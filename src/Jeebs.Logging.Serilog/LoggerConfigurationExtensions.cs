@@ -46,6 +46,9 @@ public static class LoggerConfigurationExtensions
 
 		// Enable connectors
 		EnableConnectors(@this, jeebs);
+
+		// Set static logger
+		StaticLogger.Factory = new(() => new SerilogLogger());
 	}
 
 	/// <summary>

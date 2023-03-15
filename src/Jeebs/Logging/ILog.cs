@@ -17,7 +17,7 @@ public interface ILog<out TContext> : ILog { }
 public interface ILog
 {
 	/// <summary>
-	/// Return a new log instance for a difference context
+	/// Return a new log instance for a different context
 	/// </summary>
 	/// <typeparam name="T">Log context</typeparam>
 	ILog<T> ForContext<T>();

@@ -65,6 +65,7 @@ public abstract class Log : ILog
 			case LogLevel.Fatal:
 				Ftl(text, args);
 				break;
+			case LogLevel.Unknown:
 			default:
 				// Unsupported level
 				break;
