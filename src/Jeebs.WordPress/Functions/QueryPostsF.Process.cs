@@ -37,7 +37,7 @@ public static partial class QueryPostsF
 			x => AddTaxonomiesAsync<TList, TModel>(db, w, x)
 		)
 		.SwitchIfAsync(
-			_ => filters.Length > 0,
+			check: _ => filters.Length > 0,
 			ifTrue: x => ApplyContentFilters<TList, TModel>(x, filters)
 		);
 }
