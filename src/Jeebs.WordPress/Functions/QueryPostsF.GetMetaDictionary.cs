@@ -1,9 +1,6 @@
 // Jeebs Rapid Application Development
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
-using System;
-using System.Collections.Concurrent;
-using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using Jeebs.Messages;
@@ -14,23 +11,15 @@ namespace Jeebs.WordPress.Functions;
 public static partial class QueryPostsF
 {
 	/// <summary>
-	/// Meta Dictionary cache
-	/// </summary>
-	private static ConcurrentDictionary<Type, IEnumerable<PropertyInfo>> MetaDictionaryCache { get; } = new();
-
-	/// <summary>
 	/// Get the Meta Dictionary Info for <typeparamref name="TModel"/>
 	/// </summary>
 	/// <typeparam name="TModel">Post Model type</typeparam>
 	internal static Maybe<Meta<TModel>> GetMetaDictionary<TModel>()
 	{
-		// Get from or Add to the cache
-		var metaDictionary = MetaDictionaryCache.GetOrAdd(
-			typeof(TModel),
-			type => from m in type.GetProperties()
-					where m.PropertyType == typeof(MetaDictionary)
-					select m
-		);
+		// Get meta dictionary property for model type
+		var metaDictionary = from m in typeof(TModel).GetProperties()
+							 where m.PropertyType == typeof(MetaDictionary)
+							 select m;
 
 		// If MetaDictionary is not defined return none
 		if (!metaDictionary.Any())
