@@ -139,6 +139,14 @@ public abstract class Locked
 	/// </summary>
 	protected Locked() { }
 
+	/// <inheritdoc cref="CryptoF.Lock{T}(T, byte[])"/>
+	public static Maybe<Locked<T>> Create<T>(T contents, byte[] key) =>
+		CryptoF.Lock(contents, key);
+
+	/// <inheritdoc cref="CryptoF.Lock{T}(T, string)"/>
+	public static Locked<T> Create<T>(T contents, string key) =>
+		CryptoF.Lock(contents, key);
+
 	/// <summary>Messages</summary>
 	public static class M
 	{
