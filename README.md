@@ -20,6 +20,10 @@ I am definitely a backend developer at heart, although like everyone I have to w
 
 The code in these libraries has been under active development and use for over a decade, powering all my own websites, and some for other people as well.
 
+### Jeebs v9
+
+Jeebs v9 targets .NET 8 and brings in various optimisations and a re-write of the authentication projects.
+
 ### Jeebs v8
 
 Jeebs v8 targets .NET 7, applies StyleCop conventions and best practices, and removes two utility projects (`Maybe` and `Random`) to separate repos / packages (see [here](https://github.com/bfren/maybe) and [here](https://github.com/bfren/rnd)).
