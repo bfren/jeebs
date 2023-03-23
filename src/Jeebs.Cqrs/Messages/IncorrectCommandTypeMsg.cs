@@ -6,7 +6,7 @@ using Jeebs.Messages;
 
 namespace Jeebs.Cqrs.Messages;
 
-/// <summary>The query is an incorrect type for the handler</summary>
-/// <param name="ExpectedType">Expected query type</param>
-/// <param name="ActualType">Actual query type</param>
+/// <summary>The command is an incorrect type for the handler</summary>
+/// <param name="ExpectedType">Expected command type</param>
+/// <param name="ActualType">Actual command type</param>
 public sealed record class IncorrectCommandTypeMsg(Type ExpectedType, Type ActualType) : Msg;
