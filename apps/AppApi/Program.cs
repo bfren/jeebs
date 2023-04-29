@@ -21,7 +21,7 @@ static async Task<IResult> HandleSayHello(
 )
 {
 	var text = await query
-		.DispatchAsync(
+		.SendAsync(
 			new SayHelloQuery(name)
 		)
 		.UnwrapAsync(
