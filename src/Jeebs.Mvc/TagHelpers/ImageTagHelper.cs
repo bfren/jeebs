@@ -1,4 +1,4 @@
-﻿// Jeebs Rapid Application Development
+// Jeebs Rapid Application Development
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using System;
@@ -17,7 +17,8 @@ namespace Jeebs.Mvc.TagHelpers;
 public sealed class ImageTagHelper : UrlResolutionTagHelper
 {
 	/// <summary>
-	/// Image src - if this starts '/' then it is assumed it is a path within the default wwwroot/images directory
+	/// Image src - if this starts '/' then it is assumed it is a path within the wwwroot/img directory -
+	/// otherwise use ~/... to reference an image elsewhere within wwwroot or an absolute URL
 	/// </summary>
 	public string Src { get; set; } = string.Empty;
 
