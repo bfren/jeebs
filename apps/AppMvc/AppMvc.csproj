@@ -22,8 +22,6 @@
 		</Content>
 	</ItemGroup>
 	<ProjectExtensions>
-		<VisualStudio>
-			<UserProperties jeebsconfig_1json__JsonSchema="https://schemas.bfren.dev/jeebs/application/config.json" jeebsconfig-secrets_1json__JsonSchema="https://schemas.bfren.dev/jeebs/application/config.json" />
-		</VisualStudio>
+		<VisualStudio><UserProperties jeebsconfig_1json__JsonSchema="https://schemas.bfren.dev/jeebs/application/config.json" /></VisualStudio>
 	</ProjectExtensions>
 </Project>
