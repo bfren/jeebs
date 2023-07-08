@@ -18,13 +18,15 @@ public static partial class FluentQueryHelper
 	/// <exception cref="CollectionException"></exception>
 	internal static void AssertCollection<T>(T[] collection, params Action<T>[] inspectors)
 	{
+		// number of items does not match
 		var expected = inspectors.Length;
 		var actual = collection.Length;
 		if (expected != actual)
 		{
-			throw new CollectionException(collection, expected, actual);
+			throw CollectionException.ForMismatchedItemCount(expected, actual, string.Join(", ", collection));
 		}
 
+		// 
 		for (var i = 0; i < actual; i++)
 		{
 			try
@@ -33,7 +35,7 @@ public static partial class FluentQueryHelper
 			}
 			catch (Exception ex) when (ex is not FluentQueryHelperException)
 			{
-				throw new CollectionException(collection, expected, actual, i, ex);
+				throw CollectionException.ForMismatchedItem(ex, i, null, string.Join(", ", collection));
 			}
 		}
 	}
