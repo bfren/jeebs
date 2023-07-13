@@ -10,12 +10,12 @@
     <PackageVersion Include="Azure.Identity" Version="1.9.0" />
     <PackageVersion Include="coverlet.collector" Version="6.0.0" />
     <PackageVersion Include="Dapper" Version="2.0.143" />
-    <PackageVersion Include="MaybeF" Version="9.3.3" />
-    <PackageVersion Include="MaybeF.Testing" Version="9.3.3" />
-    <PackageVersion Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="7.0.8" />
-    <PackageVersion Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="7.0.8" />
-    <PackageVersion Include="Microsoft.EntityFrameworkCore" Version="7.0.8" />
-    <PackageVersion Include="Microsoft.EntityFrameworkCore.Relational" Version="7.0.8" />
+    <PackageVersion Include="MaybeF" Version="9.3.4" />
+    <PackageVersion Include="MaybeF.Testing" Version="9.3.4" />
+    <PackageVersion Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="7.0.9" />
+    <PackageVersion Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="7.0.9" />
+    <PackageVersion Include="Microsoft.EntityFrameworkCore" Version="7.0.9" />
+    <PackageVersion Include="Microsoft.EntityFrameworkCore.Relational" Version="7.0.9" />
     <PackageVersion Include="Microsoft.Extensions.Caching.Memory" Version="7.0.0" />
     <PackageVersion Include="Microsoft.Extensions.Configuration" Version="7.0.0" />
     <PackageVersion Include="Microsoft.Extensions.Configuration.Abstractions" Version="7.0.0" />
@@ -53,7 +53,7 @@
     <PackageVersion Include="System.Collections.Immutable" Version="7.0.0" />
     <PackageVersion Include="System.Data.SqlClient" Version="4.8.5" />
     <PackageVersion Include="System.Data.SQLite.Core" Version="1.0.118" />
-    <PackageVersion Include="System.IdentityModel.Tokens.Jwt" Version="6.31.0" />
+    <PackageVersion Include="System.IdentityModel.Tokens.Jwt" Version="6.32.0" />
     <PackageVersion Include="System.Text.Json" Version="7.0.3" />
     <PackageVersion Include="xunit" Version="2.5.0" />
     <PackageVersion Include="xunit.assert" Version="2.5.0" />
