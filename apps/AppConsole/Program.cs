@@ -10,6 +10,7 @@ using Jeebs.Services.Notify;
 using MaybeF;
 using MaybeF.Linq;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using RndF;
 
@@ -74,6 +75,12 @@ log.Msg(new WithValue(Rnd.Str));
 log.Inf("Testing Msg with exception");
 var e = new Exception(Rnd.Str);
 log.Msg(new WithException(e));
+
+// Test Microsoft ILogger
+var microsoftLogTest = LoggerMessage.Define<string>(LogLevel.Information, new(), "{Msg}");
+var msLog = app.Services.GetRequiredService<ILogger<Basic>>();
+var msMsg = "Test from Microsoft Logging framework";
+microsoftLogTest(msLog, msMsg, null);
 
 // Log console
 while (Console.ReadLine() is string output)

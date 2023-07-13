@@ -43,10 +43,8 @@ public abstract class Controller : Microsoft.AspNetCore.Mvc.Controller
 	/// <param name="success">Function to run when the result is successful</param>
 	protected Task<IActionResult> ProcessAsync<T>(Maybe<T> maybe, Func<T, Task<IActionResult>> success) =>
 		maybe.SwitchAsync(
-			some: value =>
-				success(value),
-			none: reason =>
-				this.ExecuteErrorAsync(reason)
+			some: success,
+			none: this.ExecuteErrorAsync
 		);
 
 	/// <summary>
@@ -57,10 +55,8 @@ public abstract class Controller : Microsoft.AspNetCore.Mvc.Controller
 	/// <param name="success">Function to run when the result is successful</param>
 	protected Task<IActionResult> ProcessAsync<T>(Task<Maybe<T>> maybe, Func<T, IActionResult> success) =>
 		maybe.SwitchAsync(
-			some: value =>
-				success(value),
-			none: reason =>
-				this.ExecuteErrorAsync(reason)
+			some: success,
+			none: this.ExecuteErrorAsync
 		);
 
 	/// <summary>
@@ -71,17 +67,14 @@ public abstract class Controller : Microsoft.AspNetCore.Mvc.Controller
 	/// <param name="success">Function to run when the result is successful</param>
 	protected Task<IActionResult> ProcessAsync<T>(Task<Maybe<T>> maybe, Func<T, Task<IActionResult>> success) =>
 		maybe.SwitchAsync(
-			some: value =>
-				success(value),
-			none: reason =>
-				this.ExecuteErrorAsync(reason)
+			some: success,
+			none: this.ExecuteErrorAsync
 		);
 
 	/// <inheritdoc cref="ProcessAsync{T}(Maybe{T}, Func{T, Task{IActionResult}})"/>
 	protected IActionResult Process<T>(Maybe<T> maybe, Func<T, IActionResult> success) =>
 		maybe.Switch(
-			some: value =>
-				success(value),
+			some: success,
 			none: reason =>
 				this.ExecuteErrorAsync(reason).GetAwaiter().GetResult()
 		);
