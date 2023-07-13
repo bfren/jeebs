@@ -19,5 +19,6 @@
 			".vscode/**": true,
 			"docs/**": true,
 		},
+		"dotnet.defaultSolution": "Jeebs (v9).sln",
 	}
 }
