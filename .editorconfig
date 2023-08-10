@@ -452,10 +452,14 @@ dotnet_naming_rule.parameters_rule.severity             = warning
 ##########################################
 
 [*]
-indent_style = tab
+
 end_of_line = crlf
 
 [*.{cs,csx,cake,vb,vbx}]
+
+indent_style = tab
+indent_size = tab
+tab_size = 4
 
 # SA1636: File header copyright text should match.
 dotnet_diagnostic.SA1636.severity = none
