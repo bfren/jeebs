@@ -145,7 +145,7 @@ public abstract class Db : IDb
 			some: LogQuery<T>
 		)
 		.MapAsync(
-			x => transaction.Connection.QueryAsync<T>(x.query, x.parameters, transaction, commandType: x.type),
+			x => transaction.Connection!.QueryAsync<T>(x.query, x.parameters, transaction, commandType: x.type),
 			e => new M.QueryExceptionMsg(e)
 		);
 
@@ -165,11 +165,18 @@ public abstract class Db : IDb
 			some: LogQuery<T>
 		)
 		.MapAsync(
-			x => transaction.Connection.QuerySingleOrDefaultAsync<T>(x.query, x.parameters, transaction, commandType: x.type),
+			x => transaction.Connection!.QuerySingleOrDefaultAsync<T>(x.query, x.parameters, transaction, commandType: x.type),
 			e => new M.QuerySingleExceptionMsg(e)
 		)
-		.IfNullAsync(
-			() => new M.QuerySingleItemNotFoundMsg((query, param))
+		.BindAsync(
+			x => x switch
+			{
+				T =>
+					F.Some(x),
+
+				_ =>
+					F.None<T>(new M.QuerySingleItemNotFoundMsg((query, param)))
+			}
 		);
 
 	/// <inheritdoc/>
@@ -188,7 +195,7 @@ public abstract class Db : IDb
 			some: LogQuery<bool>
 		)
 		.MapAsync(
-			x => transaction.Connection.ExecuteAsync(x.query, x.parameters, transaction, commandType: x.type),
+			x => transaction.Connection!.ExecuteAsync(x.query, x.parameters, transaction, commandType: x.type),
 			e => new M.ExecuteExceptionMsg(e)
 		)
 		.MapAsync(
@@ -212,8 +219,18 @@ public abstract class Db : IDb
 			some: LogQuery<T>
 		)
 		.MapAsync(
-			x => transaction.Connection.ExecuteScalarAsync<T>(x.query, x.parameters, transaction, commandType: x.type),
+			x => transaction.Connection!.ExecuteScalarAsync<T>(x.query, x.parameters, transaction, commandType: x.type),
 			e => new M.ExecuteScalarExceptionMsg(e)
+		)
+		.BindAsync(
+			x => x switch
+			{
+				T =>
+					F.Some(x),
+
+				_ =>
+					F.None<T, M.ExecuteScalarNullMsg>()
+			}
 		);
 
 	#endregion Querying
@@ -236,6 +253,9 @@ public abstract class Db : IDb
 		/// <param name="Value">Exception object</param>
 		public sealed record class QuerySingleExceptionMsg(Exception Value) : ExceptionMsg;
 
+		/// <summary>Null value returned by QuerySingleAsync</summary>
+		public sealed record class QuerySingleNullMsg() : IMsg;
+
 		/// <summary>The query returned no items, or more than one</summary>
 		/// <param name="Value">Query parameters</param>
 		public sealed record class QuerySingleItemNotFoundMsg((string sql, object? parameters) Value)
@@ -253,5 +273,8 @@ public abstract class Db : IDb
 		/// <summary>Error running ExecuteScalarAsync</summary>
 		/// <param name="Value">Exception object</param>
 		public sealed record class ExecuteScalarExceptionMsg(Exception Value) : ExceptionMsg;
+
+		/// <summary>Null value returned by ExecuteScalarAsync</summary>
+		public sealed record class ExecuteScalarNullMsg() : IMsg;
 	}
 }

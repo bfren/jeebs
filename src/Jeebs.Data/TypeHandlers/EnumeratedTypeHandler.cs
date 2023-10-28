@@ -1,4 +1,4 @@
-﻿// Jeebs Rapid Application Development
+// Jeebs Rapid Application Development
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using System;
@@ -34,7 +34,7 @@ public abstract class EnumeratedTypeHandler<T> : Dapper.SqlMapper.TypeHandler<T>
 	/// </summary>
 	/// <param name="parameter">IDbDataParameter object</param>
 	/// <param name="value">Enumerated value</param>
-	public override void SetValue(IDbDataParameter parameter, T value) =>
+	public override void SetValue(IDbDataParameter parameter, T? value) =>
 		parameter.Value = value?.ToString();
 
 	#region Testing
