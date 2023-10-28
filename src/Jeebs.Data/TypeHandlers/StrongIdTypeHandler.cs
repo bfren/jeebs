@@ -43,8 +43,8 @@ public sealed class StrongIdTypeHandler<T> : Dapper.SqlMapper.TypeHandler<T>
 	/// </summary>
 	/// <param name="parameter">IDbDataParameter</param>
 	/// <param name="value"><see cref="IStrongId"/> value</param>
-	public override void SetValue(IDbDataParameter parameter, T value) =>
-		parameter.Value = value.Value;
+	public override void SetValue(IDbDataParameter parameter, T? value) =>
+		parameter.Value = value?.Value;
 
 	/// <summary>
 	/// Returns a strongly-typed value

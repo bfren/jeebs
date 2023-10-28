@@ -36,7 +36,7 @@ public class JsonbTypeHandler<T> : Dapper.SqlMapper.TypeHandler<T>
 	/// </summary>
 	/// <param name="parameter">IDbDataParameter</param>
 	/// <param name="value">Value object</param>
-	public override void SetValue(IDbDataParameter parameter, T value)
+	public override void SetValue(IDbDataParameter parameter, T? value)
 	{
 		if (parameter is NpgsqlParameter npgsqlParameter)
 		{
