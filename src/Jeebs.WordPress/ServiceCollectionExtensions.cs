@@ -54,6 +54,6 @@ public static class ServiceCollectionExtensions
 			where TWpConfig : WpConfig =>
 			services
 				.Configure<TWpConfig>(config.GetSection(section))
-				.AddSingleton<TWp>();
+				.AddScoped<TWp>();
 	}
 }

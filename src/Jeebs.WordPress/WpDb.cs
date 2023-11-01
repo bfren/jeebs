@@ -8,6 +8,7 @@ using Jeebs.Data.Clients.MySql;
 using Jeebs.Data.TypeHandlers;
 using Jeebs.Logging;
 using Jeebs.WordPress.Entities;
+using Jeebs.WordPress.Entities.StrongIds;
 using Jeebs.WordPress.TypeHandlers;
 using Microsoft.Extensions.Options;
 
@@ -44,6 +45,8 @@ public sealed class WpDb<TC, TCm, TL, TO, TP, TPm, TT, TTm, TTr, TTt, TU, TUm> :
 	where TU : WpUserEntity
 	where TUm : WpUserMetaEntity
 {
+	private static readonly object X = new();
+
 	/// <inheritdoc/>
 	public WpConfig WpConfig { get; private init; }
 
@@ -91,13 +94,19 @@ public sealed class WpDb<TC, TCm, TL, TO, TP, TPm, TT, TTm, TTr, TTt, TU, TUm> :
 		_ = Map<TU>.To(Schema.Users);
 		_ = Map<TUm>.To(Schema.UsersMeta);
 
-		// Add type handlers
-		client.Types.ResetTypeHandlers();
-		client.Types.AddTypeHandler(new CommentTypeTypeHandler());
-		client.Types.AddTypeHandler(new MimeTypeTypeHandler());
-		client.Types.AddTypeHandler(new PostStatusTypeHandler());
-		client.Types.AddTypeHandler(new PostTypeTypeHandler());
-		client.Types.AddTypeHandler(new TaxonomyTypeHandler());
-		client.Types.AddStrongIdTypeHandlers();
+		lock (X)
+		{
+			// Add type handlers
+			if (!client.Types.HasTypeHandler<WpPostId>())
+			{
+				client.Types.ResetTypeHandlers();
+				client.Types.AddTypeHandler(new CommentTypeTypeHandler());
+				client.Types.AddTypeHandler(new MimeTypeTypeHandler());
+				client.Types.AddTypeHandler(new PostStatusTypeHandler());
+				client.Types.AddTypeHandler(new PostTypeTypeHandler());
+				client.Types.AddTypeHandler(new TaxonomyTypeHandler());
+				client.Types.AddStrongIdTypeHandlers();
+			}
+		}
 	}
 }

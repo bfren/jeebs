@@ -96,4 +96,8 @@ public class DbTypeMapper : IDbTypeMapper
 			}
 		});
 	}
+
+	/// <inheritdoc/>
+	public virtual bool HasTypeHandler<T>() =>
+		SqlMapper.HasTypeHandler(typeof(T));
 }

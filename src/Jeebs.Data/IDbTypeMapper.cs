@@ -73,4 +73,10 @@ public interface IDbTypeMapper
 	/// <param name="type">Base (abstract or interface) type to map</param>
 	/// <param name="handler">Handler type (with generic argument)</param>
 	delegate void AddGenericTypeHandler(Type type, SqlMapper.ITypeHandler handler);
+
+	/// <summary>
+	/// Whether or not the specified type has a custom type handler registered
+	/// </summary>
+	/// <typeparam name="T">The type to check</typeparam>
+	bool HasTypeHandler<T>();
 }
