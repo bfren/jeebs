@@ -3,6 +3,7 @@
 
 using System;
 using System.Globalization;
+using System.Text;
 
 namespace Jeebs.Config.Db;
 
@@ -14,7 +15,7 @@ public class NamedDbConnectionNotFoundException : Exception
 	/// <summary>
 	/// Exception message format
 	/// </summary>
-	public static readonly string Format = "Connection '{0}' was not found in configuration settings.";
+	public static readonly CompositeFormat Format = CompositeFormat.Parse("Connection '{0}' was not found in configuration settings.");
 
 	/// <summary>
 	/// Create exception

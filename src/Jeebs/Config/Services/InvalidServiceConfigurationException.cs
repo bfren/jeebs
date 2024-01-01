@@ -3,6 +3,7 @@
 
 using System;
 using System.Globalization;
+using System.Text;
 
 namespace Jeebs.Config.Services;
 
@@ -14,7 +15,7 @@ public class InvalidServiceConfigurationException : Exception
 	/// <summary>
 	/// Exception message format
 	/// </summary>
-	public static readonly string Format = "Service configuration '{0}' in {1} collection is not valid.";
+	public static readonly CompositeFormat Format = CompositeFormat.Parse("Service configuration '{0}' in {1} collection is not valid.");
 
 	/// <summary>
 	/// Create exception
