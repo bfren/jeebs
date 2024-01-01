@@ -1,4 +1,4 @@
-﻿// Jeebs Rapid Application Development
+// Jeebs Rapid Application Development
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using System;
@@ -93,7 +93,7 @@ public sealed class NavMenuTagHelper : UrlResolutionTagHelper
 		// Build the menu
 		BuildMenu(
 			Menu.Items,
-			mi => mi.Controller.ToLower(CultureInfo.InvariantCulture) == currentController,
+			mi => string.Equals(mi.Controller, currentController, StringComparison.OrdinalIgnoreCase),
 			mi => mi.Controller,
 			el => output.Content.AppendHtml(el)
 		);
@@ -157,7 +157,7 @@ public sealed class NavMenuTagHelper : UrlResolutionTagHelper
 					// Build child menu
 					BuildMenu(
 						menuItem.Children,
-						mi => mi.Action.ToLower(CultureInfo.InvariantCulture) == currentAction,
+						mi => string.Equals(mi.Action, currentAction, StringComparison.OrdinalIgnoreCase),
 						mi => mi.Action,
 						el => childMenu.InnerHtml.AppendHtml(el)
 					);
