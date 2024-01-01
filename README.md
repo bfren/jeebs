@@ -22,7 +22,7 @@ The code in these libraries has been under active development and use for over a
 
 ### Jeebs v8
 
-Jeebs v8 targets .NET 7, applies StyleCop conventions and best practices, and removes two utility projects (`Maybe` and `Random`) to separate repos / packages (see [here](https://github.com/bfren/maybe) and [here](https://github.com/bfren/rnd)).
+Jeebs v8 targets .NET 7 (<= 8.3.13) and .Net 8 (>= 8.4.0, applies StyleCop conventions and best practices, and removes two utility projects (`Maybe` and `Random`) to separate repos / packages (see [here](https://github.com/bfren/maybe) and [here](https://github.com/bfren/rnd)).
 
 ### Jeebs v7
 
@@ -42,5 +42,5 @@ Jeebs v5 came from a) rewriting the entire codebase to make use of improvements 
 
 ## Copyright
 
-> Copyright (c) 2013-2023 [bfren](https://bfren.dev)
+> Copyright (c) 2013-2024 [bfren](https://bfren.dev)
 > Unless otherwise stated
