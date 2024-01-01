@@ -28,6 +28,8 @@ namespace Jeebs.Apps.Web;
 /// </summary>
 public class MvcApp : WebApp
 {
+	private static readonly string[] VaryByQueryKeys = ["*"];
+
 	#region Run
 
 	/// <inheritdoc cref="WebAppBuilder.Run{T}(string[], Action{HostBuilderContext, IServiceCollection})"/>
@@ -206,7 +208,7 @@ public class MvcApp : WebApp
 	protected virtual void ConfigureServicesMvcOptions(HostBuilderContext ctx, MvcOptions opt)
 	{
 		opt.CacheProfiles.Add(CacheProfiles.None, new() { NoStore = true });
-		opt.CacheProfiles.Add(CacheProfiles.Default, new() { Duration = 600, VaryByQueryKeys = new[] { "*" } });
+		opt.CacheProfiles.Add(CacheProfiles.Default, new() { Duration = 600, VaryByQueryKeys = VaryByQueryKeys });
 	}
 
 	/// <summary>
