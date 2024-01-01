@@ -45,8 +45,7 @@ public class GetSetListForUpdateQuery_Tests
 		// Assert
 		client.Received().Escape(column);
 		client.Received().GetParamRef(alias);
-		Assert.Collection(result,
-			x => Assert.Equal(expected, x)
-		);
+		var single = Assert.Single(result);
+		Assert.Equal(expected, single);
 	}
 }

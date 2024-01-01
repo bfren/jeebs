@@ -51,17 +51,13 @@ public class Join_Tests
 		var result = (QueryBuilderWithFrom)builder.Join<TestTable0, TestTable1>(join, t => t.Foo, t => t.Bar);
 
 		// Assert
-		Assert.Collection(getJoin(result.Parts),
-			x =>
-			{
-				Assert.Equal(nameof(TestTable0), x.from.TblName.Name);
-				Assert.Equal(TestTable0.Prefix + nameof(TestTable0.Foo), x.from.ColName);
-				Assert.Equal(nameof(TestTable0.Foo), x.from.ColAlias);
-				Assert.Equal(nameof(TestTable1), x.to.TblName.Name);
-				Assert.Equal(TestTable1.Prefix + nameof(TestTable1.Bar), x.to.ColName);
-				Assert.Equal(nameof(TestTable1.Bar), x.to.ColAlias);
-			}
-		);
+		var (from, to) = Assert.Single(getJoin(result.Parts));
+		Assert.Equal(nameof(TestTable0), from.TblName.Name);
+		Assert.Equal(TestTable0.Prefix + nameof(TestTable0.Foo), from.ColName);
+		Assert.Equal(nameof(TestTable0.Foo), from.ColAlias);
+		Assert.Equal(nameof(TestTable1), to.TblName.Name);
+		Assert.Equal(TestTable1.Prefix + nameof(TestTable1.Bar), to.ColName);
+		Assert.Equal(nameof(TestTable1.Bar), to.ColAlias);
 	}
 
 	[Fact]

@@ -38,14 +38,12 @@ public class WhereId_Tests : FluentQuery_Tests
 
 		// Assert
 		var fluent = Assert.IsType<FluentQuery<TestEntity, TestId>>(result);
-		Assert.Collection(fluent.Parts.Where, x =>
-		{
-			Assert.Equal(v.Table.GetName(), x.column.TblName);
-			Assert.Equal(v.Table.Id, x.column.ColName);
-			Assert.Equal(nameof(TestEntity.Id), x.column.ColAlias);
-			Assert.Equal(Enums.Compare.Equal, x.compare);
-			Assert.Equal(id.Value, x.value);
-		});
+		var (column, compare, value) = Assert.Single(fluent.Parts.Where);
+		Assert.Equal(v.Table.GetName(), column.TblName);
+		Assert.Equal(v.Table.Id, column.ColName);
+		Assert.Equal(nameof(TestEntity.Id), column.ColAlias);
+		Assert.Equal(Enums.Compare.Equal, compare);
+		Assert.Equal(id.Value, value);
 	}
 
 	[Fact]
@@ -61,16 +59,14 @@ public class WhereId_Tests : FluentQuery_Tests
 
 		// Assert
 		var fluent = Assert.IsType<FluentQuery<TestEntity, TestId>>(result);
-		Assert.Collection(fluent.Parts.Where, x =>
-		{
-			Assert.Equal(v.Table.GetName(), x.column.TblName);
-			Assert.Equal(v.Table.Id, x.column.ColName);
-			Assert.Equal(nameof(TestEntity.Id), x.column.ColAlias);
-			Assert.Equal(Enums.Compare.In, x.compare);
-			Assert.Collection((IEnumerable<object>)x.value,
-				x => Assert.Equal(i0.Value, x),
-				x => Assert.Equal(i1.Value, x)
-			);
-		});
+		var (column, compare, value) = Assert.Single(fluent.Parts.Where);
+		Assert.Equal(v.Table.GetName(), column.TblName);
+		Assert.Equal(v.Table.Id, column.ColName);
+		Assert.Equal(nameof(TestEntity.Id), column.ColAlias);
+		Assert.Equal(Enums.Compare.In, compare);
+		Assert.Collection((IEnumerable<object>)value,
+			x => Assert.Equal(i0.Value, x),
+			x => Assert.Equal(i1.Value, x)
+		);
 	}
 }

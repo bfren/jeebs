@@ -53,9 +53,8 @@ public class ConvertPredicatesToColumns_Tests
 		var result = QueryF.ConvertPredicatesToColumns(columns, predicates).UnsafeUnwrap();
 
 		// Assert
-		Assert.Collection(result,
-			x => Assert.Equal(nameof(TestEntity.Foo), x.column.ColName)
-		);
+		var single = Assert.Single(result);
+		Assert.Equal(nameof(TestEntity.Foo), single.column.ColName);
 	}
 
 	[Theory]
@@ -85,7 +84,9 @@ public class ConvertPredicatesToColumns_Tests
 		var result = QueryF.ConvertPredicatesToColumns(columns, predicates).UnsafeUnwrap();
 
 		// Assert
-		Assert.Collection(result, x => Assert.Equal(input, x.cmp));
+		var x = // Assert
+Assert.Single(result);
+		Assert.Equal(input, x.cmp);
 	}
 
 	[Theory]
@@ -114,9 +115,9 @@ public class ConvertPredicatesToColumns_Tests
 		var result = QueryF.ConvertPredicatesToColumns(columns, predicates).UnsafeUnwrap();
 
 		// Assert
-		Assert.Collection(result,
-			x => Assert.Same(value, x.value)
-		);
+		var x = // Assert
+Assert.Single(result);
+		Assert.Same(value, x.value);
 	}
 
 	[Theory]
@@ -145,9 +146,9 @@ public class ConvertPredicatesToColumns_Tests
 		var result = QueryF.ConvertPredicatesToColumns(columns, predicates).UnsafeUnwrap();
 
 		// Assert
-		Assert.Collection(result,
-			x => Assert.Equal(id.Value, x.value)
-		);
+		var x = // Assert
+Assert.Single(result);
+		Assert.Equal(id.Value, x.value);
 	}
 
 	private static void Test_In_With_Enumerable(Func<int, int, int, dynamic> getValue)
@@ -172,9 +173,9 @@ public class ConvertPredicatesToColumns_Tests
 		var result = QueryF.ConvertPredicatesToColumns(columns, predicates).UnsafeUnwrap();
 
 		// Assert
-		Assert.Collection(result,
-			x => Assert.Same(value, x.value)
-		);
+		var x = // Assert
+Assert.Single(result);
+		Assert.Same(value, x.value);
 	}
 
 	[Fact]

@@ -27,14 +27,10 @@ public static class Setup
 	{
 		var some = result.AssertSome();
 		Assert.NotSame(parts, some);
-		Assert.Collection(some.Where,
-			x =>
-			{
-				Assert.Equal(PostsMeta.GetName(), x.column.TblName);
-				Assert.Equal(column, x.column.ColName);
-				Assert.Equal(cmp, x.compare);
-				Assert.Equal(value, x.value);
-			}
-		);
+		var single = Assert.Single(some.Where);
+		Assert.Equal(PostsMeta.GetName(), single.column.TblName);
+		Assert.Equal(column, single.column.ColName);
+		Assert.Equal(cmp, single.compare);
+		Assert.Equal(value, single.value);
 	}
 }

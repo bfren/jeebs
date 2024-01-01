@@ -1,4 +1,4 @@
-﻿// Jeebs Unit Tests
+// Jeebs Unit Tests
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using Jeebs.Collections;
@@ -57,18 +57,14 @@ public class AddWhereCustomFields_Tests : QueryPartsBuilder_Tests<PostsPartsBuil
 
 		// Assert
 		var some = result.AssertSome();
-		Assert.Collection(some.WhereCustom,
-			x =>
-			{
-				Assert.Equal("(" +
-					$"SELECT COUNT(1) FROM `{pm}` " +
-					$"WHERE `{pm}`.`post_id` = `{p}`.`ID` " +
-					$"AND `{pm}`.`meta_key` = @customField0_Key " +
-					$"AND `{pm}`.`meta_value` {input.ToOperator()} @customField0_Value" +
-					") = 1",
-					x.clause
-				);
-			}
+		var (clause, _) = Assert.Single(some.WhereCustom);
+		Assert.Equal("(" +
+			$"SELECT COUNT(1) FROM `{pm}` " +
+			$"WHERE `{pm}`.`post_id` = `{p}`.`ID` " +
+			$"AND `{pm}`.`meta_key` = @customField0_Key " +
+			$"AND `{pm}`.`meta_value` {input.ToOperator()} @customField0_Value" +
+			") = 1",
+			clause
 		);
 	}
 
@@ -91,21 +87,17 @@ public class AddWhereCustomFields_Tests : QueryPartsBuilder_Tests<PostsPartsBuil
 
 		// Assert
 		var some = result.AssertSome();
-		Assert.Collection(some.WhereCustom,
-			x =>
+		var (_, parameters) = Assert.Single(some.WhereCustom);
+		Assert.Collection(parameters,
+			y =>
 			{
-				Assert.Collection(x.parameters,
-					y =>
-					{
-						Assert.Equal("@customField0_Key", y.Key);
-						Assert.Equal(key, y.Value);
-					},
-					y =>
-					{
-						Assert.Equal("@customField0_Value", y.Key);
-						Assert.Equal(value, y.Value);
-					}
-				);
+				Assert.Equal("@customField0_Key", y.Key);
+				Assert.Equal(key, y.Value);
+			},
+			y =>
+			{
+				Assert.Equal("@customField0_Value", y.Key);
+				Assert.Equal(value, y.Value);
 			}
 		);
 	}
@@ -136,23 +128,19 @@ public class AddWhereCustomFields_Tests : QueryPartsBuilder_Tests<PostsPartsBuil
 
 		// Assert
 		var some = result.AssertSome();
-		Assert.Collection(some.WhereCustom,
-			x =>
-			{
-				Assert.Equal("(" +
-					$"SELECT COUNT(1) FROM `{pm}` " +
-					$"WHERE `{pm}`.`post_id` = `{p}`.`ID` " +
-					$"AND `{pm}`.`meta_key` = @customField0_Key " +
-					$"AND `{pm}`.`meta_value` = @customField0_Value" +
-					") = 1 AND (" +
-					$"SELECT COUNT(1) FROM `{pm}` " +
-					$"WHERE `{pm}`.`post_id` = `{p}`.`ID` " +
-					$"AND `{pm}`.`meta_key` = @customField1_Key " +
-					$"AND `{pm}`.`meta_value` = @customField1_Value" +
-					") = 1",
-					x.clause
-				);
-			}
+		var (clause, _) = Assert.Single(some.WhereCustom);
+		Assert.Equal("(" +
+			$"SELECT COUNT(1) FROM `{pm}` " +
+			$"WHERE `{pm}`.`post_id` = `{p}`.`ID` " +
+			$"AND `{pm}`.`meta_key` = @customField0_Key " +
+			$"AND `{pm}`.`meta_value` = @customField0_Value" +
+			") = 1 AND (" +
+			$"SELECT COUNT(1) FROM `{pm}` " +
+			$"WHERE `{pm}`.`post_id` = `{p}`.`ID` " +
+			$"AND `{pm}`.`meta_key` = @customField1_Key " +
+			$"AND `{pm}`.`meta_value` = @customField1_Value" +
+			") = 1",
+			clause
 		);
 	}
 
@@ -179,31 +167,27 @@ public class AddWhereCustomFields_Tests : QueryPartsBuilder_Tests<PostsPartsBuil
 
 		// Assert
 		var some = result.AssertSome();
-		Assert.Collection(some.WhereCustom,
-			x =>
+		var (_, parameters) = Assert.Single(some.WhereCustom);
+		Assert.Collection(parameters,
+			y =>
 			{
-				Assert.Collection(x.parameters,
-					y =>
-					{
-						Assert.Equal("@customField0_Key", y.Key);
-						Assert.Equal(k0, y.Value);
-					},
-					y =>
-					{
-						Assert.Equal("@customField0_Value", y.Key);
-						Assert.Equal(v0, y.Value);
-					},
-					y =>
-					{
-						Assert.Equal("@customField1_Key", y.Key);
-						Assert.Equal(k1, y.Value);
-					},
-					y =>
-					{
-						Assert.Equal("@customField1_Value", y.Key);
-						Assert.Equal(v1, y.Value);
-					}
-				);
+				Assert.Equal("@customField0_Key", y.Key);
+				Assert.Equal(k0, y.Value);
+			},
+			y =>
+			{
+				Assert.Equal("@customField0_Value", y.Key);
+				Assert.Equal(v0, y.Value);
+			},
+			y =>
+			{
+				Assert.Equal("@customField1_Key", y.Key);
+				Assert.Equal(k1, y.Value);
+			},
+			y =>
+			{
+				Assert.Equal("@customField1_Value", y.Key);
+				Assert.Equal(v1, y.Value);
 			}
 		);
 	}

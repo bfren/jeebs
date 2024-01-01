@@ -41,14 +41,10 @@ public abstract class AddWhereId_Tests<TBuilder, TId> : QueryPartsBuilder_Tests<
 		// Assert
 		var some = result.AssertSome();
 		Assert.NotSame(v.Parts, some);
-		Assert.Collection(some.Where,
-			x =>
-			{
-				Assert.Equal(builder.IdColumn, x.column);
-				Assert.Equal(Compare.Equal, x.compare);
-				Assert.Equal(id.Value, x.value);
-			}
-		);
+		var (column, compare, value) = Assert.Single(some.Where);
+		Assert.Equal(builder.IdColumn, column);
+		Assert.Equal(Compare.Equal, compare);
+		Assert.Equal(id.Value, value);
 	}
 
 	public abstract void Test02_Id_And_Ids_Set_Adds_Where_Id_Equal();
@@ -68,14 +64,10 @@ public abstract class AddWhereId_Tests<TBuilder, TId> : QueryPartsBuilder_Tests<
 		// Assert
 		var some = result.AssertSome();
 		Assert.NotSame(v.Parts, some);
-		Assert.Collection(some.Where,
-			x =>
-			{
-				Assert.Equal(builder.IdColumn, x.column);
-				Assert.Equal(Compare.Equal, x.compare);
-				Assert.Equal(i0.Value, x.value);
-			}
-		);
+		var (column, compare, value) = Assert.Single(some.Where);
+		Assert.Equal(builder.IdColumn, column);
+		Assert.Equal(Compare.Equal, compare);
+		Assert.Equal(i0.Value, value);
 	}
 
 	public abstract void Test03_Id_Null_Ids_Set_Adds_Where_Id_In();
@@ -94,17 +86,12 @@ public abstract class AddWhereId_Tests<TBuilder, TId> : QueryPartsBuilder_Tests<
 		// Assert
 		var some = result.AssertSome();
 		Assert.NotSame(v.Parts, some);
-		Assert.Collection(some.Where,
-			x =>
-			{
-				Assert.Equal(builder.IdColumn, x.column);
-				Assert.Equal(Compare.In, x.compare);
-
-				Assert.Collection((IEnumerable<object>)x.value,
-					y => Assert.Equal(i0.Value, y),
-					y => Assert.Equal(i1.Value, y)
-				);
-			}
+		var (column, compare, value) = Assert.Single(some.Where);
+		Assert.Equal(builder.IdColumn, column);
+		Assert.Equal(Compare.In, compare);
+		Assert.Collection((IEnumerable<object>)value,
+			y => Assert.Equal(i0.Value, y),
+			y => Assert.Equal(i1.Value, y)
 		);
 	}
 }

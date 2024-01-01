@@ -40,28 +40,24 @@ public class WhereNotIn_Tests : FluentQuery_Tests
 
 		// Assert
 		var f0 = Assert.IsType<FluentQuery<TestEntity, TestId>>(r0);
-		Assert.Collection(f0.Parts.Where, x =>
-		{
-			Assert.Equal(v.Table.GetName(), x.column.TblName);
-			Assert.Equal(v.Table.Foo, x.column.ColName);
-			Assert.Equal(nameof(TestEntity.Foo), x.column.ColAlias);
-			Assert.Equal(Compare.NotIn, x.compare);
-			Assert.Collection((IEnumerable<string>)x.value!,
-				y => Assert.Equal(v0, y),
-				y => Assert.Equal(v1, y)
-			);
-		});
+		var (column0, compare0, value0) = Assert.Single(f0.Parts.Where);
+		Assert.Equal(v.Table.GetName(), column0.TblName);
+		Assert.Equal(v.Table.Foo, column0.ColName);
+		Assert.Equal(nameof(TestEntity.Foo), column0.ColAlias);
+		Assert.Equal(Compare.NotIn, compare0);
+		Assert.Collection((IEnumerable<string>)value0!,
+			y => Assert.Equal(v0, y),
+			y => Assert.Equal(v1, y)
+		);
 		var f1 = Assert.IsType<FluentQuery<TestEntity, TestId>>(r1);
-		Assert.Collection(f1.Parts.Where, x =>
-		{
-			Assert.Equal(v.Table.GetName(), x.column.TblName);
-			Assert.Equal(v.Table.Foo, x.column.ColName);
-			Assert.Equal(nameof(TestEntity.Foo), x.column.ColAlias);
-			Assert.Equal(Compare.NotIn, x.compare);
-			Assert.Collection((IEnumerable<string>)x.value!,
-				y => Assert.Equal(v0, y),
-				y => Assert.Equal(v1, y)
-			);
-		});
+		var (column1, compare1, value1) = Assert.Single(f1.Parts.Where);
+		Assert.Equal(v.Table.GetName(), column1.TblName);
+		Assert.Equal(v.Table.Foo, column1.ColName);
+		Assert.Equal(nameof(TestEntity.Foo), column1.ColAlias);
+		Assert.Equal(Compare.NotIn, compare1);
+		Assert.Collection((IEnumerable<string>)value1!,
+			y => Assert.Equal(v0, y),
+			y => Assert.Equal(v1, y)
+		);
 	}
 }

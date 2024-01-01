@@ -1,4 +1,4 @@
-﻿// Jeebs Unit Tests
+// Jeebs Unit Tests
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using Jeebs.Data;
@@ -41,11 +41,9 @@ public class AddWhereSearch_Tests : QueryPartsBuilder_Tests<PostsPartsBuilder, W
 
 		// Assert
 		var some = result.AssertSome();
-		Assert.Collection(some.WhereCustom,
-			x => Assert.Collection(x.parameters,
-				y => Assert.Equal("search", y.Key)
-			)
-		);
+		var (_, parameters) = Assert.Single(some.WhereCustom);
+		var single = Assert.Single(parameters);
+		Assert.Equal("search", single.Key);
 	}
 
 	[Fact]
@@ -61,11 +59,9 @@ public class AddWhereSearch_Tests : QueryPartsBuilder_Tests<PostsPartsBuilder, W
 
 		// Assert
 		var some = result.AssertSome();
-		Assert.Collection(some.WhereCustom,
-			x => Assert.Collection(x.parameters,
-				y => Assert.Equal(text, y.Value)
-			)
-		);
+		var (_, parameters) = Assert.Single(some.WhereCustom);
+		var single = Assert.Single(parameters);
+		Assert.Equal(text, single.Value);
 	}
 
 	[Fact]
@@ -80,11 +76,9 @@ public class AddWhereSearch_Tests : QueryPartsBuilder_Tests<PostsPartsBuilder, W
 
 		// Assert
 		var some = result.AssertSome();
-		Assert.Collection(some.WhereCustom,
-			x => Assert.Collection(x.parameters,
-				y => Assert.Equal($"%{text}%", y.Value)
-			)
-		);
+		var (_, parameters) = Assert.Single(some.WhereCustom);
+		var single = Assert.Single(parameters);
+		Assert.Equal($"%{text}%", single.Value);
 	}
 
 	public static IEnumerable<object[]> Adds_SearchPostField_Data()
@@ -110,12 +104,8 @@ public class AddWhereSearch_Tests : QueryPartsBuilder_Tests<PostsPartsBuilder, W
 
 		// Assert
 		var some = result.AssertSome();
-		Assert.Collection(some.WhereCustom,
-			x =>
-			{
-				Assert.Contains($"`{table}`.`{column}`", x.clause);
-			}
-		);
+		var (clause, _) = Assert.Single(some.WhereCustom);
+		Assert.Contains($"`{table}`.`{column}`", clause);
 	}
 
 	public static IEnumerable<object[]> Adds_Comparison_Data() =>
@@ -133,12 +123,8 @@ public class AddWhereSearch_Tests : QueryPartsBuilder_Tests<PostsPartsBuilder, W
 
 		// Assert
 		var some = result.AssertSome();
-		Assert.Collection(some.WhereCustom,
-			x =>
-			{
-				Assert.Contains($"{cmp.ToOperator()}", x.clause);
-			}
-		);
+		var (clause, _) = Assert.Single(some.WhereCustom);
+		Assert.Contains($"{cmp.ToOperator()}", clause);
 	}
 
 	[Fact]
@@ -154,14 +140,10 @@ public class AddWhereSearch_Tests : QueryPartsBuilder_Tests<PostsPartsBuilder, W
 
 		// Assert
 		var some = result.AssertSome();
-		Assert.Collection(some.WhereCustom,
-			x =>
-			{
-				Assert.Contains($"`{table}`.`{post.Title}`", x.clause);
-				Assert.Contains($" OR `{table}`.`{post.Slug}`", x.clause);
-				Assert.Contains($" OR `{table}`.`{post.Content}`", x.clause);
-				Assert.Contains($" OR `{table}`.`{post.Excerpt}`", x.clause);
-			}
-		);
+		var (clause, _) = Assert.Single(some.WhereCustom);
+		Assert.Contains($"`{table}`.`{post.Title}`", clause);
+		Assert.Contains($" OR `{table}`.`{post.Slug}`", clause);
+		Assert.Contains($" OR `{table}`.`{post.Content}`", clause);
+		Assert.Contains($" OR `{table}`.`{post.Excerpt}`", clause);
 	}
 }

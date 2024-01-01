@@ -1,4 +1,4 @@
-﻿// Jeebs Unit Tests
+// Jeebs Unit Tests
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using Jeebs.Data.Map;
@@ -19,9 +19,8 @@ public class From_Tests
 
 		// Assert
 		var from = Assert.IsType<QueryBuilderWithFrom>(result);
-		Assert.Collection(from.Tables,
-			x => Assert.Same(table, x)
-		);
+		var single = Assert.Single(from.Tables);
+		Assert.Same(table, single);
 	}
 
 	[Fact]
@@ -35,9 +34,8 @@ public class From_Tests
 
 		// Assert
 		var from = Assert.IsType<QueryBuilderWithFrom>(result);
-		Assert.Collection(from.Tables,
-			x => Assert.IsType<TestTable>(x)
-		);
+		var single = Assert.Single(from.Tables);
+		Assert.IsType<TestTable>(single);
 	}
 
 	public sealed record class TestTable() : Table(Rnd.Str);

@@ -46,14 +46,10 @@ public class AddWherePostIds_Tests : QueryPartsBuilder_Tests<PostsTaxonomyPartsB
 		// Assert
 		var some = result.AssertSome();
 		Assert.NotSame(v.Parts, some);
-		Assert.Collection(some.Where,
-			x =>
-			{
-				Assert.Equal(builder.TTest.TermRelationships.GetName(), x.column.TblName);
-				Assert.Equal(builder.TTest.TermRelationships.PostId, x.column.ColName);
-				Assert.Equal(Compare.In, x.compare);
-				Assert.Equal(postIdValues, x.value);
-			}
-		);
+		var (column, compare, value) = Assert.Single(some.Where);
+		Assert.Equal(builder.TTest.TermRelationships.GetName(), column.TblName);
+		Assert.Equal(builder.TTest.TermRelationships.PostId, column.ColName);
+		Assert.Equal(Compare.In, compare);
+		Assert.Equal(postIdValues, value);
 	}
 }

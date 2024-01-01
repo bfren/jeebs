@@ -15,9 +15,8 @@ public class Args_Tests
 		var result = msg.Args;
 
 		// Assert
-		Assert.Collection(result!,
-			x => Assert.NotNull(x)
-		);
+		var single = Assert.Single(result!);
+		Assert.NotNull(single);
 	}
 
 	[Fact]
@@ -31,9 +30,8 @@ public class Args_Tests
 		var result = msg.Args;
 
 		// Assert
-		Assert.Collection(result!,
-			x => Assert.Equal(value, x)
-		);
+		var single = Assert.Single(result!);
+		Assert.Equal(value, single);
 	}
 
 	public sealed record class TestMsg(string? Value) : WithValueMsg<string?>;
