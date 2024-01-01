@@ -23,6 +23,6 @@ public sealed class EnumeratedListJsonbTypeHandler<T> : JsonbTypeHandler<Enumera
 				EnumeratedList.Deserialise<T>(json),
 
 			_ =>
-				new()
+				[]
 		};
 }

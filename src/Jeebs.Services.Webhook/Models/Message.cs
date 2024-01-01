@@ -18,5 +18,5 @@ public sealed record class Message : IWebhookMessage
 	public NotificationLevel Level { get; init; }
 
 	/// <inheritdoc/>
-	public Dictionary<string, object> Fields { get; init; } = new();
+	public Dictionary<string, object> Fields { get; init; } = [];
 }

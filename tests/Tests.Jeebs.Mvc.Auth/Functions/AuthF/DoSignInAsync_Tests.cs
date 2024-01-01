@@ -28,7 +28,7 @@ public class DoSignInAsync_Tests
 			.Returns(repo);
 		var getClaims = Substitute.For<AuthF.GetClaims>();
 		getClaims.Invoke(default!, default!)
-			.ReturnsForAnyArgs(new List<Claim>());
+			.ReturnsForAnyArgs([]);
 		var log = Substitute.For<ILog>();
 		var signIn = Substitute.For<Func<ClaimsPrincipal, Task<AuthResult>>>();
 		var url = Substitute.For<IUrlHelper>();

@@ -48,7 +48,7 @@ public abstract record class Msg() : IMsg
 		get
 		{
 			// Add type to list of arguments
-			var list = Args?.ToList() ?? new List<object>();
+			var list = Args?.ToList() ?? [];
 			list.Insert(0, GetTypeName());
 
 			// Return as array

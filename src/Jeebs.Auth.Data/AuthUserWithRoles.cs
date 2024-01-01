@@ -30,5 +30,5 @@ public abstract record class AuthUserWithRoles<TRole> : IAuthUserWithRoles<TRole
 
 	/// <inheritdoc/>
 	[Ignore]
-	public List<TRole> Roles { get; init; } = new();
+	public List<TRole> Roles { get; init; } = [];
 }

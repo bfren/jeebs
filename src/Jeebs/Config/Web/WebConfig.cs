@@ -23,7 +23,7 @@ public sealed record class WebConfig : IOptions<WebConfig>
 	/// <summary>
 	/// RedirectionsConfig
 	/// </summary>
-	public Redirections.RedirectionsConfig Redirections { get; init; } = new();
+	public Redirections.RedirectionsConfig Redirections { get; init; } = [];
 
 	/// <summary>
 	/// SiteVerificationConfig

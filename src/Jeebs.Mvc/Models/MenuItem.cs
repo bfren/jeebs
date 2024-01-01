@@ -45,7 +45,7 @@ public record class MenuItem
 	/// <summary>
 	/// List of child menu items, for hierarchical menus
 	/// </summary>
-	public List<MenuItem> Children { get; init; } = new();
+	public List<MenuItem> Children { get; init; } = [];
 
 	/// <summary>
 	/// Whether or not this menu item is a link (if false, it is just text to output)

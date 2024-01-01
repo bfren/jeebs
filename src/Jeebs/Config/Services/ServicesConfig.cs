@@ -20,17 +20,17 @@ public sealed record class ServicesConfig : IOptions<ServicesConfig>
 	/// <summary>
 	/// Console configurations
 	/// </summary>
-	public Dictionary<string, Console.ConsoleConfig> Console { get; init; } = new();
+	public Dictionary<string, Console.ConsoleConfig> Console { get; init; } = [];
 
 	/// <summary>
 	/// Seq configurations
 	/// </summary>
-	public Dictionary<string, Seq.SeqConfig> Seq { get; init; } = new();
+	public Dictionary<string, Seq.SeqConfig> Seq { get; init; } = [];
 
 	/// <summary>
 	/// Slack configurations
 	/// </summary>
-	public Dictionary<string, Slack.SlackConfig> Slack { get; init; } = new();
+	public Dictionary<string, Slack.SlackConfig> Slack { get; init; } = [];
 
 	/// <inheritdoc/>
 	ServicesConfig IOptions<ServicesConfig>.Value =>
@@ -71,12 +71,11 @@ public sealed record class ServicesConfig : IOptions<ServicesConfig>
 		where TConfig : IServiceConfig, new()
 	{
 		var services = getCollection(this);
-		if (!services.ContainsKey(name))
+		if (!services.TryGetValue(name, out var config))
 		{
 			return new TConfig();
 		}
 
-		var config = services[name];
 		if (!config.IsValid)
 		{
 			throw new InvalidServiceConfigurationException(name, typeof(TConfig));

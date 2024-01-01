@@ -23,7 +23,7 @@ public static partial class QueryPostsF
 		// If there aren't any return an empty list
 		if (!taxonomies.Any())
 		{
-			return new();
+			return [];
 		}
 
 		return taxonomies.ToList();

@@ -12,7 +12,7 @@ internal record class PostModel : WpPostEntityWithId
 {
 	public string Title { get; init; } = string.Empty;
 
-	public MetaDictionary Meta { get; init; } = new();
+	public MetaDictionary Meta { get; init; } = [];
 }
 
 internal sealed record class PostModelWithContent : PostModel
@@ -41,7 +41,7 @@ internal sealed record class SermonModelWithTaxonomies : SermonModel
 
 internal sealed record class SermonModelWithCustomFields : SermonModel
 {
-	public MetaDictionary Meta { get; init; } = new();
+	public MetaDictionary Meta { get; init; } = [];
 
 	public PassageCustomField Passage { get; init; } = new();
 

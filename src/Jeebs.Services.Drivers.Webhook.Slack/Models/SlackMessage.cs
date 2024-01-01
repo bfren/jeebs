@@ -38,12 +38,12 @@ public sealed record class SlackMessage
 		Text = text;
 
 		// Create header
-		Blocks = new()
-		{
+		Blocks =
+		[
 			new SlackHeader(
 				new SlackPlainText(config.App.FullName)
 			)
-		};
+		];
 
 		// Add image if not an information notification
 		if (level == NotificationLevel.Information)

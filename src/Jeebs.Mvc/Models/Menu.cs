@@ -36,7 +36,7 @@ public abstract class Menu
 	/// <summary>
 	/// List of top-level menu items
 	/// </summary>
-	public List<MenuItem> Items { get; private init; } = new();
+	public List<MenuItem> Items { get; private init; } = [];
 
 	/// <inheritdoc cref="MenuF.GetSimpleItems(IUrlHelper, List{MenuItem}, GetUri)"/>
 	public IEnumerable<MenuItemSimple> GetSimpleItems(IUrlHelper urlHelper) =>

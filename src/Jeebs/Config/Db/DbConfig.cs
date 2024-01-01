@@ -38,7 +38,7 @@ public sealed record class DbConfig : IOptions<DbConfig>
 	/// <summary>
 	/// Dictionary of database connections
 	/// </summary>
-	public Dictionary<string, DbConnectionConfig> Connections { get; init; } = new();
+	public Dictionary<string, DbConnectionConfig> Connections { get; init; } = [];
 
 	/// <inheritdoc/>
 	DbConfig IOptions<DbConfig>.Value =>

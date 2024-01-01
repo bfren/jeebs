@@ -17,7 +17,7 @@ public class LoadUrisAsync_Tests
 		var loadUri = Substitute.For<LoadUri>();
 
 		// Act
-		var result = await MenuF.LoadUrisAsync(client, new(), loadUri);
+		var result = await MenuF.LoadUrisAsync(client, [], loadUri);
 
 		// Assert
 		var some = result.AssertSome();

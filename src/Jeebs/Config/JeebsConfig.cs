@@ -50,7 +50,7 @@ public sealed record class JeebsConfig : IOptions<JeebsConfig>
 	/// <summary>
 	/// WordPress configurations
 	/// </summary>
-	public Dictionary<string, WordPress.WpConfig> Wp { get; init; } = new();
+	public Dictionary<string, WordPress.WpConfig> Wp { get; init; } = [];
 
 	/// <inheritdoc/>
 	JeebsConfig IOptions<JeebsConfig>.Value =>
