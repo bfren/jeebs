@@ -16,8 +16,16 @@ namespace Jeebs.Mvc.TagHelpers;
 /// <summary>
 /// Nav Menu TagHelper
 /// </summary>
+/// <remarks>
+/// Create object
+/// </remarks>
+/// <param name="urlHelperFactory">IUrlHelperFactory object</param>
+/// <param name="htmlEncoder">HtmlEncoder</param>
 [HtmlTargetElement("nav-menu", TagStructure = TagStructure.WithoutEndTag)]
-public sealed class NavMenuTagHelper : UrlResolutionTagHelper
+public sealed class NavMenuTagHelper(
+	IUrlHelperFactory urlHelperFactory,
+	HtmlEncoder htmlEncoder
+) : UrlResolutionTagHelper(urlHelperFactory, htmlEncoder)
 {
 	/// <summary>
 	/// Menu
@@ -63,13 +71,6 @@ public sealed class NavMenuTagHelper : UrlResolutionTagHelper
 	/// Default: nav-child
 	/// </summary>
 	public string ChildMenuWrapperClass { get; set; } = "nav-child";
-
-	/// <summary>
-	/// Create object
-	/// </summary>
-	/// <param name="urlHelperFactory">IUrlHelperFactory object</param>
-	/// <param name="htmlEncoder">HtmlEncoder</param>
-	public NavMenuTagHelper(IUrlHelperFactory urlHelperFactory, HtmlEncoder htmlEncoder) : base(urlHelperFactory, htmlEncoder) { }
 
 	/// <summary>
 	/// Process TagHelper

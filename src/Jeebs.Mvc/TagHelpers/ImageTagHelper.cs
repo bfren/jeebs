@@ -12,8 +12,18 @@ namespace Jeebs.Mvc.TagHelpers;
 /// <summary>
 /// Image TagHelper
 /// </summary>
+/// <remarks>
+/// Setup dependencies
+/// </remarks>
+/// <param name="fileVersionProvider">IFileVersionProvider object</param>
+/// <param name="urlHelperFactory">IUrlHelperFactory object</param>
+/// <param name="htmlEncoder">HtmlEncoder</param>
 [HtmlTargetElement("image", TagStructure = TagStructure.WithoutEndTag)]
-public sealed class ImageTagHelper : UrlResolutionTagHelper
+public sealed class ImageTagHelper(
+	IFileVersionProvider fileVersionProvider,
+	IUrlHelperFactory urlHelperFactory,
+	HtmlEncoder htmlEncoder
+) : UrlResolutionTagHelper(urlHelperFactory, htmlEncoder)
 {
 	/// <summary>
 	/// Image src - if this starts '/' then it is assumed it is a path within the default wwwroot/images directory
@@ -38,20 +48,7 @@ public sealed class ImageTagHelper : UrlResolutionTagHelper
 	/// <summary>
 	/// FileVersionProvider object
 	/// </summary>
-	private readonly IFileVersionProvider fileVersionProvider;
-
-	/// <summary>
-	/// Setup dependencies
-	/// </summary>
-	/// <param name="fileVersionProvider">IFileVersionProvider object</param>
-	/// <param name="urlHelperFactory">IUrlHelperFactory object</param>
-	/// <param name="htmlEncoder">HtmlEncoder</param>
-	public ImageTagHelper(
-		IFileVersionProvider fileVersionProvider,
-		IUrlHelperFactory urlHelperFactory,
-		HtmlEncoder htmlEncoder)
-		: base(urlHelperFactory, htmlEncoder) =>
-		this.fileVersionProvider = fileVersionProvider;
+	private readonly IFileVersionProvider fileVersionProvider = fileVersionProvider;
 
 	/// <summary>
 	/// Process the tag helper
