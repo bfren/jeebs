@@ -55,7 +55,7 @@ public record class MenuItem
 	/// <summary>
 	/// Required user roles - if set, the item will only be shown if the user HAS one of the specified roles
 	/// </summary>
-	public string[] Roles { get; init; } = Array.Empty<string>();
+	public string[] Roles { get; init; } = [];
 
 	/// <summary>
 	/// Add a child menu item, using action as text

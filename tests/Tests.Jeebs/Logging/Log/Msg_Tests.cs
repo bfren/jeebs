@@ -19,7 +19,7 @@ public class Msg_Tests
 		log.Msg(reason);
 
 		// Assert
-		log.Received().Wrn(reason.ToString(), Array.Empty<object>());
+		log.Received().Wrn(reason.ToString(), []);
 	}
 
 	[Fact]

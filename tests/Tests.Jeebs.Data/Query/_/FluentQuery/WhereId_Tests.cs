@@ -15,7 +15,7 @@ public class WhereId_Tests : FluentQuery_Tests
 
 		// Act
 		var r0 = query.WhereId();
-		var r1 = query.WhereId(Array.Empty<TestId>());
+		var r1 = query.WhereId([]);
 
 		// Assert
 		var f0 = Assert.IsType<FluentQuery<TestEntity, TestId>>(r0);
