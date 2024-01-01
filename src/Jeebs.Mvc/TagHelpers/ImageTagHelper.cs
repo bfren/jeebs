@@ -1,7 +1,6 @@
-﻿// Jeebs Rapid Application Development
+// Jeebs Rapid Application Development
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
-using System;
 using System.Text.Encodings.Web;
 using Microsoft.AspNetCore.Mvc.Razor.TagHelpers;
 using Microsoft.AspNetCore.Mvc.Routing;
@@ -72,7 +71,7 @@ public sealed class ImageTagHelper : UrlResolutionTagHelper
 		var url = Src;
 
 		// Add file version to the URL if it is a local URL
-		if (!SrcDirect && url.StartsWith("/", StringComparison.InvariantCulture) && TryResolveUrl($"~/img{Src}", out url))
+		if (!SrcDirect && url.StartsWith('/') && TryResolveUrl($"~/img{Src}", out url))
 		{
 			// Add file version to the image
 			url = fileVersionProvider.AddFileVersionToPath(ViewContext.HttpContext.Request.PathBase, url);
