@@ -15,7 +15,7 @@ public class ReplaceAll_Tests
 		// Arrange
 
 		// Act
-		var result = input.ReplaceAll(Array.Empty<string>(), string.Empty);
+		var result = input.ReplaceAll([], string.Empty);
 
 		// Assert
 		Assert.Equal(input, result);

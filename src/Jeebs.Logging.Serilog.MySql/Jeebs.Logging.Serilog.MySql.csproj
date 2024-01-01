@@ -1,8 +1,8 @@
 <Project Sdk="Microsoft.NET.Sdk">
-	<ItemGroup>
-		<PackageReference Include="MySqlConnector.Logging.Serilog" />
-	</ItemGroup>
-	<ItemGroup>
-		<ProjectReference Include="..\Jeebs.Logging.Serilog\Jeebs.Logging.Serilog.csproj" />
-	</ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="MySqlConnector.Logging.Serilog" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Jeebs.Logging.Serilog\Jeebs.Logging.Serilog.csproj" />
+  </ItemGroup>
 </Project>

@@ -48,19 +48,15 @@ public class AddWhereTaxonomies_Tests : QueryPartsBuilder_Tests<PostsPartsBuilde
 
 		// Assert
 		var some = result.AssertSome();
-		Assert.Collection(some.WhereCustom,
-			x =>
-			{
-				Assert.Equal("(" +
-					$"SELECT COUNT(1) FROM `{tr}` " +
-					$"INNER JOIN `{tt}` ON `{tr}`.`term_taxonomy_id` = `{tt}`.`term_taxonomy_id` " +
-					$"WHERE `{tt}`.`taxonomy` = @taxonomy0 " +
-					$"AND `{tr}`.`object_id` = `{p}`.`ID` " +
-					$"AND `{tt}`.`term_id` IN (@taxonomy0_0)" +
-					") = 1",
-					x.clause
-				);
-			}
+		var (clause, _) = Assert.Single(some.WhereCustom);
+		Assert.Equal("(" +
+			$"SELECT COUNT(1) FROM `{tr}` " +
+			$"INNER JOIN `{tt}` ON `{tr}`.`term_taxonomy_id` = `{tt}`.`term_taxonomy_id` " +
+			$"WHERE `{tt}`.`taxonomy` = @taxonomy0 " +
+			$"AND `{tr}`.`object_id` = `{p}`.`ID` " +
+			$"AND `{tt}`.`term_id` IN (@taxonomy0_0)" +
+			") = 1",
+			clause
 		);
 	}
 
@@ -78,21 +74,17 @@ public class AddWhereTaxonomies_Tests : QueryPartsBuilder_Tests<PostsPartsBuilde
 
 		// Assert
 		var some = result.AssertSome();
-		Assert.Collection(some.WhereCustom,
-			x =>
+		var (_, parameters) = Assert.Single(some.WhereCustom);
+		Assert.Collection(parameters,
+			y =>
 			{
-				Assert.Collection(x.parameters,
-					y =>
-					{
-						Assert.Equal("@taxonomy0", y.Key);
-						Assert.Equal(taxonomy, y.Value);
-					},
-					y =>
-					{
-						Assert.Equal("@taxonomy0_0", y.Key);
-						Assert.Equal(id.Value, y.Value);
-					}
-				);
+				Assert.Equal("@taxonomy0", y.Key);
+				Assert.Equal(taxonomy, y.Value);
+			},
+			y =>
+			{
+				Assert.Equal("@taxonomy0_0", y.Key);
+				Assert.Equal(id.Value, y.Value);
 			}
 		);
 	}
@@ -118,25 +110,21 @@ public class AddWhereTaxonomies_Tests : QueryPartsBuilder_Tests<PostsPartsBuilde
 
 		// Assert
 		var some = result.AssertSome();
-		Assert.Collection(some.WhereCustom,
-			x =>
-			{
-				Assert.Equal("(" +
-					$"SELECT COUNT(1) FROM `{tr}` " +
-					$"INNER JOIN `{tt}` ON `{tr}`.`term_taxonomy_id` = `{tt}`.`term_taxonomy_id` " +
-					$"WHERE `{tt}`.`taxonomy` = @taxonomy0 " +
-					$"AND `{tr}`.`object_id` = `{p}`.`ID` " +
-					$"AND `{tt}`.`term_id` IN (@taxonomy0_0)" +
-					") = 1 AND (" +
-					$"SELECT COUNT(1) FROM `{tr}` " +
-					$"INNER JOIN `{tt}` ON `{tr}`.`term_taxonomy_id` = `{tt}`.`term_taxonomy_id` " +
-					$"WHERE `{tt}`.`taxonomy` = @taxonomy1 " +
-					$"AND `{tr}`.`object_id` = `{p}`.`ID` " +
-					$"AND `{tt}`.`term_id` IN (@taxonomy1_0, @taxonomy1_1)" +
-					") = 2",
-					x.clause
-				);
-			}
+		var (clause, _) = Assert.Single(some.WhereCustom);
+		Assert.Equal("(" +
+			$"SELECT COUNT(1) FROM `{tr}` " +
+			$"INNER JOIN `{tt}` ON `{tr}`.`term_taxonomy_id` = `{tt}`.`term_taxonomy_id` " +
+			$"WHERE `{tt}`.`taxonomy` = @taxonomy0 " +
+			$"AND `{tr}`.`object_id` = `{p}`.`ID` " +
+			$"AND `{tt}`.`term_id` IN (@taxonomy0_0)" +
+			") = 1 AND (" +
+			$"SELECT COUNT(1) FROM `{tr}` " +
+			$"INNER JOIN `{tt}` ON `{tr}`.`term_taxonomy_id` = `{tt}`.`term_taxonomy_id` " +
+			$"WHERE `{tt}`.`taxonomy` = @taxonomy1 " +
+			$"AND `{tr}`.`object_id` = `{p}`.`ID` " +
+			$"AND `{tt}`.`term_id` IN (@taxonomy1_0, @taxonomy1_1)" +
+			") = 2",
+			clause
 		);
 	}
 
@@ -157,36 +145,32 @@ public class AddWhereTaxonomies_Tests : QueryPartsBuilder_Tests<PostsPartsBuilde
 
 		// Assert
 		var some = result.AssertSome();
-		Assert.Collection(some.WhereCustom,
-			x =>
+		var (_, parameters) = Assert.Single(some.WhereCustom);
+		Assert.Collection(parameters,
+			y =>
 			{
-				Assert.Collection(x.parameters,
-					y =>
-					{
-						Assert.Equal("@taxonomy0", y.Key);
-						Assert.Equal(t0, y.Value);
-					},
-					y =>
-					{
-						Assert.Equal("@taxonomy0_0", y.Key);
-						Assert.Equal(id0.Value, y.Value);
-					},
-					y =>
-					{
-						Assert.Equal("@taxonomy0_1", y.Key);
-						Assert.Equal(id1.Value, y.Value);
-					},
-					y =>
-					{
-						Assert.Equal("@taxonomy1", y.Key);
-						Assert.Equal(t1, y.Value);
-					},
-					y =>
-					{
-						Assert.Equal("@taxonomy1_0", y.Key);
-						Assert.Equal(id2.Value, y.Value);
-					}
-				);
+				Assert.Equal("@taxonomy0", y.Key);
+				Assert.Equal(t0, y.Value);
+			},
+			y =>
+			{
+				Assert.Equal("@taxonomy0_0", y.Key);
+				Assert.Equal(id0.Value, y.Value);
+			},
+			y =>
+			{
+				Assert.Equal("@taxonomy0_1", y.Key);
+				Assert.Equal(id1.Value, y.Value);
+			},
+			y =>
+			{
+				Assert.Equal("@taxonomy1", y.Key);
+				Assert.Equal(t1, y.Value);
+			},
+			y =>
+			{
+				Assert.Equal("@taxonomy1_0", y.Key);
+				Assert.Equal(id2.Value, y.Value);
 			}
 		);
 	}

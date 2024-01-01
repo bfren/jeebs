@@ -3,6 +3,7 @@
 
 using System;
 using System.Globalization;
+using System.Text;
 
 namespace Jeebs.Config.Services;
 
@@ -14,7 +15,7 @@ public class UnknownServiceException : Exception
 	/// <summary>
 	/// Exception message format
 	/// </summary>
-	public static readonly string Format = "Unknown service '{0}' in {1} collection.";
+	public static readonly CompositeFormat Format = CompositeFormat.Parse("Unknown service '{0}' in {1} collection.");
 
 	/// <summary>
 	/// Create exception

@@ -1,4 +1,4 @@
-﻿// Jeebs Unit Tests
+// Jeebs Unit Tests
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using Jeebs.Data.Map;
@@ -35,9 +35,8 @@ public class AddTable_Tests
 		builder.AddTable<TestTable>();
 
 		// Assert
-		Assert.Collection(builder.Tables,
-			x => Assert.IsType<TestTable>(x)
-		);
+		var single = Assert.Single(builder.Tables);
+		Assert.IsType<TestTable>(single);
 	}
 
 	public sealed record class TestTable() : Table(Rnd.Str);

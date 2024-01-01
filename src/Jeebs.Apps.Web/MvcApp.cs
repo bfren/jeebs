@@ -26,8 +26,14 @@ namespace Jeebs.Apps.Web;
 /// <summary>
 /// MVC Web Application - see <see cref="WebApp"/>
 /// </summary>
-public class MvcApp : WebApp
+/// <remarks>
+/// Create MVC application
+/// </remarks>
+/// <param name="useHsts">HSTS should only be disabled if the application is in development mode, or behind a reverse proxy</param>
+public class MvcApp(bool useHsts) : WebApp(useHsts)
 {
+	private static readonly string[] VaryByQueryKeys = ["*"];
+
 	#region Run
 
 	/// <inheritdoc cref="WebAppBuilder.Run{T}(string[], Action{HostBuilderContext, IServiceCollection})"/>
@@ -96,12 +102,6 @@ public class MvcApp : WebApp
 	/// Create MVC application with HSTS enabled
 	/// </summary>
 	public MvcApp() : this(true) { }
-
-	/// <summary>
-	/// Create MVC application
-	/// </summary>
-	/// <param name="useHsts">HSTS should only be disabled if the application is in development mode, or behind a reverse proxy</param>
-	public MvcApp(bool useHsts) : base(useHsts) { }
 
 	#region ConfigureServices
 
@@ -206,7 +206,7 @@ public class MvcApp : WebApp
 	protected virtual void ConfigureServicesMvcOptions(HostBuilderContext ctx, MvcOptions opt)
 	{
 		opt.CacheProfiles.Add(CacheProfiles.None, new() { NoStore = true });
-		opt.CacheProfiles.Add(CacheProfiles.Default, new() { Duration = 600, VaryByQueryKeys = new[] { "*" } });
+		opt.CacheProfiles.Add(CacheProfiles.Default, new() { Duration = 600, VaryByQueryKeys = VaryByQueryKeys });
 	}
 
 	/// <summary>

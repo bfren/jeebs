@@ -1,6 +1,7 @@
-﻿// Jeebs Unit Tests
+// Jeebs Unit Tests
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
+using System.Globalization;
 using Jeebs.Config.Services.Console;
 using Jeebs.Config.Services.Seq;
 
@@ -37,7 +38,7 @@ public partial class GetServiceConfig_Tests
 
 		// Assert
 		var ex = Assert.Throws<InvalidServiceConfigurationException>(action);
-		Assert.Equal(string.Format(InvalidServiceConfigurationException.Format, name, typeof(SeqConfig)), ex.Message);
+		Assert.Equal(string.Format(CultureInfo.InvariantCulture, InvalidServiceConfigurationException.Format, name, typeof(SeqConfig)), ex.Message);
 	}
 
 	[Fact]

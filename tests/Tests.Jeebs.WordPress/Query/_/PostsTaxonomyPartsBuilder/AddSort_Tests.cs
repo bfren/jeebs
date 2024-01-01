@@ -31,15 +31,11 @@ public class AddSort_Tests : AddSort_Tests<PostsTaxonomyPartsBuilder, WpTermId>
 		// Assert
 		var some = result.AssertSome();
 		Assert.NotSame(v.Parts, some);
-		Assert.Collection(some.Sort,
-			x =>
-			{
-				Assert.Equal(builder.TTest.Terms.GetName(), x.column.TblName);
-				Assert.Equal(builder.TTest.Terms.Title, x.column.ColName);
-				Assert.Equal(nameof(TermsTable.Title), x.column.ColAlias);
-				Assert.Equal(SortOrder.Ascending, x.order);
-			}
-		);
+		var (column, order) = Assert.Single(some.Sort);
+		Assert.Equal(builder.TTest.Terms.GetName(), column.TblName);
+		Assert.Equal(builder.TTest.Terms.Title, column.ColName);
+		Assert.Equal(nameof(TermsTable.Title), column.ColAlias);
+		Assert.Equal(SortOrder.Ascending, order);
 	}
 
 	[Fact]

@@ -15,9 +15,8 @@ public class ArgsWithType_Tests
 		var result = msg.ArgsWithType;
 
 		// Assert
-		Assert.Collection(result,
-			x => Assert.Equal(msg.GetTypeName(), x)
-		);
+		var single = Assert.Single(result);
+		Assert.Equal(msg.GetTypeName(), single);
 	}
 
 	[Fact]

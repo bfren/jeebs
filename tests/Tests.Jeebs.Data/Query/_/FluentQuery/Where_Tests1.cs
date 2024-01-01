@@ -43,23 +43,19 @@ public class Where_Tests1 : FluentQuery_Tests
 
 		// Assert
 		var f0 = Assert.IsType<FluentQuery<TestEntity, TestId>>(r0);
-		Assert.Collection(f0.Parts.Where, x =>
-		{
-			Assert.Equal(v.Table.GetName(), x.column.TblName);
-			Assert.Equal(v.Table.Foo, x.column.ColName);
-			Assert.Equal(nameof(TestEntity.Foo), x.column.ColAlias);
-			Assert.Equal(compare, x.compare);
-			Assert.IsType<DBNull>(x.value);
-		});
+		var s0 = Assert.Single(f0.Parts.Where);
+		Assert.Equal(v.Table.GetName(), s0.column.TblName);
+		Assert.Equal(v.Table.Foo, s0.column.ColName);
+		Assert.Equal(nameof(TestEntity.Foo), s0.column.ColAlias);
+		Assert.Equal(compare, s0.compare);
+		Assert.IsType<DBNull>(s0.value);
 		var f1 = Assert.IsType<FluentQuery<TestEntity, TestId>>(r1);
-		Assert.Collection(f1.Parts.Where, x =>
-		{
-			Assert.Equal(v.Table.GetName(), x.column.TblName);
-			Assert.Equal(v.Table.Foo, x.column.ColName);
-			Assert.Equal(nameof(TestEntity.Foo), x.column.ColAlias);
-			Assert.Equal(compare, x.compare);
-			Assert.IsType<DBNull>(x.value);
-		});
+		var s1 = Assert.Single(f1.Parts.Where);
+		Assert.Equal(v.Table.GetName(), s1.column.TblName);
+		Assert.Equal(v.Table.Foo, s1.column.ColName);
+		Assert.Equal(nameof(TestEntity.Foo), s1.column.ColAlias);
+		Assert.Equal(compare, s1.compare);
+		Assert.IsType<DBNull>(s1.value);
 	}
 
 	[Theory]
@@ -84,23 +80,19 @@ public class Where_Tests1 : FluentQuery_Tests
 
 		// Assert
 		var f0 = Assert.IsType<FluentQuery<TestEntity, TestId>>(r0);
-		Assert.Collection(f0.Parts.Where, x =>
-		{
-			Assert.Equal(v.Table.GetName(), x.column.TblName);
-			Assert.Equal(v.Table.Foo, x.column.ColName);
-			Assert.Equal(nameof(TestEntity.Foo), x.column.ColAlias);
-			Assert.Equal(compare, x.compare);
-			Assert.Equal(value, x.value);
-		});
+		var s0 = Assert.Single(f0.Parts.Where);
+		Assert.Equal(v.Table.GetName(), s0.column.TblName);
+		Assert.Equal(v.Table.Foo, s0.column.ColName);
+		Assert.Equal(nameof(TestEntity.Foo), s0.column.ColAlias);
+		Assert.Equal(compare, s0.compare);
+		Assert.Equal(value, s0.value);
 		var f1 = Assert.IsType<FluentQuery<TestEntity, TestId>>(r1);
-		Assert.Collection(f1.Parts.Where, x =>
-		{
-			Assert.Equal(v.Table.GetName(), x.column.TblName);
-			Assert.Equal(v.Table.Foo, x.column.ColName);
-			Assert.Equal(nameof(TestEntity.Foo), x.column.ColAlias);
-			Assert.Equal(compare, x.compare);
-			Assert.Equal(value, x.value);
-		});
+		var s1 = Assert.Single(f1.Parts.Where);
+		Assert.Equal(v.Table.GetName(), s1.column.TblName);
+		Assert.Equal(v.Table.Foo, s1.column.ColName);
+		Assert.Equal(nameof(TestEntity.Foo), s1.column.ColAlias);
+		Assert.Equal(compare, s1.compare);
+		Assert.Equal(value, s1.value);
 	}
 
 	[Fact]
@@ -114,9 +106,8 @@ public class Where_Tests1 : FluentQuery_Tests
 
 		// Assert
 		var fluent = Assert.IsType<FluentQuery<TestEntity, TestId>>(result);
-		Assert.Collection(fluent.Errors,
-			x => x.AssertType<NoMatchingItemsMsg>()
-		);
+		var single = Assert.Single(fluent.Errors);
+		single.AssertType<NoMatchingItemsMsg>();
 		Assert.Same(query, fluent);
 	}
 }

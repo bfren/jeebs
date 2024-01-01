@@ -35,16 +35,12 @@ public class Where_Tests
 		var result = (QueryBuilderWithFrom)builder.Where<TestTable>(t => t.Foo, Compare.Like, value);
 
 		// Assert
-		Assert.Collection(result.Parts.Where,
-			x =>
-			{
-				Assert.Equal(nameof(TestTable), x.column.TblName.Name);
-				Assert.Equal(TestTable.Prefix + nameof(TestTable0.Foo), x.column.ColName);
-				Assert.Equal(nameof(TestTable.Foo), x.column.ColAlias);
-				Assert.Equal(Compare.Like, x.compare);
-				Assert.Equal(value, x.value);
-			}
-		);
+		var single = Assert.Single(result.Parts.Where);
+		Assert.Equal(nameof(TestTable), single.column.TblName.Name);
+		Assert.Equal(TestTable.Prefix + nameof(TestTable0.Foo), single.column.ColName);
+		Assert.Equal(nameof(TestTable.Foo), single.column.ColAlias);
+		Assert.Equal(Compare.Like, single.compare);
+		Assert.Equal(value, single.value);
 	}
 
 	public sealed record class TestTable() : Table(nameof(TestTable))

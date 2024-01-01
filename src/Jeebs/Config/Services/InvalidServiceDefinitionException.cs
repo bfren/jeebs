@@ -3,6 +3,7 @@
 
 using System;
 using System.Globalization;
+using System.Text;
 
 namespace Jeebs.Config.Services;
 
@@ -14,7 +15,7 @@ public class InvalidServiceDefinitionException : Exception
 	/// <summary>
 	/// Exception message format
 	/// </summary>
-	public static readonly string Format = "Invalid service definition '{0}': should be [service_type].[service_name].";
+	public static readonly CompositeFormat Format = CompositeFormat.Parse("Invalid service definition '{0}': should be [service_type].[service_name].");
 
 	/// <summary>
 	/// Create exception

@@ -31,15 +31,10 @@ public abstract class AddInnerJoin_Tests<TBuilder, TId> : QueryPartsBuilder_Test
 		// Assert
 		var some = result.AssertSome();
 		Assert.NotSame(v.Parts, some);
-		Assert.Collection(some.InnerJoin,
-			x =>
-			{
-				Assert.Equal(t0Name, x.from.TblName);
-				Assert.Equal(t0Column, x.from.ColName);
-
-				Assert.Equal(t1Name, x.to.TblName);
-				Assert.Equal(t1Column, x.to.ColName);
-			}
-		);
+		var (from, to) = Assert.Single(some.InnerJoin);
+		Assert.Equal(t0Name, from.TblName);
+		Assert.Equal(t0Column, from.ColName);
+		Assert.Equal(t1Name, to.TblName);
+		Assert.Equal(t1Column, to.ColName);
 	}
 }

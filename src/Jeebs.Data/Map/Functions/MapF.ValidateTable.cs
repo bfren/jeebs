@@ -68,6 +68,6 @@ public static partial class MapF
 		}
 
 		// Return valid with no errors
-		return (true, new());
+		return (true, []);
 	}
 }

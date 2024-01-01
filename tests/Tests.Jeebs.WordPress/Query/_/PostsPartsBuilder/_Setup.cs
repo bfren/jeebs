@@ -24,15 +24,11 @@ public static class Setup
 	{
 		var some = result.AssertSome();
 		Assert.NotSame(parts, some);
-		Assert.Collection(some.Where,
-			x =>
-			{
-				Assert.Equal(Post.GetName(), x.column.TblName);
-				Assert.Equal(column, x.column.ColName);
-				Assert.Equal(cmp, x.compare);
-				Assert.Equal(value, x.value);
-			}
-		);
+		var single = Assert.Single(some.Where);
+		Assert.Equal(Post.GetName(), single.column.TblName);
+		Assert.Equal(column, single.column.ColName);
+		Assert.Equal(cmp, single.compare);
+		Assert.Equal(value, single.value);
 	}
 
 	public static IEnumerable<object[]> GetCompareValues()

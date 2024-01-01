@@ -40,9 +40,8 @@ public class Where_Tests0 : FluentQuery_Tests
 		var fluent = Assert.IsType<FluentQuery<TestEntity, TestId>>(result);
 		Assert.Empty(fluent.Parts.Where);
 		Assert.Same(query, fluent);
-		Assert.Collection(fluent.Errors,
-			x => x.AssertType<TryingToAddEmptyClauseToWhereMsg>()
-		);
+		var single = Assert.Single(fluent.Errors);
+		single.AssertType<TryingToAddEmptyClauseToWhereMsg>();
 	}
 
 	[Theory]
@@ -64,9 +63,8 @@ public class Where_Tests0 : FluentQuery_Tests
 		var fluent = Assert.IsType<FluentQuery<TestEntity, TestId>>(result);
 		Assert.Empty(fluent.Parts.Where);
 		Assert.Same(query, fluent);
-		Assert.Collection(fluent.Errors,
-			x => x.AssertType<UnableToAddParametersToWhereMsg>()
-		);
+		var single = Assert.Single(fluent.Errors);
+		single.AssertType<UnableToAddParametersToWhereMsg>();
 	}
 
 	[Fact]
@@ -85,27 +83,23 @@ public class Where_Tests0 : FluentQuery_Tests
 
 		// Assert
 		var fluent = Assert.IsType<FluentQuery<TestEntity, TestId>>(result);
-		Assert.Collection(fluent.Parts.WhereCustom,
-			x =>
+		var single = Assert.Single(fluent.Parts.WhereCustom);
+		Assert.Equal(clause, single.clause);
+		Assert.Collection(single.parameters,
+			y =>
 			{
-				Assert.Equal(clause, x.clause);
-				Assert.Collection(x.parameters,
-					y =>
-					{
-						Assert.Equal(nameof(param.A), y.Key);
-						Assert.Equal(v0, y.Value);
-					},
-					y =>
-					{
-						Assert.Equal(nameof(param.B), y.Key);
-						Assert.Equal(v1, y.Value);
-					},
-					y =>
-					{
-						Assert.Equal(nameof(param.C), y.Key);
-						Assert.Equal(v2, y.Value);
-					}
-				);
+				Assert.Equal(nameof(param.A), y.Key);
+				Assert.Equal(v0, y.Value);
+			},
+			y =>
+			{
+				Assert.Equal(nameof(param.B), y.Key);
+				Assert.Equal(v1, y.Value);
+			},
+			y =>
+			{
+				Assert.Equal(nameof(param.C), y.Key);
+				Assert.Equal(v2, y.Value);
 			}
 		);
 	}

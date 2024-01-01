@@ -34,7 +34,7 @@ public static class TempDataDictionaryExtensions
 				JsonF.Deserialise<List<Alert>>(alerts).Unwrap(() => new List<Alert>()),
 
 			_ =>
-				new List<Alert>()
+				[]
 		};
 
 	/// <summary>

@@ -27,14 +27,10 @@ public abstract class AddWhere_Tests<TBuilder, TId> : QueryPartsBuilder_Tests<TB
 
 		// Assert
 		var some = result.AssertSome();
-		Assert.Collection(some.Where,
-			x =>
-			{
-				Assert.Equal(bar, x.column.ColName);
-				Assert.Equal(cmp, x.compare);
-				Assert.Equal(val, x.value);
-			}
-		);
+		var (column, compare, value) = Assert.Single(some.Where);
+		Assert.Equal(bar, column.ColName);
+		Assert.Equal(cmp, compare);
+		Assert.Equal(val, value);
 	}
 
 	public abstract void Test01_Column_Does_Not_Exist_Returns_None_With_PropertyDoesNotExistOnTypeMsg();

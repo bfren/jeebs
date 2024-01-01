@@ -15,6 +15,10 @@ public sealed record class DateTimeInt
 {
 	private const string FormatString = "000000000000";
 
+	private static readonly int[] ThirtyOneDayMonths = [1, 3, 5, 7, 8, 10, 12];
+
+	private static readonly int[] ThirtyDayMonths = [4, 6, 9, 11];
+
 	/// <summary>
 	/// Year
 	/// </summary>
@@ -147,11 +151,11 @@ public sealed record class DateTimeInt
 			return (false, nameof(Day));
 		}
 
-		if (new[] { 1, 3, 5, 7, 8, 10, 12 }.Contains(Month) && Day > 31)
+		if (ThirtyOneDayMonths.Contains(Month) && Day > 31)
 		{
 			return (false, nameof(Day));
 		}
-		else if (new[] { 4, 6, 9, 11 }.Contains(Month) && Day > 30)
+		else if (ThirtyDayMonths.Contains(Month) && Day > 30)
 		{
 			return (false, nameof(Day));
 		}

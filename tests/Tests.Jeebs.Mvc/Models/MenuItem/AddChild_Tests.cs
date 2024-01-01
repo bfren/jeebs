@@ -1,4 +1,4 @@
-﻿// Jeebs Unit Tests
+// Jeebs Unit Tests
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 namespace Jeebs.Mvc.Models.MenuItem_Tests;
@@ -18,12 +18,8 @@ public class AddChild_Tests
 		menu.AddChild(action, input);
 
 		// Assert
-		Assert.Collection(menu.Children,
-			x =>
-			{
-				Assert.Equal(action, x.Text);
-			}
-		);
+		var single = Assert.Single(menu.Children);
+		Assert.Equal(action, single.Text);
 	}
 
 	[Fact]
@@ -46,15 +42,11 @@ public class AddChild_Tests
 		menu.AddChild(action, text, description);
 
 		// Assert
-		Assert.Collection(menu.Children,
-			x =>
-			{
-				Assert.Equal(controller, x.Controller);
-				Assert.Equal(action, x.Action);
-				Assert.Equal(text, x.Text);
-				Assert.Equal(description, x.Description);
-				Assert.Same(routeValues, x.RouteValues);
-			}
-		);
+		var single = Assert.Single(menu.Children);
+		Assert.Equal(controller, single.Controller);
+		Assert.Equal(action, single.Action);
+		Assert.Equal(text, single.Text);
+		Assert.Equal(description, single.Description);
+		Assert.Same(routeValues, single.RouteValues);
 	}
 }

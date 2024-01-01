@@ -1,6 +1,8 @@
 ﻿// Jeebs Unit Tests
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
+using System.Globalization;
+
 namespace Jeebs.Config.Db.DbConfig_Tests;
 
 public class GetConnection_Tests
@@ -46,7 +48,7 @@ public class GetConnection_Tests
 
 		// Assert
 		var ex = Assert.Throws<NamedDbConnectionNotFoundException>(action);
-		Assert.Equal(string.Format(NamedDbConnectionNotFoundException.Format, name), ex.Message);
+		Assert.Equal(string.Format(CultureInfo.InvariantCulture, NamedDbConnectionNotFoundException.Format, name), ex.Message);
 	}
 
 	[Fact]
