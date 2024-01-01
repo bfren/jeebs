@@ -1,8 +1,8 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
-	<PropertyGroup>
-		<RootNamespace>Jeebs.Calendar</RootNamespace>
-	</PropertyGroup>
-	<ItemGroup>
-		<ProjectReference Include="..\..\src\Jeebs.Calendar\Jeebs.Calendar.csproj" />
-	</ItemGroup>
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <RootNamespace>Jeebs.Calendar</RootNamespace>
+  </PropertyGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\Jeebs.Calendar\Jeebs.Calendar.csproj" />
+  </ItemGroup>
 </Project>

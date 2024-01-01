@@ -1,8 +1,8 @@
 <Project Sdk="Microsoft.NET.Sdk">
-	<PropertyGroup>
-		<RootNamespace>Jeebs.Mvc</RootNamespace>
-	</PropertyGroup>
-	<ItemGroup>
-		<ProjectReference Include="..\..\src\Jeebs.Mvc\Jeebs.Mvc.csproj" />
-	</ItemGroup>
+  <PropertyGroup>
+    <RootNamespace>Jeebs.Mvc</RootNamespace>
+  </PropertyGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\Jeebs.Mvc\Jeebs.Mvc.csproj" />
+  </ItemGroup>
 </Project>

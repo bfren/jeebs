@@ -1,8 +1,8 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
-	<PropertyGroup>
-		<RootNamespace>Jeebs.Auth.Jwt</RootNamespace>
-	</PropertyGroup>
-	<ItemGroup>
-		<ProjectReference Include="..\..\src\Jeebs.Auth.Jwt\Jeebs.Auth.Jwt.csproj" />
-	</ItemGroup>
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <RootNamespace>Jeebs.Auth.Jwt</RootNamespace>
+  </PropertyGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\Jeebs.Auth.Jwt\Jeebs.Auth.Jwt.csproj" />
+  </ItemGroup>
 </Project>

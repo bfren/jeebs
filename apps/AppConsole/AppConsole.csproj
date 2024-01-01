@@ -1,34 +1,34 @@
 <Project Sdk="Microsoft.NET.Sdk">
-	<PropertyGroup>
-		<OutputType>Exe</OutputType>
-	</PropertyGroup>
-	<ItemGroup>
-		<None Remove="appsettings.json" />
-		<None Remove="jeebsconfig-secrets.json" />
-		<None Remove="jeebsconfig.json" />
-	</ItemGroup>
-	<ItemGroup>
-		<PackageReference Include="Rnd" />
-	</ItemGroup>
-	<ItemGroup>
-		<Content Include="appsettings.json">
-			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
-		</Content>
-		<Content Include="jeebsconfig-secrets.json">
-			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
-		</Content>
-		<Content Include="jeebsconfig.json">
-			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
-		</Content>
-	</ItemGroup>
-	<ItemGroup>
-		<ProjectReference Include="..\..\src\Jeebs.Apps\Jeebs.Apps.csproj" />
-		<ProjectReference Include="..\..\src\Jeebs.Services.Drivers.Webhook.Seq\Jeebs.Services.Drivers.Webhook.Seq.csproj" />
-		<ProjectReference Include="..\..\src\Jeebs.Services.Drivers.Webhook.Slack\Jeebs.Services.Drivers.Webhook.Slack.csproj" />
-	</ItemGroup>
-	<ProjectExtensions>
-		<VisualStudio>
-			<UserProperties jeebsconfig_1json__JsonSchema="https://schemas.bfren.dev/jeebs/application/config.json" jeebsconfig-secrets_1json__JsonSchema="https://schemas.bfren.dev/jeebs/application/config.json" />
-		</VisualStudio>
-	</ProjectExtensions>
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+  </PropertyGroup>
+  <ItemGroup>
+    <None Remove="appsettings.json" />
+    <None Remove="jeebsconfig-secrets.json" />
+    <None Remove="jeebsconfig.json" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Rnd" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="appsettings.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="jeebsconfig-secrets.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="jeebsconfig.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\Jeebs.Apps\Jeebs.Apps.csproj" />
+    <ProjectReference Include="..\..\src\Jeebs.Services.Drivers.Webhook.Seq\Jeebs.Services.Drivers.Webhook.Seq.csproj" />
+    <ProjectReference Include="..\..\src\Jeebs.Services.Drivers.Webhook.Slack\Jeebs.Services.Drivers.Webhook.Slack.csproj" />
+  </ItemGroup>
+  <ProjectExtensions>
+    <VisualStudio>
+      <UserProperties jeebsconfig_1json__JsonSchema="https://schemas.bfren.dev/jeebs/application/config.json" jeebsconfig-secrets_1json__JsonSchema="https://schemas.bfren.dev/jeebs/application/config.json" />
+    </VisualStudio>
+  </ProjectExtensions>
 </Project>

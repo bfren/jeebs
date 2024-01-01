@@ -1,18 +1,18 @@
 <Project Sdk="Microsoft.NET.Sdk">
-	<PropertyGroup>
-		<ImplicitUsings>enable</ImplicitUsings>
-	</PropertyGroup>
-	<ItemGroup>
-		<Using Include="MaybeF.Testing" />
-		<Using Include="NSubstitute" />
-		<Using Include="Xunit" />
-	</ItemGroup>
-	<ItemGroup>
-		<PackageReference Include="MaybeF.Testing" />
-		<PackageReference Include="NSubstitute" />
-		<PackageReference Include="xunit.assert" />
-	</ItemGroup>
-	<ItemGroup>
-		<ProjectReference Include="..\Jeebs.Data\Jeebs.Data.csproj" />
-	</ItemGroup>
+  <PropertyGroup>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+  <ItemGroup>
+    <Using Include="MaybeF.Testing" />
+    <Using Include="NSubstitute" />
+    <Using Include="Xunit" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="MaybeF.Testing" />
+    <PackageReference Include="NSubstitute" />
+    <PackageReference Include="xunit.assert" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Jeebs.Data\Jeebs.Data.csproj" />
+  </ItemGroup>
 </Project>
