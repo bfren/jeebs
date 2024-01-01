@@ -2,6 +2,7 @@
   <ItemGroup>
     <PackageReference Include="Microsoft.EntityFrameworkCore" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Relational" />
+    <PackageReference Include="MySql.Data" />
     <PackageReference Include="MySql.EntityFrameworkCore" />
     <PackageReference Include="StrongId.Mvc" />
   </ItemGroup>
