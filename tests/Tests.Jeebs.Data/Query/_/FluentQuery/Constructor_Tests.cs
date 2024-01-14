@@ -25,9 +25,8 @@ public class Constructor_Tests
 		var result = new FluentQuery<TestEntity, TestId>(db, mapper, log);
 
 		// Assert
-		Assert.Collection(result.Errors,
-			x => Assert.Same(reason, x)
-		);
+		var single = Assert.Single(result.Errors);
+		Assert.Same(reason, single);
 	}
 
 	[Fact]

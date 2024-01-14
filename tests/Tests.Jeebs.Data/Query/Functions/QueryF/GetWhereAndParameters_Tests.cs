@@ -29,9 +29,8 @@ public class GetWhereAndParameters_Tests
 		var (where, param) = QueryF.GetWhereAndParameters(client, predicates, false);
 
 		// Assert
-		Assert.Collection(where,
-			x => Assert.Equal($"--{name}-- cmp ~P0", x)
-		);
+		var single = Assert.Single(where);
+		Assert.Equal($"--{name}-- cmp ~P0", single);
 	}
 
 	[Fact]
@@ -55,9 +54,9 @@ public class GetWhereAndParameters_Tests
 		var (where, param) = QueryF.GetWhereAndParameters(client, predicates, true);
 
 		// Assert
-		Assert.Collection(where,
-			x => Assert.Equal($"--{tableName}|{columnName}-- cmp ~P0", x)
-		);
+		var x = // Assert
+Assert.Single(where);
+		Assert.Equal($"--{tableName}|{columnName}-- cmp ~P0", x);
 	}
 
 	[Theory]
@@ -87,16 +86,11 @@ public class GetWhereAndParameters_Tests
 		var (where, param) = QueryF.GetWhereAndParameters(client, predicates, false);
 
 		// Assert
-		Assert.Collection(where,
-			x => Assert.Equal($"--{name}-- cmp ~P0", x)
-		);
-		Assert.Collection(param,
-			x =>
-			{
-				Assert.Equal("P0", x.Key);
-				Assert.Equal(value, x.Value);
-			}
-		);
+		var x = Assert.Single(where);
+		Assert.Equal($"--{name}-- cmp ~P0", x);
+		var single = Assert.Single(param);
+		Assert.Equal("P0", single.Key);
+		Assert.Equal(value, single.Value);
 	}
 
 	[Theory]
@@ -126,16 +120,11 @@ public class GetWhereAndParameters_Tests
 		var (where, param) = QueryF.GetWhereAndParameters(client, predicates, false);
 
 		// Assert
-		Assert.Collection(where,
-			x => Assert.Equal($"--{name}-- cmp ~P0", x)
-		);
-		Assert.Collection(param,
-			x =>
-			{
-				Assert.Equal("P0", x.Key);
-				Assert.Equal(value, x.Value);
-			}
-		);
+		var x = Assert.Single(where);
+		Assert.Equal($"--{name}-- cmp ~P0", x);
+		var single = Assert.Single(param);
+		Assert.Equal("P0", single.Key);
+		Assert.Equal(value, single.Value);
 	}
 
 	private static void Test_In_With_Not_Enumerable(Compare cmp)
@@ -191,9 +180,9 @@ public class GetWhereAndParameters_Tests
 		var (where, param) = QueryF.GetWhereAndParameters(client, predicates, false);
 
 		// Assert
-		Assert.Collection(where,
-			x => Assert.Equal($"--{name}-- cmp (~P0|~P1|~P2)", x)
-		);
+		var x = // Assert
+Assert.Single(where);
+		Assert.Equal($"--{name}-- cmp (~P0|~P1|~P2)", x);
 		Assert.Collection(param,
 			x =>
 			{

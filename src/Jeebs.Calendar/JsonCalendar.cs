@@ -40,7 +40,7 @@ public class JsonCalendar : CalendarBase
 		(LastModified, Timezone) = (calendar.LastModified, tzid);
 
 		// Add each event to the dictionary with a unique ID
-		Events = new();
+		Events = [];
 		var counter = 0;
 		foreach (var e in calendar.Events)
 		{

@@ -45,14 +45,10 @@ public class AddWhereTaxonomies_Tests : QueryPartsBuilder_Tests<PostsTaxonomyPar
 		// Assert
 		var some = result.AssertSome();
 		Assert.NotSame(v.Parts, some);
-		Assert.Collection(some.Where,
-			x =>
-			{
-				Assert.Equal(builder.TTest.TermTaxonomies.GetName(), x.column.TblName);
-				Assert.Equal(builder.TTest.TermTaxonomies.Taxonomy, x.column.ColName);
-				Assert.Equal(Compare.In, x.compare);
-				Assert.Equal(taxonomies, x.value);
-			}
-		);
+		var (column, compare, value) = Assert.Single(some.Where);
+		Assert.Equal(builder.TTest.TermTaxonomies.GetName(), column.TblName);
+		Assert.Equal(builder.TTest.TermTaxonomies.Taxonomy, column.ColName);
+		Assert.Equal(Compare.In, compare);
+		Assert.Equal(taxonomies, value);
 	}
 }

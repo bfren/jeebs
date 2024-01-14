@@ -16,7 +16,7 @@ public class GetSimpleItems_Tests
 		var getUri = Substitute.For<GetUri>();
 
 		// Act
-		var result = MenuF.GetSimpleItems(urlHelper, new(), getUri);
+		var result = MenuF.GetSimpleItems(urlHelper, [], getUri);
 
 		// Assert
 		Assert.Empty(result);

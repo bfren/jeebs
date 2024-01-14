@@ -1,4 +1,4 @@
-﻿// Jeebs Unit Tests
+// Jeebs Unit Tests
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 namespace Jeebs.Data.Query.QueryParameters_Tests;
@@ -51,8 +51,8 @@ public class Merge_Tests
 
 		// Assert
 		Assert.False(result);
-		Assert.Collection(parameters,
-			x => { Assert.Equal(nameof(p0), x.Key); Assert.Equal(p0, x.Value); }
-		);
+		var single = Assert.Single(parameters);
+		Assert.Equal(nameof(p0), single.Key);
+		Assert.Equal(p0, single.Value);
 	}
 }

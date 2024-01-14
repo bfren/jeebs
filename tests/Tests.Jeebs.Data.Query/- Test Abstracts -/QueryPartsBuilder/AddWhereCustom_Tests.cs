@@ -70,18 +70,10 @@ public abstract class AddWhereCustom_Tests<TBuilder, TId> : QueryPartsBuilder_Te
 		// Assert
 		var some = result.AssertSome();
 		Assert.NotSame(v.Parts, some);
-		Assert.Collection(some.WhereCustom,
-			x =>
-			{
-				Assert.Equal(clause, x.clause);
-				Assert.Collection(x.parameters,
-					y =>
-					{
-						Assert.Equal(nameof(value), y.Key);
-						Assert.Equal(value, y.Value);
-					}
-				);
-			}
-		);
+		var s0 = Assert.Single(some.WhereCustom);
+		Assert.Equal(clause, s0.clause);
+		var s1 = Assert.Single(s0.parameters);
+		Assert.Equal(nameof(value), s1.Key);
+		Assert.Equal(value, s1.Value);
 	}
 }

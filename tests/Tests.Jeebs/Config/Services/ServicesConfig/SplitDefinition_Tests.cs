@@ -1,6 +1,7 @@
 // Jeebs Unit Tests
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
+using System.Globalization;
 using Jeebs.Config.Services;
 
 namespace Jeebs.Config.ServicesConfig_Tests;
@@ -21,7 +22,7 @@ public class SplitDefinition_Tests
 
 		// Assert
 		var ex = Assert.Throws<InvalidServiceDefinitionException>(action);
-		Assert.Equal(string.Format(InvalidServiceDefinitionException.Format, definition), ex.Message);
+		Assert.Equal(string.Format(CultureInfo.InvariantCulture, InvalidServiceDefinitionException.Format, definition), ex.Message);
 	}
 
 	[Fact]

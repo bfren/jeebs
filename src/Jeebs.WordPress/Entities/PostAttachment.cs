@@ -22,7 +22,7 @@ public abstract record class PostAttachment : WpPostEntity, IPostAttachment
 	}
 
 	/// <inheritdoc/>
-	public MetaDictionary Meta { get; init; } = new();
+	public MetaDictionary Meta { get; init; } = [];
 
 	/// <inheritdoc/>
 	public string UrlPath { get; init; } = string.Empty;

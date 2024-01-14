@@ -1,4 +1,4 @@
-﻿// Jeebs Rapid Application Development
+// Jeebs Rapid Application Development
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using System;
@@ -16,8 +16,16 @@ namespace Jeebs.Mvc.TagHelpers;
 /// <summary>
 /// Nav Menu TagHelper
 /// </summary>
+/// <remarks>
+/// Create object
+/// </remarks>
+/// <param name="urlHelperFactory">IUrlHelperFactory object</param>
+/// <param name="htmlEncoder">HtmlEncoder</param>
 [HtmlTargetElement("nav-menu", TagStructure = TagStructure.WithoutEndTag)]
-public sealed class NavMenuTagHelper : UrlResolutionTagHelper
+public sealed class NavMenuTagHelper(
+	IUrlHelperFactory urlHelperFactory,
+	HtmlEncoder htmlEncoder
+) : UrlResolutionTagHelper(urlHelperFactory, htmlEncoder)
 {
 	/// <summary>
 	/// Menu
@@ -65,13 +73,6 @@ public sealed class NavMenuTagHelper : UrlResolutionTagHelper
 	public string ChildMenuWrapperClass { get; set; } = "nav-child";
 
 	/// <summary>
-	/// Create object
-	/// </summary>
-	/// <param name="urlHelperFactory">IUrlHelperFactory object</param>
-	/// <param name="htmlEncoder">HtmlEncoder</param>
-	public NavMenuTagHelper(IUrlHelperFactory urlHelperFactory, HtmlEncoder htmlEncoder) : base(urlHelperFactory, htmlEncoder) { }
-
-	/// <summary>
 	/// Process TagHelper
 	/// </summary>
 	/// <param name="context">TagHelperContext</param>
@@ -93,7 +94,7 @@ public sealed class NavMenuTagHelper : UrlResolutionTagHelper
 		// Build the menu
 		BuildMenu(
 			Menu.Items,
-			mi => mi.Controller.ToLower(CultureInfo.InvariantCulture) == currentController,
+			mi => string.Equals(mi.Controller, currentController, StringComparison.OrdinalIgnoreCase),
 			mi => mi.Controller,
 			el => output.Content.AppendHtml(el)
 		);
@@ -157,7 +158,7 @@ public sealed class NavMenuTagHelper : UrlResolutionTagHelper
 					// Build child menu
 					BuildMenu(
 						menuItem.Children,
-						mi => mi.Action.ToLower(CultureInfo.InvariantCulture) == currentAction,
+						mi => string.Equals(mi.Action, currentAction, StringComparison.OrdinalIgnoreCase),
 						mi => mi.Action,
 						el => childMenu.InnerHtml.AppendHtml(el)
 					);

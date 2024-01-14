@@ -41,14 +41,10 @@ public class AddWhereSlug_Tests : QueryPartsBuilder_Tests<TermsPartsBuilder, WpT
 		// Assert
 		var some = result.AssertSome();
 		Assert.NotSame(v.Parts, some);
-		Assert.Collection(some.Where,
-			x =>
-			{
-				Assert.Equal(builder.TTest.Terms.GetName(), x.column.TblName);
-				Assert.Equal(builder.TTest.Terms.Slug, x.column.ColName);
-				Assert.Equal(Compare.Equal, x.compare);
-				Assert.Equal(slug, x.value);
-			}
-		);
+		var (column, compare, value) = Assert.Single(some.Where);
+		Assert.Equal(builder.TTest.Terms.GetName(), column.TblName);
+		Assert.Equal(builder.TTest.Terms.Slug, column.ColName);
+		Assert.Equal(Compare.Equal, compare);
+		Assert.Equal(slug, value);
 	}
 }

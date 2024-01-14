@@ -1,9 +1,9 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
-	<PropertyGroup>
-		<RootNamespace>Jeebs.Cryptography</RootNamespace>
-	</PropertyGroup>
-	<ItemGroup>
-		<ProjectReference Include="..\..\src\Jeebs.Cryptography\Jeebs.Cryptography.csproj" />
-		<ProjectReference Include="..\..\src\Jeebs\Jeebs.csproj" />
-	</ItemGroup>
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <RootNamespace>Jeebs.Cryptography</RootNamespace>
+  </PropertyGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\Jeebs.Cryptography\Jeebs.Cryptography.csproj" />
+    <ProjectReference Include="..\..\src\Jeebs\Jeebs.csproj" />
+  </ItemGroup>
 </Project>

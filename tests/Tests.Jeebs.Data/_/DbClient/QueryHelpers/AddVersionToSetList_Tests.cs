@@ -40,8 +40,7 @@ public class AddVersionToSetList_Tests
 		client.AddVersionToSetListTest(set, version);
 
 		// Assert
-		Assert.Collection(set,
-			x => Assert.Equal(expected, x)
-		);
+		var single = Assert.Single(set);
+		Assert.Equal(expected, single);
 	}
 }

@@ -73,7 +73,7 @@ public partial class MySqlDbClient : DbClient
 		}
 
 		// Add WHERE
-		IQueryParametersDictionary parameters = new QueryParametersDictionary();
+		var parameters = new QueryParametersDictionary();
 		if (parts.Where.Count > 0 || parts.WhereCustom.Count > 0)
 		{
 			// This will be appended to the SQL query

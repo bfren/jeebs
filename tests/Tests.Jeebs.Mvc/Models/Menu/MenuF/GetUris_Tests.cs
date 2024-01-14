@@ -16,7 +16,7 @@ public class GetUris_Tests
 		var getUri = Substitute.For<GetUri>();
 
 		// Act
-		var result = MenuF.GetUris(urlHelper, new(), getUri);
+		var result = MenuF.GetUris(urlHelper, [], getUri);
 
 		// Assert
 		Assert.Empty(result);

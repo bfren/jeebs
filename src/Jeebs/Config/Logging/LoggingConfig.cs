@@ -25,12 +25,12 @@ public sealed record class LoggingConfig : IOptions<LoggingConfig>
 	/// <summary>
 	/// Override minimum levels for sources beginning with dictionary key
 	/// </summary>
-	public Dictionary<string, LogLevel> Overrides { get; init; } = new();
+	public Dictionary<string, LogLevel> Overrides { get; init; } = [];
 
 	/// <summary>
 	/// List of providers - dictionary key is a service name
 	/// </summary>
-	public Dictionary<string, LoggingProviderConfig> Providers { get; init; } = new();
+	public Dictionary<string, LoggingProviderConfig> Providers { get; init; } = [];
 
 	/// <inheritdoc/>
 	LoggingConfig IOptions<LoggingConfig>.Value =>

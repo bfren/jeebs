@@ -43,14 +43,10 @@ public class AddWhereCount_Tests : QueryPartsBuilder_Tests<TermsPartsBuilder, Wp
 		// Assert
 		var some = result.AssertSome();
 		Assert.NotSame(v.Parts, some);
-		Assert.Collection(some.Where,
-			x =>
-			{
-				Assert.Equal(builder.TTest.TermTaxonomies.GetName(), x.column.TblName);
-				Assert.Equal(builder.TTest.TermTaxonomies.Count, x.column.ColName);
-				Assert.Equal(Compare.MoreThanOrEqual, x.compare);
-				Assert.Equal(count, x.value);
-			}
-		);
+		var (column, compare, value) = Assert.Single(some.Where);
+		Assert.Equal(builder.TTest.TermTaxonomies.GetName(), column.TblName);
+		Assert.Equal(builder.TTest.TermTaxonomies.Count, column.ColName);
+		Assert.Equal(Compare.MoreThanOrEqual, compare);
+		Assert.Equal(count, value);
 	}
 }

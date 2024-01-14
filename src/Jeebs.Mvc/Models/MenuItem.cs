@@ -45,7 +45,7 @@ public record class MenuItem
 	/// <summary>
 	/// List of child menu items, for hierarchical menus
 	/// </summary>
-	public List<MenuItem> Children { get; init; } = new();
+	public List<MenuItem> Children { get; init; } = [];
 
 	/// <summary>
 	/// Whether or not this menu item is a link (if false, it is just text to output)
@@ -55,7 +55,7 @@ public record class MenuItem
 	/// <summary>
 	/// Required user roles - if set, the item will only be shown if the user HAS one of the specified roles
 	/// </summary>
-	public string[] Roles { get; init; } = Array.Empty<string>();
+	public string[] Roles { get; init; } = [];
 
 	/// <summary>
 	/// Add a child menu item, using action as text

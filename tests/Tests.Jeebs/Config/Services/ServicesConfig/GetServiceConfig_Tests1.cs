@@ -1,6 +1,7 @@
 ﻿// Jeebs Unit Tests
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
+using System.Globalization;
 using Jeebs.Config.Services.Seq;
 
 namespace Jeebs.Config.Services.ServicesConfig_Tests;
@@ -19,7 +20,7 @@ public partial class GetServiceConfig_Tests
 
 		// Assert
 		var ex = Assert.Throws<UnsupportedServiceException>(action);
-		Assert.Equal(string.Format(UnsupportedServiceException.Format, type), ex.Message);
+		Assert.Equal(string.Format(CultureInfo.InvariantCulture, UnsupportedServiceException.Format, type), ex.Message);
 	}
 
 	[Fact]

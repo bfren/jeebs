@@ -1,12 +1,12 @@
 <Project Sdk="Microsoft.NET.Sdk">
-	<PropertyGroup>
-		<RootNamespace>Jeebs.Data</RootNamespace>
-	</PropertyGroup>
-	<ItemGroup>
-		<PackageReference Include="StrongId.Testing" />
-	</ItemGroup>
-	<ItemGroup>
-		<ProjectReference Include="..\..\src\Jeebs.Data\Jeebs.Data.csproj" />
-		<ProjectReference Include="..\Tests.Jeebs\Tests.Jeebs.csproj" />
-	</ItemGroup>
+  <PropertyGroup>
+    <RootNamespace>Jeebs.Data</RootNamespace>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="StrongId.Testing" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\Jeebs.Data\Jeebs.Data.csproj" />
+    <ProjectReference Include="..\Tests.Jeebs\Tests.Jeebs.csproj" />
+  </ItemGroup>
 </Project>

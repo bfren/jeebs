@@ -29,7 +29,7 @@ public sealed record class AuthUserEntity : AuthUserModel, IWithVersion
 	/// <summary>
 	/// TOTP backup codes - used when the authenticator is not available
 	/// </summary>
-	public List<string> TotpBackupCodes { get; init; } = new();
+	public List<string> TotpBackupCodes { get; init; } = [];
 
 	/// <summary>
 	/// Whether or not the user account is enabled

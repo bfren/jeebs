@@ -3,6 +3,7 @@
 
 using System;
 using System.Globalization;
+using System.Text;
 
 namespace Jeebs.Config.Services;
 
@@ -14,7 +15,7 @@ public class UnsupportedServiceException : Exception
 	/// <summary>
 	/// Exception message format
 	/// </summary>
-	public static readonly string Format = "Unsupported service type '{0}'.";
+	public static readonly CompositeFormat Format = CompositeFormat.Parse("Unsupported service type '{0}'.");
 
 	/// <summary>
 	/// Create exception

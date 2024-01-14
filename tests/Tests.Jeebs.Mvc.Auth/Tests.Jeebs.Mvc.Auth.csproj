@@ -1,16 +1,16 @@
 <Project Sdk="Microsoft.NET.Sdk">
-	<PropertyGroup>
-		<RootNamespace>Jeebs.Mvc.Auth</RootNamespace>
-	</PropertyGroup>
-	<ItemGroup>
-		<Compile Remove="Jwt\**" />
-		<EmbeddedResource Remove="Jwt\**" />
-		<None Remove="Jwt\**" />
-	</ItemGroup>
-	<ItemGroup>
-		<PackageReference Include="StrongId.Testing" />
-	</ItemGroup>
-	<ItemGroup>
-		<ProjectReference Include="..\..\src\Jeebs.Mvc.Auth\Jeebs.Mvc.Auth.csproj" />
-	</ItemGroup>
+  <PropertyGroup>
+    <RootNamespace>Jeebs.Mvc.Auth</RootNamespace>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Remove="Jwt\**" />
+    <EmbeddedResource Remove="Jwt\**" />
+    <None Remove="Jwt\**" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="StrongId.Testing" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\Jeebs.Mvc.Auth\Jeebs.Mvc.Auth.csproj" />
+  </ItemGroup>
 </Project>

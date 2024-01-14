@@ -43,21 +43,17 @@ public class Sort_Tests : FluentQuery_Tests
 
 		// Assert
 		var f0 = Assert.IsType<FluentQuery<TestEntity, TestId>>(r0);
-		Assert.Collection(f0.Parts.Sort, x =>
-		{
-			Assert.Equal(v.Table.GetName(), x.column.TblName);
-			Assert.Equal(v.Table.Foo, x.column.ColName);
-			Assert.Equal(nameof(TestEntity.Foo), x.column.ColAlias);
-			Assert.Equal(order, x.order);
-		});
+		var s0 = Assert.Single(f0.Parts.Sort);
+		Assert.Equal(v.Table.GetName(), s0.column.TblName);
+		Assert.Equal(v.Table.Foo, s0.column.ColName);
+		Assert.Equal(nameof(TestEntity.Foo), s0.column.ColAlias);
+		Assert.Equal(order, s0.order);
 		var f1 = Assert.IsType<FluentQuery<TestEntity, TestId>>(r1);
-		Assert.Collection(f1.Parts.Sort, x =>
-		{
-			Assert.Equal(v.Table.GetName(), x.column.TblName);
-			Assert.Equal(v.Table.Foo, x.column.ColName);
-			Assert.Equal(nameof(TestEntity.Foo), x.column.ColAlias);
-			Assert.Equal(order, x.order);
-		});
+		var s1 = Assert.Single(f1.Parts.Sort);
+		Assert.Equal(v.Table.GetName(), s1.column.TblName);
+		Assert.Equal(v.Table.Foo, s1.column.ColName);
+		Assert.Equal(nameof(TestEntity.Foo), s1.column.ColAlias);
+		Assert.Equal(order, s1.order);
 	}
 
 	[Theory]
@@ -74,9 +70,8 @@ public class Sort_Tests : FluentQuery_Tests
 
 		// Assert
 		var fluent = Assert.IsType<FluentQuery<TestEntity, TestId>>(result);
-		Assert.Collection(fluent.Errors,
-			x => x.AssertType<NoMatchingItemsMsg>()
-		);
+		var single = Assert.Single(fluent.Errors);
+		single.AssertType<NoMatchingItemsMsg>();
 		Assert.Same(query, fluent);
 	}
 }

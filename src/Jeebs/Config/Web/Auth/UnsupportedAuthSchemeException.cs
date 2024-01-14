@@ -3,6 +3,7 @@
 
 using System;
 using System.Globalization;
+using System.Text;
 
 namespace Jeebs.Config.Web.Auth;
 
@@ -14,7 +15,7 @@ public sealed class UnsupportedAuthSchemeException : Exception
 	/// <summary>
 	/// Exception message format
 	/// </summary>
-	public static readonly string Format = "Unsupported auth scheme '{0}'.";
+	public static readonly CompositeFormat Format = CompositeFormat.Parse("Unsupported auth scheme '{0}'.");
 
 	/// <summary>
 	/// Create exception

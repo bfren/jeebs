@@ -18,7 +18,8 @@ public class ValidateTable_Tests
 
 		// Assert
 		Assert.False(valid);
-		Assert.Collection(errors, x => Assert.Equal(e0, x));
+		var single = Assert.Single(errors);
+		Assert.Equal(e0, single);
 	}
 
 	[Fact]
@@ -52,7 +53,8 @@ public class ValidateTable_Tests
 
 		// Assert
 		Assert.False(valid);
-		Assert.Collection(errors, x => Assert.Equal(e0, x));
+		var single = Assert.Single(errors);
+		Assert.Equal(e0, single);
 	}
 
 	[Fact]
