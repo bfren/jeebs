@@ -126,7 +126,7 @@ public sealed record class MimeType : Enumerated
 	/// Populate list of mime types
 	/// </summary>
 	static MimeType() =>
-		All = new HashSet<MimeType>(new[] { Blank, General, Bmp, Doc, Docx, Gif, Jpg, M4a, Mp3, Pdf, Png, Ppt, Pptx, Rar, Tar, Text, Xls, Xlsx, Zip });
+		All = new HashSet<MimeType>([Blank, General, Bmp, Doc, Docx, Gif, Jpg, M4a, Mp3, Pdf, Png, Ppt, Pptx, Rar, Tar, Text, Xls, Xlsx, Zip]);
 
 	internal static HashSet<MimeType> AllTest() =>
 		All;

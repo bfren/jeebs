@@ -9,7 +9,6 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Rnd" />
-    <PackageReference Include="StrongId" />
   </ItemGroup>
   <ItemGroup Label="Embed Version">
     <EmbeddedResource Include="$(VersionPath)" />

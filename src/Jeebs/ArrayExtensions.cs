@@ -1,8 +1,6 @@
 // Jeebs Rapid Application Development
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
-using System.Linq;
-
 namespace Jeebs;
 
 /// <summary>
@@ -23,6 +21,6 @@ public static class ArrayExtensions
 			return @this;
 		}
 
-		return @this.Concat(additionalItems).ToArray();
+		return [.. @this, .. additionalItems];
 	}
 }

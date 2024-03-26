@@ -4,6 +4,6 @@
 namespace Jeebs;
 
 /// <summary>
-/// <see cref="Maybe{T}"/> extension methods
+/// <see cref="Result{T}"/> extension methods.
 /// </summary>
-public static partial class MaybeExtensions { }
+public static partial class ResultExtensions { }

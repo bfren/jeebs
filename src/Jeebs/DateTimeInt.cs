@@ -4,7 +4,6 @@
 using System;
 using System.Globalization;
 using System.Linq;
-using Jeebs.Messages;
 
 namespace Jeebs;
 
@@ -13,10 +12,19 @@ namespace Jeebs;
 /// </summary>
 public sealed record class DateTimeInt
 {
+	/// <summary>
+	/// Twelve numbers: YYYYMMDDhhmm
+	/// </summary>
 	private const string FormatString = "000000000000";
 
+	/// <summary>
+	/// January, March, May, July, August, October, December
+	/// </summary>
 	private static readonly int[] ThirtyOneDayMonths = [1, 3, 5, 7, 8, 10, 12];
 
+	/// <summary>
+	/// April, June, September, November
+	/// </summary>
 	private static readonly int[] ThirtyDayMonths = [4, 6, 9, 11];
 
 	/// <summary>
@@ -96,14 +104,14 @@ public sealed record class DateTimeInt
 	/// <summary>
 	/// Get the current DateTime
 	/// </summary>
-	public Maybe<DateTime> ToDateTime() =>
+	public Result<DateTime> ToDateTime() =>
 		IsValidDateTime() switch
 		{
 			{ } x when x.Valid =>
 				new DateTime(Year, Month, Day, Hour, Minute, 0),
 
 			{ } x =>
-				F.None<DateTime>(new M.InvalidDateTimeMsg((x.Part, this)))
+				Failures.InvalidDateTime(x.Part, this)
 		};
 
 	/// <summary>
@@ -151,15 +159,18 @@ public sealed record class DateTimeInt
 			return (false, nameof(Day));
 		}
 
+		// January, March, May, July, August, October, December
 		if (ThirtyOneDayMonths.Contains(Month) && Day > 31)
 		{
 			return (false, nameof(Day));
 		}
+		// April, June, September, November
 		else if (ThirtyDayMonths.Contains(Month) && Day > 30)
 		{
 			return (false, nameof(Day));
 		}
-		else // February is the only month left
+		// February
+		else
 		{
 			if (IsLeapYear(Year) && Day > 29)
 			{
@@ -241,20 +252,16 @@ public sealed record class DateTimeInt
 
 	#endregion Static
 
-	/// <summary>Messages</summary>
-	public static class M
+	/// <summary><see cref="DateTimeInt"/> Failures.</summary>
+	public static class Failures
 	{
-		/// <summary>Unable to parse DateTime integer</summary>
-		/// <param name="Value">Invalid part and DateTimeInt</param>
-		public sealed record class InvalidDateTimeMsg((string part, DateTimeInt dt) Value) : Msg
-		{
-			/// <inheritdoc/>
-			public override string Format =>
-				"Invalid {Part} - 'Y:{Year} M:{Month} D:{Day} H:{Hour} m:{Minute}'.";
-
-			/// <inheritdoc/>
-			public override object[]? Args =>
-				new object[] { Value.part, Value.dt.Year, Value.dt.Month, Value.dt.Day, Value.dt.Hour, Value.dt.Minute };
-		}
+		/// <summary>Unable to parse DateTime integer.</summary>
+		/// <param name="part">The name of the part that caused the error.</param>
+		/// <param name="dt">DateTime value.</param>
+		public static Result<DateTime> InvalidDateTime(string part, DateTimeInt dt) =>
+			R.Fail<DateTimeInt>(
+				"Invalid {Part} - 'Y:{Year} M:{Month} D:{Day} H:{Hour} m:{Minute}'.",
+				part, dt.Year, dt.Month, dt.Day, dt.Hour, dt.Minute
+			);
 	}
 }
