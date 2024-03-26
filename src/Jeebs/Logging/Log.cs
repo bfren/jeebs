@@ -2,7 +2,7 @@
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using System;
-using Jeebs.Messages;
+using Wrap.Logging;
 
 namespace Jeebs.Logging;
 
@@ -13,35 +13,20 @@ public abstract class Log : ILog
 	public abstract ILog<T> ForContext<T>();
 
 	/// <inheritdoc/>
-	public void Msg<T>(T? message)
-		where T : IMsg =>
-		Msg(message, message switch
-		{
-			Msg msg =>
-				msg.Level,
-
-			_ =>
-				Messages.Msg.DefaultLevel
-		});
+	public void Failure(FailValue failure) =>
+		Failure(failure, failure.Level);
 
 	/// <inheritdoc/>
-	public void Msg<T>(T? message, LogLevel level)
-		where T : IMsg
+	public void Failure(FailValue failure, LogLevel level)
 	{
-		// Get message text and arguments
-		var (text, args) = message switch
+		// Get failure message and arguments
+		var (text, args) = failure.Context switch
 		{
-			Msg msg =>
-				(
-					msg.FormatWithType,
-					msg.ArgsWithType
-				),
+			string context =>
+				("{Context} | " + failure.Message, [context, .. failure.Args]),
 
 			_ =>
-				(
-					message?.ToString() ?? typeof(T).ToString(),
-					Array.Empty<object>()
-				),
+				(failure.Message, failure.Args ?? [])
 		};
 
 		// Switch different levels
@@ -73,16 +58,16 @@ public abstract class Log : ILog
 	}
 
 	/// <inheritdoc/>
-	public void Msgs(params IMsg[] messages)
+	public void Failures(params FailValue[] failures)
 	{
-		if (messages.Length == 0)
+		if (failures.Length == 0)
 		{
 			return;
 		}
 
-		foreach (var m in messages)
+		foreach (var f in failures)
 		{
-			Msg(m);
+			Failure(f);
 		}
 	}
 

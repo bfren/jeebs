@@ -2,6 +2,7 @@
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using System;
+using Wrap.Logging;
 
 namespace Jeebs.Logging;
 
@@ -9,7 +10,7 @@ namespace Jeebs.Logging;
 public sealed class NullLogger<T> : NullLogger, ILog<T> { }
 
 /// <summary>
-/// A logger that does nothing - except stop null reference exceptions when using the static logger
+/// A logger that does nothing - except stop null reference exceptions when using the static logger.
 /// </summary>
 public class NullLogger : Log
 {
