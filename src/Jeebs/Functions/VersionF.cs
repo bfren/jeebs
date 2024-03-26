@@ -4,8 +4,6 @@
 namespace Jeebs.Functions;
 
 /// <summary>
-/// Version functions
+/// Version functions.
 /// </summary>
-public static partial class VersionF
-{
-}
+public static partial class VersionF { }

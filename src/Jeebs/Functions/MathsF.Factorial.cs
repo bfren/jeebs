@@ -6,12 +6,12 @@ namespace Jeebs.Functions;
 public static partial class MathsF
 {
 	/// <summary>
-	/// Calculate the factorial result of <paramref name="x"/>
+	/// Calculate the factorial result of <paramref name="x"/>.
 	/// </summary>
 	/// <remarks>
-	/// <paramref name="x"/> must be greater than or equal to zero
+	/// <paramref name="x"/> must be greater than or equal to zero.
 	/// </remarks>
-	/// <param name="x">Number (greater than or equal to zero)</param>
+	/// <param name="x">Number (greater than or equal to zero).</param>
 	public static long Factorial(long x)
 	{
 		if (x < 0)

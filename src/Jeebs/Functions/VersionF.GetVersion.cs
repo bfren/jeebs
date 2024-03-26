@@ -10,10 +10,10 @@ namespace Jeebs.Functions;
 public static partial class VersionF
 {
 	/// <summary>
-	/// Get version from the specified stream, Version property, or default (0.0.0.0)
+	/// Get version from the specified stream, Version property, or default (0.0.0.0).
 	/// </summary>
-	/// <param name="stream">Stream containing version file</param>
-	/// <param name="version">Version object</param>
+	/// <param name="stream">Stream containing version file.</param>
+	/// <param name="version">Version object.</param>
 	internal static async Task<string> GetVersion(Stream? stream, Version? version)
 	{
 		// Attempt to read from stream
@@ -41,9 +41,9 @@ public static partial class VersionF
 	}
 
 	/// <summary>
-	/// Return version formatted as x.x.x.x
+	/// Return version formatted as x.x.x.x.
 	/// </summary>
-	/// <param name="version">Version</param>
+	/// <param name="version">Version.</param>
 	internal static string GetVersionString(Version version) =>
 		$"{version.Major}.{version.Minor}.{version.Build}.{version.Revision}";
 }

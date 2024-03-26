@@ -7,7 +7,7 @@ using System.Text;
 namespace Jeebs.Functions;
 
 /// <summary>
-/// PHP serialisation functions
+/// PHP serialisation functions.
 /// </summary>
 public static partial class PhpF
 {

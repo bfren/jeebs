@@ -6,9 +6,9 @@ namespace Jeebs.Functions;
 public static partial class JsonF
 {
 	/// <summary>
-	/// Return lower-case boolean string
+	/// Return lower-case boolean string.
 	/// </summary>
-	/// <param name="value">Value</param>
+	/// <param name="value">Boolean value.</param>
 	public static string Bool(bool value) =>
 		value switch
 		{

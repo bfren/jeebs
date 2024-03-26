@@ -9,38 +9,37 @@ using System.Text.RegularExpressions;
 namespace Jeebs.Functions;
 
 /// <summary>
-/// String functions
+/// String functions.
 /// </summary>
 public static partial class StringF
 {
 	/// <summary>
 	/// If <paramref name="obj"/> is not null, use string.Format() -
-	/// otherwise, return <paramref name="ifNull"/>
+	/// otherwise, return <paramref name="formatString"/>.
 	/// </summary>
-	/// <typeparam name="T">Object type</typeparam>
-	/// <param name="formatString">Format string</param>
-	/// <param name="obj">Object (nullable)</param>
-	/// <param name="ifNull">Value to return if null</param>
-	public static string? Format<T>(string formatString, T obj, string? ifNull) =>
+	/// <typeparam name="T">Object type.</typeparam>
+	/// <param name="formatString">Format string.</param>
+	/// <param name="obj">Object (nullable).</param>
+	public static string Format<T>(string formatString, T obj, string? ifNull) =>
 		obj switch
 		{
-			T t =>
-				string.Format(CultureInfo.InvariantCulture, formatString, t),
+			T x =>
+				string.Format(CultureInfo.InvariantCulture, formatString, x),
 
 			_ =>
-				ifNull
+				ifNull ?? formatString
 		};
 
 	/// <summary>
-	/// Works like string.Format() but with named as well as numbered placeholders
-	/// <para>Source is Array: values will be inserted in order (regardless of placeholder values)</para>
-	/// <para>Source is Object: property names must match placeholders or they will be left in place</para>
-	/// <para>Inspired by http://james.newtonking.com/archive/2008/03/29/formatwith-2-0-string-formatting-with-named-variables</para>
-	/// <para>(Significantly) altered to work without requiring DataBinder</para>
+	/// Works like string.Format() but with named as well as numbered placeholders.
+	/// <para>Source is Array: values will be inserted in order (regardless of placeholder values).</para>
+	/// <para>Source is Object: property names must match placeholders or they will be left in place.</para>
+	/// <para>Inspired by http://james.newtonking.com/archive/2008/03/29/formatwith-2-0-string-formatting-with-named-variables.</para>
+	/// <para>(Significantly) altered to work without requiring DataBinder.</para>
 	/// </summary>
-	/// <typeparam name="T">Source type</typeparam>
-	/// <param name="formatString">String to format</param>
-	/// <param name="source">Source object to use for template values</param>
+	/// <typeparam name="T">Source type.</typeparam>
+	/// <param name="formatString">String to format.</param>
+	/// <param name="source">Source object to use for template values.</param>
 	public static string Format<T>(string formatString, T source)
 	{
 		// Return original if source is null or if it is an empty array

@@ -4,27 +4,27 @@
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Jeebs.Functions.JsonConverters;
-using StrongId.Json;
+using Wrap.Json;
 
 namespace Jeebs.Functions;
 
 /// <summary>
-/// JSON functions
+/// JSON functions.
 /// </summary>
 public static partial class JsonF
 {
 	/// <summary>
-	/// Empty JSON
+	/// Empty JSON string.
 	/// </summary>
 	public static string Empty { get; } = "\"\"";
 
 	/// <summary>
-	/// Default JsonSerializerOptions
+	/// Default JsonSerializerOptions.
 	/// </summary>
 	public static JsonSerializerOptions Options { private get; set; }
 
 	/// <summary>
-	/// Define default settings
+	/// Define default settings.
 	/// </summary>
 	static JsonF()
 	{
@@ -40,9 +40,6 @@ public static partial class JsonF
 		Options.Converters.Add(new EnumeratedJsonConverterFactory());
 		Options.Converters.Add(new JsonStringEnumConverter(JsonNamingPolicy.CamelCase));
 		Options.Converters.Add(new MaybeJsonConverterFactory());
-		Options.Converters.Add(new StrongIdJsonConverterFactory());
+		Options.Converters.Add(new UnionJsonConverterFactory());
 	}
-
-	/// <summary>Messages</summary>
-	public static partial class M { }
 }

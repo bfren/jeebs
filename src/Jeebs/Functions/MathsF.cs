@@ -4,8 +4,6 @@
 namespace Jeebs.Functions;
 
 /// <summary>
-/// Maths Functions
+/// Maths Functions.
 /// </summary>
-public static partial class MathsF
-{
-}
+public static partial class MathsF { }

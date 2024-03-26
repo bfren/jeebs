@@ -9,20 +9,19 @@ namespace Jeebs.Functions;
 public static partial class VersionF
 {
 	/// <summary>
-	/// Lazy property to avoid multiple reflection calls
+	/// Lazy property to avoid multiple reflection calls.
 	/// </summary>
-	private static LazyAsync<string> Version { get; } = new(
-		() => GetVersion(typeof(VersionF).Assembly.GetManifestResourceStream("Jeebs.Version"), AssemblyVersion)
-	);
+	private static LazyAsync<string> Version { get; } =
+		new(() => GetVersion(typeof(VersionF).Assembly.GetManifestResourceStream("Jeebs.Version"), AssemblyVersion));
 
 	/// <summary>
-	/// Get the compiled version of the current assembly - does not include suffixes (e.g. '-beta.1')
+	/// Get the compiled version of the current assembly - does not include suffixes (e.g. '-beta.1').
 	/// </summary>
 	internal static Version? AssemblyVersion =>
 		typeof(VersionF).Assembly.GetName().Version;
 
 	/// <summary>
-	/// Get Jeebs Version, or return the package version if the resource cannot be found
+	/// Get Jeebs Version, or return the package version if the resource cannot be found.
 	/// </summary>
 	public static Task<string> GetJeebsVersionAsync() =>
 		Version.Value;

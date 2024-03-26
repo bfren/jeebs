@@ -3,27 +3,26 @@
 
 using System.Globalization;
 using System.Linq;
-using Jeebs.Messages;
 
 namespace Jeebs.Functions;
 
 /// <summary>
-/// Boolean functions
+/// Boolean functions.
 /// </summary>
 public static class BooleanF
 {
 	/// <summary>
-	/// Parse a boolean value
+	/// Parse a boolean value.
 	/// </summary>
-	/// <typeparam name="T">Value type</typeparam>
-	/// <param name="value">Value to parse</param>
+	/// <typeparam name="T">Value type.</typeparam>
+	/// <param name="value">Value to parse.</param>
 	public static Maybe<bool> Parse<T>(T value)
 	{
 		// Convert to string
 		var val = value?.ToString()?.ToLower(CultureInfo.InvariantCulture);
 		if (val is null)
 		{
-			return F.None<bool, M.NullValueMsg>();
+			return M.None;
 		}
 
 		// Alternative boolean values
@@ -40,20 +39,7 @@ public static class BooleanF
 			return false;
 		}
 
-		return F.ParseBool(val).Switch(
-			some: x => F.Some(x),
-			none: _ => F.None<bool>(new M.UnrecognisedValueMsg(val))
-		);
-	}
-
-	/// <summary>Messages</summary>
-	public static class M
-	{
-		/// <summary>Null Value</summary>
-		public sealed record class NullValueMsg : Msg;
-
-		/// <summary>Unrecognised boolean value</summary>
-		/// <param name="Value">Unrecognised Value</param>
-		public sealed record class UnrecognisedValueMsg(string Value) : WithValueMsg<string>();
+		// Parse default values
+		return M.ParseBool(val);
 	}
 }

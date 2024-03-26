@@ -3,24 +3,26 @@
 
 using System;
 using System.Text.Json;
-using Jeebs.Messages;
 
 namespace Jeebs.Functions;
 
 public static partial class JsonF
 {
 	/// <summary>
-	/// Use JsonSerializer to deserialise a given string into a given object type
+	/// Use JsonSerializer to deserialise a given string into a given object type.
 	/// </summary>
-	/// <typeparam name="T">The type of the object to return</typeparam>
-	/// <param name="str">The string to deserialise</param>
-	/// <param name="options">JsonSerializerOptions</param>
-	public static Maybe<T> Deserialise<T>(string str, JsonSerializerOptions options)
+	/// <typeparam name="T">The type of the object to return.</typeparam>
+	/// <param name="str">The string to deserialise.</param>
+	/// <param name="options">JsonSerializerOptions.</param>
+	public static Result<T> Deserialise<T>(string str, JsonSerializerOptions options)
 	{
+		static Result<T> fail(string message) =>
+			R.Fail(nameof(JsonF), nameof(Deserialise), message);
+
 		// Check for null string
 		if (str is null || string.IsNullOrWhiteSpace(str))
 		{
-			return F.None<T, M.DeserialisingNullOrEmptyStringMsg>();
+			return fail("Cannot deserialise a null or empty string to JSON.");
 		}
 
 		// Attempt to deserialise JSON
@@ -32,23 +34,16 @@ public static partial class JsonF
 					x,
 
 				_ =>
-					F.None<T, M.DeserialisingReturnedNullMsg>() // should never get here
+					fail("Json deserialise returned a null object.") // should never get here
 			};
 		}
 		catch (Exception ex)
 		{
-			return F.None<T>(new M.DeserialiseExceptionMsg(ex));
+			return R.Fail(nameof(JsonF), nameof(Deserialise), ex);
 		}
 	}
 
 	/// <inheritdoc cref="Deserialise{T}(string, JsonSerializerOptions)"/>
-	public static Maybe<T> Deserialise<T>(string str) =>
+	public static Result<T> Deserialise<T>(string str) =>
 		Deserialise<T>(str, Options);
-
-	public static partial class M
-	{
-		/// <summary>Exception caught during <see cref="JsonSerializer.Serialize{TValue}(TValue, JsonSerializerOptions?)"/></summary>
-		/// <param name="Value">Exception object</param>
-		public sealed record class SerialiseExceptionMsg(Exception Value) : ExceptionMsg;
-	}
 }

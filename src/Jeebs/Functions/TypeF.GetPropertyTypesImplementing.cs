@@ -10,7 +10,7 @@ namespace Jeebs.Functions;
 public static partial class TypeF
 {
 	/// <inheritdoc cref="GetPropertyTypesImplementing(Type, IEnumerable{Type})"/>
-	/// <typeparam name="T">Property Type</typeparam>
+	/// <typeparam name="T">Property Type.</typeparam>
 	public static List<Type> GetPropertyTypesImplementing<T>() =>
 		GetPropertyTypesImplementing(typeof(T), AllTypes.Value);
 
@@ -19,10 +19,10 @@ public static partial class TypeF
 		GetPropertyTypesImplementing(type, AllTypes.Value);
 
 	/// <summary>
-	/// Get distinct property types that implement <paramref name="type"/>
+	/// Get distinct property types that implement <paramref name="type"/>.
 	/// </summary>
-	/// <param name="type">Property Type</param>
-	/// <param name="typeList">Type List</param>
+	/// <param name="type">Property Type.</param>
+	/// <param name="typeList">Type List.</param>
 	internal static List<Type> GetPropertyTypesImplementing(Type type, IEnumerable<Type> typeList)
 	{
 		var types = from t in typeList

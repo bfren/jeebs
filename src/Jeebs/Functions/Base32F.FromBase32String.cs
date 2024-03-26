@@ -2,18 +2,20 @@
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using System;
-using Jeebs.Messages;
 
 namespace Jeebs.Functions;
 
 public static partial class Base32F
 {
 	/// <summary>
-	/// Convert <paramref name="base32String"/> string to a byte array
+	/// Convert <paramref name="base32String"/> string to a byte array.
 	/// </summary>
-	/// <param name="base32String">Base32 string to convert - must be at least two characters</param>
-	public static Maybe<byte[]> FromBase32String(string base32String)
+	/// <param name="base32String">Base32 string to convert - must be at least two characters.</param>
+	public static Result<byte[]> FromBase32String(string base32String)
 	{
+		static Result<byte[]> fail(string message, params object[] args) =>
+			R.Fail(nameof(Base32F), nameof(FromBase32String), message, args);
+
 		// Check if string is empty
 		if (string.IsNullOrEmpty(base32String))
 		{
@@ -29,7 +31,7 @@ public static partial class Base32F
 		// Check the size
 		if (outputBytes.Length == 0)
 		{
-			return F.None<byte[], M.InputStringNotLongEnoughMsg>();
+			return fail("Input string is not long enough.");
 		}
 
 		// Position in the string
@@ -54,7 +56,7 @@ public static partial class Base32F
 			// Check if found
 			if (currentBase32Byte < 0)
 			{
-				return F.None<byte[]>(new M.CharacterNotInBase32AlphabetMsg(base32String[base32Position]));
+				return fail("'{Character}' is not in Base32 alphabet.", base32String[base32Position]);
 			}
 
 			// Calculate the number of bits we can extract out of current input character to fill missing bits in the output byte
@@ -90,16 +92,5 @@ public static partial class Base32F
 		}
 
 		return outputBytes;
-	}
-
-	/// <summary>Messages</summary>
-	public static partial class M
-	{
-		/// <summary>Input string is not long enough to construct a complete byte array</summary>
-		public sealed record class InputStringNotLongEnoughMsg : Msg;
-
-		/// <summary>Input string contains a character that is not in the Base32 alphabet</summary>
-		/// <param name="Value">Invalid character</param>
-		public sealed record class CharacterNotInBase32AlphabetMsg(char Value) : WithValueMsg<char>;
 	}
 }

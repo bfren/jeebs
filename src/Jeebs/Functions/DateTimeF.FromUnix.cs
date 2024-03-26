@@ -8,9 +8,9 @@ namespace Jeebs.Functions;
 public static partial class DateTimeF
 {
 	/// <summary>
-	/// Convert a Unix timestamp to a DateTime object
+	/// Convert a Unix timestamp to a DateTime object.
 	/// </summary>
-	/// <param name="unixTimeStampInSeconds">Unix timestamp (in seconds)</param>
+	/// <param name="unixTimeStampInSeconds">Unix timestamp (in seconds).</param>
 	public static DateTime FromUnix(double unixTimeStampInSeconds) =>
 		DateTime.UnixEpoch.AddSeconds(unixTimeStampInSeconds).ToUniversalTime();
 }

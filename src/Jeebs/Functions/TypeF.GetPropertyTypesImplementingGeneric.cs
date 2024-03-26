@@ -14,10 +14,10 @@ public static partial class TypeF
 		GetPropertyTypesImplementingGeneric(type, AllTypes.Value);
 
 	/// <summary>
-	/// Get distinct property types that implement <paramref name="type"/>
+	/// Get distinct property types that implement <paramref name="type"/>.
 	/// </summary>
-	/// <param name="type">Property Type</param>
-	/// <param name="typeList">Type List</param>
+	/// <param name="type">Property Type.</param>
+	/// <param name="typeList">Type List.</param>
 	internal static List<Type> GetPropertyTypesImplementingGeneric(Type type, IEnumerable<Type> typeList)
 	{
 		var types = from t in typeList

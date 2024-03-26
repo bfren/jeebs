@@ -8,7 +8,7 @@ namespace Jeebs.Functions;
 public static partial class JsonF
 {
 	/// <summary>
-	/// Get a copy of the default serialiser options
+	/// Get a copy of the default serialiser options.
 	/// </summary>
 	public static JsonSerializerOptions CopyOptions()
 	{

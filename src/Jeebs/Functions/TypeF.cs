@@ -9,14 +9,13 @@ using System.Reflection;
 namespace Jeebs.Functions;
 
 /// <summary>
-/// Type functions
+/// Type functions.
 /// </summary>
 public static partial class TypeF
 {
 	/// <summary>
-	/// Return list of all loaded assembly names -
-	/// excludes Microsoft.* and System.* assemblies
-	/// See https://dotnetcoretutorials.com/2020/07/03/getting-assemblies-is-harder-than-you-think-in-c/
+	/// Return list of all loaded assembly names - excludes Microsoft.* and System.* assemblies.<br/>
+	/// See https://dotnetcoretutorials.com/2020/07/03/getting-assemblies-is-harder-than-you-think-in-c/.
 	/// </summary>
 	internal static Lazy<List<AssemblyName>> AllAssemblyNames { get; } = new(
 		() =>
@@ -48,8 +47,7 @@ public static partial class TypeF
 	);
 
 	/// <summary>
-	/// Return list of all public class types in all loaded assemblies -
-	/// excludes Microsoft.* and System.* types
+	/// Return list of all public class types in all loaded assemblies - excludes Microsoft.* and System.* types.
 	/// </summary>
 	public static Lazy<IEnumerable<Type>> AllTypes { get; } = new(
 		() =>

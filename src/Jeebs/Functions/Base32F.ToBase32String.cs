@@ -9,9 +9,9 @@ namespace Jeebs.Functions;
 public static partial class Base32F
 {
 	/// <summary>
-	/// Convert <paramref name="bytes"/> to a Base32 string
+	/// Convert <paramref name="bytes"/> to a Base32 string.
 	/// </summary>
-	/// <param name="bytes">Input byte array</param>
+	/// <param name="bytes">Input byte array.</param>
 	public static string ToBase32String(byte[] bytes)
 	{
 		// Check if byte array is null

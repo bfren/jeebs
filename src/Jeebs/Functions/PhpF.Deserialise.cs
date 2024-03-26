@@ -9,9 +9,9 @@ namespace Jeebs.Functions;
 public static partial class PhpF
 {
 	/// <summary>
-	/// Deserialise object
+	/// Deserialise object.
 	/// </summary>
-	/// <param name="str">Serialised string</param>
+	/// <param name="str">Serialised string.</param>
 	public static object Deserialise(string str)
 	{
 		var pointer = 0;
@@ -116,9 +116,9 @@ public static partial class PhpF
 			for (var i = 0; i < len; i++)
 			{
 				var (key, value) = (PrivateDeserialise(str, ref pointer), PrivateDeserialise(str, ref pointer));
-				F.ParseInt32(key.ToString()).Switch(
+				M.ParseInt32(key.ToString()).Match(
 					some: x => table.Add(x, value),
-					none: _ => table.Add(key, value)
+					none: () => table.Add(key, value)
 				);
 			}
 
