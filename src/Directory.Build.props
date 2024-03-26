@@ -10,9 +10,9 @@
 
   <!-- Common Packages -->
   <ItemGroup>
-    <PackageReference Include="MaybeF" />
-    <Using Include="MaybeF" />
-    <Using Include="MaybeF.Linq" />
+    <PackageReference Include="Wrap" />
+    <Using Include="Wrap" />
+    <Using Include="Wrap.Linq" />
   </ItemGroup>
 
   <!-- Documentation -->
