@@ -2,7 +2,6 @@
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using System;
-using System.Globalization;
 using System.Linq;
 
 namespace Jeebs;
@@ -96,7 +95,22 @@ public readonly partial struct DateTimeInt : IComparable<DateTimeInt>, IEquatabl
 				new DateTime(Year, Month, Day, Hour, Minute, 0),
 
 			{ } x =>
-				Failures.InvalidDateTime(x.Part, this)
+				Failures.Invalid<DateTime>(nameof(ToDateTime), x.Part, this)
+		};
+
+	/// <summary>
+	/// Outputs object values as long.
+	/// If the object is not valid, returns 0.
+	/// </summary>
+	/// <returns>Long value.</returns>
+	public Result<long> ToLong() =>
+		IsValidDateTime() switch
+		{
+			{ } x when x.Valid =>
+				M.ParseInt64(ToString()).ToResult(nameof(DateTimeInt), nameof(ToLong)),
+
+			{ } x =>
+				Failures.Invalid<long>(nameof(ToLong), x.Part, this)
 		};
 
 	/// <summary>
@@ -111,22 +125,7 @@ public readonly partial struct DateTimeInt : IComparable<DateTimeInt>, IEquatabl
 				$"{Year:0000}{Month:00}{Day:00}{Hour:00}{Minute:00}",
 
 			false =>
-				0.ToString(FormatString, CultureInfo.InvariantCulture)
-		};
-
-	/// <summary>
-	/// Outputs object values as long.
-	/// If the object is not valid, returns 0.
-	/// </summary>
-	/// <returns>Long value.</returns>
-	public long ToLong() =>
-		IsValidDateTime().Valid switch
-		{
-			true =>
-				long.Parse(ToString(), CultureInfo.InvariantCulture),
-
-			false =>
-				0
+				MinValue.ToString()
 		};
 
 	internal (bool Valid, string Part) IsValidDateTime()
@@ -229,8 +228,10 @@ public readonly partial struct DateTimeInt : IComparable<DateTimeInt>, IEquatabl
 		/// <summary>Unable to parse DateTime integer.</summary>
 		/// <param name="part">The name of the part that caused the error.</param>
 		/// <param name="dt">DateTime value.</param>
-		public static Result<DateTime> InvalidDateTime(string part, DateTimeInt dt) =>
+		public static Result<T> Invalid<T>(string function, string part, DateTimeInt dt) =>
 			R.Fail<DateTimeInt>(
+				nameof(DateTimeInt),
+				function,
 				"Invalid {Part} - 'Y:{Year} M:{Month} D:{Day} H:{Hour} m:{Minute}'.",
 				part, dt.Year, dt.Month, dt.Day, dt.Hour, dt.Minute
 			);

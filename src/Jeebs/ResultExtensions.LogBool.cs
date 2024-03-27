@@ -19,6 +19,7 @@ public static partial class ResultExtensions
 	/// <param name="usingLog">Log implementation.</param>
 	/// <param name="ifTrue">Text when <paramref name="this"/> is <see cref="Ok{T}"/> and the value is true.</param>
 	/// <param name="ifFalse">Text when <paramref name="this"/> is <see cref="Ok{T}"/> and the value is false.</param>
+	/// <returns>Original object.</returns>
 	public static Result<bool> LogBool(this Result<bool> @this, ILog usingLog, string ifTrue, string ifFalse) =>
 		@this.Audit(
 			ok: x =>

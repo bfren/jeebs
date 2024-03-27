@@ -18,7 +18,7 @@ internal sealed class EnumeratedJsonConverterFactory : JsonConverterFactory
 	/// <param name="typeToConvert">Type to convert.</param>
 	/// <returns>Whether or not <paramref name="typeToConvert"/> inherits from <see cref="Enumerated"/>.</returns>
 	public override bool CanConvert(Type typeToConvert) =>
-		typeToConvert.IsSubclassOf(typeof(Enumerated));
+		typeToConvert.Implements<Enumerated>();
 
 	/// <summary>
 	/// Creates JsonConverter using <see cref="Enumerated"/> type as generic argument.

@@ -7,5 +7,5 @@ public readonly partial struct DateTimeInt
 {
 	/// <inheritdoc/>
 	public int CompareTo(DateTimeInt other) =>
-		ToLong().CompareTo(other.ToLong());
+		string.Compare(ToString(), other.ToString(), System.StringComparison.Ordinal);
 }
