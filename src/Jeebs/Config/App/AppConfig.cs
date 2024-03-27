@@ -8,34 +8,34 @@ using Microsoft.Extensions.Options;
 namespace Jeebs.Config.App;
 
 /// <summary>
-/// Jeebs Application Configuraiton
+/// Jeebs Application Configuration.
 /// </summary>
 public sealed record class AppConfig : IOptions<AppConfig>
 {
 	/// <summary>
-	/// Path to this configuration section
+	/// Path to this configuration section.
 	/// </summary>
 	public static readonly string Key = JeebsConfig.Key + ":app";
 
 	/// <summary>
-	/// Application Name
+	/// Application Name.
 	/// </summary>
 	public string Name { get; init; } = string.Empty;
 
 	/// <summary>
-	/// The Application Suite property to add to log messages
+	/// The Application Suite property to add to log messages.
 	/// </summary>
 	public string? Suite { get; init; }
 
 	/// <summary>
 	/// The full name - if <see cref="Suite"/> is set, returns <see cref="Suite"/>/<see cref="Name"/>,
-	/// otherwise simply <see cref="Name"/>
+	/// otherwise simply <see cref="Name"/>.
 	/// </summary>
 	public string FullName =>
 		StringF.Format("{0}/", Suite, string.Empty) + Name;
 
 	/// <summary>
-	/// Application Version
+	/// Application Version.
 	/// </summary>
 	public Version Version { get; init; } = new Version(0, 1, 0, 0);
 

@@ -4,12 +4,11 @@
 using System;
 using System.Linq.Expressions;
 using System.Reflection;
-using Jeebs.Messages;
 
 namespace Jeebs.Reflection;
 
 /// <summary>
-/// LinqExpression Extensions: GetPropertyInfo
+/// Extension methods for <see cref="Expression"/> objects.
 /// </summary>
 public static class LinqExpressionExtensions
 {
@@ -29,10 +28,10 @@ public static class LinqExpressionExtensions
 			x => typeof(TObject).HasProperty(x.Name) switch
 			{
 				true =>
-					F.Some(new PropertyInfo<TObject, TProperty>((PropertyInfo)x)),
+					M.Wrap(new PropertyInfo<TObject, TProperty>((PropertyInfo)x)),
 
 				false =>
-					F.None<PropertyInfo<TObject, TProperty>>(new M.PropertyDoesNotExistOnTypeMsg<TObject>(x.Name))
+					M.None
 			}
 		);
 
@@ -53,18 +52,6 @@ public static class LinqExpressionExtensions
 				memberExpression.Member,
 
 			_ =>
-				F.None<MemberInfo, M.ExpressionIsNotAMemberExpressionMsg>()
+				M.None
 		};
-
-	/// <summary>Messages</summary>
-	public static class M
-	{
-		/// <summary>Only MemberExpressions can be used for PropertyInfo purposes</summary>
-		public sealed record class ExpressionIsNotAMemberExpressionMsg : Msg;
-
-		/// <summary>The specified property does not exist on the type</summary>
-		/// <typeparam name="T">Type</typeparam>
-		/// <param name="Value">Property Name</param>
-		public sealed record class PropertyDoesNotExistOnTypeMsg<T>(string Value) : WithValueMsg<string>;
-	}
 }

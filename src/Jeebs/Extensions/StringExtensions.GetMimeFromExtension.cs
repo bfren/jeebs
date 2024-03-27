@@ -6,9 +6,10 @@ namespace Jeebs.Extensions;
 public static partial class StringExtensions
 {
 	/// <summary>
-	/// Parse the Mime Type of a filename using its extension
+	/// Parse the Mime Type of a filename using its extension.
 	/// </summary>
-	/// <param name="this">String object</param>
+	/// <param name="this">String object.</param>
+	/// <returns>Mime Type.</returns>
 	public static string GetMimeFromExtension(this string @this) =>
 		Modify(@this, () =>
 		{

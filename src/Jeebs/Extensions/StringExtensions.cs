@@ -6,23 +6,28 @@ using System;
 namespace Jeebs.Extensions;
 
 /// <summary>
-/// String Extensions
+/// Extension methods for <see cref="string"/> objects.
 /// </summary>
 public static partial class StringExtensions
 {
-	/// <summary>
-	/// Return empty if the input string is null or empty
-	/// </summary>
-	/// <param name="this">Input string</param>
-	/// <param name="perform">Function to modify and return the input string</param>
-	/// <param name="empty">[Optional] String to return if @this is empty</param>
-	private static string Modify(string @this, Func<string> perform, string? empty = null)
-	{
-		if (string.IsNullOrEmpty(@this))
-		{
-			return empty ?? @this;
-		}
+	/// <inheritdoc cref="Modify(string, Func{string?}, string)"/>
+	private static string Modify(string s, Func<string?> perform) =>
+		Modify(s, perform, string.Empty);
 
-		return perform();
-	}
+	/// <summary>
+	/// Perform a modification on an input string.
+	/// </summary>
+	/// <param name="s">Input string.</param>
+	/// <param name="perform">Function to modify and return the input string.</param>
+	/// <param name="empty">String to return if <paramref name="s"/> is empty.</param>
+	/// <returns>Modified string (or <paramref name="empty"/> if <paramref name="s"/> is null or empty).</returns>
+	private static string Modify(string s, Func<string?> perform, string empty) =>
+		string.IsNullOrEmpty(s) switch
+		{
+			false =>
+				perform() ?? empty,
+
+			true =>
+				empty
+		};
 }

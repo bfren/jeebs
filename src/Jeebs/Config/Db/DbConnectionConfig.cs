@@ -6,22 +6,22 @@ using System.Collections.Generic;
 namespace Jeebs.Config.Db;
 
 /// <summary>
-/// Database connection configuration
+/// Database connection configuration.
 /// </summary>
 public sealed record class DbConnectionConfig
 {
 	/// <summary>
-	/// Database connection string
+	/// Database connection string.
 	/// </summary>
 	public string ConnectionString { get; init; } = string.Empty;
 
 	/// <summary>
-	/// Database table prefix
+	/// Database table prefix.
 	/// </summary>
 	public string TablePrefix { get; init; } = string.Empty;
 
 	/// <summary>
-	/// Additional settings required for configuring this database connection
+	/// Additional settings required for configuring this database connection.
 	/// </summary>
 	public Dictionary<string, string> AdditionalSettings { get; init; } = [];
 }

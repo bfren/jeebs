@@ -4,7 +4,7 @@
 namespace Jeebs;
 
 /// <summary>
-/// Array Extensions
+/// Extension methods for <see cref="System.Array"/> objects.
 /// </summary>
 public static class ArrayExtensions
 {

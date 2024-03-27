@@ -8,9 +8,10 @@ namespace Jeebs.Extensions;
 public static partial class StringExtensions
 {
 	/// <summary>
-	/// Converts a string to Title Case (ignoring acronyms)
+	/// Converts a string to Title Case (ignoring acronyms).
 	/// </summary>
-	/// <param name="this">String object</param>
+	/// <param name="this">Input string.</param>
+	/// <returns></returns>
 	public static string ToTitleCase(this string @this) =>
 		Modify(@this, () =>
 		{

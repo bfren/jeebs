@@ -7,7 +7,7 @@ using Microsoft.Extensions.Options;
 namespace Jeebs.Config.Services.Seq;
 
 /// <summary>
-/// Seq configuration
+/// Seq configuration.
 /// </summary>
 public sealed record class SeqConfig : IOptions<SeqConfig>, IWebhookServiceConfig
 {
@@ -16,12 +16,12 @@ public sealed record class SeqConfig : IOptions<SeqConfig>, IWebhookServiceConfi
 		$"{Server}/api/events/raw?clef";
 
 	/// <summary>
-	/// Seq Server URI
+	/// Seq Server URI.
 	/// </summary>
 	public string Server { get; init; } = string.Empty;
 
 	/// <summary>
-	/// Seq Server API Key
+	/// Seq Server API Key.
 	/// </summary>
 	public string ApiKey { get; init; } = string.Empty;
 

@@ -8,18 +8,18 @@ namespace Jeebs.Extensions;
 public static partial class StringExtensions
 {
 	/// <inheritdoc cref="ReplaceNonWord(string, string?)"/>
-	public static string ReplaceNonWord(this string @this) =>
+	public static string ReplaceNonLetter(this string @this) =>
 		ReplaceNonWord(@this, string.Empty);
 
 	/// <summary>
-	/// Replace non-word characters in a string, useful for creating HTML IDs (for example).
+	/// Replace non-letter characters in a string.
 	/// </summary>
 	/// <param name="this">String to perform operation on.</param>
 	/// <param name="with">String to replace unwanted characters with.</param>
 	/// <returns><paramref name="this"/> with non-word characters replaced by <paramref name="with"/>.</returns>
-	public static string ReplaceNonWord(this string @this, string with) =>
-		Modify(@this, () => NonWordCharactersRegex().Replace(@this, with ?? string.Empty));
+	public static string ReplaceNonLetter(this string @this, string with) =>
+		Modify(@this, () => NonLetterCharactersRegex().Replace(@this, with ?? string.Empty));
 
-	[GeneratedRegex("\\W+")]
-	private static partial Regex NonWordCharactersRegex();
+	[GeneratedRegex("[^a-zA-Z]+")]
+	private static partial Regex NonLetterCharactersRegex();
 }

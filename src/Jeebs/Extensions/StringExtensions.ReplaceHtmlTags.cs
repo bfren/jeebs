@@ -7,25 +7,18 @@ namespace Jeebs.Extensions;
 
 public static partial class StringExtensions
 {
-	/// <summary>
-	/// Replace all HTML tags
-	/// </summary>
-	/// <param name="this">The input string</param>
-	/// <param name="replaceWith">String to replace HTML tags with</param>
-	public static string ReplaceHtmlTags(this string @this, string? replaceWith) =>
-		Modify(@this, () =>
-		{
-			// Make sure replaceWith isn't null
-			replaceWith ??= string.Empty;
-
-			// Now replace all HTML characters
-			var re = HtmlCharactersRegex();
-			return re.Replace(@this, replaceWith);
-		});
-
-	/// <inheritdoc cref="ReplaceHtmlTags(string, string?)"/>
+	/// <inheritdoc cref="ReplaceHtmlTags(string, string)"/>
 	public static string ReplaceHtmlTags(this string @this) =>
-		ReplaceHtmlTags(@this, null);
+		ReplaceHtmlTags(@this, string.Empty);
+
+	/// <summary>
+	/// Replace all HTML tags.
+	/// </summary>
+	/// <param name="this">Input string.</param>
+	/// <param name="with">String to replace HTML tags with.</param>
+	/// <returns><paramref name="this"/> with HTML tags replaced by <paramref name="with"/>.</returns>
+	public static string ReplaceHtmlTags(this string @this, string with) =>
+		Modify(@this, () => HtmlCharactersRegex().Replace(@this, with ?? string.Empty));
 
 	[GeneratedRegex("<.*?>")]
 	private static partial Regex HtmlCharactersRegex();

@@ -5,71 +5,14 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using Jeebs.Functions;
-using Sys = System.Collections.Immutable;
+using SCI = System.Collections.Immutable;
 
 namespace Jeebs.Collections;
-
-/// <summary>
-/// Alternative methods for creating an <see cref="ImmutableList{T}"/>
-/// </summary>
-public static class ImmutableList
-{
-	/// <summary>
-	/// Create an empty <see cref="ImmutableList{T}"/>
-	/// </summary>
-	/// <typeparam name="T">List Item type</typeparam>
-	public static ImmutableList<T> Empty<T>() =>
-		new();
-
-	/// <summary>
-	/// Create a new <see cref="ImmutableList{T}"/> with the specified <paramref name="items"/>
-	/// </summary>
-	/// <typeparam name="T">List Item type</typeparam>
-	/// <param name="items">Collection of items to add</param>
-	public static ImmutableList<T> Create<T>(IEnumerable<T> items) =>
-		new(items);
-
-	/// <summary>
-	/// Create a new <see cref="ImmutableList{T}"/> with the specified <paramref name="args"/>
-	/// </summary>
-	/// <typeparam name="T">List Item type</typeparam>
-	/// <param name="args">Items to add</param>
-	public static ImmutableList<T> Create<T>(params T[]? args) =>
-		args switch
-		{
-			T[] =>
-				new(args),
-
-			_ =>
-				new()
-		};
-
-	/// <summary>
-	/// Deserialise a JSON list into an ImmutableList
-	/// </summary>
-	/// <typeparam name="T">List Item type</typeparam>
-	/// <param name="json">JSON list</param>
-	public static ImmutableList<T> Deserialise<T>(string json) =>
-		JsonF.Deserialise<List<T>>(json)
-			.Switch(
-				some: x => Create(items: x),
-				none: _ => new()
-			);
-
-	/// <summary>
-	/// Merge multiple <see cref="ImmutableList{T}"/> objects into one
-	/// </summary>
-	/// <typeparam name="T">List Item type</typeparam>
-	/// <param name="lists">Lists to merge</param>
-	public static ImmutableList<T> Merge<T>(params IImmutableList<T>[] lists) =>
-		new(lists.SelectMany(x => x));
-}
 
 /// <inheritdoc cref="IImmutableList{T}"/>
 public record class ImmutableList<T> : IImmutableList<T>, IEquatable<ImmutableList<T>>
 {
-	internal Sys.ImmutableList<T> List { get; init; }
+	internal SCI.ImmutableList<T> List { get; init; }
 
 	/// <inheritdoc/>
 	public Maybe<T> this[int index] =>
@@ -80,21 +23,17 @@ public record class ImmutableList<T> : IImmutableList<T>, IEquatable<ImmutableLi
 		List.Count;
 
 	/// <summary>
-	/// Create a new, empty <see cref="ImmutableList{T}"/>
+	/// Create a new, empty <see cref="ImmutableList{T}"/>.
 	/// </summary>
-	public ImmutableList() :
-		this(Sys.ImmutableList<T>.Empty)
-	{ }
+	public ImmutableList() : this(SCI.ImmutableList<T>.Empty) { }
 
 	/// <summary>
-	/// Create a new <see cref="ImmutableList{T}"/> with the specified <paramref name="collection"/>
+	/// Create a new <see cref="ImmutableList{T}"/> with the specified <paramref name="collection"/>.
 	/// </summary>
-	/// <param name="collection">Collection of items to add</param>
-	public ImmutableList(IEnumerable<T> collection) :
-		this(Sys.ImmutableList<T>.Empty.AddRange(collection))
-	{ }
+	/// <param name="collection">Collection of items to add.</param>
+	public ImmutableList(IEnumerable<T> collection) : this(SCI.ImmutableList<T>.Empty.AddRange(collection)) { }
 
-	internal ImmutableList(Sys.ImmutableList<T> list) =>
+	internal ImmutableList(SCI.ImmutableList<T> list) =>
 		List = list;
 
 	/// <inheritdoc/>
@@ -103,11 +42,11 @@ public record class ImmutableList<T> : IImmutableList<T>, IEquatable<ImmutableLi
 
 	/// <inheritdoc/>
 	public T[] ToArray() =>
-		List.ToArray();
+		[.. List];
 
 	/// <inheritdoc/>
 	public List<T> ToList() =>
-		List.ToList();
+		[.. List];
 
 	/// <inheritdoc/>
 	public IImmutableList<T> WithItem(T itemToAdd) =>
@@ -141,9 +80,10 @@ public record class ImmutableList<T> : IImmutableList<T>, IEquatable<ImmutableLi
 		GetEnumerator();
 
 	/// <summary>
-	/// Compare sequences
+	/// Compare sequences.
 	/// </summary>
-	/// <param name="other">Another list to compare with this one</param>
+	/// <param name="other">Another list to compare with this one.</param>
+	/// <returns>True if <see cref="this"/> and <paramref name="other"/> are equal.</returns>
 	public virtual bool Equals(ImmutableList<T>? other) =>
 		other switch
 		{
@@ -154,9 +94,7 @@ public record class ImmutableList<T> : IImmutableList<T>, IEquatable<ImmutableLi
 				false
 		};
 
-	/// <summary>
-	/// Return list hash code
-	/// </summary>
+	/// <inheritdoc/>
 	public override int GetHashCode() =>
 		List.GetHashCode();
 }

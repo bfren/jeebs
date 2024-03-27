@@ -8,9 +8,10 @@ namespace Jeebs.Extensions;
 public static partial class StringExtensions
 {
 	/// <summary>
-	/// Generate an acronym from a string
+	/// Generate an acronym from a string.
 	/// </summary>
-	/// <param name="this">Input string</param>
+	/// <param name="this">Input string.</param>
+	/// <returns>Acronym.</returns>
 	public static string GetAcronym(this string @this)
 	{
 		var acronym = new StringBuilder();

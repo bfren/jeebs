@@ -8,16 +8,16 @@ namespace Jeebs.Extensions;
 public static partial class StringExtensions
 {
 	/// <summary>
-	/// Trim a string from the end of another string.
+	/// Trim a string from the start of another string.
 	/// </summary>
 	/// <param name="this">Input string.</param>
 	/// <param name="value">Value to trim.</param>
-	/// <returns><paramref name="this"/> with <paramref name="value"/> trimmed from the end.</returns>
-	public static string TrimEnd(this string @this, string value) =>
-		@this.EndsWith(value, StringComparison.InvariantCulture) switch
+	/// <returns><paramref name="this"/> with <paramref name="value"/> trimmed from the start.</returns>
+	public static string TrimStart(this string @this, string value) =>
+		@this.StartsWith(value, StringComparison.InvariantCulture) switch
 		{
 			true =>
-				@this.Remove(@this.LastIndexOf(value, StringComparison.InvariantCulture)),
+				@this.Remove(@this.IndexOf(value, StringComparison.InvariantCulture)),
 
 			false =>
 				@this

@@ -9,9 +9,10 @@ namespace Jeebs.Extensions;
 public static partial class StringExtensions
 {
 	/// <summary>
-	/// Convert straight quotes to curly quotes, but not inside HTML tags / attributes
+	/// Convert straight quotes to curly quotes, but not inside HTML tags / attributes.
 	/// </summary>
-	/// <param name="this">Input string</param>
+	/// <param name="this">Input string.</param>
+	/// <returns><paramref name="this"/> with straight quotes converted to curly quotes except inside HTML.</returns>
 	public static string ConvertInnerHtmlQuotes(this string @this) =>
 		Modify(@this, () =>
 		{

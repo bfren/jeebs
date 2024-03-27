@@ -6,11 +6,12 @@ namespace Jeebs.Extensions;
 public static partial class StringExtensions
 {
 	/// <summary>
-	/// Replace all strings in an array
+	/// Replace all strings in an array with a single value.
 	/// </summary>
-	/// <param name="this">String to perform operation on</param>
-	/// <param name="replace">Array of strings to replace</param>
-	/// <param name="with">String to replace occurrences with</param>
+	/// <param name="this">Input string.</param>
+	/// <param name="replace">Array of strings to replace.</param>
+	/// <param name="with">String to replace occurrences with.</param>
+	/// <returns><paramref name="this"/> with <paramref name="replace"/> values replaced by <paramref name="with"/>.</returns>
 	public static string ReplaceAll(this string @this, string[] replace, string with) =>
 		Modify(@this, () =>
 		{

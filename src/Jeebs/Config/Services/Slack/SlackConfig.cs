@@ -7,7 +7,7 @@ using Microsoft.Extensions.Options;
 namespace Jeebs.Config.Services.Slack;
 
 /// <summary>
-/// Slack configuration
+/// Slack configuration.
 /// </summary>
 public sealed record class SlackConfig : IOptions<SlackConfig>, IWebhookServiceConfig
 {
@@ -15,7 +15,7 @@ public sealed record class SlackConfig : IOptions<SlackConfig>, IWebhookServiceC
 	public string Webhook { get; init; } = string.Empty;
 
 	/// <summary>
-	/// Whether or not to add attachments to a message (error type and timestamp)
+	/// Whether or not to add attachments to a message (error type and timestamp).
 	/// </summary>
 	public bool ShowAttachments { get; init; }
 

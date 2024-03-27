@@ -7,7 +7,7 @@ using System.Linq;
 namespace Jeebs;
 
 /// <summary>
-/// Type extension methods
+/// Extension methods for <see cref="Type"/> objects.
 /// </summary>
 public static class TypeExtensions
 {

@@ -7,7 +7,7 @@ using System.Globalization;
 namespace Jeebs;
 
 /// <summary>
-/// DateTime Extensions
+/// Extension methods for <see cref="DateTime"/> objects.
 /// </summary>
 public static class DateTimeExtensions
 {

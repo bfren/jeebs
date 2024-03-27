@@ -6,9 +6,10 @@ namespace Jeebs.Extensions;
 public static partial class StringExtensions
 {
 	/// <summary>
-	/// Decode HTML entities
+	/// Decode HTML entities.
 	/// </summary>
-	/// <param name="this">Input string</param>
+	/// <param name="this">Input string.</param>
+	/// <returns>HTML decoded string.</returns>
 	public static string HtmlDecode(this string @this) =>
 		Modify(@this, () => System.Net.WebUtility.HtmlDecode(@this));
 }

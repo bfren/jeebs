@@ -9,10 +9,13 @@ namespace Jeebs.Extensions;
 public static partial class StringExtensions
 {
 	/// <summary>
-	/// Return the input string encoded into ASCII Html Entities
-	/// Warning: this only works with ASCII 'Printable' characters (32->126), NOT 'Extended' characters
+	/// Return the input string encoded into ASCII Html Entities.
 	/// </summary>
-	/// <param name="this">The input string</param>
+	/// <remarks>
+	/// Warning: this only works with ASCII 'Printable' characters (32->126), NOT 'Extended' characters.
+	/// </remarks>
+	/// <param name="this">Input string.</param>
+	/// <returns>ASCII-encoded string.</returns>
 	public static string ToASCII(this string @this) =>
 		Modify(@this, () =>
 		{

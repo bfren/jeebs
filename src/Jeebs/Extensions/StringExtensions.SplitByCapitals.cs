@@ -8,15 +8,12 @@ namespace Jeebs.Extensions;
 public static partial class StringExtensions
 {
 	/// <summary>
-	/// Split a CamelCase string by capitals
+	/// Split a CamelCase string by capital letters.
 	/// </summary>
-	/// <param name="this">String object</param>
+	/// <param name="this">Input string.</param>
+	/// <returns><paramref name="this"/> split by capital letters.</returns>
 	public static string SplitByCapitals(this string @this) =>
-		Modify(@this, () =>
-		{
-			var capitals = CapitalLettersRegex();
-			return capitals.Replace(@this, " $2").Trim();
-		});
+		Modify(@this, () => CapitalLettersRegex().Replace(@this, " $2").Trim());
 
 	[GeneratedRegex("( *)([A-Z])")]
 	private static partial Regex CapitalLettersRegex();

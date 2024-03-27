@@ -7,17 +7,17 @@ using Microsoft.Extensions.Options;
 namespace Jeebs.Config.Web.Verification;
 
 /// <summary>
-/// Site Verification Configuration
+/// Site Verification Configuration.
 /// </summary>
 public sealed record class VerificationConfig : IOptions<VerificationConfig>
 {
 	/// <summary>
-	/// Path to this configuration section
+	/// Path to this configuration section.
 	/// </summary>
 	public static readonly string Key = WebConfig.Key + ":verification";
 
 	/// <summary>
-	/// Google Site Verification page
+	/// Google Site Verification page.
 	/// </summary>
 	public string? Google
 	{
@@ -31,7 +31,7 @@ public sealed record class VerificationConfig : IOptions<VerificationConfig>
 	private readonly string? googleCode;
 
 	/// <summary>
-	/// True if there are any verification configurations
+	/// True if there are any verification configurations.
 	/// </summary>
 	public bool Any =>
 		Google is not null;

@@ -6,27 +6,27 @@ using Microsoft.Extensions.Options;
 namespace Jeebs.Config.Web;
 
 /// <summary>
-/// Configuration options for Web Apps
+/// Configuration options for Web Apps.
 /// </summary>
 public sealed record class WebConfig : IOptions<WebConfig>
 {
 	/// <summary>
-	/// Path to this configuration section
+	/// Path to this configuration section.
 	/// </summary>
 	public static readonly string Key = JeebsConfig.Key + ":web";
 
 	/// <summary>
-	/// Authentication and Authorisation configuration
+	/// Authentication and Authorisation configuration.
 	/// </summary>
 	public Auth.AuthConfig Auth { get; init; } = new();
 
 	/// <summary>
-	/// RedirectionsConfig
+	/// RedirectionsConfig.
 	/// </summary>
 	public Redirections.RedirectionsConfig Redirections { get; init; } = [];
 
 	/// <summary>
-	/// SiteVerificationConfig
+	/// SiteVerificationConfig.
 	/// </summary>
 	public Verification.VerificationConfig Verification { get; init; } = new();
 

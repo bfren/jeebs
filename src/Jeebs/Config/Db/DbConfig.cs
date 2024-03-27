@@ -7,22 +7,22 @@ using Microsoft.Extensions.Options;
 namespace Jeebs.Config.Db;
 
 /// <summary>
-/// Database configuration
+/// Database configuration.
 /// </summary>
 public sealed record class DbConfig : IOptions<DbConfig>
 {
 	/// <summary>
-	/// Path to database settings configuration section
+	/// Path to database settings configuration section.
 	/// </summary>
 	public static readonly string Key = JeebsConfig.Key + ":db";
 
 	/// <summary>
-	/// Default database connection name
+	/// Default database connection name.
 	/// </summary>
 	public string Default { get; init; } = string.Empty;
 
 	/// <summary>
-	/// Authentication database connection name
+	/// Authentication database connection name.
 	/// </summary>
 	public string Authentication
 	{
@@ -36,7 +36,7 @@ public sealed record class DbConfig : IOptions<DbConfig>
 	private readonly string? authenticationConnectionValue;
 
 	/// <summary>
-	/// Dictionary of database connections
+	/// Dictionary of database connections.
 	/// </summary>
 	public Dictionary<string, DbConnectionConfig> Connections { get; init; } = [];
 
@@ -45,47 +45,45 @@ public sealed record class DbConfig : IOptions<DbConfig>
 		this;
 
 	/// <summary>
-	/// Retrieve default Connection
+	/// Retrieve default Connection.
 	/// </summary>
-	/// <exception cref="DefaultDbConnectionUndefinedException"></exception>
-	/// <exception cref="NoDbConnectionsException"></exception>
-	/// <exception cref="NamedDbConnectionNotFoundException"></exception>
-	public DbConnectionConfig GetConnection() =>
-		GetConnection(null);
+	public Result<DbConnectionConfig> GetConnection() =>
+		GetConnection(Default);
 
 	/// <summary>
-	/// Retrieve Connection by name
+	/// Retrieve Connection by name.
 	/// </summary>
-	/// <param name="name">[Optional] Connection name</param>
-	/// <exception cref="DefaultDbConnectionUndefinedException"></exception>
-	/// <exception cref="NoDbConnectionsException"></exception>
-	/// <exception cref="NamedDbConnectionNotFoundException"></exception>
-	public DbConnectionConfig GetConnection(string? name)
+	/// <param name="name">Connection name.</param>
+	public Result<DbConnectionConfig> GetConnection(string name)
 	{
-		// If name is null or empty, use Default connection
-		var connection = string.IsNullOrWhiteSpace(name) ? Default : name;
-		if (string.IsNullOrEmpty(connection))
+		static Result<DbConnectionConfig> fail(string message, params object[] args) =>
+			R.Fail(nameof(DbConfig), nameof(GetConnection), message, args);
+
+		// Name cannot be null or empty
+		if (string.IsNullOrEmpty(name))
 		{
-			throw new DefaultDbConnectionUndefinedException("Default database connection is not defined.");
+			return fail("Default database connection is not defined.");
+		}
+
+		// The list of defined connections cannot be empty
+		if (Connections.Count == 0)
+		{
+			return fail("At least one database connection must be defined.");
 		}
 
 		// Attempt to retrieve the connection
-		if (Connections.Count == 0)
-		{
-			throw new NoDbConnectionsException("At least one database connection must be defined.");
-		}
-
-		if (Connections.TryGetValue(connection, out var config))
+		if (Connections.TryGetValue(name, out var config))
 		{
 			return config;
 		}
 
-		throw new NamedDbConnectionNotFoundException(connection);
+		return fail("A connection named {ConnectionName} could not be found.", name);
 	}
 
 	/// <summary>
-	/// Retrieve the authentication database connection settings
+	/// Retrieve the authentication database Connection defined by <see cref="Authentication"/>.
 	/// </summary>
-	public DbConnectionConfig GetAuthenticationConnection() =>
+	/// <returns>The Authentication Connection configuration.</returns>
+	public Result<DbConnectionConfig> GetAuthenticationConnection() =>
 		GetConnection(Authentication);
 }

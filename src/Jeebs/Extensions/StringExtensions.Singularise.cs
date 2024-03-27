@@ -10,9 +10,11 @@ namespace Jeebs.Extensions;
 public static partial class StringExtensions
 {
 	/// <summary>
-	/// Rules for converting plural words into singular words
-	/// This comes from http://lotsacode.wordpress.com/2010/03/05/singularization-pluralization-in-c/
+	/// Rules for converting plural words into singular words.
 	/// </summary>
+	/// <remarks>
+	/// This comes from http://lotsacode.wordpress.com/2010/03/05/singularization-pluralization-in-c/
+	/// </remarks>
 	private static readonly IDictionary<string, string> Singularisations = new Dictionary<string, string>
 	{
 		{ "people", "person" },
@@ -39,9 +41,10 @@ public static partial class StringExtensions
 	};
 
 	/// <summary>
-	/// 'Singularise' a string
+	/// 'Singularise' a string.
 	/// </summary>
-	/// <param name="this">The string to singularise</param>
+	/// <param name="this">Input string.</param>
+	/// <returns>Singularised string.</returns>
 	public static string Singularise(this string @this)
 	{
 		if (UnPluralisables.All.Contains(@this.ToLowerInvariant()))

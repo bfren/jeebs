@@ -4,6 +4,6 @@
 namespace Jeebs;
 
 /// <summary>
-/// <see cref="Result{T}"/> extension methods.
+/// Extension methods for <see cref="Result{T}"/> object.
 /// </summary>
 public static partial class ResultExtensions { }

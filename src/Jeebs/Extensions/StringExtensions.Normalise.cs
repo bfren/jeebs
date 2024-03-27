@@ -8,22 +8,27 @@ namespace Jeebs.Extensions;
 public static partial class StringExtensions
 {
 	/// <summary>
-	/// Normalise a string by making it lowercase, stripping all non-letters and replacing spaces with -
+	/// Normalise a string by making it lowercase, stripping all non-letters and replacing spaces with '-'.
 	/// </summary>
-	/// <param name="this">String to perform operation on</param>
+	/// <param name="this">Input string.</param>
+	/// <returns>Normalised string.</returns>
 	public static string Normalise(this string @this) =>
 		Modify(@this, () =>
 		{
 			// Make lowercase, and remove non-letters characters
-			var nonNormalisedCharacters = UnwantedCharactersRegex();
-			var normalised = nonNormalisedCharacters.Replace(@this.ToLowerInvariant(), "").Trim();
+			var normalised = UnwantedCharactersRegex()
+				.Replace(@this.ToLowerInvariant(), "")
+				.Trim();
 
-			// Remove hyphens from the start of the string
-			normalised = normalised.TrimStart('-');
+			// Trim hyphens from the start and end of the string
+			normalised = normalised
+				.Trim('-');
 
 			// Replace multiple spaces and hyphens with a single hyphen
-			var multipleSpacesAndHyphens = MultipleSpacesAndHyphensRegex();
-			return multipleSpacesAndHyphens.Replace(normalised, "-");
+			normalised = MultipleSpacesAndHyphensRegex()
+				.Replace(normalised, "-");
+
+			return normalised;
 		});
 
 	[GeneratedRegex("[^a-z -]")]

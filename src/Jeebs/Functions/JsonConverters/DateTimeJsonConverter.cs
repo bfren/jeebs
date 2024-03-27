@@ -19,9 +19,9 @@ internal sealed class DateTimeJsonConverter : JsonConverter<DateTime>
 	/// <param name="typeToConvert">Type</param>
 	/// <param name="options">JsonSerializerOptions</param>
 	public override DateTime Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options) =>
-		F.ParseDateTime(reader.GetString()).Switch(
+		M.ParseDateTime(reader.GetString()).Match(
 			some: x => new DateTime(x.Ticks, DateTimeKind.Utc),
-			none: _ => DateTime.MinValue.ToUniversalTime()
+			none: DateTime.MinValue.ToUniversalTime
 		);
 
 	/// <summary>
