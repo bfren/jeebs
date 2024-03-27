@@ -5,26 +5,28 @@ using System;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
-namespace Jeebs.Functions.JsonConverters;
+namespace Jeebs.Internals.JsonConverters;
 
 /// <summary>
-/// <see cref="EnumeratedJsonConverter{T}"/> JSON converter factory
+/// JSON converter for <see cref="Enumerated"/> objects.
 /// </summary>
 internal sealed class EnumeratedJsonConverterFactory : JsonConverterFactory
 {
 	/// <summary>
-	/// Returns true if <paramref name="typeToConvert"/> inherits from <see cref="Enumerated"/>
+	/// Returns true if <paramref name="typeToConvert"/> inherits from <see cref="Enumerated"/>.
 	/// </summary>
-	/// <param name="typeToConvert">Type to convert</param>
+	/// <param name="typeToConvert">Type to convert.</param>
+	/// <returns>Whether or not <paramref name="typeToConvert"/> inherits from <see cref="Enumerated"/>.</returns>
 	public override bool CanConvert(Type typeToConvert) =>
 		typeToConvert.IsSubclassOf(typeof(Enumerated));
 
 	/// <summary>
-	/// Creates JsonConverter using Enum type as generic argument
+	/// Creates JsonConverter using <see cref="Enumerated"/> type as generic argument.
 	/// </summary>
-	/// <param name="typeToConvert">Enum type</param>
-	/// <param name="options">JsonSerializerOptions</param>
-	/// <exception cref="JsonException"></exception>
+	/// <param name="typeToConvert"><see cref="Enumerated"/> type.</param>
+	/// <param name="options">JsonSerializerOptions.</param>
+	/// <returns><see cref="EnumeratedJsonConverter{T}"/> object.</returns>
+	/// <exception cref="JsonException"/>
 	public override JsonConverter CreateConverter(Type typeToConvert, JsonSerializerOptions options)
 	{
 		var converterType = typeof(EnumeratedJsonConverter<>).MakeGenericType(typeToConvert);
