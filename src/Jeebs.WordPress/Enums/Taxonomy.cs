@@ -59,7 +59,7 @@ public sealed record class Taxonomy : Enumerated
 	/// Populate list of taxonomies
 	/// </summary>
 	static Taxonomy() =>
-		All = new HashSet<Taxonomy>(new[] { PostCategory, PostTag, LinkCategory, NavMenu });
+		All = new HashSet<Taxonomy>([PostCategory, PostTag, LinkCategory, NavMenu]);
 
 	/// <summary>
 	/// Add a custom taxonomy

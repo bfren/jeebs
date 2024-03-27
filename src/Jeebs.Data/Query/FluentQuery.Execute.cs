@@ -26,7 +26,7 @@ public sealed partial record class FluentQuery<TEntity, TId>
 			.BindAsync(x =>
 				Update(parts => parts with
 				{
-					SelectColumns = new ColumnList(new[] { x })
+					SelectColumns = new ColumnList([x])
 				})
 				.QuerySingleAsync<TValue>(transaction)
 			);

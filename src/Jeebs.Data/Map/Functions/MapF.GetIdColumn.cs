@@ -54,7 +54,7 @@ public static partial class MapF
 
 			/// <inheritdoc/>
 			public override object[]? Args =>
-				new object[] { nameof(IWithId.Id), typeof(IdAttribute), typeof(TTable) };
+				[nameof(IWithId.Id), typeof(IdAttribute), typeof(TTable)];
 		}
 
 		/// <summary>Too many properties with specified attribute found on table</summary>
@@ -67,7 +67,7 @@ public static partial class MapF
 
 			/// <inheritdoc/>
 			public override object[]? Args =>
-				new object[] { typeof(IdAttribute), typeof(TTable) };
+				[typeof(IdAttribute), typeof(TTable)];
 		}
 	}
 }

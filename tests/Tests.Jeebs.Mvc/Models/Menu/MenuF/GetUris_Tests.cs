@@ -52,8 +52,8 @@ public class GetUris_Tests
 		var c2 = new MenuItem { Text = Rnd.Str };
 		var c3 = new MenuItem { Text = Rnd.Str };
 		var c4 = new MenuItem { Text = Rnd.Str };
-		var p0 = new MenuItem { Text = Rnd.Str, Children = new(new[] { c0, c1, c2 }) };
-		var p1 = new MenuItem { Text = Rnd.Str, Children = new(new[] { c3, c4 }) };
+		var p0 = new MenuItem { Text = Rnd.Str, Children = new([c0, c1, c2]) };
+		var p1 = new MenuItem { Text = Rnd.Str, Children = new([c3, c4]) };
 		var items = new[] { p0, p1 }.ToList();
 		var getUri = Substitute.For<GetUri>();
 		getUri.Invoke(urlHelper, Arg.Any<MenuItem>()).Returns(x => x.ArgAt<MenuItem>(1).Text);

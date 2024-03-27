@@ -16,7 +16,7 @@ public record FormattedMsg : Msg
 		"Values {One} and {Two}";
 
 	public override object[]? Args =>
-		new object[] { Rnd.Int, Rnd.Guid };
+		[Rnd.Int, Rnd.Guid];
 }
 
 public record WithValue(string Value) : WithValueMsg<string>;

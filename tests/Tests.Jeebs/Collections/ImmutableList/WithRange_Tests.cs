@@ -16,7 +16,7 @@ public class WithRange_Tests
 		var list = new ImmutableList<string>(new[] { i0, i1 });
 
 		// Act
-		var result = list.WithRange(new[] { i2, i3 });
+		var result = list.WithRange([i2, i3]);
 
 		// Assert
 		Assert.Collection(result,
@@ -38,7 +38,7 @@ public class WithRange_Tests
 		var list = new ImmutableList<string>(new[] { i0, i1 });
 
 		// Act
-		var result = list.WithRange(new[] { i2, i3 });
+		var result = list.WithRange([i2, i3]);
 		i0 = Rnd.Str;
 		i1 = Rnd.Str;
 		i2 = Rnd.Str;

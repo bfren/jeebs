@@ -30,7 +30,7 @@ public class GetSelectFromList_Tests
 		var client = Substitute.For<IDbClient>();
 		var c0 = Substitute.For<IColumn>();
 		var c1 = Substitute.For<IColumn>();
-		var columns = new ColumnList(new[] { c0, c1 });
+		var columns = new ColumnList([c0, c1]);
 
 		// Act
 		QueryF.GetSelectFromList(client, columns);

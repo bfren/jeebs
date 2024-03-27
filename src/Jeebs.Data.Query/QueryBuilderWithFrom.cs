@@ -32,7 +32,7 @@ public sealed record class QueryBuilderWithFrom : IQueryBuilderWithFrom
 	internal QueryBuilderWithFrom(ITable from)
 	{
 		Parts = new QueryParts(from);
-		Tables = new(new[] { from });
+		Tables = new([from]);
 	}
 
 	/// <summary>

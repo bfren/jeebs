@@ -158,7 +158,7 @@ public class Msg_Tests
 		msg.Level.Returns(LogLevel.Verbose);
 
 		// Act
-		log.Msgs(new[] { msg, msg, msg, msg, msg });
+		log.Msgs([msg, msg, msg, msg, msg]);
 
 		// Assert
 		log.Received(5).Vrb(Arg.Any<string>(), Arg.Any<object[]>());

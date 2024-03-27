@@ -18,10 +18,10 @@ public class GetWhereAndParameters_Tests
 		var column = Substitute.For<IColumn>();
 		column.ColName.Returns(name);
 
-		var predicates = ImmutableList.Create(new (IColumn, Compare, object)[]
-		{
+		var predicates = ImmutableList.Create(
+		[
 			(column, Compare.LessThan, Rnd.Int)
-		});
+		]);
 
 		var client = Substitute.ForPartsOf<TestClient>();
 
@@ -43,10 +43,10 @@ public class GetWhereAndParameters_Tests
 		column.ColName.Returns(columnName);
 		column.TblName.Returns(tableName);
 
-		var predicates = ImmutableList.Create(new (IColumn, Compare, object)[]
-		{
+		var predicates = ImmutableList.Create(
+		[
 			(column, Compare.LessThan, Rnd.Int)
-		});
+		]);
 
 		var client = Substitute.ForPartsOf<TestClient>();
 
@@ -75,10 +75,10 @@ Assert.Single(where);
 		column.ColName.Returns(name);
 
 		var value = Rnd.Int;
-		var predicates = ImmutableList.Create(new (IColumn, Compare, object)[]
-		{
+		var predicates = ImmutableList.Create(
+		[
 			(column, input, value)
-		});
+		]);
 
 		var client = Substitute.ForPartsOf<TestClient>();
 
@@ -109,10 +109,10 @@ Assert.Single(where);
 		column.ColName.Returns(name);
 
 		var value = Rnd.Lng;
-		var predicates = ImmutableList.Create(new (IColumn, Compare, object)[]
-		{
+		var predicates = ImmutableList.Create(
+		[
 			(column, input, new TestId(value))
-		});
+		]);
 
 		var client = Substitute.ForPartsOf<TestClient>();
 
@@ -131,10 +131,10 @@ Assert.Single(where);
 	{
 		// Arrange
 		var column = Substitute.For<IColumn>();
-		var predicates = ImmutableList.Create(new (IColumn, Compare, object)[]
-		{
+		var predicates = ImmutableList.Create(
+		[
 			(column, cmp, Rnd.Int)
-		});
+		]);
 
 		var client = Substitute.ForPartsOf<TestClient>();
 
@@ -169,10 +169,10 @@ Assert.Single(where);
 		var v1 = Rnd.Lng;
 		var v2 = Rnd.Lng;
 		var value = getValue(v0, v1, v2);
-		var predicates = ImmutableList.Create(new (IColumn, Compare, object)[]
-		{
+		var predicates = ImmutableList.Create(
+		[
 			(column, cmp, value)
-		});
+		]);
 
 		var client = Substitute.ForPartsOf<TestClient>();
 

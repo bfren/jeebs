@@ -10,6 +10,6 @@ public abstract class ClaimsPrincipalExtensions_Tests
 	protected ClaimsPrincipal Setup(bool authenticated, params Claim[]? claims)
 	{
 		var claimsIdentity = new ClaimsIdentity(claims, authenticated ? Rnd.Str : null);
-		return new(new[] { claimsIdentity });
+		return new([claimsIdentity]);
 	}
 }

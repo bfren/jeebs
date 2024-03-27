@@ -36,11 +36,11 @@ public class GetQuery_Tests
 		var p1Operator = Compare.MoreThanOrEqual;
 		var p1Value = Rnd.Int;
 
-		var predicates = ImmutableList.Create(new (IColumn, Compare, object)[]
-		{
+		var predicates = ImmutableList.Create(
+		[
 			( p0Column, p0Operator, p0Value ),
 			( p1Column, p1Operator, p1Value )
-		});
+		]);
 
 		var client = new SqlServerDbClient();
 
@@ -158,7 +158,7 @@ public class GetQuery_Tests
 		var to1Name = Rnd.Str;
 		var to1 = new Column(to1Table, to1Name, Helpers.CreateInfoFromAlias());
 
-		var join = ImmutableList.Create(new (IColumn, IColumn)[] { (from, to0), (to0, to1) });
+		var join = ImmutableList.Create([(from, to0), (to0, to1)]);
 
 		var parts = setJoin(new(v.Table), join);
 
@@ -208,11 +208,11 @@ public class GetQuery_Tests
 		var c1Name = Rnd.Str;
 		var c1 = new Column(c1Table, c1Name, Helpers.CreateInfoFromAlias());
 
-		var where = ImmutableList.Create(new (IColumn, Compare, object)[]
-		{
+		var where = ImmutableList.Create(
+		[
 			(c0, Compare.Like, Rnd.Str),
 			(c1, Compare.MoreThanOrEqual, Rnd.Int)
-		});
+		]);
 
 		var parts = new QueryParts(v.Table) { Where = where };
 
@@ -251,11 +251,11 @@ public class GetQuery_Tests
 
 		var parts = new QueryParts(v.Table)
 		{
-			WhereCustom = ImmutableList.Create(new (string, IQueryParametersDictionary)[]
-			{
+			WhereCustom = ImmutableList.Create(
+			[
 				(w0, parametersToAdd0),
 				(w1, parametersToAdd1)
-			})
+			])
 		};
 
 		var expected = $"SELECT * FROM [{v.Schema}].[{v.Name}] WHERE ({w0}) AND ({w1})";
@@ -300,11 +300,11 @@ public class GetQuery_Tests
 		var c1Value = Rnd.Int;
 		var c1 = new Column(c1Table, c1Name, Helpers.CreateInfoFromAlias());
 
-		var where = ImmutableList.Create(new (IColumn, Compare, object)[]
-		{
+		var where = ImmutableList.Create(
+		[
 			(c0, Compare.Like, c0Value),
 			(c1, Compare.MoreThanOrEqual, c1Value)
-		});
+		]);
 
 		var parts = new QueryParts(v.Table) { Where = where };
 
@@ -361,11 +361,11 @@ public class GetQuery_Tests
 
 		var parts = new QueryParts(v.Table)
 		{
-			Sort = ImmutableList.Create(new (IColumn, SortOrder)[]
-			{
+			Sort = ImmutableList.Create(
+			[
 				(sort0, SortOrder.Ascending),
 				(sort1, SortOrder.Descending)
-			})
+			])
 		};
 
 		var expected = "SELECT" +
