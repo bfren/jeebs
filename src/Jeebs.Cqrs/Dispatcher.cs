@@ -4,7 +4,6 @@
 using System;
 using System.Threading.Tasks;
 using Jeebs.Cqrs.Internals;
-using Jeebs.Cqrs.Messages;
 using Jeebs.Logging;
 
 namespace Jeebs.Cqrs;
@@ -17,15 +16,15 @@ public sealed class Dispatcher : IDispatcher
 	private IServiceProvider Provider { get; init; }
 
 	/// <summary>
-	/// Create object
+	/// Create object.
 	/// </summary>
-	/// <param name="provider"></param>
-	/// <param name="log"></param>
+	/// <param name="provider">IServiceProvider.</param>
+	/// <param name="log">ILog.</param>
 	public Dispatcher(IServiceProvider provider, ILog<Dispatcher> log) =>
 		(Provider, Log) = (provider, log);
 
 	/// <inheritdoc/>
-	public Task<Maybe<bool>> SendAsync(Command command)
+	public Task<Result<bool>> SendAsync(Command command)
 	{
 		var service = GetHandlerService(typeof(CommandHandler<>), command.GetType());
 		return service switch
@@ -34,26 +33,30 @@ public sealed class Dispatcher : IDispatcher
 				handler.HandleAsync(command),
 
 			_ =>
-				F.None<bool>(new UnableToGetCommandHandlerMsg(command.GetType())).AsTask()
+				R.Fail(nameof(Dispatcher), nameof(SendAsync),
+					"Unable to get command handler {Type}.", command.GetType()
+				).AsTask<bool>()
 		};
 	}
 
 	/// <inheritdoc/>
-	public Task<Maybe<bool>> SendAsync<TCommand>()
-		where TCommand : Command, new() =>
-		SendAsync(new TCommand());
+	public Task<Result<bool>> SendAsync<T>()
+		where T : Command, new() =>
+		SendAsync(new T());
 
 	/// <inheritdoc/>
-	public Task<Maybe<TResult>> SendAsync<TResult>(Query<TResult> query)
+	public Task<Result<T>> SendAsync<T>(Query<T> query)
 	{
-		var service = GetHandlerService(typeof(QueryHandler<,>), query.GetType(), typeof(TResult));
+		var service = GetHandlerService(typeof(QueryHandler<,>), query.GetType(), typeof(T));
 		return service switch
 		{
-			IQueryHandler<TResult> handler =>
+			IQueryHandler<T> handler =>
 				handler.HandleAsync(query),
 
 			_ =>
-				F.None<TResult>(new UnableToGetQueryHandlerMsg(query.GetType())).AsTask()
+				R.Fail(nameof(Dispatcher), nameof(SendAsync),
+					"Unable to get query handler {Type}.", query.GetType()
+				).AsTask<T>()
 		};
 	}
 
