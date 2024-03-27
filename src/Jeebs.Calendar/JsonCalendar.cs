@@ -10,7 +10,7 @@ using Jeebs.Functions;
 namespace Jeebs.Calendar;
 
 /// <summary>
-/// Export calendar model as JSON
+/// Export calendar model as JSON.
 /// </summary>
 public class JsonCalendar : CalendarBase
 {
@@ -24,16 +24,16 @@ public class JsonCalendar : CalendarBase
 	public string Timezone { get; internal init; }
 
 	/// <summary>
-	/// Create object
+	/// Create object.
 	/// </summary>
-	/// <param name="calendar">Calendar</param>
+	/// <param name="calendar">Calendar.</param>
 	public JsonCalendar(CalendarModel calendar) : this(calendar, DefaultTimezone) { }
 
 	/// <summary>
-	/// Create object
+	/// Create object.
 	/// </summary>
-	/// <param name="calendar">Calendar</param>
-	/// <param name="tzid">Timezone</param>
+	/// <param name="calendar">Calendar.</param>
+	/// <param name="tzid">Timezone.</param>
 	public JsonCalendar(CalendarModel calendar, string tzid) : base(calendar, tzid)
 	{
 		// Set values
@@ -51,5 +51,5 @@ public class JsonCalendar : CalendarBase
 
 	/// <inheritdoc/>
 	public override string ToString() =>
-		JsonF.Serialise(new { calendar = this }).Unwrap(/*lang=json,strict*/ "{\"calendar\":{}}");
+		JsonF.Serialise(new { calendar = this }).Unwrap(f => /*lang=json,strict*/ $"{{\"calendar\":{{\"error\":\"{f}\"}}}}");
 }

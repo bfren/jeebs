@@ -12,17 +12,18 @@ using Newtonsoft.Json.Schema;
 namespace Jeebs.Config;
 
 /// <summary>
-/// Jeebs configuration validator
+/// Jeebs configuration validator.
 /// </summary>
 public static class ConfigValidator
 {
 	/// <summary>
-	/// Validate a Jeebs config file against the schema
+	/// Validate a Jeebs config file against the schema.
 	/// </summary>
-	/// <exception cref="FileNotFoundException"></exception>
-	/// <exception cref="ConfigSchemaValidationFailedException"></exception>
-	/// <param name="path">Absolute path to Jeebs configuration file</param>
-	public static string Validate(string path)
+	/// <param name="path">Absolute path to Jeebs configuration file.</param>
+	/// <returns>Whether or not the config file is valid.</returns>
+	/// <exception cref="FileNotFoundException"/>
+	/// <exception cref="ConfigSchemaValidationFailedException"/>
+	public static bool Validate(string path)
 	{
 		// Make sure file exists
 		if (!File.Exists(path))
@@ -54,7 +55,6 @@ public static class ConfigValidator
 			throw new ConfigSchemaValidationFailedException(sb.ToString());
 		}
 
-		// Return original path on success
-		return path;
+		return true;
 	}
 }

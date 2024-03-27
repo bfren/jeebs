@@ -11,27 +11,22 @@ using Jeebs.Calendar.Models;
 namespace Jeebs.Calendar;
 
 /// <summary>
-/// Export calendar model as VCalendar (ICS format)
+/// Export calendar model as VCalendar (ICS format).
 /// </summary>
-public class VCalendar : CalendarBase
+/// <param name="calendar">Calendar.</param>
+/// <param name="tzid">Timezone.</param>
+public class VCalendar(CalendarModel calendar, string tzid) : CalendarBase(calendar, tzid)
 {
 	/// <summary>
-	/// Create object
+	/// Create object.
 	/// </summary>
-	/// <param name="calendar">Calendar</param>
+	/// <param name="calendar">Calendar.</param>
 	public VCalendar(CalendarModel calendar) : this(calendar, DefaultTimezone) { }
 
 	/// <summary>
-	/// Create object
+	/// Convert calendar to ICS format.
 	/// </summary>
-	/// <param name="calendar">Calendar</param>
-	/// <param name="tzid">Timezone</param>
-	public VCalendar(CalendarModel calendar, string tzid) : base(calendar, tzid) { }
-
-	/// <summary>
-	/// Convert calendar to ICS format
-	/// </summary>
-	/// <param name="domain">Calendar / app domain</param>
+	/// <param name="domain">Calendar / app domain.</param>
 	public string ToString(string domain)
 	{
 		// Add Header
@@ -57,8 +52,9 @@ public class VCalendar : CalendarBase
 	}
 
 	/// <summary>
-	/// Get Header
+	/// Get Header.
 	/// </summary>
+	/// <returns>Header string.</returns>
 	internal static string GetHeader()
 	{
 		var builder = new StringBuilder();
@@ -71,8 +67,9 @@ public class VCalendar : CalendarBase
 	}
 
 	/// <summary>
-	/// Get GMT Timezone
+	/// Get GMT Timezone.
 	/// </summary>
+	/// <returns>Timezone string.</returns>
 	internal static string GetTimezoneGmt()
 	{
 		var builder = new StringBuilder();
@@ -97,12 +94,13 @@ public class VCalendar : CalendarBase
 	}
 
 	/// <summary>
-	/// Get Event
+	/// Get Event.
 	/// </summary>
-	/// <param name="lastModified">Calendar last modified date</param>
-	/// <param name="tzid">Timezone ID</param>
-	/// <param name="uid">Event ID</param>
-	/// <param name="e">Event model</param>
+	/// <param name="lastModified">Calendar last modified date.</param>
+	/// <param name="tzid">Timezone ID.</param>
+	/// <param name="uid">Event ID.</param>
+	/// <param name="e">Event model.</param>
+	/// <returns>Event string.</returns>
 	internal static string GetEvent(DateTime lastModified, string tzid, string uid, EventModel e)
 	{
 		var builder = new StringBuilder();
@@ -135,8 +133,9 @@ public class VCalendar : CalendarBase
 	}
 
 	/// <summary>
-	/// Get Footer
+	/// Get Footer.
 	/// </summary>
+	/// <returns>Footer string.</returns>
 	internal static string GetFooter()
 	{
 		var builder = new StringBuilder();
@@ -145,16 +144,18 @@ public class VCalendar : CalendarBase
 	}
 
 	/// <summary>
-	/// Format date with or without the time
+	/// Format date with or without the time.
 	/// </summary>
-	/// <param name="dt">Date Time</param>
-	/// <param name="withTime">If true will include the time</param>
+	/// <param name="dt">Date Time.</param>
+	/// <param name="withTime">If true will include the time.</param>
+	/// <returns>DateTime string.</returns>
 	internal static string Format(DateTime dt, bool withTime = true) =>
 		dt.ToString(withTime ? @"yyyyMMdd\THHmmss" : "yyyyMMdd", CultureInfo.InvariantCulture);
 
 	/// <summary>
-	/// Get Timezone information
+	/// Get Timezone information.
 	/// </summary>
+	/// <returns>TimeZone string.</returns>
 	public virtual string GetTimezone() =>
 		GetTimezoneGmt();
 }

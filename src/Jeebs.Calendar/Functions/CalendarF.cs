@@ -1,9 +1,9 @@
 // Jeebs Rapid Application Development
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
-namespace Jeebs.Calendar.Extensions;
+namespace Jeebs.Calendar.Functions;
 
 /// <summary>
-/// StringBuilder extensions
+/// Calendar functions
 /// </summary>
-internal static partial class StringBuilderExtensions { }
+public static partial class CalendarF { }

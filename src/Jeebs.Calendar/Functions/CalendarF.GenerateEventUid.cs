@@ -5,10 +5,7 @@ using System;
 
 namespace Jeebs.Calendar.Functions;
 
-/// <summary>
-/// Calendar functions
-/// </summary>
-public static class CalendarF
+public static partial class CalendarF
 {
 	/// <summary>
 	/// Generate Event UID
