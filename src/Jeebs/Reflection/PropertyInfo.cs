@@ -2,39 +2,40 @@
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Reflection;
 
 namespace Jeebs.Reflection;
 
 /// <summary>
-/// Dynamically gets and sets property values on an object
+/// Dynamically gets and sets property values on an object.
 /// </summary>
-/// <typeparam name="TObject">Object type</typeparam>
-/// <typeparam name="TProperty">Property type</typeparam>
+/// <typeparam name="TObject">Object type.</typeparam>
+/// <typeparam name="TProperty">Property type.</typeparam>
 public class PropertyInfo<TObject, TProperty>
 {
 	/// <summary>
-	/// PropertyInfo object
+	/// PropertyInfo object.
 	/// </summary>
 	public PropertyInfo Info { get; private init; }
 
 	/// <summary>
-	/// Return the property name
+	/// Return the property name.
 	/// </summary>
 	public string Name =>
 		Info.Name;
 
 	/// <summary>
-	/// Create object
+	/// Create object.
 	/// </summary>
 	/// <param name="info">PropertyInfo object</param>
 	public PropertyInfo(PropertyInfo info) =>
 		Info = info;
 
 	/// <summary>
-	/// Create object
+	/// Create object.
 	/// </summary>
-	/// <param name="propertyName">Property name</param>
+	/// <param name="propertyName">Property name.</param>
 	public PropertyInfo(string propertyName)
 	{
 		if (typeof(TObject).GetProperty(propertyName) is PropertyInfo info)
@@ -55,44 +56,25 @@ public class PropertyInfo<TObject, TProperty>
 	}
 
 	/// <summary>
-	/// Get the value of the property from the specified object
+	/// Get the value of the property from the specified object.
 	/// </summary>
-	/// <param name="obj">Object</param>
-	/// <exception cref="ArgumentNullException"></exception>
-	/// <exception cref="InvalidOperationException"></exception>
-	public TProperty Get(TObject obj)
+	/// <param name="obj">Object.</param>
+	/// <returns>Property value.</returns>
+	public Maybe<TProperty> Get([DisallowNull] TObject obj)
 	{
-		if (obj is null)
-		{
-			throw new ArgumentNullException(nameof(obj));
-		}
-
 		if (Info.GetValue(obj, null) is TProperty value)
 		{
 			return value;
 		}
 
-		throw new InvalidOperationException($"Unable to get value of property '{Info.Name}' from type {typeof(TObject)} - the value has not been set.");
+		return M.None;
 	}
 
 	/// <summary>
-	/// Set the value of the property on the specified object
+	/// Set the value of the property on the specified object.
 	/// </summary>
-	/// <param name="obj">Object</param>
-	/// <param name="value">Value</param>
-	/// <exception cref="ArgumentNullException"></exception>
-	public void Set(TObject obj, TProperty value)
-	{
-		if (obj is null)
-		{
-			throw new ArgumentNullException(nameof(obj));
-		}
-
-		if (value is null)
-		{
-			throw new ArgumentNullException(nameof(value));
-		}
-
+	/// <param name="obj">Object.</param>
+	/// <param name="value">Value.</param>
+	public void Set([DisallowNull] TObject obj, [DisallowNull] TProperty value) =>
 		Info.SetValue(obj, value);
-	}
 }

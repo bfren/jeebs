@@ -12,6 +12,7 @@ public static partial class MathsF
 	/// <paramref name="x"/> must be greater than or equal to zero.
 	/// </remarks>
 	/// <param name="x">Number (greater than or equal to zero).</param>
+	/// <returns>Factorial result.</returns>
 	public static long Factorial(long x)
 	{
 		if (x < 0)

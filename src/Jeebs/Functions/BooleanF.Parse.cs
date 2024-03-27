@@ -6,16 +6,14 @@ using System.Linq;
 
 namespace Jeebs.Functions;
 
-/// <summary>
-/// Boolean functions.
-/// </summary>
-public static class BooleanF
+public static partial class BooleanF
 {
 	/// <summary>
 	/// Parse a boolean value.
 	/// </summary>
 	/// <typeparam name="T">Value type.</typeparam>
 	/// <param name="value">Value to parse.</param>
+	/// <returns>Boolean value.</returns>
 	public static Maybe<bool> Parse<T>(T value)
 	{
 		// Convert to string

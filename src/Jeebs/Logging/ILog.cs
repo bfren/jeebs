@@ -24,15 +24,17 @@ public interface ILog
 	ILog<T> ForContext<T>();
 
 	/// <summary>
-	/// Whether or not the log will write for the specified Level.
+	/// Whether or not the log will write for the specified <paramref name="level"/>.
 	/// </summary>
 	/// <param name="level">LogLevel.</param>
+	/// <returns>Whether or not logging is enabled for the specified <paramref name="level"/>.</returns>
 	bool IsEnabled(LogLevel level);
 
 	/// <summary>
-	/// Whether or not the log will write for the specified Level.
+	/// Whether or not the log will write for the specified <paramref name="level"/>.
 	/// </summary>
 	/// <param name="level">LogLevel.</param>
+	/// <returns>Whether or not logging is enabled for the specified <paramref name="level"/>.</returns>
 	bool IsEnabled(Microsoft.Extensions.Logging.LogLevel level);
 
 	/// <summary>

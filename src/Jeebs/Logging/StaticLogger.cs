@@ -16,7 +16,7 @@ public static class StaticLogger
 	public static Lazy<ILog> Factory { private get; set; } = new(new NullLogger());
 
 	/// <summary>
-	/// Return a new logger.
+	/// Create a new logger.
 	/// </summary>
 	public static ILog Log =>
 		Factory.Value;
@@ -25,6 +25,7 @@ public static class StaticLogger
 	/// Return a new log instance for a specific context.
 	/// </summary>
 	/// <typeparam name="T">Log context type.</typeparam>
+	/// <returns>A new <see cref="ILog"/> for context specified by <typeparamref name="T"/>.</returns>
 	public static ILog<T> ForContext<T>() =>
 		Factory.Value.ForContext<T>();
 }

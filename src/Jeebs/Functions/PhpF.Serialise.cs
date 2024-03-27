@@ -10,10 +10,11 @@ namespace Jeebs.Functions;
 public static partial class PhpF
 {
 	/// <summary>
-	/// Serialise object.
+	/// Serialise object as PHP string..
 	/// </summary>
 	/// <typeparam name="T">Object type.</typeparam>
 	/// <param name="obj">Object value.</param>
+	/// <returns>Serialised string.</returns>
 	public static string Serialise<T>(T obj) =>
 		Serialise(obj, new StringBuilder()).ToString();
 

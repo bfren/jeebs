@@ -8,9 +8,6 @@ using System.Text.RegularExpressions;
 
 namespace Jeebs.Functions;
 
-/// <summary>
-/// String functions.
-/// </summary>
 public static partial class StringF
 {
 	/// <summary>
@@ -20,6 +17,7 @@ public static partial class StringF
 	/// <typeparam name="T">Object type.</typeparam>
 	/// <param name="formatString">Format string.</param>
 	/// <param name="obj">Object (nullable).</param>
+	/// <returns>Formatted string.</returns>
 	public static string Format<T>(string formatString, T obj, string? ifNull) =>
 		obj switch
 		{
@@ -34,12 +32,15 @@ public static partial class StringF
 	/// Works like string.Format() but with named as well as numbered placeholders.
 	/// <para>Source is Array: values will be inserted in order (regardless of placeholder values).</para>
 	/// <para>Source is Object: property names must match placeholders or they will be left in place.</para>
-	/// <para>Inspired by http://james.newtonking.com/archive/2008/03/29/formatwith-2-0-string-formatting-with-named-variables.</para>
-	/// <para>(Significantly) altered to work without requiring DataBinder.</para>
 	/// </summary>
+	/// <remarks>
+	/// Inspired by http://james.newtonking.com/archive/2008/03/29/formatwith-2-0-string-formatting-with-named-variables,
+	/// (significantly) altered to work without requiring DataBinder.
+	/// </remarks>
 	/// <typeparam name="T">Source type.</typeparam>
 	/// <param name="formatString">String to format.</param>
 	/// <param name="source">Source object to use for template values.</param>
+	/// <returns>Formatted string.</returns>
 	public static string Format<T>(string formatString, T source)
 	{
 		// Return original if source is null or if it is an empty array
@@ -94,7 +95,7 @@ public static partial class StringF
 				+ new string('}', endGroup.Captures.Count);
 		});
 
-		return string.Format(CultureInfo.InvariantCulture, rewrittenFormat, values.ToArray());
+		return string.Format(CultureInfo.InvariantCulture, rewrittenFormat, [.. values]);
 	}
 
 	[GeneratedRegex("(?<start>\\{)+(?<template>[\\w\\.\\[\\]@]+)(?<format>:[^}]+)?(?<end>\\})+", RegexOptions.IgnoreCase | RegexOptions.CultureInvariant)]

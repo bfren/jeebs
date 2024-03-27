@@ -16,6 +16,7 @@ public static partial class MathsF
 	/// </remarks>
 	/// <param name="n">The total number of objects.</param>
 	/// <param name="r">The number of objects being selected.</param>
+	/// <returns>The number of possible combinations.</returns>
 	public static long Combinations(long n, long r) =>
 		(n > 0 && r > 0 && n >= r) switch
 		{

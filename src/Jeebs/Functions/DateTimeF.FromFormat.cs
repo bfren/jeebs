@@ -13,6 +13,7 @@ public static partial class DateTimeF
 	/// </summary>
 	/// <param name="s">Input string.</param>
 	/// <param name="format">DateTime format.</param>
+	/// <returns>DateTime object.</returns>
 	public static Maybe<DateTime> FromFormat(string s, string format)
 	{
 		if (DateTime.TryParseExact(s, format, CultureInfo.InvariantCulture, DateTimeStyles.None, out var dt))

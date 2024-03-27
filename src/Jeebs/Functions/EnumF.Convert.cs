@@ -13,6 +13,7 @@ public static partial class EnumF
 	/// </summary>
 	/// <typeparam name="TFrom">Enum type.</typeparam>
 	/// <param name="value">The value to parse.</param>
+	/// <returns><see cref="FluentConvert{TFrom}"/> object.</returns>
 	public static FluentConvert<TFrom> Convert<TFrom>(TFrom value)
 		where TFrom : struct, Enum =>
 		new(value);
@@ -31,6 +32,7 @@ public static partial class EnumF
 		/// Convert value to specified type.
 		/// </summary>
 		/// <typeparam name="TTo">Convert To type.</typeparam>
+		/// <returns>Value converted to <typeparamref name="TTo"/> object.</returns>
 		public Result<TTo> To<TTo>()
 			where TTo : struct, Enum
 		{

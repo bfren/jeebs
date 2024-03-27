@@ -16,6 +16,7 @@ public static partial class MathsF
 	/// </remarks>
 	/// <param name="n">The total number of objects.</param>
 	/// <param name="r">The number of places being filled.</param>
+	/// <returns>The number of possible permutations.</returns>
 	public static long Permutations(long n, long r) =>
 		(n > 0 && r > 0 && n >= r) switch
 		{

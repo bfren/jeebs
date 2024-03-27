@@ -12,6 +12,7 @@ public static partial class Base32F
 	/// Convert <paramref name="bytes"/> to a Base32 string.
 	/// </summary>
 	/// <param name="bytes">Input byte array.</param>
+	/// <returns>Base32 string.</returns>
 	public static string ToBase32String(byte[] bytes)
 	{
 		// Check if byte array is null

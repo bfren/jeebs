@@ -14,6 +14,7 @@ public static partial class VersionF
 	/// </summary>
 	/// <param name="stream">Stream containing version file.</param>
 	/// <param name="version">Version object.</param>
+	/// <returns>Version string.</returns>
 	internal static async Task<string> GetVersion(Stream? stream, Version? version)
 	{
 		// Attempt to read from stream
@@ -44,6 +45,7 @@ public static partial class VersionF
 	/// Return version formatted as x.x.x.x.
 	/// </summary>
 	/// <param name="version">Version.</param>
+	/// <returns>Version string.</returns>
 	internal static string GetVersionString(Version version) =>
 		$"{version.Major}.{version.Minor}.{version.Build}.{version.Revision}";
 }

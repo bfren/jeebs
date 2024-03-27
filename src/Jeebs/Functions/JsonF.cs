@@ -3,7 +3,7 @@
 
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using Jeebs.Functions.JsonConverters;
+using Jeebs.Internals.JsonConverters;
 using Wrap.Json;
 
 namespace Jeebs.Functions;

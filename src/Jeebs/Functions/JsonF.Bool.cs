@@ -9,6 +9,7 @@ public static partial class JsonF
 	/// Return lower-case boolean string.
 	/// </summary>
 	/// <param name="value">Boolean value.</param>
+	/// <returns>JSON boolean string.</returns>
 	public static string Bool(bool value) =>
 		value switch
 		{

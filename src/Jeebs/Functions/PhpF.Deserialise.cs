@@ -9,9 +9,10 @@ namespace Jeebs.Functions;
 public static partial class PhpF
 {
 	/// <summary>
-	/// Deserialise object.
+	/// Deserialise object from a PHP string.
 	/// </summary>
 	/// <param name="str">Serialised string.</param>
+	/// <returns>Deserialised object.</returns>
 	public static object Deserialise(string str)
 	{
 		var pointer = 0;
@@ -102,7 +103,7 @@ public static partial class PhpF
 		}
 
 		// Get AssocArray
-		static AssocArray getArray(string str, ref int pointer)
+		static AssociativeArray getArray(string str, ref int pointer)
 		{
 			// Get start and end positions
 			var colon0 = str.IndexOf(':', pointer) + 1;
@@ -112,13 +113,13 @@ public static partial class PhpF
 			pointer += 4 + num.Length;
 
 			// Get each key and value, and add them to a hashtable
-			var table = new AssocArray();
+			var table = new AssociativeArray();
 			for (var i = 0; i < len; i++)
 			{
 				var (key, value) = (PrivateDeserialise(str, ref pointer), PrivateDeserialise(str, ref pointer));
 				M.ParseInt32(key.ToString()).Match(
-					some: x => table.Add(x, value),
-					none: () => table.Add(key, value)
+					none: () => table.Add(key, value),
+					some: x => table.Add(x, value)
 				);
 			}
 

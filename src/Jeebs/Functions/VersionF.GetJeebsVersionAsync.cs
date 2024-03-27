@@ -23,6 +23,7 @@ public static partial class VersionF
 	/// <summary>
 	/// Get Jeebs Version, or return the package version if the resource cannot be found.
 	/// </summary>
+	/// <returns>Jeebs version.</returns>
 	public static Task<string> GetJeebsVersionAsync() =>
 		Version.Value;
 }

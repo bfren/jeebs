@@ -13,6 +13,7 @@ public static partial class JsonF
 	/// <typeparam name="T">Object Type to be serialised.</typeparam>
 	/// <param name="obj">The object to serialise.</param>
 	/// <param name="options">JsonSerializerOptions.</param>
+	/// <returns>Serialised string.</returns>
 	public static Result<string> Serialise<T>(T obj, JsonSerializerOptions options) =>
 		obj switch
 		{

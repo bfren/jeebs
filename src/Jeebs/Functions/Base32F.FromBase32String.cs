@@ -11,6 +11,7 @@ public static partial class Base32F
 	/// Convert <paramref name="base32String"/> string to a byte array.
 	/// </summary>
 	/// <param name="base32String">Base32 string to convert - must be at least two characters.</param>
+	/// <returns>Byte array.</returns>
 	public static Result<byte[]> FromBase32String(string base32String)
 	{
 		static Result<byte[]> fail(string message, params object[] args) =>

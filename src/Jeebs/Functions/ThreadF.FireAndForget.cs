@@ -6,10 +6,7 @@ using System.Threading;
 
 namespace Jeebs.Functions;
 
-/// <summary>
-/// Thread functions.
-/// </summary>
-public static class ThreadF
+public static partial class ThreadF
 {
 	/// <summary>
 	/// Start a task and forget about it.
@@ -23,7 +20,7 @@ public static class ThreadF
 	/// </summary>
 	/// <typeparam name="T">Task state object.</typeparam>
 	/// <param name="state">State to pass to the task.</param>
-	/// <param name="task">The task be sync or async - doesn't matter<./param>
+	/// <param name="task">The task be sync or async - doesn't matter.</param>
 	public static void FireAndForget<T>(T state, Action<T> task) =>
 		ThreadPool.QueueUserWorkItem(task, state, false);
 }

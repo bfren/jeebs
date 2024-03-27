@@ -10,6 +10,7 @@ public static partial class DateTimeF
 	/// <summary>
 	/// Returns a DateTime object representing the start of the Unix Epoch.
 	/// </summary>
+	/// <returns>DateTime object representing the start of the Unix Epoch.</returns>
 	public static DateTime UnixEpoch() =>
 		new(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
 }

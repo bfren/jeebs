@@ -18,6 +18,7 @@ public static partial class TypeF
 	/// </summary>
 	/// <param name="type">Property Type.</param>
 	/// <param name="typeList">Type List.</param>
+	/// <returns>All generic types in <paramref name="typeList"/> that implement <paramref name="type"/>.</returns>
 	internal static List<Type> GetPropertyTypesImplementingGeneric(Type type, IEnumerable<Type> typeList)
 	{
 		var types = from t in typeList

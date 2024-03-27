@@ -14,6 +14,7 @@ public static partial class JsonF
 	/// <typeparam name="T">The type of the object to return.</typeparam>
 	/// <param name="str">The string to deserialise.</param>
 	/// <param name="options">JsonSerializerOptions.</param>
+	/// <returns>Deserialised object.</returns>
 	public static Result<T> Deserialise<T>(string str, JsonSerializerOptions options)
 	{
 		static Result<T> fail(string message) =>
