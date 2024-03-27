@@ -9,6 +9,7 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Rnd" />
+    <PackageReference Include="Wrap.Maybe.System.Text.Json" />
   </ItemGroup>
   <ItemGroup Label="Embed Version">
     <EmbeddedResource Include="$(VersionPath)" />

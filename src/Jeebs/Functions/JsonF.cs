@@ -24,7 +24,7 @@ public static partial class JsonF
 	public static JsonSerializerOptions Options { private get; set; }
 
 	/// <summary>
-	/// Define default settings.
+	/// Define default settings and add standard converters.
 	/// </summary>
 	static JsonF()
 	{
