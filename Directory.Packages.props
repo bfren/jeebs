@@ -56,8 +56,8 @@
     <PackageVersion Include="System.Data.SQLite.Core" Version="1.0.118" />
     <PackageVersion Include="System.IdentityModel.Tokens.Jwt" Version="7.4.1" />
     <PackageVersion Include="System.Text.Json" Version="8.0.3" />
-    <PackageVersion Include="Wrap" Version="1.0.0-beta.24032703" />
-    <PackageVersion Include="Wrap.Maybe.System.Text.Json" Version="1.0.0-beta.24032703" />
+    <PackageVersion Include="Wrap" Version="1.0.0-beta.24032707" />
+    <PackageVersion Include="Wrap.Maybe.System.Text.Json" Version="1.0.0-beta.24032707" />
     <PackageVersion Include="xunit" Version="2.7.0" />
     <PackageVersion Include="xunit.assert" Version="2.7.0" />
     <PackageVersion Include="xunit.runner.visualstudio" Version="2.5.7" />
