@@ -53,7 +53,7 @@ public class Deserialise_Tests
 			$"\"id\":\"{v0}\"," +
 			$"\"str\":\"{v1}\"," +
 			$"\"num\":{v2}," +
-			$"\"dt\":\"{v3:s}\"," +
+			$"\"dt\":\"{v3:o}\"," +
 			$"\"mbe\":{JsonF.Bool(v4)}," +
 			"\"empty\":null" +
 			"}";
