@@ -1,4 +1,4 @@
-﻿// Jeebs Unit Tests
+// Jeebs Unit Tests
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using Jeebs.Auth.Jwt.Constants;
@@ -28,11 +28,11 @@ public class GenerateKey_Tests
 		var result = JwtF.GenerateSigningKey();
 
 		// Assert
-		Assert.False(result.All(c => Rnd.StringF.LowercaseChars.Contains(c)));
-		Assert.False(result.All(c => Rnd.StringF.UppercaseChars.Contains(c)));
-		Assert.False(result.All(c => Rnd.StringF.NumberChars.Contains(c)));
-		Assert.False(result.All(c => Rnd.StringF.SpecialChars.Contains(c)));
-		Assert.True(result.All(c => Rnd.StringF.AllChars.Contains(c)));
+		Assert.False(result.All(c => Helpers.Chars.Lowercase.Contains(c)));
+		Assert.False(result.All(c => Helpers.Chars.Uppercase.Contains(c)));
+		Assert.False(result.All(c => Helpers.Chars.Numbers.Contains(c)));
+		Assert.False(result.All(c => Helpers.Chars.Special.Contains(c)));
+		Assert.True(result.All(c => Helpers.Chars.All.Contains(c)));
 	}
 
 	[Fact]
@@ -56,10 +56,10 @@ public class GenerateKey_Tests
 		var result = JwtF.GenerateEncryptingKey();
 
 		// Assert
-		Assert.False(result.All(c => Rnd.StringF.LowercaseChars.Contains(c)));
-		Assert.False(result.All(c => Rnd.StringF.UppercaseChars.Contains(c)));
-		Assert.False(result.All(c => Rnd.StringF.NumberChars.Contains(c)));
-		Assert.False(result.All(c => Rnd.StringF.SpecialChars.Contains(c)));
-		Assert.True(result.All(c => Rnd.StringF.AllChars.Contains(c)));
+		Assert.False(result.All(c => Helpers.Chars.Lowercase.Contains(c)));
+		Assert.False(result.All(c => Helpers.Chars.Uppercase.Contains(c)));
+		Assert.False(result.All(c => Helpers.Chars.Numbers.Contains(c)));
+		Assert.False(result.All(c => Helpers.Chars.Special.Contains(c)));
+		Assert.True(result.All(c => Helpers.Chars.All.Contains(c)));
 	}
 }
