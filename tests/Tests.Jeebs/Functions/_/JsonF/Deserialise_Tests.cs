@@ -57,7 +57,14 @@ public class Deserialise_Tests
 			$"\"mbe\":{JsonF.Bool(v4)}," +
 			"\"empty\":null" +
 			"}";
-		var expected = new Test { Id = new(v0), Str = v1, Num = v2, DT = new(v3.Year, v3.Month, v3.Day, v3.Hour, v3.Minute, v3.Second), Mbe = v4 };
+		var expected = new Test
+		{
+			Id = new(v0),
+			Str = v1,
+			Num = v2,
+			DT = new(v3.Year, v3.Month, v3.Day, v3.Hour, v3.Minute, v3.Second, DateTimeKind.Utc),
+			Mbe = v4
+		};
 
 		// Act
 		var result = JsonF.Deserialise<Test>(input).Unwrap(() => new Test());
