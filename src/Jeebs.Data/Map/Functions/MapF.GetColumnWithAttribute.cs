@@ -26,7 +26,7 @@ public static partial class MapF
 			columns
 		)
 		.Map(
-			x => x.Where(p => p.PropertyInfo.GetCustomAttribute(typeof(TAttribute)) != null).ToList(),
+			x => x.Where(p => p.PropertyInfo.GetCustomAttribute<TAttribute>() != null).ToList(),
 			e => new M.ErrorGettingColumnsWithAttributeMsg<TTable, TAttribute>(e)
 		)
 		.UnwrapSingle<IColumn>(
@@ -57,7 +57,7 @@ public static partial class MapF
 
 			/// <inheritdoc/>
 			public override object[]? Args =>
-				new object[] { typeof(TAttribute), typeof(TTable) };
+				[typeof(TAttribute), typeof(TTable)];
 		}
 
 		/// <summary>Too many properties with specified attribute found on table</summary>
@@ -71,7 +71,7 @@ public static partial class MapF
 
 			/// <inheritdoc/>
 			public override object[]? Args =>
-				new object[] { typeof(TAttribute), typeof(TTable) };
+				[typeof(TAttribute), typeof(TTable)];
 		}
 	}
 }

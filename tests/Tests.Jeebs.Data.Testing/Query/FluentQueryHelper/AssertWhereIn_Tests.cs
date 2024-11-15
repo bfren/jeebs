@@ -31,7 +31,7 @@ public class AssertWhereIn_Tests : Setup
 		fluent.Maximum(Rnd.ULng);
 
 		// Act
-		var action = (ICall c) => FluentQueryHelper.AssertWhereIn<TestEntity, long>(c, x => x.Bar, new[] { Rnd.Lng, Rnd.Lng });
+		var action = (ICall c) => FluentQueryHelper.AssertWhereIn<TestEntity, long>(c, x => x.Bar, [Rnd.Lng, Rnd.Lng]);
 
 		// Assert
 		Assert.Throws<MethodNameException>(() => fluent.AssertCalls(action));
@@ -46,7 +46,7 @@ public class AssertWhereIn_Tests : Setup
 		fluent.WhereIn(x => x.Foo, values);
 
 		// Act
-		var action = (ICall c) => FluentQueryHelper.AssertWhereIn<TestEntity, long>(c, x => x.Bar, new[] { Rnd.Lng, Rnd.Lng });
+		var action = (ICall c) => FluentQueryHelper.AssertWhereIn<TestEntity, long>(c, x => x.Bar, [Rnd.Lng, Rnd.Lng]);
 
 		// Assert
 		Assert.Throws<GenericArgumentException>(() => fluent.AssertCalls(action));
@@ -61,7 +61,7 @@ public class AssertWhereIn_Tests : Setup
 		fluent.WhereIn(x => x.Foo, values);
 
 		// Act
-		var action = (ICall c) => FluentQueryHelper.AssertWhereIn<TestEntity, string>(c, x => x.Foo, new[] { Rnd.Str, Rnd.Str });
+		var action = (ICall c) => FluentQueryHelper.AssertWhereIn<TestEntity, string>(c, x => x.Foo, [Rnd.Str, Rnd.Str]);
 
 		// Assert
 		Assert.Throws<EqualTypeException>(() => fluent.AssertCalls(action));

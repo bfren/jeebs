@@ -26,7 +26,7 @@ public static partial class MapF
 			columns
 		)
 		.Map(
-			x => x.Where(p => p.PropertyInfo.Name == nameof(IWithId.Id) && p.PropertyInfo.GetCustomAttribute(typeof(IgnoreAttribute)) is null).ToList(),
+			x => x.Where(p => p.PropertyInfo.Name == nameof(IWithId.Id) && p.PropertyInfo.GetCustomAttribute<IgnoreAttribute>() is null).ToList(),
 			e => new M.ErrorGettingIdPropertyMsg<TTable>(e)
 		)
 		.UnwrapSingle<IColumn>(
@@ -54,7 +54,7 @@ public static partial class MapF
 
 			/// <inheritdoc/>
 			public override object[]? Args =>
-				new object[] { nameof(IWithId.Id), typeof(IdAttribute), typeof(TTable) };
+				[nameof(IWithId.Id), typeof(IdAttribute), typeof(TTable)];
 		}
 
 		/// <summary>Too many properties with specified attribute found on table</summary>
@@ -67,7 +67,7 @@ public static partial class MapF
 
 			/// <inheritdoc/>
 			public override object[]? Args =>
-				new object[] { typeof(IdAttribute), typeof(TTable) };
+				[typeof(IdAttribute), typeof(TTable)];
 		}
 	}
 }

@@ -14,7 +14,7 @@ public class Indexer_Tests
 		var i0 = Rnd.Str;
 		var i1 = Rnd.Str;
 		var i2 = Rnd.Str;
-		var list = ImmutableList.Create(new[] { i0, i1, i2 });
+		var list = ImmutableList.Create([i0, i1, i2]);
 
 		// Act
 		var result = list[1];
@@ -30,7 +30,7 @@ public class Indexer_Tests
 		// Arrange
 		var i0 = Rnd.Str;
 		var i1 = Rnd.Str;
-		var list = ImmutableList.Create(new[] { i0, i1 });
+		var list = ImmutableList.Create([i0, i1]);
 
 		// Act
 		var result = list[2];
@@ -58,7 +58,7 @@ public class Indexer_Tests
 		// Arrange
 		var i0 = Rnd.Str;
 		var i1 = Rnd.Str;
-		var list = ImmutableList.Create(new[] { i0, i1 });
+		var list = ImmutableList.Create([i0, i1]);
 
 		// Act
 		for (var i = 0; i < list.Count; i++)

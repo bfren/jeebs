@@ -14,7 +14,7 @@ public class GetUserId_Tests : ClaimsPrincipalExtensions_Tests
 	public void Claims_Does_Not_Contain_UserId__Returns_None_With_NoMatchingItemsMsg()
 	{
 		// Arrange
-		var principal = Setup(true, new[] { new Claim(Rnd.Str, Rnd.Str), new Claim(Rnd.Str, Rnd.Str) });
+		var principal = Setup(true, [new Claim(Rnd.Str, Rnd.Str), new Claim(Rnd.Str, Rnd.Str)]);
 
 		// Act
 		var result = principal.GetUserId();
@@ -27,7 +27,7 @@ public class GetUserId_Tests : ClaimsPrincipalExtensions_Tests
 	public void Claims_Contains_Multiple_UserIds__Returns_None_With_MultipleItemsMsg()
 	{
 		// Arrange
-		var principal = Setup(true, new[] { new Claim(JwtClaimTypes.UserId, Rnd.Str), new Claim(JwtClaimTypes.UserId, Rnd.Str) });
+		var principal = Setup(true, [new Claim(JwtClaimTypes.UserId, Rnd.Str), new Claim(JwtClaimTypes.UserId, Rnd.Str)]);
 
 		// Act
 		var result = principal.GetUserId();
@@ -40,7 +40,7 @@ public class GetUserId_Tests : ClaimsPrincipalExtensions_Tests
 	public void Claims_Contains_Single_UserId__Incorrect_Type__Returns_None_With_InvalidUserIdMsg()
 	{
 		// Arrange
-		var principal = Setup(true, new[] { new Claim(JwtClaimTypes.UserId, Rnd.Str) });
+		var principal = Setup(true, [new Claim(JwtClaimTypes.UserId, Rnd.Str)]);
 
 		// Act
 		var result = principal.GetUserId();
@@ -54,7 +54,7 @@ public class GetUserId_Tests : ClaimsPrincipalExtensions_Tests
 	{
 		// Arrange
 		var userId = Rnd.Lng;
-		var principal = Setup(true, new[] { new Claim(JwtClaimTypes.UserId, userId.ToString()) });
+		var principal = Setup(true, [new Claim(JwtClaimTypes.UserId, userId.ToString())]);
 
 		// Act
 		var result = principal.GetUserId();

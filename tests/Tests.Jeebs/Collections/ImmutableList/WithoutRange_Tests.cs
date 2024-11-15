@@ -16,7 +16,7 @@ public class WithoutRange_Tests
 		var list = new ImmutableList<string>(new[] { i0, i1, i2, i3 });
 
 		// Act
-		var result = list.WithoutRange(new[] { i2, i3 });
+		var result = list.WithoutRange([i2, i3]);
 
 		// Assert
 		Assert.Collection(result,
@@ -36,7 +36,7 @@ public class WithoutRange_Tests
 		var list = new ImmutableList<string>(new[] { i0, i1, i2, i3 });
 
 		// Act
-		var result = list.WithoutRange(new[] { i2, i3 });
+		var result = list.WithoutRange([i2, i3]);
 		i0 = Rnd.Str;
 		i1 = Rnd.Str;
 

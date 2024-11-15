@@ -24,17 +24,14 @@ public static partial class EnumF
 	/// FluentConvert
 	/// </summary>
 	/// <typeparam name="TFrom">Convert from type</typeparam>
-	public sealed class FluentConvert<TFrom>
+	/// <remarks>
+	/// Construct object
+	/// </remarks>
+	/// <param name="from">Convert from type</param>
+	public sealed class FluentConvert<TFrom>(TFrom from)
 		where TFrom : struct, Enum
 	{
-		private readonly TFrom from;
-
-		/// <summary>
-		/// Construct object
-		/// </summary>
-		/// <param name="from">Convert from type</param>
-		public FluentConvert(TFrom from) =>
-			this.from = from;
+		private readonly TFrom from = from;
 
 		/// <summary>
 		/// Convert value to specified type
@@ -51,7 +48,7 @@ public static partial class EnumF
 			// TTo before returning it
 			return Enum.ToObject(typeof(TTo), fromLong) switch
 			{
-				TTo x when Enum.IsDefined(typeof(TTo), x) =>
+				TTo x when Enum.IsDefined(x) =>
 					x,
 
 				_ =>
@@ -82,7 +79,7 @@ public static partial class EnumF
 
 			/// <inheritdoc/>
 			public override object[]? Args =>
-				new object[] { Value, typeof(T) };
+				[Value, typeof(T)];
 		}
 
 		/// <summary><paramref name="Value"/> is not a valid value of <paramref name="EnumType"/></summary>
@@ -96,7 +93,7 @@ public static partial class EnumF
 
 			/// <inheritdoc/>
 			public override object[]? Args =>
-				new object[] { Value, EnumType };
+				[Value, EnumType];
 		}
 
 		/// <summary><paramref name="Value"/> is not in <typeparamref name="TTo"/></summary>
@@ -113,7 +110,7 @@ public static partial class EnumF
 
 			/// <inheritdoc/>
 			public override object[]? Args =>
-				new object[] { Value, typeof(TTo) };
+				[Value, typeof(TTo)];
 		}
 	}
 }

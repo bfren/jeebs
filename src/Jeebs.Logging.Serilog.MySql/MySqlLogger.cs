@@ -70,7 +70,7 @@ public sealed partial class MySqlLogger : IMySqlConnectorLogger
 	public void Log(MySqlConnectorLogLevel level, string message, object?[]? args, Exception? exception) =>
 		LevelF.ConvertToSerilogLevel(level).Switch(
 			some: x => Log(x, message, args, exception),
-			none: r => Log(LogEventLevel.Fatal, "Unable to log: {Reason}.", new object?[] { r }, null)
+			none: r => Log(LogEventLevel.Fatal, "Unable to log: {Reason}.", [r], null)
 		);
 
 	/// <summary>

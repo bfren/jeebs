@@ -11,7 +11,7 @@ public class GetEnumerator_Tests
 		// Arrange
 		var i0 = Rnd.Guid;
 		var i1 = Rnd.Guid;
-		var list = ImmutableList.Create(new[] { i0, i1 });
+		var list = ImmutableList.Create([i0, i1]);
 
 		// Act
 		var result = list.GetEnumerator();

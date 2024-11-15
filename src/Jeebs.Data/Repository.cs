@@ -51,11 +51,11 @@ public abstract class Repository<TEntity, TId> : IRepository<TEntity, TId>
 	/// </summary>
 	/// <param name="operation">Operation (method) name</param>
 	protected void LogFunc(string operation) =>
-		WriteToLog("{Operation} {Entity}", new object[]
-		{
+		WriteToLog("{Operation} {Entity}",
+		[
 			operation.Replace("Async", string.Empty),
 			typeof(TEntity).Name.Replace("Entity", string.Empty)
-		});
+		]);
 
 	#region Fluent Queries
 

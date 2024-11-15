@@ -16,7 +16,7 @@ public class AssertGenericArgument_Tests
 		// Arrange
 		var method = Substitute.ForPartsOf<MethodInfo>();
 		method.Configure().GetGenericArguments()
-			.Returns(new[] { typeof(string) });
+			.Returns([typeof(string)]);
 		var call = Substitute.For<ICall>();
 		call.GetMethodInfo()
 			.Returns(method);
@@ -35,7 +35,7 @@ public class AssertGenericArgument_Tests
 		// Arrange
 		var method = Substitute.ForPartsOf<MethodInfo>();
 		method.Configure().GetGenericArguments()
-			.Returns(new[] { typeof(string) });
+			.Returns([typeof(string)]);
 		var call = Substitute.For<ICall>();
 		call.GetMethodInfo()
 			.Returns(method);

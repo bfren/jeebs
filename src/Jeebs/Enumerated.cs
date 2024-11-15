@@ -241,7 +241,7 @@ public abstract record class Enumerated : IEquatable<Enumerated>, IEquatable<str
 
 			/// <inheritdoc/>
 			public override object[]? Args =>
-				new object[] { Value, typeof(T) };
+				[Value, typeof(T)];
 		}
 	}
 }
