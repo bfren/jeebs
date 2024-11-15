@@ -17,7 +17,6 @@ using Jeebs.Config.Web.Redirections;
 using Jeebs.Config.Web.Verification;
 using Jeebs.Logging;
 using Jeebs.Logging.Serilog;
-using Microsoft.AspNetCore.DataProtection;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -116,16 +115,6 @@ public class App
 
 		// Add HttpClient
 		_ = services.AddHttpClient();
-
-		// Add Azure Data Protection
-		var dpc = ctx.Configuration.GetSection<DataProtectionConfig>(DataProtectionConfig.Key);
-		var kvc = ctx.Configuration.GetSection<KeyVaultConfig>(KeyVaultConfig.Key);
-		if (dpc.IsValid && kvc.IsValid)
-		{
-			_ = services.AddDataProtection()
-				.PersistKeysToAzureBlobStorage(dpc.StorageAccessKeyConnectionString, dpc.ContainerName, dpc.BlobName)
-				.ProtectKeysWithAzureKeyVault(dpc.GetUri(), kvc.GetCredential());
-		}
 	}
 
 	/// <summary>

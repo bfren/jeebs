@@ -53,7 +53,7 @@ public class Deserialise_Tests
 			$"\"id\":\"{v0}\"," +
 			$"\"str\":\"{v1}\"," +
 			$"\"num\":{v2}," +
-			$"\"dt\":\"{v3:u}\"," +
+			$"\"dt\":\"{v3:s}\"," +
 			$"\"mbe\":{JsonF.Bool(v4)}," +
 			"\"empty\":null" +
 			"}";
@@ -62,7 +62,7 @@ public class Deserialise_Tests
 			Id = new(v0),
 			Str = v1,
 			Num = v2,
-			DT = new(v3.Year, v3.Month, v3.Day, v3.Hour, v3.Minute, v3.Second, DateTimeKind.Utc),
+			DT = new(v3.Year, v3.Month, v3.Day, v3.Hour, v3.Minute, v3.Second, v3.Kind),
 			Mbe = v4
 		};
 

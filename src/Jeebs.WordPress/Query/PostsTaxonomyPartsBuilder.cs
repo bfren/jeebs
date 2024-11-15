@@ -91,7 +91,7 @@ public sealed class PostsTaxonomyPartsBuilder : PartsBuilder<WpTermId>, IQueryPo
 					   new[] { (count, SortOrder.Descending), (title, SortOrder.Ascending) },
 
 				   _ =>
-					   new[] { (title, SortOrder.Ascending) }
+					   [(title, SortOrder.Ascending)]
 			   }
 			   select parts with { Sort = parts.Sort.WithRange(sortRange) };
 	}

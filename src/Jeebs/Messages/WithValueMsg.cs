@@ -21,7 +21,7 @@ public abstract record class WithValueMsg<T>() : Msg, IWithValueMsg<T>
 
 	/// <inheritdoc/>
 	public sealed override object[]? Args =>
-		new[] { Value ?? new object() };
+		[Value ?? new object()];
 
 	/// <summary>
 	/// For testing, allow <see cref="name"/> to be set via constructor

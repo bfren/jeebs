@@ -1,6 +1,6 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <ItemGroup>
-    <PackageReference Include="System.Data.SqlClient" />
+    <PackageReference Include="Microsoft.Data.SqlClient" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Jeebs.Data\Jeebs.Data.csproj" />

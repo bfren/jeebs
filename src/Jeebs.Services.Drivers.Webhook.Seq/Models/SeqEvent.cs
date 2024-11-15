@@ -39,6 +39,6 @@ public sealed record class SeqEvent
 	{
 		Timestamp = DateTime.Now.ToString("O");
 		Message = message;
-		Level = Enum.GetName(typeof(NotificationLevel), level) ?? nameof(NotificationLevel.Information);
+		Level = Enum.GetName(level) ?? nameof(NotificationLevel.Information);
 	}
 }

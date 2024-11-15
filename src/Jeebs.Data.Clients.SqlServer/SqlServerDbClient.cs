@@ -3,9 +3,9 @@
 
 using System.Collections.Generic;
 using System.Data.Common;
-using System.Data.SqlClient;
 using Jeebs.Data.Enums;
 using Jeebs.Data.Map;
+using Microsoft.Data.SqlClient;
 
 namespace Jeebs.Data.Clients.SqlServer;
 

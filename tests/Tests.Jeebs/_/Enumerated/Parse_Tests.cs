@@ -44,6 +44,6 @@ public record class EnumeratedTest : Enumerated
 
 	public static Maybe<EnumeratedTest> Parse(string value)
 	{
-		return Parse(value, new[] { Test1, Test2 });
+		return Parse(value, [Test1, Test2]);
 	}
 }

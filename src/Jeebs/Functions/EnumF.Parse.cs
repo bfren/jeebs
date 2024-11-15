@@ -22,14 +22,7 @@ public static partial class EnumF
 
 		try
 		{
-			return Enum.Parse(typeof(T), value) switch
-			{
-				T x =>
-					x,
-
-				_ =>
-					F.None<T>(new M.NotAValidEnumValueMsg<T>(value))
-			};
+			return Enum.Parse<T>(value);
 		}
 		catch (Exception)
 		{

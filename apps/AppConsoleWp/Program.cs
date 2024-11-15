@@ -251,7 +251,7 @@ log.Dbg("== Get Sermons where First Preached is {First} ==", first);
 await bcg.Db.Query.PostsAsync<SermonModelWithCustomFields>(opt => opt with
 {
 	Type = WpBcg.PostTypes.Sermon,
-	CustomFields = ImmutableList.Create(new[] { (field, Compare.Equal, first) })
+	CustomFields = ImmutableList.Create([(field, Compare.Equal, first)])
 })
 .AuditAsync(
 	some: x =>

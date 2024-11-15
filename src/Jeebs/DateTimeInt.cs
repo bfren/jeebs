@@ -254,7 +254,7 @@ public sealed record class DateTimeInt
 
 			/// <inheritdoc/>
 			public override object[]? Args =>
-				new object[] { Value.part, Value.dt.Year, Value.dt.Month, Value.dt.Day, Value.dt.Hour, Value.dt.Minute };
+				[Value.part, Value.dt.Year, Value.dt.Month, Value.dt.Day, Value.dt.Hour, Value.dt.Minute];
 		}
 	}
 }

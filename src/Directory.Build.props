@@ -3,7 +3,7 @@
 
   <!-- Standard Configuration -->
   <PropertyGroup Label="Framework and Language">
-    <TargetFramework>net8.0</TargetFramework>
+    <TargetFramework>net9.0</TargetFramework>
     <LangVersion>latest</LangVersion>
     <Nullable>enable</Nullable>
   </PropertyGroup>
@@ -86,7 +86,7 @@
   <Import Project="$(LocalPackPath)" Condition="Exists('$(LocalPackPath)')"/>
   <PropertyGroup Label="Local Package Validation" Condition="Exists('$(LocalPackPath)') and '$(Configuration)'=='Release'">
     <EnablePackageValidation>true</EnablePackageValidation>
-    <PackageValidationBaselineVersion>8.4.0</PackageValidationBaselineVersion>
+    <PackageValidationBaselineVersion>8.5.0</PackageValidationBaselineVersion>
   </PropertyGroup>
   <Target Name="PackAndPushToLocalNuget" AfterTargets="Build" Condition="Exists('$(LocalPackPath)') and '$(Configuration)'=='Release'">
     <Exec Command="dotnet pack &quot;$(ProjectFileName)&quot; -p:PackageVersion=$(JeebsVersion) --no-build --configuration Release" />
