@@ -3,16 +3,16 @@
 
   <!-- Standard Configuration -->
   <PropertyGroup Label="Framework and Language">
-    <TargetFramework>net8.0</TargetFramework>
+    <TargetFramework>net9.0</TargetFramework>
     <LangVersion>latest</LangVersion>
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
   <!-- Common Packages -->
   <ItemGroup>
-    <PackageReference Include="Wrap" />
-    <Using Include="Wrap" />
-    <Using Include="Wrap.Linq" />
+    <PackageReference Include="MaybeF" />
+    <Using Include="MaybeF" />
+    <Using Include="MaybeF.Linq" />
   </ItemGroup>
 
   <!-- Documentation -->
@@ -29,7 +29,7 @@
 
   <!-- Get Paths to Files -->
   <PropertyGroup>
-    <SolutionFilePath>$([MSBuild]::GetPathOfFileAbove('Jeebs (v9).sln'))</SolutionFilePath>
+    <SolutionFilePath>$([MSBuild]::GetPathOfFileAbove('Jeebs (v8).sln'))</SolutionFilePath>
     <SolutionRootPath>$([System.IO.Path]::GetDirectoryName('$(SolutionFilePath)'))</SolutionRootPath>
   </PropertyGroup>
   <PropertyGroup>
@@ -85,8 +85,8 @@
 	-->
   <Import Project="$(LocalPackPath)" Condition="Exists('$(LocalPackPath)')"/>
   <PropertyGroup Label="Local Package Validation" Condition="Exists('$(LocalPackPath)') and '$(Configuration)'=='Release'">
-    <EnablePackageValidation>false</EnablePackageValidation>
-    <PackageValidationBaselineVersion>8.4.0</PackageValidationBaselineVersion>
+    <EnablePackageValidation>true</EnablePackageValidation>
+    <PackageValidationBaselineVersion>8.5.0</PackageValidationBaselineVersion>
   </PropertyGroup>
   <Target Name="PackAndPushToLocalNuget" AfterTargets="Build" Condition="Exists('$(LocalPackPath)') and '$(Configuration)'=='Release'">
     <Exec Command="dotnet pack &quot;$(ProjectFileName)&quot; -p:PackageVersion=$(JeebsVersion) --no-build --configuration Release" />

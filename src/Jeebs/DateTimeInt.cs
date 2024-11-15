@@ -2,73 +2,82 @@
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using System;
+using System.Globalization;
 using System.Linq;
+using Jeebs.Messages;
 
 namespace Jeebs;
 
 /// <summary>
-/// DateTime Integer format.
+/// DateTime Integer
 /// </summary>
-public readonly partial struct DateTimeInt : IComparable<DateTimeInt>, IEquatable<DateTimeInt>, IParsable<DateTimeInt>
+public sealed record class DateTimeInt
 {
-	/// <summary>
-	/// Twelve numbers: yyyymmddHHMM.
-	/// </summary>
 	private const string FormatString = "000000000000";
 
-	/// <summary>
-	/// Year.
-	/// </summary>
-	public int Year { get; init; } = 0;
+	private static readonly int[] ThirtyOneDayMonths = [1, 3, 5, 7, 8, 10, 12];
+
+	private static readonly int[] ThirtyDayMonths = [4, 6, 9, 11];
 
 	/// <summary>
-	/// Month.
+	/// Year
 	/// </summary>
-	public int Month { get; init; } = 0;
+	public int Year { get; init; }
 
 	/// <summary>
-	/// Day.
+	/// Month
 	/// </summary>
-	public int Day { get; init; } = 0;
+	public int Month { get; init; }
 
 	/// <summary>
-	/// Hour.
+	/// Day
 	/// </summary>
-	public int Hour { get; init; } = 0;
+	public int Day { get; init; }
 
 	/// <summary>
-	/// Minute.
+	/// Hour
 	/// </summary>
-	public int Minute { get; init; } = 0;
+	public int Hour { get; init; }
 
 	/// <summary>
-	/// Construct object using specified date/time integers.
+	/// Minute
 	/// </summary>
-	/// <param name="year">Year.</param>
-	/// <param name="month">Month.</param>
-	/// <param name="day">Day.</param>
-	/// <param name="hour">Hour.</param>
-	/// <param name="minute">Minute.</param>
+	public int Minute { get; init; }
+
+	/// <summary>
+	/// Construct using zero values
+	/// </summary>
+	public DateTimeInt() =>
+		(Year, Month, Day, Hour, Minute) = (0, 0, 0, 0, 0);
+
+	/// <summary>
+	/// Construct object using specified date/time integers
+	/// </summary>
+	/// <param name="year">Year</param>
+	/// <param name="month">Month</param>
+	/// <param name="day">Day</param>
+	/// <param name="hour">Hour</param>
+	/// <param name="minute">Minute</param>
 	public DateTimeInt(int year, int month, int day, int hour, int minute) =>
 		(Year, Month, Day, Hour, Minute) = (year, month, day, hour, minute);
 
 	/// <summary>
-	/// Construct object using a DateTime object.
+	/// Construct object using a DateTime object
 	/// </summary>
-	/// <param name="dt">DateTime.</param>
+	/// <param name="dt">DateTime</param>
 	public DateTimeInt(DateTime dt) : this(dt.Year, dt.Month, dt.Day, dt.Hour, dt.Minute) { }
 
 	/// <summary>
-	/// Construct object from string - must be exactly 12 characters long (yyyymmddHHMM).
+	/// Construct object from string - must be exactly 12 characters long (yyyymmddHHMM)
 	/// </summary>
-	/// <param name="value">DateTime string value - format yyyymmddHHMM.</param>
+	/// <param name="value">DateTime string value - format yyyymmddHHMM</param>
 	public DateTimeInt(string value) =>
-		(Year, Month, Day, Hour, Minute) = Parse(value, null);
+		(Year, Month, Day, Hour, Minute) = Parse(value);
 
 	/// <summary>
-	/// Construct object from long - will be converted to a 12-digit string with leading zeroes.
+	/// Construct object from long - will be converted to a 12-digit string with leading zeroes
 	/// </summary>
-	/// <param name="value">DateTime long value - format yyyymmddHHMM.</param>
+	/// <param name="value">DateTime long value - format yyyymmddHHMM</param>
 	public DateTimeInt(long value)
 	{
 		if (value <= 100000000000)
@@ -81,43 +90,26 @@ public readonly partial struct DateTimeInt : IComparable<DateTimeInt>, IEquatabl
 			throw new ArgumentException("Too large - cannot be later than the year 9999", nameof(value));
 		}
 
-		(Year, Month, Day, Hour, Minute) = Parse(value.ToString(FormatString, null), null);
+		(Year, Month, Day, Hour, Minute) = Parse(value.ToString(FormatString, CultureInfo.InvariantCulture));
 	}
 
 	/// <summary>
-	/// Get DateTime.
+	/// Get the current DateTime
 	/// </summary>
-	/// <returns>Value as a <see cref="DateTime"/> object.</returns>
-	public Result<DateTime> ToDateTime() =>
+	public Maybe<DateTime> ToDateTime() =>
 		IsValidDateTime() switch
 		{
 			{ } x when x.Valid =>
 				new DateTime(Year, Month, Day, Hour, Minute, 0),
 
 			{ } x =>
-				Failures.Invalid<DateTime>(nameof(ToDateTime), x.Part, this)
+				F.None<DateTime>(new M.InvalidDateTimeMsg((x.Part, this)))
 		};
 
 	/// <summary>
-	/// Outputs object values as long.
-	/// If the object is not valid, returns 0.
+	/// Outputs object values as correctly formatted string
+	/// If the object is not valid, returns a string of zeroes
 	/// </summary>
-	/// <returns>Long value.</returns>
-	public Result<long> ToLong() =>
-		IsValidDateTime() switch
-		{
-			{ } x when x.Valid =>
-				M.ParseInt64(ToString()).ToResult(nameof(DateTimeInt), nameof(ToLong)),
-
-			{ } x =>
-				Failures.Invalid<long>(nameof(ToLong), x.Part, this)
-		};
-
-	/// <summary>
-	/// Outputs object values as correctly formatted string.
-	/// If the object is not valid, returns a string of zeroes.
-	/// </summary>
-	/// <returns>String value.</returns>
 	public override string ToString() =>
 		IsValidDateTime().Valid switch
 		{
@@ -125,7 +117,21 @@ public readonly partial struct DateTimeInt : IComparable<DateTimeInt>, IEquatabl
 				$"{Year:0000}{Month:00}{Day:00}{Hour:00}{Minute:00}",
 
 			false =>
-				MinValue.ToString()
+				0.ToString(FormatString, CultureInfo.InvariantCulture)
+		};
+
+	/// <summary>
+	/// Outputs object values as long
+	/// If the object is not valid, returns 0
+	/// </summary>
+	public long ToLong() =>
+		IsValidDateTime().Valid switch
+		{
+			true =>
+				long.Parse(ToString(), CultureInfo.InvariantCulture),
+
+			false =>
+				0
 		};
 
 	internal (bool Valid, string Part) IsValidDateTime()
@@ -145,18 +151,15 @@ public readonly partial struct DateTimeInt : IComparable<DateTimeInt>, IEquatabl
 			return (false, nameof(Day));
 		}
 
-		// January, March, May, July, August, October, December
 		if (ThirtyOneDayMonths.Contains(Month) && Day > 31)
 		{
 			return (false, nameof(Day));
 		}
-		// April, June, September, November
 		else if (ThirtyDayMonths.Contains(Month) && Day > 30)
 		{
 			return (false, nameof(Day));
 		}
-		// February
-		else
+		else // February is the only month left
 		{
 			if (IsLeapYear(Year) && Day > 29)
 			{
@@ -202,7 +205,7 @@ public readonly partial struct DateTimeInt : IComparable<DateTimeInt>, IEquatabl
 	/// Minimum possible value
 	/// </summary>
 	public static DateTimeInt MinValue =>
-		new();
+		new(0, 0, 0, 0, 0);
 
 	/// <summary>
 	/// Maximum possible value
@@ -210,30 +213,48 @@ public readonly partial struct DateTimeInt : IComparable<DateTimeInt>, IEquatabl
 	public static DateTimeInt MaxValue =>
 		new(9999, 12, 31, 23, 59);
 
-	/// <summary>
-	/// January, March, May, July, August, October, December.
-	/// </summary>
-	private static readonly int[] ThirtyOneDayMonths = [1, 3, 5, 7, 8, 10, 12];
+	private static (int year, int month, int day, int hour, int minute) Parse(string value)
+	{
+		if (string.IsNullOrEmpty(value))
+		{
+			return (0, 0, 0, 0, 0);
+		}
 
-	/// <summary>
-	/// April, June, September, November.
-	/// </summary>
-	private static readonly int[] ThirtyDayMonths = [4, 6, 9, 11];
+		if (value.Length != 12)
+		{
+			throw new ArgumentException($"{nameof(DateTimeInt)} value must be a 12 characters long", nameof(value));
+		}
+
+		if (!ulong.TryParse(value, out _))
+		{
+			throw new ArgumentException("Not a valid number", nameof(value));
+		}
+
+		return (
+			year: int.Parse(value[0..4], CultureInfo.InvariantCulture),
+			month: int.Parse(value[4..6], CultureInfo.InvariantCulture),
+			day: int.Parse(value[6..8], CultureInfo.InvariantCulture),
+			hour: int.Parse(value[8..10], CultureInfo.InvariantCulture),
+			minute: int.Parse(value[10..], CultureInfo.InvariantCulture)
+		);
+	}
 
 	#endregion Static
 
-	/// <summary><see cref="DateTimeInt"/> Failures.</summary>
-	public static class Failures
+	/// <summary>Messages</summary>
+	public static class M
 	{
-		/// <summary>Unable to parse DateTime integer.</summary>
-		/// <param name="part">The name of the part that caused the error.</param>
-		/// <param name="dt">DateTime value.</param>
-		public static Result<T> Invalid<T>(string function, string part, DateTimeInt dt) =>
-			R.Fail<DateTimeInt>(
-				nameof(DateTimeInt),
-				function,
-				"Invalid {Part} - 'Y:{Year} M:{Month} D:{Day} H:{Hour} m:{Minute}'.",
-				part, dt.Year, dt.Month, dt.Day, dt.Hour, dt.Minute
-			);
+		/// <summary>Unable to parse DateTime integer</summary>
+		/// <param name="Value">Invalid part and DateTimeInt</param>
+		public sealed record class InvalidDateTimeMsg((string part, DateTimeInt dt) Value) : Msg
+		{
+			/// <inheritdoc/>
+			public override string Format =>
+				"Invalid {Part} - 'Y:{Year} M:{Month} D:{Day} H:{Hour} m:{Minute}'.";
+
+			/// <inheritdoc/>
+			public override object[]? Args =>
+				[Value.part, Value.dt.Year, Value.dt.Month, Value.dt.Day, Value.dt.Hour, Value.dt.Minute];
+		}
 	}
 }

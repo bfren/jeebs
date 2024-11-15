@@ -48,5 +48,5 @@ public sealed record class PostStatus : Enumerated
 	/// </summary>
 	/// <param name="name">Value name</param>
 	public static PostStatus Parse(string name) =>
-		Parse(name, values: new[] { Publish, Inherit, Pending, Draft, AutoDraft }).Unwrap(() => Draft);
+		Parse(name, values: [Publish, Inherit, Pending, Draft, AutoDraft]).Unwrap(() => Draft);
 }

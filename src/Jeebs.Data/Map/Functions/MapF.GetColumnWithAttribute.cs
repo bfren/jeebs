@@ -26,7 +26,7 @@ public static partial class MapF
 			columns
 		)
 		.Map(
-			x => x.Where(p => p.PropertyInfo.GetCustomAttribute(typeof(TAttribute)) != null).ToList(),
+			x => x.Where(p => p.PropertyInfo.GetCustomAttribute<TAttribute>() != null).ToList(),
 			e => new M.ErrorGettingColumnsWithAttributeMsg<TTable, TAttribute>(e)
 		)
 		.UnwrapSingle<IColumn>(

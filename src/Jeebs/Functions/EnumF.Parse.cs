@@ -8,52 +8,43 @@ namespace Jeebs.Functions;
 public static partial class EnumF
 {
 	/// <summary>
-	/// Parse a string value into the specified Enum.
+	/// Parse a string value into the specified Enum
 	/// </summary>
-	/// <typeparam name="T">Enum type.</typeparam>
-	/// <param name="value">The value to parse.</param>
-	/// <returns><paramref name="value"/> parsed as a <typeparamref name="T"/> Enum value.</returns>
+	/// <typeparam name="T">Enum type</typeparam>
+	/// <param name="value">The value to parse</param>
 	public static Maybe<T> Parse<T>(string? value)
 		where T : struct, Enum
 	{
 		if (value is null)
 		{
-			return M.None;
+			return F.None<T, M.NullValueMsg>();
 		}
 
 		try
 		{
-			return Enum.Parse(typeof(T), value) switch
-			{
-				T x =>
-					x,
-
-				_ =>
-					M.None
-			};
+			return Enum.Parse<T>(value);
 		}
 		catch (Exception)
 		{
-			return M.None;
+			return F.None<T>(new M.NotAValidEnumValueMsg<T>(value));
 		}
 	}
 
 	/// <summary>
-	/// Parse a string value into the specified Enum.
+	/// Parse a string value into the specified Enum
 	/// </summary>
-	/// <param name="t">Enum type.</param>
-	/// <param name="value">The value to parse.</param>
-	/// <returns><paramref name="value"/> parsed as an Enum value of type <paramref name="t"/>.</returns>
+	/// <param name="t">Enum type</param>
+	/// <param name="value">The value to parse</param>
 	public static Maybe<object> Parse(Type t, string? value)
 	{
 		if (!t.IsEnum)
 		{
-			return M.None;
+			return F.None<object>(new M.NotAValidEnumMsg(t));
 		}
 
 		if (value is null)
 		{
-			return M.None;
+			return F.None<object, M.NullValueMsg>();
 		}
 
 		try
@@ -62,7 +53,7 @@ public static partial class EnumF
 		}
 		catch (Exception)
 		{
-			return M.None;
+			return F.None<object>(new M.NotAValidEnumValueMsg(t, value));
 		}
 	}
 }
