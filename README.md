@@ -42,5 +42,5 @@ Jeebs v5 came from a) rewriting the entire codebase to make use of improvements 
 
 ## Copyright
 
-> Copyright (c) 2013-2024 [bfren](https://bfren.dev)
+> Copyright (c) 2013-2025 [bfren](https://bfren.dev)
 > Unless otherwise stated
