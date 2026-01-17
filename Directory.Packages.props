@@ -50,10 +50,10 @@
     <PackageVersion Include="Simple.Migrations" Version="0.9.21" />
     <PackageVersion Include="SkiaSharp" Version="3.119.1" />
     <PackageVersion Include="Sodium.Core" Version="1.4.0" />
-    <PackageVersion Include="StrongId" Version="8.5.8" />
-    <PackageVersion Include="StrongId.Dapper" Version="8.5.8" />
-    <PackageVersion Include="StrongId.Mvc" Version="8.5.8" />
-    <PackageVersion Include="StrongId.Testing" Version="8.5.8" />
+    <PackageVersion Include="StrongId" Version="8.5.9" />
+    <PackageVersion Include="StrongId.Dapper" Version="8.5.9" />
+    <PackageVersion Include="StrongId.Mvc" Version="8.5.9" />
+    <PackageVersion Include="StrongId.Testing" Version="8.5.9" />
     <PackageVersion Include="System.Collections.Immutable" Version="10.0.2" />
     <PackageVersion Include="System.Data.SQLite.Core" Version="1.0.119" />
     <PackageVersion Include="System.IdentityModel.Tokens.Jwt" Version="8.15.0" />
