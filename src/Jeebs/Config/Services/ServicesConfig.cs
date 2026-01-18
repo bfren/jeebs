@@ -92,7 +92,7 @@ public sealed record class ServicesConfig : IOptions<ServicesConfig>
 	/// </summary>
 	/// <param name="definition">Service definition - in format <c>service_type.service_name</c>.</param>
 	/// <returns>Definition tuple.</returns>
-	public static Maybe<(string type, string name)> SplitDefinition(string definition) =>
+	public static Maybe<(string type, string name)> SplitDefinition(string? definition) =>
 		string.IsNullOrWhiteSpace(definition) switch
 		{
 			false =>

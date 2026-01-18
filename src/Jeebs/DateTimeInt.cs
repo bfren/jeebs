@@ -70,7 +70,7 @@ public readonly partial struct DateTimeInt
 	/// Construct object from string - must be exactly 12 characters long (yyyymmddHHMM).
 	/// </summary>
 	/// <param name="value">DateTime string value - format yyyymmddHHMM.</param>
-	public DateTimeInt(string value) =>
+	public DateTimeInt(string? value) =>
 		(Year, Month, Day, Hour, Minute) = Parse(value, CultureInfo.InvariantCulture);
 
 	/// <summary>
@@ -102,7 +102,7 @@ public readonly partial struct DateTimeInt
 				new DateTime(Year, Month, Day, Hour, Minute, 0),
 
 			{ } x =>
-				R.Fail("Invalid {Part} - 'Y:{Year} M:{Month} D:{Day} H:{Hour} m:{Minute}'.", x.Part, Year, Month, Day, Hour, Minute)
+				R.Fail(nameof(DateTimeInt), nameof(ToDateTime), "Invalid {Part} - 'Y:{Year} M:{Month} D:{Day} H:{Hour} m:{Minute}'.", x.Part, Year, Month, Day, Hour, Minute)
 		};
 
 	/// <summary>

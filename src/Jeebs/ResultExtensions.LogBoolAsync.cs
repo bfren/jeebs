@@ -13,6 +13,6 @@ public static partial class ResultExtensions
 		(await @this.ConfigureAwait(false)).LogBool(log);
 
 	/// <inheritdoc cref="LogBool(Result{bool}, ILog, string, string)"/>
-	public static async Task<Result<bool>> LogBoolAsync(this Task<Result<bool>> @this, ILog log, string done, string failed) =>
-		(await @this.ConfigureAwait(false)).LogBool(log, done, failed);
+	public static async Task<Result<bool>> LogBoolAsync(this Task<Result<bool>> @this, ILog log, string ifTrue, string ifFalse) =>
+		(await @this.ConfigureAwait(false)).LogBool(log, ifTrue, ifFalse);
 }

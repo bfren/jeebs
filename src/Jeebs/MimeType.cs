@@ -146,7 +146,7 @@ public sealed record class MimeType : Enumerated
 	/// </summary>
 	/// <param name="mimeType">String to parse.</param>
 	/// <returns>MimeType value.</returns>
-	public static MimeType Parse(string? mimeType)
+	public static Result<MimeType> Parse(string? mimeType)
 	{
 		// Return Blank for null
 		if (mimeType is null)
@@ -154,7 +154,7 @@ public sealed record class MimeType : Enumerated
 			return Blank;
 		}
 
-		// Parse and return value - if None, return Blank
-		return Parse(mimeType, All.ToArray()).Unwrap(() => Blank);
+		// Parse and return value
+		return Parse(mimeType, All.ToArray());
 	}
 }
