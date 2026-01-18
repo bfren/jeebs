@@ -9,13 +9,16 @@ namespace Jeebs.Cryptography;
 /// <typeparam name="T">Value type.</typeparam>
 /// <param name="contents">Contents.</param>
 public sealed class Lockable<T>(T contents) : Lockable
-{$1/// <summary>
-$2/// $3$4.
-$5/// </summary>
+{
+	/// <summary>
+	/// Lockable contents.
+	/// </summary>
 	public T Contents { get; private init; } =
-		contents;$1/// <summary>
-$2/// $3$4.
-$5/// </summary>
+		contents;
+
+	/// <summary>
+	/// Lock this object.
+	/// </summary>
 	/// <param name="key">Encryption key - must be <see cref="Lockable.KeyLength"/> bytes.</param>
 	/// <returns>Locked box.</returns>
 	public Result<Locked<T>> Lock(byte[] key) =>
@@ -29,11 +32,13 @@ $5/// </summary>
 
 			_ =>
 				R.Fail(nameof(Lockable<>), nameof(Lock), "Key must be {Bytes} bytes long.", KeyLength)
-		};$1/// <summary>
-$2/// $3$4.
-$5/// </summary>
+		};
+
+	/// <summary>
+	/// Lock this object.
+	/// </summary>
 	/// <param name="key">Encryption key.</param>
-	/// <returns>Locked object.</returns>
+	/// <returns>Locked box.</returns>
 	public Result<Locked<T>> Lock(string key) =>
 		R.Try(
 			() => new Locked<T>(Contents, key),
@@ -45,8 +50,9 @@ $5/// </summary>
 /// Holds constants for <see cref="Lockable{T}"/>.
 /// </summary>
 public abstract class Lockable()
-{$1/// <summary>
-$2/// $3$4.
-$5/// </summary>
+{
+	/// <summary>
+	/// Length of encryption key (if it's a byte array).
+	/// </summary>
 	public static readonly int KeyLength = 32;
 }

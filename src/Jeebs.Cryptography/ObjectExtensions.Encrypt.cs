@@ -7,9 +7,10 @@ using Jeebs.Functions;
 namespace Jeebs.Cryptography;
 
 public static partial class ObjectExtensions
-{$1/// <summary>
-$2/// $3$4.
-$5/// </summary>
+{
+	/// <summary>
+	/// Encrypt an object using the specified key and return it serialised as JSON.
+	/// </summary>
 	/// <typeparam name="T">Type of object being encrypted.</typeparam>
 	/// <param name="this">Value to encrypt.</param>
 	/// <param name="key">Encryption Key (must be 32 bytes).</param>
@@ -26,7 +27,13 @@ $5/// </summary>
 				JsonF.Empty
 		};
 
-	/// <inheritdoc cref="Encrypt{T}(T, byte[])"/>
+	/// <summary>
+	/// Encrypt an object using the specified key and return it serialised as JSON.
+	/// </summary>
+	/// <typeparam name="T">Type of object being encrypted.</typeparam>
+	/// <param name="this">Value to encrypt.</param>
+	/// <param name="key">Encryption Key.</param>
+	/// <returns>JSON serialised encrypted box.</returns>
 	public static Result<string> Encrypt<T>(this T @this, string key) =>
 		@this switch
 		{

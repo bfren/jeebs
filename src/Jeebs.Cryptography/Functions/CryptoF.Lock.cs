@@ -4,9 +4,10 @@
 namespace Jeebs.Cryptography.Functions;
 
 public static partial class CryptoF
-{$1/// <summary>
-$2/// $3$4.
-$5/// </summary>
+{
+	/// <summary>
+	/// Create a locked box to secure <paramref name="contents"/> using <paramref name="key"/>.
+	/// </summary>
 	/// <typeparam name="T">Value type.</typeparam>
 	/// <param name="contents">Value to encrypt.</param>
 	/// <param name="key">Encryption key.</param>

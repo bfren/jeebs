@@ -15,19 +15,26 @@ namespace Jeebs.Cryptography;
 /// </summary>
 /// <typeparam name="T">Contents type.</typeparam>
 public sealed class Locked<T>
-{$1/// <summary>
-$2/// $3$4.
-$5/// </summary>
+{
+	/// <summary>
+	/// Encrypted contents.
+	/// </summary>
 	public Maybe<byte[]> EncryptedContents { get; init; } =
-		M.None;$1/// <summary>
-$2/// $3$4.
-$5/// </summary>
-	public byte[] Salt { get; init; }$1/// <summary>
-$2/// $3$4.
-$5/// </summary>
-	public byte[] Nonce { get; init; }$1/// <summary>
-$2/// $3$4.
-$5/// </summary>
+		M.None;
+
+	/// <summary>
+	/// Encryption salt.
+	/// </summary>
+	public byte[] Salt { get; init; }
+
+	/// <summary>
+	/// Encryption nonce.
+	/// </summary>
+	public byte[] Nonce { get; init; }
+
+	/// <summary>
+	/// Create new Locked box with random salt and nonce.
+	/// </summary>
 	public Locked() =>
 		(Salt, Nonce) = (SodiumCore.GetRandomBytes(16), SecretBox.GenerateNonce());
 
@@ -39,9 +46,11 @@ $5/// </summary>
 	internal Locked(T contents, string key) : this() =>
 		EncryptedContents = JsonF.Serialise(contents)
 			.Discard()
-			.Map(x => SecretBox.Create(x, Nonce, HashKey(key)));$1/// <summary>
-$2/// $3$4.
-$5/// </summary>
+			.Map(x => SecretBox.Create(x, Nonce, HashKey(key)));
+
+	/// <summary>
+	/// Unlock this box and decrypt contents.
+	/// </summary>
 	/// <param name="key">Encryption Key.</param>
 	/// <result>Unlocked box.</result>
 	public Result<Lockable<T>> Unlock(byte[] key)
@@ -80,15 +89,19 @@ $5/// </summary>
 				}
 			}
 		);
-	}$1/// <summary>
-$2/// $3$4.
-$5/// </summary>
+	}
+
+	/// <summary>
+	/// Unlock this box and decrypt contents.
+	/// </summary>
 	/// <param name="key">Encryption Key.</param>
-	/// <returns>Unlocked box.</returns>
+	/// <result>Unlocked box.</result>
 	public Result<Lockable<T>> Unlock(string key) =>
-		Unlock(HashKey(key));$1/// <summary>
-$2/// $3$4.
-$5/// </summary>
+		Unlock(HashKey(key));
+
+	/// <summary>
+	/// Serialise this Locked box as JSON.
+	/// </summary>
 	/// <returns>JSON.</returns>
 	public Result<string> Serialise() =>
 		EncryptedContents.Match(

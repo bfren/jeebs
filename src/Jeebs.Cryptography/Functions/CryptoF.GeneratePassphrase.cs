@@ -6,14 +6,17 @@ using RndF;
 namespace Jeebs.Cryptography.Functions;
 
 public static partial class CryptoF
-{$1/// <summary>
-$2/// $3$4.
-$5/// </summary>
+{
+	/// <summary>
+	/// Generate an 8-word passphrase.
+	/// </summary>
 	/// <returns>Passphrase.</returns>
 	public static string GeneratePassphrase() =>
-		Rnd.StringF.Passphrase();$1/// <summary>
-$2/// $3$4.
-$5/// </summary>
+		Rnd.StringF.Passphrase();
+
+	/// <summary>
+	/// Generate an 8-word passphrase.
+	/// </summary>
 	/// <param name="numberOfWords">The number of words in the passphrase (minimum: 5).</param>
 	/// <returns>Passphrase.</returns>
 	public static Result<string> GeneratePassphrase(int numberOfWords) =>

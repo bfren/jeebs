@@ -6,9 +6,10 @@ using Sodium;
 namespace Jeebs.Cryptography.Functions;
 
 public static partial class CryptoF
-{$1/// <summary>
-$2/// $3$4.
-$5/// </summary>
+{
+	/// <summary>
+	/// Generate a 32 byte key to use for encryption.
+	/// </summary>
 	/// <returns>Encryption key as byte array.</returns>
 	public static Result<byte[]> GenerateKey() =>
 		R.Try(SecretBox.GenerateKey, e => R.Fail(nameof(CryptoF), nameof(GenerateKey), e));

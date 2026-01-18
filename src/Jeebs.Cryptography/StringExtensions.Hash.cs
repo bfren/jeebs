@@ -7,15 +7,18 @@ using Jeebs.Cryptography.Functions;
 namespace Jeebs.Cryptography;
 
 public static partial class StringExtensions
-{$1/// <summary>
-$2/// $3$4.
-$5/// </summary>
+{
+	/// <summary>
+	/// Compute a 64-byte hash, returning a string of length 88.
+	/// </summary>
 	/// <param name="this">String to hash.</param>
 	/// <returns>Hashed string.</returns>
 	public static Result<string> Hash(this string @this) =>
-		Hash(@this, 64);$1/// <summary>
-$2/// $3$4.
-$5/// </summary>
+		Hash(@this, 64);
+
+	/// <summary>
+	/// Compute a hash.
+	/// </summary>
 	/// <remarks>
 	/// A 32 byte hash returns a string of length 44.<br/>
 	/// A 64 byte hash (default) returns a string of length 88.
