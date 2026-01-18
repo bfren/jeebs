@@ -1,6 +1,7 @@
 // Jeebs Rapid Application Development
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
+using System.Globalization;
 using Jeebs.Config;
 using Serilog;
 using Serilog.Events;
@@ -23,7 +24,8 @@ public sealed class SeqLoggingProvider : ILoggingProvider
 		_ = logger.WriteTo.Async(a => a.Seq(
 			serverUrl: config.Server,
 			apiKey: config.ApiKey,
-			restrictedToMinimumLevel: minimum
+			restrictedToMinimumLevel: minimum,
+			formatProvider: CultureInfo.InvariantCulture
 		));
 	}
 }

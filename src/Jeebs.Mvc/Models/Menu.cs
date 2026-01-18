@@ -69,7 +69,7 @@ public abstract class Menu
 		// Build the context
 		var actionContext = new UrlActionContext
 		{
-			Protocol = urlHelper.ActionContext.HttpContext.Request.Scheme,
+			Protocol = urlHelper.ActionContext.HttpContext.Request.IsHttps ? "https" : "http",
 			Host = urlHelper.ActionContext.HttpContext.Request.Host.ToString(),
 			Controller = item.Controller,
 			Action = item.Action,
