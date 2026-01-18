@@ -1,4 +1,4 @@
-﻿// Jeebs Unit Tests
+// Jeebs Unit Tests
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 namespace Jeebs.Config.Services.Seq.SeqConfig_Tests;
@@ -12,13 +12,13 @@ public class IsValid_Tests
 	[InlineData("server", null)]
 	[InlineData("server", "")]
 	[InlineData("server", " ")]
-	public void Returns_False(string server, string apiKey)
+	public void Returns_False(string? server, string? apiKey)
 	{
 		// Arrange
 		var config = new SeqConfig
 		{
-			Server = server,
-			ApiKey = apiKey,
+			Server = server!,
+			ApiKey = apiKey!,
 		};
 
 		// Act

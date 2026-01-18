@@ -9,7 +9,7 @@ public class Serialise_Tests
 {
 	[Theory]
 	[InlineData(null)]
-	public void Null_Returns_Empty(object input)
+	public void Null_Returns_Empty(object? input)
 	{
 		// Arrange
 

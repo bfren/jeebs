@@ -1,7 +1,6 @@
 // Jeebs Unit Tests
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
-using System.Globalization;
 using Jeebs.Config.Services.Console;
 using Jeebs.Config.Services.Seq;
 
@@ -18,7 +17,7 @@ public partial class GetServiceConfig_Tests
 		var defaultConfig = new ConsoleConfig();
 
 		// Act
-		var result = config.GetServiceConfig(x => x.Console, name);
+		var result = (ConsoleConfig)config.GetServiceConfig(x => x.Console, name).Unsafe().Unwrap();
 
 		// Assert
 		Assert.Equal(defaultConfig.AddPrefix, result.AddPrefix);
@@ -26,7 +25,7 @@ public partial class GetServiceConfig_Tests
 	}
 
 	[Fact]
-	public void Invalid_Config_Throws_InvalidServiceConfigurationException()
+	public void Invalid_Config_Returns_Fail()
 	{
 		// Arrange
 		var config = new ServicesConfig();
@@ -34,11 +33,10 @@ public partial class GetServiceConfig_Tests
 		config.Seq.Add(name, new SeqConfig());
 
 		// Act
-		var action = void () => config.GetServiceConfig(x => x.Seq, name);
+		var result = config.GetServiceConfig(x => x.Seq, name);
 
 		// Assert
-		var ex = Assert.Throws<InvalidServiceConfigurationException>(action);
-		Assert.Equal(string.Format(CultureInfo.InvariantCulture, InvalidServiceConfigurationException.Format, name, typeof(SeqConfig)), ex.Message);
+		result.AssertFail("Definition of {Type} service named '{Name}' is invalid.", typeof(SeqConfig).Name!, name);
 	}
 
 	[Fact]

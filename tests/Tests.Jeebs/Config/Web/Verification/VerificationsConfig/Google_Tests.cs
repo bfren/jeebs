@@ -1,4 +1,4 @@
-﻿// Jeebs Unit Tests
+// Jeebs Unit Tests
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 namespace Jeebs.Config.Web.Verification.VerificationsConfig_Tests;
@@ -6,7 +6,7 @@ namespace Jeebs.Config.Web.Verification.VerificationsConfig_Tests;
 public class Google_Tests
 {
 	[Fact]
-	public void Code_Not_Set_Returns_Null()
+	public void Code_Not_Set_Returns_Empty_string()
 	{
 		// Arrange
 		var config = new VerificationConfig();
@@ -15,7 +15,7 @@ public class Google_Tests
 		var result = config.Google;
 
 		// Assert
-		Assert.Null(result);
+		Assert.Equal(string.Empty, result);
 	}
 
 	[Fact]

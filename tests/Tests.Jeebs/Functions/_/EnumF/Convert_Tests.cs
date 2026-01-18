@@ -1,4 +1,4 @@
-﻿// Jeebs Unit Tests
+// Jeebs Unit Tests
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 namespace Jeebs.Functions.EnumF_Tests;
@@ -19,7 +19,7 @@ public class Convert_Tests
 	}
 
 	[Fact]
-	public void NoMatchingValue_Returns_None()
+	public void NoMatchingValue_Returns_Fail()
 	{
 		// Arrange
 		const TestB input = TestB.Test5;
@@ -28,7 +28,7 @@ public class Convert_Tests
 		var result = EnumF.Convert(input).To<TestA>();
 
 		// Assert
-		result.AssertNone();
+		result.AssertFail("'{Value}' is not a valid value of {Type}.", nameof(TestB.Test5), typeof(TestA));
 	}
 
 	public enum TestA

@@ -1,4 +1,4 @@
-﻿// Jeebs Unit Tests
+// Jeebs Unit Tests
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 namespace Jeebs.Reflection.PropertyInfo_Tests;
@@ -7,13 +7,13 @@ public class Set_Tests
 {
 	[Theory]
 	[InlineData(null)]
-	public void Set_WithNullObject_ThrowsArgumentNullException(Foo obj)
+	public void Set_WithNullObject_ThrowsArgumentNullException(Foo? obj)
 	{
 		// Arrange
 		var info = new PropertyInfo<Foo, string>(nameof(Foo.Bar));
 
 		// Act
-		var result = void () => info.Set(obj, Rnd.Str);
+		var result = void () => info.Set(obj!, Rnd.Str);
 
 		// Assert
 		Assert.Throws<ArgumentNullException>(result);
@@ -21,14 +21,14 @@ public class Set_Tests
 
 	[Theory]
 	[InlineData(null)]
-	public void Set_WithNullValue_ThrowsArgumentNullException(string value)
+	public void Set_WithNullValue_ThrowsArgumentNullException(string? value)
 	{
 		// Arrange
 		var foo = new Foo();
 		var info = new PropertyInfo<Foo, string>(nameof(Foo.Bar));
 
 		// Act
-		var result = void () => info.Set(foo, value);
+		var result = void () => info.Set(foo, value!);
 
 		// Assert
 		Assert.Throws<ArgumentNullException>(result);

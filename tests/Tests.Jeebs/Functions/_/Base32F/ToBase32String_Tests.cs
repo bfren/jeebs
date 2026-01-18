@@ -1,4 +1,4 @@
-﻿// Jeebs Unit Tests
+// Jeebs Unit Tests
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 namespace Jeebs.Functions.Base32F_Tests;
@@ -36,7 +36,7 @@ public class ToBase32String_Tests
 	{
 		// Arrange
 		var expected = "5C5NHZDVBT4RWPBK";
-		var bytes = Base32F.FromBase32String(expected).UnsafeUnwrap();
+		var bytes = Base32F.FromBase32String(expected).Unsafe().Unwrap();
 
 		// Act
 		var result = Base32F.ToBase32String(bytes);

@@ -1,7 +1,6 @@
-﻿// Jeebs Unit Tests
+// Jeebs Unit Tests
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
-using System.Globalization;
 using Jeebs.Config.Services.Seq;
 
 namespace Jeebs.Config.Services.ServicesConfig_Tests;
@@ -9,18 +8,17 @@ namespace Jeebs.Config.Services.ServicesConfig_Tests;
 public partial class GetServiceConfig_Tests
 {
 	[Fact]
-	public void Splits_Definition_Unknown_Service_Type_Throws_UnsupportedServiceException()
+	public void Splits_Definition_Unknown_Service_Type_Returns_Fail()
 	{
 		// Arrange
 		var config = new ServicesConfig();
 		var type = Rnd.Str;
 
 		// Act
-		var action = void () => config.GetServiceConfig($"{type}.{Rnd.Str}");
+		var result = config.GetServiceConfig($"{type}.{Rnd.Str}");
 
 		// Assert
-		var ex = Assert.Throws<UnsupportedServiceException>(action);
-		Assert.Equal(string.Format(CultureInfo.InvariantCulture, UnsupportedServiceException.Format, type), ex.Message);
+		result.AssertFail("Unsupported service type: {Type}.", type);
 	}
 
 	[Fact]

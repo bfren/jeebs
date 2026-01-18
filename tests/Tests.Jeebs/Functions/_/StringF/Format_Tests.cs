@@ -1,4 +1,4 @@
-﻿// Jeebs Unit Tests
+// Jeebs Unit Tests
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 namespace Jeebs.Functions.StringF_Tests;
@@ -14,12 +14,10 @@ public class Format_Tests
 		var value = Rnd.Str;
 
 		// Act
-		var r0 = StringF.Format(format, obj, null);
-		var r1 = StringF.Format(format, obj, value);
+		var result = StringF.Format(format, obj, value);
 
 		// Assert
-		Assert.Null(r0);
-		Assert.Equal(value, r1);
+		Assert.Equal(value, result);
 	}
 
 	[Fact]

@@ -1,8 +1,6 @@
 // Jeebs Unit Tests
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
-using static Jeebs.Functions.BooleanF.M;
-
 namespace Jeebs.Functions.BooleanF_Tests;
 
 public class Parse_Tests
@@ -60,6 +58,6 @@ public class Parse_Tests
 		var result = BooleanF.Parse(input);
 
 		// Assert
-		result.AssertNone().AssertType<UnrecognisedValueMsg>();
+		result.AssertNone();
 	}
 }

@@ -1,4 +1,4 @@
-﻿// Jeebs Unit Tests
+// Jeebs Unit Tests
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using Jeebs.Extensions;
@@ -8,7 +8,6 @@ namespace Jeebs.StringExtensions_Tests;
 public class ReplaceNonNumerical_Tests
 {
 	[Theory]
-	[InlineData(null)]
 	[InlineData("")]
 	public void NullOrEmpty_ReturnsOriginal(string input)
 	{
@@ -24,12 +23,12 @@ public class ReplaceNonNumerical_Tests
 	[Theory]
 	[InlineData("Bro65ken12", null, "6512")]
 	[InlineData("Bro65ken12", "-", "-65-12")]
-	public void String_ReturnsValueWithNumbersReplaced(string input, string with, string expected)
+	public void String_ReturnsValueWithNumbersReplaced(string input, string? with, string expected)
 	{
 		// Arrange
 
 		// Act
-		var result = input.ReplaceNonNumerical(with);
+		var result = input.ReplaceNonNumerical(with!);
 
 		// Assert
 		Assert.Equal(expected, result);

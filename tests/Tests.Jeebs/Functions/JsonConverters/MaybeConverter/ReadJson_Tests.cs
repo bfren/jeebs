@@ -1,9 +1,6 @@
 // Jeebs Unit Tests
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
-using MaybeF;
-using static Jeebs.Functions.JsonF.M;
-
 namespace Jeebs.Functions.JsonConverters.MaybeConverter_Tests;
 
 public class ReadJson_Tests
@@ -21,8 +18,7 @@ public class ReadJson_Tests
 		var result = JsonF.Deserialise<Maybe<Test>>(json);
 
 		// Assert
-		var some = result.AssertSome();
-		Assert.Equal(expected, some);
+		result.AssertOk(expected);
 	}
 
 	[Fact]
@@ -38,8 +34,7 @@ public class ReadJson_Tests
 		var result = JsonF.Deserialise<Wrapper>(json);
 
 		// Assert
-		var some = result.AssertSome();
-		Assert.Equal(expected, some);
+		result.AssertOk(expected);
 	}
 
 	[Theory]
@@ -48,7 +43,7 @@ public class ReadJson_Tests
 	[InlineData("false")]
 	[InlineData("[0,1,2]")]
 	[InlineData(/*lang=json,strict*/ "{\"bar\":\"foo\"}")]
-	public void Deserialise_Null_Or_Invalid_Value_Returns_None_With_DeserialisingValueExceptionMsg(string input)
+	public void Deserialise_Null_Or_Invalid_Value_Returns_Fail(string input)
 	{
 		// Arrange
 
@@ -56,7 +51,8 @@ public class ReadJson_Tests
 		var result = JsonF.Deserialise<Maybe<Test>>(input);
 
 		// Assert
-		result.AssertNone().AssertType<DeserialiseExceptionMsg>();
+		var fail = result.AssertFail();
+		Assert.NotNull(fail.Exception);
 	}
 
 	[Theory]
@@ -65,7 +61,7 @@ public class ReadJson_Tests
 	[InlineData("false")]
 	[InlineData("[0,1,2]")]
 	[InlineData(/*lang=json,strict*/ "{\"bar\":\"foo\"}")]
-	public void Deserialise_Object_With_Maybe_Property_Null_Or_Invalid_Value_Returns_None_With_DeserialisingValueExceptionMsg(string input)
+	public void Deserialise_Object_With_Maybe_Property_Null_Or_Invalid_Value_Returns_Fail(string input)
 	{
 		// Arrange
 		var json = $"{{\"test\":{input}}}";
@@ -74,7 +70,8 @@ public class ReadJson_Tests
 		var result = JsonF.Deserialise<Wrapper>(json);
 
 		// Assert
-		result.AssertNone().AssertType<DeserialiseExceptionMsg>();
+		var fail = result.AssertFail();
+		Assert.NotNull(fail.Exception);
 	}
 
 	public record class Test(string Foo, int Bar);

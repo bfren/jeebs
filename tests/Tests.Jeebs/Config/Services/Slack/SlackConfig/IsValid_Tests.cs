@@ -1,4 +1,4 @@
-﻿// Jeebs Unit Tests
+// Jeebs Unit Tests
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 namespace Jeebs.Config.Services.Slack.SlackConfig_Tests;
@@ -10,10 +10,10 @@ public class IsValid_Tests
 	[InlineData("")]
 	[InlineData(" ")]
 	[InlineData("http://news.contoso.com")]
-	public void Returns_False(string webhook)
+	public void Returns_False(string? webhook)
 	{
 		// Arrange
-		var config = new SlackConfig { Webhook = webhook };
+		var config = new SlackConfig { Webhook = webhook! };
 
 		// Act
 		var result = config.IsValid;

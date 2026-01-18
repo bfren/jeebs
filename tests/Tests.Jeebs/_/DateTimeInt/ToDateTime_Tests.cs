@@ -1,8 +1,6 @@
 // Jeebs Unit Tests
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
-using static Jeebs.DateTimeInt.M;
-
 namespace Jeebs.DateTimeInt_Tests;
 
 public class ToDateTime_Tests
@@ -18,8 +16,8 @@ public class ToDateTime_Tests
 		var result = input.ToDateTime();
 
 		// Assert
-		var some = result.AssertSome();
-		Assert.Equal(dt, some);
+		var ok = result.AssertOk();
+		Assert.Equal(dt, ok);
 	}
 
 	[Theory]
@@ -33,7 +31,6 @@ public class ToDateTime_Tests
 		var result = input.ToDateTime();
 
 		// Assert
-		var none = result.AssertNone().AssertType<InvalidDateTimeMsg>();
-		Assert.Equal(part, none.Value.part);
+		result.AssertFail("Invalid {Part} - 'Y:{Year} M:{Month} D:{Day} H:{Hour} m:{Minute}'.", part, year, month, day, hour, minute);
 	}
 }

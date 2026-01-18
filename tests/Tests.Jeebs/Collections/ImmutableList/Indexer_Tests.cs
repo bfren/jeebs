@@ -1,7 +1,7 @@
 // Jeebs Unit Tests
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
-using static MaybeF.F.EnumerableF.M;
+using Jeebs.Functions;
 
 namespace Jeebs.Collections.ImmutableList_Tests;
 
@@ -14,7 +14,7 @@ public class Indexer_Tests
 		var i0 = Rnd.Str;
 		var i1 = Rnd.Str;
 		var i2 = Rnd.Str;
-		var list = ImmutableList.Create([i0, i1, i2]);
+		var list = ListF.Create([i0, i1, i2]);
 
 		// Act
 		var result = list[1];
@@ -25,31 +25,31 @@ public class Indexer_Tests
 	}
 
 	[Fact]
-	public void Does_Not_Exist_Returns_None_With_ElementAtIsNullMsg()
+	public void Does_Not_Exist_Returns_None()
 	{
 		// Arrange
 		var i0 = Rnd.Str;
 		var i1 = Rnd.Str;
-		var list = ImmutableList.Create([i0, i1]);
+		var list = ListF.Create([i0, i1]);
 
 		// Act
 		var result = list[2];
 
 		// Assert
-		result.AssertNone().AssertType<ElementAtIsNullMsg>();
+		result.AssertNone();
 	}
 
 	[Fact]
-	public void Empty_List_Returns_None_With_ListIsEmptyMsg()
+	public void Empty_List_Returns_None()
 	{
 		// Arrange
-		var list = new ImmutableList<int>();
+		var list = ListF.Create<int>();
 
 		// Act
 		var result = list[Rnd.Int];
 
 		// Assert
-		result.AssertNone().AssertType<ListIsEmptyMsg>();
+		result.AssertNone();
 	}
 
 	[Fact]
@@ -58,7 +58,7 @@ public class Indexer_Tests
 		// Arrange
 		var i0 = Rnd.Str;
 		var i1 = Rnd.Str;
-		var list = ImmutableList.Create([i0, i1]);
+		var list = ListF.Create([i0, i1]);
 
 		// Act
 		for (var i = 0; i < list.Count; i++)

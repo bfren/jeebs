@@ -1,4 +1,4 @@
-﻿// Jeebs Unit Tests
+// Jeebs Unit Tests
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 namespace Jeebs.MimeType_Tests;
@@ -30,7 +30,9 @@ public class Parse_Tests
 		};
 
 	[Theory]
+#pragma warning disable xUnit1044 // Avoid using TheoryData type arguments that are not serializable
 	[MemberData(nameof(Returns_Correct_MimeType_Data))]
+#pragma warning restore xUnit1044 // Avoid using TheoryData type arguments that are not serializable
 	public void Returns_Correct_MimeType(string name, MimeType type)
 	{
 		// Arrange

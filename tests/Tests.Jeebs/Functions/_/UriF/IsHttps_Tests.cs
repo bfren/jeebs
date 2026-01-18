@@ -1,4 +1,4 @@
-﻿// Jeebs Unit Tests
+// Jeebs Unit Tests
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 namespace Jeebs.Functions.UriF_Tests;
@@ -27,12 +27,12 @@ public class IsHttps_Tests
 	[InlineData("nntp://news.contoso.com/123456@contoso.com", true)]
 	[InlineData("nntp://news.contoso.com/123456@contoso.com", false)]
 	[InlineData("http://news.contoso.com", true)]
-	public void Returns_False(string input, bool requireHttps)
+	public void Returns_False(string? input, bool requireHttps)
 	{
 		// Arrange
 
 		// Act
-		var result = UriF.IsHttp(input, requireHttps);
+		var result = UriF.IsHttp(input!, requireHttps);
 
 		// Assert
 		Assert.False(result);
