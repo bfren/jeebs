@@ -1,69 +1,52 @@
 // Jeebs Rapid Application Development
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
-using Jeebs.Messages;
-
 namespace Jeebs.Cryptography;
 
 /// <summary>
-/// Contains contents that can been encrypted
+/// Contains contents that can been encrypted.
 /// </summary>
-/// <typeparam name="T">Value type</typeparam>
-public sealed class Lockable<T> : Lockable
-{
-	/// <summary>
-	/// Contents
-	/// </summary>
-	public T Contents { get; private init; }
-
-	/// <summary>
-	/// Create object
-	/// </summary>
-	/// <param name="contents">Contents</param>
-	public Lockable(T contents) =>
-		Contents = contents;
-
-	/// <summary>
-	/// Lock object
-	/// </summary>
-	/// <param name="key">Encryption key - must be <see cref="Lockable.KeyLength"/> bytes</param>
-	public Maybe<Locked<T>> Lock(byte[] key) =>
+/// <typeparam name="T">Value type.</typeparam>
+/// <param name="contents">Contents.</param>
+public sealed class Lockable<T>(T contents) : Lockable
+{$1/// <summary>
+$2/// $3$4.
+$5/// </summary>
+	public T Contents { get; private init; } =
+		contents;$1/// <summary>
+$2/// $3$4.
+$5/// </summary>
+	/// <param name="key">Encryption key - must be <see cref="Lockable.KeyLength"/> bytes.</param>
+	/// <returns>Locked box.</returns>
+	public Result<Locked<T>> Lock(byte[] key) =>
 		key.Length switch
 		{
 			int l when l == KeyLength =>
-				new Locked<T>(Contents, key),
+				R.Try(
+					() => new Locked<T>(Contents, key),
+					e => R.Fail(nameof(Lockable<>), nameof(Lock), e)
+				),
 
 			_ =>
-				F.None<Locked<T>, M.InvalidKeyLengthMsg>()
-		};
-
-	/// <summary>
-	/// Lock object
-	/// </summary>
-	/// <param name="key">Encryption key</param>
-	public Locked<T> Lock(string key) =>
-		new(Contents, key);
+				R.Fail(nameof(Lockable<>), nameof(Lock), "Key must be {Bytes} bytes long.", KeyLength)
+		};$1/// <summary>
+$2/// $3$4.
+$5/// </summary>
+	/// <param name="key">Encryption key.</param>
+	/// <returns>Locked object.</returns>
+	public Result<Locked<T>> Lock(string key) =>
+		R.Try(
+			() => new Locked<T>(Contents, key),
+			e => R.Fail(nameof(Lockable<>), nameof(Lock), e)
+		);
 }
 
 /// <summary>
-/// Holds constants and Messages for <see cref="Lockable{T}"/>
+/// Holds constants for <see cref="Lockable{T}"/>.
 /// </summary>
-public abstract class Lockable
-{
-	/// <summary>
-	/// Length of encryption key (if it's a byte array)
-	/// </summary>
+public abstract class Lockable()
+{$1/// <summary>
+$2/// $3$4.
+$5/// </summary>
 	public static readonly int KeyLength = 32;
-
-	/// <summary>
-	/// Create object
-	/// </summary>
-	protected Lockable() { }
-
-	/// <summary>Messages</summary>
-	public static class M
-	{
-		/// <summary>Encryption key is not the correct length to lock the box</summary>
-		public sealed record class InvalidKeyLengthMsg : Msg;
-	}
 }

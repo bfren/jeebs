@@ -4,17 +4,31 @@
 namespace Jeebs.Cryptography.Functions;
 
 public static partial class CryptoF
-{
-	/// <summary>
-	/// Create a locked box to secure <paramref name="contents"/> using <paramref name="key"/>
-	/// </summary>
-	/// <typeparam name="T">Value type</typeparam>
-	/// <param name="contents">Value to encrypt</param>
-	/// <param name="key">Encryption key</param>
-	public static Maybe<Locked<T>> Lock<T>(T contents, byte[] key) =>
-		new Lockable<T>(contents).Lock(key);
+{$1/// <summary>
+$2/// $3$4.
+$5/// </summary>
+	/// <typeparam name="T">Value type.</typeparam>
+	/// <param name="contents">Value to encrypt.</param>
+	/// <param name="key">Encryption key.</param>
+	/// <returns>Locked box.</returns>
+	public static Result<Locked<T>> Lock<T>(T contents, byte[] key) =>
+		contents switch
+		{
+			T x =>
+				new Lockable<T>(x).Lock(key),
+
+			_ =>
+				new Locked<T>()
+		};
 
 	/// <inheritdoc cref="Lock{T}(T, byte[])"/>
-	public static Locked<T> Lock<T>(T contents, string key) =>
-		new Lockable<T>(contents).Lock(key);
+	public static Result<Locked<T>> Lock<T>(T contents, string key) =>
+		contents switch
+		{
+			T x =>
+				new Lockable<T>(x).Lock(key),
+
+			_ =>
+				new Locked<T>()
+		};
 }

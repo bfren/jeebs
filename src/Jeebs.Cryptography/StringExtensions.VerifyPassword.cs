@@ -8,7 +8,7 @@ namespace Jeebs.Cryptography;
 public static partial class StringExtensions
 {
 	/// <summary>
-	/// Verify a password hashed using argon2id
+	/// Verify a password hashed using argon2id.
 	/// </summary>
 	/// <param name="this">Password hash</param>
 	/// <param name="password">Password to verify</param>
