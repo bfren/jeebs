@@ -15,9 +15,9 @@ public static partial class EnumF
 	public static Result<T> Parse<T>(string? value)
 		where T : struct, Enum
 	{
-		if (value is null)
+		if (string.IsNullOrEmpty(value))
 		{
-			return FailNullValue<T>();
+			return FailNullValue<T>(nameof(EnumF), nameof(Parse));
 		}
 
 		try
@@ -26,7 +26,7 @@ public static partial class EnumF
 		}
 		catch (Exception)
 		{
-			return FailNotAValidEnumValue<T>(value);
+			return FailNotAValidValue<T>(nameof(EnumF), nameof(Parse), value);
 		}
 	}
 }

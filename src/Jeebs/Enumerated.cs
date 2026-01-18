@@ -4,6 +4,7 @@
 using System;
 using System.Collections;
 using System.Collections.Concurrent;
+using Jeebs.Functions;
 
 namespace Jeebs;
 
@@ -81,7 +82,7 @@ public abstract record class Enumerated : IEquatable<Enumerated>, IEquatable<str
 				value,
 
 			false =>
-				R.Fail("'{Value}' is not a valid value of {Type}.", value, typeof(T))
+				EnumF.FailNotAValidValue<T>(nameof(Enumerated), nameof(Check), name)
 		};
 
 	/// <summary>
@@ -99,14 +100,14 @@ public abstract record class Enumerated : IEquatable<Enumerated>, IEquatable<str
 				// Check all given values against name
 				foreach (var item in args.Values)
 				{
-					if (Check(args.Name, item) is Some<T> s)
+					if (Check(args.Name, item) is Ok<T> s)
 					{
 						return s;
 					}
 				}
 
 				// If we get here the name was never matched
-				return R.Fail("'{Value}' is not a valid value of {Type}.", name, typeof(T));
+				return EnumF.FailNotAValidValue<T>(nameof(Enumerated), nameof(Parse), name);
 			},
 			new ParseArgs<T>(name, values)
 		);

@@ -39,8 +39,8 @@ public static class ListExtensions
 				(M.None, @this[1]),
 
 			// If it is the last item, Next should be None
-			{ } x when x == @this.Count - 1 =>
-				(@this[^1], M.None),
+			{ } x when x == (@this.Count - 1) =>
+				(@this[^2], M.None),
 
 			// Return the items either side of the item
 			{ } x =>

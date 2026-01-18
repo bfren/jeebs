@@ -51,7 +51,7 @@ public static partial class EnumF
 					x,
 
 				_ =>
-					FailNotAValidEnumValue<TTo>(fromLong.ToString()),
+					FailNotAValidValue<TTo>(nameof(EnumF), nameof(Convert), from.ToString()),
 			};
 		}
 	}

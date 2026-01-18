@@ -15,13 +15,13 @@ public static partial class JsonF
 	/// <param name="str">The string to deserialise.</param>
 	/// <param name="options">JsonSerializerOptions.</param>
 	/// <returns>Deserialised object.</returns>
-	public static Result<T> Deserialise<T>(string str, JsonSerializerOptions options)
+	public static Result<T> Deserialise<T>(string? str, JsonSerializerOptions options)
 	{
 		static Result<T> fail(string message) =>
 			R.Fail(nameof(JsonF), nameof(Deserialise), message);
 
 		// Check for null string
-		if (str is null || string.IsNullOrWhiteSpace(str))
+		if (string.IsNullOrWhiteSpace(str))
 		{
 			return fail("Cannot deserialise a null or empty string to JSON.");
 		}
@@ -45,6 +45,6 @@ public static partial class JsonF
 	}
 
 	/// <inheritdoc cref="Deserialise{T}(string, JsonSerializerOptions)"/>
-	public static Result<T> Deserialise<T>(string str) =>
+	public static Result<T> Deserialise<T>(string? str) =>
 		Deserialise<T>(str, Options);
 }

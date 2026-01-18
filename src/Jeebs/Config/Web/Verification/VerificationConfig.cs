@@ -19,10 +19,10 @@ public sealed record class VerificationConfig : IOptions<VerificationConfig>
 	/// <summary>
 	/// Google Site Verification page.
 	/// </summary>
-	public string? Google
+	public string Google
 	{
 		get =>
-			StringF.Format("google{0}.html", googleCode, null);
+			StringF.Format("google{0}.html", googleCode, string.Empty);
 
 		init =>
 			googleCode = value;

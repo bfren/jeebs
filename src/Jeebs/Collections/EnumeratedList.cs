@@ -15,7 +15,7 @@ public static class EnumeratedList
 	/// </summary>
 	/// <typeparam name="T">Enumerated value type.</typeparam>
 	/// <param name="json">JSON serialised list.</param>
-	public static EnumeratedList<T> Deserialise<T>(string json)
+	public static EnumeratedList<T> Deserialise<T>(string? json)
 		where T : Enumerated
 	{
 		var strings = JsonF.Deserialise<List<string>>(json).Unwrap(_ => []);
@@ -39,7 +39,7 @@ public sealed class EnumeratedList<T> : List<T>
 	/// Construct object from list of string values.
 	/// </summary>
 	/// <param name="list">List of values.</param>
-	public EnumeratedList(List<string> list)
+	public EnumeratedList(List<string>? list)
 	{
 		if (list is null)
 		{

@@ -9,9 +9,12 @@ namespace Jeebs;
 public readonly partial struct DateTimeInt
 {
 	/// <inheritdoc/>
-	public static DateTimeInt Parse(string s, IFormatProvider? provider)
+	public static DateTimeInt Parse(string? s, IFormatProvider? provider)
 	{
-		ArgumentException.ThrowIfNullOrEmpty(s);
+		if (string.IsNullOrEmpty(s))
+		{
+			return MinValue;
+		}
 
 		if (s.Length != 12)
 		{

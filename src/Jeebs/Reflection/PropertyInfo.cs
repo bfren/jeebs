@@ -62,7 +62,7 @@ public class PropertyInfo<TObject, TProperty>
 	/// <returns>Property value.</returns>
 	public Maybe<TProperty> Get([DisallowNull] TObject obj)
 	{
-		if (Info.GetValue(obj, null) is TProperty value)
+		if (obj is not null && Info.GetValue(obj, null) is TProperty value)
 		{
 			return value;
 		}
