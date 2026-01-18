@@ -9,7 +9,7 @@ using StrongId;
 namespace Jeebs.Data.Query;
 
 /// <summary>
-/// Builds a <see cref="QueryParts"/> object from various options
+/// Builds a <see cref="QueryParts"/> object from various options.
 /// </summary>
 /// <typeparam name="TEntity">Entity type</typeparam>
 /// <typeparam name="TId">Entity ID type</typeparam>

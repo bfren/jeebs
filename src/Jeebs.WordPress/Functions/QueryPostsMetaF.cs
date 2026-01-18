@@ -4,7 +4,7 @@
 namespace Jeebs.WordPress.Functions;
 
 /// <summary>
-/// Query Posts Meta Functions
+/// Query Posts Meta Functions.
 /// </summary>
 public static partial class QueryPostsMetaF
 {

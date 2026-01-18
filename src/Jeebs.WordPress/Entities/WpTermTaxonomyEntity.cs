@@ -6,7 +6,7 @@ using Jeebs.WordPress.Enums;
 namespace Jeebs.WordPress.Entities;
 
 /// <summary>
-/// TermTaxonomy entity
+/// TermTaxonomy entity.
 /// </summary>
 public abstract record class WpTermTaxonomyEntity : WpTermTaxonomyEntityWithId
 {

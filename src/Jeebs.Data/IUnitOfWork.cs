@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 namespace Jeebs.Data;
 
 /// <summary>
-/// Database unit of work
+/// Database unit of work.
 /// </summary>
 public interface IUnitOfWork : IAsyncDisposable, IDisposable
 {

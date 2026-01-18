@@ -8,7 +8,7 @@ using Jeebs.Services.Webhook;
 namespace Jeebs.Services.Drivers.Webhook.Seq;
 
 /// <summary>
-/// Seq Webhook driver
+/// Seq Webhook driver.
 /// </summary>
 public abstract class SeqWebhookDriver : WebhookDriver<SeqConfig, SeqEvent>
 {

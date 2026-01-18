@@ -7,7 +7,7 @@ using Jeebs.WordPress.Enums;
 namespace Jeebs.WordPress.TypeHandlers;
 
 /// <summary>
-/// Taxonomy TypeHandler
+/// Taxonomy TypeHandler.
 /// </summary>
 public sealed class TaxonomyTypeHandler : EnumeratedTypeHandler<Taxonomy>
 {

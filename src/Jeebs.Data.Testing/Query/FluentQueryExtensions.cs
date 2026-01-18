@@ -9,7 +9,7 @@ using Xunit.Sdk;
 namespace Jeebs.Data.Testing.Query;
 
 /// <summary>
-/// <see cref="IFluentQuery{TEntity, TId}"/> extension methods
+/// <see cref="IFluentQuery{TEntity, TId}"/> extension methods.
 /// </summary>
 public static class FluentQueryExtensions
 {

@@ -13,7 +13,7 @@ using StrongId;
 namespace Jeebs.WordPress;
 
 /// <summary>
-/// WordPress Database queries
+/// WordPress Database queries.
 /// </summary>
 public interface IWpDbQuery : IDbQuery
 {

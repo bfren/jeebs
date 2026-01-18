@@ -13,7 +13,7 @@ using Jeebs.WordPress.Query;
 namespace Jeebs.WordPress.CustomFields;
 
 /// <summary>
-/// Post Attachment Custom Field
+/// Post Attachment Custom Field.
 /// </summary>
 public abstract class AttachmentCustomField : CustomField<AttachmentCustomField.Attachment>
 {

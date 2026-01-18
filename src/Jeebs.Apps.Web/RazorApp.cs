@@ -11,7 +11,7 @@ using Microsoft.Extensions.Hosting;
 namespace Jeebs.Apps.Web;
 
 /// <summary>
-/// Razor Pages Web Application - see <see cref="MvcApp"/>
+/// Razor Pages Web Application - see <see cref="MvcApp"/>.
 /// </summary>
 public class RazorApp : MvcApp
 {

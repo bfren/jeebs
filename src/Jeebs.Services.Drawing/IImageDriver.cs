@@ -6,7 +6,7 @@ using System.IO;
 namespace Jeebs.Services.Drawing;
 
 /// <summary>
-/// Image Driver
+/// Image Driver.
 /// </summary>
 public interface IImageDriver
 {

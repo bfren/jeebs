@@ -7,7 +7,7 @@ using Jeebs.Data.Map;
 namespace Jeebs.WordPress.Tables;
 
 /// <summary>
-/// Option Table
+/// Option Table.
 /// </summary>
 public sealed record class OptionsTable : Table
 {

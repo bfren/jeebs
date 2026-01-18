@@ -8,7 +8,7 @@ using Jeebs.Data;
 namespace Jeebs.Auth.Data;
 
 /// <summary>
-/// Adds additional Authentication functionality to the base <see cref="IDbQuery"/>
+/// Adds additional Authentication functionality to the base <see cref="IDbQuery"/>.
 /// </summary>
 public interface IAuthDbQuery : IDbQuery
 {

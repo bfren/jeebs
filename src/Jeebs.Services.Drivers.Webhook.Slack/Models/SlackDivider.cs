@@ -4,6 +4,6 @@
 namespace Jeebs.Services.Drivers.Webhook.Slack.Models;
 
 /// <summary>
-/// Slack message block divider
+/// Slack message block divider.
 /// </summary>
 public sealed record class SlackDivider() : SlackBlock("divider");

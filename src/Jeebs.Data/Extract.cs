@@ -33,7 +33,7 @@ public sealed class Extract : IExtract
 }
 
 /// <summary>
-/// Extract columns from a table that match <typeparamref name="TModel"/>
+/// Extract columns from a table that match <typeparamref name="TModel"/>.
 /// </summary>
 /// <typeparam name="TModel">Model type</typeparam>
 public static class Extract<TModel>

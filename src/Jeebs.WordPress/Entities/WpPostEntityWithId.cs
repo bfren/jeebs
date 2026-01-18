@@ -8,7 +8,7 @@ using StrongId;
 namespace Jeebs.WordPress.Entities;
 
 /// <summary>
-/// Post entity with ID properties
+/// Post entity with ID properties.
 /// </summary>
 public abstract record class WpPostEntityWithId : IWithId<WpPostId>
 {

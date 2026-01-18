@@ -4,7 +4,7 @@
 namespace Jeebs.Services.Drawing.Geometry;
 
 /// <summary>
-/// Rectangle
+/// Rectangle.
 /// </summary>
 /// <param name="X">X co-ordinate</param>
 /// <param name="Y">Y co-ordinate</param>

@@ -9,7 +9,7 @@ using Jeebs.WordPress.Enums;
 namespace Jeebs.WordPress.Query.Options;
 
 /// <summary>
-/// Query Posts Taxonomy Options
+/// Query Posts Taxonomy Options.
 /// </summary>
 public interface IQueryPostsTaxonomyOptions : IQueryOptions<WpTermId>
 {

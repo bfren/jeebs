@@ -7,7 +7,7 @@ using Jeebs.Functions;
 namespace Jeebs.WordPress.Entities;
 
 /// <summary>
-/// Post Attachment
+/// Post Attachment.
 /// </summary>
 public abstract record class PostAttachment : WpPostEntity, IPostAttachment
 {

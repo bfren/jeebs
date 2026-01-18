@@ -6,7 +6,7 @@ using System;
 namespace Jeebs.Data.Attributes;
 
 /// <summary>
-/// Mark property as Version
+/// Mark property as Version.
 /// </summary>
 [AttributeUsage(AttributeTargets.Property | AttributeTargets.Parameter, Inherited = true, AllowMultiple = false)]
 public sealed class VersionAttribute : Attribute { }

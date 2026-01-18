@@ -4,7 +4,7 @@
 namespace Jeebs.Services.Drawing;
 
 /// <summary>
-/// Supported image formats
+/// Supported image formats.
 /// </summary>
 public enum ImageFormat
 {

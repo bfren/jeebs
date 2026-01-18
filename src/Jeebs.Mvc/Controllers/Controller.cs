@@ -10,7 +10,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace Jeebs.Mvc.Controllers;
 
 /// <summary>
-/// Controller class
+/// Controller class.
 /// </summary>
 public abstract class Controller : Microsoft.AspNetCore.Mvc.Controller
 {

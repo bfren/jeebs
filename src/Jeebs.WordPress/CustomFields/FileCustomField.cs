@@ -4,7 +4,7 @@
 namespace Jeebs.WordPress.CustomFields;
 
 /// <summary>
-/// File Custom Field
+/// File Custom Field.
 /// </summary>
 public abstract class FileCustomField : AttachmentCustomField
 {

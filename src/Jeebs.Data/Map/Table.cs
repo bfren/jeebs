@@ -40,6 +40,6 @@ public abstract record class Table : ITable
 }
 
 /// <summary>
-/// Represents a null / unknown table
+/// Represents a null / unknown table.
 /// </summary>
 public sealed record class NullTable() : Table(string.Empty);

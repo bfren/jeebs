@@ -7,7 +7,7 @@ using Jeebs.Data.Map;
 namespace Jeebs.WordPress.Tables;
 
 /// <summary>
-/// Term Taxonomy Table
+/// Term Taxonomy Table.
 /// </summary>
 public sealed record class TermTaxonomiesTable : Table
 {

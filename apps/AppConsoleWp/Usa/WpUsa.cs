@@ -9,7 +9,7 @@ using Microsoft.Extensions.Options;
 namespace AppConsoleWp.Usa;
 
 /// <summary>
-/// USA WordPress instance
+/// USA WordPress instance.
 /// </summary>
 public sealed class WpUsa : Wp<
 	WpUsaConfig,

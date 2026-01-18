@@ -10,7 +10,7 @@ using Microsoft.Extensions.Options;
 namespace Jeebs.Services.Drivers.Webhook.Seq;
 
 /// <summary>
-/// Seq Webhook Driver arguments
+/// Seq Webhook Driver arguments.
 /// </summary>
 public sealed class SeqWebhookDriverArgs : WebhookDriverArgs<SeqConfig>
 {

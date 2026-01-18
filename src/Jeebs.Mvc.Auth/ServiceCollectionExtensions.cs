@@ -9,7 +9,7 @@ using Microsoft.Extensions.DependencyInjection;
 namespace Jeebs.Mvc.Auth;
 
 /// <summary>
-/// Extension methods for IServiceCollection
+/// Extension methods for IServiceCollection.
 /// </summary>
 public static class ServiceCollectionExtensions
 {

@@ -10,7 +10,7 @@ using Jeebs.Messages;
 namespace Jeebs.Mvc.Auth;
 
 /// <summary>
-/// <see cref="ClaimsPrincipal"/> extension methods
+/// <see cref="ClaimsPrincipal"/> extension methods.
 /// </summary>
 public static class ClaimsPrincipalExtensions
 {

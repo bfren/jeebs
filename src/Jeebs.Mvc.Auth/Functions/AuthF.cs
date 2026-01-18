@@ -9,7 +9,7 @@ using Jeebs.Auth.Data.Models;
 namespace Jeebs.Mvc.Auth.Functions;
 
 /// <summary>
-/// Auth functions
+/// Auth functions.
 /// </summary>
 public static partial class AuthF
 {

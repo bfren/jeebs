@@ -7,7 +7,7 @@ using Jeebs.WordPress.Entities.StrongIds;
 namespace Jeebs.WordPress.Query.Options;
 
 /// <summary>
-/// Query Attachments Options
+/// Query Attachments Options.
 /// </summary>
 public interface IQueryAttachmentsOptions
 {

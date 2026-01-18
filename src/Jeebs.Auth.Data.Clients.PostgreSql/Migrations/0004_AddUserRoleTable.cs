@@ -8,7 +8,7 @@ using SimpleMigrations;
 namespace Jeebs.Auth.Data.Clients.PostgreSql.Migrations;
 
 /// <summary>
-/// Migration: Add user role table
+/// Migration: Add user role table.
 /// </summary>
 [Migration(4, "Add user role table")]
 public sealed class AddUserRoleTable : Migration

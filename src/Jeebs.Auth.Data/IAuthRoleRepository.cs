@@ -8,7 +8,7 @@ using StrongId;
 namespace Jeebs.Auth.Data;
 
 /// <summary>
-/// Provides Authentication functions for interacting with Roles
+/// Provides Authentication functions for interacting with Roles.
 /// </summary>
 /// <typeparam name="TRoleEntity">Role Entity type</typeparam>
 public interface IAuthRoleRepository<TRoleEntity> : IRepository<TRoleEntity, AuthRoleId>

@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace Jeebs.Mvc;
 
 /// <summary>
-/// Represents the result of an operation, and can be returned by MVC / Razor Page methods
+/// Represents the result of an operation, and can be returned by MVC / Razor Page methods.
 /// </summary>
 public interface IResult : IActionResult
 {

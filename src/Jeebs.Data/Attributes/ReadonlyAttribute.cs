@@ -6,7 +6,7 @@ using System;
 namespace Jeebs.Data.Attributes;
 
 /// <summary>
-/// Mark property as Readonly
+/// Mark property as Readonly.
 /// </summary>
 [AttributeUsage(AttributeTargets.Property | AttributeTargets.Parameter, Inherited = true, AllowMultiple = false)]
 public sealed class ReadonlyAttribute : Attribute { }

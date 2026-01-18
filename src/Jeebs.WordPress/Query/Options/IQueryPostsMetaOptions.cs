@@ -8,7 +8,7 @@ using Jeebs.WordPress.Entities.StrongIds;
 namespace Jeebs.WordPress.Query.Options;
 
 /// <summary>
-/// Query Posts Meta Options
+/// Query Posts Meta Options.
 /// </summary>
 public interface IQueryPostsMetaOptions : IQueryOptions<WpPostMetaId>
 {

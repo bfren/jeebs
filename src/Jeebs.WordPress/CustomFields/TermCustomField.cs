@@ -12,7 +12,7 @@ using Jeebs.WordPress.Query;
 namespace Jeebs.WordPress.CustomFields;
 
 /// <summary>
-/// Term Taxonomy Custom Field
+/// Term Taxonomy Custom Field.
 /// </summary>
 public abstract class TermCustomField : CustomField<TermCustomField.Term>
 {

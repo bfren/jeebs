@@ -12,7 +12,7 @@ using Microsoft.IdentityModel.Tokens;
 namespace Jeebs.Auth.Jwt.Functions;
 
 /// <summary>
-/// JSON Web Tokens functions
+/// JSON Web Tokens functions.
 /// </summary>
 public static partial class JwtF
 {

@@ -9,7 +9,7 @@ using Jeebs.Data;
 namespace Jeebs.Auth.Data.Entities;
 
 /// <summary>
-/// Authentication User Entity
+/// Authentication User Entity.
 /// </summary>
 public sealed record class AuthUserEntity : AuthUserModel, IWithVersion
 {

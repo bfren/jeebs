@@ -6,7 +6,7 @@ using System;
 namespace Jeebs.WordPress.Entities;
 
 /// <summary>
-/// Link entity
+/// Link entity.
 /// </summary>
 public abstract record class WpLinkEntity : WpLinkEntityWithId
 {

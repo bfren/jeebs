@@ -9,7 +9,7 @@ using Jeebs.Messages;
 namespace Jeebs.WordPress.CustomFields;
 
 /// <summary>
-/// Simple text value custom field
+/// Simple text value custom field.
 /// </summary>
 public abstract class TextCustomField : CustomField<string>
 {

@@ -9,7 +9,7 @@ using Serilog.Events;
 namespace Jeebs.Logging.Serilog;
 
 /// <summary>
-/// Configure logging to console
+/// Configure logging to console.
 /// </summary>
 public sealed class ConsoleLoggingProvider : ILoggingProvider
 {

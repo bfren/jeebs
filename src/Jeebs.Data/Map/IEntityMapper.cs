@@ -6,7 +6,7 @@ using StrongId;
 namespace Jeebs.Data.Map;
 
 /// <summary>
-/// Maps entities to tables
+/// Maps entities to tables.
 /// </summary>
 public interface IEntityMapper
 {

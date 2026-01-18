@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Razor.TagHelpers;
 namespace Jeebs.Mvc.TagHelpers;
 
 /// <summary>
-/// Paging TagHelper
+/// Paging TagHelper.
 /// </summary>
 [HtmlTargetElement("paging", TagStructure = TagStructure.WithoutEndTag)]
 public sealed class PagingTagHelper : TagHelper

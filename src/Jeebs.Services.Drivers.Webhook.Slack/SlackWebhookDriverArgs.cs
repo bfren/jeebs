@@ -10,7 +10,7 @@ using Microsoft.Extensions.Options;
 namespace Jeebs.Services.Drivers.Webhook.Slack;
 
 /// <summary>
-/// Slack Webhook Driver arguments
+/// Slack Webhook Driver arguments.
 /// </summary>
 public sealed class SlackWebhookDriverArgs : WebhookDriverArgs<SlackConfig>
 {

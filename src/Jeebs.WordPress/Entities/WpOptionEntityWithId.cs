@@ -8,7 +8,7 @@ using StrongId;
 namespace Jeebs.WordPress.Entities;
 
 /// <summary>
-/// Option entity with ID properties
+/// Option entity with ID properties.
 /// </summary>
 public abstract record class WpOptionEntityWithId : IWithId<WpOptionId>
 {

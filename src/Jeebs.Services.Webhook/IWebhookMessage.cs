@@ -7,7 +7,7 @@ using Jeebs.Services.Notify;
 namespace Jeebs.Services.Webhook;
 
 /// <summary>
-/// Webhook message interface
+/// Webhook message interface.
 /// </summary>
 public interface IWebhookMessage
 {

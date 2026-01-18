@@ -17,7 +17,7 @@ using Serilog.Events;
 namespace Jeebs.Logging.Serilog;
 
 /// <summary>
-/// LoggerConfiguration extension methods
+/// LoggerConfiguration extension methods.
 /// </summary>
 public static class LoggerConfigurationExtensions
 {

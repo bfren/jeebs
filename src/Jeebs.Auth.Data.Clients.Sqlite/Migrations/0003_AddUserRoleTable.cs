@@ -8,7 +8,7 @@ using SimpleMigrations;
 namespace Jeebs.Auth.Data.Clients.Sqlite.Migrations;
 
 /// <summary>
-/// Migration: Add user role table
+/// Migration: Add user role table.
 /// </summary>
 [Migration(3, "Add user role table")]
 public sealed class AddUserRoleTable : Migration

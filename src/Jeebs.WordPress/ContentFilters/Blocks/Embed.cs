@@ -10,7 +10,7 @@ using RndF;
 namespace Jeebs.WordPress.ContentFilters.Blocks;
 
 /// <summary>
-/// Parse embed blocks
+/// Parse embed blocks.
 /// </summary>
 internal static partial class Embed
 {

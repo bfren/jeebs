@@ -6,6 +6,6 @@ using StrongId;
 namespace Jeebs.WordPress.Entities.StrongIds;
 
 /// <summary>
-/// WordPress Term Taxonomy ID
+/// WordPress Term Taxonomy ID.
 /// </summary>
 public sealed record class WpTermTaxonomyId : ULongId;

@@ -30,7 +30,7 @@ public abstract class AuthController : AuthControllerBase
 }
 
 /// <summary>
-/// Implement this controller to add support for user authentication
+/// Implement this controller to add support for user authentication.
 /// </summary>
 public abstract class AuthControllerBase : Mvc.Controllers.Controller
 {

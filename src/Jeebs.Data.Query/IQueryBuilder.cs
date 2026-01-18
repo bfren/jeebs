@@ -6,7 +6,7 @@ using Jeebs.Data.Map;
 namespace Jeebs.Data.Query;
 
 /// <summary>
-/// Fluently build a database query
+/// Fluently build a database query.
 /// </summary>
 public interface IQueryBuilder
 {

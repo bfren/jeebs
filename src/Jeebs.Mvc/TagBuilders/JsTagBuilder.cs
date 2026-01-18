@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 namespace Jeebs.Mvc.TagBuilders;
 
 /// <summary>
-/// JS TagBuilder
+/// JS TagBuilder.
 /// </summary>
 public sealed class JsTagBuilder : TagBuilder
 {

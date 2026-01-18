@@ -6,7 +6,7 @@ using System.Security.Claims;
 namespace Jeebs.Auth;
 
 /// <summary>
-/// JSON Web Tokens authentication provider interface
+/// JSON Web Tokens authentication provider interface.
 /// </summary>
 public interface IAuthJwtProvider
 {

@@ -6,7 +6,7 @@ using System.Collections.Generic;
 namespace Jeebs.Data.Query;
 
 /// <summary>
-/// Shorthand to make working with query parameters easier
+/// Shorthand to make working with query parameters easier.
 /// </summary>
 public interface IQueryParametersDictionary : IDictionary<string, object>
 {

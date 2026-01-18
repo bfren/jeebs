@@ -4,7 +4,7 @@
 namespace Jeebs.Data.Map;
 
 /// <summary>
-/// Table interface
+/// Table interface.
 /// </summary>
 public interface ITable
 {

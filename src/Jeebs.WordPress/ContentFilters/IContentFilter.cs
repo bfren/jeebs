@@ -4,7 +4,7 @@
 namespace Jeebs.WordPress.ContentFilters;
 
 /// <summary>
-/// Content filter
+/// Content filter.
 /// </summary>
 public interface IContentFilter
 {

@@ -6,7 +6,7 @@ using Jeebs.WordPress.CustomFields;
 namespace AppConsoleWp.Bcg;
 
 /// <summary>
-/// Audio recording of sermon
+/// Audio recording of sermon.
 /// </summary>
 public sealed class AudioRecordingCustomField : FileCustomField
 {

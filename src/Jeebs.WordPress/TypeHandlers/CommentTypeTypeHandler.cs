@@ -7,7 +7,7 @@ using Jeebs.WordPress.Enums;
 namespace Jeebs.WordPress.TypeHandlers;
 
 /// <summary>
-/// Comment TypeHandler
+/// Comment TypeHandler.
 /// </summary>
 public sealed class CommentTypeTypeHandler : EnumeratedTypeHandler<CommentType>
 {

@@ -7,7 +7,7 @@ using Jeebs.Data.Map;
 namespace Jeebs.Data.Query.Exceptions;
 
 /// <summary>
-/// See <see cref="QueryPartsBuilder.GetIdColumn{T}(T)"/>
+/// See <see cref="QueryPartsBuilder.GetIdColumn{T}(T)"/>.
 /// </summary>
 public sealed class UnableToGetIdColumnFromTableException : Exception
 {

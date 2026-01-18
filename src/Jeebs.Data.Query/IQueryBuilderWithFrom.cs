@@ -9,7 +9,7 @@ using Jeebs.Data.Map;
 namespace Jeebs.Data.Query;
 
 /// <summary>
-/// Once <see cref="IQueryBuilder"/> has defined the table, more query options can be built
+/// Once <see cref="IQueryBuilder"/> has defined the table, more query options can be built.
 /// </summary>
 public interface IQueryBuilderWithFrom
 {

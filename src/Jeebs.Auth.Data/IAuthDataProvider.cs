@@ -8,7 +8,7 @@ using StrongId;
 namespace Jeebs.Auth.Data;
 
 /// <summary>
-/// Provides Authentication database functionality
+/// Provides Authentication database functionality.
 /// </summary>
 /// <typeparam name="TUserEntity">User entity type</typeparam>
 /// <typeparam name="TRoleEntity">Role entity type</typeparam>

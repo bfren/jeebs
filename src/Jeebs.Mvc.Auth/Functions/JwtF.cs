@@ -4,7 +4,7 @@
 namespace Jeebs.Mvc.Auth.Functions;
 
 /// <summary>
-/// JWT functions
+/// JWT functions.
 /// </summary>
 public static partial class JwtF
 {

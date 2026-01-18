@@ -7,7 +7,7 @@ using StrongId;
 namespace Jeebs.Auth.Data.Entities;
 
 /// <summary>
-/// Authentication Role Entity
+/// Authentication Role Entity.
 /// </summary>
 public sealed record class AuthRoleEntity : AuthRoleModel, IWithId<AuthRoleId>
 {

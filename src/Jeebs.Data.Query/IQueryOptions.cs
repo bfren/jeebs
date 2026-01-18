@@ -9,7 +9,7 @@ using StrongId;
 namespace Jeebs.Data.Query;
 
 /// <summary>
-/// An alternative method to <see cref="IQueryParts"/> for building a database query
+/// An alternative method to <see cref="IQueryParts"/> for building a database query.
 /// </summary>
 /// <typeparam name="TId">Entity ID type</typeparam>
 public interface IQueryOptions<TId>

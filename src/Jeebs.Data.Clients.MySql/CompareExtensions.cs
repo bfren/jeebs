@@ -7,7 +7,7 @@ using Jeebs.Data.Exceptions;
 namespace Jeebs.Data.Clients.MySql;
 
 /// <summary>
-/// Extension methods for Compare: ToOperator
+/// Extension methods for Compare: ToOperator.
 /// </summary>
 public static class CompareExtensions
 {

@@ -6,6 +6,6 @@ using StrongId;
 namespace Jeebs.WordPress.Entities.StrongIds;
 
 /// <summary>
-/// WordPress Post ID
+/// WordPress Post ID.
 /// </summary>
 public sealed record class WpPostId : ULongId;

@@ -4,7 +4,7 @@
 namespace Jeebs.WordPress;
 
 /// <summary>
-/// WordPress Constants
+/// WordPress Constants.
 /// </summary>
 public static class Constants
 {

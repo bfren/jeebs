@@ -11,7 +11,7 @@ using Microsoft.Extensions.Options;
 namespace Jeebs.Services;
 
 /// <summary>
-/// Service driver arguments base type
+/// Service driver arguments base type.
 /// </summary>
 /// <typeparam name="TConfig">Service configuration type</typeparam>
 public abstract class DriverArgs<TConfig> : IDriverArgs<TConfig>

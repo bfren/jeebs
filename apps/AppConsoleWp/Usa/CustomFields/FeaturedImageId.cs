@@ -7,7 +7,7 @@ using Jeebs.WordPress.CustomFields;
 namespace AppConsoleWp.Usa;
 
 /// <summary>
-/// Featured image ID
+/// Featured image ID.
 /// </summary>
 public sealed class FeaturedImageId : TextCustomField
 {

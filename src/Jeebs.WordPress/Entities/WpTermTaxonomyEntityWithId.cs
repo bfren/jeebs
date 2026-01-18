@@ -8,7 +8,7 @@ using StrongId;
 namespace Jeebs.WordPress.Entities;
 
 /// <summary>
-/// TermTaxonomy entity
+/// TermTaxonomy entity.
 /// </summary>
 public abstract record class WpTermTaxonomyEntityWithId : IWithId<WpTermTaxonomyId>
 {

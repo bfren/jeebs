@@ -6,7 +6,7 @@ using Jeebs.WordPress.Tables;
 namespace Jeebs.WordPress;
 
 /// <summary>
-/// WordPress Database schema
+/// WordPress Database schema.
 /// </summary>
 public interface IWpDbSchema
 {

@@ -10,7 +10,7 @@ using Serilog;
 namespace Jeebs.Apps;
 
 /// <summary>
-/// Uses .NET 6 hosting model, with default options
+/// Uses .NET 6 hosting model, with default options.
 /// </summary>
 public static class Host
 {

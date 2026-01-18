@@ -4,7 +4,7 @@
 namespace Jeebs.Auth.Data.Models;
 
 /// <summary>
-/// Authentication Role model
+/// Authentication Role model.
 /// </summary>
 public record class AuthRoleModel : IAuthRole
 {

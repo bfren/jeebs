@@ -7,7 +7,7 @@ using StrongId;
 namespace Jeebs.Data.Testing.Query;
 
 /// <summary>
-/// <see cref="IFluentQuery{TEntity, TId}"/> unit test helper functions and assertions
+/// <see cref="IFluentQuery{TEntity, TId}"/> unit test helper functions and assertions.
 /// </summary>
 public static partial class FluentQueryHelper
 {

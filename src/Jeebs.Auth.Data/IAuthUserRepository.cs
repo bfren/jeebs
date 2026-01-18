@@ -9,7 +9,7 @@ using StrongId;
 namespace Jeebs.Auth.Data;
 
 /// <summary>
-/// Provides Authentication functions for interacting with User
+/// Provides Authentication functions for interacting with User.
 /// </summary>
 /// <typeparam name="TUserEntity">User Entity type</typeparam>
 public interface IAuthUserRepository<TUserEntity> : IRepository<TUserEntity, AuthUserId>

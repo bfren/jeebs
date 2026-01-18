@@ -4,7 +4,7 @@
 namespace Jeebs.Mvc.Auth.Models;
 
 /// <summary>
-/// Sign In Model
+/// Sign In Model.
 /// </summary>
 public sealed record class SignInModel
 {

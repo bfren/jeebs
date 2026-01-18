@@ -4,6 +4,6 @@
 namespace Jeebs.Calendar.Functions;
 
 /// <summary>
-/// Calendar functions
+/// Calendar functions.
 /// </summary>
 public static partial class CalendarF { }

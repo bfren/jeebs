@@ -24,7 +24,7 @@ using Microsoft.Net.Http.Headers;
 namespace Jeebs.Apps.Web;
 
 /// <summary>
-/// MVC Web Application - see <see cref="WebApp"/>
+/// MVC Web Application - see <see cref="WebApp"/>.
 /// </summary>
 /// <remarks>
 /// Create MVC application

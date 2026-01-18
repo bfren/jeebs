@@ -7,7 +7,7 @@ using Jeebs.WordPress.CustomFields;
 namespace AppConsoleWp.Usa;
 
 /// <summary>
-/// Info about an attached file
+/// Info about an attached file.
 /// </summary>
 public sealed class AttachedFileInfo : TextCustomField
 {

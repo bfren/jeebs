@@ -6,7 +6,7 @@ using System.Collections.Generic;
 namespace Jeebs.WordPress;
 
 /// <summary>
-/// Meta Dictionary that handles when WordPress doesn't preserve unique keys in the meta collection
+/// Meta Dictionary that handles when WordPress doesn't preserve unique keys in the meta collection.
 /// </summary>
 public sealed class MetaDictionary : Dictionary<string, string>
 {

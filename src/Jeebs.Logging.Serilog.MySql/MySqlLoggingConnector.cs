@@ -8,7 +8,7 @@ using Serilog;
 namespace Jeebs.Logging.Serilog.MySql;
 
 /// <summary>
-/// Connects MySqlConnector log to Serilog
+/// Connects MySqlConnector log to Serilog.
 /// </summary>
 public sealed class MySqlLoggingConnector : ILoggingConnector
 {

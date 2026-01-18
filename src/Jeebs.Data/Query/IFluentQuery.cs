@@ -12,7 +12,7 @@ using StrongId;
 namespace Jeebs.Data.Query;
 
 /// <summary>
-/// Build a database query using fluent syntax
+/// Build a database query using fluent syntax.
 /// </summary>
 /// <typeparam name="TEntity">Entity type</typeparam>
 /// <typeparam name="TId">StrongId type</typeparam>

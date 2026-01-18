@@ -7,7 +7,7 @@ using Jeebs.Config.Azure.KeyVault;
 namespace Jeebs.Apps;
 
 /// <summary>
-/// <see cref="KeyVaultConfig"/> extensions
+/// <see cref="KeyVaultConfig"/> extensions.
 /// </summary>
 public static class KeyVaultExtensions
 {

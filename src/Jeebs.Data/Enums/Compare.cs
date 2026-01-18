@@ -4,7 +4,7 @@
 namespace Jeebs.Data.Enums;
 
 /// <summary>
-/// Compare Operators
+/// Compare Operators.
 /// </summary>
 public enum Compare
 {

@@ -4,6 +4,6 @@
 namespace Jeebs.Data.Query.Functions;
 
 /// <summary>
-/// Query Builder Functions
+/// Query Builder Functions.
 /// </summary>
 public static partial class QueryBuilderF { }

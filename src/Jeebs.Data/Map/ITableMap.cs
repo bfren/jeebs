@@ -6,7 +6,7 @@ using System.Collections.Generic;
 namespace Jeebs.Data.Map;
 
 /// <summary>
-/// Table Map
+/// Table Map.
 /// </summary>
 public interface ITableMap
 {

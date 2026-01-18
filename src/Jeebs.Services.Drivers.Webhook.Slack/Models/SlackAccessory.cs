@@ -6,7 +6,7 @@ using System.Text.Json.Serialization;
 namespace Jeebs.Services.Drivers.Webhook.Slack.Models;
 
 /// <summary>
-/// Slack message block content accessory
+/// Slack message block content accessory.
 /// </summary>
 [JsonDerivedType(typeof(SlackImage))]
 public abstract record class SlackAccessory

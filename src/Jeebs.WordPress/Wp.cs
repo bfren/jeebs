@@ -12,7 +12,7 @@ using Microsoft.Extensions.Options;
 namespace Jeebs.WordPress;
 
 /// <summary>
-/// Enforces once-only registration of custom WordPress values
+/// Enforces once-only registration of custom WordPress values.
 /// </summary>
 public abstract class Wp
 {

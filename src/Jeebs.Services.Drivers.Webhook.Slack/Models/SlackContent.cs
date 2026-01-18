@@ -6,7 +6,7 @@ using System.Text.Json.Serialization;
 namespace Jeebs.Services.Drivers.Webhook.Slack.Models;
 
 /// <summary>
-/// Slack message block content
+/// Slack message block content.
 /// </summary>
 [JsonDerivedType(typeof(SlackMarkdown))]
 [JsonDerivedType(typeof(SlackPlainText))]

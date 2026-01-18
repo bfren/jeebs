@@ -10,7 +10,7 @@ using Jeebs.Data.Query;
 namespace Jeebs.Data;
 
 /// <summary>
-/// General database query functionality
+/// General database query functionality.
 /// </summary>
 public interface IDbQuery
 {

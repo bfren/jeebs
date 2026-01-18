@@ -7,7 +7,7 @@ using StrongId;
 namespace Jeebs.WordPress.Entities;
 
 /// <summary>
-/// CommentMeta entity with ID properties
+/// CommentMeta entity with ID properties.
 /// </summary>
 public abstract record class WpCommentMetaEntityWithId : IWithId<WpCommentMetaId>
 {

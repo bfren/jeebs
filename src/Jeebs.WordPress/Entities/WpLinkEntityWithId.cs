@@ -7,7 +7,7 @@ using StrongId;
 namespace Jeebs.WordPress.Entities;
 
 /// <summary>
-/// Link entity with ID properties
+/// Link entity with ID properties.
 /// </summary>
 public abstract record class WpLinkEntityWithId : IWithId<WpLinkId>
 {

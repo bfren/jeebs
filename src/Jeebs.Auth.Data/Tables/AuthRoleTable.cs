@@ -9,7 +9,7 @@ using Jeebs.Data.Map;
 namespace Jeebs.Auth.Data.Tables;
 
 /// <summary>
-/// Authentication Role Table
+/// Authentication Role Table.
 /// </summary>
 public sealed record class AuthRoleTable() : Table(AuthDb.Schema, TableName)
 {

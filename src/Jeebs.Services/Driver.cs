@@ -7,7 +7,7 @@ using Jeebs.Logging;
 namespace Jeebs.Services;
 
 /// <summary>
-/// Service driver base class
+/// Service driver base class.
 /// </summary>
 /// <typeparam name="TConfig">Service configuration type</typeparam>
 public abstract class Driver<TConfig> : IDriver<TConfig>

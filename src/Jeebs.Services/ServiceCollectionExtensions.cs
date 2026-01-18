@@ -11,7 +11,7 @@ using Microsoft.Extensions.DependencyInjection;
 namespace Jeebs.Services;
 
 /// <summary>
-/// <see cref="IServiceCollection"/> Extensions - AddDrivers
+/// <see cref="IServiceCollection"/> Extensions - AddDrivers.
 /// </summary>
 public static class ServiceCollectionExtensions
 {

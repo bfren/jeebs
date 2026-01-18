@@ -10,7 +10,7 @@ using System.Linq;
 namespace Jeebs.WordPress.TypeHandlers;
 
 /// <summary>
-/// Boolean TypeHandler
+/// Boolean TypeHandler.
 /// </summary>
 public sealed class BooleanTypeHandler : Dapper.SqlMapper.TypeHandler<bool>
 {

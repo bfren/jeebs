@@ -6,7 +6,7 @@ using StrongId;
 namespace Jeebs.WordPress.Entities;
 
 /// <summary>
-/// Attachment entity
+/// Attachment entity.
 /// </summary>
 public interface IPostAttachment : IWithId<StrongIds.WpPostId>
 {

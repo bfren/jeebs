@@ -7,7 +7,7 @@ using Jeebs.Data.Map;
 namespace Jeebs.WordPress.Tables;
 
 /// <summary>
-/// Link Table
+/// Link Table.
 /// </summary>
 public sealed record class LinksTable : Table
 {

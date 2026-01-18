@@ -7,7 +7,7 @@ using Jeebs.WordPress.Enums;
 namespace Jeebs.WordPress.Entities;
 
 /// <summary>
-/// Comment entity
+/// Comment entity.
 /// </summary>
 public abstract record class WpCommentEntity : WpCommentEntityWithId
 {

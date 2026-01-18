@@ -4,12 +4,11 @@
 using System;
 using System.Collections;
 using System.Collections.Concurrent;
-using Jeebs.Messages;
 
 namespace Jeebs;
 
 /// <summary>
-/// Enables custom enumerated values
+/// Enables custom enumerated values.
 /// </summary>
 public abstract record class Enumerated : IEquatable<Enumerated>, IEquatable<string>
 {
@@ -74,7 +73,7 @@ public abstract record class Enumerated : IEquatable<Enumerated>, IEquatable<str
 	/// <typeparam name="T">Enum value type</typeparam>
 	/// <param name="name">Enum name</param>
 	/// <param name="value">Enum value</param>
-	internal static Maybe<T> Check<T>(string name, T value)
+	internal static Result<T> Check<T>(string name, T value)
 		where T : Enumerated =>
 		string.Equals(value.ToString(), name, StringComparison.OrdinalIgnoreCase) switch
 		{
@@ -82,7 +81,7 @@ public abstract record class Enumerated : IEquatable<Enumerated>, IEquatable<str
 				value,
 
 			false =>
-				F.None<T>(new M.NotAValidEnumeratedValueMsg<T>(value))
+				R.Fail("'{Value}' is not a valid value of {Type}.", value, typeof(T))
 		};
 
 	/// <summary>
@@ -91,9 +90,9 @@ public abstract record class Enumerated : IEquatable<Enumerated>, IEquatable<str
 	/// <typeparam name="T">Enum value type</typeparam>
 	/// <param name="name">Enum name</param>
 	/// <param name="values">Enum values to check name against</param>
-	protected static Maybe<T> Parse<T>(string name, T[] values)
+	protected static Result<T> Parse<T>(string name, T[] values)
 		where T : Enumerated =>
-		(Maybe<T>)Cache.GetOrAdd(
+		(Result<T>)Cache.GetOrAdd(
 			$"{typeof(T)}-{name}",
 			(_, args) =>
 			{
@@ -107,7 +106,7 @@ public abstract record class Enumerated : IEquatable<Enumerated>, IEquatable<str
 				}
 
 				// If we get here the name was never matched
-				return F.None<T>(new M.NotAValidEnumeratedValueMsg<T>(name));
+				return R.Fail("'{Value}' is not a valid value of {Type}.", name, typeof(T));
 			},
 			new ParseArgs<T>(name, values)
 		);
@@ -120,7 +119,7 @@ public abstract record class Enumerated : IEquatable<Enumerated>, IEquatable<str
 	/// <param name="values">Enum values to check name against</param>
 	protected static bool IsRegistered<T>(string name, T[] values)
 		where T : Enumerated =>
-		Parse(name, values).IsSome(out var _);
+		Parse(name, values).IsOk;
 
 	/// <summary>
 	/// Parse Arguments
@@ -225,23 +224,4 @@ public abstract record class Enumerated : IEquatable<Enumerated>, IEquatable<str
 		GetType().GetHashCode() ^ comparer.GetHashCode(name);
 
 	#endregion Overrides
-
-	/// <summary>Messages</summary>
-	public static class M
-	{
-		/// <summary>Value does not belong to the specified Enumerated type</summary>
-		/// <typeparam name="T">Enum type</typeparam>
-		/// <param name="Value">Value being parsed</param>
-		public sealed record class NotAValidEnumeratedValueMsg<T>(string Value) : Msg
-			where T : Enumerated
-		{
-			/// <inheritdoc/>
-			public override string Format =>
-				"'{Value}' is not a valid value of {Type}.";
-
-			/// <inheritdoc/>
-			public override object[]? Args =>
-				[Value, typeof(T)];
-		}
-	}
 }

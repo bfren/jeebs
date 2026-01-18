@@ -7,7 +7,7 @@ using System.Data;
 namespace Jeebs.Data.TypeHandlers;
 
 /// <summary>
-/// Guid TypeHandler
+/// Guid TypeHandler.
 /// </summary>
 public sealed class GuidTypeHandler : Dapper.SqlMapper.TypeHandler<Guid>
 {

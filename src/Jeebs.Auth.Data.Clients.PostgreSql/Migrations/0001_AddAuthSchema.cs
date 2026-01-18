@@ -6,7 +6,7 @@ using SimpleMigrations;
 namespace Jeebs.Auth.Data.Clients.PostgreSql.Migrations;
 
 /// <summary>
-/// Migration: Add auth schema
+/// Migration: Add auth schema.
 /// </summary>
 [Migration(1, "Add auth schema")]
 public sealed class AddAuthSchema : Migration

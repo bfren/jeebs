@@ -4,7 +4,7 @@
 namespace Jeebs.Data.TypeHandlers;
 
 /// <summary>
-/// MimeType TypeHandler
+/// MimeType TypeHandler.
 /// </summary>
 public sealed class MimeTypeTypeHandler : EnumeratedTypeHandler<MimeType>
 {

@@ -9,7 +9,7 @@ using SkiaSharp;
 namespace Jeebs.Services.Drivers.Drawing.Skia;
 
 /// <summary>
-/// Image Driver implemented using SkiaSharp
+/// Image Driver implemented using SkiaSharp.
 /// </summary>
 public sealed class ImageDriver : IImageDriver
 {

@@ -11,7 +11,7 @@ using NpgsqlTypes;
 namespace Jeebs.Data.Clients.PostgreSql.TypeHandlers;
 
 /// <summary>
-/// Jsonb Type Handler to map JSON as jsonb so it is queryable
+/// Jsonb Type Handler to map JSON as jsonb so it is queryable.
 /// </summary>
 /// <typeparam name="T">Value type</typeparam>
 public class JsonbTypeHandler<T> : Dapper.SqlMapper.TypeHandler<T>

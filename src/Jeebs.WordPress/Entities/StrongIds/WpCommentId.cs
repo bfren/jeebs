@@ -6,6 +6,6 @@ using StrongId;
 namespace Jeebs.WordPress.Entities.StrongIds;
 
 /// <summary>
-/// WordPress Comment ID
+/// WordPress Comment ID.
 /// </summary>
 public sealed record class WpCommentId : ULongId;

@@ -6,7 +6,7 @@ using System;
 namespace Jeebs.Services.Drivers.Drawing.Skia;
 
 /// <summary>
-/// See <see cref="ImageFormatExtensions.GetEncodedImageFormat(Services.Drawing.ImageFormat)"/>
+/// See <see cref="ImageFormatExtensions.GetEncodedImageFormat(Services.Drawing.ImageFormat)"/>.
 /// </summary>
 public class UnsupportedImageFormatException : Exception
 {

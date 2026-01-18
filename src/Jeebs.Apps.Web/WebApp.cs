@@ -16,7 +16,7 @@ using Microsoft.Extensions.Hosting;
 namespace Jeebs.Apps.Web;
 
 /// <summary>
-/// Web Application - see <see cref="App"/>
+/// Web Application - see <see cref="App"/>.
 /// </summary>
 public class WebApp : App
 {

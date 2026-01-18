@@ -11,7 +11,7 @@ using Microsoft.AspNetCore.Razor.TagHelpers;
 namespace Jeebs.Mvc.TagHelpers;
 
 /// <summary>
-/// Email TagHelper
+/// Email TagHelper.
 /// </summary>
 [HtmlTargetElement("email", TagStructure = TagStructure.WithoutEndTag)]
 public sealed class EmailTagHelper : UrlResolutionTagHelper

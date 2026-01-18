@@ -7,7 +7,7 @@ using Dapper;
 namespace Jeebs.Data;
 
 /// <summary>
-/// Add custom type maps
+/// Add custom type maps.
 /// </summary>
 public interface IDbTypeMapper
 {

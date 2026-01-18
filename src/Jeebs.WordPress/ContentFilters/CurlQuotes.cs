@@ -7,7 +7,7 @@ using Jeebs.Extensions;
 namespace Jeebs.WordPress.ContentFilters;
 
 /// <summary>
-/// Curly Quotes
+/// Curly Quotes.
 /// </summary>
 public sealed class CurlQuotes : ContentFilter
 {

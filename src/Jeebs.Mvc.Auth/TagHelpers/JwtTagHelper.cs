@@ -10,7 +10,7 @@ using Microsoft.AspNetCore.Razor.TagHelpers;
 namespace Jeebs.Mvc.Auth.TagHelpers;
 
 /// <summary>
-/// JSON Web Token TagHelper
+/// JSON Web Token TagHelper.
 /// </summary>
 [HtmlTargetElement("jwt", TagStructure = TagStructure.WithoutEndTag)]
 public sealed class JwtTagHelper : TagHelper

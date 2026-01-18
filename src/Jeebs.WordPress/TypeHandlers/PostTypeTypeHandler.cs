@@ -7,7 +7,7 @@ using Jeebs.WordPress.Enums;
 namespace Jeebs.WordPress.TypeHandlers;
 
 /// <summary>
-/// PostType TypeHandler
+/// PostType TypeHandler.
 /// </summary>
 public sealed class PostTypeTypeHandler : EnumeratedTypeHandler<PostType>
 {

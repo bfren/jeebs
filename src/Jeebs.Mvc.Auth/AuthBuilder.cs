@@ -18,7 +18,7 @@ using Microsoft.Extensions.DependencyInjection;
 namespace Jeebs.Mvc.Auth;
 
 /// <summary>
-/// Fluently configure authentication and authorisation
+/// Fluently configure authentication and authorisation.
 /// </summary>
 public sealed class AuthBuilder
 {

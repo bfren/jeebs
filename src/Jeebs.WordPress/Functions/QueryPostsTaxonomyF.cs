@@ -4,7 +4,7 @@
 namespace Jeebs.WordPress.Functions;
 
 /// <summary>
-/// Query Posts Taxonomy Functions
+/// Query Posts Taxonomy Functions.
 /// </summary>
 public static partial class QueryPostsTaxonomyF
 {

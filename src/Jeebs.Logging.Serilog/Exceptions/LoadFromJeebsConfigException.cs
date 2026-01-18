@@ -6,7 +6,7 @@ using System;
 namespace Jeebs.Logging.Serilog.Exceptions;
 
 /// <summary>
-/// See <see cref="LoggerConfigurationExtensions.LoadFromJeebsConfig(global::Serilog.LoggerConfiguration, Config.JeebsConfig)"/>
+/// See <see cref="LoggerConfigurationExtensions.LoadFromJeebsConfig(global::Serilog.LoggerConfiguration, Config.JeebsConfig)"/>.
 /// </summary>
 public class LoadFromJeebsConfigException : Exception
 {

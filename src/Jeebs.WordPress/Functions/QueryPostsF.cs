@@ -7,7 +7,7 @@ using Jeebs.WordPress.Enums;
 namespace Jeebs.WordPress.Functions;
 
 /// <summary>
-/// Query Posts Functions
+/// Query Posts Functions.
 /// </summary>
 public static partial class QueryPostsF
 {

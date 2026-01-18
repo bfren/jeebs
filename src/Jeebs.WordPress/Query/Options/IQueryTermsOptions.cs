@@ -7,7 +7,7 @@ using Jeebs.WordPress.Entities.StrongIds;
 namespace Jeebs.WordPress.Query.Options;
 
 /// <summary>
-/// Query Terms Options
+/// Query Terms Options.
 /// </summary>
 public interface IQueryTermsOptions : IQueryOptions<WpTermId>
 {

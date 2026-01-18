@@ -7,7 +7,7 @@ using Jeebs.WordPress.CustomFields;
 namespace AppConsoleWp.Usa;
 
 /// <summary>
-/// Featured image Url
+/// Featured image Url.
 /// </summary>
 public sealed class FeaturedImageUrl : AttachmentCustomField
 {

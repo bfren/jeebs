@@ -9,7 +9,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 namespace Jeebs.Mvc.Razor.Pages.Auth;
 
 /// <summary>
-/// Auth Index page
+/// Auth Index page.
 /// </summary>
 [Authorize]
 public abstract partial class IndexModel : PageModel

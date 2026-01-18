@@ -7,7 +7,7 @@ using SkiaSharp;
 namespace Jeebs.Services.Drivers.Drawing.Skia;
 
 /// <summary>
-/// <see cref="ImageFormat"/> extensions
+/// <see cref="ImageFormat"/> extensions.
 /// </summary>
 public static class ImageFormatExtensions
 {

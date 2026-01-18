@@ -4,7 +4,7 @@
 namespace Jeebs.Services.Notify;
 
 /// <summary>
-/// Handles notifications - like logging, but bypasses the minimum level filters
+/// Handles notifications - like logging, but bypasses the minimum level filters.
 /// </summary>
 public interface INotifier
 {

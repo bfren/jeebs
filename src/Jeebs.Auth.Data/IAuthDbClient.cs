@@ -6,7 +6,7 @@ using Jeebs.Data;
 namespace Jeebs.Auth.Data;
 
 /// <summary>
-/// Adds additional Authentication functionality to the base <see cref="IDbClient"/>
+/// Adds additional Authentication functionality to the base <see cref="IDbClient"/>.
 /// </summary>
 public interface IAuthDbClient : IDbClient
 {

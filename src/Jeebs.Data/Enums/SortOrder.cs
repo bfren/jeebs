@@ -4,7 +4,7 @@
 namespace Jeebs.Data.Enums;
 
 /// <summary>
-/// Sort order
+/// Sort order.
 /// </summary>
 public enum SortOrder
 {

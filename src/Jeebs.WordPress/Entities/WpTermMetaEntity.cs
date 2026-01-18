@@ -4,7 +4,7 @@
 namespace Jeebs.WordPress.Entities;
 
 /// <summary>
-/// TermMeta entity
+/// TermMeta entity.
 /// </summary>
 public abstract record class WpTermMetaEntity : WpTermMetaEntityWithId
 {

@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace Jeebs;
 
 /// <summary>
-/// Supports asynchronous <see cref="Lazy{T}"/> values
+/// Supports asynchronous <see cref="Lazy{T}"/> values.
 /// </summary>
 /// <typeparam name="T">Return value</typeparam>
 public sealed class LazyAsync<T>

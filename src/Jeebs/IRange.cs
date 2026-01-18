@@ -4,7 +4,7 @@
 namespace Jeebs;
 
 /// <summary>
-/// Comes from https://martinfowler.com/eaaDev/Range.html
+/// Comes from https://martinfowler.com/eaaDev/Range.html.
 /// </summary>
 /// <typeparam name="T">Range value type</typeparam>
 public interface IRange<T>

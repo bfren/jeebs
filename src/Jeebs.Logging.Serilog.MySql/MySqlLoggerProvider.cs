@@ -6,7 +6,7 @@ using MySqlConnector.Logging;
 namespace Jeebs.Logging.Serilog.MySql;
 
 /// <summary>
-/// Create logger instances for MySqlConnector
+/// Create logger instances for MySqlConnector.
 /// </summary>
 public sealed class MySqlLoggerProvider : IMySqlConnectorLoggerProvider
 {

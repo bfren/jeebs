@@ -14,7 +14,7 @@ using Microsoft.Extensions.Options;
 namespace Jeebs.Mvc.Razor.Pages.Auth;
 
 /// <summary>
-/// Auth Sign In page model
+/// Auth Sign In page model.
 /// </summary>
 public abstract partial class SignInModel : PageModel
 {

@@ -6,7 +6,7 @@ using Jeebs.Data.Map;
 namespace Jeebs.Data;
 
 /// <summary>
-/// Interface wrapper for column extraction function
+/// Interface wrapper for column extraction function.
 /// </summary>
 public interface IExtract
 {

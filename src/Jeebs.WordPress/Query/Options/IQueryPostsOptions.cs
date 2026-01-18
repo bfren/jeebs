@@ -12,7 +12,7 @@ using Jeebs.WordPress.Enums;
 namespace Jeebs.WordPress.Query.Options;
 
 /// <summary>
-/// Query Posts Options
+/// Query Posts Options.
 /// </summary>
 public interface IQueryPostsOptions : IQueryOptions<WpPostId>
 {

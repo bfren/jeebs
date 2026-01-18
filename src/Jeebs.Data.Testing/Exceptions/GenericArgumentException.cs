@@ -4,7 +4,7 @@
 namespace Jeebs.Data.Testing.Exceptions;
 
 /// <summary>
-/// See <see cref="Query.FluentQueryHelper.AssertGenericArgument{TExpected}(NSubstitute.Core.ICall)"/>
+/// See <see cref="Query.FluentQueryHelper.AssertGenericArgument{TExpected}(NSubstitute.Core.ICall)"/>.
 /// </summary>
 public sealed class GenericArgumentException : FluentQueryHelperException
 {

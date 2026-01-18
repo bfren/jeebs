@@ -9,7 +9,7 @@ using StrongId.Functions;
 namespace Jeebs.Data.TypeHandlers;
 
 /// <summary>
-/// <see cref="IStrongId"/> TypeHandler
+/// <see cref="IStrongId"/> TypeHandler.
 /// </summary>
 /// <typeparam name="T"><see cref="IStrongId"/> type</typeparam>
 public sealed class StrongIdTypeHandler<T> : Dapper.SqlMapper.TypeHandler<T>

@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Http;
 namespace Jeebs.Mvc.Auth;
 
 /// <summary>
-/// Various authentication results
+/// Various authentication results.
 /// </summary>
 public abstract record class AuthResult : Result<string>
 {

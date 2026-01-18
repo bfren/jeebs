@@ -4,6 +4,6 @@
 namespace Jeebs.Auth.Totp.Functions;
 
 /// <summary>
-/// TOTP Functions
+/// TOTP Functions.
 /// </summary>
 public static partial class TotpF { }

@@ -6,7 +6,7 @@ using System;
 namespace Jeebs.Mvc.Models;
 
 /// <summary>
-/// MenuItem Simple
+/// MenuItem Simple.
 /// </summary>
 /// <param name="Id">Each menu item needs a unique identifier</param>
 /// <param name="Text">Menu item display text</param>

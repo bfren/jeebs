@@ -6,7 +6,7 @@ using Jeebs.WordPress.CustomFields;
 namespace AppConsoleWp.Bcg;
 
 /// <summary>
-/// Sermon script PDF
+/// Sermon script PDF.
 /// </summary>
 public sealed class PdfCustomField : FileCustomField
 {

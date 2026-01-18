@@ -11,7 +11,7 @@ using Serilog;
 namespace Jeebs.Apps.Web.Middleware;
 
 /// <summary>
-/// Google Site Verification
+/// Google Site Verification.
 /// </summary>
 public sealed class SiteVerificationMiddleware : IMiddleware
 {

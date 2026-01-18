@@ -4,7 +4,7 @@
 namespace Jeebs.Data.Testing.Exceptions;
 
 /// <summary>
-/// Fluent Query Exception type
+/// Fluent Query Exception type.
 /// </summary>
 public abstract class FluentQueryHelperException : Exception
 {

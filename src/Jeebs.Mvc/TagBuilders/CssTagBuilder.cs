@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 namespace Jeebs.Mvc.TagBuilders;
 
 /// <summary>
-/// CSS TagBuilder
+/// CSS TagBuilder.
 /// </summary>
 public sealed class CssTagBuilder : TagBuilder
 {

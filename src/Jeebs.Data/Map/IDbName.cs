@@ -6,7 +6,7 @@ using System;
 namespace Jeebs.Data.Map;
 
 /// <summary>
-/// Database object name and optional schema
+/// Database object name and optional schema.
 /// </summary>
 public interface IDbName
 {

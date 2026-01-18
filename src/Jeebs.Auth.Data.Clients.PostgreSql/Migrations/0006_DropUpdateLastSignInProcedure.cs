@@ -8,7 +8,7 @@ using SimpleMigrations;
 namespace Jeebs.Auth.Data.Clients.PostgreSql.Migrations;
 
 /// <summary>
-/// Migration: Drop update last sign in procedure
+/// Migration: Drop update last sign in procedure.
 /// </summary>
 [Migration(6, "Drop update last user sign in procedure")]
 public sealed class DropUpdateLastSignInProcedure : Migration

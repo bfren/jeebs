@@ -8,7 +8,7 @@ using Jeebs.Extensions;
 namespace Jeebs.WordPress.ContentFilters;
 
 /// <summary>
-/// Generate Excerpt
+/// Generate Excerpt.
 /// </summary>
 public sealed partial class GenerateExcerpt : ContentFilter
 {

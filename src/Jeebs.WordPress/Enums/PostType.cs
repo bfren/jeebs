@@ -7,7 +7,7 @@ using System.Linq;
 namespace Jeebs.WordPress.Enums;
 
 /// <summary>
-/// PostType enumeration
+/// PostType enumeration.
 /// </summary>
 public sealed record class PostType : Enumerated
 {

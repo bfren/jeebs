@@ -3,7 +3,6 @@
 
 using System;
 using System.Globalization;
-using Jeebs.Messages;
 
 namespace Jeebs.Functions;
 
@@ -37,7 +36,7 @@ public static partial class EnumF
 		/// Convert value to specified type
 		/// </summary>
 		/// <typeparam name="TTo">Convert To type</typeparam>
-		public Maybe<TTo> To<TTo>()
+		public Result<TTo> To<TTo>()
 			where TTo : struct, Enum
 		{
 			// Convert to long so we can get the value of the receiving enum
@@ -52,65 +51,8 @@ public static partial class EnumF
 					x,
 
 				_ =>
-					F.None<TTo>(new M.ValueNotInReceivingEnumMsg<TFrom, TTo>(from))
+					FailNotAValidEnumValue<TTo>(fromLong.ToString()),
 			};
-		}
-	}
-
-	/// <summary>Messages</summary>
-	public static partial class M
-	{
-		/// <summary><paramref name="Value"/> Type is not a valid <see cref="Enum"/></summary>
-		/// <param name="Value">Enum type</param>
-		public sealed record class NotAValidEnumMsg(Type Value) : WithValueMsg<Type>;
-
-		/// <summary>Attempting to parse a null value</summary>
-		public sealed record class NullValueMsg : Msg;
-
-		/// <summary><paramref name="Value"/> is not a valid value of <typeparamref name="T"/></summary>
-		/// <typeparam name="T">Enum type</typeparam>
-		/// <param name="Value">Enum value</param>
-		public sealed record class NotAValidEnumValueMsg<T>(string Value) : Msg
-			where T : struct, Enum
-		{
-			/// <inheritdoc/>
-			public override string Format =>
-				"'{Value}' is not a valid value of {Type}.";
-
-			/// <inheritdoc/>
-			public override object[]? Args =>
-				[Value, typeof(T)];
-		}
-
-		/// <summary><paramref name="Value"/> is not a valid value of <paramref name="EnumType"/></summary>
-		/// <param name="EnumType">Enum type</param>
-		/// <param name="Value">Enum value</param>
-		public sealed record class NotAValidEnumValueMsg(Type EnumType, string Value) : Msg
-		{
-			/// <inheritdoc/>
-			public override string Format =>
-				"'{Value}' is not a valid value of {Type}.";
-
-			/// <inheritdoc/>
-			public override object[]? Args =>
-				[Value, EnumType];
-		}
-
-		/// <summary><paramref name="Value"/> is not in <typeparamref name="TTo"/></summary>
-		/// <typeparam name="TFrom">From Enum</typeparam>
-		/// <typeparam name="TTo">To Enum</typeparam>
-		/// <param name="Value">From Enum value</param>
-		public sealed record class ValueNotInReceivingEnumMsg<TFrom, TTo>(TFrom Value) : Msg
-			where TFrom : struct, Enum
-			where TTo : struct, Enum
-		{
-			/// <inheritdoc/>
-			public override string Format =>
-				"'{Value}' is not a valid {Type}.";
-
-			/// <inheritdoc/>
-			public override object[]? Args =>
-				[Value, typeof(TTo)];
 		}
 	}
 }

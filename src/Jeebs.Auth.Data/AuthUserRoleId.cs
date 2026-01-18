@@ -6,6 +6,6 @@ using StrongId;
 namespace Jeebs.Auth.Data;
 
 /// <summary>
-/// User Role ID
+/// User Role ID.
 /// </summary>
 public sealed record class AuthUserRoleId : LongId;

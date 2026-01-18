@@ -4,7 +4,7 @@
 namespace Jeebs.WordPress.Enums;
 
 /// <summary>
-/// CommentType enumeration
+/// CommentType enumeration.
 /// </summary>
 public sealed record class CommentType : Enumerated
 {

@@ -11,7 +11,7 @@ using Microsoft.AspNetCore.Razor.TagHelpers;
 namespace Jeebs.Mvc.TagHelpers;
 
 /// <summary>
-/// Alert TagHelper
+/// Alert TagHelper.
 /// </summary>
 [HtmlTargetElement("alerts", TagStructure = TagStructure.WithoutEndTag)]
 public sealed class AlertsTagHelper : TagHelper

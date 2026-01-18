@@ -6,7 +6,7 @@ using System.Text.Json.Serialization;
 namespace Jeebs.Services.Drivers.Webhook.Slack.Models;
 
 /// <summary>
-/// Slack message block content accessory - image
+/// Slack message block content accessory - image.
 /// </summary>
 public sealed record class SlackImage : SlackAccessory
 {

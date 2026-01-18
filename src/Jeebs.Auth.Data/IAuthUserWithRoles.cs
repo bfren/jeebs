@@ -6,7 +6,7 @@ using System.Collections.Generic;
 namespace Jeebs.Auth.Data;
 
 /// <summary>
-/// Authentication User with list of Roles
+/// Authentication User with list of Roles.
 /// </summary>
 /// <typeparam name="TRole">Role model type</typeparam>
 public interface IAuthUserWithRoles<TRole> : IAuthUser

@@ -7,7 +7,7 @@ using Jeebs.WordPress.Enums;
 namespace Jeebs.WordPress.Entities;
 
 /// <summary>
-/// Post entity
+/// Post entity.
 /// </summary>
 public abstract record class WpPostEntity : WpPostEntityWithId
 {

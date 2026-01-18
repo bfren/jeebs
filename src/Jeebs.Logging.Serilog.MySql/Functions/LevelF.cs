@@ -4,7 +4,7 @@
 namespace Jeebs.Logging.Serilog.MySql.Functions;
 
 /// <summary>
-/// Log Level functions
+/// Log Level functions.
 /// </summary>
 public static partial class LevelF
 {

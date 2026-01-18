@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace Jeebs.Mvc.Controllers;
 
 /// <summary>
-/// Simple Controller
+/// Simple Controller.
 /// </summary>
 public abstract class SimpleController : Microsoft.AspNetCore.Mvc.Controller
 {

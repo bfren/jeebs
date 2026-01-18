@@ -7,7 +7,7 @@ using Jeebs.Data.Map;
 namespace Jeebs.WordPress.Tables;
 
 /// <summary>
-/// Post Meta Table
+/// Post Meta Table.
 /// </summary>
 public sealed record class PostsMetaTable : Table
 {

@@ -6,7 +6,7 @@ using Jeebs.Mvc.Enums;
 namespace Jeebs.Mvc.Models;
 
 /// <summary>
-/// User feedback alert
+/// User feedback alert.
 /// </summary>
 /// <param name="Type">Alert type</param>
 /// <param name="Text">Alert message</param>

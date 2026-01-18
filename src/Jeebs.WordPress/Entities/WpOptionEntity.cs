@@ -4,7 +4,7 @@
 namespace Jeebs.WordPress.Entities;
 
 /// <summary>
-/// Option entity
+/// Option entity.
 /// </summary>
 public abstract record class WpOptionEntity : WpOptionEntityWithId
 {

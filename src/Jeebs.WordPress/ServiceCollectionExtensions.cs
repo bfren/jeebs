@@ -8,7 +8,7 @@ using Microsoft.Extensions.DependencyInjection;
 namespace Jeebs.WordPress;
 
 /// <summary>
-/// IServiceCollection extension methods
+/// IServiceCollection extension methods.
 /// </summary>
 public static class ServiceCollectionExtensions
 {

@@ -7,7 +7,7 @@ using Jeebs.Data.Map;
 namespace Jeebs.WordPress.Tables;
 
 /// <summary>
-/// User Table
+/// User Table.
 /// </summary>
 public sealed record class UsersMetaTable : Table
 {

@@ -12,7 +12,7 @@ using Microsoft.Extensions.Options;
 namespace Jeebs.Services;
 
 /// <summary>
-/// Webhook Driver arguments
+/// Webhook Driver arguments.
 /// </summary>
 /// <typeparam name="TConfig">Service configuration type</typeparam>
 public abstract class WebhookDriverArgs<TConfig> : DriverArgs<TConfig>

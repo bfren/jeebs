@@ -4,6 +4,6 @@
 namespace Jeebs.Calendar.Extensions;
 
 /// <summary>
-/// StringBuilder extensions
+/// StringBuilder extensions.
 /// </summary>
 internal static partial class StringBuilderExtensions { }

@@ -10,7 +10,7 @@ using StrongId;
 namespace Jeebs.WordPress.Query;
 
 /// <summary>
-/// Query Terms - to enable testing of static functions
+/// Query Terms - to enable testing of static functions.
 /// </summary>
 public interface IQueryTerms
 {

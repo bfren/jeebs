@@ -7,7 +7,7 @@ using Jeebs.WordPress.CustomFields;
 namespace AppConsoleWp.Usa;
 
 /// <summary>
-/// URL of attached file
+/// URL of attached file.
 /// </summary>
 public sealed class AttachedFileUrl : TextCustomField
 {

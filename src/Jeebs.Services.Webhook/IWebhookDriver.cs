@@ -7,7 +7,7 @@ using Jeebs.Services.Notify;
 namespace Jeebs.Services.Webhook;
 
 /// <summary>
-/// Webhook Driver
+/// Webhook Driver.
 /// </summary>
 /// <typeparam name="TConfig">Service configuration</typeparam>
 /// <typeparam name="TMessage">Message type</typeparam>

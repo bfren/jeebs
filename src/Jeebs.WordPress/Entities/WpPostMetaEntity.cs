@@ -4,7 +4,7 @@
 namespace Jeebs.WordPress.Entities;
 
 /// <summary>
-/// PostMeta entity
+/// PostMeta entity.
 /// </summary>
 public abstract record class WpPostMetaEntity : WpPostMetaEntityWithId
 {

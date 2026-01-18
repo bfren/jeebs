@@ -8,7 +8,7 @@ using StrongId;
 namespace Jeebs.WordPress.Entities;
 
 /// <summary>
-/// UserMeta entity
+/// UserMeta entity.
 /// </summary>
 public abstract record class WpUserMetaEntityWithId : IWithId<WpUserMetaId>
 {

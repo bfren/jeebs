@@ -9,7 +9,7 @@ using Microsoft.Extensions.Options;
 namespace AppConsoleWp.Bcg;
 
 /// <summary>
-/// BCG WordPress instance
+/// BCG WordPress instance.
 /// </summary>
 public sealed class WpBcg : Wp<
 	WpBcgConfig,

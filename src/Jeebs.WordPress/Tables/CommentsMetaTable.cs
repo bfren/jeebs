@@ -7,7 +7,7 @@ using Jeebs.Data.Map;
 namespace Jeebs.WordPress.Tables;
 
 /// <summary>
-/// Comment Meta Table
+/// Comment Meta Table.
 /// </summary>
 public sealed record class CommentsMetaTable : Table
 {

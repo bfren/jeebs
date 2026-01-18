@@ -6,7 +6,7 @@ using System.Text.Json.Serialization;
 namespace Jeebs.Services.Drivers.Webhook.Slack.Models;
 
 /// <summary>
-/// Slack message block - header
+/// Slack message block - header.
 /// </summary>
 public sealed record class SlackHeader : SlackBlock
 {

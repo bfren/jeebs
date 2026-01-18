@@ -8,7 +8,7 @@ using Microsoft.Extensions.Hosting;
 namespace Jeebs.Apps.Web;
 
 /// <summary>
-/// Application supporting minimal API syntax
+/// Application supporting minimal API syntax.
 /// </summary>
 internal sealed class MinimalApiApp : ApiApp
 {

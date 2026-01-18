@@ -11,7 +11,7 @@ using Microsoft.Extensions.DependencyInjection;
 namespace Jeebs.Mvc.Controllers;
 
 /// <summary>
-/// Controller extension methods
+/// Controller extension methods.
 /// </summary>
 public static class ControllerExtensions
 {

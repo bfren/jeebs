@@ -9,7 +9,7 @@ using NpgsqlTypes;
 namespace Jeebs.Data.Clients.PostgreSql.Parameters;
 
 /// <summary>
-/// Jsonb Parameter to allow inserting objects into a database as Jsonb (and therefore to be queryable)
+/// Jsonb Parameter to allow inserting objects into a database as Jsonb (and therefore to be queryable).
 /// </summary>
 public sealed class Jsonb : Dapper.SqlMapper.ICustomQueryParameter
 {

@@ -8,7 +8,7 @@ using Jeebs.Data.Map;
 namespace Jeebs.Data.Query;
 
 /// <summary>
-/// Contains all the parts necessary to build a query
+/// Contains all the parts necessary to build a query.
 /// </summary>
 public interface IQueryParts
 {

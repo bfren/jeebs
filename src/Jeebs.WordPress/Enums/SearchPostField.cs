@@ -6,7 +6,7 @@ using System;
 namespace Jeebs.WordPress.Enums;
 
 /// <summary>
-/// Search Post Fields
+/// Search Post Fields.
 /// </summary>
 [Flags]
 public enum SearchPostField

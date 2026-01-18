@@ -8,7 +8,7 @@ using RndF;
 namespace Jeebs.Mvc.Models;
 
 /// <summary>
-/// Menu Item
+/// Menu Item.
 /// </summary>
 public record class MenuItem
 {

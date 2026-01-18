@@ -10,7 +10,7 @@ using Microsoft.AspNetCore.Http;
 namespace Jeebs.Mvc.Auth.Jwt;
 
 /// <summary>
-/// JWT Authorisation Handler - extracts and validates JWT from the authorisation header
+/// JWT Authorisation Handler - extracts and validates JWT from the authorisation header.
 /// </summary>
 public sealed class JwtHandler : AuthorizationHandler<JwtRequirement>
 {

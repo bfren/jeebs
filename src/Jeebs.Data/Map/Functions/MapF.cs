@@ -4,7 +4,7 @@
 namespace Jeebs.Data.Map.Functions;
 
 /// <summary>
-/// Mapping Functions
+/// Mapping Functions.
 /// </summary>
 public static partial class MapF
 {

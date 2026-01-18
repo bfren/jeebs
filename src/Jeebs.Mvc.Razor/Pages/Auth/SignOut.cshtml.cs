@@ -15,7 +15,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 namespace Jeebs.Mvc.Razor.Pages.Auth;
 
 /// <summary>
-/// Auth Sign Out page model
+/// Auth Sign Out page model.
 /// </summary>
 [Authorize]
 public abstract class SignOutModel : PageModel

@@ -4,7 +4,7 @@
 namespace Jeebs.Services.Drawing.Geometry;
 
 /// <summary>
-/// Size
+/// Size.
 /// </summary>
 /// <param name="Width">Rectangle width</param>
 /// <param name="Height">Rectangle height</param>

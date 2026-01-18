@@ -4,14 +4,13 @@
 using System;
 using System.Globalization;
 using System.Linq;
-using Jeebs.Messages;
 
 namespace Jeebs;
 
 /// <summary>
-/// DateTime Integer
+/// DateTime Integer.
 /// </summary>
-public sealed record class DateTimeInt
+public readonly partial struct DateTimeInt
 {
 	private const string FormatString = "000000000000";
 
@@ -72,7 +71,7 @@ public sealed record class DateTimeInt
 	/// </summary>
 	/// <param name="value">DateTime string value - format yyyymmddHHMM</param>
 	public DateTimeInt(string value) =>
-		(Year, Month, Day, Hour, Minute) = Parse(value);
+		(Year, Month, Day, Hour, Minute) = Parse(value, CultureInfo.InvariantCulture);
 
 	/// <summary>
 	/// Construct object from long - will be converted to a 12-digit string with leading zeroes
@@ -90,20 +89,20 @@ public sealed record class DateTimeInt
 			throw new ArgumentException("Too large - cannot be later than the year 9999", nameof(value));
 		}
 
-		(Year, Month, Day, Hour, Minute) = Parse(value.ToString(FormatString, CultureInfo.InvariantCulture));
+		(Year, Month, Day, Hour, Minute) = Parse(value.ToString(FormatString, CultureInfo.InvariantCulture), CultureInfo.InvariantCulture);
 	}
 
 	/// <summary>
 	/// Get the current DateTime
 	/// </summary>
-	public Maybe<DateTime> ToDateTime() =>
+	public Result<DateTime> ToDateTime() =>
 		IsValidDateTime() switch
 		{
 			{ } x when x.Valid =>
 				new DateTime(Year, Month, Day, Hour, Minute, 0),
 
 			{ } x =>
-				F.None<DateTime>(new M.InvalidDateTimeMsg((x.Part, this)))
+				R.Fail("Invalid {Part} - 'Y:{Year} M:{Month} D:{Day} H:{Hour} m:{Minute}'.", x.Part, Year, Month, Day, Hour, Minute)
 		};
 
 	/// <summary>
@@ -213,48 +212,5 @@ public sealed record class DateTimeInt
 	public static DateTimeInt MaxValue =>
 		new(9999, 12, 31, 23, 59);
 
-	private static (int year, int month, int day, int hour, int minute) Parse(string value)
-	{
-		if (string.IsNullOrEmpty(value))
-		{
-			return (0, 0, 0, 0, 0);
-		}
-
-		if (value.Length != 12)
-		{
-			throw new ArgumentException($"{nameof(DateTimeInt)} value must be a 12 characters long", nameof(value));
-		}
-
-		if (!ulong.TryParse(value, out _))
-		{
-			throw new ArgumentException("Not a valid number", nameof(value));
-		}
-
-		return (
-			year: int.Parse(value[0..4], CultureInfo.InvariantCulture),
-			month: int.Parse(value[4..6], CultureInfo.InvariantCulture),
-			day: int.Parse(value[6..8], CultureInfo.InvariantCulture),
-			hour: int.Parse(value[8..10], CultureInfo.InvariantCulture),
-			minute: int.Parse(value[10..], CultureInfo.InvariantCulture)
-		);
-	}
-
 	#endregion Static
-
-	/// <summary>Messages</summary>
-	public static class M
-	{
-		/// <summary>Unable to parse DateTime integer</summary>
-		/// <param name="Value">Invalid part and DateTimeInt</param>
-		public sealed record class InvalidDateTimeMsg((string part, DateTimeInt dt) Value) : Msg
-		{
-			/// <inheritdoc/>
-			public override string Format =>
-				"Invalid {Part} - 'Y:{Year} M:{Month} D:{Day} H:{Hour} m:{Minute}'.";
-
-			/// <inheritdoc/>
-			public override object[]? Args =>
-				[Value.part, Value.dt.Year, Value.dt.Month, Value.dt.Day, Value.dt.Hour, Value.dt.Minute];
-		}
-	}
 }

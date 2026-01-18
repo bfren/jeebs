@@ -6,7 +6,7 @@ using Jeebs.Collections;
 namespace Jeebs.Data.TypeHandlers;
 
 /// <summary>
-/// ImmutableList JsonTypeHandler
+/// ImmutableList JsonTypeHandler.
 /// </summary>
 /// <typeparam name="T">Enumerated type</typeparam>
 public sealed class ImmutableListJsonTypeHandler<T> : JsonTypeHandler<ImmutableList<T>>

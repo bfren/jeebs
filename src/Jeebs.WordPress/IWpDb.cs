@@ -7,7 +7,7 @@ using Jeebs.Data;
 namespace Jeebs.WordPress;
 
 /// <summary>
-/// WordPress Database instance
+/// WordPress Database instance.
 /// </summary>
 public interface IWpDb : IDb
 {

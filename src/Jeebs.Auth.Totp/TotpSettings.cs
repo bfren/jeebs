@@ -4,7 +4,7 @@
 namespace Jeebs.Auth.Totp;
 
 /// <summary>
-/// TOTP settings
+/// TOTP settings.
 /// </summary>
 public sealed record class TotpSettings
 {

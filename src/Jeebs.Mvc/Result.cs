@@ -119,7 +119,7 @@ public record class Result<T> : Result, IResult<T>
 }
 
 /// <summary>
-/// Easily create <see cref="Result{T}"/> objects
+/// Easily create <see cref="Result{T}"/> objects.
 /// </summary>
 public abstract record class Result : IResult
 {

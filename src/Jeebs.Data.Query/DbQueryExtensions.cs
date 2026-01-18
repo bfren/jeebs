@@ -11,7 +11,7 @@ using Jeebs.Data.Query.Functions;
 namespace Jeebs.Data.Query;
 
 /// <summary>
-/// IDbQuery extensions for using <see cref="IQueryBuilder"/>
+/// IDbQuery extensions for using <see cref="IQueryBuilder"/>.
 /// </summary>
 public static class DbQueryExtensions
 {

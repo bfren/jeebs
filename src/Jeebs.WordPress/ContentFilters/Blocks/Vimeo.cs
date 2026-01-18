@@ -6,7 +6,7 @@ using System.Globalization;
 namespace Jeebs.WordPress.ContentFilters.Blocks;
 
 /// <summary>
-/// Parse Vimeo blocks
+/// Parse Vimeo blocks.
 /// </summary>
 internal static class Vimeo
 {

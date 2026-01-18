@@ -4,7 +4,7 @@
 namespace Jeebs.Mvc.Models;
 
 /// <summary>
-/// MenuItem Text
+/// MenuItem Text.
 /// </summary>
 public sealed record class MenuItemText : MenuItem
 {

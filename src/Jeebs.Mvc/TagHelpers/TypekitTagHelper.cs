@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Razor.TagHelpers;
 namespace Jeebs.Mvc.TagHelpers;
 
 /// <summary>
-/// Typekit TagHelper
+/// Typekit TagHelper.
 /// </summary>
 [HtmlTargetElement("typekit", TagStructure = TagStructure.WithoutEndTag)]
 public sealed class TypekitTagHelper : TagHelper

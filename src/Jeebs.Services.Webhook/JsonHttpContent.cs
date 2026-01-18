@@ -8,7 +8,7 @@ using Jeebs.Functions;
 namespace Jeebs.Services.Webhook;
 
 /// <summary>
-/// JSON-encoded HTTP content
+/// JSON-encoded HTTP content.
 /// </summary>
 public sealed class JsonHttpContent : StringContent
 {

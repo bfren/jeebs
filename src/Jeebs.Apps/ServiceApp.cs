@@ -7,7 +7,7 @@ using Microsoft.Extensions.Hosting;
 namespace Jeebs.Apps;
 
 /// <summary>
-/// Hosted Service Application (for background tasks) - see <see cref="App"/>
+/// Hosted Service Application (for background tasks) - see <see cref="App"/>.
 /// </summary>
 /// <typeparam name="T">Service type</typeparam>
 public class ServiceApp<T> : App

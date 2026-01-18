@@ -4,7 +4,7 @@
 namespace Jeebs.Services.Notify;
 
 /// <summary>
-/// Message levels
+/// Message levels.
 /// </summary>
 public enum NotificationLevel
 {

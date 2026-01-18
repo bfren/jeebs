@@ -11,7 +11,7 @@ using Serilog;
 namespace Jeebs.Apps.Web;
 
 /// <summary>
-/// Create a new <see cref="WebApplication"/> with default Jeebs configuration
+/// Create a new <see cref="WebApplication"/> with default Jeebs configuration.
 /// </summary>
 internal static class WebAppBuilder
 {

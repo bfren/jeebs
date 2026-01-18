@@ -7,7 +7,7 @@ using StrongId;
 namespace Jeebs.WordPress.Query;
 
 /// <summary>
-/// WordPress Query Options
+/// WordPress Query Options.
 /// </summary>
 /// <typeparam name="TId">Entity ID type</typeparam>
 public abstract record class Options<TId> : QueryOptions<TId>

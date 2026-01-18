@@ -13,7 +13,7 @@ using Microsoft.AspNetCore.Mvc.Routing;
 namespace Jeebs.Mvc.Models;
 
 /// <summary>
-/// Menu
+/// Menu.
 /// </summary>
 public abstract class Menu
 {

@@ -6,7 +6,7 @@ using StrongId;
 namespace Jeebs.Auth.Data;
 
 /// <summary>
-/// Authentication User Role Model
+/// Authentication User Role Model.
 /// </summary>
 public interface IAuthUserRole : IWithId<AuthUserRoleId>
 {

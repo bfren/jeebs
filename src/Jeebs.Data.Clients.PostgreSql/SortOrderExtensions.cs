@@ -6,7 +6,7 @@ using Jeebs.Data.Enums;
 namespace Jeebs.Data.Clients.PostgreSql;
 
 /// <summary>
-/// Extension methods for SortOrder: ToOperator
+/// Extension methods for SortOrder: ToOperator.
 /// </summary>
 public static class SortOrderExtensions
 {

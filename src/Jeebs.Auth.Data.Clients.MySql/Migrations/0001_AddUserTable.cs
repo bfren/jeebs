@@ -8,7 +8,7 @@ using SimpleMigrations;
 namespace Jeebs.Auth.Data.Clients.MySql.Migrations;
 
 /// <summary>
-/// Migration: Add user table
+/// Migration: Add user table.
 /// </summary>
 [Migration(1, "Add user table")]
 public sealed class AddUserTable : Migration

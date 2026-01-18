@@ -7,7 +7,7 @@ using System.Linq;
 namespace Jeebs.WordPress.Enums;
 
 /// <summary>
-/// Taxonomy enumeration
+/// Taxonomy enumeration.
 /// </summary>
 public sealed record class Taxonomy : Enumerated
 {

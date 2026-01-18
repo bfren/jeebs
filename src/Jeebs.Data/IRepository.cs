@@ -9,7 +9,7 @@ using StrongId;
 namespace Jeebs.Data;
 
 /// <summary>
-/// Repository for an entity type, including CRUD and custom queries
+/// Repository for an entity type, including CRUD and custom queries.
 /// </summary>
 /// <typeparam name="TEntity">Entity type</typeparam>
 /// <typeparam name="TId">StrongId type</typeparam>

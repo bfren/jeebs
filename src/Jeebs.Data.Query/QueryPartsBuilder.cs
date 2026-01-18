@@ -40,7 +40,7 @@ public abstract class QueryPartsBuilder
 }
 
 /// <summary>
-/// Builds a <see cref="QueryParts"/> object from various options
+/// Builds a <see cref="QueryParts"/> object from various options.
 /// </summary>
 /// <typeparam name="TId">Entity ID type</typeparam>
 public abstract class QueryPartsBuilder<TId> : QueryPartsBuilder, IQueryPartsBuilder<TId>

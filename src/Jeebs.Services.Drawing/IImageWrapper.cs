@@ -4,7 +4,7 @@
 namespace Jeebs.Services.Drawing;
 
 /// <summary>
-/// Image wrapper
+/// Image wrapper.
 /// </summary>
 public interface IImageWrapper
 {

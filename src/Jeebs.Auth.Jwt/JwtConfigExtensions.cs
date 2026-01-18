@@ -9,7 +9,7 @@ using Microsoft.IdentityModel.Tokens;
 namespace Jeebs.Auth.Jwt;
 
 /// <summary>
-/// JwtConfig extension methods
+/// JwtConfig extension methods.
 /// </summary>
 public static class JwtConfigExtensions
 {

@@ -8,7 +8,7 @@ using Microsoft.Extensions.DependencyInjection;
 namespace Jeebs.Auth.Data;
 
 /// <summary>
-/// Auth data functions
+/// Auth data functions.
 /// </summary>
 public static class ServiceCollectionExtensions
 {

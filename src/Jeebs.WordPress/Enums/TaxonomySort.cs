@@ -4,7 +4,7 @@
 namespace Jeebs.WordPress.Enums;
 
 /// <summary>
-/// Sort Options for Taxonomy lists
+/// Sort Options for Taxonomy lists.
 /// </summary>
 public enum TaxonomySort
 {

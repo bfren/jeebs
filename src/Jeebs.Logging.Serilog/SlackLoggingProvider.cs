@@ -10,7 +10,7 @@ using Serilog.Sinks.Slack;
 namespace Jeebs.Logging.Serilog;
 
 /// <summary>
-/// Configure logging to Slack
+/// Configure logging to Slack.
 /// </summary>
 public sealed class SlackLoggingProvider : ILoggingProvider
 {

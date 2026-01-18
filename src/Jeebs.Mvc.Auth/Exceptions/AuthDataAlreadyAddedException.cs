@@ -6,7 +6,7 @@ using System;
 namespace Jeebs.Mvc.Auth.Exceptions;
 
 /// <summary>
-/// See <see cref="AuthBuilder.WithData{TDbClient}(bool)"/>
+/// See <see cref="AuthBuilder.WithData{TDbClient}(bool)"/>.
 /// </summary>
 public class AuthDataAlreadyAddedException : Exception
 {

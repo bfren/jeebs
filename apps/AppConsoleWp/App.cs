@@ -10,7 +10,7 @@ using Microsoft.Extensions.Hosting;
 namespace AppConsoleWp;
 
 /// <summary>
-/// WordPress Console Application
+/// WordPress Console Application.
 /// </summary>
 internal sealed class App : Jeebs.Apps.App
 {

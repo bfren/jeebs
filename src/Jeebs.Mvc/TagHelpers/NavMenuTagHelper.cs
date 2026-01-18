@@ -14,7 +14,7 @@ using Microsoft.AspNetCore.Razor.TagHelpers;
 namespace Jeebs.Mvc.TagHelpers;
 
 /// <summary>
-/// Nav Menu TagHelper
+/// Nav Menu TagHelper.
 /// </summary>
 /// <remarks>
 /// Create object

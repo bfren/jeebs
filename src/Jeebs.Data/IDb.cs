@@ -9,7 +9,7 @@ using Jeebs.Config.Db;
 namespace Jeebs.Data;
 
 /// <summary>
-/// Enables agnostic interaction with a database
+/// Enables agnostic interaction with a database.
 /// </summary>
 public interface IDb
 {

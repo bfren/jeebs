@@ -4,7 +4,7 @@
 namespace Jeebs.Data.Testing.Exceptions;
 
 /// <summary>
-/// See <see cref="Query.FluentQueryHelper.AssertMethodName(NSubstitute.Core.ICall, string)"/>
+/// See <see cref="Query.FluentQueryHelper.AssertMethodName(NSubstitute.Core.ICall, string)"/>.
 /// </summary>
 public sealed class MethodNameException : FluentQueryHelperException
 {

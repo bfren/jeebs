@@ -6,7 +6,7 @@ using System;
 namespace Jx.Services.Webhook;
 
 /// <summary>
-/// Unknown MessageLevel
+/// Unknown MessageLevel.
 /// </summary>
 public class UnknownMessageLevelException : Exception
 {

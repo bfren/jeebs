@@ -7,7 +7,7 @@ using Jeebs.Data;
 namespace Jeebs.WordPress.CustomFields;
 
 /// <summary>
-/// Represents a CustomField, which are stored in the post_meta table
+/// Represents a CustomField, which are stored in the post_meta table.
 /// </summary>
 public interface ICustomField
 {

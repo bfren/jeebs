@@ -8,7 +8,7 @@ using Jeebs.Data.Map;
 namespace Jeebs.Auth.Data.Tables;
 
 /// <summary>
-/// Authentication User Table
+/// Authentication User Table.
 /// </summary>
 public sealed record class AuthUserTable() : Table(AuthDb.Schema, TableName)
 {

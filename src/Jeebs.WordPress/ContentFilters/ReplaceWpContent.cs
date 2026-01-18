@@ -6,7 +6,7 @@ using System;
 namespace Jeebs.WordPress.ContentFilters;
 
 /// <summary>
-/// Replace wp-content/ URLs (e.g. with static file server)
+/// Replace wp-content/ URLs (e.g. with static file server).
 /// </summary>
 public sealed class ReplaceWpContent : ContentFilter
 {

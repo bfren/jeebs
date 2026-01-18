@@ -10,7 +10,7 @@ using Microsoft.AspNetCore.Razor.TagHelpers;
 namespace Jeebs.Mvc.TagHelpers;
 
 /// <summary>
-/// Image TagHelper
+/// Image TagHelper.
 /// </summary>
 /// <remarks>
 /// Setup dependencies

@@ -7,7 +7,7 @@ using StrongId;
 namespace Jeebs.Data;
 
 /// <summary>
-/// Map an entity to a table in a fluent style
+/// Map an entity to a table in a fluent style.
 /// </summary>
 /// <typeparam name="TEntity">Entity type</typeparam>
 public static class Map<TEntity>

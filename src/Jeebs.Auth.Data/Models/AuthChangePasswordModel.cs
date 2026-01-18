@@ -6,7 +6,7 @@ using Jeebs.Data;
 namespace Jeebs.Auth.Data.Models;
 
 /// <summary>
-/// Change password model
+/// Change password model.
 /// </summary>
 /// <param name="Id">User ID</param>
 /// <param name="Version">Version</param>

@@ -6,7 +6,7 @@ using Jeebs.WordPress.CustomFields;
 namespace AppConsoleWp.Bcg;
 
 /// <summary>
-/// The place a sermon was first preached
+/// The place a sermon was first preached.
 /// </summary>
 public sealed class FirstPreachedCustomField : TermCustomField
 {

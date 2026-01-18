@@ -4,7 +4,7 @@
 namespace Jeebs.Apps.Web.Constants;
 
 /// <summary>
-/// Cache Profiles
+/// Cache Profiles.
 /// </summary>
 public static class CacheProfiles
 {

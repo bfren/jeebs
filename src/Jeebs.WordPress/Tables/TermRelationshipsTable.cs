@@ -7,7 +7,7 @@ using Jeebs.Data.Map;
 namespace Jeebs.WordPress.Tables;
 
 /// <summary>
-/// Term Relationship Table
+/// Term Relationship Table.
 /// </summary>
 public sealed record class TermRelationshipsTable : Table
 {

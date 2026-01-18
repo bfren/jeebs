@@ -4,7 +4,7 @@
 namespace Jeebs.WordPress.Functions;
 
 /// <summary>
-/// Query Terms Functions
+/// Query Terms Functions.
 /// </summary>
 public static partial class QueryTermsF
 {

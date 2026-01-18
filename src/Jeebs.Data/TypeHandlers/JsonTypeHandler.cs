@@ -7,7 +7,7 @@ using Jeebs.Functions;
 namespace Jeebs.Data.TypeHandlers;
 
 /// <summary>
-/// JSON TypeHandler
+/// JSON TypeHandler.
 /// </summary>
 /// <typeparam name="T">Type to serialise from / deserialise to</typeparam>
 public class JsonTypeHandler<T> : Dapper.SqlMapper.StringTypeHandler<T>

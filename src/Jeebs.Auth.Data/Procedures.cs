@@ -4,7 +4,7 @@
 namespace Jeebs.Auth.Data;
 
 /// <summary>
-/// Stored Procedure names
+/// Stored Procedure names.
 /// </summary>
 public static class Procedures
 {

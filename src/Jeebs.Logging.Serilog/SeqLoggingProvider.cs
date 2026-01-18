@@ -9,7 +9,7 @@ using Serilog.Events;
 namespace Jeebs.Logging.Serilog;
 
 /// <summary>
-/// Configure logging to Seq
+/// Configure logging to Seq.
 /// </summary>
 public sealed class SeqLoggingProvider : ILoggingProvider
 {

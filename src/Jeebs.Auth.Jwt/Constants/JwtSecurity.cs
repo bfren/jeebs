@@ -7,7 +7,7 @@ using Microsoft.IdentityModel.Tokens;
 namespace Jeebs.Auth.Jwt.Constants;
 
 /// <summary>
-/// Default JSON Web Token security algorithms and key lengths
+/// Default JSON Web Token security algorithms and key lengths.
 /// </summary>
 public static class JwtSecurity
 {

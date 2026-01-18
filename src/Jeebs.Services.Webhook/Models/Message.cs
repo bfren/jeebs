@@ -7,7 +7,7 @@ using Jeebs.Services.Notify;
 namespace Jeebs.Services.Webhook.Models;
 
 /// <summary>
-/// Message model
+/// Message model.
 /// </summary>
 public sealed record class Message : IWebhookMessage
 {

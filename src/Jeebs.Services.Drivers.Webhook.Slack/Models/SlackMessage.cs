@@ -10,7 +10,7 @@ using Jeebs.Services.Notify;
 namespace Jeebs.Services.Drivers.Webhook.Slack.Models;
 
 /// <summary>
-/// Slack Message
+/// Slack Message.
 /// </summary>
 public sealed record class SlackMessage
 {

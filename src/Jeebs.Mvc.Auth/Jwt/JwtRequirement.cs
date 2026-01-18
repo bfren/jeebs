@@ -4,6 +4,6 @@
 namespace Jeebs.Mvc.Auth.Jwt;
 
 /// <summary>
-/// JSON Web Token authorisation requirement
+/// JSON Web Token authorisation requirement.
 /// </summary>
 public sealed class JwtRequirement : Microsoft.AspNetCore.Authorization.IAuthorizationRequirement { }

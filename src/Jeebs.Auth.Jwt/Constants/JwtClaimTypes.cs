@@ -4,7 +4,7 @@
 namespace Jeebs.Auth.Jwt.Constants;
 
 /// <summary>
-/// JWT claim types
+/// JWT claim types.
 /// </summary>
 public static class JwtClaimTypes
 {

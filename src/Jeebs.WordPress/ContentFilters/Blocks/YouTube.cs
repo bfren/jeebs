@@ -11,7 +11,7 @@ using RndF;
 namespace Jeebs.WordPress.ContentFilters.Blocks;
 
 /// <summary>
-/// Parse YouTube blocks
+/// Parse YouTube blocks.
 /// </summary>
 internal static partial class YouTube
 {

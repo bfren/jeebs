@@ -13,7 +13,7 @@ using static Jeebs.Data.IDbTypeMapper;
 namespace Jeebs.Data;
 
 /// <summary>
-/// Default DbType mapper
+/// Default DbType mapper.
 /// </summary>
 public class DbTypeMapper : IDbTypeMapper
 {

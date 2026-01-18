@@ -9,7 +9,7 @@ using SkiaSharp;
 namespace Jeebs.Services.Drivers.Drawing.Skia;
 
 /// <summary>
-/// Image Wrapper - using SkiaSharp
+/// Image Wrapper - using SkiaSharp.
 /// </summary>
 public sealed class ImageWrapper : Services.Drawing.ImageWrapper, IDisposable
 {

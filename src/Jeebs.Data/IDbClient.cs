@@ -11,7 +11,7 @@ using StrongId;
 namespace Jeebs.Data;
 
 /// <summary>
-/// Database client
+/// Database client.
 /// </summary>
 public interface IDbClient
 {

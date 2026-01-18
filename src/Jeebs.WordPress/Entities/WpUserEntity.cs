@@ -6,7 +6,7 @@ using System;
 namespace Jeebs.WordPress.Entities;
 
 /// <summary>
-/// User entity
+/// User entity.
 /// </summary>
 public abstract record class WpUserEntity : WpUserEntityWithId
 {

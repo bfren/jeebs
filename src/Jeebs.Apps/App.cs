@@ -25,7 +25,7 @@ using Serilog;
 namespace Jeebs.Apps;
 
 /// <summary>
-/// Configure and run an application using <seealso cref="IHost"/>
+/// Configure and run an application using <seealso cref="IHost"/>.
 /// </summary>
 public class App
 {

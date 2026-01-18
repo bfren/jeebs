@@ -4,7 +4,7 @@
 namespace Jeebs.Data.Enums;
 
 /// <summary>
-/// Query JOIN types
+/// Query JOIN types.
 /// </summary>
 public enum QueryJoin
 {

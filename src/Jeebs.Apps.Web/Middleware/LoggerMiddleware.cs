@@ -12,7 +12,7 @@ using Serilog.Events;
 namespace Jeebs.Apps.Web.Middleware;
 
 /// <summary>
-/// Logger Middleware
+/// Logger Middleware.
 /// </summary>
 public sealed class LoggerMiddleware : IMiddleware
 {

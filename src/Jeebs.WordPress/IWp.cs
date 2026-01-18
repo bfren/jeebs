@@ -6,7 +6,7 @@ using Jeebs.Config.WordPress;
 namespace Jeebs.WordPress;
 
 /// <summary>
-/// WordPress wrapper
+/// WordPress wrapper.
 /// </summary>
 public interface IWp
 {
@@ -27,7 +27,7 @@ public interface IWp
 }
 
 /// <summary>
-/// WordPress wrapper
+/// WordPress wrapper.
 /// </summary>
 /// <typeparam name="TConfig">WpConfig type</typeparam>
 public interface IWp<out TConfig> : IWp

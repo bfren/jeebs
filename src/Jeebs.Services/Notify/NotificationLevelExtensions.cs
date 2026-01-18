@@ -6,7 +6,7 @@ using Jeebs.Logging;
 namespace Jeebs.Services.Notify;
 
 /// <summary>
-/// LogLevel Extensions - ToMessageLevel
+/// LogLevel Extensions - ToMessageLevel.
 /// </summary>
 public static class NotificationLevelExtensions
 {

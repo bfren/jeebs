@@ -12,7 +12,7 @@ using Microsoft.Extensions.Hosting;
 namespace Jeebs.Apps.Web;
 
 /// <summary>
-/// API Application - see <see cref="MvcApp"/>
+/// API Application - see <see cref="MvcApp"/>.
 /// </summary>
 public class ApiApp : MvcApp
 {

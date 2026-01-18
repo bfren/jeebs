@@ -14,7 +14,7 @@ using StrongId;
 namespace Jeebs.WordPress.Query;
 
 /// <summary>
-/// Common functions for building QueryParts
+/// Common functions for building QueryParts.
 /// </summary>
 /// <typeparam name="TId">Entity ID type</typeparam>
 public abstract class PartsBuilder<TId> : QueryPartsBuilder<TId>

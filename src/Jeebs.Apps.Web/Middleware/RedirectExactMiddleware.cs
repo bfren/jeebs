@@ -10,7 +10,7 @@ using Serilog;
 namespace Jeebs.Apps.Web.Middleware;
 
 /// <summary>
-/// Redirect Exact Middleware
+/// Redirect Exact Middleware.
 /// </summary>
 public sealed class RedirectExactMiddleware : IMiddleware
 {

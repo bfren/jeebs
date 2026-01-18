@@ -4,7 +4,7 @@
 namespace Jeebs.Services.Notify;
 
 /// <summary>
-/// Used to make a service listen for notifications
+/// Used to make a service listen for notifications.
 /// </summary>
 public interface INotificationListener
 {

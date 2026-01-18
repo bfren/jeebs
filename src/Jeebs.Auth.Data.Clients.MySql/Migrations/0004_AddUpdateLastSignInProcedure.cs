@@ -8,7 +8,7 @@ using SimpleMigrations;
 namespace Jeebs.Auth.Data.Clients.MySql.Migrations;
 
 /// <summary>
-/// Migration: Add update last sign in procedure
+/// Migration: Add update last sign in procedure.
 /// </summary>
 [Migration(4, "Add update last user sign in procedure")]
 public sealed class AddUpdateLastSignInProcedure : Migration

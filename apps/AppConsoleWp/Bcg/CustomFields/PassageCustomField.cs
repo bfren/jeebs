@@ -6,7 +6,7 @@ using Jeebs.WordPress.CustomFields;
 namespace AppConsoleWp.Bcg;
 
 /// <summary>
-/// Bible Passage
+/// Bible Passage.
 /// </summary>
 public sealed class PassageCustomField : TextCustomField
 {

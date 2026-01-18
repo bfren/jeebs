@@ -23,7 +23,7 @@ public abstract class Log : ILog
 		var (text, args) = failure.Context switch
 		{
 			string context =>
-				("{Context} | " + failure.Message, [context, .. failure.Args]),
+				("{Context} | " + failure.Message, [context, .. failure.Args ?? []]),
 
 			_ =>
 				(failure.Message, failure.Args ?? [])
@@ -79,28 +79,28 @@ public abstract class Log : ILog
 		IsEnabled((LogLevel)level);
 
 	/// <inheritdoc/>
-	public abstract void Vrb(string message, params object[] args);
+	public abstract void Vrb(string message, params object?[] args);
 
 	/// <inheritdoc/>
-	public abstract void Dbg(string message, params object[] args);
+	public abstract void Dbg(string message, params object?[] args);
 
 	/// <inheritdoc/>
-	public abstract void Inf(string message, params object[] args);
+	public abstract void Inf(string message, params object?[] args);
 
 	/// <inheritdoc/>
-	public abstract void Wrn(string message, params object[] args);
+	public abstract void Wrn(string message, params object?[] args);
 
 	/// <inheritdoc/>
-	public abstract void Err(string message, params object[] args);
+	public abstract void Err(string message, params object?[] args);
 
 	/// <inheritdoc/>
-	public abstract void Err(Exception ex, string message, params object[] args);
+	public abstract void Err(Exception ex, string message, params object?[] args);
 
 	/// <inheritdoc/>
-	public abstract void Ftl(string message, params object[] args);
+	public abstract void Ftl(string message, params object?[] args);
 
 	/// <inheritdoc/>
-	public abstract void Ftl(Exception ex, string message, params object[] args);
+	public abstract void Ftl(Exception ex, string message, params object?[] args);
 
 	/// <inheritdoc/>
 	public abstract void Dispose();

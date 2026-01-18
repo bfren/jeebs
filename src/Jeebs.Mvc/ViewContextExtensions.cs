@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 namespace Jeebs.Mvc;
 
 /// <summary>
-/// ViewContext Extensions
+/// ViewContext Extensions.
 /// </summary>
 public static class ViewContextExtensions
 {

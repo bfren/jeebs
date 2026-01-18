@@ -10,7 +10,7 @@ using RndF;
 namespace Jeebs.WordPress.ContentFilters.Blocks;
 
 /// <summary>
-/// Parse Gallery block
+/// Parse Gallery block.
 /// </summary>
 internal static partial class Gallery
 {

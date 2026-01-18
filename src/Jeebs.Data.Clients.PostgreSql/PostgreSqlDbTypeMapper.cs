@@ -10,7 +10,7 @@ using Npgsql;
 namespace Jeebs.Data.Clients.PostgreSql;
 
 /// <summary>
-/// PostgreSQL database type mapping
+/// PostgreSQL database type mapping.
 /// </summary>
 public sealed class PostgreSqlDbTypeMapper : DbTypeMapper
 {

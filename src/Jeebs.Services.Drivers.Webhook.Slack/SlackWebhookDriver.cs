@@ -8,7 +8,7 @@ using Jeebs.Services.Webhook;
 namespace Jeebs.Services.Drivers.Webhook.Slack;
 
 /// <summary>
-/// Slack Webhook Driver
+/// Slack Webhook Driver.
 /// </summary>
 public abstract class SlackWebhookDriver : WebhookDriver<SlackConfig, SlackMessage>
 {

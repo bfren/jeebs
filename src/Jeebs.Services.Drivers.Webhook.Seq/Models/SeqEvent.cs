@@ -8,7 +8,7 @@ using Jeebs.Services.Notify;
 namespace Jeebs.Services.Drivers.Webhook.Seq;
 
 /// <summary>
-/// Seq Event
+/// Seq Event.
 /// </summary>
 public sealed record class SeqEvent
 {

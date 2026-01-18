@@ -6,7 +6,7 @@ using StrongId;
 namespace Jeebs.Data;
 
 /// <summary>
-/// Object (Entity or Model) with Version property
+/// Object (Entity or Model) with Version property.
 /// </summary>
 public interface IWithVersion : IWithId
 {
