@@ -10,9 +10,9 @@
 
   <!-- Common Packages -->
   <ItemGroup>
-    <PackageReference Include="MaybeF" />
-    <Using Include="MaybeF" />
-    <Using Include="MaybeF.Linq" />
+    <PackageReference Include="Wrap" />
+    <Using Include="Wrap" />
+    <Using Include="Wrap.Linq" />
   </ItemGroup>
 
   <!-- Documentation -->
@@ -29,7 +29,7 @@
 
   <!-- Get Paths to Files -->
   <PropertyGroup>
-    <SolutionFilePath>$([MSBuild]::GetPathOfFileAbove('Jeebs (v8).sln'))</SolutionFilePath>
+    <SolutionFilePath>$([MSBuild]::GetPathOfFileAbove('Jeebs (v9).sln'))</SolutionFilePath>
     <SolutionRootPath>$([System.IO.Path]::GetDirectoryName('$(SolutionFilePath)'))</SolutionRootPath>
   </PropertyGroup>
   <PropertyGroup>
