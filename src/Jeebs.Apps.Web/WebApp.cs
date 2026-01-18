@@ -55,17 +55,17 @@ public class WebApp : App
 	#endregion Create
 
 	/// <summary>
-	/// Whether or not to use HSTS
+	/// Whether or not to use HSTS.
 	/// </summary>
 	private readonly bool useHsts;
 
 	/// <summary>
-	/// Create web application with HSTS enabled
+	/// Create web application with HSTS enabled.
 	/// </summary>
 	public WebApp() : this(true) { }
 
 	/// <summary>
-	/// Create web application
+	/// Create web application.
 	/// </summary>
 	/// <param name="useHsts">HSTS should only be disabled if the application is in development mode, or behind a reverse proxy</param>
 	public WebApp(bool useHsts) =>
@@ -95,7 +95,7 @@ public class WebApp : App
 	}
 
 	/// <summary>
-	/// Configure a WebApplication
+	/// Configure a WebApplication.
 	/// </summary>
 	/// <param name="app">WebApplication</param>
 	public virtual void Configure(WebApplication app)
@@ -134,7 +134,7 @@ public class WebApp : App
 	}
 
 	/// <summary>
-	/// Override to configure site verification
+	/// Override to configure site verification.
 	/// </summary>
 	/// <param name="app">WebApplication</param>
 	/// <param name="config">IConfiguration</param>
@@ -150,14 +150,14 @@ public class WebApp : App
 	}
 
 	/// <summary>
-	/// Override to configure production exception handling
+	/// Override to configure production exception handling.
 	/// </summary>
 	/// <param name="app">WebApplication</param>
 	protected virtual void ConfigureProductionExceptionHandling(WebApplication app) =>
 		_ = app.UseExceptionHandler("/Error");
 
 	/// <summary>
-	/// Override to configure security headers
+	/// Override to configure security headers.
 	/// </summary>
 	/// <param name="app">WebApplication</param>
 	protected virtual void ConfigureSecurityHeaders(WebApplication app)
@@ -169,7 +169,7 @@ public class WebApp : App
 	}
 
 	/// <summary>
-	/// Override to configure authentication and authorisation - it is only called if Auth is enabled
+	/// Override to configure authentication and authorisation - it is only called if Auth is enabled.
 	/// </summary>
 	/// <remarks>
 	/// Calls to app.UseAuthentication() should come *before* app.UseAuthorization()

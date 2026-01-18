@@ -13,7 +13,7 @@ namespace Jeebs;
 public sealed class LazyAsync<T>
 {
 	/// <summary>
-	/// Get the awaitable task for this value (it will only be run the first time)
+	/// Get the awaitable task for this value (it will only be run the first time).
 	/// </summary>
 	public Task<T> Value =>
 		task.Value;
@@ -21,14 +21,14 @@ public sealed class LazyAsync<T>
 	private readonly Lazy<Task<T>> task;
 
 	/// <summary>
-	/// Create a LazyAsync object with a task
+	/// Create a LazyAsync object with a task.
 	/// </summary>
 	/// <param name="task">Task to get value</param>
 	public LazyAsync(Task<T> task) =>
 		this.task = new(() => task, true);
 
 	/// <summary>
-	/// Create a LazyAsync object with a function that returns a task
+	/// Create a LazyAsync object with a function that returns a task.
 	/// </summary>
 	/// <param name="f">Awaitable function to get value</param>
 	public LazyAsync(Func<Task<T>> f) =>

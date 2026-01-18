@@ -17,13 +17,13 @@ namespace Jeebs.Mvc.TagHelpers;
 public sealed class AlertsTagHelper : TagHelper
 {
 	/// <summary>
-	/// ViewContext object
+	/// ViewContext object.
 	/// </summary>
 	[ViewContext]
 	public ViewContext? ViewContext { get; set; }
 
 	/// <summary>
-	/// Output any alert messages
+	/// Output any alert messages.
 	/// </summary>
 	/// <param name="context">TagHelperContext</param>
 	/// <param name="output">TagHelperOutput</param>

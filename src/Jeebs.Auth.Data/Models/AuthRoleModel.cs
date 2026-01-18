@@ -9,22 +9,22 @@ namespace Jeebs.Auth.Data.Models;
 public record class AuthRoleModel : IAuthRole
 {
 	/// <summary>
-	/// Role ID
+	/// Role ID.
 	/// </summary>
 	public AuthRoleId Id { get; init; } = new();
 
 	/// <summary>
-	/// Role Name (should be a normalised string)
+	/// Role Name (should be a normalised string).
 	/// </summary>
 	public string Name { get; init; }
 
 	/// <summary>
-	/// Create with default values
+	/// Create with default values.
 	/// </summary>
 	public AuthRoleModel() : this(new(), string.Empty) { }
 
 	/// <summary>
-	/// Create with specified values
+	/// Create with specified values.
 	/// </summary>
 	/// <param name="id">AuthRoleId</param>
 	/// <param name="name">Role Name</param>

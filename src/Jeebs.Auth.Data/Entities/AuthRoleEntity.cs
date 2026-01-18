@@ -12,7 +12,7 @@ namespace Jeebs.Auth.Data.Entities;
 public sealed record class AuthRoleEntity : AuthRoleModel, IWithId<AuthRoleId>
 {
 	/// <summary>
-	/// Role Description
+	/// Role Description.
 	/// </summary>
 	public string Description { get; init; } = string.Empty;
 

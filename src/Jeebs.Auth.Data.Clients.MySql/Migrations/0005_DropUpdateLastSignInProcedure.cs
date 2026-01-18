@@ -17,7 +17,7 @@ public sealed class DropUpdateLastSignInProcedure : Migration
 		selector(new());
 
 	/// <summary>
-	/// Migrate up
+	/// Migrate up.
 	/// </summary>
 	protected override void Up() => Execute($@"
 		DROP FUNCTION `{AuthDb.Schema}.{Procedures.UpdateUserLastSignIn}`
@@ -25,7 +25,7 @@ public sealed class DropUpdateLastSignInProcedure : Migration
 	");
 
 	/// <summary>
-	/// Migrate down
+	/// Migrate down.
 	/// </summary>
 	protected override void Down() => Execute($@"
 		CREATE DEFINER=`root`@`localhost` FUNCTION `{AuthDb.Schema}.{Procedures.UpdateUserLastSignIn}`(

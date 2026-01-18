@@ -13,7 +13,7 @@ namespace Jeebs.Auth.Data;
 public interface IAuthDbQuery : IDbQuery
 {
 	/// <summary>
-	/// Retrieve the Roles added to the specified User
+	/// Retrieve the Roles added to the specified User.
 	/// </summary>
 	/// <typeparam name="TRole">Role type</typeparam>
 	/// <param name="userId">User ID</param>

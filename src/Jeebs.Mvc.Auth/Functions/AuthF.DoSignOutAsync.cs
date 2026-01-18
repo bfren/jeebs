@@ -9,7 +9,7 @@ namespace Jeebs.Mvc.Auth.Functions;
 public static partial class AuthF
 {
 	/// <summary>
-	/// Provides arguments for <see cref="DoSignOutAsync(SignOutArgs)"/>
+	/// Provides arguments for <see cref="DoSignOutAsync(SignOutArgs)"/>.
 	/// </summary>
 	/// <param name="AddInfoAlert"></param>
 	/// <param name="RedirectUrl"></param>
@@ -21,7 +21,7 @@ public static partial class AuthF
 	);
 
 	/// <summary>
-	/// Sign a user out of the session
+	/// Sign a user out of the session.
 	/// </summary>
 	/// <param name="v"></param>
 	public static async Task<AuthResult> DoSignOutAsync(SignOutArgs v)

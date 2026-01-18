@@ -8,7 +8,7 @@ namespace Jeebs.Calendar.Functions;
 public static partial class CalendarF
 {
 	/// <summary>
-	/// Generate Event UID
+	/// Generate Event UID.
 	/// </summary>
 	/// <param name="counter">Event counter - should be increased each time</param>
 	/// <param name="lastModified">Calendar Last Modified</param>
@@ -16,7 +16,7 @@ public static partial class CalendarF
 		@$"{lastModified:yyyyMMdd\THHmmss}-{counter:000000}";
 
 	/// <summary>
-	/// Generate Event UID with additional domain
+	/// Generate Event UID with additional domain.
 	/// </summary>
 	/// <param name="counter">Event counter - should be increased each time</param>
 	/// <param name="lastModified">Calendar Last Modified</param>

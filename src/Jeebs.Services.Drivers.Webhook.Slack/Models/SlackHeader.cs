@@ -11,13 +11,13 @@ namespace Jeebs.Services.Drivers.Webhook.Slack.Models;
 public sealed record class SlackHeader : SlackBlock
 {
 	/// <summary>
-	/// Header text
+	/// Header text.
 	/// </summary>
 	[JsonPropertyName("text")]
 	public SlackContent Text { get; init; }
 
 	/// <summary>
-	/// Create object
+	/// Create object.
 	/// </summary>
 	/// <param name="text">Header text</param>
 	public SlackHeader(SlackContent text) : base("header") =>

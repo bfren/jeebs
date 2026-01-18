@@ -14,14 +14,14 @@ namespace Jeebs.Auth.Jwt;
 public static class JwtConfigExtensions
 {
 	/// <summary>
-	/// Get Signing Key
+	/// Get Signing Key.
 	/// </summary>
 	/// <param name="this">JwtConfig</param>
 	public static SecurityKey GetSigningKey(this JwtConfig @this) =>
 		new SymmetricSecurityKey(Encoding.UTF8.GetBytes(@this.SigningKey));
 
 	/// <summary>
-	/// Get Encrypting Key
+	/// Get Encrypting Key.
 	/// </summary>
 	/// <param name="this">JwtConfig</param>
 	public static Maybe<SecurityKey> GetEncryptingKey(this JwtConfig @this) =>

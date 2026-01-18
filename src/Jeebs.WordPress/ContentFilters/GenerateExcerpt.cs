@@ -16,13 +16,13 @@ public sealed partial class GenerateExcerpt : ContentFilter
 	private GenerateExcerpt(Func<string, string> filter) : base(filter) { }
 
 	/// <summary>
-	/// Create filter with default max length
+	/// Create filter with default max length.
 	/// </summary>
 	public static ContentFilter Create() =>
 		Create(200);
 
 	/// <summary>
-	/// Create filter
+	/// Create filter.
 	/// </summary>
 	/// <param name="maxLength">Maximum length of excerpt - ignored if <!--more--> is present</param>
 	public static ContentFilter Create(int maxLength) =>

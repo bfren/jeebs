@@ -12,7 +12,7 @@ namespace Jeebs.WordPress.Entities;
 public abstract record class WpLinkEntityWithId : IWithId<WpLinkId>
 {
 	/// <summary>
-	/// Id
+	/// Id.
 	/// </summary>
 	public WpLinkId Id { get; init; } = new();
 }

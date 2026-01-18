@@ -19,38 +19,38 @@ public readonly partial struct DateTimeInt
 	private static readonly int[] ThirtyDayMonths = [4, 6, 9, 11];
 
 	/// <summary>
-	/// Year
+	/// Year.
 	/// </summary>
 	public int Year { get; init; }
 
 	/// <summary>
-	/// Month
+	/// Month.
 	/// </summary>
 	public int Month { get; init; }
 
 	/// <summary>
-	/// Day
+	/// Day.
 	/// </summary>
 	public int Day { get; init; }
 
 	/// <summary>
-	/// Hour
+	/// Hour.
 	/// </summary>
 	public int Hour { get; init; }
 
 	/// <summary>
-	/// Minute
+	/// Minute.
 	/// </summary>
 	public int Minute { get; init; }
 
 	/// <summary>
-	/// Construct using zero values
+	/// Construct using zero values.
 	/// </summary>
 	public DateTimeInt() =>
 		(Year, Month, Day, Hour, Minute) = (0, 0, 0, 0, 0);
 
 	/// <summary>
-	/// Construct object using specified date/time integers
+	/// Construct object using specified date/time integers.
 	/// </summary>
 	/// <param name="year">Year</param>
 	/// <param name="month">Month</param>
@@ -61,20 +61,20 @@ public readonly partial struct DateTimeInt
 		(Year, Month, Day, Hour, Minute) = (year, month, day, hour, minute);
 
 	/// <summary>
-	/// Construct object using a DateTime object
+	/// Construct object using a DateTime object.
 	/// </summary>
 	/// <param name="dt">DateTime</param>
 	public DateTimeInt(DateTime dt) : this(dt.Year, dt.Month, dt.Day, dt.Hour, dt.Minute) { }
 
 	/// <summary>
-	/// Construct object from string - must be exactly 12 characters long (yyyymmddHHMM)
+	/// Construct object from string - must be exactly 12 characters long (yyyymmddHHMM).
 	/// </summary>
 	/// <param name="value">DateTime string value - format yyyymmddHHMM</param>
 	public DateTimeInt(string value) =>
 		(Year, Month, Day, Hour, Minute) = Parse(value, CultureInfo.InvariantCulture);
 
 	/// <summary>
-	/// Construct object from long - will be converted to a 12-digit string with leading zeroes
+	/// Construct object from long - will be converted to a 12-digit string with leading zeroes.
 	/// </summary>
 	/// <param name="value">DateTime long value - format yyyymmddHHMM</param>
 	public DateTimeInt(long value)
@@ -93,7 +93,7 @@ public readonly partial struct DateTimeInt
 	}
 
 	/// <summary>
-	/// Get the current DateTime
+	/// Get the current DateTime.
 	/// </summary>
 	public Result<DateTime> ToDateTime() =>
 		IsValidDateTime() switch
@@ -201,13 +201,13 @@ public readonly partial struct DateTimeInt
 	#region Static
 
 	/// <summary>
-	/// Minimum possible value
+	/// Minimum possible value.
 	/// </summary>
 	public static DateTimeInt MinValue =>
 		new(0, 0, 0, 0, 0);
 
 	/// <summary>
-	/// Maximum possible value
+	/// Maximum possible value.
 	/// </summary>
 	public static DateTimeInt MaxValue =>
 		new(9999, 12, 31, 23, 59);

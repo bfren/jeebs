@@ -12,7 +12,7 @@ namespace Jeebs.WordPress.Enums;
 public sealed record class Taxonomy : Enumerated
 {
 	/// <summary>
-	/// Create new value
+	/// Create new value.
 	/// </summary>
 	/// <param name="name">Value name</param>
 	public Taxonomy(string name) : base(name) { }
@@ -20,27 +20,27 @@ public sealed record class Taxonomy : Enumerated
 	#region Default Taxonomies
 
 	/// <summary>
-	/// Blank
+	/// Blank.
 	/// </summary>
 	public static readonly Taxonomy Blank = new(string.Empty);
 
 	/// <summary>
-	/// Category
+	/// Category.
 	/// </summary>
 	public static readonly Taxonomy PostCategory = new("category");
 
 	/// <summary>
-	/// Tag
+	/// Tag.
 	/// </summary>
 	public static readonly Taxonomy PostTag = new("post_tag");
 
 	/// <summary>
-	/// Link
+	/// Link.
 	/// </summary>
 	public static readonly Taxonomy LinkCategory = new("link_category");
 
 	/// <summary>
-	/// Menu Item
+	/// Menu Item.
 	/// </summary>
 	public static readonly Taxonomy NavMenu = new("nav_menu");
 
@@ -56,27 +56,27 @@ public sealed record class Taxonomy : Enumerated
 		All;
 
 	/// <summary>
-	/// Populate list of taxonomies
+	/// Populate list of taxonomies.
 	/// </summary>
 	static Taxonomy() =>
 		All = new HashSet<Taxonomy>([PostCategory, PostTag, LinkCategory, NavMenu]);
 
 	/// <summary>
-	/// Add a custom taxonomy
+	/// Add a custom taxonomy.
 	/// </summary>
 	/// <param name="taxonomy">Taxonomy to add</param>
 	public static bool AddCustomTaxonomy(Taxonomy taxonomy) =>
 		All.Add(taxonomy);
 
 	/// <summary>
-	/// Parse Taxonomy value name
+	/// Parse Taxonomy value name.
 	/// </summary>
 	/// <param name="name">Value name</param>
 	public static Taxonomy Parse(string name) =>
 		Parse(name, All.ToArray()).Unwrap(() => Blank);
 
 	/// <summary>
-	/// Returns whether or not the specified taxonomy has been registered
+	/// Returns whether or not the specified taxonomy has been registered.
 	/// </summary>
 	/// <param name="taxonomy">Taxonomy to check</param>
 	public static bool IsRegistered(Taxonomy taxonomy) =>

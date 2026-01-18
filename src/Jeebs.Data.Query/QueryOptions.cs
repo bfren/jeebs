@@ -13,7 +13,7 @@ public abstract record class QueryOptions<TId> : IQueryOptions<TId>
 	where TId : class, IStrongId, new()
 {
 	/// <summary>
-	/// Abstraction for building query parts
+	/// Abstraction for building query parts.
 	/// </summary>
 	protected IQueryPartsBuilder<TId> Builder { get; init; }
 
@@ -38,7 +38,7 @@ public abstract record class QueryOptions<TId> : IQueryOptions<TId>
 	public ulong Skip { get; init; }
 
 	/// <summary>
-	/// Inject builder
+	/// Inject builder.
 	/// </summary>
 	/// <param name="builder">IQueryPartsBuilder</param>
 	protected QueryOptions(IQueryPartsBuilder<TId> builder) =>
@@ -55,7 +55,7 @@ public abstract record class QueryOptions<TId> : IQueryOptions<TId>
 		);
 
 	/// <summary>
-	/// Build QueryParts
+	/// Build QueryParts.
 	/// </summary>
 	/// <param name="parts">Initial QueryParts</param>
 	protected virtual Maybe<QueryParts> Build(Maybe<QueryParts> parts) =>

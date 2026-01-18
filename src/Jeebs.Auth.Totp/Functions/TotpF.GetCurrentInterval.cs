@@ -8,7 +8,7 @@ namespace Jeebs.Auth.Totp.Functions;
 public static partial class TotpF
 {
 	/// <summary>
-	/// Return the current interval, calculated from the Unix Epoch
+	/// Return the current interval, calculated from the Unix Epoch.
 	/// </summary>
 	/// <param name="periodSeconds">The number of seconds per interval</param>
 	public static ulong GetCurrentInterval(int periodSeconds)

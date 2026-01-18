@@ -26,7 +26,7 @@ public interface IQueryPosts
 		where T : IWithId<WpPostId>;
 
 	/// <summary>
-	/// Run a query and return multiple items with paging
+	/// Run a query and return multiple items with paging.
 	/// </summary>
 	/// <typeparam name="T">Return value type</typeparam>
 	/// <param name="db">IWpDb</param>

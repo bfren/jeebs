@@ -12,32 +12,32 @@ namespace Jeebs.WordPress.Tables;
 public sealed record class PostsMetaTable : Table
 {
 	/// <summary>
-	/// PostMetaId
+	/// PostMetaId.
 	/// </summary>
 	[Id]
 	public string Id =>
 		"meta_id";
 
 	/// <summary>
-	/// PostId
+	/// PostId.
 	/// </summary>
 	public string PostId =>
 		"post_id";
 
 	/// <summary>
-	/// Key
+	/// Key.
 	/// </summary>
 	public string Key =>
 		"meta_key";
 
 	/// <summary>
-	/// Value
+	/// Value.
 	/// </summary>
 	public string Value =>
 		"meta_value";
 
 	/// <summary>
-	/// Create object
+	/// Create object.
 	/// </summary>
 	/// <param name="prefix">Table prefix</param>
 	public PostsMetaTable(string prefix) : base($"{prefix}postmeta") { }

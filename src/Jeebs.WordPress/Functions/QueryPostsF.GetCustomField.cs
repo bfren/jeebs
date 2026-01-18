@@ -10,7 +10,7 @@ namespace Jeebs.WordPress.Functions;
 public static partial class QueryPostsF
 {
 	/// <summary>
-	/// Get value of custom field - and if it's null, create it
+	/// Get value of custom field - and if it's null, create it.
 	/// </summary>
 	/// <typeparam name="TModel">Post model type</typeparam>
 	/// <param name="post">Post object</param>

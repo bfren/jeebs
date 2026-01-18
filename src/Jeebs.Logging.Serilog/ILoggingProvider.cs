@@ -14,12 +14,12 @@ namespace Jeebs.Logging.Serilog;
 public interface ILoggingProvider
 {
 	/// <summary>
-	/// Type name (e.g. 'slack')
+	/// Type name (e.g. 'slack').
 	/// </summary>
 	string Type { get; }
 
 	/// <summary>
-	/// Configure this provider
+	/// Configure this provider.
 	/// </summary>
 	/// <param name="logger">LoggerConfiguration</param>
 	/// <param name="jeebs">JeebsConfig</param>

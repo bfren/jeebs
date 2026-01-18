@@ -9,7 +9,7 @@ namespace Jeebs.Auth.Totp.Functions;
 public static partial class TotpF
 {
 	/// <summary>
-	/// Generate a time-based code from the specified key
+	/// Generate a time-based code from the specified key.
 	/// </summary>
 	/// <param name="key">Secret key</param>
 	/// <param name="settings">TotpSettings</param>

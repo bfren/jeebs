@@ -11,7 +11,7 @@ namespace Jeebs.Mvc.TagBuilders;
 public sealed class CssTagBuilder : TagBuilder
 {
 	/// <summary>
-	/// Create object
+	/// Create object.
 	/// </summary>
 	/// <param name="href">Stylesheet URI</param>
 	public CssTagBuilder(string href) : base("link")

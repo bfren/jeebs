@@ -33,32 +33,32 @@ public sealed partial record class FluentQuery<TEntity, TId> : FluentQuery, IFlu
 	where TId : class, IStrongId, new()
 {
 	/// <summary>
-	/// Database object
+	/// Database object.
 	/// </summary>
 	internal IDb Db { get; private init; }
 
 	/// <summary>
-	/// List of errors encountered while building
+	/// List of errors encountered while building.
 	/// </summary>
 	internal IList<IMsg> Errors { get; private init; } = new List<IMsg>();
 
 	/// <summary>
-	/// Log (should come with the context of the calling class)
+	/// Log (should come with the context of the calling class).
 	/// </summary>
 	internal ILog Log { get; private init; }
 
 	/// <summary>
-	/// Query Parts - used to build the query
+	/// Query Parts - used to build the query.
 	/// </summary>
 	internal IQueryParts Parts { get; private init; }
 
 	/// <summary>
-	/// Table that TEntity is mapped to
+	/// Table that TEntity is mapped to.
 	/// </summary>
 	internal ITable Table { get; private init; }
 
 	/// <summary>
-	/// Create object
+	/// Create object.
 	/// </summary>
 	/// <param name="db">Database instance</param>
 	/// <param name="mapper">IMapper</param>
@@ -76,7 +76,7 @@ public sealed partial record class FluentQuery<TEntity, TId> : FluentQuery, IFlu
 	}
 
 	/// <summary>
-	/// Update <see cref="Parts"/> with a new value
+	/// Update <see cref="Parts"/> with a new value.
 	/// </summary>
 	/// <param name="with">Function to perform the update</param>
 	internal IFluentQuery<TEntity, TId> Update(Func<QueryParts, QueryParts> with) =>

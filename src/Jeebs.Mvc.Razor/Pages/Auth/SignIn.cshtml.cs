@@ -19,42 +19,42 @@ namespace Jeebs.Mvc.Razor.Pages.Auth;
 public abstract partial class SignInModel : PageModel
 {
 	/// <summary>
-	/// Auth Data provider
+	/// Auth Data provider.
 	/// </summary>
 	protected IAuthDataProvider Auth { get; init; }
 
 	/// <summary>
-	/// Auth JWT provider
+	/// Auth JWT provider.
 	/// </summary>
 	protected IAuthJwtProvider Jwt { get; init; }
 
 	/// <summary>
-	/// Log
+	/// Log.
 	/// </summary>
 	protected ILog Log { get; init; }
 
 	/// <summary>
-	/// Auth Config
+	/// Auth Config.
 	/// </summary>
 	protected AuthConfig Config { get; init; }
 
 	/// <summary>
-	/// Get application-specific claims for an authenticated user
+	/// Get application-specific claims for an authenticated user.
 	/// </summary>
 	protected virtual AuthF.GetClaims? GetClaims { get; }
 
 	/// <summary>
-	/// Redirect here after a successful sign in
+	/// Redirect here after a successful sign in.
 	/// </summary>
 	protected virtual Func<string?> SignInRedirect { get; init; }
 
 	/// <summary>
-	/// Model to use for Sign In form partial
+	/// Model to use for Sign In form partial.
 	/// </summary>
 	public Mvc.Auth.Models.SignInModel PartialModel { get; set; } = new();
 
 	/// <summary>
-	/// Inject dependencies
+	/// Inject dependencies.
 	/// </summary>
 	/// <param name="auth"></param>
 	/// <param name="jwt"></param>

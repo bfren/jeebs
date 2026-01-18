@@ -12,7 +12,7 @@ namespace AppConsoleWp.Usa;
 public sealed class FeaturedImageUrl : AttachmentCustomField
 {
 	/// <summary>
-	/// This field is required
+	/// This field is required.
 	/// </summary>
 	public FeaturedImageUrl() : base(Constants.FeaturedImageId) { }
 }

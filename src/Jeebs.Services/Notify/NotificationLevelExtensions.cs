@@ -11,7 +11,7 @@ namespace Jeebs.Services.Notify;
 public static class NotificationLevelExtensions
 {
 	/// <summary>
-	/// Convert a <see cref="LogLevel"/> to a <see cref="NotificationLevel"/>
+	/// Convert a <see cref="LogLevel"/> to a <see cref="NotificationLevel"/>.
 	/// </summary>
 	/// <param name="this"></param>
 	public static NotificationLevel ToNotificationLevel(this LogLevel @this) =>

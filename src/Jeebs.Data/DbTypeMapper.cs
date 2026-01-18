@@ -20,20 +20,20 @@ public class DbTypeMapper : IDbTypeMapper
 	#region Static
 
 	/// <summary>
-	/// Default (global) instance
+	/// Default (global) instance.
 	/// </summary>
 	internal static IDbTypeMapper Instance =>
 		LazyInstance.Value;
 
 	/// <summary>
-	/// Lazily create a <see cref="DbTypeMapper"/>
+	/// Lazily create a <see cref="DbTypeMapper"/>.
 	/// </summary>
 	private static Lazy<IDbTypeMapper> LazyInstance { get; } = new(() => new DbTypeMapper(), true);
 
 	#endregion Static
 
 	/// <summary>
-	/// Only allow creation from <see cref="Db"/> or implementing classes
+	/// Only allow creation from <see cref="Db"/> or implementing classes.
 	/// </summary>
 	protected internal DbTypeMapper() { }
 

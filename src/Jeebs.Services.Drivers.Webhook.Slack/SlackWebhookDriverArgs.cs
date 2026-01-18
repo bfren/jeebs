@@ -15,7 +15,7 @@ namespace Jeebs.Services.Drivers.Webhook.Slack;
 public sealed class SlackWebhookDriverArgs : WebhookDriverArgs<SlackConfig>
 {
 	/// <summary>
-	/// Create object
+	/// Create object.
 	/// </summary>
 	/// <param name="factory">IHttpClientFactory</param>
 	/// <param name="log">ILog</param>

@@ -9,17 +9,17 @@ namespace Jeebs.Services.Notify;
 public enum NotificationLevel
 {
 	/// <summary>
-	/// Information, or 'Green' message
+	/// Information, or 'Green' message.
 	/// </summary>
 	Information = 0,
 
 	/// <summary>
-	/// Warning, or 'Amber' message
+	/// Warning, or 'Amber' message.
 	/// </summary>
 	Warning = 1,
 
 	/// <summary>
-	/// Error, or 'Red' message
+	/// Error, or 'Red' message.
 	/// </summary>
 	Error = 2
 }

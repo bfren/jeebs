@@ -11,7 +11,7 @@ namespace AppConsoleWp.Bcg;
 public sealed class FirstPreachedCustomField : TermCustomField
 {
 	/// <summary>
-	/// This is a required field
+	/// This is a required field.
 	/// </summary>
 	public FirstPreachedCustomField() : base("first_preached") { }
 }

@@ -13,7 +13,7 @@ namespace Jeebs.WordPress.Functions;
 public static partial class QueryAttachmentsF
 {
 	/// <summary>
-	/// Build custom query to return file attachments with URL from meta values
+	/// Build custom query to return file attachments with URL from meta values.
 	/// </summary>
 	/// <param name="schema">IWpDbSchema</param>
 	/// <param name="fileIds">Attachment IDs</param>

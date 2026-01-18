@@ -13,7 +13,7 @@ namespace Jeebs.WordPress.Entities;
 public abstract record class WpTermTaxonomyEntityWithId : IWithId<WpTermTaxonomyId>
 {
 	/// <summary>
-	/// Id
+	/// Id.
 	/// </summary>
 	[Id]
 	public WpTermTaxonomyId Id { get; init; } = new();

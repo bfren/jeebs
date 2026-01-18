@@ -15,12 +15,12 @@ namespace Jeebs.Mvc.Controllers;
 public abstract class Controller : Microsoft.AspNetCore.Mvc.Controller
 {
 	/// <summary>
-	/// ILog
+	/// ILog.
 	/// </summary>
 	public ILog Log { get; }
 
 	/// <summary>
-	/// Current page number
+	/// Current page number.
 	/// </summary>
 	public ulong Page =>
 		F.ParseUInt64(Request.Query["p"]).Switch<ulong>(
@@ -29,14 +29,14 @@ public abstract class Controller : Microsoft.AspNetCore.Mvc.Controller
 		);
 
 	/// <summary>
-	/// Create object
+	/// Create object.
 	/// </summary>
 	/// <param name="log">ILog</param>
 	protected Controller(ILog log) =>
 		Log = log;
 
 	/// <summary>
-	/// Do something, process the result and return errors if necessary, or perform the success function
+	/// Do something, process the result and return errors if necessary, or perform the success function.
 	/// </summary>
 	/// <typeparam name="T">Result type</typeparam>
 	/// <param name="maybe">Maybe value</param>
@@ -48,7 +48,7 @@ public abstract class Controller : Microsoft.AspNetCore.Mvc.Controller
 		);
 
 	/// <summary>
-	/// Do something, process the result and return errors if necessary, or perform the success function
+	/// Do something, process the result and return errors if necessary, or perform the success function.
 	/// </summary>
 	/// <typeparam name="T">Result type</typeparam>
 	/// <param name="maybe">Maybe value</param>
@@ -60,7 +60,7 @@ public abstract class Controller : Microsoft.AspNetCore.Mvc.Controller
 		);
 
 	/// <summary>
-	/// Do something, process the result and return errors if necessary, or perform the success function
+	/// Do something, process the result and return errors if necessary, or perform the success function.
 	/// </summary>
 	/// <typeparam name="T">Result type</typeparam>
 	/// <param name="maybe">Maybe value</param>
@@ -80,20 +80,20 @@ public abstract class Controller : Microsoft.AspNetCore.Mvc.Controller
 		);
 
 	/// <summary>
-	/// Redirect to error page with HTTP status 500
+	/// Redirect to error page with HTTP status 500.
 	/// </summary>
 	protected static RedirectToActionResult RedirectToError() =>
 		RedirectToError(StatusCodes.Status500InternalServerError);
 
 	/// <summary>
-	/// Redirect to error page
+	/// Redirect to error page.
 	/// </summary>
 	/// <param name="code">HTTP Status Code</param>
 	protected static RedirectToActionResult RedirectToError(int code) =>
 		new(nameof(ErrorController.Handle), "Error", new { code });
 
 	/// <summary>
-	/// Return a 403 Not Allowed result
+	/// Return a 403 Not Allowed result.
 	/// </summary>
 	protected StatusCodeResult NotAllowed() =>
 		StatusCode(403);

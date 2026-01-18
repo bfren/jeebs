@@ -19,14 +19,14 @@ public sealed class RedirectExactMiddleware : IMiddleware
 	private readonly ILogger logger = Log.ForContext<RedirectExactMiddleware>();
 
 	/// <summary>
-	/// Construct object
+	/// Construct object.
 	/// </summary>
 	/// <param name="config">JeebsConfig</param>
 	public RedirectExactMiddleware(IOptions<RedirectionsConfig> config) =>
 		this.config = config.Value;
 
 	/// <summary>
-	/// Invoke middleware and perform any redirections
+	/// Invoke middleware and perform any redirections.
 	/// </summary>
 	/// <param name="context">HttpContext</param>
 	/// <param name="next">Next Middleware</param>

@@ -13,37 +13,37 @@ namespace Jeebs.Data.Query;
 public interface IQueryParts
 {
 	/// <summary>
-	/// From table
+	/// From table.
 	/// </summary>
 	ITable From { get; init; }
 
 	/// <summary>
-	/// If true, tells the query to select a count of rows instead of columns
+	/// If true, tells the query to select a count of rows instead of columns.
 	/// </summary>
 	bool SelectCount { get; init; }
 
 	/// <summary>
-	/// Select columns (if empty will select all columns)
+	/// Select columns (if empty will select all columns).
 	/// </summary>
 	IColumnList SelectColumns { get; init; }
 
 	/// <summary>
-	/// Inner Joins
+	/// Inner Joins.
 	/// </summary>
 	IImmutableList<(IColumn from, IColumn to)> InnerJoin { get; init; }
 
 	/// <summary>
-	/// Left Joins
+	/// Left Joins.
 	/// </summary>
 	IImmutableList<(IColumn from, IColumn to)> LeftJoin { get; init; }
 
 	/// <summary>
-	/// Right Joins
+	/// Right Joins.
 	/// </summary>
 	IImmutableList<(IColumn from, IColumn to)> RightJoin { get; init; }
 
 	/// <summary>
-	/// Where predicates
+	/// Where predicates.
 	/// </summary>
 	IImmutableList<(IColumn column, Compare compare, dynamic value)> Where { get; init; }
 
@@ -59,17 +59,17 @@ public interface IQueryParts
 	IImmutableList<(string clause, IQueryParametersDictionary parameters)> WhereCustom { get; init; }
 
 	/// <summary>
-	/// Sort columns
+	/// Sort columns.
 	/// </summary>
 	IImmutableList<(IColumn column, SortOrder order)> Sort { get; init; }
 
 	/// <summary>
-	/// Sort randomly - if true, will take precedence over <see cref="Sort"/>
+	/// Sort randomly - if true, will take precedence over <see cref="Sort"/>.
 	/// </summary>
 	bool SortRandom { get; init; }
 
 	/// <summary>
-	/// Maximum number of results to return (if null will select all rows) - default is 10
+	/// Maximum number of results to return (if null will select all rows) - default is 10.
 	/// </summary>
 	ulong? Maximum { get; init; }
 

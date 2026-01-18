@@ -67,12 +67,12 @@ public class ApiApp : MvcApp
 	#endregion Create
 
 	/// <summary>
-	/// Create API application with HSTS enabled
+	/// Create API application with HSTS enabled.
 	/// </summary>
 	public ApiApp() : this(true) { }
 
 	/// <summary>
-	/// Create API application
+	/// Create API application.
 	/// </summary>
 	/// <param name="useHsts">HSTS should only be disabled if the application is in development mode, or behind a reverse proxy</param>
 	public ApiApp(bool useHsts) : base(useHsts) { }

@@ -11,7 +11,7 @@ namespace Jeebs.WordPress.Functions;
 public static partial class QueryPostsF
 {
 	/// <summary>
-	/// Get query parts using the specific options
+	/// Get query parts using the specific options.
 	/// </summary>
 	/// <typeparam name="TModel">Return value type</typeparam>
 	/// <param name="db">IWpDb</param>

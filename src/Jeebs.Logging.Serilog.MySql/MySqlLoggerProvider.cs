@@ -11,7 +11,7 @@ namespace Jeebs.Logging.Serilog.MySql;
 public sealed class MySqlLoggerProvider : IMySqlConnectorLoggerProvider
 {
 	/// <summary>
-	/// Create named logger
+	/// Create named logger.
 	/// </summary>
 	/// <param name="name">Logger name</param>
 	public IMySqlConnectorLogger CreateLogger(string name) =>

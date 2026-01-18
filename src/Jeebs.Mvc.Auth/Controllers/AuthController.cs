@@ -16,12 +16,12 @@ namespace Jeebs.Mvc.Auth.Controllers;
 public abstract class AuthController : AuthControllerBase
 {
 	/// <summary>
-	/// AuthDataProvider
+	/// AuthDataProvider.
 	/// </summary>
 	protected new AuthDataProvider Auth { get; private init; }
 
 	/// <summary>
-	/// Inject dependencies
+	/// Inject dependencies.
 	/// </summary>
 	/// <param name="auth">AuthDataProvider</param>
 	/// <param name="log">ILog</param>
@@ -35,27 +35,27 @@ public abstract class AuthController : AuthControllerBase
 public abstract class AuthControllerBase : Mvc.Controllers.Controller
 {
 	/// <summary>
-	/// IAuthDataProvider
+	/// IAuthDataProvider.
 	/// </summary>
 	protected IAuthDataProvider Auth { get; private init; }
 
 	/// <summary>
-	/// Get application-specific claims for an authenticated user
+	/// Get application-specific claims for an authenticated user.
 	/// </summary>
 	protected virtual GetClaims? GetClaims { get; }
 
 	/// <summary>
-	/// Redirect here after a successful sign in
+	/// Redirect here after a successful sign in.
 	/// </summary>
 	protected virtual Func<string?> SignInRedirect { get; init; }
 
 	/// <summary>
-	/// Redirect here after a successful sign out
+	/// Redirect here after a successful sign out.
 	/// </summary>
 	protected virtual Func<string?> SignOutRedirect { get; init; }
 
 	/// <summary>
-	/// Inject dependencies
+	/// Inject dependencies.
 	/// </summary>
 	/// <param name="auth">IAuthDataProvider</param>
 	/// <param name="log">ILog</param>
@@ -67,13 +67,13 @@ public abstract class AuthControllerBase : Mvc.Controllers.Controller
 	}
 
 	/// <summary>
-	/// Display sign in page
+	/// Display sign in page.
 	/// </summary>
 	public IActionResult SignIn() =>
 		View(new SignInModel());
 
 	/// <summary>
-	/// Check TOTP requirement or perform sign in
+	/// Check TOTP requirement or perform sign in.
 	/// </summary>
 	/// <param name="model">SignInModel</param>
 	[HttpPost, ValidateAntiForgeryToken]
@@ -99,7 +99,7 @@ public abstract class AuthControllerBase : Mvc.Controllers.Controller
 	}
 
 	/// <summary>
-	/// Perform sign out
+	/// Perform sign out.
 	/// </summary>
 	public new async Task<IActionResult> SignOut()
 	{
@@ -122,7 +122,7 @@ public abstract class AuthControllerBase : Mvc.Controllers.Controller
 	}
 
 	/// <summary>
-	/// Show access denied page
+	/// Show access denied page.
 	/// </summary>
 	/// <param name="accessUrl">URL that was accessed</param>
 	public IActionResult Denied(string? accessUrl) =>

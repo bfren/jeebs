@@ -12,32 +12,32 @@ namespace Jeebs.WordPress.Tables;
 public sealed record class TermsTable : Table
 {
 	/// <summary>
-	/// TermId
+	/// TermId.
 	/// </summary>
 	[Id]
 	public string Id =>
 		"term_id";
 
 	/// <summary>
-	/// Title
+	/// Title.
 	/// </summary>
 	public string Title =>
 		"name";
 
 	/// <summary>
-	/// Slug
+	/// Slug.
 	/// </summary>
 	public string Slug =>
 		"slug";
 
 	/// <summary>
-	/// Group
+	/// Group.
 	/// </summary>
 	public string Group =>
 		"term_group";
 
 	/// <summary>
-	/// Create object
+	/// Create object.
 	/// </summary>
 	/// <param name="prefix">Table prefix</param>
 	public TermsTable(string prefix) : base($"{prefix}terms") { }

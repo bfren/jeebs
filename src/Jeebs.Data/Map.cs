@@ -21,7 +21,7 @@ public static class Map<TEntity>
 		To<TTable>(EntityMapper.Instance);
 
 	/// <summary>
-	/// Map entity to the specified table type
+	/// Map entity to the specified table type.
 	/// </summary>
 	/// <typeparam name="TTable">Table type</typeparam>
 	/// <param name="mapper">IMapper</param>
@@ -30,7 +30,7 @@ public static class Map<TEntity>
 		mapper.Map<TEntity, TTable>(new TTable());
 
 	/// <summary>
-	/// Map entity to the specified table
+	/// Map entity to the specified table.
 	/// </summary>
 	/// <typeparam name="TTable">Table type</typeparam>
 	/// <param name="table">The table to map <typeparamref name="TEntity"/> to</param>
@@ -41,7 +41,7 @@ public static class Map<TEntity>
 		To(table, EntityMapper.Instance);
 
 	/// <summary>
-	/// Map entity to the specified table
+	/// Map entity to the specified table.
 	/// </summary>
 	/// <typeparam name="TTable">Table type</typeparam>
 	/// <param name="table">The table to map <typeparamref name="TEntity"/> to</param>

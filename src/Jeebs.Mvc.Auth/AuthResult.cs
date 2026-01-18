@@ -12,7 +12,7 @@ namespace Jeebs.Mvc.Auth;
 public abstract record class AuthResult : Result<string>
 {
 	/// <summary>
-	/// Create object
+	/// Create object.
 	/// </summary>
 	/// <param name="result">Result value</param>
 	/// <param name="statusCode"></param>
@@ -20,7 +20,7 @@ public abstract record class AuthResult : Result<string>
 		StatusCode = statusCode;
 
 	/// <summary>
-	/// Access is denied
+	/// Access is denied.
 	/// </summary>
 	public sealed record class Denied : AuthResult
 	{
@@ -29,7 +29,7 @@ public abstract record class AuthResult : Result<string>
 	}
 
 	/// <summary>
-	/// Additional MFA information is required
+	/// Additional MFA information is required.
 	/// </summary>
 	public sealed record class MfaRequired : AuthResult
 	{
@@ -38,7 +38,7 @@ public abstract record class AuthResult : Result<string>
 	}
 
 	/// <summary>
-	/// Credentials were valid and the user has been signed in
+	/// Credentials were valid and the user has been signed in.
 	/// </summary>
 	public sealed record class SignedIn : AuthResult
 	{
@@ -48,7 +48,7 @@ public abstract record class AuthResult : Result<string>
 	}
 
 	/// <summary>
-	/// The user has been signed out
+	/// The user has been signed out.
 	/// </summary>
 	public sealed record class SignedOut : AuthResult
 	{
@@ -58,7 +58,7 @@ public abstract record class AuthResult : Result<string>
 	}
 
 	/// <summary>
-	/// Credentials are invalid / not recognised, and the user can try again
+	/// Credentials are invalid / not recognised, and the user can try again.
 	/// </summary>
 	public sealed record class TryAgain : AuthResult
 	{

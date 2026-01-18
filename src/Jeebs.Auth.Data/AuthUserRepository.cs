@@ -21,12 +21,12 @@ public interface IAuthUserRepository : IAuthUserRepository<AuthUserEntity>
 public sealed class AuthUserRepository : Repository<AuthUserEntity, AuthUserId>, IAuthUserRepository
 {
 	/// <summary>
-	/// IAuthDb
+	/// IAuthDb.
 	/// </summary>
 	private new IAuthDb Db { get; init; }
 
 	/// <summary>
-	/// Inject dependencies
+	/// Inject dependencies.
 	/// </summary>
 	/// <param name="db">IAuthDb</param>
 	/// <param name="log">ILog</param>

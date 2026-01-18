@@ -18,12 +18,12 @@ public abstract class WebhookDriver<TConfig, TMessage> : Driver<TConfig>, IWebho
 	where TMessage : notnull
 {
 	/// <summary>
-	/// IHttpClientFactory
+	/// IHttpClientFactory.
 	/// </summary>
 	internal IHttpClientFactory Factory { get; }
 
 	/// <summary>
-	/// Create object
+	/// Create object.
 	/// </summary>
 	/// <param name="name">Service name</param>
 	/// <param name="args">WebhookServiceArgs</param>
@@ -104,7 +104,7 @@ public abstract class WebhookDriver<TConfig, TMessage> : Driver<TConfig>, IWebho
 	#region Actually Send
 
 	/// <summary>
-	/// Use <see cref="Factory"/> to send the message
+	/// Use <see cref="Factory"/> to send the message.
 	/// </summary>
 	/// <param name="request"></param>
 	protected void Send(HttpRequestMessage request) =>

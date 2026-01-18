@@ -21,7 +21,7 @@ public abstract class PartsBuilder<TId> : QueryPartsBuilder<TId>
 	where TId : ULongId, new()
 {
 	/// <summary>
-	/// IDbClient
+	/// IDbClient.
 	/// </summary>
 	protected IDbClient Client { get; private init; }
 
@@ -29,7 +29,7 @@ public abstract class PartsBuilder<TId> : QueryPartsBuilder<TId>
 		Client;
 
 	/// <summary>
-	/// IWpDbSchema
+	/// IWpDbSchema.
 	/// </summary>
 	protected IWpDbSchema T { get; private init; }
 
@@ -37,20 +37,20 @@ public abstract class PartsBuilder<TId> : QueryPartsBuilder<TId>
 		T;
 
 	/// <summary>
-	/// Create object
+	/// Create object.
 	/// </summary>
 	/// <param name="schema">IWpDbSchema</param>
 	protected PartsBuilder(IWpDbSchema schema) : this(new Extract(), schema) { }
 
 	/// <summary>
-	/// Create object
+	/// Create object.
 	/// </summary>
 	/// <param name="extract">IExtract</param>
 	/// <param name="schema">IWpDbSchema</param>
 	protected PartsBuilder(IExtract extract, IWpDbSchema schema) : this(extract, new MySqlDbClient(), schema) { }
 
 	/// <summary>
-	/// Create object
+	/// Create object.
 	/// </summary>
 	/// <param name="extract">IExtract</param>
 	/// <param name="client">IDbClient</param>
@@ -59,7 +59,7 @@ public abstract class PartsBuilder<TId> : QueryPartsBuilder<TId>
 		(Client, T) = (client, schema);
 
 	/// <summary>
-	/// Escape a table
+	/// Escape a table.
 	/// </summary>
 	/// <typeparam name="TTable">Table type</typeparam>
 	/// <param name="table">Table object</param>
@@ -72,7 +72,7 @@ public abstract class PartsBuilder<TId> : QueryPartsBuilder<TId>
 		Client.Escape(table);
 
 	/// <summary>
-	/// Get and escape a column using a Linq Expression selector
+	/// Get and escape a column using a Linq Expression selector.
 	/// </summary>
 	/// <typeparam name="TTable">Table type</typeparam>
 	/// <param name="table">Table object</param>

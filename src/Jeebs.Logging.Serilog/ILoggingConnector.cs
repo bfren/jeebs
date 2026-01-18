@@ -13,7 +13,7 @@ namespace Jeebs.Logging.Serilog;
 public interface ILoggingConnector
 {
 	/// <summary>
-	/// Enable this user
+	/// Enable this user.
 	/// </summary>
 	/// <param name="serilog"></param>
 	/// <param name="jeebs"></param>

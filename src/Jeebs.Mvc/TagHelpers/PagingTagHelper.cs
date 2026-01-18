@@ -14,47 +14,47 @@ namespace Jeebs.Mvc.TagHelpers;
 public sealed class PagingTagHelper : TagHelper
 {
 	/// <summary>
-	/// Paging Values - normally returned from a PagedList
+	/// Paging Values - normally returned from a PagedList.
 	/// </summary>
 	public IPagingValues Values { get; set; } = new PagingValues();
 
 	/// <summary>
-	/// Base URL for paging links
+	/// Base URL for paging links.
 	/// </summary>
 	public string Url { get; set; } = string.Empty;
 
 	/// <summary>
-	/// The current Query string (for passing to each page via the URL Query string)
+	/// The current Query string (for passing to each page via the URL Query string).
 	/// </summary>
 	public string Query { get; set; } = string.Empty;
 
 	/// <summary>
-	/// The Query prefix (for passing to each page via the URL Query string)
+	/// The Query prefix (for passing to each page via the URL Query string).
 	/// </summary>
 	public string QueryPrefix { get; set; } = "q";
 
 	/// <summary>
-	/// Wrapper HTML Tag
+	/// Wrapper HTML Tag.
 	/// </summary>
 	public string WrapperHtmlTag { get; set; } = "div";
 
 	/// <summary>
-	/// Wrapper CSS class
+	/// Wrapper CSS class.
 	/// </summary>
 	public string WrapperClass { get; set; } = "paging";
 
 	/// <summary>
-	/// Link HTML tag
+	/// Link HTML tag.
 	/// </summary>
 	public string LinkHtmlTag { get; set; } = "span";
 
 	/// <summary>
-	/// Active page CSS class
+	/// Active page CSS class.
 	/// </summary>
 	public string LinkOnClass { get; set; } = "on";
 
 	/// <summary>
-	/// Output paging values
+	/// Output paging values.
 	/// </summary>
 	/// <param name="context">TagHelperContext</param>
 	/// <param name="output">TagHelperOutput</param>

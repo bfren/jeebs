@@ -12,7 +12,7 @@ namespace AppConsoleWp.Usa;
 public sealed class FeaturedImageId : TextCustomField
 {
 	/// <summary>
-	/// This field is required
+	/// This field is required.
 	/// </summary>
 	public FeaturedImageId() : base(Constants.FeaturedImageId) { }
 }

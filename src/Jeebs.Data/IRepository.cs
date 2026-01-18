@@ -20,7 +20,7 @@ public interface IRepository<TEntity, TId>
 	#region Fluent Queries
 
 	/// <summary>
-	/// Start a new fluent query
+	/// Start a new fluent query.
 	/// </summary>
 	IFluentQuery<TEntity, TId> StartFluentQuery();
 
@@ -32,7 +32,7 @@ public interface IRepository<TEntity, TId>
 	Task<Maybe<TId>> CreateAsync(TEntity entity);
 
 	/// <summary>
-	/// Create an entity
+	/// Create an entity.
 	/// </summary>
 	/// <param name="entity">Entity to create</param>
 	/// <param name="transaction">Database transaction</param>
@@ -42,7 +42,7 @@ public interface IRepository<TEntity, TId>
 	Task<Maybe<TModel>> RetrieveAsync<TModel>(TId id);
 
 	/// <summary>
-	/// Retrieve an entity
+	/// Retrieve an entity.
 	/// </summary>
 	/// <typeparam name="TModel">Model type</typeparam>
 	/// <param name="id">Entity ID</param>
@@ -54,7 +54,7 @@ public interface IRepository<TEntity, TId>
 		where TModel : IWithId;
 
 	/// <summary>
-	/// Update an entity with the values in <paramref name="model"/>
+	/// Update an entity with the values in <paramref name="model"/>.
 	/// </summary>
 	/// <typeparam name="TModel">Model type</typeparam>
 	/// <param name="model">Model with updated values</param>
@@ -67,7 +67,7 @@ public interface IRepository<TEntity, TId>
 		where TModel : IWithId;
 
 	/// <summary>
-	/// Delete an entity
+	/// Delete an entity.
 	/// </summary>
 	/// <typeparam name="TModel">Model type</typeparam>
 	/// <param name="model">Model containing ID of entity to delete (and Version if required)</param>

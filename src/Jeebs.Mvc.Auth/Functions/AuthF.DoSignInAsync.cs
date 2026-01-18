@@ -16,7 +16,7 @@ namespace Jeebs.Mvc.Auth.Functions;
 public static partial class AuthF
 {
 	/// <summary>
-	/// Provides arguments for <see cref="DoSignInAsync(SignInArgs)"/>
+	/// Provides arguments for <see cref="DoSignInAsync(SignInArgs)"/>.
 	/// </summary>
 	/// <param name="Model"></param>
 	/// <param name="Auth"></param>
@@ -34,14 +34,14 @@ public static partial class AuthF
 	);
 
 	/// <summary>
-	/// Perform sign in checks and do sign in if the user passes
+	/// Perform sign in checks and do sign in if the user passes.
 	/// </summary>
 	/// <param name="v"></param>
 	public static Task<AuthResult> DoSignInAsync(SignInArgs v) =>
 		DoSignInAsync(v, ValidateUserAsync);
 
 	/// <summary>
-	/// Perform sign in checks and do sign in if the user passes
+	/// Perform sign in checks and do sign in if the user passes.
 	/// </summary>
 	/// <param name="v"></param>
 	/// <param name="validate"></param>
@@ -61,7 +61,7 @@ public static partial class AuthF
 		// Perform sign in
 		if (validateResult.IsSome(out var user))
 		{
-			// Get user principal			
+			// Get user principal
 			var principal = await GetPrincipalAsync(user, v.Model.Password, v.GetClaims).ConfigureAwait(false);
 
 			// Update last sign in

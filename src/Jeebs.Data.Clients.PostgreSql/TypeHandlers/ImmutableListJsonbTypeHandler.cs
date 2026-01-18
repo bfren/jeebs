@@ -12,7 +12,7 @@ namespace Jeebs.Data.Clients.PostgreSql.TypeHandlers;
 public sealed class ImmutableListJsonbTypeHandler<T> : JsonbTypeHandler<ImmutableList<T>>
 {
 	/// <summary>
-	/// Parse from list of string values and convert
+	/// Parse from list of string values and convert.
 	/// </summary>
 	/// <param name="value">JSON string</param>
 	public override ImmutableList<T> Parse(object value) =>

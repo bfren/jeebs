@@ -38,7 +38,7 @@ public sealed class QueryParametersDictionary : Dictionary<string, object>, IQue
 		{
 			return false;
 		}
-		// Merge another IQueryParameters with this one 
+		// Merge another IQueryParameters with this one
 		else if (parameters is IQueryParametersDictionary queryParameters)
 		{
 			return Merge(queryParameters);
@@ -75,7 +75,7 @@ public sealed class QueryParametersDictionary : Dictionary<string, object>, IQue
 	}
 
 	/// <summary>
-	/// Return parameters as JSON
+	/// Return parameters as JSON.
 	/// </summary>
 	public override string ToString()
 	{
@@ -94,7 +94,7 @@ public sealed class QueryParametersDictionary : Dictionary<string, object>, IQue
 	}
 
 	/// <summary>
-	/// Don't change parameter names when serialising to JSON
+	/// Don't change parameter names when serialising to JSON.
 	/// </summary>
 	internal static JsonSerializerOptions JsonSerializerOptions
 	{

@@ -13,7 +13,7 @@ namespace Jeebs.WordPress.Entities;
 public abstract record class WpPostEntityWithId : IWithId<WpPostId>
 {
 	/// <summary>
-	/// Id
+	/// Id.
 	/// </summary>
 	[Id]
 	public WpPostId Id { get; init; } = new();

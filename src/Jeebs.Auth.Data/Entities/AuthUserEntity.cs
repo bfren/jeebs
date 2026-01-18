@@ -17,27 +17,27 @@ public sealed record class AuthUserEntity : AuthUserModel, IWithVersion
 	public long Version { get; init; }
 
 	/// <summary>
-	/// The user's encrypted password
+	/// The user's encrypted password.
 	/// </summary>
 	public string PasswordHash { get; init; } = string.Empty;
 
 	/// <summary>
-	/// TOTP secret - used for generating one-time authentication codes
+	/// TOTP secret - used for generating one-time authentication codes.
 	/// </summary>
 	public string? TotpSecret { get; init; }
 
 	/// <summary>
-	/// TOTP backup codes - used when the authenticator is not available
+	/// TOTP backup codes - used when the authenticator is not available.
 	/// </summary>
 	public List<string> TotpBackupCodes { get; init; } = [];
 
 	/// <summary>
-	/// Whether or not the user account is enabled
+	/// Whether or not the user account is enabled.
 	/// </summary>
 	public bool IsEnabled { get; init; }
 
 	/// <summary>
-	/// The last time the user signed in
+	/// The last time the user signed in.
 	/// </summary>
 	public DateTimeOffset? LastSignedIn { get; init; }
 

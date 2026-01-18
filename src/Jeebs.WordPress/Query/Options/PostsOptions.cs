@@ -14,7 +14,7 @@ namespace Jeebs.WordPress.Query.Options;
 public abstract record class PostsOptions : Options<WpPostId>, IQueryPostsOptions
 {
 	/// <summary>
-	/// IQueryPostsPartsBuilder
+	/// IQueryPostsPartsBuilder.
 	/// </summary>
 	protected new IQueryPostsPartsBuilder Builder =>
 		(IQueryPostsPartsBuilder)base.Builder;
@@ -52,7 +52,7 @@ public abstract record class PostsOptions : Options<WpPostId>, IQueryPostsOption
 		new ImmutableList<(ICustomField field, Compare cmp, object value)>();
 
 	/// <summary>
-	/// Allow Builder to be injected
+	/// Allow Builder to be injected.
 	/// </summary>
 	/// <param name="schema">IWpDbSchema</param>
 	/// <param name="builder">IQueryPostsPartsBuilder</param>

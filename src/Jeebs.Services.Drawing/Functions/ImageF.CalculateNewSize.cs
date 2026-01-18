@@ -11,7 +11,7 @@ namespace Jeebs.Services.Drawing.Functions;
 public static partial class ImageF
 {
 	/// <summary>
-	/// Calculate new size of an image based on the image ratio
+	/// Calculate new size of an image based on the image ratio.
 	/// </summary>
 	/// <param name="imgWidth">Image width</param>
 	/// <param name="imgHeight">Image height</param>
@@ -24,7 +24,7 @@ public static partial class ImageF
 		);
 
 	/// <summary>
-	/// Calculate new size of an image based on the image ratio
+	/// Calculate new size of an image based on the image ratio.
 	/// </summary>
 	/// <param name="currentSize">Current size</param>
 	/// <param name="newSize">New size</param>

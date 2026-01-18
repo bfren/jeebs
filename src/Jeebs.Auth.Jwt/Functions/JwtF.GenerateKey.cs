@@ -12,13 +12,13 @@ public static partial class JwtF
 		Rnd.StringF.Get(bytes, Chars.Lower | Chars.Upper | Chars.Number);
 
 	/// <summary>
-	/// Generate a signing key of length <see cref="JwtSecurity.SigningKeyBytes"/>
+	/// Generate a signing key of length <see cref="JwtSecurity.SigningKeyBytes"/>.
 	/// </summary>
 	public static string GenerateSigningKey() =>
 		GenerateKey(JwtSecurity.SigningKeyBytes);
 
 	/// <summary>
-	/// Generate an encrypting key of length <see cref="JwtSecurity.EncryptingKeyBytes"/>
+	/// Generate an encrypting key of length <see cref="JwtSecurity.EncryptingKeyBytes"/>.
 	/// </summary>
 	public static string GenerateEncryptingKey() =>
 		GenerateKey(JwtSecurity.EncryptingKeyBytes);

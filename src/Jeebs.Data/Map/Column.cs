@@ -14,28 +14,28 @@ namespace Jeebs.Data.Map;
 public sealed record class Column : IColumn
 {
 	/// <summary>
-	/// Table name
+	/// Table name.
 	/// </summary>
 	public IDbName TblName { get; init; }
 
 	/// <summary>
-	/// Column name
+	/// Column name.
 	/// </summary>
 	public string ColName { get; init; }
 
 	/// <summary>
-	/// Column alias
+	/// Column alias.
 	/// </summary>
 	public string ColAlias =>
 		PropertyInfo.Name;
 
 	/// <summary>
-	/// Table property PropertyInfo
+	/// Table property PropertyInfo.
 	/// </summary>
 	public PropertyInfo PropertyInfo { get; init; }
 
 	/// <summary>
-	/// Create object
+	/// Create object.
 	/// </summary>
 	/// <param name="tblName">Table name</param>
 	/// <param name="colName">Column Name</param>
@@ -44,13 +44,13 @@ public sealed record class Column : IColumn
 		(TblName, ColName, PropertyInfo) = (tblName, colName, propertyInfo);
 
 	/// <summary>
-	/// Create from another column
+	/// Create from another column.
 	/// </summary>
 	/// <param name="column"></param>
 	public Column(IColumn column) : this(column.TblName, column.ColName, column.PropertyInfo) { }
 
 	/// <summary>
-	/// Create object using table
+	/// Create object using table.
 	/// </summary>
 	/// <param name="table">Table</param>
 	/// <param name="colName">Column Name</param>
@@ -58,13 +58,13 @@ public sealed record class Column : IColumn
 	public Column(ITable table, string colName, PropertyInfo propertyInfo) : this(table.GetName(), colName, propertyInfo) { }
 
 	/// <summary>
-	/// Return column name
+	/// Return column name.
 	/// </summary>
 	public override string ToString() =>
 		ColName;
 
 	/// <summary>
-	/// Create a column from a table object and expression
+	/// Create a column from a table object and expression.
 	/// </summary>
 	/// <typeparam name="T">Table type</typeparam>
 	/// <param name="table">Table</param>
@@ -78,12 +78,12 @@ public sealed record class Column : IColumn
 			);
 
 	/// <summary>
-	/// Column Alias Comparer
+	/// Column Alias Comparer.
 	/// </summary>
 	public sealed class AliasComparer : IEqualityComparer<IColumn>, IEqualityComparer
 	{
 		/// <summary>
-		/// Returns true if the two aliases are identical
+		/// Returns true if the two aliases are identical.
 		/// </summary>
 		/// <param name="x">IColumn 1</param>
 		/// <param name="y">IColumn 2</param>
@@ -91,7 +91,7 @@ public sealed record class Column : IColumn
 			x?.ColAlias == y?.ColAlias;
 
 		/// <summary>
-		/// Return object's hash code
+		/// Return object's hash code.
 		/// </summary>
 		/// <param name="obj">IColumn</param>
 		public int GetHashCode(IColumn obj) =>

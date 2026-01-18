@@ -11,24 +11,24 @@ namespace Jeebs.Data.Exceptions;
 public sealed class UnableToFindIdColumnException : Exception
 {
 	/// <summary>
-	/// Create exception
+	/// Create exception.
 	/// </summary>
 	public UnableToFindIdColumnException() { }
 
 	/// <summary>
-	/// Create exception
+	/// Create exception.
 	/// </summary>
 	/// <param name="msg"></param>
 	public UnableToFindIdColumnException(IMsg msg) : base(msg.ToString() ?? string.Empty) { }
 
 	/// <summary>
-	/// Create exception
+	/// Create exception.
 	/// </summary>
 	/// <param name="message"></param>
 	public UnableToFindIdColumnException(string message) : base(message) { }
 
 	/// <summary>
-	/// Create exception
+	/// Create exception.
 	/// </summary>
 	/// <param name="message"></param>
 	/// <param name="inner"></param>

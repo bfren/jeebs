@@ -12,28 +12,28 @@ namespace Jeebs.Data;
 public abstract partial class DbClient : IDbClient
 {
 	/// <summary>
-	/// IEntityMapper
+	/// IEntityMapper.
 	/// </summary>
 	public IEntityMapper Entities { get; private init; }
 
 	/// <summary>
-	/// IDbTypeMapper
+	/// IDbTypeMapper.
 	/// </summary>
 	public IDbTypeMapper Types { get; private init; }
 
 	/// <summary>
-	/// Create using default instances
+	/// Create using default instances.
 	/// </summary>
 	protected DbClient() : this(EntityMapper.Instance, DbTypeMapper.Instance) { }
 
 	/// <summary>
-	/// Inject dependencies
+	/// Inject dependencies.
 	/// </summary>
 	/// <param name="types"></param>
 	protected DbClient(IDbTypeMapper types) : this(EntityMapper.Instance, types) { }
 
 	/// <summary>
-	/// Inject dependencies
+	/// Inject dependencies.
 	/// </summary>
 	/// <param name="entities"></param>
 	/// <param name="types"></param>

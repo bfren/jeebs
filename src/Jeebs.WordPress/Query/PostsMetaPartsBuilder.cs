@@ -23,13 +23,13 @@ public sealed class PostsMetaPartsBuilder : PartsBuilder<WpPostMetaId>, IQueryPo
 		new Column(T.PostsMeta, T.PostsMeta.Id, GetIdColumn(T.PostsMeta));
 
 	/// <summary>
-	/// Internal creation only
+	/// Internal creation only.
 	/// </summary>
 	/// <param name="schema">IWpDbSchema</param>
 	internal PostsMetaPartsBuilder(IWpDbSchema schema) : base(schema) { }
 
 	/// <summary>
-	/// Internal creation only
+	/// Internal creation only.
 	/// </summary>
 	/// <param name="extract">IExtract</param>
 	/// <param name="schema">IWpDbSchema</param>

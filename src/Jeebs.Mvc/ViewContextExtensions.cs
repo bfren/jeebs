@@ -12,14 +12,14 @@ namespace Jeebs.Mvc;
 public static class ViewContextExtensions
 {
 	/// <summary>
-	/// Return the name of the current controller
+	/// Return the name of the current controller.
 	/// </summary>
 	/// <param name="this">ViewContext object</param>
 	public static string ControllerName(this ViewContext @this) =>
 		@this.RouteData?.Values["controller"]?.ToString() ?? "## Unknown ##";
 
 	/// <summary>
-	/// Return the name of the current action
+	/// Return the name of the current action.
 	/// </summary>
 	/// <param name="this">ViewContext object</param>
 	public static string ActionName(this ViewContext @this) =>

@@ -17,14 +17,14 @@ namespace Jeebs.Mvc;
 public record class Result<T> : Result, IResult<T>
 {
 	/// <summary>
-	/// Create with value
+	/// Create with value.
 	/// </summary>
 	/// <param name="value"></param>
 	public Result(Maybe<T> value) =>
 		Maybe = value;
 
 	/// <summary>
-	/// Maybe result object
+	/// Maybe result object.
 	/// </summary>
 	internal Maybe<T> Maybe { get; private init; }
 
@@ -135,14 +135,14 @@ public abstract record class Result : IResult
 	#region Static Methods
 
 	/// <summary>
-	/// Create an error result with a message (and a <see langword="false"/> value)
+	/// Create an error result with a message (and a <see langword="false"/> value).
 	/// </summary>
 	/// <param name="message"></param>
 	public static Result Error(string message) =>
 		new Result<bool>(false) { Message = Alert.Error(message) };
 
 	/// <summary>
-	/// Create an error result with a Reason message
+	/// Create an error result with a Reason message.
 	/// </summary>
 	/// <typeparam name="T">Reason message type</typeparam>
 	/// <param name="reason"></param>
@@ -151,7 +151,7 @@ public abstract record class Result : IResult
 		new Result<bool>(F.None<bool>(reason));
 
 	/// <summary>
-	/// Create with value
+	/// Create with value.
 	/// </summary>
 	/// <typeparam name="T">Value type</typeparam>
 	/// <param name="value"></param>
@@ -159,7 +159,7 @@ public abstract record class Result : IResult
 		new Result<T>(value);
 
 	/// <summary>
-	/// Create with value
+	/// Create with value.
 	/// </summary>
 	/// <typeparam name="T">Value type</typeparam>
 	/// <param name="value"></param>
@@ -167,7 +167,7 @@ public abstract record class Result : IResult
 		new Result<T>(value);
 
 	/// <summary>
-	/// Create with value and message
+	/// Create with value and message.
 	/// </summary>
 	/// <typeparam name="T">Value type</typeparam>
 	/// <param name="value"></param>
@@ -176,7 +176,7 @@ public abstract record class Result : IResult
 		new Result<T>(value) { Message = message };
 
 	/// <summary>
-	/// Create with value and message
+	/// Create with value and message.
 	/// </summary>
 	/// <typeparam name="T">Value type</typeparam>
 	/// <param name="value"></param>

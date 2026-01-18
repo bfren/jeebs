@@ -13,7 +13,7 @@ namespace Jeebs.Services.Drawing.Geometry;
 public readonly record struct Rectangle(int X, int Y, int Width, int Height)
 {
 	/// <summary>
-	/// Ratio of Width / Height
+	/// Ratio of Width / Height.
 	/// </summary>
 	public double Ratio =>
 		(double)Width / Height;

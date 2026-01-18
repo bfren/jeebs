@@ -11,7 +11,7 @@ namespace Jeebs.WordPress.Functions;
 public static partial class QueryPostsF
 {
 	/// <summary>
-	/// Set meta dictionary property for each post
+	/// Set meta dictionary property for each post.
 	/// </summary>
 	/// <typeparam name="TList">List type</typeparam>
 	/// <typeparam name="TModel">Model type</typeparam>

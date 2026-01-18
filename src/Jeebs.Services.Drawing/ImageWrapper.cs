@@ -42,7 +42,7 @@ public abstract class ImageWrapper : IImageWrapper
 	public abstract Maybe<IImageWrapper> ApplyMask(int width, int height);
 
 	/// <summary>
-	/// Resize and crop an image to fill a mask of specified width and height
+	/// Resize and crop an image to fill a mask of specified width and height.
 	/// </summary>
 	/// <param name="width">Mask width</param>
 	/// <param name="height">Mask height</param>

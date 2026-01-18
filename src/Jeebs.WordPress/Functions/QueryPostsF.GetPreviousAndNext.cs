@@ -10,7 +10,7 @@ namespace Jeebs.WordPress.Functions;
 public static partial class QueryPostsF
 {
 	/// <summary>
-	/// Get Previous and Next IDs from a list of IDs
+	/// Get Previous and Next IDs from a list of IDs.
 	/// </summary>
 	/// <param name="currentId">Current Post ID</param>
 	/// <param name="ids">List of IDs</param>

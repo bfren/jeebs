@@ -12,7 +12,7 @@ namespace Jeebs.WordPress.Entities;
 public abstract record class WpCommentMetaEntityWithId : IWithId<WpCommentMetaId>
 {
 	/// <summary>
-	/// Id
+	/// Id.
 	/// </summary>
 	public WpCommentMetaId Id { get; init; } = new();
 }

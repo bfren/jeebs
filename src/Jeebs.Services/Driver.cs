@@ -14,27 +14,27 @@ public abstract class Driver<TConfig> : IDriver<TConfig>
 	where TConfig : IServiceConfig, new()
 {
 	/// <summary>
-	/// Driver name
+	/// Driver name.
 	/// </summary>
 	protected string Name { get; private init; }
 
 	/// <summary>
-	/// ILog
+	/// ILog.
 	/// </summary>
 	protected ILog Log { get; private init; }
 
 	/// <summary>
-	/// Jeebs configuration
+	/// Jeebs configuration.
 	/// </summary>
 	protected JeebsConfig JeebsConfig { get; private init; }
 
 	/// <summary>
-	/// Service configuration
+	/// Service configuration.
 	/// </summary>
 	protected TConfig ServiceConfig { get; private init; }
 
 	/// <summary>
-	/// Create object
+	/// Create object.
 	/// </summary>
 	/// <param name="name">Service name</param>
 	/// <param name="args">DriverArgs</param>

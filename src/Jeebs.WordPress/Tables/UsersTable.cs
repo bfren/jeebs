@@ -12,68 +12,68 @@ namespace Jeebs.WordPress.Tables;
 public sealed record class UsersTable : Table
 {
 	/// <summary>
-	/// UserId
+	/// UserId.
 	/// </summary>
 	[Id]
 	public string Id =>
 		"ID";
 
 	/// <summary>
-	/// Username
+	/// Username.
 	/// </summary>
 	public string Username =>
 		"user_login";
 
 	/// <summary>
-	/// Password
+	/// Password.
 	/// </summary>
 	public string Password =>
 		"user_pass";
 
 	/// <summary>
-	/// Slug
+	/// Slug.
 	/// </summary>
 	public string Slug =>
 		"user_nicename";
 
 	/// <summary>
-	/// Email
+	/// Email.
 	/// </summary>
 	public string Email =>
 		"user_email";
 
 	/// <summary>
-	/// Url
+	/// Url.
 	/// </summary>
 	public string Url =>
 		"user_url";
 
 	/// <summary>
-	/// RegisteredOn
+	/// RegisteredOn.
 	/// </summary>
 	public string RegisteredOn =>
 		"user_registered";
 
 	/// <summary>
-	/// ActivationKey
+	/// ActivationKey.
 	/// </summary>
 	public string ActivationKey =>
 		"user_activation_key";
 
 	/// <summary>
-	/// Status
+	/// Status.
 	/// </summary>
 	public string Status =>
 		"user_status";
 
 	/// <summary>
-	/// DisplayName
+	/// DisplayName.
 	/// </summary>
 	public string DisplayName =>
 		"display_name";
 
 	/// <summary>
-	/// Create object
+	/// Create object.
 	/// </summary>
 	/// <param name="prefix">Table prefix</param>
 	public UsersTable(string prefix) : base($"{prefix}users") { }

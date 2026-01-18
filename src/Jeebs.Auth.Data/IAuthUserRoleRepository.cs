@@ -15,7 +15,7 @@ public interface IAuthUserRoleRepository<TUserRoleEntity> : IRepository<TUserRol
 	where TUserRoleEntity : IAuthUserRole, IWithId
 {
 	/// <summary>
-	/// Create a new User Role
+	/// Create a new User Role.
 	/// </summary>
 	/// <param name="userId">User ID</param>
 	/// <param name="roleId">Role ID</param>

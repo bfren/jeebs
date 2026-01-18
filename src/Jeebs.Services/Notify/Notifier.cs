@@ -11,7 +11,7 @@ public sealed class Notifier : INotifier
 	private readonly IEnumerable<INotificationListener> listeners;
 
 	/// <summary>
-	/// Create using the specified listeners
+	/// Create using the specified listeners.
 	/// </summary>
 	/// <param name="listeners"></param>
 	public Notifier(IEnumerable<INotificationListener> listeners) =>

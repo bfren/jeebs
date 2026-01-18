@@ -11,17 +11,17 @@ namespace Jeebs.WordPress;
 public interface IWp
 {
 	/// <summary>
-	/// WordPress Database instance
+	/// WordPress Database instance.
 	/// </summary>
 	IWpDb Db { get; }
 
 	/// <summary>
-	/// Register custom post types
+	/// Register custom post types.
 	/// </summary>
 	void RegisterCustomPostTypes();
 
 	/// <summary>
-	/// Register custom taxonomies
+	/// Register custom taxonomies.
 	/// </summary>
 	void RegisterCustomTaxonomies();
 }
@@ -34,7 +34,7 @@ public interface IWp<out TConfig> : IWp
 	where TConfig : WpConfig
 {
 	/// <summary>
-	/// WordPress configuration
+	/// WordPress configuration.
 	/// </summary>
 	TConfig Config { get; }
 }

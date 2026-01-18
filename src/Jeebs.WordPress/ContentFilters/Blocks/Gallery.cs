@@ -15,7 +15,7 @@ namespace Jeebs.WordPress.ContentFilters.Blocks;
 internal static partial class Gallery
 {
 	/// <summary>
-	/// Parse WordPress photo gallery
+	/// Parse WordPress photo gallery.
 	/// </summary>
 	/// <param name="content">Post content</param>
 	internal static string Parse(string content)
@@ -48,7 +48,7 @@ internal static partial class Gallery
 	}
 
 	/// <summary>
-	/// Used to parse Gallery JSON
+	/// Used to parse Gallery JSON.
 	/// </summary>
 	/// <param name="Ids">Image IDs</param>
 	/// <param name="Columns">The number of columns to display</param>

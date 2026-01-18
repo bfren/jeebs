@@ -11,13 +11,13 @@ namespace Jeebs.Services.Drivers.Webhook.Slack.Models;
 public abstract record class SlackText : SlackContent
 {
 	/// <summary>
-	/// Text content
+	/// Text content.
 	/// </summary>
 	[JsonPropertyName("text")]
 	public string Text { get; init; }
 
 	/// <summary>
-	/// Create object
+	/// Create object.
 	/// </summary>
 	/// <param name="type">Content type (e.g. 'mrkdwn')</param>
 	/// <param name="text">Text content</param>

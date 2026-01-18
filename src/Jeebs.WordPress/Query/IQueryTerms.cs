@@ -15,7 +15,7 @@ namespace Jeebs.WordPress.Query;
 public interface IQueryTerms
 {
 	/// <summary>
-	/// Execute Terms query
+	/// Execute Terms query.
 	/// </summary>
 	/// <typeparam name="T">Return Model type</typeparam>
 	/// <param name="db">IWpDb</param>

@@ -12,7 +12,7 @@ namespace Jeebs.Data;
 public static class DateTimeExtensions
 {
 	/// <summary>
-	/// Return a MySql formatted DateTime string for the specified date (yyyy-MM-dd HH:mm:ss)
+	/// Return a MySql formatted DateTime string for the specified date (yyyy-MM-dd HH:mm:ss).
 	/// </summary>
 	/// <param name="this">DateTime object</param>
 	public static string ToMySqlString(this DateTime @this) =>

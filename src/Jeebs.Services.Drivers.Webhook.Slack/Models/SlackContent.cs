@@ -13,13 +13,13 @@ namespace Jeebs.Services.Drivers.Webhook.Slack.Models;
 public abstract record class SlackContent
 {
 	/// <summary>
-	/// Block content type (e.g. 'text')
+	/// Block content type (e.g. 'text').
 	/// </summary>
 	[JsonPropertyName("type")]
 	public string Type { get; init; }
 
 	/// <summary>
-	/// Create object
+	/// Create object.
 	/// </summary>
 	/// <param name="type">Block content type</param>
 	protected SlackContent(string type) =>

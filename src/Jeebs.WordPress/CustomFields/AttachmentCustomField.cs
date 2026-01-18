@@ -18,7 +18,7 @@ namespace Jeebs.WordPress.CustomFields;
 public abstract class AttachmentCustomField : CustomField<AttachmentCustomField.Attachment>
 {
 	/// <summary>
-	/// IQueryPosts
+	/// IQueryPosts.
 	/// </summary>
 	protected IQueryPosts QueryPosts { get; private init; }
 
@@ -26,7 +26,7 @@ public abstract class AttachmentCustomField : CustomField<AttachmentCustomField.
 	protected AttachmentCustomField(string key) : this(new Posts(), key) { }
 
 	/// <summary>
-	/// Create object from posts
+	/// Create object from posts.
 	/// </summary>
 	/// <param name="queryPosts">IQueryPosts</param>
 	/// <param name="key">Meta key (for post_meta table)</param>
@@ -97,7 +97,7 @@ public abstract class AttachmentCustomField : CustomField<AttachmentCustomField.
 	}
 
 	/// <summary>
-	/// Parse the Attachment Post ID
+	/// Parse the Attachment Post ID.
 	/// </summary>
 	/// <param name="type">AttachmentCustomField type</param>
 	/// <param name="value">Post ID value</param>
@@ -115,7 +115,7 @@ public abstract class AttachmentCustomField : CustomField<AttachmentCustomField.
 		GetValueAsString();
 
 	/// <summary>
-	/// Attachment file
+	/// Attachment file.
 	/// </summary>
 	public sealed record class Attachment : PostAttachment { }
 

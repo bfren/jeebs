@@ -12,7 +12,7 @@ namespace AppConsoleWp.Usa;
 public sealed class AttachedFileUrl : TextCustomField
 {
 	/// <summary>
-	/// This field is not required
+	/// This field is not required.
 	/// </summary>
 	public AttachedFileUrl() : base(Constants.Attachment) { }
 }

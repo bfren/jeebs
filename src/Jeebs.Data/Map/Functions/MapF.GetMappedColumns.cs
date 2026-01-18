@@ -16,7 +16,7 @@ namespace Jeebs.Data.Map.Functions;
 public static partial class MapF
 {
 	/// <summary>
-	/// Get all columns as <see cref="Column"/> objects
+	/// Get all columns as <see cref="Column"/> objects.
 	/// </summary>
 	/// <typeparam name="TTable">Table type</typeparam>
 	/// <typeparam name="TEntity">Entity type</typeparam>

@@ -17,7 +17,7 @@ public sealed class AddUpdateLastSignInProcedure : Migration
 		selector(new());
 
 	/// <summary>
-	/// Migrate up
+	/// Migrate up.
 	/// </summary>
 	protected override void Up() => Execute($@"
 		CREATE DEFINER=`root`@`localhost` FUNCTION `{AuthDb.Schema}.{Procedures.UpdateUserLastSignIn}`(
@@ -40,7 +40,7 @@ public sealed class AddUpdateLastSignInProcedure : Migration
 	");
 
 	/// <summary>
-	/// Migrate down
+	/// Migrate down.
 	/// </summary>
 	protected override void Down() => Execute($@"
 		DROP FUNCTION `{AuthDb.Schema}.{Procedures.UpdateUserLastSignIn}`

@@ -8,7 +8,7 @@ namespace Jeebs;
 public static partial class TypeExtensions
 {
 	/// <summary>
-	/// True if <paramref name="this"/> implements <paramref name="class"/>
+	/// True if <paramref name="this"/> implements <paramref name="class"/>.
 	/// </summary>
 	/// <param name="this">Base type</param>
 	/// <param name="class">Class type</param>

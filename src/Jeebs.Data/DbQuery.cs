@@ -41,7 +41,7 @@ public abstract class DbQuery<TDb> : DbQuery, IDbQuery
 		Db.StartWorkAsync();
 
 	/// <summary>
-	/// TDb
+	/// TDb.
 	/// </summary>
 	protected TDb Db { get; private init; }
 
@@ -49,7 +49,7 @@ public abstract class DbQuery<TDb> : DbQuery, IDbQuery
 		Db;
 
 	/// <summary>
-	/// ILog (should be given a context of the implementing class)
+	/// ILog (should be given a context of the implementing class).
 	/// </summary>
 	protected ILog Log { get; private init; }
 
@@ -57,7 +57,7 @@ public abstract class DbQuery<TDb> : DbQuery, IDbQuery
 		Log;
 
 	/// <summary>
-	/// Inject database and log objects
+	/// Inject database and log objects.
 	/// </summary>
 	/// <param name="db">TDb</param>
 	/// <param name="log">ILog (should be given a context of the implementing class)</param>
@@ -65,7 +65,7 @@ public abstract class DbQuery<TDb> : DbQuery, IDbQuery
 		(Db, Log) = (db, log);
 
 	/// <summary>
-	/// Shorthand for escaping a column with its table name and alias
+	/// Shorthand for escaping a column with its table name and alias.
 	/// </summary>
 	/// <typeparam name="TTable">Table type</typeparam>
 	/// <param name="table">Table object</param>

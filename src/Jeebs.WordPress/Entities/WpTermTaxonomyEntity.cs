@@ -11,27 +11,27 @@ namespace Jeebs.WordPress.Entities;
 public abstract record class WpTermTaxonomyEntity : WpTermTaxonomyEntityWithId
 {
 	/// <summary>
-	/// TermId
+	/// TermId.
 	/// </summary>
 	public StrongIds.WpTermId TermId { get; init; } = new();
 
 	/// <summary>
-	/// Taxonomy
+	/// Taxonomy.
 	/// </summary>
 	public Taxonomy Taxonomy { get; init; } = Taxonomy.Blank;
 
 	/// <summary>
-	/// Description
+	/// Description.
 	/// </summary>
 	public string Description { get; init; } = string.Empty;
 
 	/// <summary>
-	/// ParentId
+	/// ParentId.
 	/// </summary>
 	public StrongIds.WpTermId ParentId { get; init; } = new();
 
 	/// <summary>
-	/// Count
+	/// Count.
 	/// </summary>
 	public ulong Count { get; init; }
 }

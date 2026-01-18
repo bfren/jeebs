@@ -23,7 +23,7 @@ public abstract class Db : IDb
 	public DbConnectionConfig Config { get; private init; }
 
 	/// <summary>
-	/// ILog (should be given a context of the implementing class)
+	/// ILog (should be given a context of the implementing class).
 	/// </summary>
 	protected ILog Log { get; private init; }
 
@@ -77,7 +77,7 @@ public abstract class Db : IDb
 	}
 
 	/// <summary>
-	/// Inject database client and configuration
+	/// Inject database client and configuration.
 	/// </summary>
 	/// <param name="client">Database client</param>
 	/// <param name="config">Database configuration</param>
@@ -88,7 +88,7 @@ public abstract class Db : IDb
 	{ }
 
 	/// <summary>
-	/// Inject database client and configuration
+	/// Inject database client and configuration.
 	/// </summary>
 	/// <param name="client">Database client</param>
 	/// <param name="config">Database configuration</param>
@@ -97,13 +97,13 @@ public abstract class Db : IDb
 		(Client, Config, Log) = (client, config, log);
 
 	/// <summary>
-	/// Use Verbose log by default - override to send elsewhere (or to disable entirely)
+	/// Use Verbose log by default - override to send elsewhere (or to disable entirely).
 	/// </summary>
 	protected virtual Action<string, object[]> WriteToLog =>
 		Log.Vrb;
 
 	/// <summary>
-	/// Write query to the log
+	/// Write query to the log.
 	/// </summary>
 	/// <typeparam name="TReturn">Query return type</typeparam>
 	/// <param name="input">Input values</param>

@@ -11,7 +11,7 @@ namespace AppConsoleWp.Bcg;
 public sealed class PassageCustomField : TextCustomField
 {
 	/// <summary>
-	/// This is a required field
+	/// This is a required field.
 	/// </summary>
 	public PassageCustomField() : base("passage") { }
 }

@@ -61,7 +61,7 @@ public sealed class Dispatcher : IDispatcher
 	}
 
 	/// <summary>
-	/// Use <see cref="Provider"/> to get a service of type <paramref name="genericType"/>
+	/// Use <see cref="Provider"/> to get a service of type <paramref name="genericType"/>.
 	/// </summary>
 	/// <param name="genericType">The generic handler type</param>
 	/// <param name="typeArguments">Specific type arguments used to create the handler type</param>

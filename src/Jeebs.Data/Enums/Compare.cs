@@ -9,57 +9,57 @@ namespace Jeebs.Data.Enums;
 public enum Compare
 {
 	/// <summary>
-	/// Equal
+	/// Equal.
 	/// </summary>
 	Equal = 1 << 0,
 
 	/// <summary>
-	/// Not Equal
+	/// Not Equal.
 	/// </summary>
 	NotEqual = 1 << 1,
 
 	/// <summary>
-	/// Like
+	/// Like.
 	/// </summary>
 	Like = 1 << 2,
 
 	/// <summary>
-	/// Less Than
+	/// Less Than.
 	/// </summary>
 	LessThan = 1 << 3,
 
 	/// <summary>
-	/// Less Than or Equal
+	/// Less Than or Equal.
 	/// </summary>
 	LessThanOrEqual = 1 << 4,
 
 	/// <summary>
-	/// More Than
+	/// More Than.
 	/// </summary>
 	MoreThan = 1 << 5,
 
 	/// <summary>
-	/// More Than or Equal
+	/// More Than or Equal.
 	/// </summary>
 	MoreThanOrEqual = 1 << 6,
 
 	/// <summary>
-	/// In
+	/// In.
 	/// </summary>
 	In = 1 << 7,
 
 	/// <summary>
-	/// Not In
+	/// Not In.
 	/// </summary>
 	NotIn = 1 << 8,
 
 	/// <summary>
-	/// Is (e.g. for NULL)
+	/// Is (e.g. for NULL).
 	/// </summary>
 	Is = 1 << 9,
 
 	/// <summary>
-	/// Is Not (e.g. for NULL)
+	/// Is Not (e.g. for NULL).
 	/// </summary>
 	IsNot = 1 << 10,
 }

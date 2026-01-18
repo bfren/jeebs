@@ -16,7 +16,7 @@ namespace Jeebs.Data.Map.Functions;
 public static partial class MapF
 {
 	/// <summary>
-	/// Get the ID column
+	/// Get the ID column.
 	/// </summary>
 	/// <typeparam name="TTable">Table type</typeparam>
 	/// <param name="columns">List of mapped columns</param>

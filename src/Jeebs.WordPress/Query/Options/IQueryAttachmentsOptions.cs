@@ -12,7 +12,7 @@ namespace Jeebs.WordPress.Query.Options;
 public interface IQueryAttachmentsOptions
 {
 	/// <summary>
-	/// Attachment IDs
+	/// Attachment IDs.
 	/// </summary>
 	IImmutableList<WpPostId> Ids { get; init; }
 }

@@ -11,19 +11,19 @@ namespace Jeebs.Mvc.TagBuilders;
 public sealed class JsTagBuilder : TagBuilder
 {
 	/// <summary>
-	/// Create object
+	/// Create object.
 	/// </summary>
 	public JsTagBuilder() : base("script") =>
 		Attributes.Add("type", "text/javascript");
 
 	/// <summary>
-	/// Construct object with async and defer disabled
+	/// Construct object with async and defer disabled.
 	/// </summary>
 	/// <param name="src">Script file source</param>
 	public JsTagBuilder(string src) : this(src, false, false) { }
 
 	/// <summary>
-	/// Construct object
+	/// Construct object.
 	/// </summary>
 	/// <param name="src">Script file source</param>
 	/// <param name="useAsync">Output async attribute</param>

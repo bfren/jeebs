@@ -9,12 +9,12 @@ namespace Jeebs.Auth.Data.Models;
 public record class AuthUserModel : AuthUserWithRoles<AuthRoleModel>
 {
 	/// <summary>
-	/// Create with default values
+	/// Create with default values.
 	/// </summary>
 	public AuthUserModel() : this(new(), string.Empty) { }
 
 	/// <summary>
-	/// Create with specified values
+	/// Create with specified values.
 	/// </summary>
 	/// <param name="id">AuthUserId</param>
 	/// <param name="email">Email address</param>

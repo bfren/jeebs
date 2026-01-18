@@ -15,19 +15,19 @@ namespace Jeebs.Mvc.Controllers;
 public abstract class ErrorController : Controller
 {
 	/// <summary>
-	/// Create object
+	/// Create object.
 	/// </summary>
 	/// <param name="log">ILog</param>
 	protected ErrorController(ILog log) : base(log) { }
 
 	/// <summary>
-	/// Default error view
+	/// Default error view.
 	/// </summary>
 	public async Task<IActionResult> Index() =>
 		await Handle(StatusCodes.Status500InternalServerError).ConfigureAwait(false);
 
 	/// <summary>
-	/// Handle an error with the specified code
+	/// Handle an error with the specified code.
 	/// </summary>
 	/// <param name="code">Http Status Code</param>
 	[Route("/Error/{code:int}")]

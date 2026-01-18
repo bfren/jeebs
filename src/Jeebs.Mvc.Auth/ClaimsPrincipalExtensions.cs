@@ -15,7 +15,7 @@ namespace Jeebs.Mvc.Auth;
 public static class ClaimsPrincipalExtensions
 {
 	/// <summary>
-	/// Returns a specified claim for the current user
+	/// Returns a specified claim for the current user.
 	/// </summary>
 	/// <param name="this">ClaimsPrincipal</param>
 	/// <param name="type">Claim type</param>
@@ -31,7 +31,7 @@ public static class ClaimsPrincipalExtensions
 			.Select(x => x.Value);
 	}
 	/// <summary>
-	/// Returns the ID of the current user
+	/// Returns the ID of the current user.
 	/// </summary>
 	/// <param name="this">CLaimsPrincipal</param>
 	public static Maybe<AuthUserId> GetUserId(this ClaimsPrincipal @this) =>
@@ -47,7 +47,7 @@ public static class ClaimsPrincipalExtensions
 			);
 
 	/// <summary>
-	/// Returns whether or not the current user has the specified claim
+	/// Returns whether or not the current user has the specified claim.
 	/// </summary>
 	/// <param name="this">ClaimsPrincipal</param>
 	/// <param name="type">Claim type</param>
@@ -55,7 +55,7 @@ public static class ClaimsPrincipalExtensions
 		@this.GetClaim(type).IsSome(out var _);
 
 	/// <summary>
-	/// Returns whether or not the current user is a Super user
+	/// Returns whether or not the current user is a Super user.
 	/// </summary>
 	/// <param name="this">CLaimsPrincipal</param>
 	public static bool IsSuper(this ClaimsPrincipal @this) =>

@@ -13,7 +13,7 @@ namespace Jeebs.WordPress.Functions;
 public static partial class QueryPostsF
 {
 	/// <summary>
-	/// Process a list of posts, adding meta / taxonomies / custom fields as required
+	/// Process a list of posts, adding meta / taxonomies / custom fields as required.
 	/// </summary>
 	/// <typeparam name="TList">List type</typeparam>
 	/// <typeparam name="TModel">Model type</typeparam>

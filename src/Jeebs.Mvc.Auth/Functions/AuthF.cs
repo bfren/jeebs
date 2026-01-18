@@ -14,7 +14,7 @@ namespace Jeebs.Mvc.Auth.Functions;
 public static partial class AuthF
 {
 	/// <summary>
-	/// Returns custom claims for a given user
+	/// Returns custom claims for a given user.
 	/// </summary>
 	/// <param name="user">User model</param>
 	/// <param name="password">The user's password - required to support encrypted claims</param>

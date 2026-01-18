@@ -22,13 +22,13 @@ public interface IWebhookDriver<in TConfig, in TMessage>
 	void Send(string message, NotificationLevel level);
 
 	/// <summary>
-	/// Send a message
+	/// Send a message.
 	/// </summary>
 	/// <param name="message"></param>
 	void Send(IWebhookMessage message);
 
 	/// <summary>
-	/// Send a message
+	/// Send a message.
 	/// </summary>
 	/// <param name="message"></param>
 	void Send(TMessage message);

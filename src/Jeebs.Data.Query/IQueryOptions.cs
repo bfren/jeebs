@@ -16,12 +16,12 @@ public interface IQueryOptions<TId>
 	where TId : class, IStrongId, new()
 {
 	/// <summary>
-	/// Query Id
+	/// Query Id.
 	/// </summary>
 	TId? Id { get; init; }
 
 	/// <summary>
-	/// Query IDs
+	/// Query IDs.
 	/// </summary>
 	IImmutableList<TId> Ids { get; init; }
 
@@ -38,7 +38,7 @@ public interface IQueryOptions<TId>
 	ulong Skip { get; init; }
 
 	/// <summary>
-	/// Convert the query options to <see cref="IQueryParts"/> for use in a database query
+	/// Convert the query options to <see cref="IQueryParts"/> for use in a database query.
 	/// </summary>
 	/// <typeparam name="TModel">Model type to use for selecting columns</typeparam>
 	Maybe<IQueryParts> ToParts<TModel>();

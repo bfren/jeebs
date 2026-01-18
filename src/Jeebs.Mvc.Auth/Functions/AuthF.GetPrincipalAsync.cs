@@ -13,7 +13,7 @@ namespace Jeebs.Mvc.Auth.Functions;
 public static partial class AuthF
 {
 	/// <summary>
-	/// Get a user Principal with claims added
+	/// Get a user Principal with claims added.
 	/// </summary>
 	/// <param name="user"></param>
 	/// <param name="password"></param>

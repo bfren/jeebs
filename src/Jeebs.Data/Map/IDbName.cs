@@ -11,12 +11,12 @@ namespace Jeebs.Data.Map;
 public interface IDbName
 {
 	/// <summary>
-	/// [Optional] Object Schema
+	/// [Optional] Object Schema.
 	/// </summary>
 	string? Schema { get; }
 
 	/// <summary>
-	/// Object Name
+	/// Object Name.
 	/// </summary>
 	string Name { get; }
 

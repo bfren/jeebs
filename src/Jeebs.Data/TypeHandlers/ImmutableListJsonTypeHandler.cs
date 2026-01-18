@@ -12,7 +12,7 @@ namespace Jeebs.Data.TypeHandlers;
 public sealed class ImmutableListJsonTypeHandler<T> : JsonTypeHandler<ImmutableList<T>>
 {
 	/// <summary>
-	/// Parse from list of string values and convert
+	/// Parse from list of string values and convert.
 	/// </summary>
 	/// <param name="xml">JSON string</param>
 	protected override ImmutableList<T> Parse(string xml) =>

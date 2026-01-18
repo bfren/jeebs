@@ -11,27 +11,27 @@ namespace Jeebs.WordPress.Entities;
 public interface IPostAttachment : IWithId<StrongIds.WpPostId>
 {
 	/// <summary>
-	/// Attachment description
+	/// Attachment description.
 	/// </summary>
 	string Description { get; init; }
 
 	/// <summary>
-	/// MetaDictionary
+	/// MetaDictionary.
 	/// </summary>
 	MetaDictionary Meta { get; init; }
 
 	/// <summary>
-	/// UrlPath
+	/// UrlPath.
 	/// </summary>
 	string UrlPath { get; init; }
 
 	/// <summary>
-	/// Additional information about the file (encoded as JSON)
+	/// Additional information about the file (encoded as JSON).
 	/// </summary>
 	string Info { get; init; }
 
 	/// <summary>
-	/// Get the filesystem path to this attachment
+	/// Get the filesystem path to this attachment.
 	/// </summary>
 	/// <param name="wpUploadsPath">Filesystem path to wp-uploads directory</param>
 	string GetFilePath(string wpUploadsPath);

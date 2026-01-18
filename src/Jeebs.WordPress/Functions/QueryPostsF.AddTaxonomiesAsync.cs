@@ -14,7 +14,7 @@ namespace Jeebs.WordPress.Functions;
 public static partial class QueryPostsF
 {
 	/// <summary>
-	/// Add Taxonomies to posts
+	/// Add Taxonomies to posts.
 	/// </summary>
 	/// <typeparam name="TList">List type</typeparam>
 	/// <typeparam name="TModel">Post type</typeparam>

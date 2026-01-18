@@ -23,7 +23,7 @@ public interface IFluentQuery<TEntity, TId>
 	#region Where
 
 	/// <summary>
-	/// Add a WHERE predicate (multiple predicates will be added using AND)
+	/// Add a WHERE predicate (multiple predicates will be added using AND).
 	/// </summary>
 	/// <param name="columnAlias">Column alias</param>
 	/// <param name="compare">Comparison operator</param>
@@ -31,7 +31,7 @@ public interface IFluentQuery<TEntity, TId>
 	IFluentQuery<TEntity, TId> Where(string columnAlias, Compare compare, dynamic? value);
 
 	/// <summary>
-	/// Add a WHERE predicate (multiple predicates will be added using AND)
+	/// Add a WHERE predicate (multiple predicates will be added using AND).
 	/// </summary>
 	/// <typeparam name="TValue">Column value type</typeparam>
 	/// <param name="aliasSelector">Column alias selector</param>
@@ -40,13 +40,13 @@ public interface IFluentQuery<TEntity, TId>
 	IFluentQuery<TEntity, TId> Where<TValue>(Expression<Func<TEntity, TValue>> aliasSelector, Compare compare, TValue value);
 
 	/// <summary>
-	/// Add a WHERE predicate for the ID column (multiple predicates will be added using AND)
+	/// Add a WHERE predicate for the ID column (multiple predicates will be added using AND).
 	/// </summary>
 	/// <param name="ids">ID(s) to be searched for</param>
 	IFluentQuery<TEntity, TId> WhereId(params TId[] ids);
 
 	/// <summary>
-	/// Add a WHERE IN predicate (multiple predicates will be added using AND)
+	/// Add a WHERE IN predicate (multiple predicates will be added using AND).
 	/// </summary>
 	/// <typeparam name="TValue">Column value type</typeparam>
 	/// <param name="columnAlias">Column alias</param>
@@ -57,7 +57,7 @@ public interface IFluentQuery<TEntity, TId>
 	IFluentQuery<TEntity, TId> WhereIn<TValue>(Expression<Func<TEntity, TValue>> aliasSelector, IEnumerable<TValue> values);
 
 	/// <summary>
-	/// Add a WHERE NOT IN predicate (multiple predicates will be added using AND)
+	/// Add a WHERE NOT IN predicate (multiple predicates will be added using AND).
 	/// </summary>
 	/// <typeparam name="TValue">Column value type</typeparam>
 	/// <param name="columnAlias">Column alias</param>
@@ -68,7 +68,7 @@ public interface IFluentQuery<TEntity, TId>
 	IFluentQuery<TEntity, TId> WhereNotIn<TValue>(Expression<Func<TEntity, TValue>> aliasSelector, IEnumerable<TValue> values);
 
 	/// <summary>
-	/// Add a custom where clause with parameters
+	/// Add a custom where clause with parameters.
 	/// </summary>
 	/// <param name="clause">Custom clause</param>
 	/// <param name="parameters">Parameters for custom clause</param>
@@ -79,7 +79,7 @@ public interface IFluentQuery<TEntity, TId>
 	#region Sort
 
 	/// <summary>
-	/// Add an ORDER BY command (multiple commands will be added in order)
+	/// Add an ORDER BY command (multiple commands will be added in order).
 	/// </summary>
 	/// <param name="columnAlias">Column alias</param>
 	/// <param name="order">Sort order</param>
@@ -93,13 +93,13 @@ public interface IFluentQuery<TEntity, TId>
 	#region Limit
 
 	/// <summary>
-	/// The maximum number of records to return
+	/// The maximum number of records to return.
 	/// </summary>
 	/// <param name="number"></param>
 	IFluentQuery<TEntity, TId> Maximum(ulong number);
 
 	/// <summary>
-	/// The number of records to skip
+	/// The number of records to skip.
 	/// </summary>
 	/// <param name="number"></param>
 	IFluentQuery<TEntity, TId> Skip(ulong number);
@@ -112,7 +112,7 @@ public interface IFluentQuery<TEntity, TId>
 	Task<Maybe<TValue>> ExecuteAsync<TValue>(string columnAlias);
 
 	/// <summary>
-	/// Select a single column and return its value as <typeparamref name="TValue"/>
+	/// Select a single column and return its value as <typeparamref name="TValue"/>.
 	/// </summary>
 	/// <typeparam name="TValue"></typeparam>
 	/// <param name="columnAlias">Column to be selected and returned</param>
@@ -135,7 +135,7 @@ public interface IFluentQuery<TEntity, TId>
 	Task<Maybe<long>> CountAsync();
 
 	/// <summary>
-	/// Return the number of rows matching the query
+	/// Return the number of rows matching the query.
 	/// </summary>
 	/// <param name="transaction"></param>
 	Task<Maybe<long>> CountAsync(IDbTransaction transaction);
@@ -148,7 +148,7 @@ public interface IFluentQuery<TEntity, TId>
 	Task<Maybe<IEnumerable<TModel>>> QueryAsync<TModel>();
 
 	/// <summary>
-	/// Execute the query and return multiple items
+	/// Execute the query and return multiple items.
 	/// </summary>
 	/// <typeparam name="TModel">Return model type</typeparam>
 	/// <param name="transaction"></param>
@@ -158,7 +158,7 @@ public interface IFluentQuery<TEntity, TId>
 	Task<Maybe<TModel>> QuerySingleAsync<TModel>();
 
 	/// <summary>
-	/// Perform the query and return a single item
+	/// Perform the query and return a single item.
 	/// </summary>
 	/// <typeparam name="TModel">Return model type</typeparam>
 	/// <param name="transaction"></param>

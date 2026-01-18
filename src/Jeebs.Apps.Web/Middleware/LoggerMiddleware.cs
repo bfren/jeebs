@@ -17,17 +17,17 @@ namespace Jeebs.Apps.Web.Middleware;
 public sealed class LoggerMiddleware : IMiddleware
 {
 	/// <summary>
-	/// ILogger
+	/// ILogger.
 	/// </summary>
 	private readonly ILogger logger = Log.ForContext<LoggerMiddleware>();
 
 	/// <summary>
-	/// Log message template
+	/// Log message template.
 	/// </summary>
 	private const string MessageTemplate = "HTTP {RequestMethod} {RequestPath} responded {StatusCode} in {Elapsed:0.0000}s";
 
 	/// <summary>
-	/// Invoke Middleware
+	/// Invoke Middleware.
 	/// </summary>
 	/// <param name="context">HttpContext</param>
 	/// <param name="next">Next Middleware</param>
@@ -76,7 +76,7 @@ public sealed class LoggerMiddleware : IMiddleware
 	}
 
 	/// <summary>
-	/// Get Request Path
+	/// Get Request Path.
 	/// </summary>
 	/// <param name="context">HttpContext</param>
 	private static string GetPath(HttpContext context) =>

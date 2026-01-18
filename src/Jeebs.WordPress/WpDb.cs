@@ -61,7 +61,7 @@ public sealed class WpDb<TC, TCm, TL, TO, TP, TPm, TT, TTm, TTr, TTt, TU, TUm> :
 		: this(new MySqlDbClient(), dbConfig, wpConfig, log) { }
 
 	/// <summary>
-	/// Create tables and map entity types
+	/// Create tables and map entity types.
 	/// </summary>
 	/// <param name="client">Database client</param>
 	/// <param name="dbConfig">Database configuration</param>

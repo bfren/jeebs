@@ -17,12 +17,12 @@ namespace Jeebs.WordPress;
 public abstract class Wp
 {
 	/// <summary>
-	/// Whether or not the class has been initialised
+	/// Whether or not the class has been initialised.
 	/// </summary>
 	private static MemoryCache Initialised { get; } = new(new MemoryCacheOptions());
 
 	/// <summary>
-	/// Initialise WordPress instance - but only once per <typeparamref name="TConfig"/>
+	/// Initialise WordPress instance - but only once per <typeparamref name="TConfig"/>.
 	/// </summary>
 	/// <typeparam name="TConfig">WpConfig type</typeparam>
 	/// <param name="log">ILog</param>
@@ -92,7 +92,7 @@ public abstract class Wp<TConfig, TC, TCm, TL, TO, TP, TPm, TT, TTm, TTr, TTt, T
 		Db;
 
 	/// <summary>
-	/// Create object and register custom fields / post types / taxonomies
+	/// Create object and register custom fields / post types / taxonomies.
 	/// </summary>
 	/// <param name="dbConfig">DbConfig</param>
 	/// <param name="wpConfig">WpConfig</param>

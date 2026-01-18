@@ -12,7 +12,7 @@ namespace Jeebs.WordPress.TypeHandlers;
 public sealed class CommentTypeTypeHandler : EnumeratedTypeHandler<CommentType>
 {
 	/// <summary>
-	/// Parse the CommentType value
+	/// Parse the CommentType value.
 	/// </summary>
 	/// <param name="value">Database table value</param>
 	public override CommentType Parse(object value) =>

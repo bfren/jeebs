@@ -9,7 +9,7 @@ namespace Jeebs.WordPress.ContentFilters;
 public interface IContentFilter
 {
 	/// <summary>
-	/// Execute filter
+	/// Execute filter.
 	/// </summary>
 	/// <param name="content">Original content</param>
 	string Execute(string content);

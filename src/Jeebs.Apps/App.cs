@@ -30,7 +30,7 @@ namespace Jeebs.Apps;
 public class App
 {
 	/// <summary>
-	/// Runs when the application is ready to go but before it is run
+	/// Runs when the application is ready to go but before it is run.
 	/// </summary>
 	/// <param name="services">IServiceProvider</param>
 	/// <param name="log">ILog</param>
@@ -44,13 +44,13 @@ public class App
 	}
 
 	/// <summary>
-	/// Configure Host
+	/// Configure Host.
 	/// </summary>
 	/// <param name="config">IConfigurationBuilder</param>
 	public virtual void ConfigureHost(IConfigurationBuilder config) { }
 
 	/// <summary>
-	/// Configure App
+	/// Configure App.
 	/// </summary>
 	/// <param name="ctx">HostBuilderContext</param>
 	/// <param name="config">IConfigurationBuilder</param>
@@ -85,7 +85,7 @@ public class App
 	}
 
 	/// <summary>
-	/// Configure Services
+	/// Configure Services.
 	/// </summary>
 	/// <param name="ctx">HostBuilderContext</param>
 	/// <param name="services">IServiceCollection</param>
@@ -118,7 +118,7 @@ public class App
 	}
 
 	/// <summary>
-	/// Configure Serilog
+	/// Configure Serilog.
 	/// </summary>
 	/// <param name="ctx">HostBuilderContext</param>
 	/// <param name="loggerConfig">LoggerConfiguration</param>

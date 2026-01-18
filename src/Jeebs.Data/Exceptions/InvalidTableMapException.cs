@@ -12,24 +12,24 @@ namespace Jeebs.Data.Exceptions;
 public sealed class InvalidTableMapException : Exception
 {
 	/// <summary>
-	/// Create exception
+	/// Create exception.
 	/// </summary>
 	public InvalidTableMapException() { }
 
 	/// <summary>
-	/// Create exception
+	/// Create exception.
 	/// </summary>
 	/// <param name="errors">List of errors</param>
 	public InvalidTableMapException(List<string> errors) : base(string.Join("\n", errors)) { }
 
 	/// <summary>
-	/// Create exception
+	/// Create exception.
 	/// </summary>
 	/// <param name="message">Message</param>
 	public InvalidTableMapException(string message) : base(message) { }
 
 	/// <summary>
-	/// Create exception
+	/// Create exception.
 	/// </summary>
 	/// <param name="message">Message</param>
 	/// <param name="inner">Exception</param>

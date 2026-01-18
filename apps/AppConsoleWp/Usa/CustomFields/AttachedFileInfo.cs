@@ -12,7 +12,7 @@ namespace AppConsoleWp.Usa;
 public sealed class AttachedFileInfo : TextCustomField
 {
 	/// <summary>
-	/// This is not a required field
+	/// This is not a required field.
 	/// </summary>
 	public AttachedFileInfo() : base(Constants.AttachmentMetadata) { }
 }

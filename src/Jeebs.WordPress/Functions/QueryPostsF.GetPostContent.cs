@@ -11,7 +11,7 @@ namespace Jeebs.WordPress.Functions;
 public static partial class QueryPostsF
 {
 	/// <summary>
-	/// Get Post Content property for specified model
+	/// Get Post Content property for specified model.
 	/// </summary>
 	/// <typeparam name="TModel">Model type</typeparam>
 	internal static Maybe<PropertyInfo> GetPostContent<TModel>()

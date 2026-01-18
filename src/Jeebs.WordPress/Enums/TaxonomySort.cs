@@ -9,12 +9,12 @@ namespace Jeebs.WordPress.Enums;
 public enum TaxonomySort
 {
 	/// <summary>
-	/// Sort by Taxonomy Term
+	/// Sort by Taxonomy Term.
 	/// </summary>
 	TitleAscending = 0,
 
 	/// <summary>
-	/// Sort by Taxonomy Count
+	/// Sort by Taxonomy Count.
 	/// </summary>
 	CountDescending = 1
 }

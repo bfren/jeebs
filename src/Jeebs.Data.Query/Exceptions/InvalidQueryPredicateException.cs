@@ -13,18 +13,18 @@ namespace Jeebs.Data.Query.Exceptions;
 public class InvalidQueryPredicateException : Exception
 {
 	/// <summary>
-	/// Create exception
+	/// Create exception.
 	/// </summary>
 	public InvalidQueryPredicateException() { }
 
 	/// <summary>
-	/// Create exception
+	/// Create exception.
 	/// </summary>
 	/// <param name="message"></param>
 	public InvalidQueryPredicateException(string message) : base(message) { }
 
 	/// <summary>
-	/// Create exception
+	/// Create exception.
 	/// </summary>
 	/// <param name="message"></param>
 	/// <param name="inner"></param>

@@ -14,7 +14,7 @@ namespace Jeebs.Mvc.Auth;
 public static class ServiceCollectionExtensions
 {
 	/// <summary>
-	/// Add authentication
+	/// Add authentication.
 	/// </summary>
 	/// <param name="this">IServiceCollection</param>
 	/// <param name="config">IConfiguration</param>

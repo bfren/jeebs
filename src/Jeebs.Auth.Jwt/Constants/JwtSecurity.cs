@@ -12,27 +12,27 @@ namespace Jeebs.Auth.Jwt.Constants;
 public static class JwtSecurity
 {
 	/// <summary>
-	/// Default signing algorithm (256-bits = 32 characters)
+	/// Default signing algorithm (256-bits = 32 characters).
 	/// </summary>
 	public static readonly string SigningAlgorithm = SecurityAlgorithms.HmacSha256Signature;
 
 	/// <summary>
-	/// Minimum length of signing key (in bytes)
+	/// Minimum length of signing key (in bytes).
 	/// </summary>
 	public static readonly int SigningKeyBytes = 32;
 
 	/// <summary>
-	/// Default Key Wrap algorithm
+	/// Default Key Wrap algorithm.
 	/// </summary>
 	public static readonly string KeyWrapAlgorithm = JwtConstants.DirectKeyUseAlg;
 
 	/// <summary>
-	/// Minimum length of signing key (in bytes)
+	/// Minimum length of signing key (in bytes).
 	/// </summary>
 	public static readonly int EncryptingKeyBytes = 64;
 
 	/// <summary>
-	/// Default encrypting algorithm (512-bits = 64 characters)
+	/// Default encrypting algorithm (512-bits = 64 characters).
 	/// </summary>
 	public static readonly string EncryptingAlgorithm = SecurityAlgorithms.Aes256CbcHmacSha512;
 }

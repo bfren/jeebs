@@ -20,7 +20,7 @@ public abstract class QueryPartsBuilderWithEntity<TEntity, TId> : QueryPartsBuil
 	private readonly IEntityMapper mapper;
 
 	/// <summary>
-	/// Get table map for <typeparamref name="TEntity"/>
+	/// Get table map for <typeparamref name="TEntity"/>.
 	/// </summary>
 	public virtual Lazy<ITableMap> Map =>
 		new(() =>
@@ -38,12 +38,12 @@ public abstract class QueryPartsBuilderWithEntity<TEntity, TId> : QueryPartsBuil
 		Map.Value.IdColumn;
 
 	/// <summary>
-	/// Create with default mapper
+	/// Create with default mapper.
 	/// </summary>
 	protected QueryPartsBuilderWithEntity() : this(EntityMapper.Instance) { }
 
 	/// <summary>
-	/// Inject mapper
+	/// Inject mapper.
 	/// </summary>
 	/// <param name="mapper">IMapper</param>
 	protected QueryPartsBuilderWithEntity(IEntityMapper mapper) =>

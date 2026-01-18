@@ -14,7 +14,7 @@ namespace Jeebs.WordPress.Functions;
 public static partial class QueryPostsF
 {
 	/// <summary>
-	/// Apply the specified content filters to the list of posts
+	/// Apply the specified content filters to the list of posts.
 	/// </summary>
 	/// <typeparam name="TList">List type</typeparam>
 	/// <typeparam name="TModel">Post type</typeparam>

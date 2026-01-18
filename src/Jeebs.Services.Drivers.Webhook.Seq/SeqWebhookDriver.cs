@@ -13,7 +13,7 @@ namespace Jeebs.Services.Drivers.Webhook.Seq;
 public abstract class SeqWebhookDriver : WebhookDriver<SeqConfig, SeqEvent>
 {
 	/// <summary>
-	/// Create object
+	/// Create object.
 	/// </summary>
 	/// <param name="name">Service name</param>
 	/// <param name="args">SeqWebhookDriverArgs</param>

@@ -15,7 +15,7 @@ namespace Jeebs.WordPress.Functions;
 public static partial class QueryTermsF
 {
 	/// <summary>
-	/// Execute Terms query
+	/// Execute Terms query.
 	/// </summary>
 	/// <typeparam name="TModel">Return Model type</typeparam>
 	/// <param name="db">IWpDb</param>

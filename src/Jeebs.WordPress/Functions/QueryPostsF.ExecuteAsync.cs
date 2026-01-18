@@ -43,7 +43,7 @@ public static partial class QueryPostsF
 		);
 
 	/// <summary>
-	/// Run a query and return multiple items with paging
+	/// Run a query and return multiple items with paging.
 	/// </summary>
 	/// <typeparam name="TModel">Return value type</typeparam>
 	/// <param name="db">IWpDb</param>

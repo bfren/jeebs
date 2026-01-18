@@ -45,7 +45,7 @@ public sealed class WpDbSchema : IWpDbSchema
 	public UsersMetaTable UsersMeta { get; private init; }
 
 	/// <summary>
-	/// Create table objects
+	/// Create table objects.
 	/// </summary>
 	/// <param name="prefix">Table prefix</param>
 	public WpDbSchema(string prefix)

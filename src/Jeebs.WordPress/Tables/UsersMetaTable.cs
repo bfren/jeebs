@@ -12,32 +12,32 @@ namespace Jeebs.WordPress.Tables;
 public sealed record class UsersMetaTable : Table
 {
 	/// <summary>
-	/// UserMetaId
+	/// UserMetaId.
 	/// </summary>
 	[Id]
 	public string Id =>
 		"umeta_id";
 
 	/// <summary>
-	/// UserId
+	/// UserId.
 	/// </summary>
 	public string UserId =>
 		"user_id";
 
 	/// <summary>
-	/// Key
+	/// Key.
 	/// </summary>
 	public string Key =>
 		"meta_key";
 
 	/// <summary>
-	/// Value
+	/// Value.
 	/// </summary>
 	public string Value =>
 		"meta_value";
 
 	/// <summary>
-	/// Create object
+	/// Create object.
 	/// </summary>
 	/// <param name="prefix">Table prefix</param>
 	public UsersMetaTable(string prefix) : base($"{prefix}usermeta") { }

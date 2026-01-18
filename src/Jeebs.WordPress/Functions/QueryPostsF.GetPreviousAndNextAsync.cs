@@ -15,7 +15,7 @@ namespace Jeebs.WordPress.Functions;
 public static partial class QueryPostsF
 {
 	/// <summary>
-	/// Get Previous and Next posts, if they exist, for the specified query options
+	/// Get Previous and Next posts, if they exist, for the specified query options.
 	/// </summary>
 	/// <param name="db">IWpDb</param>
 	/// <param name="w">IUnitOfWork</param>

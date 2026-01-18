@@ -14,12 +14,12 @@ namespace Jeebs.WordPress.Query.Options;
 public interface IQueryPostsTaxonomyOptions : IQueryOptions<WpTermId>
 {
 	/// <summary>
-	/// The taxonomies to get
+	/// The taxonomies to get.
 	/// </summary>
 	IImmutableList<Taxonomy> Taxonomies { get; init; }
 
 	/// <summary>
-	/// Get taxonomies for specific Posts
+	/// Get taxonomies for specific Posts.
 	/// </summary>
 	IImmutableList<WpPostId> PostIds { get; init; }
 

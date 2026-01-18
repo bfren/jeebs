@@ -43,7 +43,7 @@ public abstract record class PostAttachment : WpPostEntity, IPostAttachment
 	}
 
 	/// <summary>
-	/// PHP serialised info
+	/// PHP serialised info.
 	/// </summary>
 	private string info = string.Empty;
 

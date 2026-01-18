@@ -12,24 +12,24 @@ namespace Jeebs.Data.Query.Exceptions;
 public sealed class UnableToGetIdColumnFromTableException : Exception
 {
 	/// <summary>
-	/// Create object
+	/// Create object.
 	/// </summary>
 	public UnableToGetIdColumnFromTableException() { }
 
 	/// <summary>
-	/// Create object with table
+	/// Create object with table.
 	/// </summary>
 	/// <param name="table"></param>
 	public UnableToGetIdColumnFromTableException(ITable table) : this(table.GetName().Name) { }
 
 	/// <summary>
-	/// Create object with message
+	/// Create object with message.
 	/// </summary>
 	/// <param name="message"></param>
 	public UnableToGetIdColumnFromTableException(string message) : base(message) { }
 
 	/// <summary>
-	/// Create object with message and exception
+	/// Create object with message and exception.
 	/// </summary>
 	/// <param name="message"></param>
 	/// <param name="inner"></param>

@@ -17,14 +17,14 @@ public sealed class JwtHandler : AuthorizationHandler<JwtRequirement>
 	private ILog Log { get; init; }
 
 	/// <summary>
-	/// Inject dependencies
+	/// Inject dependencies.
 	/// </summary>
 	/// <param name="log">ILog</param>
 	public JwtHandler(ILog<JwtHandler> log) =>
 		Log = log;
 
 	/// <summary>
-	/// Handle Requirement
+	/// Handle Requirement.
 	/// </summary>
 	/// <param name="context">AuthorizationHandlerContext</param>
 	/// <param name="requirement">JwtRequirement</param>

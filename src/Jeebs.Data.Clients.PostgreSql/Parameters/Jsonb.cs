@@ -14,7 +14,7 @@ namespace Jeebs.Data.Clients.PostgreSql.Parameters;
 public sealed class Jsonb : Dapper.SqlMapper.ICustomQueryParameter
 {
 	/// <summary>
-	/// Create a new Jsonb parameter
+	/// Create a new Jsonb parameter.
 	/// </summary>
 	/// <typeparam name="T">Object type</typeparam>
 	/// <param name="obj">Object value</param>
@@ -29,19 +29,19 @@ public sealed class Jsonb : Dapper.SqlMapper.ICustomQueryParameter
 		};
 
 	/// <summary>
-	/// JSON-encoded value
+	/// JSON-encoded value.
 	/// </summary>
 	private readonly string value;
 
 	/// <summary>
-	/// Create object
+	/// Create object.
 	/// </summary>
 	/// <param name="value">JSON-encoded value</param>
 	internal Jsonb(string value) =>
 		this.value = value;
 
 	/// <summary>
-	/// Add this parameter to <paramref name="command"/>
+	/// Add this parameter to <paramref name="command"/>.
 	/// </summary>
 	/// <param name="command">IDbCommand</param>
 	/// <param name="name">Parameter name</param>
@@ -52,7 +52,7 @@ public sealed class Jsonb : Dapper.SqlMapper.ICustomQueryParameter
 		});
 
 	/// <summary>
-	/// Return JSON-encoded value
+	/// Return JSON-encoded value.
 	/// </summary>
 	public override string ToString() =>
 		value;

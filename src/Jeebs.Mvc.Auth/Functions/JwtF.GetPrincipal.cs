@@ -9,7 +9,7 @@ namespace Jeebs.Mvc.Auth.Functions;
 public static partial class JwtF
 {
 	/// <summary>
-	/// Retrieve the user from the supplied token
+	/// Retrieve the user from the supplied token.
 	/// </summary>
 	/// <param name="auth">IJwtAuthProvider</param>
 	/// <param name="token">Token value</param>

@@ -10,34 +10,34 @@ namespace Jeebs;
 public interface IRange<T>
 {
 	/// <summary>
-	/// Range start
+	/// Range start.
 	/// </summary>
 	T Start { get; }
 
 	/// <summary>
-	/// Range finish
+	/// Range finish.
 	/// </summary>
 	T Finish { get; }
 
 	/// <summary>
-	/// The length of the range
+	/// The length of the range.
 	/// </summary>
 	int Length { get; }
 
 	/// <summary>
-	/// Whether or not the range includes the specified value
+	/// Whether or not the range includes the specified value.
 	/// </summary>
 	/// <param name="value"></param>
 	bool Includes(T value);
 
 	/// <summary>
-	/// Whether or not the range includes the specified range of values
+	/// Whether or not the range includes the specified range of values.
 	/// </summary>
 	/// <param name="value">IRange</param>
 	bool Includes(IRange<T> value);
 
 	/// <summary>
-	/// Whether or not the range overlaps the specified range
+	/// Whether or not the range overlaps the specified range.
 	/// </summary>
 	/// <param name="value">IRange</param>
 	bool Overlaps(IRange<T> value);

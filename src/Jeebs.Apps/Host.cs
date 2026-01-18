@@ -30,7 +30,7 @@ public static class Host
 		Create<T>(args).app.Run();
 
 	/// <summary>
-	/// Build an <see cref="IHost"/> with default Jeebs configuration and then run it
+	/// Build an <see cref="IHost"/> with default Jeebs configuration and then run it.
 	/// </summary>
 	/// <inheritdoc cref="CreateBuilder{T}(string[], Action{HostBuilderContext, IServiceCollection})"/>
 	internal static void Run<T>(string[] args, Action<HostBuilderContext, IServiceCollection> configureServices)
@@ -55,7 +55,7 @@ public static class Host
 		Create<T>(args, (_, _) => { });
 
 	/// <summary>
-	/// Build an <see cref="IHost"/> with default Jeebs configuration
+	/// Build an <see cref="IHost"/> with default Jeebs configuration.
 	/// </summary>
 	/// <inheritdoc cref="CreateBuilder{T}(string[], Action{HostBuilderContext, IServiceCollection})"/>
 	internal static (IHost app, ILog<T> log) Create<T>(string[] args, Action<HostBuilderContext, IServiceCollection> configureServices)
@@ -93,7 +93,7 @@ public static class Host
 		CreateBuilder<T>(args, (_, _) => { });
 
 	/// <summary>
-	/// Create an <see cref="IHostBuilder"/> with default Jeebs configuration
+	/// Create an <see cref="IHostBuilder"/> with default Jeebs configuration.
 	/// </summary>
 	/// <remarks>
 	///   - Default configuration is loaded using <see cref="Microsoft.Extensions.Hosting.Host.CreateDefaultBuilder(string[])"/><br/>

@@ -12,12 +12,12 @@ namespace Jeebs.WordPress.CustomFields;
 public interface ICustomField
 {
 	/// <summary>
-	/// Custom Field key
+	/// Custom Field key.
 	/// </summary>
 	string Key { get; }
 
 	/// <summary>
-	/// Hydrate this Custom Field using <see cref="IWpDb"/>, and <see cref="MetaDictionary"/>
+	/// Hydrate this Custom Field using <see cref="IWpDb"/>, and <see cref="MetaDictionary"/>.
 	/// </summary>
 	/// <param name="db">IWpDb</param>
 	/// <param name="w">IUnitOfWork</param>
@@ -31,7 +31,7 @@ public interface ICustomField
 public interface ICustomField<out T> : ICustomField
 {
 	/// <summary>
-	/// Custom Field Value
+	/// Custom Field Value.
 	/// </summary>
 	T ValueObj { get; }
 }

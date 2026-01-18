@@ -13,7 +13,7 @@ namespace Jeebs.WordPress.Entities;
 public abstract record class WpTermRelationshipEntity : IWithId
 {
 	/// <summary>
-	/// Required to enable mapping - but the WP database does not have a unique key for the Term Relationship table
+	/// Required to enable mapping - but the WP database does not have a unique key for the Term Relationship table.
 	/// </summary>
 	/// <exception cref="NotSupportedException"></exception>
 	[Ignore]
@@ -27,17 +27,17 @@ public abstract record class WpTermRelationshipEntity : IWithId
 		new("Term Relationships do not have unique IDs in the WordPress database.");
 
 	/// <summary>
-	/// PostId
+	/// PostId.
 	/// </summary>
 	public StrongIds.WpPostId PostId { get; init; } = new();
 
 	/// <summary>
-	/// TermTaxonomyId
+	/// TermTaxonomyId.
 	/// </summary>
 	public StrongIds.WpTermTaxonomyId TermTaxonomyId { get; init; } = new();
 
 	/// <summary>
-	/// SortOrder
+	/// SortOrder.
 	/// </summary>
 	public ulong SortOrder { get; init; }
 }

@@ -9,7 +9,7 @@ namespace Jeebs.Logging.Serilog.Functions;
 public static partial class LevelF
 {
 	/// <summary>
-	/// Convert a <see cref="LogLevel"/> to a <see cref="LogEventLevel"/>
+	/// Convert a <see cref="LogLevel"/> to a <see cref="LogEventLevel"/>.
 	/// </summary>
 	/// <param name="level"></param>
 	public static Maybe<LogEventLevel> ConvertToSerilogLevel(LogLevel level) =>

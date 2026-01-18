@@ -15,7 +15,7 @@ namespace Jeebs.Services.Drivers.Webhook.Seq;
 public sealed class SeqWebhookDriverArgs : WebhookDriverArgs<SeqConfig>
 {
 	/// <summary>
-	/// Create object
+	/// Create object.
 	/// </summary>
 	/// <param name="factory">IHttpClientFactory</param>
 	/// <param name="log">ILog</param>

@@ -11,62 +11,62 @@ namespace Jeebs.WordPress;
 public interface IWpDbSchema
 {
 	/// <summary>
-	/// Comment Table
+	/// Comment Table.
 	/// </summary>
 	CommentsTable Comments { get; }
 
 	/// <summary>
-	/// Comment Meta Table
+	/// Comment Meta Table.
 	/// </summary>
 	CommentsMetaTable CommentsMeta { get; }
 
 	/// <summary>
-	/// Link Table
+	/// Link Table.
 	/// </summary>
 	LinksTable Links { get; }
 
 	/// <summary>
-	/// Option Table
+	/// Option Table.
 	/// </summary>
 	OptionsTable Options { get; }
 
 	/// <summary>
-	/// Post Table
+	/// Post Table.
 	/// </summary>
 	PostsTable Posts { get; }
 
 	/// <summary>
-	/// Post Meta Table
+	/// Post Meta Table.
 	/// </summary>
 	PostsMetaTable PostsMeta { get; }
 
 	/// <summary>
-	/// Term Table
+	/// Term Table.
 	/// </summary>
 	TermsTable Terms { get; }
 
 	/// <summary>
-	/// Term Meta Table
+	/// Term Meta Table.
 	/// </summary>
 	TermsMetaTable TermsMeta { get; }
 
 	/// <summary>
-	/// Term Relationship Table
+	/// Term Relationship Table.
 	/// </summary>
 	TermRelationshipsTable TermRelationships { get; }
 
 	/// <summary>
-	/// Term Taxonomy Table
+	/// Term Taxonomy Table.
 	/// </summary>
 	TermTaxonomiesTable TermTaxonomies { get; }
 
 	/// <summary>
-	/// User Table
+	/// User Table.
 	/// </summary>
 	UsersTable Users { get; }
 
 	/// <summary>
-	/// User Meta Table
+	/// User Meta Table.
 	/// </summary>
 	UsersMetaTable UsersMeta { get; }
 }

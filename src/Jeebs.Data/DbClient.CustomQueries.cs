@@ -13,7 +13,7 @@ namespace Jeebs.Data;
 public abstract partial class DbClient : IDbClient
 {
 	/// <summary>
-	/// Return a query to retrieve a list of entities that match all the specified parameters
+	/// Return a query to retrieve a list of entities that match all the specified parameters.
 	/// </summary>
 	/// <param name="table">Table name</param>
 	/// <param name="columns">List of columns to select</param>

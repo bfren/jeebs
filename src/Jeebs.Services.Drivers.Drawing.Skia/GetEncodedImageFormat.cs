@@ -12,7 +12,7 @@ namespace Jeebs.Services.Drivers.Drawing.Skia;
 public static class ImageFormatExtensions
 {
 	/// <summary>
-	/// Return the <see cref="SKEncodedImageFormat"/> equivalent of an <see cref="ImageFormat"/>
+	/// Return the <see cref="SKEncodedImageFormat"/> equivalent of an <see cref="ImageFormat"/>.
 	/// </summary>
 	/// <param name="this">ImageFormat</param>
 	/// <exception cref="UnsupportedImageFormatException"></exception>

@@ -13,18 +13,18 @@ namespace Jeebs;
 public abstract record class Enumerated : IEquatable<Enumerated>, IEquatable<string>
 {
 	/// <summary>
-	/// The string representation ('name' in Enum terms) of this enumerated value
+	/// The string representation ('name' in Enum terms) of this enumerated value.
 	/// </summary>
 	private readonly string name;
 
 	/// <summary>
-	/// Set the name of this value, allowing empty values
+	/// Set the name of this value, allowing empty values.
 	/// </summary>
 	/// <param name="name">Value name</param>
 	protected Enumerated(string name) : this(name, true) { }
 
 	/// <summary>
-	/// Set the name of this value
+	/// Set the name of this value.
 	/// </summary>
 	/// <param name="name">Value name</param>
 	/// <param name="allowEmpty">If <see langword="false"/>, and <paramref name="name"/> is null or empty, will throw an exception</param>
@@ -48,7 +48,7 @@ public abstract record class Enumerated : IEquatable<Enumerated>, IEquatable<str
 	}
 
 	/// <summary>
-	/// Return the name of this value
+	/// Return the name of this value.
 	/// </summary>
 	/// <returns>Name of this value</returns>
 	public sealed override string ToString() =>
@@ -57,18 +57,18 @@ public abstract record class Enumerated : IEquatable<Enumerated>, IEquatable<str
 	#region Static Members
 
 	/// <summary>
-	/// Thread-safe parser cache
+	/// Thread-safe parser cache.
 	/// </summary>
 	private static ConcurrentDictionary<string, object> Cache { get; }
 
 	/// <summary>
-	/// Create cache object
+	/// Create cache object.
 	/// </summary>
 	static Enumerated() =>
 		Cache = new ConcurrentDictionary<string, object>();
 
 	/// <summary>
-	/// Check whether or not the specified name matches the given value
+	/// Check whether or not the specified name matches the given value.
 	/// </summary>
 	/// <typeparam name="T">Enum value type</typeparam>
 	/// <param name="name">Enum name</param>
@@ -85,7 +85,7 @@ public abstract record class Enumerated : IEquatable<Enumerated>, IEquatable<str
 		};
 
 	/// <summary>
-	/// Parse a given name and return the correct Enum value - or throw an exception if no match is found
+	/// Parse a given name and return the correct Enum value - or throw an exception if no match is found.
 	/// </summary>
 	/// <typeparam name="T">Enum value type</typeparam>
 	/// <param name="name">Enum name</param>
@@ -112,7 +112,7 @@ public abstract record class Enumerated : IEquatable<Enumerated>, IEquatable<str
 		);
 
 	/// <summary>
-	/// Returns true if the given name matches a registered Enum value
+	/// Returns true if the given name matches a registered Enum value.
 	/// </summary>
 	/// <typeparam name="T">Enum value type</typeparam>
 	/// <param name="name">Enum name</param>
@@ -122,24 +122,24 @@ public abstract record class Enumerated : IEquatable<Enumerated>, IEquatable<str
 		Parse(name, values).IsOk;
 
 	/// <summary>
-	/// Parse Arguments
+	/// Parse Arguments.
 	/// </summary>
 	/// <typeparam name="T">Enum Type</typeparam>
 	private sealed class ParseArgs<T>
 		where T : Enumerated
 	{
 		/// <summary>
-		/// Enum name to parse
+		/// Enum name to parse.
 		/// </summary>
 		public string Name { get; private init; }
 
 		/// <summary>
-		/// Enum values to test Name against
+		/// Enum values to test Name against.
 		/// </summary>
 		public T[] Values { get; private init; }
 
 		/// <summary>
-		/// Create object
+		/// Create object.
 		/// </summary>
 		/// <param name="name">Enumerated name to parse</param>
 		/// <param name="values">Enumerated values to check <paramref name="name"/> against</param>
@@ -152,7 +152,7 @@ public abstract record class Enumerated : IEquatable<Enumerated>, IEquatable<str
 	#region Operators
 
 	/// <summary>
-	/// Allow implicit conversion to string
+	/// Allow implicit conversion to string.
 	/// </summary>
 	/// <param name="e">Enumerated value</param>
 	public static implicit operator string(Enumerated e) =>
@@ -207,14 +207,14 @@ public abstract record class Enumerated : IEquatable<Enumerated>, IEquatable<str
 		(name == other?.name) && (GetType().FullName == other?.GetType().FullName);
 
 	/// <summary>
-	/// Compare this <see cref="Enumerated"/> with a string
+	/// Compare this <see cref="Enumerated"/> with a string.
 	/// </summary>
 	/// <param name="other">String to compare to this <see cref="Enumerated"/></param>
 	public virtual bool Equals(string? other) =>
 		name == other;
 
 	/// <summary>
-	/// Generate custom HashCode
+	/// Generate custom HashCode.
 	/// </summary>
 	public override int GetHashCode() =>
 		GetType().GetHashCode() ^ name.GetHashCode();

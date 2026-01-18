@@ -17,29 +17,29 @@ namespace Jeebs.Mvc.TagHelpers;
 public sealed class EmailTagHelper : UrlResolutionTagHelper
 {
 	/// <summary>
-	/// Email address
+	/// Email address.
 	/// </summary>
 	public string To { get; set; } = string.Empty;
 
 	/// <summary>
-	/// The text to display in the link - if null, will display the email address
+	/// The text to display in the link - if null, will display the email address.
 	/// </summary>
 	public string? Display { get; set; }
 
 	/// <summary>
-	/// Email subject
+	/// Email subject.
 	/// </summary>
 	public string Subject { get; set; } = string.Empty;
 
 	/// <summary>
-	/// Setup dependencies
+	/// Setup dependencies.
 	/// </summary>
 	/// <param name="urlHelperFactory">IUrlHelperFactory object</param>
 	/// <param name="htmlEncoder">HtmlEncoder</param>
 	public EmailTagHelper(IUrlHelperFactory urlHelperFactory, HtmlEncoder htmlEncoder) : base(urlHelperFactory, htmlEncoder) { }
 
 	/// <summary>
-	/// Process the tag helper
+	/// Process the tag helper.
 	/// </summary>
 	/// <param name="context">TagHelperContext object</param>
 	/// <param name="output">TagHelperOutput object</param>

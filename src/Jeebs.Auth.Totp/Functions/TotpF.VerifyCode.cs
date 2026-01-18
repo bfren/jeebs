@@ -18,7 +18,7 @@ public static partial class TotpF
 		);
 
 	/// <summary>
-	/// Verify a code
+	/// Verify a code.
 	/// </summary>
 	/// <param name="key">Secret key</param>
 	/// <param name="code">Code to be verified</param>

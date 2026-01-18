@@ -13,7 +13,7 @@ public interface IAuthUserWithRoles<TRole> : IAuthUser
 	where TRole : IAuthRole
 {
 	/// <summary>
-	/// The roles this user is assigned to
+	/// The roles this user is assigned to.
 	/// </summary>
 	List<TRole> Roles { get; init; }
 }

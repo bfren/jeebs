@@ -12,7 +12,7 @@ namespace Jeebs.WordPress.TypeHandlers;
 public sealed class TaxonomyTypeHandler : EnumeratedTypeHandler<Taxonomy>
 {
 	/// <summary>
-	/// Parse the Taxonomy value
+	/// Parse the Taxonomy value.
 	/// </summary>
 	/// <param name="value">Database table value</param>
 	public override Taxonomy Parse(object value) =>

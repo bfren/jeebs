@@ -12,7 +12,7 @@ namespace Jeebs.WordPress;
 public interface IWpDb : IDb
 {
 	/// <summary>
-	/// WordPress configuration
+	/// WordPress configuration.
 	/// </summary>
 	WpConfig WpConfig { get; }
 

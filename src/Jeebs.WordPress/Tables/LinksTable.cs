@@ -12,7 +12,7 @@ namespace Jeebs.WordPress.Tables;
 public sealed record class LinksTable : Table
 {
 	/// <summary>
-	/// LinkId
+	/// LinkId.
 	/// </summary>
 	[Id]
 	public string Id =>
@@ -20,87 +20,87 @@ public sealed record class LinksTable : Table
 		"link_id";
 
 	/// <summary>
-	/// Url
+	/// Url.
 	/// </summary>
 	public string Url =>
 
 		"link_url";
 
 	/// <summary>
-	/// Title
+	/// Title.
 	/// </summary>
 	public string Title =>
 
 		"link_name";
 
 	/// <summary>
-	/// Image
+	/// Image.
 	/// </summary>
 	public string Image =>
 		"link_image";
 
 	/// <summary>
-	/// Target
+	/// Target.
 	/// </summary>
 	public string Target =>
 		"link_target";
 
 	/// <summary>
-	/// CategoryId
+	/// CategoryId.
 	/// </summary>
 	public string CategoryId =>
 		"link_category";
 
 	/// <summary>
-	/// Description
+	/// Description.
 	/// </summary>
 	public string Description =>
 		"link_description";
 
 	/// <summary>
-	/// Visible
+	/// Visible.
 	/// </summary>
 	public string Visible =>
 		"link_visible";
 
 	/// <summary>
-	/// OwnerId
+	/// OwnerId.
 	/// </summary>
 	public string OwnerId =>
 		"link_owner";
 
 	/// <summary>
-	/// Rating
+	/// Rating.
 	/// </summary>
 	public string Rating =>
 		"link_rating";
 
 	/// <summary>
-	/// LastUpdatedOn
+	/// LastUpdatedOn.
 	/// </summary>
 	public string LastUpdatedOn =>
 		"link_updated";
 
 	/// <summary>
-	/// Rel
+	/// Rel.
 	/// </summary>
 	public string Rel =>
 		"link_rel";
 
 	/// <summary>
-	/// Notes
+	/// Notes.
 	/// </summary>
 	public string Notes =>
 		"link_notes";
 
 	/// <summary>
-	/// Rss
+	/// Rss.
 	/// </summary>
 	public string Rss =>
 		"link_rss";
 
 	/// <summary>
-	/// Create object
+	/// Create object.
 	/// </summary>
 	/// <param name="prefix">Table prefix</param>
 	public LinksTable(string prefix) : base($"{prefix}links") { }

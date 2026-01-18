@@ -11,22 +11,22 @@ namespace Jeebs.Data.Map;
 public interface IColumn
 {
 	/// <summary>
-	/// Table Name
+	/// Table Name.
 	/// </summary>
 	IDbName TblName { get; }
 
 	/// <summary>
-	/// Column Name
+	/// Column Name.
 	/// </summary>
 	string ColName { get; }
 
 	/// <summary>
-	/// Column Alias
+	/// Column Alias.
 	/// </summary>
 	string ColAlias { get; }
 
 	/// <summary>
-	/// Entity Property
+	/// Entity Property.
 	/// </summary>
 	PropertyInfo PropertyInfo { get; }
 }

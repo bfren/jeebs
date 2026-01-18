@@ -11,7 +11,7 @@ namespace Jeebs.Data.Query;
 public interface IQueryBuilder
 {
 	/// <summary>
-	/// Set the main table to select data from
+	/// Set the main table to select data from.
 	/// </summary>
 	/// <param name="table">ITable</param>
 	IQueryBuilderWithFrom From(ITable table);

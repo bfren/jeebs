@@ -9,13 +9,13 @@ namespace Jeebs.WordPress.Query;
 public sealed record class TermsOptions : Options.TermsOptions
 {
 	/// <summary>
-	/// Internal creation only
+	/// Internal creation only.
 	/// </summary>
 	/// <param name="schema">IWpDbSchema</param>
 	internal TermsOptions(IWpDbSchema schema) : base(schema, new TermsPartsBuilder(schema)) { }
 
 	/// <summary>
-	/// Allow Builder to be injected
+	/// Allow Builder to be injected.
 	/// </summary>
 	/// <param name="schema">IWpDbSchema</param>
 	/// <param name="builder">IQueryTermsPartsBuilder</param>

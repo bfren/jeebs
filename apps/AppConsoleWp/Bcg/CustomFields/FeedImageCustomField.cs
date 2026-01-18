@@ -11,7 +11,7 @@ namespace AppConsoleWp.Bcg;
 public sealed class FeedImageCustomField : AttachmentCustomField
 {
 	/// <summary>
-	/// This is not a required field
+	/// This is not a required field.
 	/// </summary>
 	public FeedImageCustomField() : base("image") { }
 }

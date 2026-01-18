@@ -12,7 +12,7 @@ namespace Jeebs.WordPress.TypeHandlers;
 public sealed class PostStatusTypeHandler : EnumeratedTypeHandler<PostStatus>
 {
 	/// <summary>
-	/// Parse the PostStatus value
+	/// Parse the PostStatus value.
 	/// </summary>
 	/// <param name="value">Database table value</param>
 	public override PostStatus Parse(object value) =>

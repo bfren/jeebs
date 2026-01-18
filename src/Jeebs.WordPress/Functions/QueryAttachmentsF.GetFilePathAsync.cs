@@ -14,7 +14,7 @@ namespace Jeebs.WordPress.Functions;
 public static partial class QueryAttachmentsF
 {
 	/// <summary>
-	/// Get the filesystem path to the specified Attachment
+	/// Get the filesystem path to the specified Attachment.
 	/// </summary>
 	/// <param name="db">IWpDb</param>
 	/// <param name="w">IUnitOfWork</param>

@@ -12,12 +12,12 @@ namespace Jeebs.WordPress.Query.Options;
 public interface IQueryTermsOptions : IQueryOptions<WpTermId>
 {
 	/// <summary>
-	/// Search taxonomy type
+	/// Search taxonomy type.
 	/// </summary>
 	Enums.Taxonomy? Taxonomy { get; init; }
 
 	/// <summary>
-	/// Search taxonomy term
+	/// Search taxonomy term.
 	/// </summary>
 	string? Slug { get; init; }
 

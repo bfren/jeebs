@@ -12,7 +12,7 @@ namespace Jeebs.Auth.Data.Clients.PostgreSql.Migrations;
 public sealed class AddAuthSchema : Migration
 {
 	/// <summary>
-	/// Migrate up
+	/// Migrate up.
 	/// </summary>
 	protected override void Up() => Execute($@"
 		CREATE SCHEMA IF NOT EXISTS {AuthDb.Schema}
@@ -20,7 +20,7 @@ public sealed class AddAuthSchema : Migration
 	");
 
 	/// <summary>
-	/// Migrate down
+	/// Migrate down.
 	/// </summary>
 	protected override void Down()
 	{

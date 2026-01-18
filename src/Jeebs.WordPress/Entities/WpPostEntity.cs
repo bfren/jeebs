@@ -12,77 +12,77 @@ namespace Jeebs.WordPress.Entities;
 public abstract record class WpPostEntity : WpPostEntityWithId
 {
 	/// <summary>
-	/// AuthorId
+	/// AuthorId.
 	/// </summary>
 	public StrongIds.WpUserId AuthorId { get; init; } = new();
 
 	/// <summary>
-	/// PublishedOn
+	/// PublishedOn.
 	/// </summary>
 	public DateTime PublishedOn { get; init; }
 
 	/// <summary>
-	/// PublishedOnGmt
+	/// PublishedOnGmt.
 	/// </summary>
 	public DateTime PublishedOnGmt { get; init; }
 
 	/// <summary>
-	/// Content
+	/// Content.
 	/// </summary>
 	public string Content { get; init; } = string.Empty;
 
 	/// <summary>
-	/// Title
+	/// Title.
 	/// </summary>
 	public string Title { get; init; } = string.Empty;
 
 	/// <summary>
-	/// Excerpt
+	/// Excerpt.
 	/// </summary>
 	public string Excerpt { get; init; } = string.Empty;
 
 	/// <summary>
-	/// Status
+	/// Status.
 	/// </summary>
 	public PostStatus Status { get; init; } = PostStatus.Draft;
 
 	/// <summary>
-	/// Slug
+	/// Slug.
 	/// </summary>
 	public string Slug { get; init; } = string.Empty;
 
 	/// <summary>
-	/// LastModifiedOn
+	/// LastModifiedOn.
 	/// </summary>
 	public DateTime LastModifiedOn { get; init; }
 
 	/// <summary>
-	/// LastModifiedOnGmt
+	/// LastModifiedOnGmt.
 	/// </summary>
 	public DateTime LastModifiedOnGmt { get; init; }
 
 	/// <summary>
-	/// ParentId
+	/// ParentId.
 	/// </summary>
 	public StrongIds.WpPostId ParentId { get; init; } = new();
 
 	/// <summary>
-	/// Url
+	/// Url.
 	/// </summary>
 	public string Url { get; init; } = string.Empty;
 
 	/// <summary>
-	/// Type
+	/// Type.
 	/// </summary>
 	public PostType Type { get; init; } = PostType.Post;
 
 	/// <summary>
-	/// MimeType
+	/// MimeType.
 	/// </summary>
 	public MimeType MimeType { get; init; } = MimeType.Blank;
 
 	/// <summary>
-	/// CommentsCount
+	/// CommentsCount.
 	/// </summary>
 	public ulong CommentsCount { get; init; }
 }

@@ -12,7 +12,7 @@ namespace Jeebs.Mvc.Auth.Functions;
 public static partial class AuthF
 {
 	/// <summary>
-	/// Validate a user's login credentials and retrieve their info with their roles
+	/// Validate a user's login credentials and retrieve their info with their roles.
 	/// </summary>
 	/// <param name="auth"></param>
 	/// <param name="model"></param>

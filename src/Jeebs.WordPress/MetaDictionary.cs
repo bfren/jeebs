@@ -11,12 +11,12 @@ namespace Jeebs.WordPress;
 public sealed class MetaDictionary : Dictionary<string, string>
 {
 	/// <summary>
-	/// Create blank meta dictionary
+	/// Create blank meta dictionary.
 	/// </summary>
 	public MetaDictionary() { }
 
 	/// <summary>
-	/// Safely parse meta collection as a dictionary
+	/// Safely parse meta collection as a dictionary.
 	/// </summary>
 	/// <param name="collection">Meta collection</param>
 	public MetaDictionary(IEnumerable<KeyValuePair<string, string>> collection)

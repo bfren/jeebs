@@ -31,7 +31,7 @@ public sealed class AuthBuilder
 	private bool dataAdded;
 
 	/// <summary>
-	/// Inject dependencies
+	/// Inject dependencies.
 	/// </summary>
 	/// <param name="services">IServiceCollection</param>
 	/// <param name="config">AuthConfig</param>
@@ -72,7 +72,7 @@ public sealed class AuthBuilder
 	}
 
 	/// <summary>
-	/// Enable cookie authentication and authorisation
+	/// Enable cookie authentication and authorisation.
 	/// </summary>
 	public AuthBuilder WithCookie()
 	{
@@ -86,7 +86,7 @@ public sealed class AuthBuilder
 	}
 
 	/// <summary>
-	/// Enable JSON Web Token authentication and authorisation
+	/// Enable JSON Web Token authentication and authorisation.
 	/// </summary>
 	/// <exception cref="InvalidJwtConfigurationException"></exception>
 	public AuthBuilder WithJwt()
@@ -122,7 +122,7 @@ public sealed class AuthBuilder
 	}
 
 	/// <summary>
-	/// Enable custom data authentication and authorisation
+	/// Enable custom data authentication and authorisation.
 	/// </summary>
 	/// <typeparam name="TDbClient">IAuthDbClient type</typeparam>
 	/// <param name="useAuthDbClientAsMain">If true, <typeparamref name="TDbClient"/> will be registered as <see cref="IDbClient"/></param>

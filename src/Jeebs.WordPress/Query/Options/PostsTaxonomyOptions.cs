@@ -11,7 +11,7 @@ namespace Jeebs.WordPress.Query.Options;
 public abstract record class PostsTaxonomyOptions : Options<WpTermId>, IQueryPostsTaxonomyOptions
 {
 	/// <summary>
-	/// IQueryPostsTaxonomyPartsBuilder
+	/// IQueryPostsTaxonomyPartsBuilder.
 	/// </summary>
 	protected new IQueryPostsTaxonomyPartsBuilder Builder =>
 		(IQueryPostsTaxonomyPartsBuilder)base.Builder;
@@ -28,7 +28,7 @@ public abstract record class PostsTaxonomyOptions : Options<WpTermId>, IQueryPos
 	public TaxonomySort SortBy { get; init; }
 
 	/// <summary>
-	/// Allow Builder to be injected
+	/// Allow Builder to be injected.
 	/// </summary>
 	/// <param name="schema">IWpDbSchema</param>
 	/// <param name="builder">IQueryPostsTaxonomyPartsBuilder</param>

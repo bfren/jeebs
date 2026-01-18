@@ -14,22 +14,22 @@ namespace Jeebs.Data;
 public interface IDb
 {
 	/// <summary>
-	/// Database Client
+	/// Database Client.
 	/// </summary>
 	IDbClient Client { get; }
 
 	/// <summary>
-	/// Configuration for this database connection
+	/// Configuration for this database connection.
 	/// </summary>
 	DbConnectionConfig Config { get; }
 
 	/// <summary>
-	/// Start a new Unit of Work
+	/// Start a new Unit of Work.
 	/// </summary>
 	IUnitOfWork StartWork();
 
 	/// <summary>
-	/// Start a new Unit of Work asynchronously
+	/// Start a new Unit of Work asynchronously.
 	/// </summary>
 	Task<IUnitOfWork> StartWorkAsync();
 
@@ -37,7 +37,7 @@ public interface IDb
 	Task<Maybe<IEnumerable<T>>> QueryAsync<T>(string query, object? param, CommandType type);
 
 	/// <summary>
-	/// Run a query and return multiple items
+	/// Run a query and return multiple items.
 	/// </summary>
 	/// <typeparam name="T">Return value type</typeparam>
 	/// <param name="query">Query text</param>
@@ -50,7 +50,7 @@ public interface IDb
 	Task<Maybe<T>> QuerySingleAsync<T>(string query, object? param, CommandType type);
 
 	/// <summary>
-	/// Run a query and return a single item
+	/// Run a query and return a single item.
 	/// </summary>
 	/// <typeparam name="T">Return value type</typeparam>
 	/// <param name="query">Query text</param>
@@ -63,7 +63,7 @@ public interface IDb
 	Task<Maybe<bool>> ExecuteAsync(string query, object? param, CommandType type);
 
 	/// <summary>
-	/// Execute a query and return a single value
+	/// Execute a query and return a single value.
 	/// </summary>
 	/// <param name="query">Query text</param>
 	/// <param name="param">Query parameters</param>
@@ -75,7 +75,7 @@ public interface IDb
 	Task<Maybe<TReturn>> ExecuteAsync<TReturn>(string query, object? param, CommandType type);
 
 	/// <summary>
-	/// Execute a query and return a single scalar value
+	/// Execute a query and return a single scalar value.
 	/// </summary>
 	/// <typeparam name="TReturn">Return value type</typeparam>
 	/// <param name="query">Query text</param>

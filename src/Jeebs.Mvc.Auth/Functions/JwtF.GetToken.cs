@@ -9,7 +9,7 @@ namespace Jeebs.Mvc.Auth.Functions;
 public static partial class JwtF
 {
 	/// <summary>
-	/// Extract the token from the authorisation header
+	/// Extract the token from the authorisation header.
 	/// </summary>
 	/// <param name="authorisationHeader">Authorisation header</param>
 	public static Maybe<string> GetToken(string authorisationHeader) =>

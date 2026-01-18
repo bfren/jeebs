@@ -9,18 +9,18 @@ namespace Jeebs.Data.Testing.Exceptions;
 public abstract class FluentQueryHelperException : Exception
 {
 	/// <summary>
-	/// Create blank exception
+	/// Create blank exception.
 	/// </summary>
 	protected FluentQueryHelperException() { }
 
 	/// <summary>
-	/// Create exception with message
+	/// Create exception with message.
 	/// </summary>
 	/// <param name="message"></param>
 	protected FluentQueryHelperException(string message) : base(message) { }
 
 	/// <summary>
-	/// Create exception with message and inner exception
+	/// Create exception with message and inner exception.
 	/// </summary>
 	/// <param name="message"></param>
 	/// <param name="inner"></param>

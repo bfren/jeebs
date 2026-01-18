@@ -15,7 +15,7 @@ public sealed class CurlQuotes : ContentFilter
 	private CurlQuotes(Func<string, string> filter) : base(filter) { }
 
 	/// <summary>
-	/// Create filter
+	/// Create filter.
 	/// </summary>
 	public static ContentFilter Create() =>
 		new CurlQuotes(content => content.ConvertInnerHtmlQuotes());

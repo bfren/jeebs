@@ -15,19 +15,19 @@ namespace Jeebs.Services.Drivers.Webhook.Slack.Models;
 public sealed record class SlackMessage
 {
 	/// <summary>
-	/// Plain text value of the message
+	/// Plain text value of the message.
 	/// </summary>
 	[JsonPropertyName("text")]
 	public string Text { get; private init; }
 
 	/// <summary>
-	/// Blocks (the formatted content of the message)
+	/// Blocks (the formatted content of the message).
 	/// </summary>
 	[JsonPropertyName("blocks")]
 	public List<SlackBlock> Blocks { get; private init; }
 
 	/// <summary>
-	/// Create a message
+	/// Create a message.
 	/// </summary>
 	/// <param name="config">JeebsConfig</param>
 	/// <param name="text">Message text</param>

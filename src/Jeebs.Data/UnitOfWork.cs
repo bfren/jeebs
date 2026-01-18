@@ -17,7 +17,7 @@ public sealed class UnitOfWork : IUnitOfWork
 	private bool pending = true;
 
 	/// <summary>
-	/// DbConnection object to allow access to async methods
+	/// DbConnection object to allow access to async methods.
 	/// </summary>
 	private readonly DbConnection connection;
 
@@ -25,7 +25,7 @@ public sealed class UnitOfWork : IUnitOfWork
 		connection;
 
 	/// <summary>
-	/// DbTransaction object to allow access to async methods
+	/// DbTransaction object to allow access to async methods.
 	/// </summary>
 	private readonly DbTransaction transaction;
 
@@ -33,7 +33,7 @@ public sealed class UnitOfWork : IUnitOfWork
 		transaction;
 
 	/// <summary>
-	/// Create object
+	/// Create object.
 	/// </summary>
 	/// <param name="connection">Database Connection wrapper</param>
 	/// <param name="transaction">Database Transaction wrapper</param>
@@ -145,7 +145,7 @@ public sealed class UnitOfWork : IUnitOfWork
 	}
 
 	/// <summary>
-	/// Commits transaction, then disposes <see cref="transaction"/> and <see cref="connection"/> objects
+	/// Commits transaction, then disposes <see cref="transaction"/> and <see cref="connection"/> objects.
 	/// </summary>
 	public async ValueTask DisposeAsync()
 	{

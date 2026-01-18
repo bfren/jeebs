@@ -11,18 +11,18 @@ namespace Jeebs.Mvc.Auth.Exceptions;
 public class AuthDataAlreadyAddedException : Exception
 {
 	/// <summary>
-	/// Create exception
+	/// Create exception.
 	/// </summary>
 	public AuthDataAlreadyAddedException() { }
 
 	/// <summary>
-	/// Create exception
+	/// Create exception.
 	/// </summary>
 	/// <param name="message"></param>
 	public AuthDataAlreadyAddedException(string message) : base(message) { }
 
 	/// <summary>
-	/// Create exception
+	/// Create exception.
 	/// </summary>
 	/// <param name="message"></param>
 	/// <param name="inner"></param>

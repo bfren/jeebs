@@ -17,7 +17,7 @@ namespace Jeebs.WordPress.CustomFields;
 public abstract class TermCustomField : CustomField<TermCustomField.Term>
 {
 	/// <summary>
-	/// IQueryTerms
+	/// IQueryTerms.
 	/// </summary>
 	protected IQueryTerms QueryTerms { get; private init; }
 
@@ -25,7 +25,7 @@ public abstract class TermCustomField : CustomField<TermCustomField.Term>
 	protected TermCustomField(string key) : this(new Terms(), key) { }
 
 	/// <summary>
-	/// Create object from terms
+	/// Create object from terms.
 	/// </summary>
 	/// <param name="queryTerms">IQueryTerms</param>
 	/// <param name="key">Meta key (for post_meta table)</param>
@@ -79,7 +79,7 @@ public abstract class TermCustomField : CustomField<TermCustomField.Term>
 	}
 
 	/// <summary>
-	/// Parse the Term ID
+	/// Parse the Term ID.
 	/// </summary>
 	/// <param name="type">Term Custom Field type</param>
 	/// <param name="value">Term ID value</param>
@@ -90,7 +90,7 @@ public abstract class TermCustomField : CustomField<TermCustomField.Term>
 		);
 
 	/// <summary>
-	/// Return Term Title
+	/// Return Term Title.
 	/// </summary>
 	protected override string GetValueAsString() =>
 		ValueObj.Title;
@@ -99,7 +99,7 @@ public abstract class TermCustomField : CustomField<TermCustomField.Term>
 		GetValueAsString();
 
 	/// <summary>
-	/// Term class
+	/// Term class.
 	/// </summary>
 	public sealed record class Term : WpTermEntity { }
 

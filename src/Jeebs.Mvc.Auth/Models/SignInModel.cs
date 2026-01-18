@@ -9,17 +9,17 @@ namespace Jeebs.Mvc.Auth.Models;
 public sealed record class SignInModel
 {
 	/// <summary>
-	/// Email address
+	/// Email address.
 	/// </summary>
 	public string Email { get; init; } = string.Empty;
 
 	/// <summary>
-	/// Password
+	/// Password.
 	/// </summary>
 	public string Password { get; init; } = string.Empty;
 
 	/// <summary>
-	/// Remember Me
+	/// Remember Me.
 	/// </summary>
 	public bool RememberMe { get; init; }
 }

@@ -12,44 +12,44 @@ namespace Jeebs.WordPress.Tables;
 public sealed record class TermTaxonomiesTable : Table
 {
 	/// <summary>
-	/// TermTaxonomyId
+	/// TermTaxonomyId.
 	/// </summary>
 	[Id]
 	public string Id =>
 		"term_taxonomy_id";
 
 	/// <summary>
-	/// TermId
+	/// TermId.
 	/// </summary>
 	public string TermId =>
 		"term_id";
 
 	/// <summary>
-	/// Taxonomy
+	/// Taxonomy.
 	/// </summary>
 	public string Taxonomy =>
 		"taxonomy";
 
 	/// <summary>
-	/// Description
+	/// Description.
 	/// </summary>
 	public string Description =>
 		"description";
 
 	/// <summary>
-	/// ParentId
+	/// ParentId.
 	/// </summary>
 	public string ParentId =>
 		"parent";
 
 	/// <summary>
-	/// Count
+	/// Count.
 	/// </summary>
 	public string Count =>
 		"count";
 
 	/// <summary>
-	/// Create object
+	/// Create object.
 	/// </summary>
 	/// <param name="prefix">Table prefix</param>
 	public TermTaxonomiesTable(string prefix) : base($"{prefix}term_taxonomy") { }

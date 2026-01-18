@@ -29,7 +29,7 @@ public sealed record class TableMap : ITableMap
 	public IColumn? VersionColumn { get; internal set; }
 
 	/// <summary>
-	/// Create object
+	/// Create object.
 	/// </summary>
 	/// <param name="table">Table</param>
 	/// <param name="columns">Mapped Columns</param>

@@ -9,12 +9,12 @@ namespace Jeebs.Auth.Jwt.Constants;
 public static class JwtClaimTypes
 {
 	/// <summary>
-	/// User ID claim type
+	/// User ID claim type.
 	/// </summary>
 	public static readonly string UserId = "jeebs:user:id";
 
 	/// <summary>
-	/// IsSuper claim type
+	/// IsSuper claim type.
 	/// </summary>
 	public static readonly string IsSuper = "jeebs:user:isSuper";
 }

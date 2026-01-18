@@ -16,7 +16,7 @@ namespace Jeebs.WordPress.ContentFilters.Blocks;
 internal static partial class YouTube
 {
 	/// <summary>
-	/// Parse embedded YouTube videos
+	/// Parse embedded YouTube videos.
 	/// </summary>
 	/// <param name="content">Post content</param>
 	internal static string Parse(string content)
@@ -75,7 +75,7 @@ internal static partial class YouTube
 	}
 
 	/// <summary>
-	/// Used to parse YouTube JSON
+	/// Used to parse YouTube JSON.
 	/// </summary>
 	/// <param name="Url">YouTube URL</param>
 	private sealed record class YouTubeParsed(string Url);

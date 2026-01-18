@@ -32,27 +32,27 @@ public sealed class ImageTagHelper(
 	public string Src { get; set; } = string.Empty;
 
 	/// <summary>
-	/// If true, will override the '/' test and use Src as the image source
+	/// If true, will override the '/' test and use Src as the image source.
 	/// </summary>
 	public bool SrcDirect { get; set; }
 
 	/// <summary>
-	/// Required alternative text (will be used to set the title attribute as well)
+	/// Required alternative text (will be used to set the title attribute as well).
 	/// </summary>
 	public string Alt { get; set; } = string.Empty;
 
 	/// <summary>
-	/// [Optional] CSS class to apply to the element
+	/// [Optional] CSS class to apply to the element.
 	/// </summary>
 	public string CssClass { get; set; } = string.Empty;
 
 	/// <summary>
-	/// FileVersionProvider object
+	/// FileVersionProvider object.
 	/// </summary>
 	private readonly IFileVersionProvider fileVersionProvider = fileVersionProvider;
 
 	/// <summary>
-	/// Process the tag helper
+	/// Process the tag helper.
 	/// </summary>
 	/// <param name="context">TagHelperContext object</param>
 	/// <param name="output">TagHelperOutput object</param>

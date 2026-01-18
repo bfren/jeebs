@@ -18,7 +18,7 @@ namespace Jeebs.WordPress;
 internal sealed class WpDbQuery : DbQuery<IWpDb>, IWpDbQuery
 {
 	/// <summary>
-	/// Inject dependencies
+	/// Inject dependencies.
 	/// </summary>
 	/// <param name="db">IWpDb</param>
 	/// <param name="log">ILog</param>

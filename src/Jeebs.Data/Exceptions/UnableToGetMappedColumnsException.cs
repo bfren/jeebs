@@ -11,24 +11,24 @@ namespace Jeebs.Data.Exceptions;
 public sealed class UnableToGetColumnsException : Exception
 {
 	/// <summary>
-	/// Create exception
+	/// Create exception.
 	/// </summary>
 	public UnableToGetColumnsException() { }
 
 	/// <summary>
-	/// Create exception
+	/// Create exception.
 	/// </summary>
 	/// <param name="msg"></param>
 	public UnableToGetColumnsException(IMsg msg) : base(msg.ToString() ?? string.Empty) { }
 
 	/// <summary>
-	/// Create exception
+	/// Create exception.
 	/// </summary>
 	/// <param name="message"></param>
 	public UnableToGetColumnsException(string message) : base(message) { }
 
 	/// <summary>
-	/// Create exception
+	/// Create exception.
 	/// </summary>
 	/// <param name="message"></param>
 	/// <param name="inner"></param>

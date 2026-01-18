@@ -19,27 +19,27 @@ public interface IAuthDataProvider<TUserEntity, TRoleEntity, TUserRoleEntity>
 	where TUserRoleEntity : IAuthUserRole, IWithId
 {
 	/// <summary>
-	/// User functions
+	/// User functions.
 	/// </summary>
 	IAuthUserRepository<TUserEntity> User { get; }
 
 	/// <summary>
-	/// Role functions
+	/// Role functions.
 	/// </summary>
 	IAuthRoleRepository<TRoleEntity> Role { get; }
 
 	/// <summary>
-	/// User Role functions
+	/// User Role functions.
 	/// </summary>
 	IAuthUserRoleRepository<TUserRoleEntity> UserRole { get; }
 
 	/// <summary>
-	/// Database query object
+	/// Database query object.
 	/// </summary>
 	IAuthDbQuery Query { get; }
 
 	/// <summary>
-	/// Validate a User based on their email and password
+	/// Validate a User based on their email and password.
 	/// </summary>
 	/// <typeparam name="TModel">Create Auth User Model type</typeparam>
 	/// <param name="email">Email address</param>
@@ -48,7 +48,7 @@ public interface IAuthDataProvider<TUserEntity, TRoleEntity, TUserRoleEntity>
 		where TModel : IAuthUser;
 
 	/// <summary>
-	/// Retrieve a User with their Roles
+	/// Retrieve a User with their Roles.
 	/// </summary>
 	/// <typeparam name="TUser">User Model type</typeparam>
 	/// <typeparam name="TRole">Role Model type</typeparam>
@@ -58,7 +58,7 @@ public interface IAuthDataProvider<TUserEntity, TRoleEntity, TUserRoleEntity>
 		where TRole : IAuthRole;
 
 	/// <summary>
-	/// Retrieve a User with their Roles
+	/// Retrieve a User with their Roles.
 	/// </summary>
 	/// <typeparam name="TUser">User Model type</typeparam>
 	/// <typeparam name="TRole">Role Model type</typeparam>
@@ -68,7 +68,7 @@ public interface IAuthDataProvider<TUserEntity, TRoleEntity, TUserRoleEntity>
 		where TRole : IAuthRole;
 
 	/// <summary>
-	/// Change a user's password
+	/// Change a user's password.
 	/// </summary>
 	/// <param name="model"></param>
 	Task<Maybe<bool>> ChangeUserPasswordAsync(AuthChangePasswordModel model);

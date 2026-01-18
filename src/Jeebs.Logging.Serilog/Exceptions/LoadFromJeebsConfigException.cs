@@ -11,24 +11,24 @@ namespace Jeebs.Logging.Serilog.Exceptions;
 public class LoadFromJeebsConfigException : Exception
 {
 	/// <summary>
-	/// Create
+	/// Create.
 	/// </summary>
 	public LoadFromJeebsConfigException() { }
 
 	/// <summary>
-	/// Create with reason message
+	/// Create with reason message.
 	/// </summary>
 	/// <param name="reason"></param>
 	public LoadFromJeebsConfigException(IMsg reason) : this(reason.ToString() ?? string.Empty) { }
 
 	/// <summary>
-	/// Create with message
+	/// Create with message.
 	/// </summary>
 	/// <param name="message"></param>
 	public LoadFromJeebsConfigException(string message) : base(message) { }
 
 	/// <summary>
-	/// Create with message and inner exception
+	/// Create with message and inner exception.
 	/// </summary>
 	/// <param name="message"></param>
 	/// <param name="inner"></param>

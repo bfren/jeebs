@@ -9,7 +9,7 @@ namespace Jeebs.WordPress.Functions;
 public static partial class QueryPostsF
 {
 	/// <summary>
-	/// Get <see cref="PropertyInfo{TObject, TProperty}"/> object for <typeparamref name="TModel"/> content property
+	/// Get <see cref="PropertyInfo{TObject, TProperty}"/> object for <typeparamref name="TModel"/> content property.
 	/// </summary>
 	/// <typeparam name="TModel">Model type</typeparam>
 	internal static Maybe<Content<TModel>> GetPostContentInfo<TModel>() =>

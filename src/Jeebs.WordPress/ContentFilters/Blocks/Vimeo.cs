@@ -11,7 +11,7 @@ namespace Jeebs.WordPress.ContentFilters.Blocks;
 internal static class Vimeo
 {
 	/// <summary>
-	/// Parse embedded Vimeo videos
+	/// Parse embedded Vimeo videos.
 	/// </summary>
 	/// <param name="content">Post content</param>
 	internal static string Parse(string content) =>

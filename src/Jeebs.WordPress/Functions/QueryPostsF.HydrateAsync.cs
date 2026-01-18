@@ -14,7 +14,7 @@ namespace Jeebs.WordPress.Functions;
 public static partial class QueryPostsF
 {
 	/// <summary>
-	/// Hydrate the custom fields for the list of posts
+	/// Hydrate the custom fields for the list of posts.
 	/// </summary>
 	/// <typeparam name="TList">List type</typeparam>
 	/// <typeparam name="TModel">Model type</typeparam>

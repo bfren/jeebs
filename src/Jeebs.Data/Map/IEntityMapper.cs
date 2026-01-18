@@ -11,7 +11,7 @@ namespace Jeebs.Data.Map;
 public interface IEntityMapper
 {
 	/// <summary>
-	/// Map the specified <typeparamref name="TEntity"/> to the specified <paramref name="table"/>
+	/// Map the specified <typeparamref name="TEntity"/> to the specified <paramref name="table"/>.
 	/// </summary>
 	/// <typeparam name="TEntity">Entity type</typeparam>
 	/// <typeparam name="TTable">Table type</typeparam>
@@ -21,7 +21,7 @@ public interface IEntityMapper
 		where TTable : ITable;
 
 	/// <summary>
-	/// Get table map for <typeparamref name="TEntity"/>
+	/// Get table map for <typeparamref name="TEntity"/>.
 	/// </summary>
 	/// <typeparam name="TEntity">Entity type</typeparam>
 	Maybe<ITableMap> GetTableMapFor<TEntity>()

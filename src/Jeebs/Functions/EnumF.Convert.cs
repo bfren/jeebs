@@ -20,7 +20,7 @@ public static partial class EnumF
 		new(value);
 
 	/// <summary>
-	/// FluentConvert
+	/// FluentConvert.
 	/// </summary>
 	/// <typeparam name="TFrom">Convert from type</typeparam>
 	/// <remarks>
@@ -33,7 +33,7 @@ public static partial class EnumF
 		private readonly TFrom from = from;
 
 		/// <summary>
-		/// Convert value to specified type
+		/// Convert value to specified type.
 		/// </summary>
 		/// <typeparam name="TTo">Convert To type</typeparam>
 		public Result<TTo> To<TTo>()

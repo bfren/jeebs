@@ -10,7 +10,7 @@ namespace Jeebs.Mvc.Auth.Functions;
 public static partial class JwtF
 {
 	/// <summary>
-	/// Retrieve the authorisation header (if it exists)
+	/// Retrieve the authorisation header (if it exists).
 	/// </summary>
 	/// <param name="headers">Dictionary of header values</param>
 	public static Maybe<string> GetAuthorisationHeader(IDictionary<string, StringValues> headers) =>

@@ -44,7 +44,7 @@ public sealed class ImageWrapper : Services.Drawing.ImageWrapper, IDisposable
 		ToByteArray(SKEncodedImageFormat.Png, quality);
 
 	/// <summary>
-	/// Output image as byte array
+	/// Output image as byte array.
 	/// </summary>
 	/// <param name="format">SKEncodedImageFormat</param>
 	/// <param name="quality">Image quality (0 - 100)</param>

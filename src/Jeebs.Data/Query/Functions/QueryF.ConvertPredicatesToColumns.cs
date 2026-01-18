@@ -14,7 +14,7 @@ namespace Jeebs.Data.Query.Functions;
 public static partial class QueryF
 {
 	/// <summary>
-	/// Convert LINQ expression property selectors to column names
+	/// Convert LINQ expression property selectors to column names.
 	/// </summary>
 	/// <param name="columns">Mapped entity columns</param>
 	/// <param name="predicates">Predicates (matched using AND)</param>

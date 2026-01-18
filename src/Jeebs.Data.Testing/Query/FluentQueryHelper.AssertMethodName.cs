@@ -10,7 +10,7 @@ namespace Jeebs.Data.Testing.Query;
 public static partial class FluentQueryHelper
 {
 	/// <summary>
-	/// Assert that <paramref name="call"/> is a call to a method called <paramref name="expected"/>
+	/// Assert that <paramref name="call"/> is a call to a method called <paramref name="expected"/>.
 	/// </summary>
 	/// <param name="call">Call</param>
 	/// <param name="expected">Expected method name</param>

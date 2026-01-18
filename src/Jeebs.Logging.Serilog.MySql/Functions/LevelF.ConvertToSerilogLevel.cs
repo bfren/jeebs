@@ -10,7 +10,7 @@ namespace Jeebs.Logging.Serilog.MySql.Functions;
 public static partial class LevelF
 {
 	/// <summary>
-	/// Convert a <see cref="MySqlConnectorLogLevel"/> to a <see cref="LogEventLevel"/>
+	/// Convert a <see cref="MySqlConnectorLogLevel"/> to a <see cref="LogEventLevel"/>.
 	/// </summary>
 	/// <param name="level"></param>
 	public static Maybe<LogEventLevel> ConvertToSerilogLevel(MySqlConnectorLogLevel level) =>

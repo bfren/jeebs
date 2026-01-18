@@ -15,7 +15,7 @@ namespace Jeebs.WordPress.ContentFilters.Blocks;
 internal static partial class Embed
 {
 	/// <summary>
-	/// Parse a generic embedded object
+	/// Parse a generic embedded object.
 	/// </summary>
 	/// <param name="content">Post content</param>
 	/// <param name="type">EmbedType</param>
@@ -54,7 +54,7 @@ internal static partial class Embed
 	}
 
 	/// <summary>
-	/// Used to parse Embed JSON
+	/// Used to parse Embed JSON.
 	/// </summary>
 	/// <param name="Url">Embedded resource URL</param>
 	/// <param name="Type">Resource type</param>
@@ -62,7 +62,7 @@ internal static partial class Embed
 	internal sealed record class EmbedParsed(string Url, EmbedType Type, Provider ProviderNameSlug);
 
 	/// <summary>
-	/// Supported embed types
+	/// Supported embed types.
 	/// </summary>
 	internal enum EmbedType
 	{
@@ -70,7 +70,7 @@ internal static partial class Embed
 	}
 
 	/// <summary>
-	/// Supported providers
+	/// Supported providers.
 	/// </summary>
 	internal enum Provider
 	{

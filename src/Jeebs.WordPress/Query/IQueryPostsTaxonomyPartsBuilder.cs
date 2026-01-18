@@ -14,21 +14,21 @@ namespace Jeebs.WordPress.Query;
 public interface IQueryPostsTaxonomyPartsBuilder : IQueryPartsBuilder<WpTermId>
 {
 	/// <summary>
-	/// Add Where Taxonomies
+	/// Add Where Taxonomies.
 	/// </summary>
 	/// <param name="parts">QueryParts</param>
 	/// <param name="taxonomies">Taxonomies</param>
 	Maybe<QueryParts> AddWhereTaxonomies(QueryParts parts, IImmutableList<Taxonomy> taxonomies);
 
 	/// <summary>
-	/// Add Where Post IDs
+	/// Add Where Post IDs.
 	/// </summary>
 	/// <param name="parts">QueryParts</param>
 	/// <param name="postIds">Post IDs</param>
 	Maybe<QueryParts> AddWherePostIds(QueryParts parts, IImmutableList<WpPostId> postIds);
 
 	/// <summary>
-	/// Add custom Sort or default Sort
+	/// Add custom Sort or default Sort.
 	/// </summary>
 	/// <param name="parts">QueryParts</param>
 	/// <param name="sortRandom">Whether or not to sort randomly</param>

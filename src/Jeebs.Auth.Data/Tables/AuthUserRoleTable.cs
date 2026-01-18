@@ -13,7 +13,7 @@ namespace Jeebs.Auth.Data.Tables;
 public sealed record class AuthUserRoleTable() : Table(AuthDb.Schema, TableName)
 {
 	/// <summary>
-	/// Table name will be added as a prefix to all column names
+	/// Table name will be added as a prefix to all column names.
 	/// </summary>
 	public static readonly string TableName = "user_role";
 

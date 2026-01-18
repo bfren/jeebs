@@ -9,17 +9,17 @@ namespace Jeebs.Data.Enums;
 public enum QueryJoin
 {
 	/// <summary>
-	/// INNER join
+	/// INNER join.
 	/// </summary>
 	Inner = 0,
 
 	/// <summary>
-	/// LEFT join
+	/// LEFT join.
 	/// </summary>
 	Left = 1,
 
 	/// <summary>
-	/// RIGHT join
+	/// RIGHT join.
 	/// </summary>
 	Right = 2
 }

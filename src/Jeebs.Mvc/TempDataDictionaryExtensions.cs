@@ -17,14 +17,14 @@ public static class TempDataDictionaryExtensions
 	internal const string AlertsKey = "JeebsAlerts";
 
 	/// <summary>
-	/// Returns whether or not the TempDataDictionary has any pending alerts
+	/// Returns whether or not the TempDataDictionary has any pending alerts.
 	/// </summary>
 	/// <param name="this">ITempDataDictionary</param>
 	public static bool HasAlerts(this ITempDataDictionary @this) =>
 		@this.Peek(AlertsKey) != null;
 
 	/// <summary>
-	/// Get all alerts
+	/// Get all alerts.
 	/// </summary>
 	/// <param name="this">ITempDataDictionary</param>
 	public static List<Alert> GetAlerts(this ITempDataDictionary @this) =>
@@ -38,7 +38,7 @@ public static class TempDataDictionaryExtensions
 		};
 
 	/// <summary>
-	/// Add info alert
+	/// Add info alert.
 	/// </summary>
 	/// <param name="this">ITempDataDictionary</param>
 	/// <param name="message">Message</param>
@@ -46,7 +46,7 @@ public static class TempDataDictionaryExtensions
 		AddAlert(@this, AlertType.Info, message);
 
 	/// <summary>
-	/// Add info alert
+	/// Add info alert.
 	/// </summary>
 	/// <param name="this">ITempDataDictionary</param>
 	/// <param name="message">Message</param>
@@ -54,7 +54,7 @@ public static class TempDataDictionaryExtensions
 		AddAlert(@this, AlertType.Info, message);
 
 	/// <summary>
-	/// Add success alert
+	/// Add success alert.
 	/// </summary>
 	/// <param name="this">ITempDataDictionary</param>
 	/// <param name="message"></param>
@@ -62,7 +62,7 @@ public static class TempDataDictionaryExtensions
 		AddAlert(@this, AlertType.Success, message);
 
 	/// <summary>
-	/// Add success alert
+	/// Add success alert.
 	/// </summary>
 	/// <param name="this">ITempDataDictionary</param>
 	/// <param name="message"></param>
@@ -70,7 +70,7 @@ public static class TempDataDictionaryExtensions
 		AddAlert(@this, AlertType.Success, message);
 
 	/// <summary>
-	/// Add warning alert
+	/// Add warning alert.
 	/// </summary>
 	/// <param name="this">ITempDataDictionary</param>
 	/// <param name="message">Message</param>
@@ -78,7 +78,7 @@ public static class TempDataDictionaryExtensions
 		AddAlert(@this, AlertType.Warning, message);
 
 	/// <summary>
-	/// Add warning alert
+	/// Add warning alert.
 	/// </summary>
 	/// <param name="this">ITempDataDictionary</param>
 	/// <param name="message">Message</param>
@@ -86,7 +86,7 @@ public static class TempDataDictionaryExtensions
 		AddAlert(@this, AlertType.Warning, message);
 
 	/// <summary>
-	/// Add Error alert
+	/// Add Error alert.
 	/// </summary>
 	/// <param name="this">ITempDataDictionary</param>
 	/// <param name="message">Message</param>
@@ -94,7 +94,7 @@ public static class TempDataDictionaryExtensions
 		AddAlert(@this, AlertType.Error, message);
 
 	/// <summary>
-	/// Add Error alert
+	/// Add Error alert.
 	/// </summary>
 	/// <param name="this">ITempDataDictionary</param>
 	/// <param name="message">Message</param>
@@ -106,7 +106,7 @@ public static class TempDataDictionaryExtensions
 		AddAlert(tempData, messageType, message.ToString() ?? message.GetType().Name);
 
 	/// <summary>
-	/// Add alert to TempData
+	/// Add alert to TempData.
 	/// </summary>
 	/// <param name="tempData">ITempDataDictionary</param>
 	/// <param name="messageType">AlertType</param>

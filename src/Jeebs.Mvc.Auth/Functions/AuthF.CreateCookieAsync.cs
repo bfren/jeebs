@@ -12,7 +12,7 @@ namespace Jeebs.Mvc.Auth.Functions;
 public static partial class AuthF
 {
 	/// <summary>
-	/// Create authentication cookie
+	/// Create authentication cookie.
 	/// </summary>
 	/// <param name="http">HttpContext</param>
 	/// <param name="user">ClaimsPrincipal</param>

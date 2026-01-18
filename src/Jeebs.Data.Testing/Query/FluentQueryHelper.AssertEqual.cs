@@ -9,7 +9,7 @@ namespace Jeebs.Data.Testing.Query;
 public static partial class FluentQueryHelper
 {
 	/// <summary>
-	/// Assert that <paramref name="actual"/> is equal to <paramref name="expected"/>
+	/// Assert that <paramref name="actual"/> is equal to <paramref name="expected"/>.
 	/// </summary>
 	/// <typeparam name="T">Value Type</typeparam>
 	/// <param name="expected">Expected value</param>

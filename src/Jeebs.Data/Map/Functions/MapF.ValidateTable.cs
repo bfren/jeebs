@@ -16,7 +16,7 @@ namespace Jeebs.Data.Map.Functions;
 public static partial class MapF
 {
 	/// <summary>
-	/// Validate that the properties on the entity and the columns on the table match
+	/// Validate that the properties on the entity and the columns on the table match.
 	/// </summary>
 	/// <typeparam name="TTable">Table type</typeparam>
 	/// <typeparam name="TEntity">Entity type</typeparam>

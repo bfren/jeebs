@@ -19,7 +19,7 @@ namespace Jeebs.Data.Query;
 public abstract class QueryPartsBuilder
 {
 	/// <summary>
-	/// Get ID column from the specified table
+	/// Get ID column from the specified table.
 	/// </summary>
 	/// <typeparam name="T"></typeparam>
 	/// <param name="table"></param>
@@ -47,7 +47,7 @@ public abstract class QueryPartsBuilder<TId> : QueryPartsBuilder, IQueryPartsBui
 	where TId : class, IStrongId, new()
 {
 	/// <summary>
-	/// IExtract
+	/// IExtract.
 	/// </summary>
 	protected IExtract Extract { get; private init; }
 
@@ -58,12 +58,12 @@ public abstract class QueryPartsBuilder<TId> : QueryPartsBuilder, IQueryPartsBui
 	public abstract IColumn IdColumn { get; }
 
 	/// <summary>
-	/// Create object with default extractor
+	/// Create object with default extractor.
 	/// </summary>
 	protected QueryPartsBuilder() : this(new Extract()) { }
 
 	/// <summary>
-	/// Inject extract object
+	/// Inject extract object.
 	/// </summary>
 	/// <param name="extract">IExtract</param>
 	protected QueryPartsBuilder(IExtract extract) =>
@@ -83,7 +83,7 @@ public abstract class QueryPartsBuilder<TId> : QueryPartsBuilder, IQueryPartsBui
 		Extract.From<TModel>(Table);
 
 	/// <summary>
-	/// Add Join
+	/// Add Join.
 	/// </summary>
 	/// <typeparam name="TFrom">From Table type</typeparam>
 	/// <typeparam name="TTo">To Table type</typeparam>

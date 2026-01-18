@@ -14,7 +14,7 @@ namespace Jeebs.Data.Testing.Query;
 public static class FluentQueryExtensions
 {
 	/// <summary>
-	/// Assert calls to an <see cref="IFluentQuery{TEntity, TId}"/> object
+	/// Assert calls to an <see cref="IFluentQuery{TEntity, TId}"/> object.
 	/// </summary>
 	/// <typeparam name="TEntity">Entity Type</typeparam>
 	/// <typeparam name="TId">Entity ID Type</typeparam>

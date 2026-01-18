@@ -18,7 +18,7 @@ namespace Jeebs.WordPress;
 public interface IWpDbQuery : IDbQuery
 {
 	/// <summary>
-	/// Get Attachments matching the specified options
+	/// Get Attachments matching the specified options.
 	/// </summary>
 	/// <typeparam name="T">Return Model type</typeparam>
 	/// <param name="opt">Function to return query options</param>
@@ -26,13 +26,13 @@ public interface IWpDbQuery : IDbQuery
 		where T : IPostAttachment;
 
 	/// <summary>
-	/// Get filesystem path of specified Attachment
+	/// Get filesystem path of specified Attachment.
 	/// </summary>
 	/// <param name="fileId">Attachment ID</param>
 	Task<Maybe<string>> AttachmentFilePathAsync(WpPostId fileId);
 
 	/// <summary>
-	/// Get Posts matching the specified options
+	/// Get Posts matching the specified options.
 	/// </summary>
 	/// <typeparam name="T">Return Model type</typeparam>
 	/// <param name="opt">Function to return query options</param>
@@ -41,7 +41,7 @@ public interface IWpDbQuery : IDbQuery
 		where T : IWithId<WpPostId>;
 
 	/// <summary>
-	/// Get Posts matching the specified options, with paging
+	/// Get Posts matching the specified options, with paging.
 	/// </summary>
 	/// <typeparam name="T">Return Model type</typeparam>
 	/// <param name="page">Page number</param>
@@ -51,14 +51,14 @@ public interface IWpDbQuery : IDbQuery
 		where T : IWithId<WpPostId>;
 
 	/// <summary>
-	/// Get the Previous and Next posts matching the current query
+	/// Get the Previous and Next posts matching the current query.
 	/// </summary>
 	/// <param name="id">Current Post ID</param>
 	/// <param name="opt">Function to return query options</param>
 	Task<Maybe<(WpPostId? prev, WpPostId? next)>> PreviousAndNextPostsAsync(WpPostId id, Query.GetPostsOptions opt);
 
 	/// <summary>
-	/// Get Posts Meta matching the specified options
+	/// Get Posts Meta matching the specified options.
 	/// </summary>
 	/// <typeparam name="T">Return Model type</typeparam>
 	/// <param name="opt">Function to return query options</param>
@@ -66,7 +66,7 @@ public interface IWpDbQuery : IDbQuery
 		where T : IWithId<WpPostMetaId>;
 
 	/// <summary>
-	/// Get Posts Taxonomy matching the specified options
+	/// Get Posts Taxonomy matching the specified options.
 	/// </summary>
 	/// <typeparam name="T">Return Model type</typeparam>
 	/// <param name="opt">Function to return query options</param>
@@ -74,7 +74,7 @@ public interface IWpDbQuery : IDbQuery
 		where T : IWithId<WpTermId>;
 
 	/// <summary>
-	/// Get Terms matching the specified options
+	/// Get Terms matching the specified options.
 	/// </summary>
 	/// <typeparam name="T">Return Model type</typeparam>
 	/// <param name="opt">Function to return query options</param>

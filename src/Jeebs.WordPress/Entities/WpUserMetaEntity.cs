@@ -9,17 +9,17 @@ namespace Jeebs.WordPress.Entities;
 public abstract record class WpUserMetaEntity : WpUserMetaEntityWithId
 {
 	/// <summary>
-	/// UserId
+	/// UserId.
 	/// </summary>
 	public StrongIds.WpUserId UserId { get; init; } = new();
 
 	/// <summary>
-	/// Key
+	/// Key.
 	/// </summary>
 	public string? Key { get; init; }
 
 	/// <summary>
-	/// Value
+	/// Value.
 	/// </summary>
 	public string? Value { get; init; }
 }

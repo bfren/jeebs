@@ -10,7 +10,7 @@ namespace Jeebs.WordPress.Query.Options;
 public abstract record class TermsOptions : Options<WpTermId>, IQueryTermsOptions
 {
 	/// <summary>
-	/// IQueryTermsPartsBuilder
+	/// IQueryTermsPartsBuilder.
 	/// </summary>
 	protected new IQueryTermsPartsBuilder Builder =>
 		(IQueryTermsPartsBuilder)base.Builder;
@@ -25,7 +25,7 @@ public abstract record class TermsOptions : Options<WpTermId>, IQueryTermsOption
 	public long CountAtLeast { get; init; } = 1;
 
 	/// <summary>
-	/// Allow Builder to be injected
+	/// Allow Builder to be injected.
 	/// </summary>
 	/// <param name="schema">IWpDbSchema</param>
 	/// <param name="builder">IQueryTermsPartsBuilder</param>

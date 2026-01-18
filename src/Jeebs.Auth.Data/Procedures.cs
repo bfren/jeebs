@@ -9,7 +9,7 @@ namespace Jeebs.Auth.Data;
 public static class Procedures
 {
 	/// <summary>
-	/// Update user's last sign in
+	/// Update user's last sign in.
 	/// </summary>
 	public static string UpdateUserLastSignIn =>
 		"update_user_last_sign_in";

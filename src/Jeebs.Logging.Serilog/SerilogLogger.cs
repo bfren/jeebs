@@ -12,7 +12,7 @@ namespace Jeebs.Logging.Serilog;
 public sealed class SerilogLogger<TContext> : SerilogLogger, ILog<TContext>
 {
 	/// <summary>
-	/// Create logger for <typeparamref name="TContext"/>
+	/// Create logger for <typeparamref name="TContext"/>.
 	/// </summary>
 	public SerilogLogger() : base(S.Log.ForContext<TContext>()) { }
 }
@@ -21,14 +21,14 @@ public sealed class SerilogLogger<TContext> : SerilogLogger, ILog<TContext>
 public class SerilogLogger : Log
 {
 	/// <summary>
-	/// Add this as a prefix to messages logged to the console
+	/// Add this as a prefix to messages logged to the console.
 	/// </summary>
 	public static string? ConsoleMessagePrefix { get; internal set; }
 
 	private readonly S.ILogger logger;
 
 	/// <summary>
-	/// Use global logger
+	/// Use global logger.
 	/// </summary>
 	public SerilogLogger() : this(S.Log.Logger) { }
 
@@ -43,7 +43,7 @@ public class SerilogLogger : Log
 		};
 
 	/// <summary>
-	/// Use specified logger
+	/// Use specified logger.
 	/// </summary>
 	/// <param name="logger">Serilog.ILogger</param>
 	internal SerilogLogger(S.ILogger logger) =>

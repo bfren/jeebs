@@ -12,12 +12,12 @@ namespace Jeebs.Mvc.TagHelpers;
 public sealed class TypekitTagHelper : TagHelper
 {
 	/// <summary>
-	/// Typekit Library reference
+	/// Typekit Library reference.
 	/// </summary>
 	public string Library { get; set; } = string.Empty;
 
 	/// <summary>
-	/// Process the tag helper
+	/// Process the tag helper.
 	/// </summary>
 	/// <param name="context">TagHelperContext object</param>
 	/// <param name="output">TagHelperOutput object</param>

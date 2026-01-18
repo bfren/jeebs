@@ -9,7 +9,7 @@ namespace Jeebs.Data.Query.Functions;
 public static partial class QueryF
 {
 	/// <summary>
-	/// Escape and join a list of columns for a select query
+	/// Escape and join a list of columns for a select query.
 	/// </summary>
 	/// <param name="client">IDbClient</param>
 	/// <param name="columns">IColumnList</param>

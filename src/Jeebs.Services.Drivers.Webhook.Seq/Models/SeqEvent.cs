@@ -13,25 +13,25 @@ namespace Jeebs.Services.Drivers.Webhook.Seq;
 public sealed record class SeqEvent
 {
 	/// <summary>
-	/// Timestamp - ISO 8601 format
+	/// Timestamp - ISO 8601 format.
 	/// </summary>
 	[JsonPropertyName("@t")]
 	public string Timestamp { get; private init; }
 
 	/// <summary>
-	/// Message content
+	/// Message content.
 	/// </summary>
 	[JsonPropertyName("@m")]
 	public string Message { get; private init; }
 
 	/// <summary>
-	/// Message level
+	/// Message level.
 	/// </summary>
 	[JsonPropertyName("@l")]
 	public string Level { get; private init; }
 
 	/// <summary>
-	/// Create event
+	/// Create event.
 	/// </summary>
 	/// <param name="message"></param>
 	/// <param name="level"></param>

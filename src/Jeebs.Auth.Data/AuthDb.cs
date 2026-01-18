@@ -15,7 +15,7 @@ namespace Jeebs.Auth.Data;
 public sealed class AuthDb : Db, IAuthDb
 {
 	/// <summary>
-	/// Schema name
+	/// Schema name.
 	/// </summary>
 	public static string Schema { get; } = "auth";
 
@@ -23,22 +23,22 @@ public sealed class AuthDb : Db, IAuthDb
 	public new IAuthDbClient Client { get; private init; }
 
 	/// <summary>
-	/// Role Table
+	/// Role Table.
 	/// </summary>
 	public AuthRoleTable Role { get; }
 
 	/// <summary>
-	/// User Table
+	/// User Table.
 	/// </summary>
 	public AuthUserTable User { get; }
 
 	/// <summary>
-	/// User Role Table
+	/// User Role Table.
 	/// </summary>
 	public AuthUserRoleTable UserRole { get; }
 
 	/// <summary>
-	/// Create object
+	/// Create object.
 	/// </summary>
 	/// <param name="client">IAuthDbClient</param>
 	/// <param name="config">DbConfig</param>

@@ -12,7 +12,7 @@ namespace Jeebs.Apps;
 public static class KeyVaultExtensions
 {
 	/// <summary>
-	/// Create a <see cref="ClientSecretCredential"/> from a <see cref="KeyVaultConfig"/> object
+	/// Create a <see cref="ClientSecretCredential"/> from a <see cref="KeyVaultConfig"/> object.
 	/// </summary>
 	/// <param name="this"></param>
 	public static ClientSecretCredential GetCredential(this KeyVaultConfig @this) =>

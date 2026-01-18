@@ -29,13 +29,13 @@ public sealed class PostsPartsBuilder : PartsBuilder<WpPostId>, IQueryPostsParts
 		new Column(T.Posts, T.Posts.Id, GetIdColumn(T.Posts));
 
 	/// <summary>
-	/// Internal creation only
+	/// Internal creation only.
 	/// </summary>
 	/// <param name="schema">IWpDbSchema</param>
 	internal PostsPartsBuilder(IWpDbSchema schema) : base(schema) { }
 
 	/// <summary>
-	/// Internal creation only
+	/// Internal creation only.
 	/// </summary>
 	/// <param name="extract">IExtract</param>
 	/// <param name="schema">IWpDbSchema</param>

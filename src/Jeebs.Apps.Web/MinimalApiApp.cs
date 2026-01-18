@@ -13,12 +13,12 @@ namespace Jeebs.Apps.Web;
 internal sealed class MinimalApiApp : ApiApp
 {
 	/// <summary>
-	/// Create Minimal API application with HSTS enabled
+	/// Create Minimal API application with HSTS enabled.
 	/// </summary>
 	public MinimalApiApp() : this(true) { }
 
 	/// <summary>
-	/// Create Minimal API application
+	/// Create Minimal API application.
 	/// </summary>
 	/// <param name="useHsts">HSTS should only be disabled if the application is in development mode, or behind a reverse proxy</param>
 	public MinimalApiApp(bool useHsts) : base(useHsts) { }

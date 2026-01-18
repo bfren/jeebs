@@ -6,7 +6,7 @@ namespace Jeebs.WordPress.ContentFilters.Blocks.YouTube_Tests;
 public class GetVideoId_Tests
 {
 	/// <summary>
-	/// Test URLs from https://stackoverflow.com/a/27728417/8199362
+	/// Test URLs from https://stackoverflow.com/a/27728417/8199362.
 	/// </summary>
 	public static IEnumerable<object[]> Returns_Correct_Id_Data()
 	{

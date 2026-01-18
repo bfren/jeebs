@@ -9,7 +9,7 @@ namespace Jeebs.Data.Query;
 public sealed record class QueryBuilder : IQueryBuilder
 {
 	/// <summary>
-	/// Internal creation only
+	/// Internal creation only.
 	/// </summary>
 	internal QueryBuilder() { }
 

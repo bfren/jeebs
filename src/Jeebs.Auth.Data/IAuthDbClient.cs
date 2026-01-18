@@ -11,18 +11,18 @@ namespace Jeebs.Auth.Data;
 public interface IAuthDbClient : IDbClient
 {
 	/// <summary>
-	/// Returns a query that updates a user's last sign in
+	/// Returns a query that updates a user's last sign in.
 	/// </summary>
 	string GetUpdateUserLastSignInQuery();
 
 	/// <summary>
-	/// Nuke database (i.e. migrate to 0
+	/// Nuke database (i.e. migrate to 0.
 	/// </summary>
 	/// <param name="connectionString">Connection string</param>
 	void Nuke(string connectionString);
 
 	/// <summary>
-	/// Migrate to the latest version of the Authentication database
+	/// Migrate to the latest version of the Authentication database.
 	/// </summary>
 	/// <param name="connectionString">Connection string</param>
 	void MigrateToLatest(string connectionString);

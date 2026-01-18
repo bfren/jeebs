@@ -18,14 +18,14 @@ namespace Jeebs.Mvc.Models;
 public abstract class Menu
 {
 	/// <summary>
-	/// Get a URI from a Menu Item
+	/// Get a URI from a Menu Item.
 	/// </summary>
 	/// <param name="urlHelper">IUrlHelper</param>
 	/// <param name="item">MenuItem</param>
 	public delegate string? GetUri(IUrlHelper urlHelper, MenuItem item);
 
 	/// <summary>
-	/// Load a URI
+	/// Load a URI.
 	/// </summary>
 	/// <param name="result">StringBuilder result (to output)</param>
 	/// <param name="client">HttpClient</param>
@@ -34,7 +34,7 @@ public abstract class Menu
 	public delegate ValueTask LoadUri(StringBuilder result, HttpClient client, string uri, CancellationToken token);
 
 	/// <summary>
-	/// List of top-level menu items
+	/// List of top-level menu items.
 	/// </summary>
 	public List<MenuItem> Items { get; private init; } = [];
 
@@ -43,7 +43,7 @@ public abstract class Menu
 		MenuF.GetSimpleItems(urlHelper, Items, GetUriFromActionContext);
 
 	/// <summary>
-	/// Load this menu's items (to speed up page loading)
+	/// Load this menu's items (to speed up page loading).
 	/// </summary>
 	/// <param name="http">IHttpClientFactory</param>
 	/// <param name="urlHelper">IUrlHelper</param>
@@ -60,7 +60,7 @@ public abstract class Menu
 	}
 
 	/// <summary>
-	/// Build a URI using the <paramref name="urlHelper"/> ActionContext
+	/// Build a URI using the <paramref name="urlHelper"/> ActionContext.
 	/// </summary>
 	/// <param name="urlHelper">IUrlHelper</param>
 	/// <param name="item">MenuItem</param>
@@ -81,12 +81,12 @@ public abstract class Menu
 	}
 
 	/// <summary>
-	/// Helper Functions
+	/// Helper Functions.
 	/// </summary>
 	internal static class MenuF
 	{
 		/// <summary>
-		/// Use a UrlHelper object to get simple menu items
+		/// Use a UrlHelper object to get simple menu items.
 		/// </summary>
 		/// <param name="urlHelper">UrlHelper object</param>
 		/// <param name="items">Menu Items</param>
@@ -103,7 +103,7 @@ public abstract class Menu
 		}
 
 		/// <summary>
-		/// Get URIs from a list of menu items
+		/// Get URIs from a list of menu items.
 		/// </summary>
 		/// <param name="urlHelper">IUrlHelper</param>
 		/// <param name="items">Menu Items</param>
@@ -136,7 +136,7 @@ public abstract class Menu
 		}
 
 		/// <summary>
-		/// Load the specified URIs
+		/// Load the specified URIs.
 		/// </summary>
 		/// <param name="client">HttpClient</param>
 		/// <param name="uris">List of URIs to load</param>
@@ -158,7 +158,7 @@ public abstract class Menu
 		}
 
 		/// <summary>
-		/// Load a URI asynchronously, writing output to <paramref name="result"/>
+		/// Load a URI asynchronously, writing output to <paramref name="result"/>.
 		/// </summary>
 		/// <param name="result">StringBuilder</param>
 		/// <param name="client">HttpClient</param>

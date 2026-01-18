@@ -14,7 +14,7 @@ namespace Jeebs.WordPress.CustomFields;
 public abstract class TextCustomField : CustomField<string>
 {
 	/// <summary>
-	/// Custom Field value
+	/// Custom Field value.
 	/// </summary>
 	public override string ValueObj
 	{

@@ -14,7 +14,7 @@ public abstract record class Options<TId> : QueryOptions<TId>
 	where TId : ULongId, new()
 {
 	/// <summary>
-	/// IWpDbSchema shorthand
+	/// IWpDbSchema shorthand.
 	/// </summary>
 	protected IWpDbSchema T { get; private init; }
 
@@ -22,7 +22,7 @@ public abstract record class Options<TId> : QueryOptions<TId>
 		T;
 
 	/// <summary>
-	/// Inject dependencies
+	/// Inject dependencies.
 	/// </summary>
 	/// <param name="schema">IWpDbSchema</param>
 	/// <param name="builder">IQueryPartsBuilder</param>

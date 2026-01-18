@@ -11,67 +11,67 @@ namespace Jeebs.WordPress.Entities;
 public abstract record class WpLinkEntity : WpLinkEntityWithId
 {
 	/// <summary>
-	/// Url
+	/// Url.
 	/// </summary>
 	public string Url { get; init; } = string.Empty;
 
 	/// <summary>
-	/// Title
+	/// Title.
 	/// </summary>
 	public string Title { get; init; } = string.Empty;
 
 	/// <summary>
-	/// Image
+	/// Image.
 	/// </summary>
 	public string Image { get; init; } = string.Empty;
 
 	/// <summary>
-	/// Target
+	/// Target.
 	/// </summary>
 	public string Target { get; init; } = string.Empty;
 
 	/// <summary>
-	/// CategoryId
+	/// CategoryId.
 	/// </summary>
 	public StrongIds.WpTermId CategoryId { get; init; } = new();
 
 	/// <summary>
-	/// Description
+	/// Description.
 	/// </summary>
 	public string Description { get; init; } = string.Empty;
 
 	/// <summary>
-	/// Visible
+	/// Visible.
 	/// </summary>
 	public bool Visible { get; init; }
 
 	/// <summary>
-	/// OwnerId
+	/// OwnerId.
 	/// </summary>
 	public StrongIds.WpUserId OwnerId { get; init; } = new();
 
 	/// <summary>
-	/// Rating
+	/// Rating.
 	/// </summary>
 	public ulong Rating { get; init; }
 
 	/// <summary>
-	/// LastUpdatedOn
+	/// LastUpdatedOn.
 	/// </summary>
 	public DateTime LastUpdatedOn { get; init; }
 
 	/// <summary>
-	/// Rel
+	/// Rel.
 	/// </summary>
 	public string Rel { get; init; } = string.Empty;
 
 	/// <summary>
-	/// Notes
+	/// Notes.
 	/// </summary>
 	public string Notes { get; init; } = string.Empty;
 
 	/// <summary>
-	/// Rss
+	/// Rss.
 	/// </summary>
 	public string Rss { get; init; } = string.Empty;
 }

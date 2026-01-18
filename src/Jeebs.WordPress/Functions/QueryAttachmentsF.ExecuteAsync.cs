@@ -14,7 +14,7 @@ namespace Jeebs.WordPress.Functions;
 public static partial class QueryAttachmentsF
 {
 	/// <summary>
-	/// Get attached files
+	/// Get attached files.
 	/// </summary>
 	/// <typeparam name="T"></typeparam>
 	/// <param name="db">IWpDb</param>

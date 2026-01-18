@@ -14,7 +14,7 @@ public sealed class ReplaceWpContent : ContentFilter
 	private ReplaceWpContent(Func<string, string> filter) : base(filter) { }
 
 	/// <summary>
-	/// Create filter
+	/// Create filter.
 	/// </summary>
 	/// <param name="from">Search URL</param>
 	/// <param name="to">Replacement URL</param>

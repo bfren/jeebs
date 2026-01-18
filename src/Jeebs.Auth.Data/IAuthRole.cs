@@ -11,7 +11,7 @@ namespace Jeebs.Auth.Data;
 public interface IAuthRole : IWithId<AuthRoleId>
 {
 	/// <summary>
-	/// Role Name (should be a normalised string)
+	/// Role Name (should be a normalised string).
 	/// </summary>
 	string Name { get; init; }
 }

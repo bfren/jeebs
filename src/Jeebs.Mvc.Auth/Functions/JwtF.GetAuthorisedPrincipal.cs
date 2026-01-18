@@ -12,7 +12,7 @@ namespace Jeebs.Mvc.Auth.Functions;
 public static partial class JwtF
 {
 	/// <summary>
-	/// Attempt to get an authorised ClaimsPrincipal from the authorisation token
+	/// Attempt to get an authorised ClaimsPrincipal from the authorisation token.
 	/// </summary>
 	/// <param name="http">HttpContext</param>
 	public static Maybe<ClaimsPrincipal> GetAuthorisedPrincipal(HttpContext http)

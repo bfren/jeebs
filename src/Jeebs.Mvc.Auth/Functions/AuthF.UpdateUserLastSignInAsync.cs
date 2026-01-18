@@ -10,7 +10,7 @@ namespace Jeebs.Mvc.Auth.Functions;
 public static partial class AuthF
 {
 	/// <summary>
-	/// Update the last sign in for a user
+	/// Update the last sign in for a user.
 	/// </summary>
 	/// <param name="auth"></param>
 	/// <param name="user"></param>

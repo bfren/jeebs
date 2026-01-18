@@ -11,7 +11,7 @@ namespace Jeebs.WordPress.Query;
 public interface IQueryPostsMetaPartsBuilder : IQueryPartsBuilder<WpPostMetaId>
 {
 	/// <summary>
-	/// Add Where Post ID
+	/// Add Where Post ID.
 	/// </summary>
 	/// <param name="parts">QueryParts</param>
 	/// <param name="postId">Post ID</param>
@@ -19,7 +19,7 @@ public interface IQueryPostsMetaPartsBuilder : IQueryPartsBuilder<WpPostMetaId>
 	Maybe<QueryParts> AddWherePostId(QueryParts parts, WpPostId? postId, IImmutableList<WpPostId> postIds);
 
 	/// <summary>
-	/// Add Where Post Status
+	/// Add Where Post Status.
 	/// </summary>
 	/// <param name="parts">QueryParts</param>
 	/// <param name="key">Meta Key</param>

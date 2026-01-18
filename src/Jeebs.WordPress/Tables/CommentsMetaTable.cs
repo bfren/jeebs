@@ -12,32 +12,32 @@ namespace Jeebs.WordPress.Tables;
 public sealed record class CommentsMetaTable : Table
 {
 	/// <summary>
-	/// CommentMetaId
+	/// CommentMetaId.
 	/// </summary>
 	[Id]
 	public string Id =>
 		"meta_id";
 
 	/// <summary>
-	/// CommentId
+	/// CommentId.
 	/// </summary>
 	public string CommentId =>
 		"comment_id";
 
 	/// <summary>
-	/// Key
+	/// Key.
 	/// </summary>
 	public string Key =>
 		"meta_key";
 
 	/// <summary>
-	/// Value
+	/// Value.
 	/// </summary>
 	public string Value =>
 		"meta_value";
 
 	/// <summary>
-	/// Create object
+	/// Create object.
 	/// </summary>
 	/// <param name="prefix">Table Prefix</param>
 	public CommentsMetaTable(string prefix) : base($"{prefix}commentmeta") { }

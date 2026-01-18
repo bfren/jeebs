@@ -14,7 +14,7 @@ public abstract class EnumeratedTypeHandler<T> : Dapper.SqlMapper.TypeHandler<T>
 	where T : Enumerated
 {
 	/// <summary>
-	/// Parse the Enumerated value
+	/// Parse the Enumerated value.
 	/// </summary>
 	/// <param name="value">Database table value</param>
 	/// <param name="parseValue">Function to parse <paramref name="value"/> to Enumerated value</param>
@@ -30,7 +30,7 @@ public abstract class EnumeratedTypeHandler<T> : Dapper.SqlMapper.TypeHandler<T>
 		};
 
 	/// <summary>
-	/// Set the Enumerated table value
+	/// Set the Enumerated table value.
 	/// </summary>
 	/// <param name="parameter">IDbDataParameter object</param>
 	/// <param name="value">Enumerated value</param>

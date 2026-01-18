@@ -13,7 +13,7 @@ namespace Jeebs.Services.Drivers.Webhook.Slack;
 public abstract class SlackWebhookDriver : WebhookDriver<SlackConfig, SlackMessage>
 {
 	/// <summary>
-	/// Create object
+	/// Create object.
 	/// </summary>
 	/// <param name="name">Service name</param>
 	/// <param name="args">SlackWebhookDriverArgs</param>

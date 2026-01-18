@@ -11,24 +11,24 @@ namespace Jeebs.Data.Exceptions;
 public sealed class UnableToFindVersionColumnException : Exception
 {
 	/// <summary>
-	/// Create exception
+	/// Create exception.
 	/// </summary>
 	public UnableToFindVersionColumnException() { }
 
 	/// <summary>
-	/// Create exception
+	/// Create exception.
 	/// </summary>
 	/// <param name="msg"></param>
 	public UnableToFindVersionColumnException(IMsg msg) : base(msg.ToString() ?? string.Empty) { }
 
 	/// <summary>
-	/// Create exception
+	/// Create exception.
 	/// </summary>
 	/// <param name="message"></param>
 	public UnableToFindVersionColumnException(string message) : base(message) { }
 
 	/// <summary>
-	/// Create exception
+	/// Create exception.
 	/// </summary>
 	/// <param name="message"></param>
 	/// <param name="inner"></param>

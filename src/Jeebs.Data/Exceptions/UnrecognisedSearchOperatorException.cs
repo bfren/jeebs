@@ -12,24 +12,24 @@ namespace Jeebs.Data.Exceptions;
 public sealed class UnrecognisedSearchOperatorException : Exception
 {
 	/// <summary>
-	/// Create exception
+	/// Create exception.
 	/// </summary>
 	public UnrecognisedSearchOperatorException() { }
 
 	/// <summary>
-	/// Create exception
+	/// Create exception.
 	/// </summary>
 	/// <param name="compare">Compare</param>
 	public UnrecognisedSearchOperatorException(Compare compare) : this($"Unrecognised comparison: '{compare}'.") { }
 
 	/// <summary>
-	/// Create exception
+	/// Create exception.
 	/// </summary>
 	/// <param name="message"></param>
 	public UnrecognisedSearchOperatorException(string message) : base(message) { }
 
 	/// <summary>
-	/// Create exception
+	/// Create exception.
 	/// </summary>
 	/// <param name="message"></param>
 	/// <param name="inner"></param>

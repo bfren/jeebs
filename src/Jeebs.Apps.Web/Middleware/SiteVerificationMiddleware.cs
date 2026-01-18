@@ -20,14 +20,14 @@ public sealed class SiteVerificationMiddleware : IMiddleware
 	private readonly ILogger logger = Log.ForContext<SiteVerificationMiddleware>();
 
 	/// <summary>
-	/// Set Site Verification configuration
+	/// Set Site Verification configuration.
 	/// </summary>
 	/// <param name="config">JeebsConfig</param>
 	public SiteVerificationMiddleware(IOptions<VerificationConfig> config) =>
 		this.config = config.Value;
 
 	/// <summary>
-	/// Invoke Middleware
+	/// Invoke Middleware.
 	/// </summary>
 	/// <param name="context">HttpContext</param>
 	/// <param name="next">Next Middleware</param>

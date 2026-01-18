@@ -12,14 +12,14 @@ namespace Jeebs.Mvc.Controllers;
 public abstract class SimpleController : Microsoft.AspNetCore.Mvc.Controller
 {
 	/// <summary>
-	/// Disable favicon.ico
+	/// Disable favicon.ico.
 	/// </summary>
 	[Route("favicon.ico")]
 	public EmptyResult Favicon() =>
 		new();
 
 	/// <summary>
-	/// Keep alive page
+	/// Keep alive page.
 	/// </summary>
 	[ResponseCache(NoStore = true, Location = ResponseCacheLocation.None)]
 	[Route("keep-alive")]
@@ -27,7 +27,7 @@ public abstract class SimpleController : Microsoft.AspNetCore.Mvc.Controller
 		Content(DateTime.UtcNow.ToString("u"), "text/plain");
 
 	/// <summary>
-	/// Robots.txt file
+	/// Robots.txt file.
 	/// </summary>
 	[Route("robots.txt")]
 	public ContentResult RobotsTxt() =>

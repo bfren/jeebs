@@ -15,7 +15,7 @@ public abstract class Repository<TEntity, TId> : IRepository<TEntity, TId>
 	where TId : class, IStrongId, new()
 {
 	/// <summary>
-	/// IDb
+	/// IDb.
 	/// </summary>
 	protected IDb Db { get; private init; }
 
@@ -23,7 +23,7 @@ public abstract class Repository<TEntity, TId> : IRepository<TEntity, TId>
 		Db;
 
 	/// <summary>
-	/// ILog (should be given a context of the implementing class)
+	/// ILog (should be given a context of the implementing class).
 	/// </summary>
 	protected ILog<IRepository<TEntity, TId>> Log { get; private init; }
 
@@ -31,7 +31,7 @@ public abstract class Repository<TEntity, TId> : IRepository<TEntity, TId>
 		Log;
 
 	/// <summary>
-	/// Inject database and log objects
+	/// Inject database and log objects.
 	/// </summary>
 	/// <param name="db">IDb</param>
 	/// <param name="log">ILog (should be given a context of the implementing class)</param>
@@ -39,7 +39,7 @@ public abstract class Repository<TEntity, TId> : IRepository<TEntity, TId>
 		(Db, Log) = (db, log);
 
 	/// <summary>
-	/// Use Debug log by default - override to send elsewhere (or to disable entirely)
+	/// Use Debug log by default - override to send elsewhere (or to disable entirely).
 	/// </summary>
 	/// <param name="message">Log message</param>
 	/// <param name="args">Log message arguments</param>
@@ -47,7 +47,7 @@ public abstract class Repository<TEntity, TId> : IRepository<TEntity, TId>
 		Log.Vrb(message, args);
 
 	/// <summary>
-	/// Log an operation
+	/// Log an operation.
 	/// </summary>
 	/// <param name="operation">Operation (method) name</param>
 	protected void LogFunc(string operation) =>

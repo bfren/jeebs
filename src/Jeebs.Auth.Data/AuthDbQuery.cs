@@ -16,7 +16,7 @@ namespace Jeebs.Auth.Data;
 public sealed class AuthDbQuery : DbQuery<IAuthDb>, IAuthDbQuery
 {
 	/// <summary>
-	/// Inject dependencies
+	/// Inject dependencies.
 	/// </summary>
 	/// <param name="db">IAuthDb</param>
 	/// <param name="log">ILog</param>

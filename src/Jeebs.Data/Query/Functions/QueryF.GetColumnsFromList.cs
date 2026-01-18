@@ -9,7 +9,7 @@ namespace Jeebs.Data.Query.Functions;
 public static partial class QueryF
 {
 	/// <summary>
-	/// Get the list of columns for a query, escaped with the alias
+	/// Get the list of columns for a query, escaped with the alias.
 	/// </summary>
 	/// <param name="client">IDbClient</param>
 	/// <param name="columns">IColumnList</param>

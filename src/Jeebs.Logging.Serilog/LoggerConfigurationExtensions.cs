@@ -22,7 +22,7 @@ namespace Jeebs.Logging.Serilog;
 public static class LoggerConfigurationExtensions
 {
 	/// <summary>
-	/// Load Serilog configuration from JeebsConfig object
+	/// Load Serilog configuration from JeebsConfig object.
 	/// </summary>
 	/// <param name="this">LoggerConfiguration</param>
 	/// <param name="jeebs">JeebsConfig</param>
@@ -75,7 +75,7 @@ public static class LoggerConfigurationExtensions
 	}
 
 	/// <summary>
-	/// Configure all enabled <see cref="ILoggingProvider"/> services
+	/// Configure all enabled <see cref="ILoggingProvider"/> services.
 	/// </summary>
 	/// <param name="serilog"></param>
 	/// <param name="jeebs"></param>
@@ -119,7 +119,7 @@ public static class LoggerConfigurationExtensions
 	}
 
 	/// <summary>
-	/// Enable all <see cref="ILoggingConnector"/> services
+	/// Enable all <see cref="ILoggingConnector"/> services.
 	/// </summary>
 	/// <param name="serilog"></param>
 	/// <param name="jeebs"></param>

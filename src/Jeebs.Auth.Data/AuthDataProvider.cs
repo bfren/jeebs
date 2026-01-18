@@ -29,7 +29,7 @@ public sealed class AuthDataProvider : IAuthDataProvider
 	public IAuthDbQuery Query { get; private init; }
 
 	/// <summary>
-	/// Inject dependencies
+	/// Inject dependencies.
 	/// </summary>
 	/// <param name="user">IAuthUserRepository</param>
 	/// <param name="role">IAuthRoleRepository</param>

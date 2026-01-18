@@ -11,7 +11,7 @@ namespace Jeebs.WordPress.Functions;
 public static partial class QueryPostsF
 {
 	/// <summary>
-	/// Get the Meta Dictionary Info for <typeparamref name="TModel"/>
+	/// Get the Meta Dictionary Info for <typeparamref name="TModel"/>.
 	/// </summary>
 	/// <typeparam name="TModel">Post Model type</typeparam>
 	internal static Maybe<Meta<TModel>> GetMetaDictionary<TModel>()
@@ -37,13 +37,13 @@ public static partial class QueryPostsF
 	}
 
 	/// <summary>
-	/// Meta Info alias
+	/// Meta Info alias.
 	/// </summary>
 	/// <typeparam name="TModel">Post Model type</typeparam>
 	public sealed class Meta<TModel> : PropertyInfo<TModel, MetaDictionary>
 	{
 		/// <summary>
-		/// Create object
+		/// Create object.
 		/// </summary>
 		/// <param name="info">PropertyInfo</param>
 		public Meta(PropertyInfo info) : base(info) { }

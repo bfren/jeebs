@@ -28,7 +28,7 @@ public sealed class WpBcg : Wp<
 >
 {
 	/// <summary>
-	/// Create instance
+	/// Create instance.
 	/// </summary>
 	/// <param name="dbConfig">DbConfig</param>
 	/// <param name="wpConfig">WpBcgConfig</param>
@@ -36,13 +36,13 @@ public sealed class WpBcg : Wp<
 	public WpBcg(IOptions<DbConfig> dbConfig, IOptions<WpBcgConfig> wpConfig, Jeebs.Logging.ILog<WpBcg> log) : base(dbConfig, wpConfig, log) { }
 
 	/// <summary>
-	/// Register custom post types
+	/// Register custom post types.
 	/// </summary>
 	public override void RegisterCustomPostTypes() =>
 		PostType.AddCustomPostType(PostTypes.Sermon);
 
 	/// <summary>
-	/// Register custom taxonomies
+	/// Register custom taxonomies.
 	/// </summary>
 	public override void RegisterCustomTaxonomies()
 	{
@@ -54,7 +54,7 @@ public sealed class WpBcg : Wp<
 	}
 
 	/// <summary>
-	/// Custom Fields
+	/// Custom Fields.
 	/// </summary>
 	public static class CustomFields
 	{
@@ -66,7 +66,7 @@ public sealed class WpBcg : Wp<
 	}
 
 	/// <summary>
-	/// Custom Post Types
+	/// Custom Post Types.
 	/// </summary>
 	public static class PostTypes
 	{
@@ -74,7 +74,7 @@ public sealed class WpBcg : Wp<
 	}
 
 	/// <summary>
-	/// Custom Taxonomies
+	/// Custom Taxonomies.
 	/// </summary>
 	public static class Taxonomies
 	{

@@ -13,14 +13,14 @@ namespace Jeebs.Data.TypeHandlers;
 public class JsonTypeHandler<T> : Dapper.SqlMapper.StringTypeHandler<T>
 {
 	/// <summary>
-	/// Serialise object to JSON
+	/// Serialise object to JSON.
 	/// </summary>
 	/// <param name="xml">T value</param>
 	protected override string Format(T xml) =>
 		JsonF.Serialise(xml).Unwrap(JsonF.Empty);
 
 	/// <summary>
-	/// Deserialise JSON string
+	/// Deserialise JSON string.
 	/// </summary>
 	/// <param name="xml">JSON string</param>
 	protected override T Parse(string xml) =>

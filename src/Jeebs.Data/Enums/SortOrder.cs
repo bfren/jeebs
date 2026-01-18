@@ -9,12 +9,12 @@ namespace Jeebs.Data.Enums;
 public enum SortOrder
 {
 	/// <summary>
-	/// Ascending order
+	/// Ascending order.
 	/// </summary>
 	Ascending = 1 << 0,
 
 	/// <summary>
-	/// Descending order
+	/// Descending order.
 	/// </summary>
 	Descending = 1 << 1
 }

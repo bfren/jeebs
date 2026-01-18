@@ -11,12 +11,12 @@ namespace Jeebs.Auth.Data;
 public interface IAuthUserRole : IWithId<AuthUserRoleId>
 {
 	/// <summary>
-	/// User ID
+	/// User ID.
 	/// </summary>
 	AuthUserId UserId { get; init; }
 
 	/// <summary>
-	/// Role ID
+	/// Role ID.
 	/// </summary>
 	AuthRoleId RoleId { get; init; }
 }

@@ -19,23 +19,23 @@ public interface IQueryPartsBuilder<TId>
 	where TId : class, IStrongId, new()
 {
 	/// <summary>
-	/// The primary table for this query
+	/// The primary table for this query.
 	/// </summary>
 	ITable Table { get; }
 
 	/// <summary>
-	/// ID Column details
+	/// ID Column details.
 	/// </summary>
 	IColumn IdColumn { get; }
 
 	/// <summary>
-	/// Retrieve columns matching the specified model
+	/// Retrieve columns matching the specified model.
 	/// </summary>
 	/// <typeparam name="TModel">Return Model type</typeparam>
 	IColumnList GetColumns<TModel>();
 
 	/// <summary>
-	/// Create a new QueryParts object, adding <paramref name="maximum"/> and <paramref name="skip"/> values
+	/// Create a new QueryParts object, adding <paramref name="maximum"/> and <paramref name="skip"/> values.
 	/// </summary>
 	/// <typeparam name="TModel">Return Model type</typeparam>
 	/// <param name="maximum">Maximum number of results to select</param>
@@ -43,7 +43,7 @@ public interface IQueryPartsBuilder<TId>
 	QueryParts Create<TModel>(ulong? maximum, ulong skip);
 
 	/// <summary>
-	/// Add Join
+	/// Add Join.
 	/// </summary>
 	/// <typeparam name="TFrom">From Table type</typeparam>
 	/// <typeparam name="TTo">To Table type</typeparam>
@@ -70,7 +70,7 @@ public interface IQueryPartsBuilder<TId>
 		where TTo : ITable;
 
 	/// <summary>
-	/// Add Id / Ids - Id takes precedence over Ids
+	/// Add Id / Ids - Id takes precedence over Ids.
 	/// </summary>
 	/// <param name="parts">QueryParts</param>
 	/// <param name="id">Single ID</param>
@@ -79,7 +79,7 @@ public interface IQueryPartsBuilder<TId>
 		TId? id, IImmutableList<TId> ids);
 
 	/// <summary>
-	/// Add Sort - SortRandom takes precendence over Sort
+	/// Add Sort - SortRandom takes precendence over Sort.
 	/// </summary>
 	/// <param name="parts">QueryParts</param>
 	/// <param name="sortRandom">If true, will sort results randomly</param>
@@ -88,7 +88,7 @@ public interface IQueryPartsBuilder<TId>
 		bool sortRandom, IImmutableList<(IColumn, SortOrder)> sort);
 
 	/// <summary>
-	/// Add a Where predicate using Linq Expressions
+	/// Add a Where predicate using Linq Expressions.
 	/// </summary>
 	/// <typeparam name="TTable">Table type</typeparam>
 	/// <param name="parts">QueryParts</param>
@@ -101,7 +101,7 @@ public interface IQueryPartsBuilder<TId>
 		where TTable : ITable;
 
 	/// <summary>
-	/// Add a custom Where predicate
+	/// Add a custom Where predicate.
 	/// </summary>
 	/// <param name="parts">QueryParts</param>
 	/// <param name="clause">Clause text</param>

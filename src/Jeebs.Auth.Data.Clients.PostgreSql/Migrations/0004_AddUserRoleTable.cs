@@ -17,7 +17,7 @@ public sealed class AddUserRoleTable : Migration
 		selector(new());
 
 	/// <summary>
-	/// Migrate up
+	/// Migrate up.
 	/// </summary>
 	protected override void Up() => Execute($@"
 		CREATE TABLE IF NOT EXISTS {AuthDb.Schema}.{AuthUserRoleTable.TableName}
@@ -32,7 +32,7 @@ public sealed class AddUserRoleTable : Migration
 	");
 
 	/// <summary>
-	/// Migrate down
+	/// Migrate down.
 	/// </summary>
 	protected override void Down() => Execute($@"
 		DROP TABLE IF EXISTS {AuthDb.Schema}.{AuthUserRoleTable.TableName}

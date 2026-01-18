@@ -19,12 +19,12 @@ public abstract class WebhookDriverArgs<TConfig> : DriverArgs<TConfig>
 	where TConfig : IServiceConfig
 {
 	/// <summary>
-	/// IHttpClientFactory
+	/// IHttpClientFactory.
 	/// </summary>
 	public IHttpClientFactory Factory { get; }
 
 	/// <summary>
-	/// Create object
+	/// Create object.
 	/// </summary>
 	/// <param name="factory"></param>
 	/// <param name="log">ILog</param>

@@ -14,7 +14,7 @@ namespace Jeebs.Data.Map.Functions;
 public static partial class MapF
 {
 	/// <summary>
-	/// Get the column with the specified attribute
+	/// Get the column with the specified attribute.
 	/// </summary>
 	/// <typeparam name="TTable">Table type</typeparam>
 	/// <typeparam name="TAttribute">Attribute type</typeparam>

@@ -13,7 +13,7 @@ namespace Jeebs.Data.Query.Functions;
 public static partial class QueryF
 {
 	/// <summary>
-	/// Turn list of predicates into WHERE clauses with associated parameters
+	/// Turn list of predicates into WHERE clauses with associated parameters.
 	/// </summary>
 	/// <param name="client">IDbClient</param>
 	/// <param name="predicates">List of predicates</param>

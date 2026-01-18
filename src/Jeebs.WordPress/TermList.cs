@@ -13,34 +13,34 @@ namespace Jeebs.WordPress;
 public sealed class TermList : List<TermList.Term>
 {
 	/// <summary>
-	/// Taxonomy of this Term List
+	/// Taxonomy of this Term List.
 	/// </summary>
 	public Taxonomy Taxonomy { get; }
 
 	/// <summary>
-	/// Create object
+	/// Create object.
 	/// </summary>
 	/// <param name="taxonomy">Taxonomy of these terms</param>
 	public TermList(Taxonomy taxonomy) =>
 		Taxonomy = taxonomy;
 
 	/// <summary>
-	/// Term Model
+	/// Term Model.
 	/// </summary>
 	public abstract record class Term : WpTermEntityWithId
 	{
 		/// <summary>
-		/// Title
+		/// Title.
 		/// </summary>
 		public string Title { get; init; } = string.Empty;
 
 		/// <summary>
-		/// Slug
+		/// Slug.
 		/// </summary>
 		public string Slug { get; init; } = string.Empty;
 
 		/// <summary>
-		/// Count
+		/// Count.
 		/// </summary>
 		public long Count { get; init; }
 	}

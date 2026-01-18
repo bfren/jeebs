@@ -12,13 +12,13 @@ namespace Jeebs.Services.Drivers.Webhook.Slack.Models;
 public abstract record class SlackAccessory
 {
 	/// <summary>
-	/// Accessory type (e.g. 'image')
+	/// Accessory type (e.g. 'image').
 	/// </summary>
 	[JsonPropertyName("type")]
 	public string Type { get; private init; }
 
 	/// <summary>
-	/// Create object
+	/// Create object.
 	/// </summary>
 	/// <param name="type">Accessory type</param>
 	protected SlackAccessory(string type) =>

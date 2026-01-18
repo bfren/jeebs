@@ -13,7 +13,7 @@ namespace Jeebs.Auth.Data;
 public static class ServiceCollectionExtensions
 {
 	/// <summary>
-	/// Add required data services for authentication
+	/// Add required data services for authentication.
 	/// </summary>
 	/// <typeparam name="TDbClient">IAuthDbClient type</typeparam>
 	/// <param name="services"></param>

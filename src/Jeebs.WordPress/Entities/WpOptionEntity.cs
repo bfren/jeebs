@@ -9,17 +9,17 @@ namespace Jeebs.WordPress.Entities;
 public abstract record class WpOptionEntity : WpOptionEntityWithId
 {
 	/// <summary>
-	/// Key
+	/// Key.
 	/// </summary>
 	public string? Key { get; init; }
 
 	/// <summary>
-	/// Value
+	/// Value.
 	/// </summary>
 	public string Value { get; init; } = string.Empty;
 
 	/// <summary>
-	/// IsAutoloaded
+	/// IsAutoloaded.
 	/// </summary>
 	public bool IsAutoloaded { get; init; }
 }

@@ -10,7 +10,7 @@ namespace Jeebs.WordPress.Query.Options;
 public abstract record class PostsMetaOptions : Options<WpPostMetaId>, IQueryPostsMetaOptions
 {
 	/// <summary>
-	/// IQueryPostsMetaPartsBuilder
+	/// IQueryPostsMetaPartsBuilder.
 	/// </summary>
 	protected new IQueryPostsMetaPartsBuilder Builder =>
 		(IQueryPostsMetaPartsBuilder)base.Builder;
@@ -26,7 +26,7 @@ public abstract record class PostsMetaOptions : Options<WpPostMetaId>, IQueryPos
 	public string? Key { get; init; }
 
 	/// <summary>
-	/// Allow Builder to be injected
+	/// Allow Builder to be injected.
 	/// </summary>
 	/// <param name="schema">IWpDbSchema</param>
 	/// <param name="builder">IQueryPostsMetaPartsBuilder</param>

@@ -11,17 +11,17 @@ namespace Jeebs.Auth.Data.Entities;
 public sealed record class AuthUserRoleEntity : IWithId<AuthUserRoleId>, IAuthUserRole
 {
 	/// <summary>
-	/// User Role ID
+	/// User Role ID.
 	/// </summary>
 	public AuthUserRoleId Id { get; init; } = new();
 
 	/// <summary>
-	/// User ID
+	/// User ID.
 	/// </summary>
 	public AuthUserId UserId { get; init; } = new();
 
 	/// <summary>
-	/// Role ID
+	/// Role ID.
 	/// </summary>
 	public AuthRoleId RoleId { get; init; } = new();
 

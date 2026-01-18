@@ -16,7 +16,7 @@ namespace Jeebs.Mvc.Controllers;
 public static class ControllerExtensions
 {
 	/// <summary>
-	/// Execute a Maybe.None result and return the View
+	/// Execute a Maybe.None result and return the View.
 	/// </summary>
 	/// <param name="this">Controller</param>
 	/// <param name="msg">None</param>
@@ -24,7 +24,7 @@ public static class ControllerExtensions
 		ExecuteErrorAsync(@this, msg, null);
 
 	/// <summary>
-	/// Execute a Maybe.None result and return the View
+	/// Execute a Maybe.None result and return the View.
 	/// </summary>
 	/// <param name="this">Controller</param>
 	/// <param name="msg">None</param>

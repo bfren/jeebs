@@ -11,12 +11,12 @@ namespace Jeebs.Mvc;
 public interface IResult : IActionResult
 {
 	/// <summary>
-	/// Whether or not the operation was successful
+	/// Whether or not the operation was successful.
 	/// </summary>
 	bool Success { get; }
 
 	/// <summary>
-	/// HTTP status code - by default returns 200 on success or 500 on failure
+	/// HTTP status code - by default returns 200 on success or 500 on failure.
 	/// </summary>
 	int StatusCode { get; }
 }
@@ -26,7 +26,7 @@ public interface IResult : IActionResult
 public interface IResult<out T> : IResult
 {
 	/// <summary>
-	/// Returns the value if the operation succeeded, or null if not
+	/// Returns the value if the operation succeeded, or null if not.
 	/// </summary>
 	T? Value { get; }
 }

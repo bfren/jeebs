@@ -419,7 +419,7 @@ public static class BibleBooks
 		new([Joshua, Judges, Ruth, FirstSamuel, SecondSamuel, FirstKings, SecondKings, FirstChronicles, SecondChronicles, Ezra, Nehemiah, Esther]);
 
 	/// <summary>
-	/// Wisdom Literature
+	/// Wisdom Literature.
 	/// </summary>
 	public static List<string> Wisdom =>
 		new([Job, Psalms, Proverbs, Ecclesiastes, SongOfSongs]);

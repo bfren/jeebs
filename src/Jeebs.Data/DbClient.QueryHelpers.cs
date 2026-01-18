@@ -10,7 +10,7 @@ namespace Jeebs.Data;
 public abstract partial class DbClient : IDbClient
 {
 	/// <summary>
-	/// Get columns and parameter names for <see cref="GetCreateQuery(IDbName, IColumnList)"/>
+	/// Get columns and parameter names for <see cref="GetCreateQuery(IDbName, IColumnList)"/>.
 	/// </summary>
 	/// <param name="columns">IColumnList</param>
 	protected virtual (List<string> col, List<string> par) GetColumnsForCreateQuery(IColumnList columns)
@@ -32,7 +32,7 @@ public abstract partial class DbClient : IDbClient
 	}
 
 	/// <summary>
-	/// Get columns for <see cref="GetRetrieveQuery(IDbName, IColumnList, IColumn, object)"/>
+	/// Get columns for <see cref="GetRetrieveQuery(IDbName, IColumnList, IColumn, object)"/>.
 	/// </summary>
 	/// <param name="columns">ColumnList</param>
 	protected virtual List<string> GetColumnsForRetrieveQuery(IColumnList columns)
@@ -47,7 +47,7 @@ public abstract partial class DbClient : IDbClient
 	}
 
 	/// <summary>
-	/// Get columns for <see cref="GetUpdateQuery(IDbName, IColumnList, IColumn, object, IColumn?)"/>
+	/// Get columns for <see cref="GetUpdateQuery(IDbName, IColumnList, IColumn, object, IColumn?)"/>.
 	/// </summary>
 	/// <param name="columns">ColumnList</param>
 	protected virtual List<string> GetSetListForUpdateQuery(IColumnList columns)

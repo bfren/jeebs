@@ -28,7 +28,7 @@ public sealed class WpUsa : Wp<
 >
 {
 	/// <summary>
-	/// Create instance
+	/// Create instance.
 	/// </summary>
 	/// <param name="dbConfig">DbConfig</param>
 	/// <param name="wpConfig">WpUsaConfig</param>
@@ -36,7 +36,7 @@ public sealed class WpUsa : Wp<
 	public WpUsa(IOptions<DbConfig> dbConfig, IOptions<WpUsaConfig> wpConfig, ILog<WpUsa> log) : base(dbConfig, wpConfig, log) { }
 
 	/// <summary>
-	/// Register custom post types
+	/// Register custom post types.
 	/// </summary>
 	public override void RegisterCustomPostTypes()
 	{
@@ -44,7 +44,7 @@ public sealed class WpUsa : Wp<
 	}
 
 	/// <summary>
-	/// Register custom taxonomies
+	/// Register custom taxonomies.
 	/// </summary>
 	public override void RegisterCustomTaxonomies()
 	{

@@ -10,7 +10,7 @@ namespace Jeebs.Data.Query.Functions;
 public static partial class QueryF
 {
 	/// <summary>
-	/// Get columns from a table that match properties in <typeparamref name="TModel"/>
+	/// Get columns from a table that match properties in <typeparamref name="TModel"/>.
 	/// </summary>
 	/// <typeparam name="TModel">Model type</typeparam>
 	/// <param name="table">Table</param>

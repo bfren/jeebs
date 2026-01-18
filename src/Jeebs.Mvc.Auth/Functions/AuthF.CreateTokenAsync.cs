@@ -11,7 +11,7 @@ namespace Jeebs.Mvc.Auth.Functions;
 public static partial class AuthF
 {
 	/// <summary>
-	/// Create authentication token
+	/// Create authentication token.
 	/// </summary>
 	/// <param name="jwt">IAuthJwtProvider</param>
 	/// <param name="user">ClaimsPrincipal</param>

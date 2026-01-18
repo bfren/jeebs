@@ -28,52 +28,52 @@ public sealed class NavMenuTagHelper(
 ) : UrlResolutionTagHelper(urlHelperFactory, htmlEncoder)
 {
 	/// <summary>
-	/// Menu
+	/// Menu.
 	/// </summary>
 	public Menu? Menu { get; set; }
 
 	/// <summary>
-	/// Default: ul
+	/// Default: ul.
 	/// </summary>
 	public string WrapperElement { get; set; } = "ul";
 
 	/// <summary>
-	/// Default: nav nav-pills flex-column
+	/// Default: nav nav-pills flex-column.
 	/// </summary>
 	public string WrapperClass { get; set; } = "nav nav-pills flex-column";
 
 	/// <summary>
-	/// Default: li
+	/// Default: li.
 	/// </summary>
 	public string ItemElement { get; set; } = "li";
 
 	/// <summary>
-	/// Default: nav-item
+	/// Default: nav-item.
 	/// </summary>
 	public string ItemClass { get; set; } = "nav-item";
 
 	/// <summary>
-	/// Default: nav-link
+	/// Default: nav-link.
 	/// </summary>
 	public string LinkClass { get; set; } = "nav-link";
 
 	/// <summary>
-	/// Default: active
+	/// Default: active.
 	/// </summary>
 	public string LinkActiveClass { get; set; } = "active";
 
 	/// <summary>
-	/// Default: false
+	/// Default: false.
 	/// </summary>
 	public bool IncludeChildren { get; set; }
 
 	/// <summary>
-	/// Default: nav-child
+	/// Default: nav-child.
 	/// </summary>
 	public string ChildMenuWrapperClass { get; set; } = "nav-child";
 
 	/// <summary>
-	/// Process TagHelper
+	/// Process TagHelper.
 	/// </summary>
 	/// <param name="context">TagHelperContext</param>
 	/// <param name="output">TagHelperOutput</param>

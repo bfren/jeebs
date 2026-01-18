@@ -15,7 +15,7 @@ namespace Jeebs.Data;
 public interface IDbQuery
 {
 	/// <summary>
-	/// Begin a new Unit of Work
+	/// Begin a new Unit of Work.
 	/// </summary>
 	Task<IUnitOfWork> StartWorkAsync();
 
@@ -37,7 +37,7 @@ public interface IDbQuery
 	Task<Maybe<IPagedList<T>>> QueryAsync<T>(ulong page, IQueryParts parts);
 
 	/// <summary>
-	/// Build a query from <see cref="IQueryParts"/> and return multiple items
+	/// Build a query from <see cref="IQueryParts"/> and return multiple items.
 	/// </summary>
 	/// <typeparam name="T">Return value type</typeparam>
 	/// <param name="page">Page number</param>

@@ -9,13 +9,13 @@ namespace Jeebs.WordPress.Query;
 public sealed record class PostsOptions : Options.PostsOptions
 {
 	/// <summary>
-	/// Internal creation only
+	/// Internal creation only.
 	/// </summary>
 	/// <param name="schema">IWpDbSchema</param>
 	internal PostsOptions(IWpDbSchema schema) : base(schema, new PostsPartsBuilder(schema)) { }
 
 	/// <summary>
-	/// Allow Builder to be injected
+	/// Allow Builder to be injected.
 	/// </summary>
 	/// <param name="schema">IWpDbSchema</param>
 	/// <param name="builder">IQueryPostsPartsBuilder</param>

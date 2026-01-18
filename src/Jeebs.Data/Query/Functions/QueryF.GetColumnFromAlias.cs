@@ -11,7 +11,7 @@ namespace Jeebs.Data.Query.Functions;
 public static partial class QueryF
 {
 	/// <summary>
-	/// Build a column object from a column alias
+	/// Build a column object from a column alias.
 	/// </summary>
 	/// <typeparam name="TTable">Table type</typeparam>
 	/// <param name="table">Table object</param>

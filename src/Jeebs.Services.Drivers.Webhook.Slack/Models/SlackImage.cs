@@ -11,19 +11,19 @@ namespace Jeebs.Services.Drivers.Webhook.Slack.Models;
 public sealed record class SlackImage : SlackAccessory
 {
 	/// <summary>
-	/// Image URL
+	/// Image URL.
 	/// </summary>
 	[JsonPropertyName("image_url")]
 	public string Url { get; private init; }
 
 	/// <summary>
-	/// Image alt text
+	/// Image alt text.
 	/// </summary>
 	[JsonPropertyName("alt_text")]
 	public string Alt { get; private init; }
 
 	/// <summary>
-	/// Create object
+	/// Create object.
 	/// </summary>
 	/// <param name="url">Image URL</param>
 	/// <param name="alt">Image alt text</param>

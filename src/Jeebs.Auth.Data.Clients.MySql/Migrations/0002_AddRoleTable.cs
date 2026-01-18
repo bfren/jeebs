@@ -17,7 +17,7 @@ public sealed class AddRoleTable : Migration
 		selector(new());
 
 	/// <summary>
-	/// Migrate up
+	/// Migrate up.
 	/// </summary>
 	protected override void Up() => Execute($@"
 		CREATE TABLE `{AuthDb.Schema}.{AuthRoleTable.TableName}` (
@@ -31,7 +31,7 @@ public sealed class AddRoleTable : Migration
 	");
 
 	/// <summary>
-	/// Migrate down
+	/// Migrate down.
 	/// </summary>
 	protected override void Down() => Execute($@"
 		DROP TABLE `{AuthDb.Schema}.{AuthRoleTable.TableName}`

@@ -15,19 +15,19 @@ namespace Jeebs.Mvc.Razor.Pages.Auth;
 public abstract partial class IndexModel : PageModel
 {
 	/// <summary>
-	/// Log
+	/// Log.
 	/// </summary>
 	protected ILog Log { get; init; }
 
 	/// <summary>
-	/// Inject dependencies
+	/// Inject dependencies.
 	/// </summary>
 	/// <param name="log"></param>
 	protected IndexModel(ILog log) =>
 		Log = log;
 
 	/// <summary>
-	/// Redirect to Sign In page
+	/// Redirect to Sign In page.
 	/// </summary>
 	public virtual IActionResult OnGet() =>
 		RedirectToPage("/Auth/SignIn");

@@ -39,7 +39,7 @@ public sealed class Extract : IExtract
 public static class Extract<TModel>
 {
 	/// <summary>
-	/// Extract columns from specified tables
+	/// Extract columns from specified tables.
 	/// </summary>
 	/// <param name="tables">List of tables</param>
 #pragma warning disable CA1000 // Do not declare static members on generic types

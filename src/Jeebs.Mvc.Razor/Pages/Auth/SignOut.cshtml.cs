@@ -21,24 +21,24 @@ namespace Jeebs.Mvc.Razor.Pages.Auth;
 public abstract class SignOutModel : PageModel
 {
 	/// <summary>
-	/// Log
+	/// Log.
 	/// </summary>
 	protected ILog Log { get; init; }
 
 	/// <summary>
-	/// Redirect here after a successful sign out
+	/// Redirect here after a successful sign out.
 	/// </summary>
 	protected virtual Func<string?> SignOutRedirect { get; init; }
 
 	/// <summary>
-	/// Inject dependencies
+	/// Inject dependencies.
 	/// </summary>
 	/// <param name="log"></param>
 	protected SignOutModel(ILog log) =>
 		(Log, SignOutRedirect) = (log, () => Url.Page("/Auth/SignIn"));
 
 	/// <summary>
-	/// Attempt sign out and return result
+	/// Attempt sign out and return result.
 	/// </summary>
 	/// <param name="returnUrl">[Optional] Return URL</param>
 	public virtual async Task<IActionResult> OnGetAsync(string? returnUrl)

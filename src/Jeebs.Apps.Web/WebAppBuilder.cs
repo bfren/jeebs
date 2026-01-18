@@ -16,7 +16,7 @@ namespace Jeebs.Apps.Web;
 internal static class WebAppBuilder
 {
 	/// <summary>
-	/// Build a <see cref="WebApplication"/> with default configuration and then run it
+	/// Build a <see cref="WebApplication"/> with default configuration and then run it.
 	/// </summary>
 	/// <inheritdoc cref="Create{T}(string[], Action{HostBuilderContext, IServiceCollection})"/>
 	internal static void Run<T>(string[] args, Action<HostBuilderContext, IServiceCollection> configureServices)

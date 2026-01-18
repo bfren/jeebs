@@ -18,22 +18,22 @@ public abstract class DriverArgs<TConfig> : IDriverArgs<TConfig>
 	where TConfig : IServiceConfig
 {
 	/// <summary>
-	/// ILog
+	/// ILog.
 	/// </summary>
 	public ILog Log { get; }
 
 	/// <summary>
-	/// JeebsConfig
+	/// JeebsConfig.
 	/// </summary>
 	public IOptions<JeebsConfig> JeebsConfig { get; }
 
 	/// <summary>
-	/// Function to return all service configurations for this type
+	/// Function to return all service configurations for this type.
 	/// </summary>
 	public Func<ServicesConfig, Dictionary<string, TConfig>> ServiceConfigs { get; }
 
 	/// <summary>
-	/// Create object
+	/// Create object.
 	/// </summary>
 	/// <param name="log">ILog</param>
 	/// <param name="jeebsConfig">JeebsConfig</param>

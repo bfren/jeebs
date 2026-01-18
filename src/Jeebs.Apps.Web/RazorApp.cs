@@ -50,12 +50,12 @@ public class RazorApp : MvcApp
 	#endregion Create
 
 	/// <summary>
-	/// Create Razor application with HSTS enabled
+	/// Create Razor application with HSTS enabled.
 	/// </summary>
 	public RazorApp() : this(true) { }
 
 	/// <summary>
-	/// Create Razor application
+	/// Create Razor application.
 	/// </summary>
 	/// <param name="useHsts">HSTS should only be disabled if the application is in development mode, or behind a reverse proxy</param>
 	public RazorApp(bool useHsts) : base(useHsts) { }
@@ -69,7 +69,7 @@ public class RazorApp : MvcApp
 			.AddJsonOptions(opt => ConfigureServicesEndpointsJson(ctx, opt));
 
 	/// <summary>
-	/// Override to configure Razor Pages options
+	/// Override to configure Razor Pages options.
 	/// </summary>
 	/// <param name="ctx">HostBuilderContext</param>
 	/// <param name="opt">RazorPagesOptions</param>

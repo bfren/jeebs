@@ -13,7 +13,7 @@ public sealed class EnumeratedListJsonTypeHandler<T> : JsonTypeHandler<Enumerate
 	where T : Enumerated
 {
 	/// <summary>
-	/// Parse from list of string values and convert
+	/// Parse from list of string values and convert.
 	/// </summary>
 	/// <param name="xml">JSON string</param>
 	protected override EnumeratedList<T> Parse(string xml) =>

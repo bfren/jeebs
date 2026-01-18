@@ -16,7 +16,7 @@ public interface IAuthUserRoleRepository : IAuthUserRoleRepository<AuthUserRoleE
 public sealed class AuthUserRoleRepository : Repository<AuthUserRoleEntity, AuthUserRoleId>, IAuthUserRoleRepository
 {
 	/// <summary>
-	/// Inject dependencies
+	/// Inject dependencies.
 	/// </summary>
 	/// <param name="db">IAuthDb</param>
 	/// <param name="log">ILog</param>

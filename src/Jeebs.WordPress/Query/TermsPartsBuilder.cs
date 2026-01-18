@@ -24,13 +24,13 @@ public sealed class TermsPartsBuilder : PartsBuilder<WpTermId>, IQueryTermsParts
 		new Column(T.Terms, T.Terms.Id, GetIdColumn(T.Terms));
 
 	/// <summary>
-	/// Internal creation only
+	/// Internal creation only.
 	/// </summary>
 	/// <param name="schema">IWpDbSchema</param>
 	internal TermsPartsBuilder(IWpDbSchema schema) : base(schema) { }
 
 	/// <summary>
-	/// Internal creation only
+	/// Internal creation only.
 	/// </summary>
 	/// <param name="extract">IExtract</param>
 	/// <param name="schema">IWpDbSchema</param>

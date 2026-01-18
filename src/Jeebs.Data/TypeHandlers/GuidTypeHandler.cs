@@ -12,7 +12,7 @@ namespace Jeebs.Data.TypeHandlers;
 public sealed class GuidTypeHandler : Dapper.SqlMapper.TypeHandler<Guid>
 {
 	/// <summary>
-	/// Parse Guid
+	/// Parse Guid.
 	/// </summary>
 	/// <param name="value">Guid value</param>
 	public override Guid Parse(object value) =>
@@ -26,7 +26,7 @@ public sealed class GuidTypeHandler : Dapper.SqlMapper.TypeHandler<Guid>
 		};
 
 	/// <summary>
-	/// Set Guid value
+	/// Set Guid value.
 	/// </summary>
 	/// <param name="parameter">IDbDataParameter</param>
 	/// <param name="value">Guid value</param>

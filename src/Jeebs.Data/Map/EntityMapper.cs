@@ -17,25 +17,25 @@ internal sealed class EntityMapper : IEntityMapper, IDisposable
 	#region Static
 
 	/// <summary>
-	/// Default (global) instance
+	/// Default (global) instance.
 	/// </summary>
 	internal static IEntityMapper Instance =>
 		LazyInstance.Value;
 
 	/// <summary>
-	/// Lazily create a <see cref="EntityMapper"/>
+	/// Lazily create a <see cref="EntityMapper"/>.
 	/// </summary>
 	private static Lazy<IEntityMapper> LazyInstance { get; } = new(() => new EntityMapper(), true);
 
 	#endregion Static
 
 	/// <summary>
-	/// Mapped entities
+	/// Mapped entities.
 	/// </summary>
 	private readonly ConcurrentDictionary<Type, TableMap> mappedEntities = new();
 
 	/// <summary>
-	/// Only allow internal creation
+	/// Only allow internal creation.
 	/// </summary>
 	internal EntityMapper() { }
 
@@ -94,7 +94,7 @@ internal sealed class EntityMapper : IEntityMapper, IDisposable
 	#region Dispose
 
 	/// <summary>
-	/// Set to true if the object has been disposed
+	/// Set to true if the object has been disposed.
 	/// </summary>
 	private bool disposed;
 

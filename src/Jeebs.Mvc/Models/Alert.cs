@@ -13,28 +13,28 @@ namespace Jeebs.Mvc.Models;
 public sealed record class Alert(AlertType Type, string Text)
 {
 	/// <summary>
-	/// Create an error alert
+	/// Create an error alert.
 	/// </summary>
 	/// <param name="message"></param>
 	public static Alert Error(string message) =>
 		new(AlertType.Error, message);
 
 	/// <summary>
-	/// Create an info alert
+	/// Create an info alert.
 	/// </summary>
 	/// <param name="message"></param>
 	public static Alert Info(string message) =>
 		new(AlertType.Info, message);
 
 	/// <summary>
-	/// Create success alert
+	/// Create success alert.
 	/// </summary>
 	/// <param name="message"></param>
 	public static Alert Success(string message) =>
 		new(AlertType.Success, message);
 
 	/// <summary>
-	/// Create a warning alert
+	/// Create a warning alert.
 	/// </summary>
 	/// <param name="message"></param>
 	public static Alert Warning(string message) =>

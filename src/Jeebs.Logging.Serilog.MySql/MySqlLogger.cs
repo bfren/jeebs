@@ -17,24 +17,24 @@ namespace Jeebs.Logging.Serilog.MySql;
 public sealed partial class MySqlLogger : IMySqlConnectorLogger
 {
 	/// <summary>
-	/// Logger instance
+	/// Logger instance.
 	/// </summary>
 	internal ILogger Logger { get; private init; }
 
 	/// <summary>
-	/// Token replacement regular expression
+	/// Token replacement regular expression.
 	/// </summary>
 	internal static Regex TokenReplacer { get; } = LogMessageTokenRegex();
 
 	/// <summary>
-	/// Create log instance by name
+	/// Create log instance by name.
 	/// </summary>
 	/// <param name="name">Log instance name</param>
 	public MySqlLogger(string name) =>
 		Logger = global::Serilog.Log.ForContext("SourceContext", "MySqlConnector." + name);
 
 	/// <summary>
-	/// Returns true if the log is enabled for <paramref name="level"/>
+	/// Returns true if the log is enabled for <paramref name="level"/>.
 	/// </summary>
 	/// <param name="level">Requested level</param>
 	public bool IsEnabled(MySqlConnectorLogLevel level) =>
@@ -44,7 +44,7 @@ public sealed partial class MySqlLogger : IMySqlConnectorLogger
 		);
 
 	/// <summary>
-	/// Send a message to the log
+	/// Send a message to the log.
 	/// </summary>
 	/// <param name="level">Event level</param>
 	/// <param name="message">Log message</param>
@@ -52,7 +52,7 @@ public sealed partial class MySqlLogger : IMySqlConnectorLogger
 		Log(level, message, null, null);
 
 	/// <summary>
-	/// Send a message to the log
+	/// Send a message to the log.
 	/// </summary>
 	/// <param name="level">Event level</param>
 	/// <param name="message">Log message</param>
@@ -61,7 +61,7 @@ public sealed partial class MySqlLogger : IMySqlConnectorLogger
 		Log(level, message, args, null);
 
 	/// <summary>
-	/// Send a message to the log
+	/// Send a message to the log.
 	/// </summary>
 	/// <param name="level">Event level</param>
 	/// <param name="message">Log message</param>
@@ -74,7 +74,7 @@ public sealed partial class MySqlLogger : IMySqlConnectorLogger
 		);
 
 	/// <summary>
-	/// Send a message to the log
+	/// Send a message to the log.
 	/// </summary>
 	/// <param name="level">Event level</param>
 	/// <param name="message">Log message</param>

@@ -13,13 +13,13 @@ namespace Jeebs.Mvc.Razor.Pages.Auth;
 public abstract partial class SignInModel
 {
 	/// <summary>
-	/// Get standard sign in form
+	/// Get standard sign in form.
 	/// </summary>
 	public Task<PartialViewResult> OnGetFormAsync() =>
 		Task.FromResult(Partial("_SignInForm", new Mvc.Auth.Models.SignInModel()));
 
 	/// <summary>
-	/// Attempt sign in and return result
+	/// Attempt sign in and return result.
 	/// </summary>
 	/// <param name="form">Sign In form data</param>
 	public virtual async Task<AuthResult> OnPostFormAsync(Mvc.Auth.Models.SignInModel form)

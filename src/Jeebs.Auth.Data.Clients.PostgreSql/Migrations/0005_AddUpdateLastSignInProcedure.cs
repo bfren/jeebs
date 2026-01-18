@@ -17,7 +17,7 @@ public sealed class AddUpdateLastSignInProcedure : Migration
 		selector(new());
 
 	/// <summary>
-	/// Migrate up
+	/// Migrate up.
 	/// </summary>
 	protected override void Up() => Execute($@"
 		CREATE OR REPLACE FUNCTION {AuthDb.Schema}.{Procedures.UpdateUserLastSignIn}(
@@ -38,7 +38,7 @@ public sealed class AddUpdateLastSignInProcedure : Migration
 	");
 
 	/// <summary>
-	/// Migrate down
+	/// Migrate down.
 	/// </summary>
 	protected override void Down() => Execute($@"
 		DROP FUNCTION IF EXISTS {AuthDb.Schema}.{Procedures.UpdateUserLastSignIn}(bigint)

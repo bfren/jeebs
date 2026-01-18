@@ -11,7 +11,7 @@ namespace Jeebs.Data;
 public interface IWithVersion : IWithId
 {
 	/// <summary>
-	/// Version
+	/// Version.
 	/// </summary>
 	long Version { get; }
 }

@@ -9,17 +9,17 @@ namespace Jeebs.WordPress.Entities;
 public abstract record class WpTermEntity : WpTermEntityWithId
 {
 	/// <summary>
-	/// Title
+	/// Title.
 	/// </summary>
 	public string Title { get; init; } = string.Empty;
 
 	/// <summary>
-	/// Slug
+	/// Slug.
 	/// </summary>
 	public string Slug { get; init; } = string.Empty;
 
 	/// <summary>
-	/// Group
+	/// Group.
 	/// </summary>
 	public ulong Group { get; init; }
 }

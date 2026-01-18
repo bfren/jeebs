@@ -10,7 +10,7 @@ namespace Jeebs.Data.Testing.Query;
 public static partial class FluentQueryHelper
 {
 	/// <summary>
-	/// Create an <see cref="IFluentQuery{TEntity, TId}"/> substitute setup to work fluently
+	/// Create an <see cref="IFluentQuery{TEntity, TId}"/> substitute setup to work fluently.
 	/// </summary>
 	/// <typeparam name="TEntity">Entity Type</typeparam>
 	/// <typeparam name="TId">Entity ID Type</typeparam>

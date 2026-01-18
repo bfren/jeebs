@@ -16,7 +16,7 @@ namespace Jeebs.Mvc.Auth.TagHelpers;
 public sealed class JwtTagHelper : TagHelper
 {
 	/// <summary>
-	/// ViewContext object
+	/// ViewContext object.
 	/// </summary>
 	[ViewContext]
 	public ViewContext? ViewContext { get; set; }
@@ -24,14 +24,14 @@ public sealed class JwtTagHelper : TagHelper
 	private IAuthJwtProvider Provider { get; init; }
 
 	/// <summary>
-	/// Inject dependencies
+	/// Inject dependencies.
 	/// </summary>
 	/// <param name="provider">IJwtAuthenticationProvider</param>
 	public JwtTagHelper(IAuthJwtProvider provider) =>
 		Provider = provider;
 
 	/// <summary>
-	/// Output a JSON web token for the current user
+	/// Output a JSON web token for the current user.
 	/// </summary>
 	/// <param name="context">TagHelperContext</param>
 	/// <param name="output">TagHelperOutput</param>

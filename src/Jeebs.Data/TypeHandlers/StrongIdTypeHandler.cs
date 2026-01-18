@@ -16,7 +16,7 @@ public sealed class StrongIdTypeHandler<T> : Dapper.SqlMapper.TypeHandler<T>
 	where T : IStrongId, new()
 {
 	/// <summary>
-	/// Parse value and create new <see cref="IStrongId"/>
+	/// Parse value and create new <see cref="IStrongId"/>.
 	/// </summary>
 	/// <param name="value"><see cref="IStrongId"/> Value</param>
 	public override T Parse(object value) =>
@@ -39,7 +39,7 @@ public sealed class StrongIdTypeHandler<T> : Dapper.SqlMapper.TypeHandler<T>
 		};
 
 	/// <summary>
-	/// Set ID value
+	/// Set ID value.
 	/// </summary>
 	/// <param name="parameter">IDbDataParameter</param>
 	/// <param name="value"><see cref="IStrongId"/> value</param>
@@ -47,7 +47,7 @@ public sealed class StrongIdTypeHandler<T> : Dapper.SqlMapper.TypeHandler<T>
 		parameter.Value = value?.Value;
 
 	/// <summary>
-	/// Returns a strongly-typed value
+	/// Returns a strongly-typed value.
 	/// </summary>
 	/// <typeparam name="TIdValue">StrongId Value type</typeparam>
 	/// <param name="value">Value to handle</param>

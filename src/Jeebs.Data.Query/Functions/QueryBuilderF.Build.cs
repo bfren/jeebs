@@ -9,7 +9,7 @@ namespace Jeebs.Data.Query.Functions;
 public static partial class QueryBuilderF
 {
 	/// <summary>
-	/// Build a query and return query parts
+	/// Build a query and return query parts.
 	/// </summary>
 	/// <typeparam name="TModel">Model type</typeparam>
 	/// <param name="builder">Query builder</param>

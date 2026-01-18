@@ -43,7 +43,7 @@ public sealed record class PagingValues : IPagingValues
 	public int Take { get; init; }
 
 	/// <summary>
-	/// Create an empty object
+	/// Create an empty object.
 	/// </summary>
 	public PagingValues() { }
 
