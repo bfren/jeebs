@@ -18,8 +18,8 @@ public sealed class AuthDbQuery : DbQuery<IAuthDb>, IAuthDbQuery
 	/// <summary>
 	/// Inject dependencies.
 	/// </summary>
-	/// <param name="db">IAuthDb</param>
-	/// <param name="log">ILog</param>
+	/// <param name="db">IAuthDb.</param>
+	/// <param name="log">ILog.</param>
 	public AuthDbQuery(IAuthDb db, ILog<AuthDbQuery> log) : base(db, log) { }
 
 	/// <inheritdoc/>

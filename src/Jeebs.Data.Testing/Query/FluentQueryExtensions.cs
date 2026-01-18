@@ -18,8 +18,8 @@ public static class FluentQueryExtensions
 	/// </summary>
 	/// <typeparam name="TEntity">Entity Type</typeparam>
 	/// <typeparam name="TId">Entity ID Type</typeparam>
-	/// <param name="this">Fluent Query object</param>
-	/// <param name="inspectors">Call inspectors</param>
+	/// <param name="this">Fluent Query object.</param>
+	/// <param name="inspectors">Call inspectors.</param>
 	/// <exception cref="CollectionException"></exception>
 	public static void AssertCalls<TEntity, TId>(this IFluentQuery<TEntity, TId> @this, params Action<ICall>[] inspectors)
 		where TEntity : IWithId<TId>

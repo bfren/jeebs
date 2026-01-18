@@ -39,6 +39,6 @@ public sealed record class OptionsTable : Table
 	/// <summary>
 	/// Create object.
 	/// </summary>
-	/// <param name="prefix">Table prefix</param>
+	/// <param name="prefix">Table prefix.</param>
 	public OptionsTable(string prefix) : base($"{prefix}options") { }
 }

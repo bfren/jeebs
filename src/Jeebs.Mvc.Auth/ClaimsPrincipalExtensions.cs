@@ -17,8 +17,8 @@ public static class ClaimsPrincipalExtensions
 	/// <summary>
 	/// Returns a specified claim for the current user.
 	/// </summary>
-	/// <param name="this">ClaimsPrincipal</param>
-	/// <param name="type">Claim type</param>
+	/// <param name="this">ClaimsPrincipal.</param>
+	/// <param name="type">Claim type.</param>
 	public static Maybe<string> GetClaim(this ClaimsPrincipal @this, string type)
 	{
 		if (@this.Identity?.IsAuthenticated != true)
@@ -33,7 +33,7 @@ public static class ClaimsPrincipalExtensions
 	/// <summary>
 	/// Returns the ID of the current user.
 	/// </summary>
-	/// <param name="this">CLaimsPrincipal</param>
+	/// <param name="this">CLaimsPrincipal.</param>
 	public static Maybe<AuthUserId> GetUserId(this ClaimsPrincipal @this) =>
 		@this
 			.GetClaim(
@@ -49,15 +49,15 @@ public static class ClaimsPrincipalExtensions
 	/// <summary>
 	/// Returns whether or not the current user has the specified claim.
 	/// </summary>
-	/// <param name="this">ClaimsPrincipal</param>
-	/// <param name="type">Claim type</param>
+	/// <param name="this">ClaimsPrincipal.</param>
+	/// <param name="type">Claim type.</param>
 	public static bool HasClaim(this ClaimsPrincipal @this, string type) =>
 		@this.GetClaim(type).IsSome(out var _);
 
 	/// <summary>
 	/// Returns whether or not the current user is a Super user.
 	/// </summary>
-	/// <param name="this">CLaimsPrincipal</param>
+	/// <param name="this">CLaimsPrincipal.</param>
 	public static bool IsSuper(this ClaimsPrincipal @this) =>
 		@this.HasClaim(JwtClaimTypes.IsSuper);
 

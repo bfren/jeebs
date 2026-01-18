@@ -13,8 +13,8 @@ public static partial class FluentQueryHelper
 	/// <paramref name="expected"/>
 	/// </summary>
 	/// <typeparam name="T">Value Type</typeparam>
-	/// <param name="expected">Expected value</param>
-	/// <param name="actual">Actual value</param>
+	/// <param name="expected">Expected value.</param>
+	/// <param name="actual">Actual value.</param>
 	/// <exception cref="EqualTypeException"></exception>
 	internal static void AssertEqualType<T>(T expected, object? actual)
 	{

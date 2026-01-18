@@ -40,7 +40,7 @@ public abstract class SignOutModel : PageModel
 	/// <summary>
 	/// Attempt sign out and return result.
 	/// </summary>
-	/// <param name="returnUrl">[Optional] Return URL</param>
+	/// <param name="returnUrl">[Optional] Return URL.</param>
 	public virtual async Task<IActionResult> OnGetAsync(string? returnUrl)
 	{
 		// Do sign out

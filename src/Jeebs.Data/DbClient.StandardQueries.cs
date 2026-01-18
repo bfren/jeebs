@@ -17,8 +17,8 @@ public abstract partial class DbClient : IDbClient
 		);
 
 	/// <inheritdoc cref="GetCreateQuery{TEntity}"/>
-	/// <param name="table">Table name</param>
-	/// <param name="columns">List of mapped columns</param>
+	/// <param name="table">Table name.</param>
+	/// <param name="columns">List of mapped columns.</param>
 	protected abstract string GetCreateQuery(
 		IDbName table,
 		IColumnList columns
@@ -38,10 +38,10 @@ public abstract partial class DbClient : IDbClient
 		);
 
 	/// <inheritdoc cref="GetRetrieveQuery{TEntity, TModel}(object)"/>
-	/// <param name="table">Table name</param>
-	/// <param name="columns">List of columns to select</param>
-	/// <param name="idColumn">ID column for predicate</param>
-	/// <param name="id">Entity ID</param>
+	/// <param name="table">Table name.</param>
+	/// <param name="columns">List of columns to select.</param>
+	/// <param name="idColumn">ID column for predicate.</param>
+	/// <param name="id">Entity ID.</param>
 	protected abstract string GetRetrieveQuery(
 		IDbName table,
 		IColumnList columns,
@@ -78,11 +78,11 @@ public abstract partial class DbClient : IDbClient
 	);
 
 	/// <inheritdoc cref="GetUpdateQuery{TEntity, TModel}"/>
-	/// <param name="table">Table name</param>
-	/// <param name="columns">List of columns to update</param>
-	/// <param name="idColumn">ID column for predicate</param>
-	/// <param name="id">Entity ID</param>
-	/// <param name="versionColumn">Version column for predicate</param>
+	/// <param name="table">Table name.</param>
+	/// <param name="columns">List of columns to update.</param>
+	/// <param name="idColumn">ID column for predicate.</param>
+	/// <param name="id">Entity ID.</param>
+	/// <param name="versionColumn">Version column for predicate.</param>
 	protected abstract string GetUpdateQuery(
 		IDbName table,
 		IColumnList columns,
@@ -115,10 +115,10 @@ public abstract partial class DbClient : IDbClient
 	);
 
 	/// <inheritdoc cref="GetDeleteQuery{TEntity}"/>
-	/// <param name="table">Table name</param>
-	/// <param name="idColumn">ID column for predicate</param>
-	/// <param name="id">Entity ID</param>
-	/// <param name="versionColumn">Version column for predicate</param>
+	/// <param name="table">Table name.</param>
+	/// <param name="idColumn">ID column for predicate.</param>
+	/// <param name="id">Entity ID.</param>
+	/// <param name="versionColumn">Version column for predicate.</param>
 	protected abstract string GetDeleteQuery(
 		IDbName table,
 		IColumn idColumn,

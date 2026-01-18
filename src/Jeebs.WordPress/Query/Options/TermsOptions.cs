@@ -27,8 +27,8 @@ public abstract record class TermsOptions : Options<WpTermId>, IQueryTermsOption
 	/// <summary>
 	/// Allow Builder to be injected.
 	/// </summary>
-	/// <param name="schema">IWpDbSchema</param>
-	/// <param name="builder">IQueryTermsPartsBuilder</param>
+	/// <param name="schema">IWpDbSchema.</param>
+	/// <param name="builder">IQueryTermsPartsBuilder.</param>
 	protected TermsOptions(IWpDbSchema schema, IQueryTermsPartsBuilder builder) : base(schema, builder) =>
 		Maximum = null;
 }

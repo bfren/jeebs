@@ -53,7 +53,7 @@ public sealed record class QueryParts(ITable From) : IQueryParts
 	/// <summary>
 	/// Create from another object by copying values.
 	/// </summary>
-	/// <param name="parts">IQueryParts</param>
+	/// <param name="parts">IQueryParts.</param>
 	public QueryParts(IQueryParts parts) : this(parts.From)
 	{
 		SelectCount = parts.SelectCount;

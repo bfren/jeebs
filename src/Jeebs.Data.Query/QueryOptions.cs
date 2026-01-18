@@ -40,7 +40,7 @@ public abstract record class QueryOptions<TId> : IQueryOptions<TId>
 	/// <summary>
 	/// Inject builder.
 	/// </summary>
-	/// <param name="builder">IQueryPartsBuilder</param>
+	/// <param name="builder">IQueryPartsBuilder.</param>
 	protected QueryOptions(IQueryPartsBuilder<TId> builder) =>
 		Builder = builder;
 
@@ -57,7 +57,7 @@ public abstract record class QueryOptions<TId> : IQueryOptions<TId>
 	/// <summary>
 	/// Build QueryParts.
 	/// </summary>
-	/// <param name="parts">Initial QueryParts</param>
+	/// <param name="parts">Initial QueryParts.</param>
 	protected virtual Maybe<QueryParts> Build(Maybe<QueryParts> parts) =>
 		parts.SwitchIf(
 			_ => Id is not null || Ids.Count > 0,

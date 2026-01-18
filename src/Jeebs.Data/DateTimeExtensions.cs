@@ -14,7 +14,7 @@ public static class DateTimeExtensions
 	/// <summary>
 	/// Return a MySql formatted DateTime string for the specified date (yyyy-MM-dd HH:mm:ss).
 	/// </summary>
-	/// <param name="this">DateTime object</param>
+	/// <param name="this">DateTime object.</param>
 	public static string ToMySqlString(this DateTime @this) =>
 		@this.ToString("yyyy-MM-dd HH:mm:ss", CultureInfo.InvariantCulture);
 }

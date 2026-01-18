@@ -28,8 +28,8 @@ public sealed class AuthUserRepository : Repository<AuthUserEntity, AuthUserId>,
 	/// <summary>
 	/// Inject dependencies.
 	/// </summary>
-	/// <param name="db">IAuthDb</param>
-	/// <param name="log">ILog</param>
+	/// <param name="db">IAuthDb.</param>
+	/// <param name="log">ILog.</param>
 	public AuthUserRepository(IAuthDb db, ILog<AuthUserRepository> log) : base(db, log) =>
 		Db = db;
 
@@ -107,7 +107,7 @@ public sealed class AuthUserRepository : Repository<AuthUserEntity, AuthUserId>,
 	public static class M
 	{
 		/// <summary>The user already exists</summary>
-		/// <param name="Value">The user's email address</param>
+		/// <param name="Value">The user's email address.</param>
 		public sealed record class UserAlreadyExistsMsg(string Value) : WithValueMsg<string>
 		{
 			/// <summary>Change value name to 'Email Address'</summary>

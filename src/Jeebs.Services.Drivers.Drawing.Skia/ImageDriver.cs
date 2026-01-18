@@ -38,7 +38,7 @@ public sealed class ImageDriver : IImageDriver
 	public static class M
 	{
 		/// <summary>The image file was not found</summary>
-		/// <param name="Value">File Path</param>
+		/// <param name="Value">File Path.</param>
 		public sealed record class ImageFileNotFoundMsg(string Value) : NotFoundMsg<string>
 		{
 			/// <inheritdoc/>

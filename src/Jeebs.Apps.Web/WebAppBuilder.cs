@@ -36,8 +36,8 @@ internal static class WebAppBuilder
 	///   - <see cref="App.Ready(IServiceProvider, ILog)"/> is run
 	/// </remarks>
 	/// <typeparam name="T">App type</typeparam>
-	/// <param name="args">Command-line arguments</param>
-	/// <param name="configureServices">Add additional services</param>
+	/// <param name="args">Command-line arguments.</param>
+	/// <param name="configureServices">Add additional services.</param>
 	internal static (WebApplication app, ILog<T> log) Create<T>(string[] args, Action<HostBuilderContext, IServiceCollection> configureServices)
 		where T : WebApp, new()
 	{

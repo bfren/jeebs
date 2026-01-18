@@ -18,9 +18,9 @@ public interface IQueryTerms
 	/// Execute Terms query.
 	/// </summary>
 	/// <typeparam name="T">Return Model type</typeparam>
-	/// <param name="db">IWpDb</param>
-	/// <param name="w">IUnitOfWork</param>
-	/// <param name="opt">Function to return query options</param>
+	/// <param name="db">IWpDb.</param>
+	/// <param name="w">IUnitOfWork.</param>
+	/// <param name="opt">Function to return query options.</param>
 	Task<Maybe<IEnumerable<T>>> ExecuteAsync<T>(IWpDb db, IUnitOfWork w, GetTermsOptions opt)
 		where T : IWithId<WpTermId>;
 }

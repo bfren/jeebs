@@ -51,6 +51,6 @@ public sealed record class TermTaxonomiesTable : Table
 	/// <summary>
 	/// Create object.
 	/// </summary>
-	/// <param name="prefix">Table prefix</param>
+	/// <param name="prefix">Table prefix.</param>
 	public TermTaxonomiesTable(string prefix) : base($"{prefix}term_taxonomy") { }
 }

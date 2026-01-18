@@ -10,7 +10,7 @@ public static partial class StringExtensions
 {$1/// <summary>
 $2/// $3$4.
 $5/// </summary>
-	/// <param name="this">String to hash</param>
+	/// <param name="this">String to hash.</param>
 	/// <returns>Hashed string.</returns>
 	public static Result<string> Hash(this string @this) =>
 		Hash(@this, 64);$1/// <summary>

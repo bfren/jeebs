@@ -21,7 +21,7 @@ public abstract partial class SignInModel
 	/// <summary>
 	/// Attempt sign in and return result.
 	/// </summary>
-	/// <param name="form">Sign In form data</param>
+	/// <param name="form">Sign In form data.</param>
 	public virtual async Task<AuthResult> OnPostFormAsync(Mvc.Auth.Models.SignInModel form)
 	{
 		Log.Dbg("Performing sign in using {@Form}.", form with { Password = "** REDACTED **" });

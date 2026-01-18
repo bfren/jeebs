@@ -25,8 +25,8 @@ public sealed class AlertsTagHelper : TagHelper
 	/// <summary>
 	/// Output any alert messages.
 	/// </summary>
-	/// <param name="context">TagHelperContext</param>
-	/// <param name="output">TagHelperOutput</param>
+	/// <param name="context">TagHelperContext.</param>
+	/// <param name="output">TagHelperOutput.</param>
 	public override Task ProcessAsync(TagHelperContext context, TagHelperOutput output)
 	{
 		// If there are alerts, display them

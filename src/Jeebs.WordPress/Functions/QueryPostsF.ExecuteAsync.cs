@@ -46,11 +46,11 @@ public static partial class QueryPostsF
 	/// Run a query and return multiple items with paging.
 	/// </summary>
 	/// <typeparam name="TModel">Return value type</typeparam>
-	/// <param name="db">IWpDb</param>
-	/// <param name="w">IUnitOfWork</param>
-	/// <param name="page">Page number</param>
-	/// <param name="opt">Function to return query options</param>
-	/// <param name="filters">Optional content filters to apply</param>
+	/// <param name="db">IWpDb.</param>
+	/// <param name="w">IUnitOfWork.</param>
+	/// <param name="page">Page number.</param>
+	/// <param name="opt">Function to return query options.</param>
+	/// <param name="filters">Optional content filters to apply.</param>
 	internal static Task<Maybe<IPagedList<TModel>>> ExecuteAsync<TModel>(
 		IWpDb db,
 		IUnitOfWork w,
@@ -82,7 +82,7 @@ public static partial class QueryPostsF
 	public static partial class M
 	{
 		/// <summary>Unable to get posts query</summary>
-		/// <param name="Value">Exception object</param>
+		/// <param name="Value">Exception object.</param>
 		public sealed record class ErrorGettingQueryPostsOptionsMsg(Exception Value) : ExceptionMsg;
 
 		/// <summary>Unrecognised <see cref="IPagedList{T}"/> implementation</summary>

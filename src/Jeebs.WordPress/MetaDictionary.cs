@@ -18,7 +18,7 @@ public sealed class MetaDictionary : Dictionary<string, string>
 	/// <summary>
 	/// Safely parse meta collection as a dictionary.
 	/// </summary>
-	/// <param name="collection">Meta collection</param>
+	/// <param name="collection">Meta collection.</param>
 	public MetaDictionary(IEnumerable<KeyValuePair<string, string>> collection)
 	{
 		// Sometimes WordPress isn't very good at preserving unique keys in the meta collection

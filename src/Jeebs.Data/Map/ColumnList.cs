@@ -17,6 +17,6 @@ public sealed record class ColumnList : ImmutableList<IColumn>, IColumnList
 	/// <summary>
 	/// Construct object from IEnumerable.
 	/// </summary>
-	/// <param name="collection">IEnumerable</param>
+	/// <param name="collection">IEnumerable.</param>
 	public ColumnList(IEnumerable<IColumn> collection) : base(collection) { }
 }

@@ -22,15 +22,15 @@ public sealed record class DbName : IDbName
 	/// <summary>
 	/// Create with only a name.
 	/// </summary>
-	/// <param name="name">Database object name</param>
+	/// <param name="name">Database object name.</param>
 	public DbName(string name) =>
 		Name = name;
 
 	/// <summary>
 	/// Create with schema and name.
 	/// </summary>
-	/// <param name="schema">Database schema</param>
-	/// <param name="name">Database object name</param>
+	/// <param name="schema">Database schema.</param>
+	/// <param name="name">Database object name.</param>
 	public DbName(string schema, string name) : this(name) =>
 		Schema = schema;
 

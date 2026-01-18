@@ -39,6 +39,6 @@ public sealed record class PostsMetaTable : Table
 	/// <summary>
 	/// Create object.
 	/// </summary>
-	/// <param name="prefix">Table prefix</param>
+	/// <param name="prefix">Table prefix.</param>
 	public PostsMetaTable(string prefix) : base($"{prefix}postmeta") { }
 }

@@ -16,8 +16,8 @@ public record class AuthUserModel : AuthUserWithRoles<AuthRoleModel>
 	/// <summary>
 	/// Create with specified values.
 	/// </summary>
-	/// <param name="id">AuthUserId</param>
-	/// <param name="email">Email address</param>
+	/// <param name="id">AuthUserId.</param>
+	/// <param name="email">Email address.</param>
 	public AuthUserModel(AuthUserId id, string email) =>
 		(Id, EmailAddress) = (id, email);
 }

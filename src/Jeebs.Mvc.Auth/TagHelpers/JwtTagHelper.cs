@@ -26,15 +26,15 @@ public sealed class JwtTagHelper : TagHelper
 	/// <summary>
 	/// Inject dependencies.
 	/// </summary>
-	/// <param name="provider">IJwtAuthenticationProvider</param>
+	/// <param name="provider">IJwtAuthenticationProvider.</param>
 	public JwtTagHelper(IAuthJwtProvider provider) =>
 		Provider = provider;
 
 	/// <summary>
 	/// Output a JSON web token for the current user.
 	/// </summary>
-	/// <param name="context">TagHelperContext</param>
-	/// <param name="output">TagHelperOutput</param>
+	/// <param name="context">TagHelperContext.</param>
+	/// <param name="output">TagHelperOutput.</param>
 	public override Task ProcessAsync(TagHelperContext context, TagHelperOutput output)
 	{
 		// ViewContext is required or we can't get the current user

@@ -23,8 +23,8 @@ public abstract class AuthController : AuthControllerBase
 	/// <summary>
 	/// Inject dependencies.
 	/// </summary>
-	/// <param name="auth">AuthDataProvider</param>
-	/// <param name="log">ILog</param>
+	/// <param name="auth">AuthDataProvider.</param>
+	/// <param name="log">ILog.</param>
 	protected AuthController(AuthDataProvider auth, Logging.ILog log) : base(auth, log) =>
 		Auth = auth;
 }
@@ -57,8 +57,8 @@ public abstract class AuthControllerBase : Mvc.Controllers.Controller
 	/// <summary>
 	/// Inject dependencies.
 	/// </summary>
-	/// <param name="auth">IAuthDataProvider</param>
-	/// <param name="log">ILog</param>
+	/// <param name="auth">IAuthDataProvider.</param>
+	/// <param name="log">ILog.</param>
 	protected AuthControllerBase(IAuthDataProvider auth, Logging.ILog log) : base(log)
 	{
 		Auth = auth;
@@ -75,7 +75,7 @@ public abstract class AuthControllerBase : Mvc.Controllers.Controller
 	/// <summary>
 	/// Check TOTP requirement or perform sign in.
 	/// </summary>
-	/// <param name="model">SignInModel</param>
+	/// <param name="model">SignInModel.</param>
 	[HttpPost, ValidateAntiForgeryToken]
 	public virtual async Task<IActionResult> SignIn(SignInModel model)
 	{
@@ -124,7 +124,7 @@ public abstract class AuthControllerBase : Mvc.Controllers.Controller
 	/// <summary>
 	/// Show access denied page.
 	/// </summary>
-	/// <param name="accessUrl">URL that was accessed</param>
+	/// <param name="accessUrl">URL that was accessed.</param>
 	public IActionResult Denied(string? accessUrl) =>
 		View(new DeniedModel(accessUrl));
 }

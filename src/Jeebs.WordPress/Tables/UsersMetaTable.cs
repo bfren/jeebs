@@ -39,6 +39,6 @@ public sealed record class UsersMetaTable : Table
 	/// <summary>
 	/// Create object.
 	/// </summary>
-	/// <param name="prefix">Table prefix</param>
+	/// <param name="prefix">Table prefix.</param>
 	public UsersMetaTable(string prefix) : base($"{prefix}usermeta") { }
 }

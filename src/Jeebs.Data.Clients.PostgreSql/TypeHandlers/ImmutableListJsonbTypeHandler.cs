@@ -14,7 +14,7 @@ public sealed class ImmutableListJsonbTypeHandler<T> : JsonbTypeHandler<Immutabl
 	/// <summary>
 	/// Parse from list of string values and convert.
 	/// </summary>
-	/// <param name="value">JSON string</param>
+	/// <param name="value">JSON string.</param>
 	public override ImmutableList<T> Parse(object value) =>
 		value switch
 		{

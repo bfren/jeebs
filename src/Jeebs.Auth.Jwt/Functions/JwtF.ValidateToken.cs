@@ -15,8 +15,8 @@ public static partial class JwtF
 	/// <summary>
 	/// Validate tokens.
 	/// </summary>
-	/// <param name="config">JwtConfig</param>
-	/// <param name="token">Token value</param>
+	/// <param name="config">JwtConfig.</param>
+	/// <param name="token">Token value.</param>
 	public static Maybe<ClaimsPrincipal> ValidateToken(JwtConfig config, string token)
 	{
 		try
@@ -61,7 +61,7 @@ public static partial class JwtF
 		public sealed record class TokenIsNotValidYetMsg : Msg;
 
 		/// <summary>Exception while validating token</summary>
-		/// <param name="Value">Exception</param>
+		/// <param name="Value">Exception.</param>
 		public sealed record class ValidatingTokenExceptionMsg(Exception Value) : ExceptionMsg;
 	}
 }

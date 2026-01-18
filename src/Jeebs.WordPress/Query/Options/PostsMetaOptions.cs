@@ -28,8 +28,8 @@ public abstract record class PostsMetaOptions : Options<WpPostMetaId>, IQueryPos
 	/// <summary>
 	/// Allow Builder to be injected.
 	/// </summary>
-	/// <param name="schema">IWpDbSchema</param>
-	/// <param name="builder">IQueryPostsMetaPartsBuilder</param>
+	/// <param name="schema">IWpDbSchema.</param>
+	/// <param name="builder">IQueryPostsMetaPartsBuilder.</param>
 	protected PostsMetaOptions(IWpDbSchema schema, IQueryPostsMetaPartsBuilder builder) : base(schema, builder) =>
 		Maximum = null;
 }

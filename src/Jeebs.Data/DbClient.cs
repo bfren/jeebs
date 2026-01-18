@@ -47,23 +47,23 @@ public abstract partial class DbClient : IDbClient
 	public static class M
 	{
 		/// <summary>Error getting General Retrieve query</summary>
-		/// <param name="Value">Exception object</param>
+		/// <param name="Value">Exception object.</param>
 		public sealed record class ErrorGettingGeneralRetrieveQueryExceptionMsg(Exception Value) : ExceptionMsg;
 
 		/// <summary>Error getting CRUD Create query</summary>
-		/// <param name="Value">Exception object</param>
+		/// <param name="Value">Exception object.</param>
 		public sealed record class ErrorGettingCrudCreateQueryExceptionMsg(Exception Value) : ExceptionMsg;
 
 		/// <summary>Error getting CRUD Retrieve query</summary>
-		/// <param name="Value">Exception object</param>
+		/// <param name="Value">Exception object.</param>
 		public sealed record class ErrorGettingCrudRetrieveQueryExceptionMsg(Exception Value) : ExceptionMsg;
 
 		/// <summary>Error getting CRUD Update query</summary>
-		/// <param name="Value">Exception object</param>
+		/// <param name="Value">Exception object.</param>
 		public sealed record class ErrorGettingCrudUpdateQueryExceptionMsg(Exception Value) : ExceptionMsg;
 
 		/// <summary>Error getting CRUD Delete query</summary>
-		/// <param name="Value">Exception object</param>
+		/// <param name="Value">Exception object.</param>
 		public sealed record class ErrorGettingCrudDeleteQueryExceptionMsg(Exception Value) : ExceptionMsg;
 	}
 }

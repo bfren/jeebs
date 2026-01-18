@@ -21,7 +21,7 @@ public abstract record class SlackContent
 	/// <summary>
 	/// Create object.
 	/// </summary>
-	/// <param name="type">Block content type</param>
+	/// <param name="type">Block content type.</param>
 	protected SlackContent(string type) =>
 		Type = type;
 }

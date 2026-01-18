@@ -14,8 +14,8 @@ public static partial class QueryF
 	/// Build a column object from a column selector expression.
 	/// </summary>
 	/// <typeparam name="TTable">Table type</typeparam>
-	/// <param name="table">Table object</param>
-	/// <param name="column">Column expression</param>
+	/// <param name="table">Table object.</param>
+	/// <param name="column">Column expression.</param>
 	public static Maybe<IColumn> GetColumnFromExpression<TTable>(TTable table, Expression<Func<TTable, string>> column)
 		where TTable : ITable =>
 		column.GetPropertyInfo()

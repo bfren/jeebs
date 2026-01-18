@@ -10,8 +10,8 @@ public static partial class TypeExtensions
 	/// <summary>
 	/// True if <paramref name="this"/> implements <paramref name="class"/>.
 	/// </summary>
-	/// <param name="this">Base type</param>
-	/// <param name="class">Class type</param>
+	/// <param name="this">Base type.</param>
+	/// <param name="class">Class type.</param>
 	/// <returns>Whether or not <paramref name="this"/> implements <paramref name="class"/>.</returns>
 	internal static bool ImplementsGenericClass(this Type @this, Type @class) =>
 		ImplementsGeneric(@this, @class) ||

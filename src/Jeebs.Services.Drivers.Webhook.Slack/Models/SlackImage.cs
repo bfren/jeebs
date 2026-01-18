@@ -25,8 +25,8 @@ public sealed record class SlackImage : SlackAccessory
 	/// <summary>
 	/// Create object.
 	/// </summary>
-	/// <param name="url">Image URL</param>
-	/// <param name="alt">Image alt text</param>
+	/// <param name="url">Image URL.</param>
+	/// <param name="alt">Image alt text.</param>
 	public SlackImage(string url, string alt) : base("image") =>
 		(Url, Alt) = (url, alt);
 }

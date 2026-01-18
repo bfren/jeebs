@@ -25,7 +25,7 @@ public abstract class Wp
 	/// Initialise WordPress instance - but only once per <typeparamref name="TConfig"/>.
 	/// </summary>
 	/// <typeparam name="TConfig">WpConfig type</typeparam>
-	/// <param name="log">ILog</param>
+	/// <param name="log">ILog.</param>
 	protected void Init<TConfig>(ILog<Wp> log) =>
 		// If a WordPress instance of the specified configuration type hasn't been created yet,
 		// call Init() to register custom values
@@ -94,9 +94,9 @@ public abstract class Wp<TConfig, TC, TCm, TL, TO, TP, TPm, TT, TTm, TTr, TTt, T
 	/// <summary>
 	/// Create object and register custom fields / post types / taxonomies.
 	/// </summary>
-	/// <param name="dbConfig">DbConfig</param>
-	/// <param name="wpConfig">WpConfig</param>
-	/// <param name="logForDb">ILog</param>
+	/// <param name="dbConfig">DbConfig.</param>
+	/// <param name="wpConfig">WpConfig.</param>
+	/// <param name="logForDb">ILog.</param>
 	protected Wp(IOptions<DbConfig> dbConfig, IOptions<TConfig> wpConfig, ILog logForDb)
 	{
 		// Store config

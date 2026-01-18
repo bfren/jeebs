@@ -31,10 +31,10 @@ public sealed class AuthDataProvider : IAuthDataProvider
 	/// <summary>
 	/// Inject dependencies.
 	/// </summary>
-	/// <param name="user">IAuthUserRepository</param>
-	/// <param name="role">IAuthRoleRepository</param>
-	/// <param name="userRole">IAuthUserRoleRepository</param>
-	/// <param name="query">IAuthDbQuery</param>
+	/// <param name="user">IAuthUserRepository.</param>
+	/// <param name="role">IAuthRoleRepository.</param>
+	/// <param name="userRole">IAuthUserRoleRepository.</param>
+	/// <param name="query">IAuthDbQuery.</param>
 	public AuthDataProvider(
 		IAuthUserRepository user,
 		IAuthRoleRepository role,
@@ -147,11 +147,11 @@ public sealed class AuthDataProvider : IAuthDataProvider
 		public sealed record class NullOrEmptyPasswordMsg : Msg;
 
 		/// <summary>User not enabled</summary>
-		/// <param name="Value">Email address</param>
+		/// <param name="Value">Email address.</param>
 		public sealed record class UserNotEnabledMsg(string Value) : WithValueMsg<string>;
 
 		/// <summary>User not found</summary>
-		/// <param name="Value">User Id</param>
+		/// <param name="Value">User Id.</param>
 		public sealed record class UserIdNotFoundMsg(AuthUserId Value) : NotFoundMsg<AuthUserId>
 		{
 			/// <inheritdoc/>
@@ -160,7 +160,7 @@ public sealed class AuthDataProvider : IAuthDataProvider
 		}
 
 		/// <summary>User not found</summary>
-		/// <param name="Value">Email address</param>
+		/// <param name="Value">Email address.</param>
 		public sealed record class UserEmailNotFoundMsg(string Value) : NotFoundMsg<string>
 		{
 			/// <inheritdoc/>

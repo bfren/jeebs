@@ -16,9 +16,9 @@ public abstract class EnumeratedTypeHandler<T> : Dapper.SqlMapper.TypeHandler<T>
 	/// <summary>
 	/// Parse the Enumerated value.
 	/// </summary>
-	/// <param name="value">Database table value</param>
-	/// <param name="parseValue">Function to parse <paramref name="value"/> to Enumerated value</param>
-	/// <param name="ifNullValue">Enumerated value to return if <paramref name="value"/> is null</param>
+	/// <param name="value">Database table value.</param>
+	/// <param name="parseValue">Function to parse <paramref name="value"/> to Enumerated value.</param>
+	/// <param name="ifNullValue">Enumerated value to return if <paramref name="value"/> is null.</param>
 	protected T Parse(object value, Func<string, T> parseValue, T ifNullValue) =>
 		value?.ToString() switch
 		{
@@ -32,8 +32,8 @@ public abstract class EnumeratedTypeHandler<T> : Dapper.SqlMapper.TypeHandler<T>
 	/// <summary>
 	/// Set the Enumerated table value.
 	/// </summary>
-	/// <param name="parameter">IDbDataParameter object</param>
-	/// <param name="value">Enumerated value</param>
+	/// <param name="parameter">IDbDataParameter object.</param>
+	/// <param name="value">Enumerated value.</param>
 	public override void SetValue(IDbDataParameter parameter, T? value) =>
 		parameter.Value = value?.ToString();
 

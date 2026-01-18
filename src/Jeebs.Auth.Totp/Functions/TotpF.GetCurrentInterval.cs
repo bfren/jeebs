@@ -10,7 +10,7 @@ public static partial class TotpF
 	/// <summary>
 	/// Return the current interval, calculated from the Unix Epoch.
 	/// </summary>
-	/// <param name="periodSeconds">The number of seconds per interval</param>
+	/// <param name="periodSeconds">The number of seconds per interval.</param>
 	public static ulong GetCurrentInterval(int periodSeconds)
 	{
 		var elapsedSeconds = (ulong)Math.Floor((DateTime.UtcNow - DateTime.UnixEpoch).TotalSeconds);

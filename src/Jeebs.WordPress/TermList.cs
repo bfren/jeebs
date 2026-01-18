@@ -20,7 +20,7 @@ public sealed class TermList : List<TermList.Term>
 	/// <summary>
 	/// Create object.
 	/// </summary>
-	/// <param name="taxonomy">Taxonomy of these terms</param>
+	/// <param name="taxonomy">Taxonomy of these terms.</param>
 	public TermList(Taxonomy taxonomy) =>
 		Taxonomy = taxonomy;
 

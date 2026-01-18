@@ -15,7 +15,7 @@ public static partial class FluentQueryHelper
 	private sealed record class FakeId : LongId;
 
 	/// <summary>Used in <see cref="IFake"/></summary>
-	/// <param name="Id">ID</param>
+	/// <param name="Id">ID.</param>
 	private sealed record class FakeEntity(FakeId Id) : IWithId<FakeId>;
 
 	/// <summary>Used to get strongly-typed method names</summary>

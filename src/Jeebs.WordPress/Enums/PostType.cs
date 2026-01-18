@@ -14,7 +14,7 @@ public sealed record class PostType : Enumerated
 	/// <summary>
 	/// Create new value.
 	/// </summary>
-	/// <param name="name">Value name</param>
+	/// <param name="name">Value name.</param>
 	public PostType(string name) : base(name) { }
 
 	#region Default Post Types
@@ -69,14 +69,14 @@ public sealed record class PostType : Enumerated
 	/// <summary>
 	/// Add a custom post type.
 	/// </summary>
-	/// <param name="type">PostType to add</param>
+	/// <param name="type">PostType to add.</param>
 	public static bool AddCustomPostType(PostType type) =>
 		All.Add(type);
 
 	/// <summary>
 	/// Parse PostType value name.
 	/// </summary>
-	/// <param name="name">Value name</param>
+	/// <param name="name">Value name.</param>
 	public static PostType Parse(string name) =>
 		Parse(name, All.ToArray()).Unwrap(() => Post);
 }

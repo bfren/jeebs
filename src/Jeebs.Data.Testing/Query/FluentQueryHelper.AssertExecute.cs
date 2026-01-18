@@ -19,9 +19,9 @@ public static partial class FluentQueryHelper
 	/// </summary>
 	/// <typeparam name="TEntity">Entity type</typeparam>
 	/// <typeparam name="TValue">Column select value type</typeparam>
-	/// <param name="call">Call</param>
-	/// <param name="expected">Expected property</param>
-	/// <param name="withTransaction">Whether or not to check for a transaction</param>
+	/// <param name="call">Call.</param>
+	/// <param name="expected">Expected property.</param>
+	/// <param name="withTransaction">Whether or not to check for a transaction.</param>
 	public static void AssertExecute<TEntity, TValue>(ICall call, string expected, bool withTransaction)
 	{
 		// Check the method name

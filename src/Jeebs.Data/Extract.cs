@@ -20,11 +20,11 @@ public sealed class Extract : IExtract
 	public static class M
 	{
 		/// <summary>An error occurred extracting columns from a table</summary>
-		/// <param name="Value">Exception object</param>
+		/// <param name="Value">Exception object.</param>
 		public sealed record class ErrorExtractingColumnsFromTableExceptionMsg(Exception Value) : ExceptionMsg;
 
 		/// <summary>An error occurred getting distinct columns</summary>
-		/// <param name="Value">Exception object</param>
+		/// <param name="Value">Exception object.</param>
 		public sealed record class ErrorExtractingDistinctColumnsExceptionMsg(Exception Value) : ExceptionMsg;
 
 		/// <summary>No matching columns were extracted from the table</summary>
@@ -41,7 +41,7 @@ public static class Extract<TModel>
 	/// <summary>
 	/// Extract columns from specified tables.
 	/// </summary>
-	/// <param name="tables">List of tables</param>
+	/// <param name="tables">List of tables.</param>
 #pragma warning disable CA1000 // Do not declare static members on generic types
 	public static Maybe<IColumnList> From(params ITable[] tables)
 #pragma warning restore CA1000 // Do not declare static members on generic types

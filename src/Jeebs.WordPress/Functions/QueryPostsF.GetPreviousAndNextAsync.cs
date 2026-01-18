@@ -17,10 +17,10 @@ public static partial class QueryPostsF
 	/// <summary>
 	/// Get Previous and Next posts, if they exist, for the specified query options.
 	/// </summary>
-	/// <param name="db">IWpDb</param>
-	/// <param name="w">IUnitOfWork</param>
-	/// <param name="currentId">Current Post ID</param>
-	/// <param name="opt">Function to return query options</param>
+	/// <param name="db">IWpDb.</param>
+	/// <param name="w">IUnitOfWork.</param>
+	/// <param name="currentId">Current Post ID.</param>
+	/// <param name="opt">Function to return query options.</param>
 	internal static Task<Maybe<(WpPostId? prev, WpPostId? next)>> GetPreviousAndNextAsync(
 		IWpDb db,
 		IUnitOfWork w,
@@ -44,7 +44,7 @@ public static partial class QueryPostsF
 	public static partial class M
 	{
 		/// <summary>Error while calculating previous and next posts</summary>
-		/// <param name="Value">Exception</param>
+		/// <param name="Value">Exception.</param>
 		public sealed record class ErrorWhileGettingPreviousAndNextPostsMsg(Exception Value) : ExceptionMsg;
 	}
 }

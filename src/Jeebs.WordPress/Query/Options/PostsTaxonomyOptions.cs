@@ -30,8 +30,8 @@ public abstract record class PostsTaxonomyOptions : Options<WpTermId>, IQueryPos
 	/// <summary>
 	/// Allow Builder to be injected.
 	/// </summary>
-	/// <param name="schema">IWpDbSchema</param>
-	/// <param name="builder">IQueryPostsTaxonomyPartsBuilder</param>
+	/// <param name="schema">IWpDbSchema.</param>
+	/// <param name="builder">IQueryPostsTaxonomyPartsBuilder.</param>
 	protected PostsTaxonomyOptions(IWpDbSchema schema, IQueryPostsTaxonomyPartsBuilder builder) : base(schema, builder) =>
 		Maximum = null;
 }

@@ -30,9 +30,9 @@ public sealed class WpBcg : Wp<
 	/// <summary>
 	/// Create instance.
 	/// </summary>
-	/// <param name="dbConfig">DbConfig</param>
-	/// <param name="wpConfig">WpBcgConfig</param>
-	/// <param name="log">ILog</param>
+	/// <param name="dbConfig">DbConfig.</param>
+	/// <param name="wpConfig">WpBcgConfig.</param>
+	/// <param name="log">ILog.</param>
 	public WpBcg(IOptions<DbConfig> dbConfig, IOptions<WpBcgConfig> wpConfig, Jeebs.Logging.ILog<WpBcg> log) : base(dbConfig, wpConfig, log) { }
 
 	/// <summary>

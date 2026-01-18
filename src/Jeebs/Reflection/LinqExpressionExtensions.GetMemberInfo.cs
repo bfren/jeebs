@@ -14,7 +14,7 @@ public static partial class LinqExpressionExtensions
 	/// If <paramref name="expression"/> is a <see cref="UnaryExpression"/>,
 	/// return the <see cref="UnaryExpression.Operand"/> member as <see cref="MemberInfo"/>
 	/// </summary>
-	/// <param name="expression">Expression body</param>
+	/// <param name="expression">Expression body.</param>
 	/// <returns>MemberInfo.</returns>
 	private static Maybe<MemberInfo> GetMemberInfo(Expression expression) =>
 		expression switch

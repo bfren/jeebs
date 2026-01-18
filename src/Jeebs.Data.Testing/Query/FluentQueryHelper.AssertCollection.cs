@@ -13,8 +13,8 @@ public static partial class FluentQueryHelper
 	/// that doesn't wrap thrown <see cref="FluentQueryHelperException"/> objects
 	/// </summary>
 	/// <typeparam name="T">Value type</typeparam>
-	/// <param name="collection">Calls</param>
-	/// <param name="inspectors">Element Inspectors</param>
+	/// <param name="collection">Calls.</param>
+	/// <param name="inspectors">Element Inspectors.</param>
 	/// <exception cref="CollectionException"></exception>
 	internal static void AssertCollection<T>(T[] collection, params Action<T>[] inspectors)
 	{
@@ -26,7 +26,7 @@ public static partial class FluentQueryHelper
 			throw CollectionException.ForMismatchedItemCount(expected, actual, string.Join(", ", collection));
 		}
 
-		// 
+		//
 		for (var i = 0; i < actual; i++)
 		{
 			try

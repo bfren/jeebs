@@ -27,14 +27,14 @@ public sealed class PostsTaxonomyPartsBuilder : PartsBuilder<WpTermId>, IQueryPo
 	/// <summary>
 	/// Internal creation only.
 	/// </summary>
-	/// <param name="schema">IWpDbSchema</param>
+	/// <param name="schema">IWpDbSchema.</param>
 	internal PostsTaxonomyPartsBuilder(IWpDbSchema schema) : base(schema) { }
 
 	/// <summary>
 	/// Internal creation only.
 	/// </summary>
-	/// <param name="extract">IExtract</param>
-	/// <param name="schema">IWpDbSchema</param>
+	/// <param name="extract">IExtract.</param>
+	/// <param name="schema">IWpDbSchema.</param>
 	internal PostsTaxonomyPartsBuilder(IExtract extract, IWpDbSchema schema) : base(extract, schema) { }
 
 	/// <inheritdoc/>

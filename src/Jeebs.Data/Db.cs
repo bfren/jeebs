@@ -79,10 +79,10 @@ public abstract class Db : IDb
 	/// <summary>
 	/// Inject database client and configuration.
 	/// </summary>
-	/// <param name="client">Database client</param>
-	/// <param name="config">Database configuration</param>
-	/// <param name="log">ILog (should be given a context of the implementing class)</param>
-	/// <param name="name">Connection name</param>
+	/// <param name="client">Database client.</param>
+	/// <param name="config">Database configuration.</param>
+	/// <param name="log">ILog (should be given a context of the implementing class).</param>
+	/// <param name="name">Connection name.</param>
 	protected Db(IDbClient client, IOptions<DbConfig> config, ILog log, string name) :
 		this(client, config.Value.GetConnection(name), log)
 	{ }
@@ -90,9 +90,9 @@ public abstract class Db : IDb
 	/// <summary>
 	/// Inject database client and configuration.
 	/// </summary>
-	/// <param name="client">Database client</param>
-	/// <param name="config">Database configuration</param>
-	/// <param name="log">ILog (should be given a context of the implementing class)</param>
+	/// <param name="client">Database client.</param>
+	/// <param name="config">Database configuration.</param>
+	/// <param name="log">ILog (should be given a context of the implementing class).</param>
 	protected Db(IDbClient client, DbConnectionConfig config, ILog log) =>
 		(Client, Config, Log) = (client, config, log);
 
@@ -106,7 +106,7 @@ public abstract class Db : IDb
 	/// Write query to the log.
 	/// </summary>
 	/// <typeparam name="TReturn">Query return type</typeparam>
-	/// <param name="input">Input values</param>
+	/// <param name="input">Input values.</param>
 	private void LogQuery<TReturn>((string query, object? parameters, CommandType type) input)
 	{
 		var (query, parameters, type) = input;
@@ -246,18 +246,18 @@ public abstract class Db : IDb
 	public static class M
 	{
 		/// <summary>Error running QueryAsync</summary>
-		/// <param name="Value">Exception object</param>
+		/// <param name="Value">Exception object.</param>
 		public sealed record class QueryExceptionMsg(Exception Value) : ExceptionMsg;
 
 		/// <summary>Error running QuerySingleAsync</summary>
-		/// <param name="Value">Exception object</param>
+		/// <param name="Value">Exception object.</param>
 		public sealed record class QuerySingleExceptionMsg(Exception Value) : ExceptionMsg;
 
 		/// <summary>Null value returned by QuerySingleAsync</summary>
 		public sealed record class QuerySingleNullMsg() : IMsg;
 
 		/// <summary>The query returned no items, or more than one</summary>
-		/// <param name="Value">Query parameters</param>
+		/// <param name="Value">Query parameters.</param>
 		public sealed record class QuerySingleItemNotFoundMsg((string sql, object? parameters) Value)
 			: NotFoundMsg<(string sql, object? parameters)>
 		{
@@ -267,11 +267,11 @@ public abstract class Db : IDb
 		}
 
 		/// <summary>Error running ExecuteAsync</summary>
-		/// <param name="Value">Exception object</param>
+		/// <param name="Value">Exception object.</param>
 		public sealed record class ExecuteExceptionMsg(Exception Value) : ExceptionMsg;
 
 		/// <summary>Error running ExecuteScalarAsync</summary>
-		/// <param name="Value">Exception object</param>
+		/// <param name="Value">Exception object.</param>
 		public sealed record class ExecuteScalarExceptionMsg(Exception Value) : ExceptionMsg;
 
 		/// <summary>Null value returned by ExecuteScalarAsync</summary>

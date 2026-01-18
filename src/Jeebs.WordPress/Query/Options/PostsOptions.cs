@@ -54,7 +54,7 @@ public abstract record class PostsOptions : Options<WpPostId>, IQueryPostsOption
 	/// <summary>
 	/// Allow Builder to be injected.
 	/// </summary>
-	/// <param name="schema">IWpDbSchema</param>
-	/// <param name="builder">IQueryPostsPartsBuilder</param>
+	/// <param name="schema">IWpDbSchema.</param>
+	/// <param name="builder">IQueryPostsPartsBuilder.</param>
 	protected PostsOptions(IWpDbSchema schema, IQueryPostsPartsBuilder builder) : base(schema, builder) { }
 }

@@ -26,8 +26,8 @@ public record class AuthRoleModel : IAuthRole
 	/// <summary>
 	/// Create with specified values.
 	/// </summary>
-	/// <param name="id">AuthRoleId</param>
-	/// <param name="name">Role Name</param>
+	/// <param name="id">AuthRoleId.</param>
+	/// <param name="name">Role Name.</param>
 	public AuthRoleModel(AuthRoleId id, string name) =>
 		(Id, Name) = (id, name);
 }

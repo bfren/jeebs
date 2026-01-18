@@ -39,22 +39,22 @@ public abstract class PartsBuilder<TId> : QueryPartsBuilder<TId>
 	/// <summary>
 	/// Create object.
 	/// </summary>
-	/// <param name="schema">IWpDbSchema</param>
+	/// <param name="schema">IWpDbSchema.</param>
 	protected PartsBuilder(IWpDbSchema schema) : this(new Extract(), schema) { }
 
 	/// <summary>
 	/// Create object.
 	/// </summary>
-	/// <param name="extract">IExtract</param>
-	/// <param name="schema">IWpDbSchema</param>
+	/// <param name="extract">IExtract.</param>
+	/// <param name="schema">IWpDbSchema.</param>
 	protected PartsBuilder(IExtract extract, IWpDbSchema schema) : this(extract, new MySqlDbClient(), schema) { }
 
 	/// <summary>
 	/// Create object.
 	/// </summary>
-	/// <param name="extract">IExtract</param>
-	/// <param name="client">IDbClient</param>
-	/// <param name="schema">IWpDbSchema</param>
+	/// <param name="extract">IExtract.</param>
+	/// <param name="client">IDbClient.</param>
+	/// <param name="schema">IWpDbSchema.</param>
 	protected PartsBuilder(IExtract extract, IDbClient client, IWpDbSchema schema) : base(extract) =>
 		(Client, T) = (client, schema);
 
@@ -62,7 +62,7 @@ public abstract class PartsBuilder<TId> : QueryPartsBuilder<TId>
 	/// Escape a table.
 	/// </summary>
 	/// <typeparam name="TTable">Table type</typeparam>
-	/// <param name="table">Table object</param>
+	/// <param name="table">Table object.</param>
 #pragma warning disable IDE1006 // Naming Styles
 #pragma warning disable CA1707 // Identifiers should not contain underscores
 	protected string __<TTable>(TTable table)
@@ -75,8 +75,8 @@ public abstract class PartsBuilder<TId> : QueryPartsBuilder<TId>
 	/// Get and escape a column using a Linq Expression selector.
 	/// </summary>
 	/// <typeparam name="TTable">Table type</typeparam>
-	/// <param name="table">Table object</param>
-	/// <param name="selector">Column selector</param>
+	/// <param name="table">Table object.</param>
+	/// <param name="selector">Column selector.</param>
 #pragma warning disable IDE1006 // Naming Styles
 #pragma warning disable CA1707 // Identifiers should not contain underscores
 	protected string __<TTable>(TTable table, Expression<Func<TTable, string>> selector)

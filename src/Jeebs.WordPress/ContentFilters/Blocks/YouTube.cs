@@ -18,7 +18,7 @@ internal static partial class YouTube
 	/// <summary>
 	/// Parse embedded YouTube videos.
 	/// </summary>
-	/// <param name="content">Post content</param>
+	/// <param name="content">Post content.</param>
 	internal static string Parse(string content)
 	{
 		// Get YouTube info
@@ -60,7 +60,7 @@ internal static partial class YouTube
 	/// Get the Video ID based on whether the long or short format has been used
 	/// Regex comes from https://stackoverflow.com/a/27728417/8199362
 	/// </summary>
-	/// <param name="uri">URI</param>
+	/// <param name="uri">URI.</param>
 	internal static string? GetVideoId(Uri uri)
 	{
 		var regex = VideoRegex();
@@ -77,7 +77,7 @@ internal static partial class YouTube
 	/// <summary>
 	/// Used to parse YouTube JSON.
 	/// </summary>
-	/// <param name="Url">YouTube URL</param>
+	/// <param name="Url">YouTube URL.</param>
 	private sealed record class YouTubeParsed(string Url);
 
 	[GeneratedRegex("<!-- wp:(core-embed/youtube|embed) ({.*?}) -->(.*?)<!-- /wp:(core-embed/youtube|embed) -->", RegexOptions.Singleline)]

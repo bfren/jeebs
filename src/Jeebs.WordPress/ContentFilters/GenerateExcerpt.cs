@@ -24,7 +24,7 @@ public sealed partial class GenerateExcerpt : ContentFilter
 	/// <summary>
 	/// Create filter.
 	/// </summary>
-	/// <param name="maxLength">Maximum length of excerpt - ignored if <!--more--> is present</param>
+	/// <param name="maxLength">Maximum length of excerpt - ignored if <!--more--> is present.</param>
 	public static ContentFilter Create(int maxLength) =>
 		new GenerateExcerpt(content =>
 		{

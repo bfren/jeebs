@@ -20,8 +20,8 @@ public static partial class JwtF
 	/// <para>Generate a new JSON Web Token for the specified user</para>
 	/// <para>See <see cref="JwtSecurity"/> for default signing and encrypting algorithms</para>
 	/// </summary>
-	/// <param name="config">JwtConfig</param>
-	/// <param name="principal">ClaimsPrincipal</param>
+	/// <param name="config">JwtConfig.</param>
+	/// <param name="principal">ClaimsPrincipal.</param>
 	public static Maybe<string> CreateToken(JwtConfig config, ClaimsPrincipal principal) =>
 		CreateToken(config, principal, DateTime.UtcNow, DateTime.UtcNow.AddHours(config.ValidForHours));
 
@@ -29,10 +29,10 @@ public static partial class JwtF
 	/// <para>Generate a new JSON Web Token for the specified user</para>
 	/// <para>See <see cref="JwtSecurity"/> for default signing and encrypting algorithms</para>
 	/// </summary>
-	/// <param name="config">JwtConfig</param>
-	/// <param name="principal">ClaimsPrincipal</param>
-	/// <param name="notBefore">The earliest date / time from which this token is valid</param>
-	/// <param name="expires">The latest date / time before which this token is valid</param>
+	/// <param name="config">JwtConfig.</param>
+	/// <param name="principal">ClaimsPrincipal.</param>
+	/// <param name="notBefore">The earliest date / time from which this token is valid.</param>
+	/// <param name="expires">The latest date / time before which this token is valid.</param>
 	internal static Maybe<string> CreateToken(
 		JwtConfig config,
 		ClaimsPrincipal principal,
@@ -114,7 +114,7 @@ public static partial class JwtF
 		public sealed record class ConfigInvalidMsg : Msg;
 
 		/// <summary>Exception when creating JwtSecurityToken</summary>
-		/// <param name="Value">Exception</param>
+		/// <param name="Value">Exception.</param>
 		public sealed record class CreatingJwtSecurityTokenExceptionMsg(Exception Value) : ExceptionMsg;
 
 		/// <summary>The Encrypting Key is not long enough</summary>

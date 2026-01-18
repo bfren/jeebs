@@ -11,19 +11,19 @@ public interface INotifier
 	/// <summary>
 	/// Send an information notification.
 	/// </summary>
-	/// <param name="message">Message content</param>
+	/// <param name="message">Message content.</param>
 	void Send(string message);
 
 	/// <summary>
 	/// Send a notification.
 	/// </summary>
-	/// <param name="message">Message content</param>
-	/// <param name="level">Notification level</param>
+	/// <param name="message">Message content.</param>
+	/// <param name="level">Notification level.</param>
 	void Send(string message, NotificationLevel level);
 
 	/// <summary>
 	/// Send a notification message.
 	/// </summary>
-	/// <param name="msg">The message to send as a notification</param>
+	/// <param name="msg">The message to send as a notification.</param>
 	void Send(IMsg msg);
 }

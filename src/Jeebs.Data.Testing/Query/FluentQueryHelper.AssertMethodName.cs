@@ -12,8 +12,8 @@ public static partial class FluentQueryHelper
 	/// <summary>
 	/// Assert that <paramref name="call"/> is a call to a method called <paramref name="expected"/>.
 	/// </summary>
-	/// <param name="call">Call</param>
-	/// <param name="expected">Expected method name</param>
+	/// <param name="call">Call.</param>
+	/// <param name="expected">Expected method name.</param>
 	/// <exception cref="MethodNameException"></exception>
 	internal static void AssertMethodName(ICall call, string expected)
 	{

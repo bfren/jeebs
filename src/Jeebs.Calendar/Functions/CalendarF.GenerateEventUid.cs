@@ -10,17 +10,17 @@ public static partial class CalendarF
 	/// <summary>
 	/// Generate Event UID.
 	/// </summary>
-	/// <param name="counter">Event counter - should be increased each time</param>
-	/// <param name="lastModified">Calendar Last Modified</param>
+	/// <param name="counter">Event counter - should be increased each time.</param>
+	/// <param name="lastModified">Calendar Last Modified.</param>
 	public static string GenerateEventUid(int counter, DateTime lastModified) =>
 		@$"{lastModified:yyyyMMdd\THHmmss}-{counter:000000}";
 
 	/// <summary>
 	/// Generate Event UID with additional domain.
 	/// </summary>
-	/// <param name="counter">Event counter - should be increased each time</param>
-	/// <param name="lastModified">Calendar Last Modified</param>
-	/// <param name="domain">Calendar / app Domain</param>
+	/// <param name="counter">Event counter - should be increased each time.</param>
+	/// <param name="lastModified">Calendar Last Modified.</param>
+	/// <param name="domain">Calendar / app Domain.</param>
 	public static string GenerateEventUid(int counter, DateTime lastModified, string domain) =>
 		$"{GenerateEventUid(counter, lastModified)}@{domain}";
 }

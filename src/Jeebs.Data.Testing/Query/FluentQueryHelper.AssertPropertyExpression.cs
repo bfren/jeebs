@@ -16,8 +16,8 @@ public static partial class FluentQueryHelper
 	/// </summary>
 	/// <typeparam name="TEntity">Entity Type</typeparam>
 	/// <typeparam name="TValue">Value Type</typeparam>
-	/// <param name="expected">Expected property name</param>
-	/// <param name="actual">Actual property (will be cast to <see cref="Expression{TDelegate}"/>)</param>
+	/// <param name="expected">Expected property name.</param>
+	/// <param name="actual">Actual property (will be cast to <see cref="Expression{TDelegate}"/>).</param>
 	/// <exception cref="PropertyExpressionException"></exception>
 	internal static void AssertPropertyExpression<TEntity, TValue>(string expected, object? actual)
 	{

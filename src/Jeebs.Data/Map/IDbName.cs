@@ -24,14 +24,14 @@ public interface IDbName
 	/// Escape and return object <see cref="Schema"/> and <see cref="Name"/> separated by '.',
 	/// or simply the <see cref="Name"/> if <see cref="Schema"/> is null
 	/// </summary>
-	/// <param name="escape">Escape function</param>
+	/// <param name="escape">Escape function.</param>
 	string GetFullName(Func<string, string> escape);
 
 	/// <summary>
 	/// Escape and return object <see cref="Schema"/> and <see cref="Name"/> separated by '.',
 	/// or simply the <see cref="Name"/> if <see cref="Schema"/> is null
 	/// </summary>
-	/// <param name="escape">Escape function</param>
-	/// <param name="schemaSeparator">Schema separator</param>
+	/// <param name="escape">Escape function.</param>
+	/// <param name="schemaSeparator">Schema separator.</param>
 	string GetFullName(Func<string, string> escape, char schemaSeparator);
 }

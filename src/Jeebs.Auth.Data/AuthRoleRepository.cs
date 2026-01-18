@@ -18,8 +18,8 @@ public sealed class AuthRoleRepository : Repository<AuthRoleEntity, AuthRoleId>,
 	/// <summary>
 	/// Inject dependencies.
 	/// </summary>
-	/// <param name="db">IAuthDb</param>
-	/// <param name="log">ILog</param>
+	/// <param name="db">IAuthDb.</param>
+	/// <param name="log">ILog.</param>
 	public AuthRoleRepository(IAuthDb db, ILog<AuthRoleRepository> log) : base(db, log) { }
 
 	/// <inheritdoc/>

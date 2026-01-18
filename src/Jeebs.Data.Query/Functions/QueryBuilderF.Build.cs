@@ -12,7 +12,7 @@ public static partial class QueryBuilderF
 	/// Build a query and return query parts.
 	/// </summary>
 	/// <typeparam name="TModel">Model type</typeparam>
-	/// <param name="builder">Query builder</param>
+	/// <param name="builder">Query builder.</param>
 	public static Maybe<IQueryParts> Build<TModel>(Func<IQueryBuilder, IQueryBuilderWithFrom> builder) =>
 		F.Some(
 			new QueryBuilder()
@@ -29,7 +29,7 @@ public static partial class QueryBuilderF
 	public static class M
 	{
 		/// <summary>Error while building query</summary>
-		/// <param name="Value">Exception object</param>
+		/// <param name="Value">Exception object.</param>
 		public sealed record class QueryBuilderExceptionMsg(Exception Value) : ExceptionMsg;
 	}
 }

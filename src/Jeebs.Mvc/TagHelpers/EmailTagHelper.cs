@@ -34,15 +34,15 @@ public sealed class EmailTagHelper : UrlResolutionTagHelper
 	/// <summary>
 	/// Setup dependencies.
 	/// </summary>
-	/// <param name="urlHelperFactory">IUrlHelperFactory object</param>
-	/// <param name="htmlEncoder">HtmlEncoder</param>
+	/// <param name="urlHelperFactory">IUrlHelperFactory object.</param>
+	/// <param name="htmlEncoder">HtmlEncoder.</param>
 	public EmailTagHelper(IUrlHelperFactory urlHelperFactory, HtmlEncoder htmlEncoder) : base(urlHelperFactory, htmlEncoder) { }
 
 	/// <summary>
 	/// Process the tag helper.
 	/// </summary>
-	/// <param name="context">TagHelperContext object</param>
-	/// <param name="output">TagHelperOutput object</param>
+	/// <param name="context">TagHelperContext object.</param>
+	/// <param name="output">TagHelperOutput object.</param>
 	public override void Process(TagHelperContext context, TagHelperOutput output)
 	{
 		// Check To

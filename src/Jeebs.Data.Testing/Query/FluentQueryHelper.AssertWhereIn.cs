@@ -27,9 +27,9 @@ public static partial class FluentQueryHelper
 	/// </summary>
 	/// <typeparam name="TEntity">Entity type</typeparam>
 	/// <typeparam name="TValue">Column select value type</typeparam>
-	/// <param name="call">Call</param>
-	/// <param name="expectedProperty">Expected property</param>
-	/// <param name="expectedValues">Expected values</param>
+	/// <param name="call">Call.</param>
+	/// <param name="expectedProperty">Expected property.</param>
+	/// <param name="expectedValues">Expected values.</param>
 	public static void AssertWhereIn<TEntity, TValue>(ICall call, string expectedProperty, TValue[] expectedValues)
 	{
 		// Check the method

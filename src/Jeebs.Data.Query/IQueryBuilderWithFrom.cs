@@ -18,9 +18,9 @@ public interface IQueryBuilderWithFrom
 	/// </summary>
 	/// <typeparam name="TFrom">Join from table type</typeparam>
 	/// <typeparam name="TTo">Join to table type</typeparam>
-	/// <param name="type">Join type</param>
-	/// <param name="fromColumn">Join from this column</param>
-	/// <param name="toColumn">Join to this table and column</param>
+	/// <param name="type">Join type.</param>
+	/// <param name="fromColumn">Join from this column.</param>
+	/// <param name="toColumn">Join to this table and column.</param>
 	IQueryBuilderWithFrom Join<TFrom, TTo>(
 		QueryJoin type,
 		Expression<Func<TFrom, string>> fromColumn,
@@ -33,9 +33,9 @@ public interface IQueryBuilderWithFrom
 	/// Add a WHERE predicate (predicates are added using AND) - you will need to write more complex queries manually.
 	/// </summary>
 	/// <typeparam name="TTable">Table type</typeparam>
-	/// <param name="column">Table column</param>
-	/// <param name="cmp">Search operator</param>
-	/// <param name="value">Search value</param>
+	/// <param name="column">Table column.</param>
+	/// <param name="cmp">Search operator.</param>
+	/// <param name="value">Search value.</param>
 	IQueryBuilderWithFrom Where<TTable>(Expression<Func<TTable, string>> column, Compare cmp, object value)
 		where TTable : ITable, new();
 
@@ -43,7 +43,7 @@ public interface IQueryBuilderWithFrom
 	/// Sort by column in Ascending order.
 	/// </summary>
 	/// <typeparam name="TTable">Table type</typeparam>
-	/// <param name="column">Table column</param>
+	/// <param name="column">Table column.</param>
 	IQueryBuilderWithFrom SortBy<TTable>(Expression<Func<TTable, string>> column)
 		where TTable : ITable, new();
 
@@ -51,19 +51,19 @@ public interface IQueryBuilderWithFrom
 	/// Sort by column in Descending order.
 	/// </summary>
 	/// <typeparam name="TTable">Table type</typeparam>
-	/// <param name="column">Table column</param>
+	/// <param name="column">Table column.</param>
 	IQueryBuilderWithFrom SortByDescending<TTable>(Expression<Func<TTable, string>> column)
 		where TTable : ITable, new();
 
 	/// <summary>
 	/// Add a limit to the number of results returned by this query.
 	/// </summary>
-	/// <param name="number">The maximum number of results to return</param>
+	/// <param name="number">The maximum number of results to return.</param>
 	IQueryBuilderWithFrom Maximum(ulong number);
 
 	/// <summary>
 	/// Skip a number of results before returning.
 	/// </summary>
-	/// <param name="number">The number of results to skip</param>
+	/// <param name="number">The number of results to skip.</param>
 	IQueryBuilderWithFrom Skip(ulong number);
 }

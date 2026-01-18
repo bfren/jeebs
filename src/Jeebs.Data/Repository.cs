@@ -33,23 +33,23 @@ public abstract class Repository<TEntity, TId> : IRepository<TEntity, TId>
 	/// <summary>
 	/// Inject database and log objects.
 	/// </summary>
-	/// <param name="db">IDb</param>
-	/// <param name="log">ILog (should be given a context of the implementing class)</param>
+	/// <param name="db">IDb.</param>
+	/// <param name="log">ILog (should be given a context of the implementing class).</param>
 	protected Repository(IDb db, ILog<IRepository<TEntity, TId>> log) =>
 		(Db, Log) = (db, log);
 
 	/// <summary>
 	/// Use Debug log by default - override to send elsewhere (or to disable entirely).
 	/// </summary>
-	/// <param name="message">Log message</param>
-	/// <param name="args">Log message arguments</param>
+	/// <param name="message">Log message.</param>
+	/// <param name="args">Log message arguments.</param>
 	internal virtual void WriteToLog(string message, object[] args) =>
 		Log.Vrb(message, args);
 
 	/// <summary>
 	/// Log an operation.
 	/// </summary>
-	/// <param name="operation">Operation (method) name</param>
+	/// <param name="operation">Operation (method) name.</param>
 	protected void LogFunc(string operation) =>
 		WriteToLog("{Operation} {Entity}",
 		[

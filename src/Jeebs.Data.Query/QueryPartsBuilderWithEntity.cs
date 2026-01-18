@@ -45,7 +45,7 @@ public abstract class QueryPartsBuilderWithEntity<TEntity, TId> : QueryPartsBuil
 	/// <summary>
 	/// Inject mapper.
 	/// </summary>
-	/// <param name="mapper">IMapper</param>
+	/// <param name="mapper">IMapper.</param>
 	protected QueryPartsBuilderWithEntity(IEntityMapper mapper) =>
 		this.mapper = mapper;
 }

@@ -11,8 +11,8 @@ public static partial class JwtF
 	/// <summary>
 	/// Retrieve the user from the supplied token.
 	/// </summary>
-	/// <param name="auth">IJwtAuthProvider</param>
-	/// <param name="token">Token value</param>
+	/// <param name="auth">IJwtAuthProvider.</param>
+	/// <param name="token">Token value.</param>
 	internal static Maybe<ClaimsPrincipal> GetPrincipal(IAuthJwtProvider auth, string token) =>
 		auth.ValidateToken(token);
 }

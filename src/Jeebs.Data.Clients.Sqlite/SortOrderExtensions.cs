@@ -14,7 +14,7 @@ public static class SortOrderExtensions
 	/// Convert a <see cref="SortOrder"/> type to the actual MySQL operator<br/>
 	/// Default value is "ASC"
 	/// </summary>
-	/// <param name="this">SortOrder</param>
+	/// <param name="this">SortOrder.</param>
 	public static string ToOperator(this SortOrder @this) =>
 		@this switch
 		{

@@ -63,10 +63,10 @@ public sealed class WpDb<TC, TCm, TL, TO, TP, TPm, TT, TTm, TTr, TTt, TU, TUm> :
 	/// <summary>
 	/// Create tables and map entity types.
 	/// </summary>
-	/// <param name="client">Database client</param>
-	/// <param name="dbConfig">Database configuration</param>
-	/// <param name="wpConfig">WordPress configuration</param>
-	/// <param name="log">ILog</param>
+	/// <param name="client">Database client.</param>
+	/// <param name="dbConfig">Database configuration.</param>
+	/// <param name="wpConfig">WordPress configuration.</param>
+	/// <param name="log">ILog.</param>
 	internal WpDb(IDbClient client, IOptions<DbConfig> dbConfig, IOptions<WpConfig> wpConfig, ILog log)
 		: base(client, dbConfig, log, wpConfig.Value.Db)
 	{

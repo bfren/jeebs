@@ -30,9 +30,9 @@ public sealed class WpUsa : Wp<
 	/// <summary>
 	/// Create instance.
 	/// </summary>
-	/// <param name="dbConfig">DbConfig</param>
-	/// <param name="wpConfig">WpUsaConfig</param>
-	/// <param name="log">ILog</param>
+	/// <param name="dbConfig">DbConfig.</param>
+	/// <param name="wpConfig">WpUsaConfig.</param>
+	/// <param name="log">ILog.</param>
 	public WpUsa(IOptions<DbConfig> dbConfig, IOptions<WpUsaConfig> wpConfig, ILog<WpUsa> log) : base(dbConfig, wpConfig, log) { }
 
 	/// <summary>

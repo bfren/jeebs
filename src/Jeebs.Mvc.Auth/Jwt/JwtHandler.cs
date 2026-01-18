@@ -19,15 +19,15 @@ public sealed class JwtHandler : AuthorizationHandler<JwtRequirement>
 	/// <summary>
 	/// Inject dependencies.
 	/// </summary>
-	/// <param name="log">ILog</param>
+	/// <param name="log">ILog.</param>
 	public JwtHandler(ILog<JwtHandler> log) =>
 		Log = log;
 
 	/// <summary>
 	/// Handle Requirement.
 	/// </summary>
-	/// <param name="context">AuthorizationHandlerContext</param>
-	/// <param name="requirement">JwtRequirement</param>
+	/// <param name="context">AuthorizationHandlerContext.</param>
+	/// <param name="requirement">JwtRequirement.</param>
 	protected override Task HandleRequirementAsync(AuthorizationHandlerContext context, JwtRequirement requirement)
 	{
 		if (context.Resource is DefaultHttpContext http)

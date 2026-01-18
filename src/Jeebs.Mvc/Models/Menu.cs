@@ -20,17 +20,17 @@ public abstract class Menu
 	/// <summary>
 	/// Get a URI from a Menu Item.
 	/// </summary>
-	/// <param name="urlHelper">IUrlHelper</param>
-	/// <param name="item">MenuItem</param>
+	/// <param name="urlHelper">IUrlHelper.</param>
+	/// <param name="item">MenuItem.</param>
 	public delegate string? GetUri(IUrlHelper urlHelper, MenuItem item);
 
 	/// <summary>
 	/// Load a URI.
 	/// </summary>
-	/// <param name="result">StringBuilder result (to output)</param>
-	/// <param name="client">HttpClient</param>
-	/// <param name="uri">URI to load</param>
-	/// <param name="token">CancellationToken</param>
+	/// <param name="result">StringBuilder result (to output).</param>
+	/// <param name="client">HttpClient.</param>
+	/// <param name="uri">URI to load.</param>
+	/// <param name="token">CancellationToken.</param>
 	public delegate ValueTask LoadUri(StringBuilder result, HttpClient client, string uri, CancellationToken token);
 
 	/// <summary>
@@ -45,8 +45,8 @@ public abstract class Menu
 	/// <summary>
 	/// Load this menu's items (to speed up page loading).
 	/// </summary>
-	/// <param name="http">IHttpClientFactory</param>
-	/// <param name="urlHelper">IUrlHelper</param>
+	/// <param name="http">IHttpClientFactory.</param>
+	/// <param name="urlHelper">IUrlHelper.</param>
 	public Task<Maybe<string>> LoadItemsAsync(IHttpClientFactory http, IUrlHelper urlHelper)
 	{
 		// Create client
@@ -62,8 +62,8 @@ public abstract class Menu
 	/// <summary>
 	/// Build a URI using the <paramref name="urlHelper"/> ActionContext.
 	/// </summary>
-	/// <param name="urlHelper">IUrlHelper</param>
-	/// <param name="item">MenuItem</param>
+	/// <param name="urlHelper">IUrlHelper.</param>
+	/// <param name="item">MenuItem.</param>
 	private static string? GetUriFromActionContext(IUrlHelper urlHelper, MenuItem item)
 	{
 		// Build the context
@@ -88,9 +88,9 @@ public abstract class Menu
 		/// <summary>
 		/// Use a UrlHelper object to get simple menu items.
 		/// </summary>
-		/// <param name="urlHelper">UrlHelper object</param>
-		/// <param name="items">Menu Items</param>
-		/// <param name="getUri">Function to get a URI from a menu item</param>
+		/// <param name="urlHelper">UrlHelper object.</param>
+		/// <param name="items">Menu Items.</param>
+		/// <param name="getUri">Function to get a URI from a menu item.</param>
 		internal static IEnumerable<MenuItemSimple> GetSimpleItems(IUrlHelper urlHelper, List<MenuItem> items, GetUri getUri)
 		{
 			foreach (var item in items)
@@ -105,9 +105,9 @@ public abstract class Menu
 		/// <summary>
 		/// Get URIs from a list of menu items.
 		/// </summary>
-		/// <param name="urlHelper">IUrlHelper</param>
-		/// <param name="items">Menu Items</param>
-		/// <param name="getUri">Get URI delegate</param>
+		/// <param name="urlHelper">IUrlHelper.</param>
+		/// <param name="items">Menu Items.</param>
+		/// <param name="getUri">Get URI delegate.</param>
 		internal static List<string> GetUris(IUrlHelper urlHelper, List<MenuItem> items, GetUri getUri)
 		{
 			// Holds list of URIs
@@ -138,9 +138,9 @@ public abstract class Menu
 		/// <summary>
 		/// Load the specified URIs.
 		/// </summary>
-		/// <param name="client">HttpClient</param>
-		/// <param name="uris">List of URIs to load</param>
-		/// <param name="loadUri">LoadUri</param>
+		/// <param name="client">HttpClient.</param>
+		/// <param name="uris">List of URIs to load.</param>
+		/// <param name="loadUri">LoadUri.</param>
 		internal static async Task<Maybe<string>> LoadUrisAsync(HttpClient client, List<string> uris, LoadUri loadUri)
 		{
 			// Use a StringBuilder to hold the response text
@@ -160,10 +160,10 @@ public abstract class Menu
 		/// <summary>
 		/// Load a URI asynchronously, writing output to <paramref name="result"/>.
 		/// </summary>
-		/// <param name="result">StringBuilder</param>
-		/// <param name="client">HttpClient</param>
-		/// <param name="uri">The URI to load</param>
-		/// <param name="token">CancellationToken</param>
+		/// <param name="result">StringBuilder.</param>
+		/// <param name="client">HttpClient.</param>
+		/// <param name="uri">The URI to load.</param>
+		/// <param name="token">CancellationToken.</param>
 		internal static async ValueTask LoadUriAsync(StringBuilder result, HttpClient client, string uri, CancellationToken token)
 		{
 			// Output URI to be loaded

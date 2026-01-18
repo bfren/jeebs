@@ -29,9 +29,9 @@ public sealed record class SlackMessage
 	/// <summary>
 	/// Create a message.
 	/// </summary>
-	/// <param name="config">JeebsConfig</param>
-	/// <param name="text">Message text</param>
-	/// <param name="level">MessageLevel</param>
+	/// <param name="config">JeebsConfig.</param>
+	/// <param name="text">Message text.</param>
+	/// <param name="level">MessageLevel.</param>
 	public SlackMessage(JeebsConfig config, string text, NotificationLevel level)
 	{
 		// Set plain text (fallback) message content

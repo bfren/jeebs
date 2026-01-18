@@ -11,7 +11,7 @@ public static partial class EnumF
 	/// Parse a string value into the specified Enum.
 	/// </summary>
 	/// <typeparam name="T">Enum type</typeparam>
-	/// <param name="value">The value to parse</param>
+	/// <param name="value">The value to parse.</param>
 	public static Result<T> Parse<T>(string? value)
 		where T : struct, Enum
 	{

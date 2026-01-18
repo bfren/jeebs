@@ -6,8 +6,8 @@ namespace Jeebs.Services.Drawing.Geometry;
 /// <summary>
 /// Size.
 /// </summary>
-/// <param name="Width">Rectangle width</param>
-/// <param name="Height">Rectangle height</param>
+/// <param name="Width">Rectangle width.</param>
+/// <param name="Height">Rectangle height.</param>
 public readonly record struct Size(int Width, int Height)
 {
 	/// <summary>

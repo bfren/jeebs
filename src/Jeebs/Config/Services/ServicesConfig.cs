@@ -39,7 +39,7 @@ public sealed record class ServicesConfig : IOptions<ServicesConfig>
 	/// <summary>
 	/// Get a service configuration by definition.
 	/// </summary>
-	/// <param name="definition">Configuration definition - in format <c>service_type.service_name</c></param>
+	/// <param name="definition">Configuration definition - in format <c>service_type.service_name</c>.</param>
 	/// <returns>Service configuration.</returns>
 	public Result<IServiceConfig> GetServiceConfig(string definition) =>
 		SplitDefinition(definition).Match(

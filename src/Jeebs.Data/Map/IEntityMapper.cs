@@ -15,7 +15,7 @@ public interface IEntityMapper
 	/// </summary>
 	/// <typeparam name="TEntity">Entity type</typeparam>
 	/// <typeparam name="TTable">Table type</typeparam>
-	/// <param name="table">Table to map</param>
+	/// <param name="table">Table to map.</param>
 	ITableMap Map<TEntity, TTable>(TTable table)
 		where TEntity : IWithId
 		where TTable : ITable;

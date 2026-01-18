@@ -28,7 +28,7 @@ public class PropertyInfo<TObject, TProperty>
 	/// <summary>
 	/// Create object.
 	/// </summary>
-	/// <param name="info">PropertyInfo object</param>
+	/// <param name="info">PropertyInfo object.</param>
 	public PropertyInfo(PropertyInfo info) =>
 		Info = info;
 

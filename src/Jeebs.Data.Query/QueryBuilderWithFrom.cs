@@ -28,7 +28,7 @@ public sealed record class QueryBuilderWithFrom : IQueryBuilderWithFrom
 	/// <summary>
 	/// Create using the specified table.
 	/// </summary>
-	/// <param name="from">'From' table</param>
+	/// <param name="from">'From' table.</param>
 	internal QueryBuilderWithFrom(ITable from)
 	{
 		Parts = new QueryParts(from);

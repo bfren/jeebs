@@ -16,7 +16,7 @@ public sealed class AuthJwtProvider : IAuthJwtProvider
 	/// <summary>
 	/// Inject dependencies.
 	/// </summary>
-	/// <param name="config">JwtConfig</param>
+	/// <param name="config">JwtConfig.</param>
 	public AuthJwtProvider(IOptions<JwtConfig> config) : this(config.Value) { }
 
 	internal AuthJwtProvider(JwtConfig config) =>

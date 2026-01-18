@@ -18,11 +18,11 @@ public static partial class QueryPostsF
 	/// </summary>
 	/// <typeparam name="TList">List type</typeparam>
 	/// <typeparam name="TModel">Model type</typeparam>
-	/// <param name="db">IWpDb</param>
-	/// <param name="w">IUnitOfWork</param>
-	/// <param name="posts">Posts</param>
-	/// <param name="meta">Meta property</param>
-	/// <param name="fields">Custom Fields</param>
+	/// <param name="db">IWpDb.</param>
+	/// <param name="w">IUnitOfWork.</param>
+	/// <param name="posts">Posts.</param>
+	/// <param name="meta">Meta property.</param>
+	/// <param name="fields">Custom Fields.</param>
 	internal static async Task<Maybe<TList>> HydrateAsync<TList, TModel>(
 		IWpDb db,
 		IUnitOfWork w,

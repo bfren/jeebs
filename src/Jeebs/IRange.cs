@@ -33,12 +33,12 @@ public interface IRange<T>
 	/// <summary>
 	/// Whether or not the range includes the specified range of values.
 	/// </summary>
-	/// <param name="value">IRange</param>
+	/// <param name="value">IRange.</param>
 	bool Includes(IRange<T> value);
 
 	/// <summary>
 	/// Whether or not the range overlaps the specified range.
 	/// </summary>
-	/// <param name="value">IRange</param>
+	/// <param name="value">IRange.</param>
 	bool Overlaps(IRange<T> value);
 }

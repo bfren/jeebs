@@ -33,8 +33,8 @@ public sealed class AuthBuilder
 	/// <summary>
 	/// Inject dependencies.
 	/// </summary>
-	/// <param name="services">IServiceCollection</param>
-	/// <param name="config">AuthConfig</param>
+	/// <param name="services">IServiceCollection.</param>
+	/// <param name="config">AuthConfig.</param>
 	public AuthBuilder(IServiceCollection services, AuthConfig config)
 	{
 		(this.services, this.config) = (services, config);
@@ -125,7 +125,7 @@ public sealed class AuthBuilder
 	/// Enable custom data authentication and authorisation.
 	/// </summary>
 	/// <typeparam name="TDbClient">IAuthDbClient type</typeparam>
-	/// <param name="useAuthDbClientAsMain">If true, <typeparamref name="TDbClient"/> will be registered as <see cref="IDbClient"/></param>
+	/// <param name="useAuthDbClientAsMain">If true, <typeparamref name="TDbClient"/> will be registered as <see cref="IDbClient"/>.</param>
 	/// <exception cref="AuthDataAlreadyAddedException"></exception>
 	public AuthBuilder WithData<TDbClient>(bool useAuthDbClientAsMain)
 		where TDbClient : class, IAuthDbClient

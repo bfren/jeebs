@@ -36,8 +36,8 @@ public abstract class Driver<TConfig> : IDriver<TConfig>
 	/// <summary>
 	/// Create object.
 	/// </summary>
-	/// <param name="name">Service name</param>
-	/// <param name="args">DriverArgs</param>
+	/// <param name="name">Service name.</param>
+	/// <param name="args">DriverArgs.</param>
 	protected Driver(string name, DriverArgs<TConfig> args)
 	{
 		(Name, Log, JeebsConfig) = (name, args.Log, args.JeebsConfig.Value);

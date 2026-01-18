@@ -31,7 +31,7 @@ public abstract class Controller : Microsoft.AspNetCore.Mvc.Controller
 	/// <summary>
 	/// Create object.
 	/// </summary>
-	/// <param name="log">ILog</param>
+	/// <param name="log">ILog.</param>
 	protected Controller(ILog log) =>
 		Log = log;
 
@@ -39,8 +39,8 @@ public abstract class Controller : Microsoft.AspNetCore.Mvc.Controller
 	/// Do something, process the result and return errors if necessary, or perform the success function.
 	/// </summary>
 	/// <typeparam name="T">Result type</typeparam>
-	/// <param name="maybe">Maybe value</param>
-	/// <param name="success">Function to run when the result is successful</param>
+	/// <param name="maybe">Maybe value.</param>
+	/// <param name="success">Function to run when the result is successful.</param>
 	protected Task<IActionResult> ProcessAsync<T>(Maybe<T> maybe, Func<T, Task<IActionResult>> success) =>
 		maybe.SwitchAsync(
 			some: success,
@@ -51,8 +51,8 @@ public abstract class Controller : Microsoft.AspNetCore.Mvc.Controller
 	/// Do something, process the result and return errors if necessary, or perform the success function.
 	/// </summary>
 	/// <typeparam name="T">Result type</typeparam>
-	/// <param name="maybe">Maybe value</param>
-	/// <param name="success">Function to run when the result is successful</param>
+	/// <param name="maybe">Maybe value.</param>
+	/// <param name="success">Function to run when the result is successful.</param>
 	protected Task<IActionResult> ProcessAsync<T>(Task<Maybe<T>> maybe, Func<T, IActionResult> success) =>
 		maybe.SwitchAsync(
 			some: success,
@@ -63,8 +63,8 @@ public abstract class Controller : Microsoft.AspNetCore.Mvc.Controller
 	/// Do something, process the result and return errors if necessary, or perform the success function.
 	/// </summary>
 	/// <typeparam name="T">Result type</typeparam>
-	/// <param name="maybe">Maybe value</param>
-	/// <param name="success">Function to run when the result is successful</param>
+	/// <param name="maybe">Maybe value.</param>
+	/// <param name="success">Function to run when the result is successful.</param>
 	protected Task<IActionResult> ProcessAsync<T>(Task<Maybe<T>> maybe, Func<T, Task<IActionResult>> success) =>
 		maybe.SwitchAsync(
 			some: success,
@@ -88,7 +88,7 @@ public abstract class Controller : Microsoft.AspNetCore.Mvc.Controller
 	/// <summary>
 	/// Redirect to error page.
 	/// </summary>
-	/// <param name="code">HTTP Status Code</param>
+	/// <param name="code">HTTP Status Code.</param>
 	protected static RedirectToActionResult RedirectToError(int code) =>
 		new(nameof(ErrorController.Handle), "Error", new { code });
 

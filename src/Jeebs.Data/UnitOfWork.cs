@@ -35,9 +35,9 @@ public sealed class UnitOfWork : IUnitOfWork
 	/// <summary>
 	/// Create object.
 	/// </summary>
-	/// <param name="connection">Database Connection wrapper</param>
-	/// <param name="transaction">Database Transaction wrapper</param>
-	/// <param name="log">ILog</param>
+	/// <param name="connection">Database Connection wrapper.</param>
+	/// <param name="transaction">Database Transaction wrapper.</param>
+	/// <param name="log">ILog.</param>
 	public UnitOfWork(DbConnection connection, DbTransaction transaction, ILog log) =>
 		(this.connection, this.transaction, this.log) = (connection, transaction, log);
 

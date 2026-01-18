@@ -47,7 +47,7 @@ public sealed class WpDbSchema : IWpDbSchema
 	/// <summary>
 	/// Create table objects.
 	/// </summary>
-	/// <param name="prefix">Table prefix</param>
+	/// <param name="prefix">Table prefix.</param>
 	public WpDbSchema(string prefix)
 	{
 		Comments = new CommentsTable(prefix);

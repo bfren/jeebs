@@ -15,7 +15,7 @@ public static class CompareExtensions
 	/// Convert a <see cref="Compare"/> type to the actual MySQL operator<br/>
 	/// Default value is "="
 	/// </summary>
-	/// <param name="this">Compare</param>
+	/// <param name="this">Compare.</param>
 	/// <exception cref="UnrecognisedSearchOperatorException"></exception>
 	public static string ToOperator(this Compare @this) =>
 		@this switch

@@ -34,8 +34,8 @@ public interface IRepository<TEntity, TId>
 	/// <summary>
 	/// Create an entity.
 	/// </summary>
-	/// <param name="entity">Entity to create</param>
-	/// <param name="transaction">Database transaction</param>
+	/// <param name="entity">Entity to create.</param>
+	/// <param name="transaction">Database transaction.</param>
 	Task<Maybe<TId>> CreateAsync(TEntity entity, IDbTransaction transaction);
 
 	/// <inheritdoc cref="RetrieveAsync{TModel}(TId, IDbTransaction)"/>
@@ -45,8 +45,8 @@ public interface IRepository<TEntity, TId>
 	/// Retrieve an entity.
 	/// </summary>
 	/// <typeparam name="TModel">Model type</typeparam>
-	/// <param name="id">Entity ID</param>
-	/// <param name="transaction">Database transaction</param>
+	/// <param name="id">Entity ID.</param>
+	/// <param name="transaction">Database transaction.</param>
 	Task<Maybe<TModel>> RetrieveAsync<TModel>(TId id, IDbTransaction transaction);
 
 	/// <inheritdoc cref="UpdateAsync{TModel}(TModel, IDbTransaction)"/>
@@ -57,8 +57,8 @@ public interface IRepository<TEntity, TId>
 	/// Update an entity with the values in <paramref name="model"/>.
 	/// </summary>
 	/// <typeparam name="TModel">Model type</typeparam>
-	/// <param name="model">Model with updated values</param>
-	/// <param name="transaction">Database transaction</param>
+	/// <param name="model">Model with updated values.</param>
+	/// <param name="transaction">Database transaction.</param>
 	Task<Maybe<bool>> UpdateAsync<TModel>(TModel model, IDbTransaction transaction)
 		where TModel : IWithId;
 
@@ -70,8 +70,8 @@ public interface IRepository<TEntity, TId>
 	/// Delete an entity.
 	/// </summary>
 	/// <typeparam name="TModel">Model type</typeparam>
-	/// <param name="model">Model containing ID of entity to delete (and Version if required)</param>
-	/// <param name="transaction">Database transaction</param>
+	/// <param name="model">Model containing ID of entity to delete (and Version if required).</param>
+	/// <param name="transaction">Database transaction.</param>
 	Task<Maybe<bool>> DeleteAsync<TModel>(TModel model, IDbTransaction transaction)
 		where TModel : IWithId;
 

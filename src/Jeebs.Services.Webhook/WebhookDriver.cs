@@ -25,8 +25,8 @@ public abstract class WebhookDriver<TConfig, TMessage> : Driver<TConfig>, IWebho
 	/// <summary>
 	/// Create object.
 	/// </summary>
-	/// <param name="name">Service name</param>
-	/// <param name="args">WebhookServiceArgs</param>
+	/// <param name="name">Service name.</param>
+	/// <param name="args">WebhookServiceArgs.</param>
 	protected WebhookDriver(string name, WebhookDriverArgs<TConfig> args) : base(name, args) =>
 		Factory = args.Factory;
 

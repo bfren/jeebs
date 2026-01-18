@@ -27,10 +27,10 @@ public interface IAuthUserRepository<TUserEntity> : IRepository<TUserEntity, Aut
 	/// <summary>
 	/// Create a new User.
 	/// </summary>
-	/// <param name="email">Email address (used for login)</param>
-	/// <param name="plainTextPassword">Password (will be hashed)</param>
-	/// <param name="friendlyName">[Optional] The user's actual name</param>
-	/// <param name="transaction">IDbTransaction</param>
+	/// <param name="email">Email address (used for login).</param>
+	/// <param name="plainTextPassword">Password (will be hashed).</param>
+	/// <param name="friendlyName">[Optional] The user's actual name.</param>
+	/// <param name="transaction">IDbTransaction.</param>
 	Task<Maybe<AuthUserId>> CreateAsync(string email, string plainTextPassword, string? friendlyName, IDbTransaction transaction);
 
 	/// <inheritdoc cref="RetrieveAsync{TModel}(string, IDbTransaction)"/>
@@ -40,8 +40,8 @@ public interface IAuthUserRepository<TUserEntity> : IRepository<TUserEntity, Aut
 	/// Retrieve a user by email address.
 	/// </summary>
 	/// <typeparam name="TModel">User model type</typeparam>
-	/// <param name="email">Email address</param>
-	/// <param name="transaction">IDbTransaction</param>
+	/// <param name="email">Email address.</param>
+	/// <param name="transaction">IDbTransaction.</param>
 	Task<Maybe<TModel>> RetrieveAsync<TModel>(string email, IDbTransaction transaction);
 
 	/// <inheritdoc cref="UpdateLastSignInAsync(AuthUserId, IDbTransaction)"/>
@@ -50,7 +50,7 @@ public interface IAuthUserRepository<TUserEntity> : IRepository<TUserEntity, Aut
 	/// <summary>
 	/// Update the user's last sign in to now.
 	/// </summary>
-	/// <param name="userId">User ID</param>
-	/// <param name="transaction">IDbTransaction</param>
+	/// <param name="userId">User ID.</param>
+	/// <param name="transaction">IDbTransaction.</param>
 	Task<Maybe<bool>> UpdateLastSignInAsync(AuthUserId userId, IDbTransaction transaction);
 }

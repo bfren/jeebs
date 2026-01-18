@@ -16,7 +16,7 @@ public interface IAuthDbQuery : IDbQuery
 	/// Retrieve the Roles added to the specified User.
 	/// </summary>
 	/// <typeparam name="TRole">Role type</typeparam>
-	/// <param name="userId">User ID</param>
+	/// <param name="userId">User ID.</param>
 	Task<Maybe<List<TRole>>> GetRolesForUserAsync<TRole>(AuthUserId userId)
 		where TRole : IAuthRole;
 }

@@ -14,8 +14,8 @@ public static partial class QueryF
 	/// Build a column object from a column alias.
 	/// </summary>
 	/// <typeparam name="TTable">Table type</typeparam>
-	/// <param name="table">Table object</param>
-	/// <param name="columnAlias">Column alias</param>
+	/// <param name="table">Table object.</param>
+	/// <param name="columnAlias">Column alias.</param>
 	public static Maybe<IColumn> GetColumnFromAlias<TTable>(TTable table, string columnAlias)
 		where TTable : ITable =>
 		table.GetProperties()
@@ -45,8 +45,8 @@ public static partial class QueryF
 	public static partial class M
 	{
 		/// <summary>Unable to get column name using the alias</summary>
-		/// <param name="Table">Table object</param>
-		/// <param name="ColumnAlias">Column alias</param>
+		/// <param name="Table">Table object.</param>
+		/// <param name="ColumnAlias">Column alias.</param>
 		public sealed record class UnableToGetColumnFromAliasMsg(ITable Table, string ColumnAlias) : Msg;
 	}
 }

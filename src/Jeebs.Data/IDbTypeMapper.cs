@@ -20,7 +20,7 @@ public interface IDbTypeMapper
 	/// Add a type handler.
 	/// </summary>
 	/// <typeparam name="T">Type to handle</typeparam>
-	/// <param name="typeHandler">Type handler</param>
+	/// <param name="typeHandler">Type handler.</param>
 	void AddTypeHandler<T>(SqlMapper.TypeHandler<T> typeHandler);
 
 	/// <summary>
@@ -63,15 +63,15 @@ public interface IDbTypeMapper
 	/// Add generic type handlers.
 	/// </summary>
 	/// <typeparam name="T">Base (abstract or interface) type to map</typeparam>
-	/// <param name="handlerType">Handler type (with generic argument)</param>
-	/// <param name="addTypeHandler">Function to add a type handler</param>
+	/// <param name="handlerType">Handler type (with generic argument).</param>
+	/// <param name="addTypeHandler">Function to add a type handler.</param>
 	void AddGenericTypeHandlers<T>(Type handlerType, AddGenericTypeHandler addTypeHandler);
 
 	/// <summary>
 	/// For testing - used to register a type handler.
 	/// </summary>
-	/// <param name="type">Base (abstract or interface) type to map</param>
-	/// <param name="handler">Handler type (with generic argument)</param>
+	/// <param name="type">Base (abstract or interface) type to map.</param>
+	/// <param name="handler">Handler type (with generic argument).</param>
 	delegate void AddGenericTypeHandler(Type type, SqlMapper.ITypeHandler handler);
 
 	/// <summary>

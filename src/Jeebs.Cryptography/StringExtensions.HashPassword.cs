@@ -11,7 +11,7 @@ public static partial class StringExtensions
 	/// <summary>
 	/// Hash a password using argon2id - returns hash containing the salt (of length 128 bytes).
 	/// </summary>
-	/// <param name="this">Password to hash</param>
+	/// <param name="this">Password to hash.</param>
 	public static string HashPassword(this string @this)
 	{
 		// Return empty string

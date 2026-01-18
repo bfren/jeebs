@@ -24,8 +24,8 @@ public static class LoggerConfigurationExtensions
 	/// <summary>
 	/// Load Serilog configuration from JeebsConfig object.
 	/// </summary>
-	/// <param name="this">LoggerConfiguration</param>
-	/// <param name="jeebs">JeebsConfig</param>
+	/// <param name="this">LoggerConfiguration.</param>
+	/// <param name="jeebs">JeebsConfig.</param>
 	/// <exception cref="LoadFromJeebsConfigException"></exception>
 	public static void LoadFromJeebsConfig(this LoggerConfiguration @this, JeebsConfig jeebs)
 	{

@@ -13,7 +13,7 @@ public sealed class CssTagBuilder : TagBuilder
 	/// <summary>
 	/// Create object.
 	/// </summary>
-	/// <param name="href">Stylesheet URI</param>
+	/// <param name="href">Stylesheet URI.</param>
 	public CssTagBuilder(string href) : base("link")
 	{
 		Attributes.Add("rel", "stylesheet");

@@ -40,9 +40,9 @@ public sealed class AuthDb : Db, IAuthDb
 	/// <summary>
 	/// Create object.
 	/// </summary>
-	/// <param name="client">IAuthDbClient</param>
-	/// <param name="config">DbConfig</param>
-	/// <param name="log">ILog</param>
+	/// <param name="client">IAuthDbClient.</param>
+	/// <param name="config">DbConfig.</param>
+	/// <param name="log">ILog.</param>
 	public AuthDb(IAuthDbClient client, IOptions<DbConfig> config, ILog<AuthDb> log) :
 		base(client, config, log, config.Value.Authentication)
 	{

@@ -19,7 +19,7 @@ public sealed record class SlackHeader : SlackBlock
 	/// <summary>
 	/// Create object.
 	/// </summary>
-	/// <param name="text">Header text</param>
+	/// <param name="text">Header text.</param>
 	public SlackHeader(SlackContent text) : base("header") =>
 		Text = text;
 }

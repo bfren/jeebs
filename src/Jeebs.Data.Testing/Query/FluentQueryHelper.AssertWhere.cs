@@ -30,10 +30,10 @@ public static partial class FluentQueryHelper
 	/// </summary>
 	/// <typeparam name="TEntity">Entity type</typeparam>
 	/// <typeparam name="TValue">Column select value type</typeparam>
-	/// <param name="call">Call</param>
-	/// <param name="expectedProperty">Expected property</param>
-	/// <param name="expectedCompare">Expected comparison</param>
-	/// <param name="expectedValue">Expected value</param>
+	/// <param name="call">Call.</param>
+	/// <param name="expectedProperty">Expected property.</param>
+	/// <param name="expectedCompare">Expected comparison.</param>
+	/// <param name="expectedValue">Expected value.</param>
 	public static void AssertWhere<TEntity, TValue>(
 		ICall call,
 		string expectedProperty,
@@ -74,9 +74,9 @@ public static partial class FluentQueryHelper
 	/// <summary>
 	/// Validate a call to <see cref="IFluentQuery{TEntity, TId}.Where(string, object)"/>.
 	/// </summary>
-	/// <param name="call">Call</param>
-	/// <param name="expectedClause">Expected clause</param>
-	/// <param name="expectedParameters">Expected parameters</param>
+	/// <param name="call">Call.</param>
+	/// <param name="expectedClause">Expected clause.</param>
+	/// <param name="expectedParameters">Expected parameters.</param>
 	public static void AssertWhere(ICall call, string expectedClause, object expectedParameters)
 	{
 		// Check the method name

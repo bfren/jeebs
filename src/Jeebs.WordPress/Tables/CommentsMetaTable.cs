@@ -39,6 +39,6 @@ public sealed record class CommentsMetaTable : Table
 	/// <summary>
 	/// Create object.
 	/// </summary>
-	/// <param name="prefix">Table Prefix</param>
+	/// <param name="prefix">Table Prefix.</param>
 	public CommentsMetaTable(string prefix) : base($"{prefix}commentmeta") { }
 }

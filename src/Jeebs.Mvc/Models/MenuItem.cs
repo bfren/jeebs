@@ -61,7 +61,7 @@ public record class MenuItem
 	/// Add a child menu item, using action as text
 	/// The controller will be set to the same as the parent menu item
 	/// </summary>
-	/// <param name="action">The action for the link</param>
+	/// <param name="action">The action for the link.</param>
 	public void AddChild(string action) =>
 		AddChild(action, null, null);
 
@@ -69,8 +69,8 @@ public record class MenuItem
 	/// Add a child menu item, using action as text if text is null
 	/// The controller will be set to the same as the parent menu item
 	/// </summary>
-	/// <param name="action">The action for the link</param>
-	/// <param name="text">The text to display in the link - if null, action will be used instead</param>
+	/// <param name="action">The action for the link.</param>
+	/// <param name="text">The text to display in the link - if null, action will be used instead.</param>
 	public void AddChild(string action, string? text) =>
 		AddChild(action, text, null);
 
@@ -78,9 +78,9 @@ public record class MenuItem
 	/// Add a child menu item, using action as text if text is null
 	/// The controller will be set to the same as the parent menu item
 	/// </summary>
-	/// <param name="action">The action for the link</param>
-	/// <param name="text">The text to display in the link - if null, action will be used instead</param>
-	/// <param name="description">If set, will add a description and title attribute to the menu item</param>
+	/// <param name="action">The action for the link.</param>
+	/// <param name="text">The text to display in the link - if null, action will be used instead.</param>
+	/// <param name="description">If set, will add a description and title attribute to the menu item.</param>
 	public void AddChild(string action, string? text, string? description)
 	{
 		// If the text is empty, use action by default

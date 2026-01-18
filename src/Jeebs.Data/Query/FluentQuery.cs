@@ -60,9 +60,9 @@ public sealed partial record class FluentQuery<TEntity, TId> : FluentQuery, IFlu
 	/// <summary>
 	/// Create object.
 	/// </summary>
-	/// <param name="db">Database instance</param>
-	/// <param name="mapper">IMapper</param>
-	/// <param name="log">ILog (should come with the context of the calling class)</param>
+	/// <param name="db">Database instance.</param>
+	/// <param name="mapper">IMapper.</param>
+	/// <param name="log">ILog (should come with the context of the calling class).</param>
 	internal FluentQuery(IDb db, IEntityMapper mapper, ILog log)
 	{
 		(Db, Log) = (db, log);
@@ -78,7 +78,7 @@ public sealed partial record class FluentQuery<TEntity, TId> : FluentQuery, IFlu
 	/// <summary>
 	/// Update <see cref="Parts"/> with a new value.
 	/// </summary>
-	/// <param name="with">Function to perform the update</param>
+	/// <param name="with">Function to perform the update.</param>
 	internal IFluentQuery<TEntity, TId> Update(Func<QueryParts, QueryParts> with) =>
 		this with { Parts = with(new(Parts)) };
 }

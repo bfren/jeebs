@@ -111,6 +111,6 @@ public sealed record class PostsTable : Table
 	/// <summary>
 	/// Create object.
 	/// </summary>
-	/// <param name="prefix">Table prefix</param>
+	/// <param name="prefix">Table prefix.</param>
 	public PostsTable(string prefix) : base($"{prefix}posts") { }
 }

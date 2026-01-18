@@ -17,9 +17,9 @@ public static partial class QueryAttachmentsF
 	/// Get attached files.
 	/// </summary>
 	/// <typeparam name="T"></typeparam>
-	/// <param name="db">IWpDb</param>
-	/// <param name="w">IUnitOfWork</param>
-	/// <param name="opt">Function to return query options</param>
+	/// <param name="db">IWpDb.</param>
+	/// <param name="w">IUnitOfWork.</param>
+	/// <param name="opt">Function to return query options.</param>
 	internal static Task<Maybe<IEnumerable<T>>> ExecuteAsync<T>(IWpDb db, IUnitOfWork w, GetAttachmentsOptions opt)
 		where T : IPostAttachment =>
 		F.Some(
@@ -36,7 +36,7 @@ public static partial class QueryAttachmentsF
 	public static partial class M
 	{
 		/// <summary>Unable to get attachments query</summary>
-		/// <param name="Value">Exception object</param>
+		/// <param name="Value">Exception object.</param>
 		public sealed record class ErrorGettingQueryAttachmentsOptionsMsg(Exception Value) : ExceptionMsg;
 	}
 }

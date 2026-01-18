@@ -14,8 +14,8 @@ public static partial class QueryPostsF
 	/// Get query parts using the specific options.
 	/// </summary>
 	/// <typeparam name="TModel">Return value type</typeparam>
-	/// <param name="db">IWpDb</param>
-	/// <param name="opt">Function to return query options</param>
+	/// <param name="db">IWpDb.</param>
+	/// <param name="opt">Function to return query options.</param>
 	internal static Maybe<IQueryParts> GetQueryParts<TModel>(IWpDb db, GetPostsOptions opt)
 		where TModel : IWithId<WpPostId> =>
 		F.Some(

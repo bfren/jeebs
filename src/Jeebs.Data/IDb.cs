@@ -40,10 +40,10 @@ public interface IDb
 	/// Run a query and return multiple items.
 	/// </summary>
 	/// <typeparam name="T">Return value type</typeparam>
-	/// <param name="query">Query text</param>
-	/// <param name="param">Query parameters</param>
-	/// <param name="type">Command type</param>
-	/// <param name="transaction">Database transaction</param>
+	/// <param name="query">Query text.</param>
+	/// <param name="param">Query parameters.</param>
+	/// <param name="type">Command type.</param>
+	/// <param name="transaction">Database transaction.</param>
 	Task<Maybe<IEnumerable<T>>> QueryAsync<T>(string query, object? param, CommandType type, IDbTransaction transaction);
 
 	/// <inheritdoc cref="QuerySingleAsync{T}(string, object?, CommandType, IDbTransaction)"/>
@@ -53,10 +53,10 @@ public interface IDb
 	/// Run a query and return a single item.
 	/// </summary>
 	/// <typeparam name="T">Return value type</typeparam>
-	/// <param name="query">Query text</param>
-	/// <param name="param">Query parameters</param>
-	/// <param name="type">Command type</param>
-	/// <param name="transaction">Database transaction</param>
+	/// <param name="query">Query text.</param>
+	/// <param name="param">Query parameters.</param>
+	/// <param name="type">Command type.</param>
+	/// <param name="transaction">Database transaction.</param>
 	Task<Maybe<T>> QuerySingleAsync<T>(string query, object? param, CommandType type, IDbTransaction transaction);
 
 	/// <inheritdoc cref="ExecuteAsync(string, object?, CommandType, IDbTransaction)"/>
@@ -65,10 +65,10 @@ public interface IDb
 	/// <summary>
 	/// Execute a query and return a single value.
 	/// </summary>
-	/// <param name="query">Query text</param>
-	/// <param name="param">Query parameters</param>
-	/// <param name="type">Command type</param>
-	/// <param name="transaction">Database transaction</param>
+	/// <param name="query">Query text.</param>
+	/// <param name="param">Query parameters.</param>
+	/// <param name="type">Command type.</param>
+	/// <param name="transaction">Database transaction.</param>
 	Task<Maybe<bool>> ExecuteAsync(string query, object? param, CommandType type, IDbTransaction transaction);
 
 	/// <inheritdoc cref="ExecuteAsync{TReturn}(string, object?, CommandType, IDbTransaction)"/>
@@ -78,9 +78,9 @@ public interface IDb
 	/// Execute a query and return a single scalar value.
 	/// </summary>
 	/// <typeparam name="TReturn">Return value type</typeparam>
-	/// <param name="query">Query text</param>
-	/// <param name="param">Query parameters</param>
-	/// <param name="type">Command type</param>
-	/// <param name="transaction">Database transaction</param>
+	/// <param name="query">Query text.</param>
+	/// <param name="param">Query parameters.</param>
+	/// <param name="type">Command type.</param>
+	/// <param name="transaction">Database transaction.</param>
 	Task<Maybe<TReturn>> ExecuteAsync<TReturn>(string query, object? param, CommandType type, IDbTransaction transaction);
 }

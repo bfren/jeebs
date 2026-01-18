@@ -65,7 +65,7 @@ public abstract class QueryPartsBuilder<TId> : QueryPartsBuilder, IQueryPartsBui
 	/// <summary>
 	/// Inject extract object.
 	/// </summary>
-	/// <param name="extract">IExtract</param>
+	/// <param name="extract">IExtract.</param>
 	protected QueryPartsBuilder(IExtract extract) =>
 		Extract = extract;
 
@@ -87,12 +87,12 @@ public abstract class QueryPartsBuilder<TId> : QueryPartsBuilder, IQueryPartsBui
 	/// </summary>
 	/// <typeparam name="TFrom">From Table type</typeparam>
 	/// <typeparam name="TTo">To Table type</typeparam>
-	/// <param name="parts">QueryParts</param>
-	/// <param name="fromTable">From table - should already be added to the query</param>
-	/// <param name="fromSelector">From column</param>
-	/// <param name="toTable">To table - should be a new table not already added to the query</param>
-	/// <param name="toSelector">To column</param>
-	/// <param name="withJoin">Function to add the Join to the correct list</param>
+	/// <param name="parts">QueryParts.</param>
+	/// <param name="fromTable">From table - should already be added to the query.</param>
+	/// <param name="fromSelector">From column.</param>
+	/// <param name="toTable">To table - should be a new table not already added to the query.</param>
+	/// <param name="toSelector">To column.</param>
+	/// <param name="withJoin">Function to add the Join to the correct list.</param>
 	protected internal Maybe<QueryParts> AddJoin<TFrom, TTo>(
 		QueryParts parts,
 		TFrom fromTable,

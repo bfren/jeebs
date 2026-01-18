@@ -63,8 +63,8 @@ public sealed class Dispatcher : IDispatcher
 	/// <summary>
 	/// Use <see cref="Provider"/> to get a service of type <paramref name="genericType"/>.
 	/// </summary>
-	/// <param name="genericType">The generic handler type</param>
-	/// <param name="typeArguments">Specific type arguments used to create the handler type</param>
+	/// <param name="genericType">The generic handler type.</param>
+	/// <param name="typeArguments">Specific type arguments used to create the handler type.</param>
 	internal object? GetHandlerService(Type genericType, params Type[] typeArguments)
 	{
 		// Make generic handler type

@@ -35,9 +35,9 @@ public abstract class DriverArgs<TConfig> : IDriverArgs<TConfig>
 	/// <summary>
 	/// Create object.
 	/// </summary>
-	/// <param name="log">ILog</param>
-	/// <param name="jeebsConfig">JeebsConfig</param>
-	/// <param name="serviceConfigs">Function to return all service configurations for this type</param>
+	/// <param name="log">ILog.</param>
+	/// <param name="jeebsConfig">JeebsConfig.</param>
+	/// <param name="serviceConfigs">Function to return all service configurations for this type.</param>
 	protected DriverArgs(
 		ILog log,
 		IOptions<JeebsConfig> jeebsConfig,

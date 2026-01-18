@@ -13,10 +13,10 @@ public static partial class ImageF
 	/// <summary>
 	/// Calculate new size of an image based on the image ratio.
 	/// </summary>
-	/// <param name="imgWidth">Image width</param>
-	/// <param name="imgHeight">Image height</param>
-	/// <param name="newWidth">New image width</param>
-	/// <param name="newHeight">New image height</param>
+	/// <param name="imgWidth">Image width.</param>
+	/// <param name="imgHeight">Image height.</param>
+	/// <param name="newWidth">New image width.</param>
+	/// <param name="newHeight">New image height.</param>
 	public static Size CalculateNewSize(int imgWidth, int imgHeight, int newWidth, int newHeight) =>
 		CalculateNewSize(
 			new Size(imgWidth, imgHeight),
@@ -26,8 +26,8 @@ public static partial class ImageF
 	/// <summary>
 	/// Calculate new size of an image based on the image ratio.
 	/// </summary>
-	/// <param name="currentSize">Current size</param>
-	/// <param name="newSize">New size</param>
+	/// <param name="currentSize">Current size.</param>
+	/// <param name="newSize">New size.</param>
 	public static Size CalculateNewSize(Size currentSize, Size newSize)
 	{
 		if (newSize.Width == 0 && newSize.Height > 0)

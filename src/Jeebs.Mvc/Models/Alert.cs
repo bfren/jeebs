@@ -8,8 +8,8 @@ namespace Jeebs.Mvc.Models;
 /// <summary>
 /// User feedback alert.
 /// </summary>
-/// <param name="Type">Alert type</param>
-/// <param name="Text">Alert message</param>
+/// <param name="Type">Alert type.</param>
+/// <param name="Text">Alert message.</param>
 public sealed record class Alert(AlertType Type, string Text)
 {
 	/// <summary>

@@ -14,7 +14,7 @@ public static partial class EnumF
 	///		KeyNotFoundException when the value does not exist in the specified Enum type
 	/// </summary>
 	/// <typeparam name="TFrom">Enum type</typeparam>
-	/// <param name="value">The value to parse</param>
+	/// <param name="value">The value to parse.</param>
 	public static FluentConvert<TFrom> Convert<TFrom>(TFrom value)
 		where TFrom : struct, Enum =>
 		new(value);
@@ -26,7 +26,7 @@ public static partial class EnumF
 	/// <remarks>
 	/// Construct object
 	/// </remarks>
-	/// <param name="from">Convert from type</param>
+	/// <param name="from">Convert from type.</param>
 	public sealed class FluentConvert<TFrom>(TFrom from)
 		where TFrom : struct, Enum
 	{

@@ -18,9 +18,9 @@ public static partial class QueryPostsF
 	/// </summary>
 	/// <typeparam name="TList">List type</typeparam>
 	/// <typeparam name="TModel">Post type</typeparam>
-	/// <param name="db">IWpDb</param>
-	/// <param name="w">IUnitOfWork</param>
-	/// <param name="posts">Posts</param>
+	/// <param name="db">IWpDb.</param>
+	/// <param name="w">IUnitOfWork.</param>
+	/// <param name="posts">Posts.</param>
 	internal static Task<Maybe<TList>> AddTaxonomiesAsync<TList, TModel>(IWpDb db, IUnitOfWork w, TList posts)
 		where TList : IEnumerable<TModel>
 		where TModel : IWithId<WpPostId>

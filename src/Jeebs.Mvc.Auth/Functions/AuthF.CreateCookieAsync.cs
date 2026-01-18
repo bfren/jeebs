@@ -14,10 +14,10 @@ public static partial class AuthF
 	/// <summary>
 	/// Create authentication cookie.
 	/// </summary>
-	/// <param name="http">HttpContext</param>
-	/// <param name="user">ClaimsPrincipal</param>
-	/// <param name="persist">If true, cookie will be marked as persistent</param>
-	/// <param name="redirectUrl">[Optional] URL to redirect to on success</param>
+	/// <param name="http">HttpContext.</param>
+	/// <param name="user">ClaimsPrincipal.</param>
+	/// <param name="persist">If true, cookie will be marked as persistent.</param>
+	/// <param name="redirectUrl">[Optional] URL to redirect to on success.</param>
 	public static async Task<AuthResult> CreateCookieAsync(HttpContext http, ClaimsPrincipal user, bool persist, string? redirectUrl)
 	{
 		await http.SignInAsync(user, new()

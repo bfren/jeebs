@@ -18,17 +18,17 @@ public static class ControllerExtensions
 	/// <summary>
 	/// Execute a Maybe.None result and return the View.
 	/// </summary>
-	/// <param name="this">Controller</param>
-	/// <param name="msg">None</param>
+	/// <param name="this">Controller.</param>
+	/// <param name="msg">None.</param>
 	public static Task<IActionResult> ExecuteErrorAsync(this Controller @this, IMsg msg) =>
 		ExecuteErrorAsync(@this, msg, null);
 
 	/// <summary>
 	/// Execute a Maybe.None result and return the View.
 	/// </summary>
-	/// <param name="this">Controller</param>
-	/// <param name="msg">None</param>
-	/// <param name="code">HTTP Status Code</param>
+	/// <param name="this">Controller.</param>
+	/// <param name="msg">None.</param>
+	/// <param name="code">HTTP Status Code.</param>
 	public static async Task<IActionResult> ExecuteErrorAsync(this Controller @this, IMsg msg, int? code)
 	{
 		// Log error

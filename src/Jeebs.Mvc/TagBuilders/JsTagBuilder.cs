@@ -19,15 +19,15 @@ public sealed class JsTagBuilder : TagBuilder
 	/// <summary>
 	/// Construct object with async and defer disabled.
 	/// </summary>
-	/// <param name="src">Script file source</param>
+	/// <param name="src">Script file source.</param>
 	public JsTagBuilder(string src) : this(src, false, false) { }
 
 	/// <summary>
 	/// Construct object.
 	/// </summary>
-	/// <param name="src">Script file source</param>
-	/// <param name="useAsync">Output async attribute</param>
-	/// <param name="useDefer">Output defer attribute</param>
+	/// <param name="src">Script file source.</param>
+	/// <param name="useAsync">Output async attribute.</param>
+	/// <param name="useDefer">Output defer attribute.</param>
 	public JsTagBuilder(string src, bool useAsync, bool useDefer) : this()
 	{
 		Attributes.Add("src", src);

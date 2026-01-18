@@ -11,7 +11,7 @@ public sealed record class CommentType : Enumerated
 	/// <summary>
 	/// Create new value.
 	/// </summary>
-	/// <param name="name">Value name</param>
+	/// <param name="name">Value name.</param>
 	public CommentType(string name) : base(name) { }
 
 	#region Default Comment Types
@@ -31,7 +31,7 @@ public sealed record class CommentType : Enumerated
 	/// <summary>
 	/// Parse CommentType value name.
 	/// </summary>
-	/// <param name="name">Value name</param>
+	/// <param name="name">Value name.</param>
 	public static CommentType Parse(string name) =>
 		Parse(name, values: [Blank, Pingback]).Unwrap(() => Blank);
 }

@@ -19,14 +19,14 @@ public static class TempDataDictionaryExtensions
 	/// <summary>
 	/// Returns whether or not the TempDataDictionary has any pending alerts.
 	/// </summary>
-	/// <param name="this">ITempDataDictionary</param>
+	/// <param name="this">ITempDataDictionary.</param>
 	public static bool HasAlerts(this ITempDataDictionary @this) =>
 		@this.Peek(AlertsKey) != null;
 
 	/// <summary>
 	/// Get all alerts.
 	/// </summary>
-	/// <param name="this">ITempDataDictionary</param>
+	/// <param name="this">ITempDataDictionary.</param>
 	public static List<Alert> GetAlerts(this ITempDataDictionary @this) =>
 		@this.TryGetValue(AlertsKey, out var value) switch
 		{
@@ -40,23 +40,23 @@ public static class TempDataDictionaryExtensions
 	/// <summary>
 	/// Add info alert.
 	/// </summary>
-	/// <param name="this">ITempDataDictionary</param>
-	/// <param name="message">Message</param>
+	/// <param name="this">ITempDataDictionary.</param>
+	/// <param name="message">Message.</param>
 	public static void AddInfoAlert(this ITempDataDictionary @this, string message) =>
 		AddAlert(@this, AlertType.Info, message);
 
 	/// <summary>
 	/// Add info alert.
 	/// </summary>
-	/// <param name="this">ITempDataDictionary</param>
-	/// <param name="message">Message</param>
+	/// <param name="this">ITempDataDictionary.</param>
+	/// <param name="message">Message.</param>
 	public static void AddInfoAlert(this ITempDataDictionary @this, IMsg message) =>
 		AddAlert(@this, AlertType.Info, message);
 
 	/// <summary>
 	/// Add success alert.
 	/// </summary>
-	/// <param name="this">ITempDataDictionary</param>
+	/// <param name="this">ITempDataDictionary.</param>
 	/// <param name="message"></param>
 	public static void AddSuccessAlert(this ITempDataDictionary @this, string message) =>
 		AddAlert(@this, AlertType.Success, message);
@@ -64,7 +64,7 @@ public static class TempDataDictionaryExtensions
 	/// <summary>
 	/// Add success alert.
 	/// </summary>
-	/// <param name="this">ITempDataDictionary</param>
+	/// <param name="this">ITempDataDictionary.</param>
 	/// <param name="message"></param>
 	public static void AddSuccessAlert(this ITempDataDictionary @this, IMsg message) =>
 		AddAlert(@this, AlertType.Success, message);
@@ -72,32 +72,32 @@ public static class TempDataDictionaryExtensions
 	/// <summary>
 	/// Add warning alert.
 	/// </summary>
-	/// <param name="this">ITempDataDictionary</param>
-	/// <param name="message">Message</param>
+	/// <param name="this">ITempDataDictionary.</param>
+	/// <param name="message">Message.</param>
 	public static void AddWarningAlert(this ITempDataDictionary @this, string message) =>
 		AddAlert(@this, AlertType.Warning, message);
 
 	/// <summary>
 	/// Add warning alert.
 	/// </summary>
-	/// <param name="this">ITempDataDictionary</param>
-	/// <param name="message">Message</param>
+	/// <param name="this">ITempDataDictionary.</param>
+	/// <param name="message">Message.</param>
 	public static void AddWarningAlert(this ITempDataDictionary @this, IMsg message) =>
 		AddAlert(@this, AlertType.Warning, message);
 
 	/// <summary>
 	/// Add Error alert.
 	/// </summary>
-	/// <param name="this">ITempDataDictionary</param>
-	/// <param name="message">Message</param>
+	/// <param name="this">ITempDataDictionary.</param>
+	/// <param name="message">Message.</param>
 	public static void AddErrorAlert(this ITempDataDictionary @this, string message) =>
 		AddAlert(@this, AlertType.Error, message);
 
 	/// <summary>
 	/// Add Error alert.
 	/// </summary>
-	/// <param name="this">ITempDataDictionary</param>
-	/// <param name="message">Message</param>
+	/// <param name="this">ITempDataDictionary.</param>
+	/// <param name="message">Message.</param>
 	public static void AddErrorAlert(this ITempDataDictionary @this, IMsg message) =>
 		AddAlert(@this, AlertType.Error, message);
 
@@ -108,9 +108,9 @@ public static class TempDataDictionaryExtensions
 	/// <summary>
 	/// Add alert to TempData.
 	/// </summary>
-	/// <param name="tempData">ITempDataDictionary</param>
-	/// <param name="messageType">AlertType</param>
-	/// <param name="message">Message</param>
+	/// <param name="tempData">ITempDataDictionary.</param>
+	/// <param name="messageType">AlertType.</param>
+	/// <param name="message">Message.</param>
 	private static void AddAlert(ITempDataDictionary tempData, AlertType messageType, string message)
 	{
 		var alerts = GetAlerts(tempData);

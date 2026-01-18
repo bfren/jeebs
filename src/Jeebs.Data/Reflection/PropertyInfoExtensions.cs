@@ -16,7 +16,7 @@ public static class PropertyInfoExtensions
 	/// Returns true if the specified PropertyInfo has either <see cref="IdAttribute"/>, <see cref="IgnoreAttribute"/>,
 	/// <see cref="ComputedAttribute"/>, or <see cref="ReadonlyAttribute"/>
 	/// </summary>
-	/// <param name="this">PropertyInfo</param>
+	/// <param name="this">PropertyInfo.</param>
 	public static bool IsReadonly(this PropertyInfo @this)
 	{
 		if (!@this.CustomAttributes.Any())

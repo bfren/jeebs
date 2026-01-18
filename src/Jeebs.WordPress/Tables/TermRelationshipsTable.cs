@@ -33,6 +33,6 @@ public sealed record class TermRelationshipsTable : Table
 	/// <summary>
 	/// Create object.
 	/// </summary>
-	/// <param name="prefix">Table prefix</param>
+	/// <param name="prefix">Table prefix.</param>
 	public TermRelationshipsTable(string prefix) : base($"{prefix}term_relationships") { }
 }

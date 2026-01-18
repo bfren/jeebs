@@ -34,15 +34,15 @@ public sealed class BooleanTypeHandler : Dapper.SqlMapper.TypeHandler<bool>
 	/// <summary>
 	/// Parse the various options of boolean values in WordPress database.
 	/// </summary>
-	/// <param name="value">Database value</param>
+	/// <param name="value">Database value.</param>
 	public override bool Parse(object value) =>
 		YesValues.Contains(value?.ToString()?.ToLower(CultureInfo.InvariantCulture));
 
 	/// <summary>
 	/// Set the value based on the column name.
 	/// </summary>
-	/// <param name="parameter">IDbDataParameter object</param>
-	/// <param name="value">True / False</param>
+	/// <param name="parameter">IDbDataParameter object.</param>
+	/// <param name="value">True / False.</param>
 	/// <exception cref="InvalidOperationException"></exception>
 	public override void SetValue(IDbDataParameter parameter, bool value)
 	{

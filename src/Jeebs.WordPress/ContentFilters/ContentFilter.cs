@@ -16,7 +16,7 @@ public abstract class ContentFilter : IContentFilter
 	/// <summary>
 	/// Setup object.
 	/// </summary>
-	/// <param name="filter">Content filter function</param>
+	/// <param name="filter">Content filter function.</param>
 	protected ContentFilter(Func<string, string> filter) =>
 		this.filter = filter;
 

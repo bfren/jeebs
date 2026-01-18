@@ -11,14 +11,14 @@ public sealed record class PostsMetaOptions : Options.PostsMetaOptions
 	/// <summary>
 	/// Internal creation only.
 	/// </summary>
-	/// <param name="schema">IWpDbSchema</param>
+	/// <param name="schema">IWpDbSchema.</param>
 	internal PostsMetaOptions(IWpDbSchema schema) : this(schema, new PostsMetaPartsBuilder(schema)) { }
 
 	/// <summary>
 	/// Allow Builder to be injected.
 	/// </summary>
-	/// <param name="schema">IWpDbSchema</param>
-	/// <param name="builder">IQueryPostsMetaPartsBuilder</param>
+	/// <param name="schema">IWpDbSchema.</param>
+	/// <param name="builder">IQueryPostsMetaPartsBuilder.</param>
 	internal PostsMetaOptions(IWpDbSchema schema, IQueryPostsMetaPartsBuilder builder) : base(schema, builder) =>
 		Maximum = null;
 

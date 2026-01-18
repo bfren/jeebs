@@ -20,8 +20,8 @@ internal sealed class WpDbQuery : DbQuery<IWpDb>, IWpDbQuery
 	/// <summary>
 	/// Inject dependencies.
 	/// </summary>
-	/// <param name="db">IWpDb</param>
-	/// <param name="log">ILog</param>
+	/// <param name="db">IWpDb.</param>
+	/// <param name="log">ILog.</param>
 	internal WpDbQuery(IWpDb db, ILog<IWpDbQuery> log) : base(db, log) { }
 
 	/// <inheritdoc/>

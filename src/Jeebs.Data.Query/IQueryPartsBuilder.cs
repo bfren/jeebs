@@ -38,8 +38,8 @@ public interface IQueryPartsBuilder<TId>
 	/// Create a new QueryParts object, adding <paramref name="maximum"/> and <paramref name="skip"/> values.
 	/// </summary>
 	/// <typeparam name="TModel">Return Model type</typeparam>
-	/// <param name="maximum">Maximum number of results to select</param>
-	/// <param name="skip">Number of results to skip</param>
+	/// <param name="maximum">Maximum number of results to select.</param>
+	/// <param name="skip">Number of results to skip.</param>
 	QueryParts Create<TModel>(ulong? maximum, ulong skip);
 
 	/// <summary>
@@ -47,11 +47,11 @@ public interface IQueryPartsBuilder<TId>
 	/// </summary>
 	/// <typeparam name="TFrom">From Table type</typeparam>
 	/// <typeparam name="TTo">To Table type</typeparam>
-	/// <param name="parts">QueryParts</param>
-	/// <param name="fromTable">From table - should already be added to the query</param>
-	/// <param name="fromSelector">From column</param>
-	/// <param name="toTable">To table - should be a new table not already added to the query</param>
-	/// <param name="toSelector">To column</param>
+	/// <param name="parts">QueryParts.</param>
+	/// <param name="fromTable">From table - should already be added to the query.</param>
+	/// <param name="fromSelector">From column.</param>
+	/// <param name="toTable">To table - should be a new table not already added to the query.</param>
+	/// <param name="toSelector">To column.</param>
 	Maybe<QueryParts> AddInnerJoin<TFrom, TTo>(QueryParts parts,
 		TFrom fromTable, Expression<Func<TFrom, string>> fromSelector, TTo toTable, Expression<Func<TTo, string>> toSelector)
 		where TFrom : ITable
@@ -72,18 +72,18 @@ public interface IQueryPartsBuilder<TId>
 	/// <summary>
 	/// Add Id / Ids - Id takes precedence over Ids.
 	/// </summary>
-	/// <param name="parts">QueryParts</param>
-	/// <param name="id">Single ID</param>
-	/// <param name="ids">List of IDs</param>
+	/// <param name="parts">QueryParts.</param>
+	/// <param name="id">Single ID.</param>
+	/// <param name="ids">List of IDs.</param>
 	Maybe<QueryParts> AddWhereId(QueryParts parts,
 		TId? id, IImmutableList<TId> ids);
 
 	/// <summary>
 	/// Add Sort - SortRandom takes precendence over Sort.
 	/// </summary>
-	/// <param name="parts">QueryParts</param>
-	/// <param name="sortRandom">If true, will sort results randomly</param>
-	/// <param name="sort">Sort columns</param>
+	/// <param name="parts">QueryParts.</param>
+	/// <param name="sortRandom">If true, will sort results randomly.</param>
+	/// <param name="sort">Sort columns.</param>
 	Maybe<QueryParts> AddSort(QueryParts parts,
 		bool sortRandom, IImmutableList<(IColumn, SortOrder)> sort);
 
@@ -91,11 +91,11 @@ public interface IQueryPartsBuilder<TId>
 	/// Add a Where predicate using Linq Expressions.
 	/// </summary>
 	/// <typeparam name="TTable">Table type</typeparam>
-	/// <param name="parts">QueryParts</param>
-	/// <param name="table">Table object</param>
-	/// <param name="column">Column selector</param>
-	/// <param name="cmp">Compare operator</param>
-	/// <param name="value">Search value</param>
+	/// <param name="parts">QueryParts.</param>
+	/// <param name="table">Table object.</param>
+	/// <param name="column">Column selector.</param>
+	/// <param name="cmp">Compare operator.</param>
+	/// <param name="value">Search value.</param>
 	Maybe<QueryParts> AddWhere<TTable>(QueryParts parts,
 		TTable table, Expression<Func<TTable, string>> column, Compare cmp, object value)
 		where TTable : ITable;
@@ -103,9 +103,9 @@ public interface IQueryPartsBuilder<TId>
 	/// <summary>
 	/// Add a custom Where predicate.
 	/// </summary>
-	/// <param name="parts">QueryParts</param>
-	/// <param name="clause">Clause text</param>
-	/// <param name="parameters">Clause parameters</param>
+	/// <param name="parts">QueryParts.</param>
+	/// <param name="clause">Clause text.</param>
+	/// <param name="parameters">Clause parameters.</param>
 	Maybe<QueryParts> AddWhereCustom(QueryParts parts,
 		string clause, object parameters);
 }

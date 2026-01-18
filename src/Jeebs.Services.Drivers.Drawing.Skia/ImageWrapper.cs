@@ -46,8 +46,8 @@ public sealed class ImageWrapper : Services.Drawing.ImageWrapper, IDisposable
 	/// <summary>
 	/// Output image as byte array.
 	/// </summary>
-	/// <param name="format">SKEncodedImageFormat</param>
-	/// <param name="quality">Image quality (0 - 100)</param>
+	/// <param name="format">SKEncodedImageFormat.</param>
+	/// <param name="quality">Image quality (0 - 100).</param>
 	internal byte[] ToByteArray(SKEncodedImageFormat format, int quality)
 	{
 		using var data = SKImage.FromEncodedData(image).Encode(format, quality);

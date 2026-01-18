@@ -13,7 +13,7 @@ public interface IQueryBuilder
 	/// <summary>
 	/// Set the main table to select data from.
 	/// </summary>
-	/// <param name="table">ITable</param>
+	/// <param name="table">ITable.</param>
 	IQueryBuilderWithFrom From(ITable table);
 
 	/// <inheritdoc cref="From(ITable)"/>

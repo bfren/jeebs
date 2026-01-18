@@ -56,8 +56,8 @@ public sealed class PagingTagHelper : TagHelper
 	/// <summary>
 	/// Output paging values.
 	/// </summary>
-	/// <param name="context">TagHelperContext</param>
-	/// <param name="output">TagHelperOutput</param>
+	/// <param name="context">TagHelperContext.</param>
+	/// <param name="output">TagHelperOutput.</param>
 	public override void Process(TagHelperContext context, TagHelperOutput output)
 	{
 		// If there aren't any results, don't display anything

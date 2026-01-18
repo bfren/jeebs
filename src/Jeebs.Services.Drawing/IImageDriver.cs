@@ -13,12 +13,12 @@ public interface IImageDriver
 	/// <summary>
 	/// Create image object from a file path.
 	/// </summary>
-	/// <param name="path">File path</param>
+	/// <param name="path">File path.</param>
 	Maybe<IImageWrapper> FromFile(string path);
 
 	/// <summary>
 	/// Create image object from a stream.
 	/// </summary>
-	/// <param name="stream">Stream</param>
+	/// <param name="stream">Stream.</param>
 	IImageWrapper FromStream(Stream stream);
 }

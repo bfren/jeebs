@@ -16,9 +16,9 @@ public static partial class QueryAttachmentsF
 	/// <summary>
 	/// Get the filesystem path to the specified Attachment.
 	/// </summary>
-	/// <param name="db">IWpDb</param>
-	/// <param name="w">IUnitOfWork</param>
-	/// <param name="fileId">File (Post) ID</param>
+	/// <param name="db">IWpDb.</param>
+	/// <param name="w">IUnitOfWork.</param>
+	/// <param name="fileId">File (Post) ID.</param>
 	internal static Task<Maybe<string>> GetFilePathAsync(IWpDb db, IUnitOfWork w, WpPostId fileId) =>
 		ExecuteAsync<Attachment>(
 			db, w, opt => opt with { Ids = ImmutableList.Create(fileId) }
@@ -39,16 +39,16 @@ public static partial class QueryAttachmentsF
 	public static partial class M
 	{
 		/// <summary>Attachment not found</summary>
-		/// <param name="FileId">File (Post) ID</param>
+		/// <param name="FileId">File (Post) ID.</param>
 		public sealed record class AttachmentNotFoundMsg(ulong FileId) : Msg;
 
 		/// <summary>Multiple Attachments found</summary>
-		/// <param name="FileId">File (Post) ID</param>
+		/// <param name="FileId">File (Post) ID.</param>
 		public sealed record class MultipleAttachmentsFoundMsg(ulong FileId) : Msg;
 
 		/// <summary>Unable to get Attachment file path</summary>
-		/// <param name="Value">Exception object</param>
-		/// <param name="FileId">File (Post) ID</param>
+		/// <param name="Value">Exception object.</param>
+		/// <param name="FileId">File (Post) ID.</param>
 		public sealed record class ErrorGettingAttachmentFilePathMsg(Exception Value, ulong FileId) : ExceptionMsg;
 	}
 }

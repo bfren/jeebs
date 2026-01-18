@@ -22,15 +22,15 @@ public sealed class SiteVerificationMiddleware : IMiddleware
 	/// <summary>
 	/// Set Site Verification configuration.
 	/// </summary>
-	/// <param name="config">JeebsConfig</param>
+	/// <param name="config">JeebsConfig.</param>
 	public SiteVerificationMiddleware(IOptions<VerificationConfig> config) =>
 		this.config = config.Value;
 
 	/// <summary>
 	/// Invoke Middleware.
 	/// </summary>
-	/// <param name="context">HttpContext</param>
-	/// <param name="next">Next Middleware</param>
+	/// <param name="context">HttpContext.</param>
+	/// <param name="next">Next Middleware.</param>
 	public async Task InvokeAsync(HttpContext context, RequestDelegate next)
 	{
 		var path = context.Request.Path.ToString().TrimStart('/');

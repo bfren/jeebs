@@ -23,11 +23,11 @@ public abstract class DbQuery
 	public static class M
 	{
 		/// <summary>Error getting query from parts</summary>
-		/// <param name="Value">Exception object</param>
+		/// <param name="Value">Exception object.</param>
 		public sealed record class ErrorGettingQueryFromPartsExceptionMsg(Exception Value) : ExceptionMsg;
 
 		/// <summary>Error getting count query from parts</summary>
-		/// <param name="Value">Exception object</param>
+		/// <param name="Value">Exception object.</param>
 		public sealed record class ErrorGettingCountQueryFromPartsExceptionMsg(Exception Value) : ExceptionMsg;
 	}
 }
@@ -59,8 +59,8 @@ public abstract class DbQuery<TDb> : DbQuery, IDbQuery
 	/// <summary>
 	/// Inject database and log objects.
 	/// </summary>
-	/// <param name="db">TDb</param>
-	/// <param name="log">ILog (should be given a context of the implementing class)</param>
+	/// <param name="db">TDb.</param>
+	/// <param name="log">ILog (should be given a context of the implementing class).</param>
 	protected DbQuery(TDb db, ILog log) =>
 		(Db, Log) = (db, log);
 
@@ -68,8 +68,8 @@ public abstract class DbQuery<TDb> : DbQuery, IDbQuery
 	/// Shorthand for escaping a column with its table name and alias.
 	/// </summary>
 	/// <typeparam name="TTable">Table type</typeparam>
-	/// <param name="table">Table object</param>
-	/// <param name="column">Column selector</param>
+	/// <param name="table">Table object.</param>
+	/// <param name="column">Column selector.</param>
 #pragma warning disable IDE1006 // Naming Styles
 #pragma warning disable CA1707 // Identifiers should not contain underscores
 	protected string __<TTable>(TTable table, Expression<Func<TTable, string>> column)

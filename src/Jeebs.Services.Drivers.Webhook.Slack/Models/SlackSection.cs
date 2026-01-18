@@ -41,22 +41,22 @@ public sealed record class SlackSection : SlackBlock
 	/// <summary>
 	/// Create section with text content.
 	/// </summary>
-	/// <param name="text">Text content</param>
+	/// <param name="text">Text content.</param>
 	public SlackSection(SlackText text) : this() =>
 		Text = text;
 
 	/// <summary>
 	/// Create section with text content plus accessory.
 	/// </summary>
-	/// <param name="text">Text content</param>
-	/// <param name="accessory">Accessory content</param>
+	/// <param name="text">Text content.</param>
+	/// <param name="accessory">Accessory content.</param>
 	public SlackSection(SlackText text, SlackAccessory accessory) : this() =>
 		(Text, Accessory) = (text, accessory);
 
 	/// <summary>
 	/// Create section with fields.
 	/// </summary>
-	/// <param name="fields">Fields</param>
+	/// <param name="fields">Fields.</param>
 	public SlackSection(params SlackContent[] fields) : this() =>
 		Fields = fields.ToList();
 }

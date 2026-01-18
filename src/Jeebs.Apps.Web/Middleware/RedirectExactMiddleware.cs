@@ -21,15 +21,15 @@ public sealed class RedirectExactMiddleware : IMiddleware
 	/// <summary>
 	/// Construct object.
 	/// </summary>
-	/// <param name="config">JeebsConfig</param>
+	/// <param name="config">JeebsConfig.</param>
 	public RedirectExactMiddleware(IOptions<RedirectionsConfig> config) =>
 		this.config = config.Value;
 
 	/// <summary>
 	/// Invoke middleware and perform any redirections.
 	/// </summary>
-	/// <param name="context">HttpContext</param>
-	/// <param name="next">Next Middleware</param>
+	/// <param name="context">HttpContext.</param>
+	/// <param name="next">Next Middleware.</param>
 	public async Task InvokeAsync(HttpContext context, RequestDelegate next)
 	{
 		// Get current path and query

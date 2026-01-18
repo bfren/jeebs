@@ -15,8 +15,8 @@ public abstract class SlackWebhookDriver : WebhookDriver<SlackConfig, SlackMessa
 	/// <summary>
 	/// Create object.
 	/// </summary>
-	/// <param name="name">Service name</param>
-	/// <param name="args">SlackWebhookDriverArgs</param>
+	/// <param name="name">Service name.</param>
+	/// <param name="args">SlackWebhookDriverArgs.</param>
 	protected SlackWebhookDriver(string name, SlackWebhookDriverArgs args) : base(name, args) { }
 
 	/// <inheritdoc/>

@@ -14,7 +14,7 @@ public abstract record class AuthResult : Result<string>
 	/// <summary>
 	/// Create object.
 	/// </summary>
-	/// <param name="result">Result value</param>
+	/// <param name="result">Result value.</param>
 	/// <param name="statusCode"></param>
 	private AuthResult(Maybe<string> result, int statusCode) : base(result) =>
 		StatusCode = statusCode;
@@ -43,7 +43,7 @@ public abstract record class AuthResult : Result<string>
 	public sealed record class SignedIn : AuthResult
 	{
 		/// <inheritdoc cref="SignedIn"/>
-		/// <param name="result">[Optional] Result - usually redirect URL or JWT</param>
+		/// <param name="result">[Optional] Result - usually redirect URL or JWT.</param>
 		public SignedIn(string? result) : base(F.Some(result ?? string.Empty), StatusCodes.Status200OK) { }
 	}
 
@@ -53,7 +53,7 @@ public abstract record class AuthResult : Result<string>
 	public sealed record class SignedOut : AuthResult
 	{
 		/// <inheritdoc cref="SignedOut"/>
-		/// <param name="redirectTo">[Optional] Redirect to this page</param>
+		/// <param name="redirectTo">[Optional] Redirect to this page.</param>
 		public SignedOut(string? redirectTo) : base(F.Some(redirectTo ?? string.Empty), StatusCodes.Status200OK) { }
 	}
 

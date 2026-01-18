@@ -29,7 +29,7 @@ namespace Jeebs.Apps.Web;
 /// <remarks>
 /// Create MVC application
 /// </remarks>
-/// <param name="useHsts">HSTS should only be disabled if the application is in development mode, or behind a reverse proxy</param>
+/// <param name="useHsts">HSTS should only be disabled if the application is in development mode, or behind a reverse proxy.</param>
 public class MvcApp(bool useHsts) : WebApp(useHsts)
 {
 	private static readonly string[] VaryByQueryKeys = ["*"];
@@ -133,16 +133,16 @@ public class MvcApp(bool useHsts) : WebApp(useHsts)
 	/// <summary>
 	/// Override to configure response caching.
 	/// </summary>
-	/// <param name="ctx">HostBuilderContext</param>
-	/// <param name="services">IServiceCollection</param>
+	/// <param name="ctx">HostBuilderContext.</param>
+	/// <param name="services">IServiceCollection.</param>
 	protected virtual void ConfigureServicesResponseCaching(HostBuilderContext ctx, IServiceCollection services) =>
 		_ = services.AddResponseCaching();
 
 	/// <summary>
 	/// Override to configure response compression.
 	/// </summary>
-	/// <param name="ctx">HostBuilderContext</param>
-	/// <param name="services">IServiceCollection</param>
+	/// <param name="ctx">HostBuilderContext.</param>
+	/// <param name="services">IServiceCollection.</param>
 	protected virtual void ConfigureServicesResponseCompression(HostBuilderContext ctx, IServiceCollection services) =>
 		_ = services
 			.Configure<GzipCompressionProviderOptions>(opt => opt.Level = CompressionLevel.Optimal)
@@ -157,16 +157,16 @@ public class MvcApp(bool useHsts) : WebApp(useHsts)
 	/// <summary>
 	/// Override to configure authorisation.
 	/// </summary>
-	/// <param name="ctx">HostBuilderContext</param>
-	/// <param name="services">IServiceCollection</param>
+	/// <param name="ctx">HostBuilderContext.</param>
+	/// <param name="services">IServiceCollection.</param>
 	protected virtual void ConfigureServicesAuthorisation(HostBuilderContext ctx, IServiceCollection services) =>
 		_ = services.AddAuthorization();
 
 	/// <summary>
 	/// Override to configure routing.
 	/// </summary>
-	/// <param name="ctx">HostBuilderContext</param>
-	/// <param name="services">IServiceCollection</param>
+	/// <param name="ctx">HostBuilderContext.</param>
+	/// <param name="services">IServiceCollection.</param>
 	protected virtual void ConfigureServicesRouting(HostBuilderContext ctx, IServiceCollection services) =>
 		_ = services.AddRouting(opt =>
 		{
@@ -177,8 +177,8 @@ public class MvcApp(bool useHsts) : WebApp(useHsts)
 	/// <summary>
 	/// Override to configure session options.
 	/// </summary>
-	/// <param name="ctx">HostBuilderContext</param>
-	/// <param name="services">IServiceCollection</param>
+	/// <param name="ctx">HostBuilderContext.</param>
+	/// <param name="services">IServiceCollection.</param>
 	protected virtual void ConfigureServicesSession(HostBuilderContext ctx, IServiceCollection services)
 	{
 		if (EnableSession)
@@ -190,8 +190,8 @@ public class MvcApp(bool useHsts) : WebApp(useHsts)
 	/// <summary>
 	/// Override to configure endpoints - default is MVC.
 	/// </summary>
-	/// <param name="ctx">HostBuilderContext</param>
-	/// <param name="services">IServiceCollection</param>
+	/// <param name="ctx">HostBuilderContext.</param>
+	/// <param name="services">IServiceCollection.</param>
 	protected virtual void ConfigureServicesEndpoints(HostBuilderContext ctx, IServiceCollection services) =>
 		_ = services
 			.AddControllersWithViews(opt => ConfigureServicesMvcOptions(ctx, opt))
@@ -202,7 +202,7 @@ public class MvcApp(bool useHsts) : WebApp(useHsts)
 	/// Override to configure MVC options.
 	/// </summary>
 	/// <param name="ctx"></param>
-	/// <param name="opt">MvcOptions</param>
+	/// <param name="opt">MvcOptions.</param>
 	protected virtual void ConfigureServicesMvcOptions(HostBuilderContext ctx, MvcOptions opt)
 	{
 		opt.CacheProfiles.Add(CacheProfiles.None, new() { NoStore = true });
@@ -212,15 +212,15 @@ public class MvcApp(bool useHsts) : WebApp(useHsts)
 	/// <summary>
 	/// Override to configure Razor Runtime Compilation.
 	/// </summary>
-	/// <param name="ctx">HostBuilderContext</param>
-	/// <param name="opt">MvcRazorRuntimeCompilationOptions</param>
+	/// <param name="ctx">HostBuilderContext.</param>
+	/// <param name="opt">MvcRazorRuntimeCompilationOptions.</param>
 	protected virtual void ConfigureServicesRuntimeCompilation(HostBuilderContext ctx, MvcRazorRuntimeCompilationOptions opt) { }
 
 	/// <summary>
 	/// Override to configure endpoints JSON.
 	/// </summary>
-	/// <param name="ctx">HostBuilderContext</param>
-	/// <param name="opt">JsonOptions</param>
+	/// <param name="ctx">HostBuilderContext.</param>
+	/// <param name="opt">JsonOptions.</param>
 	protected virtual void ConfigureServicesEndpointsJson(HostBuilderContext ctx, JsonOptions opt)
 	{
 		// Get default options
@@ -291,7 +291,7 @@ public class MvcApp(bool useHsts) : WebApp(useHsts)
 	/// <summary>
 	/// Override to send all errors to the Error Controller.
 	/// </summary>
-	/// <param name="app">WebApplication</param>
+	/// <param name="app">WebApplication.</param>
 	protected override void ConfigureProductionExceptionHandling(WebApplication app)
 	{
 		base.ConfigureProductionExceptionHandling(app);
@@ -303,15 +303,15 @@ public class MvcApp(bool useHsts) : WebApp(useHsts)
 	/// <summary>
 	/// Override to configure response compression.
 	/// </summary>
-	/// <param name="app">WebApplication</param>
+	/// <param name="app">WebApplication.</param>
 	protected virtual void ConfigureResponseCompression(WebApplication app) =>
 		_ = app.UseResponseCompression();
 
 	/// <summary>
 	/// Override to configure static files - they must be enabled BEFORE any MVC routing.
 	/// </summary>
-	/// <param name="env">IHostEnvironment</param>
-	/// <param name="app">WebApplication</param>
+	/// <param name="env">IHostEnvironment.</param>
+	/// <param name="app">WebApplication.</param>
 	protected virtual void ConfigureStaticFiles(IHostEnvironment env, WebApplication app)
 	{
 		// Check whether or not they have already been enabled
@@ -349,15 +349,15 @@ public class MvcApp(bool useHsts) : WebApp(useHsts)
 	/// <summary>
 	/// Override to configure response caching.
 	/// </summary>
-	/// <param name="app">WebApplication</param>
+	/// <param name="app">WebApplication.</param>
 	protected virtual void ConfigureResponseCaching(WebApplication app) =>
 		_ = app.UseResponseCaching();
 
 	/// <summary>
 	/// Override to configure redirections.
 	/// </summary>
-	/// <param name="app">WebApplication</param>
-	/// <param name="config">IConfiguration</param>
+	/// <param name="app">WebApplication.</param>
+	/// <param name="config">IConfiguration.</param>
 	protected virtual void ConfigureRedirections(WebApplication app, IConfiguration config)
 	{
 		if (
@@ -372,14 +372,14 @@ public class MvcApp(bool useHsts) : WebApp(useHsts)
 	/// <summary>
 	/// Override to configure routing.
 	/// </summary>
-	/// <param name="app">WebApplication</param>
+	/// <param name="app">WebApplication.</param>
 	protected virtual void ConfigureRouting(WebApplication app) =>
 		_ = app.UseRouting();
 
 	/// <summary>
 	/// Override to configure session.
 	/// </summary>
-	/// <param name="app">WebApplication</param>
+	/// <param name="app">WebApplication.</param>
 	protected virtual void ConfigureSession(WebApplication app)
 	{
 		if (EnableSession)
@@ -391,7 +391,7 @@ public class MvcApp(bool useHsts) : WebApp(useHsts)
 	/// <summary>
 	/// Override to configure endpoints.
 	/// </summary>
-	/// <param name="app">WebApplication</param>
+	/// <param name="app">WebApplication.</param>
 	protected virtual void ConfigureEndpoints(WebApplication app) =>
 		_ = app.MapControllerRoute(
 			name: "default",

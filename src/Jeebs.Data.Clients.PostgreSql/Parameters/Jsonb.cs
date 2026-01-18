@@ -17,7 +17,7 @@ public sealed class Jsonb : Dapper.SqlMapper.ICustomQueryParameter
 	/// Create a new Jsonb parameter.
 	/// </summary>
 	/// <typeparam name="T">Object type</typeparam>
-	/// <param name="obj">Object value</param>
+	/// <param name="obj">Object value.</param>
 	public static Jsonb Create<T>(T obj) =>
 		obj switch
 		{
@@ -36,15 +36,15 @@ public sealed class Jsonb : Dapper.SqlMapper.ICustomQueryParameter
 	/// <summary>
 	/// Create object.
 	/// </summary>
-	/// <param name="value">JSON-encoded value</param>
+	/// <param name="value">JSON-encoded value.</param>
 	internal Jsonb(string value) =>
 		this.value = value;
 
 	/// <summary>
 	/// Add this parameter to <paramref name="command"/>.
 	/// </summary>
-	/// <param name="command">IDbCommand</param>
-	/// <param name="name">Parameter name</param>
+	/// <param name="command">IDbCommand.</param>
+	/// <param name="name">Parameter name.</param>
 	public void AddParameter(IDbCommand command, string name) =>
 		command.Parameters.Add(new NpgsqlParameter(name, NpgsqlDbType.Jsonb)
 		{

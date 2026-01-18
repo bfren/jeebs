@@ -11,8 +11,8 @@ public static partial class TotpF
 	/// <summary>
 	/// Generate a time-based code from the specified key.
 	/// </summary>
-	/// <param name="key">Secret key</param>
-	/// <param name="settings">TotpSettings</param>
+	/// <param name="key">Secret key.</param>
+	/// <param name="settings">TotpSettings.</param>
 	public static string GenerateCode(byte[] key, TotpSettings settings)
 	{
 		var counter = GetCurrentInterval(settings.PeriodSeconds);
@@ -23,9 +23,9 @@ public static partial class TotpF
 	/// Generate a counter-based code from the specified key and counter<br/>
 	/// See https://stackoverflow.com/a/12398317/8199362
 	/// </summary>
-	/// <param name="key">Secret key</param>
-	/// <param name="counter">Code counter</param>
-	/// <param name="length">The length of the code to generate</param>
+	/// <param name="key">Secret key.</param>
+	/// <param name="counter">Code counter.</param>
+	/// <param name="length">The length of the code to generate.</param>
 	internal static string GenerateCode(byte[] key, ulong counter, int length)
 	{
 		// Get counter bytes in big-endian order

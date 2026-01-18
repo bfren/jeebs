@@ -13,7 +13,7 @@ public static partial class FluentQueryHelper
 	/// Assert that <paramref name="call"/> has one generic argument, of type <typeparamref name="TExpected"/>.
 	/// </summary>
 	/// <typeparam name="TExpected">Generic argument</typeparam>
-	/// <param name="call">Call</param>
+	/// <param name="call">Call.</param>
 	/// <exception cref="GenericArgumentException"></exception>
 	internal static void AssertGenericArgument<TExpected>(ICall call)
 	{

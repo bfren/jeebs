@@ -20,7 +20,7 @@ public abstract record class SlackAccessory
 	/// <summary>
 	/// Create object.
 	/// </summary>
-	/// <param name="type">Accessory type</param>
+	/// <param name="type">Accessory type.</param>
 	protected SlackAccessory(string type) =>
 		Type = type;
 }

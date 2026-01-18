@@ -15,7 +15,7 @@ public sealed class EnumeratedListJsonbTypeHandler<T> : JsonbTypeHandler<Enumera
 	/// <summary>
 	/// Parse from list of string values and convert.
 	/// </summary>
-	/// <param name="value">Database value</param>
+	/// <param name="value">Database value.</param>
 	public override EnumeratedList<T> Parse(object value) =>
 		value switch
 		{

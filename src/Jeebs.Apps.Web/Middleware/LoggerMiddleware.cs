@@ -29,8 +29,8 @@ public sealed class LoggerMiddleware : IMiddleware
 	/// <summary>
 	/// Invoke Middleware.
 	/// </summary>
-	/// <param name="context">HttpContext</param>
-	/// <param name="next">Next Middleware</param>
+	/// <param name="context">HttpContext.</param>
+	/// <param name="next">Next Middleware.</param>
 	public async Task InvokeAsync(HttpContext context, RequestDelegate next)
 	{
 		// Start stopwatch
@@ -78,7 +78,7 @@ public sealed class LoggerMiddleware : IMiddleware
 	/// <summary>
 	/// Get Request Path.
 	/// </summary>
-	/// <param name="context">HttpContext</param>
+	/// <param name="context">HttpContext.</param>
 	private static string GetPath(HttpContext context) =>
 		context.Features.Get<IHttpRequestFeature>()?.RawTarget ?? context.Request.Path.ToString();
 }

@@ -13,15 +13,15 @@ public interface IQueryPostsMetaPartsBuilder : IQueryPartsBuilder<WpPostMetaId>
 	/// <summary>
 	/// Add Where Post ID.
 	/// </summary>
-	/// <param name="parts">QueryParts</param>
-	/// <param name="postId">Post ID</param>
-	/// <param name="postIds">Post IDs</param>
+	/// <param name="parts">QueryParts.</param>
+	/// <param name="postId">Post ID.</param>
+	/// <param name="postIds">Post IDs.</param>
 	Maybe<QueryParts> AddWherePostId(QueryParts parts, WpPostId? postId, IImmutableList<WpPostId> postIds);
 
 	/// <summary>
 	/// Add Where Post Status.
 	/// </summary>
-	/// <param name="parts">QueryParts</param>
-	/// <param name="key">Meta Key</param>
+	/// <param name="parts">QueryParts.</param>
+	/// <param name="key">Meta Key.</param>
 	Maybe<QueryParts> AddWhereKey(QueryParts parts, string? key);
 }

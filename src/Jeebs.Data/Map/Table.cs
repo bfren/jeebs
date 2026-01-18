@@ -11,21 +11,21 @@ public abstract record class Table : ITable
 	/// <summary>
 	/// Create with <see cref="IDbName"/>.
 	/// </summary>
-	/// <param name="name">ITableName</param>
+	/// <param name="name">ITableName.</param>
 	protected Table(IDbName name) =>
 		TableName = name;
 
 	/// <summary>
 	/// Create with table name.
 	/// </summary>
-	/// <param name="name">Table Name</param>
+	/// <param name="name">Table Name.</param>
 	protected Table(string name) : this(new DbName(name)) { }
 
 	/// <summary>
 	/// Create with table schema and name.
 	/// </summary>
-	/// <param name="schema">Table Schema</param>
-	/// <param name="name">Table Name</param>
+	/// <param name="schema">Table Schema.</param>
+	/// <param name="name">Table Name.</param>
 	protected Table(string schema, string name) : this(new DbName(schema, name)) { }
 
 	/// <inheritdoc/>

@@ -6,5 +6,5 @@ namespace Jeebs.Services.Drivers.Webhook.Slack.Models;
 /// <summary>
 /// Slack block content - markdown.
 /// </summary>
-/// <param name="Text">Markdown text</param>
+/// <param name="Text">Markdown text.</param>
 public sealed record class SlackMarkdown(string Text) : SlackText("mrkdwn", Text);

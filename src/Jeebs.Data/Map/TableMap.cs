@@ -31,9 +31,9 @@ public sealed record class TableMap : ITableMap
 	/// <summary>
 	/// Create object.
 	/// </summary>
-	/// <param name="table">Table</param>
-	/// <param name="columns">Mapped Columns</param>
-	/// <param name="idColumn">Id Column</param>
+	/// <param name="table">Table.</param>
+	/// <param name="columns">Mapped Columns.</param>
+	/// <param name="idColumn">Id Column.</param>
 	public TableMap(ITable table, IColumnList columns, IColumn idColumn) =>
 		(Table, Columns, IdColumn) = (table, columns, idColumn);
 

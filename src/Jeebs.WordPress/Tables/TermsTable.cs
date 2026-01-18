@@ -39,6 +39,6 @@ public sealed record class TermsTable : Table
 	/// <summary>
 	/// Create object.
 	/// </summary>
-	/// <param name="prefix">Table prefix</param>
+	/// <param name="prefix">Table prefix.</param>
 	public TermsTable(string prefix) : base($"{prefix}terms") { }
 }

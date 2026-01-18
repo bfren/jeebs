@@ -57,7 +57,7 @@ public class RazorApp : MvcApp
 	/// <summary>
 	/// Create Razor application.
 	/// </summary>
-	/// <param name="useHsts">HSTS should only be disabled if the application is in development mode, or behind a reverse proxy</param>
+	/// <param name="useHsts">HSTS should only be disabled if the application is in development mode, or behind a reverse proxy.</param>
 	public RazorApp(bool useHsts) : base(useHsts) { }
 
 	/// <inheritdoc/>
@@ -71,8 +71,8 @@ public class RazorApp : MvcApp
 	/// <summary>
 	/// Override to configure Razor Pages options.
 	/// </summary>
-	/// <param name="ctx">HostBuilderContext</param>
-	/// <param name="opt">RazorPagesOptions</param>
+	/// <param name="ctx">HostBuilderContext.</param>
+	/// <param name="opt">RazorPagesOptions.</param>
 	public virtual void ConfigureServicesRazorPagesOptions(HostBuilderContext ctx, RazorPagesOptions opt) { }
 
 	/// <inheritdoc/>

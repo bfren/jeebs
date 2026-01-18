@@ -22,7 +22,7 @@ public abstract record class SlackBlock
 	/// <summary>
 	/// Create object.
 	/// </summary>
-	/// <param name="type">Block type</param>
+	/// <param name="type">Block type.</param>
 	protected SlackBlock(string type) =>
 		Type = type;
 }

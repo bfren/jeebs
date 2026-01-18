@@ -24,9 +24,9 @@ public static partial class FluentQueryHelper
 	/// </summary>
 	/// <typeparam name="TEntity">Entity type</typeparam>
 	/// <typeparam name="TValue">Column select value type</typeparam>
-	/// <param name="call">Call</param>
-	/// <param name="expectedProperty">Expected property</param>
-	/// <param name="expectedOrder">Expected sort order</param>
+	/// <param name="call">Call.</param>
+	/// <param name="expectedProperty">Expected property.</param>
+	/// <param name="expectedOrder">Expected sort order.</param>
 	public static void AssertSort<TEntity, TValue>(ICall call, string expectedProperty, SortOrder expectedOrder)
 	{
 		// Check the method

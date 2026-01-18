@@ -52,31 +52,31 @@ public readonly partial struct DateTimeInt
 	/// <summary>
 	/// Construct object using specified date/time integers.
 	/// </summary>
-	/// <param name="year">Year</param>
-	/// <param name="month">Month</param>
-	/// <param name="day">Day</param>
-	/// <param name="hour">Hour</param>
-	/// <param name="minute">Minute</param>
+	/// <param name="year">Year.</param>
+	/// <param name="month">Month.</param>
+	/// <param name="day">Day.</param>
+	/// <param name="hour">Hour.</param>
+	/// <param name="minute">Minute.</param>
 	public DateTimeInt(int year, int month, int day, int hour, int minute) =>
 		(Year, Month, Day, Hour, Minute) = (year, month, day, hour, minute);
 
 	/// <summary>
 	/// Construct object using a DateTime object.
 	/// </summary>
-	/// <param name="dt">DateTime</param>
+	/// <param name="dt">DateTime.</param>
 	public DateTimeInt(DateTime dt) : this(dt.Year, dt.Month, dt.Day, dt.Hour, dt.Minute) { }
 
 	/// <summary>
 	/// Construct object from string - must be exactly 12 characters long (yyyymmddHHMM).
 	/// </summary>
-	/// <param name="value">DateTime string value - format yyyymmddHHMM</param>
+	/// <param name="value">DateTime string value - format yyyymmddHHMM.</param>
 	public DateTimeInt(string value) =>
 		(Year, Month, Day, Hour, Minute) = Parse(value, CultureInfo.InvariantCulture);
 
 	/// <summary>
 	/// Construct object from long - will be converted to a 12-digit string with leading zeroes.
 	/// </summary>
-	/// <param name="value">DateTime long value - format yyyymmddHHMM</param>
+	/// <param name="value">DateTime long value - format yyyymmddHHMM.</param>
 	public DateTimeInt(long value)
 	{
 		if (value <= 100000000000)

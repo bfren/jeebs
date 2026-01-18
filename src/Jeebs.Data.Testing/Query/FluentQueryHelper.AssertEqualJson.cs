@@ -13,8 +13,8 @@ public static partial class FluentQueryHelper
 	/// Assert that <paramref name="actual"/> and <paramref name="expected"/> are equal by
 	/// serialising as JSON - to support anonymous types
 	/// </summary>
-	/// <param name="expected">Expected value</param>
-	/// <param name="actual">Actual value</param>
+	/// <param name="expected">Expected value.</param>
+	/// <param name="actual">Actual value.</param>
 	/// <exception cref="EqualJsonException"></exception>
 	internal static void AssertEqualJson(object expected, object? actual)
 	{

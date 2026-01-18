@@ -19,8 +19,8 @@ public abstract record class SlackText : SlackContent
 	/// <summary>
 	/// Create object.
 	/// </summary>
-	/// <param name="type">Content type (e.g. 'mrkdwn')</param>
-	/// <param name="text">Text content</param>
+	/// <param name="type">Content type (e.g. 'mrkdwn').</param>
+	/// <param name="text">Text content.</param>
 	protected SlackText(string type, string text) : base(type) =>
 		(Type, Text) = (type, text);
 }

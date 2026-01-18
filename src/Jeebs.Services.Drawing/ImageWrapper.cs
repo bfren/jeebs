@@ -44,9 +44,9 @@ public abstract class ImageWrapper : IImageWrapper
 	/// <summary>
 	/// Resize and crop an image to fill a mask of specified width and height.
 	/// </summary>
-	/// <param name="width">Mask width</param>
-	/// <param name="height">Mask height</param>
-	/// <param name="apply">Function to perform the graphics manipulation</param>
+	/// <param name="width">Mask width.</param>
+	/// <param name="height">Mask height.</param>
+	/// <param name="apply">Function to perform the graphics manipulation.</param>
 	protected Maybe<IImageWrapper> ApplyMask(int width, int height, Func<Size, Rectangle, IImageWrapper> apply)
 	{
 		// At least one of width and height should be greater than zero
@@ -80,7 +80,7 @@ public abstract class ImageWrapper : IImageWrapper
 		public sealed record class MaskHeightOrWidthRequiredMsg : Msg;
 
 		/// <summary>An exception occurred while applying the mask</summary>
-		/// <param name="Value">Exception</param>
+		/// <param name="Value">Exception.</param>
 		public sealed record class ApplyingImageMaskExceptionMsg(Exception Value) : ExceptionMsg;
 	}
 }

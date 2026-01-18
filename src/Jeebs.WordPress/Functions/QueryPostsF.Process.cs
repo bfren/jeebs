@@ -17,10 +17,10 @@ public static partial class QueryPostsF
 	/// </summary>
 	/// <typeparam name="TList">List type</typeparam>
 	/// <typeparam name="TModel">Model type</typeparam>
-	/// <param name="db">IWpDb</param>
-	/// <param name="w">IUnitOfWork</param>
-	/// <param name="posts">Posts</param>
-	/// <param name="filters">Optional content filters</param>
+	/// <param name="db">IWpDb.</param>
+	/// <param name="w">IUnitOfWork.</param>
+	/// <param name="posts">Posts.</param>
+	/// <param name="filters">Optional content filters.</param>
 	internal static Task<Maybe<TList>> Process<TList, TModel>(IWpDb db, IUnitOfWork w, TList posts, params IContentFilter[] filters)
 		where TList : IEnumerable<TModel>
 		where TModel : IWithId<WpPostId> =>

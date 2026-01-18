@@ -17,10 +17,10 @@ internal static partial class Embed
 	/// <summary>
 	/// Parse a generic embedded object.
 	/// </summary>
-	/// <param name="content">Post content</param>
-	/// <param name="type">EmbedType</param>
-	/// <param name="provider">Provider</param>
-	/// <param name="format">Function to parse matched content</param>
+	/// <param name="content">Post content.</param>
+	/// <param name="type">EmbedType.</param>
+	/// <param name="provider">Provider.</param>
+	/// <param name="format">Function to parse matched content.</param>
 	internal static string Parse(string content, EmbedType type, Provider provider, Func<string, EmbedParsed, string> format)
 	{
 		// Get Embedded info
@@ -56,9 +56,9 @@ internal static partial class Embed
 	/// <summary>
 	/// Used to parse Embed JSON.
 	/// </summary>
-	/// <param name="Url">Embedded resource URL</param>
-	/// <param name="Type">Resource type</param>
-	/// <param name="ProviderNameSlug">Provider</param>
+	/// <param name="Url">Embedded resource URL.</param>
+	/// <param name="Type">Resource type.</param>
+	/// <param name="ProviderNameSlug">Provider.</param>
 	internal sealed record class EmbedParsed(string Url, EmbedType Type, Provider ProviderNameSlug);
 
 	/// <summary>

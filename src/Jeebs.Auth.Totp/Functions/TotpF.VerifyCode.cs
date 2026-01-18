@@ -20,9 +20,9 @@ public static partial class TotpF
 	/// <summary>
 	/// Verify a code.
 	/// </summary>
-	/// <param name="key">Secret key</param>
-	/// <param name="code">Code to be verified</param>
-	/// <param name="settings">TotpSettings</param>
+	/// <param name="key">Secret key.</param>
+	/// <param name="code">Code to be verified.</param>
+	/// <param name="settings">TotpSettings.</param>
 	public static bool VerifyCode(byte[] key, string code, TotpSettings settings)
 	{
 		// Generate expected code and compare it

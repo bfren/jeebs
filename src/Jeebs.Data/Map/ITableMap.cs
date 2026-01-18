@@ -43,7 +43,7 @@ public interface ITableMap
 	/// <summary>
 	/// Get all column aliases.
 	/// </summary>
-	/// <param name="includeIdAlias">If true, the ID column alias will be included</param>
+	/// <param name="includeIdAlias">If true, the ID column alias will be included.</param>
 	IEnumerable<string> GetColumnAliases(bool includeIdAlias);
 
 	/// <summary>

@@ -11,6 +11,6 @@ public interface IContentFilter
 	/// <summary>
 	/// Execute filter.
 	/// </summary>
-	/// <param name="content">Original content</param>
+	/// <param name="content">Original content.</param>
 	string Execute(string content);
 }

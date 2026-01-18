@@ -33,6 +33,6 @@ public interface IPostAttachment : IWithId<StrongIds.WpPostId>
 	/// <summary>
 	/// Get the filesystem path to this attachment.
 	/// </summary>
-	/// <param name="wpUploadsPath">Filesystem path to wp-uploads directory</param>
+	/// <param name="wpUploadsPath">Filesystem path to wp-uploads directory.</param>
 	string GetFilePath(string wpUploadsPath);
 }

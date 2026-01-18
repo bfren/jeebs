@@ -17,7 +17,7 @@ public interface IAuthUserRoleRepository<TUserRoleEntity> : IRepository<TUserRol
 	/// <summary>
 	/// Create a new User Role.
 	/// </summary>
-	/// <param name="userId">User ID</param>
-	/// <param name="roleId">Role ID</param>
+	/// <param name="userId">User ID.</param>
+	/// <param name="roleId">Role ID.</param>
 	Task<Maybe<AuthUserRoleId>> CreateAsync(AuthUserId userId, AuthRoleId roleId);
 }

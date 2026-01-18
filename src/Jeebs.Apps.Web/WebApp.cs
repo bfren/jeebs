@@ -67,7 +67,7 @@ public class WebApp : App
 	/// <summary>
 	/// Create web application.
 	/// </summary>
-	/// <param name="useHsts">HSTS should only be disabled if the application is in development mode, or behind a reverse proxy</param>
+	/// <param name="useHsts">HSTS should only be disabled if the application is in development mode, or behind a reverse proxy.</param>
 	public WebApp(bool useHsts) =>
 		this.useHsts = useHsts;
 
@@ -97,7 +97,7 @@ public class WebApp : App
 	/// <summary>
 	/// Configure a WebApplication.
 	/// </summary>
-	/// <param name="app">WebApplication</param>
+	/// <param name="app">WebApplication.</param>
 	public virtual void Configure(WebApplication app)
 	{
 		// Shorthands
@@ -136,8 +136,8 @@ public class WebApp : App
 	/// <summary>
 	/// Override to configure site verification.
 	/// </summary>
-	/// <param name="app">WebApplication</param>
-	/// <param name="config">IConfiguration</param>
+	/// <param name="app">WebApplication.</param>
+	/// <param name="config">IConfiguration.</param>
 	protected virtual void ConfigureSiteVerification(WebApplication app, IConfiguration config)
 	{
 		if (
@@ -152,14 +152,14 @@ public class WebApp : App
 	/// <summary>
 	/// Override to configure production exception handling.
 	/// </summary>
-	/// <param name="app">WebApplication</param>
+	/// <param name="app">WebApplication.</param>
 	protected virtual void ConfigureProductionExceptionHandling(WebApplication app) =>
 		_ = app.UseExceptionHandler("/Error");
 
 	/// <summary>
 	/// Override to configure security headers.
 	/// </summary>
-	/// <param name="app">WebApplication</param>
+	/// <param name="app">WebApplication.</param>
 	protected virtual void ConfigureSecurityHeaders(WebApplication app)
 	{
 		if (useHsts) // check for Development Environment happens in Configure()
@@ -174,8 +174,8 @@ public class WebApp : App
 	/// <remarks>
 	/// Calls to app.UseAuthentication() should come *before* app.UseAuthorization()
 	/// </remarks>
-	/// <param name="app">WebApplication</param>
-	/// <param name="config">IConfiguration</param>
+	/// <param name="app">WebApplication.</param>
+	/// <param name="config">IConfiguration.</param>
 	protected virtual void ConfigureAuth(WebApplication app, IConfiguration config) =>
 		_ = app.UseAuthorization();
 }

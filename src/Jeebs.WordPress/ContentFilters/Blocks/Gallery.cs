@@ -17,7 +17,7 @@ internal static partial class Gallery
 	/// <summary>
 	/// Parse WordPress photo gallery.
 	/// </summary>
-	/// <param name="content">Post content</param>
+	/// <param name="content">Post content.</param>
 	internal static string Parse(string content)
 	{
 		// Get Gallery info
@@ -50,8 +50,8 @@ internal static partial class Gallery
 	/// <summary>
 	/// Used to parse Gallery JSON.
 	/// </summary>
-	/// <param name="Ids">Image IDs</param>
-	/// <param name="Columns">The number of columns to display</param>
+	/// <param name="Ids">Image IDs.</param>
+	/// <param name="Columns">The number of columns to display.</param>
 	private sealed record class GalleryParsed(int[] Ids, int Columns);
 
 	[GeneratedRegex("<!-- wp:gallery ({.*?}) -->(.*?)<!-- /wp:gallery -->", RegexOptions.Singleline)]

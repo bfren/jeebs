@@ -10,7 +10,7 @@ public static partial class QueryF
 	/// <summary>
 	/// Get a parameter value - if it's a <see cref="IStrongId"/>, return <see cref="IStrongId.Value"/>.
 	/// </summary>
-	/// <param name="value">Parameter Value</param>
+	/// <param name="value">Parameter Value.</param>
 	public static dynamic GetParameterValue(dynamic value) =>
 		value switch
 		{

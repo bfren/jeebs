@@ -11,7 +11,7 @@ public sealed record class PostStatus : Enumerated
 	/// <summary>
 	/// Create new value.
 	/// </summary>
-	/// <param name="name">Value name</param>
+	/// <param name="name">Value name.</param>
 	public PostStatus(string name) : base(name) { }
 
 	#region Default Post Statuses
@@ -46,7 +46,7 @@ public sealed record class PostStatus : Enumerated
 	/// <summary>
 	/// Parse PostStatus value name.
 	/// </summary>
-	/// <param name="name">Value name</param>
+	/// <param name="name">Value name.</param>
 	public static PostStatus Parse(string name) =>
 		Parse(name, values: [Publish, Inherit, Pending, Draft, AutoDraft]).Unwrap(() => Draft);
 }

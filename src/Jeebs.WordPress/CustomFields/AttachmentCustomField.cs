@@ -28,8 +28,8 @@ public abstract class AttachmentCustomField : CustomField<AttachmentCustomField.
 	/// <summary>
 	/// Create object from posts.
 	/// </summary>
-	/// <param name="queryPosts">IQueryPosts</param>
-	/// <param name="key">Meta key (for post_meta table)</param>
+	/// <param name="queryPosts">IQueryPosts.</param>
+	/// <param name="key">Meta key (for post_meta table).</param>
 	protected AttachmentCustomField(IQueryPosts queryPosts, string key) : base(key, new Attachment()) =>
 		QueryPosts = queryPosts;
 
@@ -99,8 +99,8 @@ public abstract class AttachmentCustomField : CustomField<AttachmentCustomField.
 	/// <summary>
 	/// Parse the Attachment Post ID.
 	/// </summary>
-	/// <param name="type">AttachmentCustomField type</param>
-	/// <param name="value">Post ID value</param>
+	/// <param name="type">AttachmentCustomField type.</param>
+	/// <param name="value">Post ID value.</param>
 	internal static Maybe<WpPostId> ParseAttachmentPostId(Type type, string value) =>
 		F.ParseUInt64(value).Switch(
 			some: x => F.Some(new WpPostId { Value = x }),
@@ -123,17 +123,17 @@ public abstract class AttachmentCustomField : CustomField<AttachmentCustomField.
 	public static class M
 	{
 		/// <summary>Meta key not found in MetaDictionary</summary>
-		/// <param name="Type">Custom Field type</param>
-		/// <param name="Value">Meta Key</param>
+		/// <param name="Type">Custom Field type.</param>
+		/// <param name="Value">Meta Key.</param>
 		public sealed record class MetaKeyNotFoundMsg(Type Type, string Value) : WithValueMsg<string>;
 
 		/// <summary>Multiple matching attachments were found (should always be 1)</summary>
-		/// <param name="Value">Attachment (Post) ID</param>
+		/// <param name="Value">Attachment (Post) ID.</param>
 		public sealed record class MultipleAttachmentsFoundMsg(string Value) : WithValueMsg<string>;
 
 		/// <summary>The value in the meta dictionary is not a valid ID</summary>
-		/// <param name="Type">Custom Field type</param>
-		/// <param name="Value">Meta Key</param>
+		/// <param name="Type">Custom Field type.</param>
+		/// <param name="Value">Meta Key.</param>
 		public sealed record class ValueIsInvalidPostIdMsg(Type Type, string Value) : WithValueMsg<string>;
 	}
 }

@@ -16,8 +16,8 @@ public static partial class QueryF
 	/// <summary>
 	/// Convert LINQ expression property selectors to column names.
 	/// </summary>
-	/// <param name="columns">Mapped entity columns</param>
-	/// <param name="predicates">Predicates (matched using AND)</param>
+	/// <param name="columns">Mapped entity columns.</param>
+	/// <param name="predicates">Predicates (matched using AND).</param>
 	public static Maybe<IImmutableList<(IColumn column, Compare cmp, dynamic value)>> ConvertPredicatesToColumns(
 		IColumnList columns,
 		(string alias, Compare cmp, dynamic value)[] predicates

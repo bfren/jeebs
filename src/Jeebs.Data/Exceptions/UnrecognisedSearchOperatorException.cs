@@ -19,7 +19,7 @@ public sealed class UnrecognisedSearchOperatorException : Exception
 	/// <summary>
 	/// Create exception.
 	/// </summary>
-	/// <param name="compare">Compare</param>
+	/// <param name="compare">Compare.</param>
 	public UnrecognisedSearchOperatorException(Compare compare) : this($"Unrecognised comparison: '{compare}'.") { }
 
 	/// <summary>

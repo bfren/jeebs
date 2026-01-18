@@ -111,6 +111,6 @@ public sealed record class CommentsTable : Table
 	/// <summary>
 	/// Create object.
 	/// </summary>
-	/// <param name="prefix">Table prefix</param>
+	/// <param name="prefix">Table prefix.</param>
 	public CommentsTable(string prefix) : base($"{prefix}comments") { }
 }

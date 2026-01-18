@@ -13,9 +13,9 @@ public static partial class AuthF
 	/// <summary>
 	/// Create authentication token.
 	/// </summary>
-	/// <param name="jwt">IAuthJwtProvider</param>
-	/// <param name="user">ClaimsPrincipal</param>
-	/// <param name="log">ILog</param>
+	/// <param name="jwt">IAuthJwtProvider.</param>
+	/// <param name="user">ClaimsPrincipal.</param>
+	/// <param name="log">ILog.</param>
 	public static Task<AuthResult> CreateTokenAsync(IAuthJwtProvider jwt, ClaimsPrincipal user, ILog log)
 	{
 		var token = jwt

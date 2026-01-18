@@ -27,9 +27,9 @@ public abstract class WebhookDriverArgs<TConfig> : DriverArgs<TConfig>
 	/// Create object.
 	/// </summary>
 	/// <param name="factory"></param>
-	/// <param name="log">ILog</param>
-	/// <param name="jeebsConfig">JeebsConfig</param>
-	/// <param name="serviceConfigs">Function to return all service configurations for this type</param>
+	/// <param name="log">ILog.</param>
+	/// <param name="jeebsConfig">JeebsConfig.</param>
+	/// <param name="serviceConfigs">Function to return all service configurations for this type.</param>
 	protected WebhookDriverArgs(
 		IHttpClientFactory factory,
 		ILog log,

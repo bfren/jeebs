@@ -27,8 +27,8 @@ public abstract class TermCustomField : CustomField<TermCustomField.Term>
 	/// <summary>
 	/// Create object from terms.
 	/// </summary>
-	/// <param name="queryTerms">IQueryTerms</param>
-	/// <param name="key">Meta key (for post_meta table)</param>
+	/// <param name="queryTerms">IQueryTerms.</param>
+	/// <param name="key">Meta key (for post_meta table).</param>
 	protected TermCustomField(IQueryTerms queryTerms, string key) : base(key, new Term()) =>
 		QueryTerms = queryTerms;
 
@@ -81,8 +81,8 @@ public abstract class TermCustomField : CustomField<TermCustomField.Term>
 	/// <summary>
 	/// Parse the Term ID.
 	/// </summary>
-	/// <param name="type">Term Custom Field type</param>
-	/// <param name="value">Term ID value</param>
+	/// <param name="type">Term Custom Field type.</param>
+	/// <param name="value">Term ID value.</param>
 	internal static Maybe<WpTermId> ParseTermId(Type type, string value) =>
 		F.ParseUInt64(value).Switch(
 			some: x => F.Some(new WpTermId { Value = x }),
@@ -107,17 +107,17 @@ public abstract class TermCustomField : CustomField<TermCustomField.Term>
 	public static class M
 	{
 		/// <summary>Meta key not found in MetaDictionary</summary>
-		/// <param name="Type">Custom Field type</param>
-		/// <param name="Value">Meta Key</param>
+		/// <param name="Type">Custom Field type.</param>
+		/// <param name="Value">Meta Key.</param>
 		public sealed record class MetaKeyNotFoundMsg(Type Type, string Value) : WithValueMsg<string>;
 
 		/// <summary>Multiple matching terms were found (should always be 1)</summary>
-		/// <param name="Value">Term ID</param>
+		/// <param name="Value">Term ID.</param>
 		public sealed record class MultipleTermsFoundMsg(string Value) : WithValueMsg<string>;
 
 		/// <summary>The value in the meta dictionary is not a valid ID</summary>
-		/// <param name="Type">Custom Field type</param>
-		/// <param name="Value">Meta Key</param>
+		/// <param name="Type">Custom Field type.</param>
+		/// <param name="Value">Meta Key.</param>
 		public sealed record class ValueIsInvalidTermIdMsg(Type Type, string Value) : WithValueMsg<string>;
 	}
 }

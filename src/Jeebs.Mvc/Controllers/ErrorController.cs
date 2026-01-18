@@ -17,7 +17,7 @@ public abstract class ErrorController : Controller
 	/// <summary>
 	/// Create object.
 	/// </summary>
-	/// <param name="log">ILog</param>
+	/// <param name="log">ILog.</param>
 	protected ErrorController(ILog log) : base(log) { }
 
 	/// <summary>
@@ -29,7 +29,7 @@ public abstract class ErrorController : Controller
 	/// <summary>
 	/// Handle an error with the specified code.
 	/// </summary>
-	/// <param name="code">Http Status Code</param>
+	/// <param name="code">Http Status Code.</param>
 	[Route("/Error/{code:int}")]
 	public async Task<IActionResult> Handle(int code) =>
 		await this.ExecuteErrorAsync(new M.UnknownErrorMsg(), code).ConfigureAwait(false);

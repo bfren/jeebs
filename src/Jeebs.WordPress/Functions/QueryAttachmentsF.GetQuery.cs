@@ -15,9 +15,9 @@ public static partial class QueryAttachmentsF
 	/// <summary>
 	/// Build custom query to return file attachments with URL from meta values.
 	/// </summary>
-	/// <param name="schema">IWpDbSchema</param>
-	/// <param name="fileIds">Attachment IDs</param>
-	/// <param name="virtualUploadsUrl">Virtual Uploads URL for building URLs</param>
+	/// <param name="schema">IWpDbSchema.</param>
+	/// <param name="fileIds">Attachment IDs.</param>
+	/// <param name="virtualUploadsUrl">Virtual Uploads URL for building URLs.</param>
 	internal static Maybe<string> GetQuery(IWpDbSchema schema, IImmutableList<WpPostId> fileIds, string virtualUploadsUrl)
 	{
 		// Check for empty list

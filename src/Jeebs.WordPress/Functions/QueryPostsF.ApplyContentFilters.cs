@@ -18,8 +18,8 @@ public static partial class QueryPostsF
 	/// </summary>
 	/// <typeparam name="TList">List type</typeparam>
 	/// <typeparam name="TModel">Post type</typeparam>
-	/// <param name="posts">Posts</param>
-	/// <param name="filters">Content Filters</param>
+	/// <param name="posts">Posts.</param>
+	/// <param name="filters">Content Filters.</param>
 	internal static Maybe<TList> ApplyContentFilters<TList, TModel>(TList posts, IContentFilter[] filters)
 		where TList : IEnumerable<TModel>
 		where TModel : IWithId<WpPostId>
@@ -43,7 +43,7 @@ public static partial class QueryPostsF
 	{
 		/// <summary>An exception occured while applying content filters to posts</summary>
 		/// <typeparam name="T">Post Model type</typeparam>
-		/// <param name="Value">Exception object</param>
+		/// <param name="Value">Exception object.</param>
 		public sealed record class ApplyContentFiltersExceptionMsg<T>(Exception Value) : ExceptionMsg;
 	}
 }

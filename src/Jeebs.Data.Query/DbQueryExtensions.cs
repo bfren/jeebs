@@ -30,10 +30,10 @@ public static class DbQueryExtensions
 	/// Use a fluent <see cref="IQueryBuilder"/> to create a query to run against the database.
 	/// </summary>
 	/// <typeparam name="T">Return model type</typeparam>
-	/// <param name="this">IDbQuery</param>
-	/// <param name="page">Page number</param>
-	/// <param name="builder">Query builder</param>
-	/// <param name="transaction">Database transaction</param>
+	/// <param name="this">IDbQuery.</param>
+	/// <param name="page">Page number.</param>
+	/// <param name="builder">Query builder.</param>
+	/// <param name="transaction">Database transaction.</param>
 	public static Task<Maybe<IPagedList<T>>> QueryAsync<T>(
 		this IDbQuery @this,
 		ulong page,

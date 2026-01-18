@@ -74,7 +74,7 @@ public class ApiApp : MvcApp
 	/// <summary>
 	/// Create API application.
 	/// </summary>
-	/// <param name="useHsts">HSTS should only be disabled if the application is in development mode, or behind a reverse proxy</param>
+	/// <param name="useHsts">HSTS should only be disabled if the application is in development mode, or behind a reverse proxy.</param>
 	public ApiApp(bool useHsts) : base(useHsts) { }
 
 	#region ConfigureServices

@@ -15,9 +15,9 @@ namespace Jeebs.Mvc.TagHelpers;
 /// <remarks>
 /// Setup dependencies
 /// </remarks>
-/// <param name="fileVersionProvider">IFileVersionProvider object</param>
-/// <param name="urlHelperFactory">IUrlHelperFactory object</param>
-/// <param name="htmlEncoder">HtmlEncoder</param>
+/// <param name="fileVersionProvider">IFileVersionProvider object.</param>
+/// <param name="urlHelperFactory">IUrlHelperFactory object.</param>
+/// <param name="htmlEncoder">HtmlEncoder.</param>
 [HtmlTargetElement("image", TagStructure = TagStructure.WithoutEndTag)]
 public sealed class ImageTagHelper(
 	IFileVersionProvider fileVersionProvider,
@@ -54,8 +54,8 @@ public sealed class ImageTagHelper(
 	/// <summary>
 	/// Process the tag helper.
 	/// </summary>
-	/// <param name="context">TagHelperContext object</param>
-	/// <param name="output">TagHelperOutput object</param>
+	/// <param name="context">TagHelperContext object.</param>
+	/// <param name="output">TagHelperOutput object.</param>
 	public override void Process(TagHelperContext context, TagHelperOutput output)
 	{
 		// Check source

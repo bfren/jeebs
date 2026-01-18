@@ -15,8 +15,8 @@ public abstract class SeqWebhookDriver : WebhookDriver<SeqConfig, SeqEvent>
 	/// <summary>
 	/// Create object.
 	/// </summary>
-	/// <param name="name">Service name</param>
-	/// <param name="args">SeqWebhookDriverArgs</param>
+	/// <param name="name">Service name.</param>
+	/// <param name="args">SeqWebhookDriverArgs.</param>
 	protected SeqWebhookDriver(string name, SeqWebhookDriverArgs args) : base(name, args) { }
 
 	/// <inheritdoc/>

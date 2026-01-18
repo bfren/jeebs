@@ -45,7 +45,7 @@ public class SerilogLogger : Log
 	/// <summary>
 	/// Use specified logger.
 	/// </summary>
-	/// <param name="logger">Serilog.ILogger</param>
+	/// <param name="logger">Serilog.ILogger.</param>
 	internal SerilogLogger(S.ILogger logger) =>
 		this.logger = logger;
 

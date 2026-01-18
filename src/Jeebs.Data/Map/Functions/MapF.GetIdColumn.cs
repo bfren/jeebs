@@ -19,7 +19,7 @@ public static partial class MapF
 	/// Get the ID column.
 	/// </summary>
 	/// <typeparam name="TTable">Table type</typeparam>
-	/// <param name="columns">List of mapped columns</param>
+	/// <param name="columns">List of mapped columns.</param>
 	public static Maybe<Column> GetIdColumn<TTable>(ColumnList columns)
 		where TTable : ITable =>
 		F.Some(
@@ -41,7 +41,7 @@ public static partial class MapF
 	{
 		/// <summary>No Id property found on table</summary>
 		/// <typeparam name="TTable">Table type</typeparam>
-		/// <param name="Value">Exception</param>
+		/// <param name="Value">Exception.</param>
 		public sealed record class ErrorGettingIdPropertyMsg<TTable>(Exception Value) : ExceptionMsg;
 
 		/// <summary>No property with specified attribute found on table</summary>

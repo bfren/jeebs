@@ -29,14 +29,14 @@ public sealed partial class MySqlLogger : IMySqlConnectorLogger
 	/// <summary>
 	/// Create log instance by name.
 	/// </summary>
-	/// <param name="name">Log instance name</param>
+	/// <param name="name">Log instance name.</param>
 	public MySqlLogger(string name) =>
 		Logger = global::Serilog.Log.ForContext("SourceContext", "MySqlConnector." + name);
 
 	/// <summary>
 	/// Returns true if the log is enabled for <paramref name="level"/>.
 	/// </summary>
-	/// <param name="level">Requested level</param>
+	/// <param name="level">Requested level.</param>
 	public bool IsEnabled(MySqlConnectorLogLevel level) =>
 		LevelF.ConvertToSerilogLevel(level).Switch(
 			some: Logger.IsEnabled,
@@ -46,27 +46,27 @@ public sealed partial class MySqlLogger : IMySqlConnectorLogger
 	/// <summary>
 	/// Send a message to the log.
 	/// </summary>
-	/// <param name="level">Event level</param>
-	/// <param name="message">Log message</param>
+	/// <param name="level">Event level.</param>
+	/// <param name="message">Log message.</param>
 	public void Log(MySqlConnectorLogLevel level, string message) =>
 		Log(level, message, null, null);
 
 	/// <summary>
 	/// Send a message to the log.
 	/// </summary>
-	/// <param name="level">Event level</param>
-	/// <param name="message">Log message</param>
-	/// <param name="args">[Optional] Message arguments</param>
+	/// <param name="level">Event level.</param>
+	/// <param name="message">Log message.</param>
+	/// <param name="args">[Optional] Message arguments.</param>
 	public void Log(MySqlConnectorLogLevel level, string message, object?[]? args) =>
 		Log(level, message, args, null);
 
 	/// <summary>
 	/// Send a message to the log.
 	/// </summary>
-	/// <param name="level">Event level</param>
-	/// <param name="message">Log message</param>
-	/// <param name="args">[Optional] Message arguments</param>
-	/// <param name="exception">[Optional] Exception</param>
+	/// <param name="level">Event level.</param>
+	/// <param name="message">Log message.</param>
+	/// <param name="args">[Optional] Message arguments.</param>
+	/// <param name="exception">[Optional] Exception.</param>
 	public void Log(MySqlConnectorLogLevel level, string message, object?[]? args, Exception? exception) =>
 		LevelF.ConvertToSerilogLevel(level).Switch(
 			some: x => Log(x, message, args, exception),
@@ -76,10 +76,10 @@ public sealed partial class MySqlLogger : IMySqlConnectorLogger
 	/// <summary>
 	/// Send a message to the log.
 	/// </summary>
-	/// <param name="level">Event level</param>
-	/// <param name="message">Log message</param>
-	/// <param name="args">[Optional] Message arguments</param>
-	/// <param name="exception">[Optional] Exception</param>
+	/// <param name="level">Event level.</param>
+	/// <param name="message">Log message.</param>
+	/// <param name="args">[Optional] Message arguments.</param>
+	/// <param name="exception">[Optional] Exception.</param>
 	private void Log(LogEventLevel level, string message, object?[]? args, Exception? exception)
 	{
 		if (args is null || args.Length == 0)

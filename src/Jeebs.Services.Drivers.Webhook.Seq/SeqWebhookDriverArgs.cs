@@ -17,9 +17,9 @@ public sealed class SeqWebhookDriverArgs : WebhookDriverArgs<SeqConfig>
 	/// <summary>
 	/// Create object.
 	/// </summary>
-	/// <param name="factory">IHttpClientFactory</param>
-	/// <param name="log">ILog</param>
-	/// <param name="jeebsConfig">JeebsConfig</param>
+	/// <param name="factory">IHttpClientFactory.</param>
+	/// <param name="log">ILog.</param>
+	/// <param name="jeebsConfig">JeebsConfig.</param>
 	public SeqWebhookDriverArgs(
 		IHttpClientFactory factory,
 		ILog log,

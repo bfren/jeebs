@@ -20,7 +20,7 @@ public static partial class MapF
 	/// </summary>
 	/// <typeparam name="TTable">Table type</typeparam>
 	/// <typeparam name="TEntity">Entity type</typeparam>
-	/// <param name="table">Table object</param>
+	/// <param name="table">Table object.</param>
 	public static Maybe<ColumnList> GetColumns<TTable, TEntity>(TTable table)
 		where TTable : ITable
 		where TEntity : IWithId =>
@@ -46,7 +46,7 @@ public static partial class MapF
 	{
 		/// <summary>Messages</summary>
 		/// <typeparam name="TEntity">Entity type</typeparam>
-		/// <param name="Value">Exception object</param>
+		/// <param name="Value">Exception object.</param>
 		public sealed record class ErrorGettingColumnsMsg<TEntity>(Exception Value) : ExceptionMsg;
 	}
 }

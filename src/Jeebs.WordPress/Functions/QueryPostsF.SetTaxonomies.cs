@@ -17,9 +17,9 @@ public static partial class QueryPostsF
 	/// </summary>
 	/// <typeparam name="TList">List type</typeparam>
 	/// <typeparam name="TModel">Post type</typeparam>
-	/// <param name="posts">Posts</param>
-	/// <param name="terms">Terms</param>
-	/// <param name="termLists">Term List properties</param>
+	/// <param name="posts">Posts.</param>
+	/// <param name="terms">Terms.</param>
+	/// <param name="termLists">Term List properties.</param>
 	internal static Maybe<TList> SetTaxonomies<TList, TModel>(TList posts, IEnumerable<Term> terms, List<PropertyInfo> termLists)
 		where TList : IEnumerable<TModel>
 		where TModel : IWithId<WpPostId>

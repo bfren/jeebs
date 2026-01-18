@@ -23,8 +23,8 @@ public abstract class CustomField<T> : ICustomField<T>
 	/// <summary>
 	/// Create object with specified meta key.
 	/// </summary>
-	/// <param name="key">Meta key (for post_meta table)</param>
-	/// <param name="value">Default value</param>
+	/// <param name="key">Meta key (for post_meta table).</param>
+	/// <param name="value">Default value.</param>
 	protected CustomField(string key, T value) =>
 		(Key, ValueObj) = (key, value);
 

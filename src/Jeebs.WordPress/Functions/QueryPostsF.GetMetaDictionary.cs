@@ -45,7 +45,7 @@ public static partial class QueryPostsF
 		/// <summary>
 		/// Create object.
 		/// </summary>
-		/// <param name="info">PropertyInfo</param>
+		/// <param name="info">PropertyInfo.</param>
 		public Meta(PropertyInfo info) : base(info) { }
 	}
 

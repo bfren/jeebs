@@ -14,7 +14,7 @@ public sealed record class Taxonomy : Enumerated
 	/// <summary>
 	/// Create new value.
 	/// </summary>
-	/// <param name="name">Value name</param>
+	/// <param name="name">Value name.</param>
 	public Taxonomy(string name) : base(name) { }
 
 	#region Default Taxonomies
@@ -64,21 +64,21 @@ public sealed record class Taxonomy : Enumerated
 	/// <summary>
 	/// Add a custom taxonomy.
 	/// </summary>
-	/// <param name="taxonomy">Taxonomy to add</param>
+	/// <param name="taxonomy">Taxonomy to add.</param>
 	public static bool AddCustomTaxonomy(Taxonomy taxonomy) =>
 		All.Add(taxonomy);
 
 	/// <summary>
 	/// Parse Taxonomy value name.
 	/// </summary>
-	/// <param name="name">Value name</param>
+	/// <param name="name">Value name.</param>
 	public static Taxonomy Parse(string name) =>
 		Parse(name, All.ToArray()).Unwrap(() => Blank);
 
 	/// <summary>
 	/// Returns whether or not the specified taxonomy has been registered.
 	/// </summary>
-	/// <param name="taxonomy">Taxonomy to check</param>
+	/// <param name="taxonomy">Taxonomy to check.</param>
 	public static bool IsRegistered(Taxonomy taxonomy) =>
 		IsRegistered(taxonomy.ToString(), All.ToArray());
 }

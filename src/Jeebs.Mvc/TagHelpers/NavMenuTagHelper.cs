@@ -19,8 +19,8 @@ namespace Jeebs.Mvc.TagHelpers;
 /// <remarks>
 /// Create object
 /// </remarks>
-/// <param name="urlHelperFactory">IUrlHelperFactory object</param>
-/// <param name="htmlEncoder">HtmlEncoder</param>
+/// <param name="urlHelperFactory">IUrlHelperFactory object.</param>
+/// <param name="htmlEncoder">HtmlEncoder.</param>
 [HtmlTargetElement("nav-menu", TagStructure = TagStructure.WithoutEndTag)]
 public sealed class NavMenuTagHelper(
 	IUrlHelperFactory urlHelperFactory,
@@ -75,8 +75,8 @@ public sealed class NavMenuTagHelper(
 	/// <summary>
 	/// Process TagHelper.
 	/// </summary>
-	/// <param name="context">TagHelperContext</param>
-	/// <param name="output">TagHelperOutput</param>
+	/// <param name="context">TagHelperContext.</param>
+	/// <param name="output">TagHelperOutput.</param>
 	public override void Process(TagHelperContext context, TagHelperOutput output)
 	{
 		// Return if no menu or items to output

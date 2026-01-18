@@ -18,7 +18,7 @@ public sealed class StrongIdTypeHandler<T> : Dapper.SqlMapper.TypeHandler<T>
 	/// <summary>
 	/// Parse value and create new <see cref="IStrongId"/>.
 	/// </summary>
-	/// <param name="value"><see cref="IStrongId"/> Value</param>
+	/// <param name="value"><see cref="IStrongId"/> Value.</param>
 	public override T Parse(object value) =>
 		new()
 		{
@@ -41,8 +41,8 @@ public sealed class StrongIdTypeHandler<T> : Dapper.SqlMapper.TypeHandler<T>
 	/// <summary>
 	/// Set ID value.
 	/// </summary>
-	/// <param name="parameter">IDbDataParameter</param>
-	/// <param name="value"><see cref="IStrongId"/> value</param>
+	/// <param name="parameter">IDbDataParameter.</param>
+	/// <param name="value"><see cref="IStrongId"/> value.</param>
 	public override void SetValue(IDbDataParameter parameter, T? value) =>
 		parameter.Value = value?.Value;
 
@@ -50,9 +50,9 @@ public sealed class StrongIdTypeHandler<T> : Dapper.SqlMapper.TypeHandler<T>
 	/// Returns a strongly-typed value.
 	/// </summary>
 	/// <typeparam name="TIdValue">StrongId Value type</typeparam>
-	/// <param name="value">Value to handle</param>
-	/// <param name="parse">Parse function</param>
-	/// <param name="defaultValue">Default value if parsing fails</param>
+	/// <param name="value">Value to handle.</param>
+	/// <param name="parse">Parse function.</param>
+	/// <param name="defaultValue">Default value if parsing fails.</param>
 	internal TIdValue GetValueAsType<TIdValue>(object value, Func<string?, Maybe<TIdValue>> parse, TIdValue defaultValue) =>
 		value switch
 		{

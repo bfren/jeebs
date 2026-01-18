@@ -75,6 +75,6 @@ public sealed record class UsersTable : Table
 	/// <summary>
 	/// Create object.
 	/// </summary>
-	/// <param name="prefix">Table prefix</param>
+	/// <param name="prefix">Table prefix.</param>
 	public UsersTable(string prefix) : base($"{prefix}users") { }
 }

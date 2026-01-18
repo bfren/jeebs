@@ -18,7 +18,7 @@ public static partial class MapF
 	/// </summary>
 	/// <typeparam name="TTable">Table type</typeparam>
 	/// <typeparam name="TAttribute">Attribute type</typeparam>
-	/// <param name="columns">List of mapped columns</param>
+	/// <param name="columns">List of mapped columns.</param>
 	public static Maybe<Column> GetColumnWithAttribute<TTable, TAttribute>(ColumnList columns)
 		where TTable : ITable
 		where TAttribute : Attribute =>
@@ -43,7 +43,7 @@ public static partial class MapF
 		/// <summary>Something went wrong while getting columns with the specified attribute</summary>
 		/// <typeparam name="TEntity">Entity type</typeparam>
 		/// <typeparam name="TAttribute">Attribute type</typeparam>
-		/// <param name="Value">Exception object</param>
+		/// <param name="Value">Exception object.</param>
 		public sealed record class ErrorGettingColumnsWithAttributeMsg<TEntity, TAttribute>(Exception Value) : ExceptionMsg;
 
 		/// <summary>No property with specified attribute found on entity</summary>

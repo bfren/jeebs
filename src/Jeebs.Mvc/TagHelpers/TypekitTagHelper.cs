@@ -19,8 +19,8 @@ public sealed class TypekitTagHelper : TagHelper
 	/// <summary>
 	/// Process the tag helper.
 	/// </summary>
-	/// <param name="context">TagHelperContext object</param>
-	/// <param name="output">TagHelperOutput object</param>
+	/// <param name="context">TagHelperContext object.</param>
+	/// <param name="output">TagHelperOutput object.</param>
 	public override void Process(TagHelperContext context, TagHelperOutput output)
 	{
 		// Check library
