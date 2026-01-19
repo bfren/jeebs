@@ -1,6 +1,8 @@
 // Jeebs Rapid Application Development
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
+using Jeebs.Cryptography.Functions;
+
 namespace Jeebs.Cryptography;
 
 /// <summary>
@@ -22,17 +24,7 @@ public sealed class Lockable<T>(T contents) : Lockable
 	/// <param name="key">Encryption key - must be <see cref="Lockable.KeyLength"/> bytes.</param>
 	/// <returns>Locked box.</returns>
 	public Result<Locked<T>> Lock(byte[] key) =>
-		key.Length switch
-		{
-			int l when l == KeyLength =>
-				R.Try(
-					() => new Locked<T>(Contents, key),
-					e => R.Fail(nameof(Lockable<>), nameof(Lock), e)
-				),
-
-			_ =>
-				R.Fail(nameof(Lockable<>), nameof(Lock), "Key must be {Bytes} bytes long.", KeyLength)
-		};
+		CryptoF.Lock(Contents, key);
 
 	/// <summary>
 	/// Lock this object.
@@ -40,10 +32,7 @@ public sealed class Lockable<T>(T contents) : Lockable
 	/// <param name="key">Encryption key.</param>
 	/// <returns>Locked box.</returns>
 	public Result<Locked<T>> Lock(string key) =>
-		R.Try(
-			() => new Locked<T>(Contents, key),
-			e => R.Fail(nameof(Lockable<>), nameof(Lock), e)
-		);
+		CryptoF.Lock(Contents, key);
 }
 
 /// <summary>

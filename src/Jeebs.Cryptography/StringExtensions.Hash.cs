@@ -33,6 +33,6 @@ public static partial class StringExtensions
 				CryptoF.Hash(@this, bytes).Map(Convert.ToBase64String),
 
 			_ =>
-				R.Fail(nameof(StringExtensions), nameof(Hash), "Null or empty string.")
+				R.Fail(nameof(StringExtensions), nameof(Hash), "Cannot hash a null or empty string.")
 		};
 }

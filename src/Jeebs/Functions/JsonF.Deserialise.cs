@@ -23,7 +23,7 @@ public static partial class JsonF
 		// Check for null string
 		if (string.IsNullOrWhiteSpace(str) || string.Equals(str, Empty, StringComparison.Ordinal))
 		{
-			return fail("Cannot deserialise a null or empty string to JSON.");
+			return fail("Cannot deserialise a null or empty string.");
 		}
 
 		// Attempt to deserialise JSON

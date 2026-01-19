@@ -11,23 +11,29 @@ public static partial class CryptoF
 	/// Generate an 8-word passphrase.
 	/// </summary>
 	/// <returns>Passphrase.</returns>
-	public static string GeneratePassphrase() =>
-		Rnd.StringF.Passphrase();
+	public static Result<string> GeneratePassphrase() =>
+		R.Try(
+			Rnd.StringF.Passphrase,
+			e => R.Fail(nameof(CryptoF), nameof(GeneratePassphrase), e)
+		);
 
 	/// <summary>
-	/// Generate an 8-word passphrase.
+	/// Generate a passphrase.
 	/// </summary>
-	/// <param name="numberOfWords">The number of words in the passphrase (minimum: 5).</param>
+	/// <param name="numberOfWords">The number of words in the passphrase (minimum: 3).</param>
 	/// <returns>Passphrase.</returns>
 	public static Result<string> GeneratePassphrase(int numberOfWords) =>
 		numberOfWords switch
 		{
-			>= 5 =>
-				R.Try(Rnd.StringF.Passphrase, e => R.Fail(nameof(CryptoF), nameof(GeneratePassphrase), e)),
+			>= 3 =>
+				R.Try(
+					() => Rnd.StringF.Passphrase(numberOfWords),
+					e => R.Fail(nameof(CryptoF), nameof(GeneratePassphrase), e)
+				),
 
 			_ =>
 				R.Fail(nameof(CryptoF), nameof(GeneratePassphrase),
-					"Cryptographically secure passphrases must contain at least five words ({Number} requested).", numberOfWords
+					"Cryptographically secure passphrases must contain at least three words ({Number} requested).", numberOfWords
 				)
 		};
 }

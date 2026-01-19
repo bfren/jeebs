@@ -1,12 +1,9 @@
 // Jeebs Rapid Application Development
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
-using System;
-using System.Security.Cryptography;
-using System.Text;
+using Jeebs.Cryptography.Functions;
 using Jeebs.Functions;
 using Sodium;
-using Sodium.Exceptions;
 
 namespace Jeebs.Cryptography;
 
@@ -38,58 +35,29 @@ public sealed class Locked<T>
 	public Locked() =>
 		(Salt, Nonce) = (SodiumCore.GetRandomBytes(16), SecretBox.GenerateNonce());
 
-	internal Locked(T contents, byte[] key) : this() =>
-		EncryptedContents = JsonF.Serialise(contents)
-			.Discard()
-			.Map(x => SecretBox.Create(x, Nonce, key));
+	/// <summary>
+	/// Internal creation only.
+	/// </summary>
+	/// <param name="json">JSON-encoded contents to encrypt.</param>
+	/// <param name="key">Encryption key.</param>
+	internal Locked(string json, byte[] key) : this() =>
+		EncryptedContents = SecretBox.Create(json, Nonce, key);
 
-	internal Locked(T contents, string key) : this() =>
-		EncryptedContents = JsonF.Serialise(contents)
-			.Discard()
-			.Map(x => SecretBox.Create(x, Nonce, HashKey(key)));
+	/// <summary>
+	/// Internal creation only.
+	/// </summary>
+	/// <param name="json">JSON-encoded contents to encrypt.</param>
+	/// <param name="key">Encryption key.</param>
+	internal Locked(string json, string key) : this() =>
+		EncryptedContents = SecretBox.Create(json, Nonce, HashKey(key));
 
 	/// <summary>
 	/// Unlock this box and decrypt contents.
 	/// </summary>
 	/// <param name="key">Encryption Key.</param>
 	/// <result>Unlocked box.</result>
-	public Result<Lockable<T>> Unlock(byte[] key)
-	{
-		static Result<Lockable<T>> fail(string message, params object?[] args) =>
-			R.Fail(nameof(Locked<>), nameof(Unlock), message, args);
-
-		return EncryptedContents.Match(
-			none: () => fail("There are no encrypted contents to unlock."),
-			some: x =>
-			{
-				try
-				{
-					// Open encrypted contents
-					var secret = SecretBox.Open(x, Nonce, key);
-
-					// Deserialise contents and return
-					return JsonF.Deserialise<T>(Encoding.UTF8.GetString(secret))
-						.Map(x => new Lockable<T>(x));
-				}
-				catch (KeyOutOfRangeException ex)
-				{
-					return fail("Invalid key: {Exception}.", ex);
-				}
-				catch (NonceOutOfRangeException ex)
-				{
-					return fail("Invalid nonce: {Exception}.", ex);
-				}
-				catch (CryptographicException ex)
-				{
-					return fail("Incorrect key or nonce: {Exception}.", ex);
-				}
-				catch (Exception ex)
-				{
-					return R.Fail(nameof(Locked<>), nameof(Unlock), ex);
-				}
-			}
-		);
-	}
+	public Result<Lockable<T>> Unlock(byte[] key) =>
+		CryptoF.Unlock(this, key);
 
 	/// <summary>
 	/// Unlock this box and decrypt contents.
@@ -97,7 +65,7 @@ public sealed class Locked<T>
 	/// <param name="key">Encryption Key.</param>
 	/// <result>Unlocked box.</result>
 	public Result<Lockable<T>> Unlock(string key) =>
-		Unlock(HashKey(key));
+		CryptoF.Unlock(this, HashKey(key));
 
 	/// <summary>
 	/// Serialise this Locked box as JSON.
