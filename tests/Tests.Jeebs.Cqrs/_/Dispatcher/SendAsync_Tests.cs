@@ -1,7 +1,6 @@
 // Jeebs Unit Tests
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
-using Jeebs.Cqrs.Messages;
 using Jeebs.Logging;
 
 namespace Jeebs.Cqrs.Dispatcher_Tests;
@@ -11,7 +10,7 @@ public class SendAsync_Tests
 	public class With_Command
 	{
 		[Fact]
-		public async Task Unregistered_Handler_Returns_None_With_UnableToGetCommandHandlerMsg()
+		public async Task Unregistered_Handler_Returns_Fail()
 		{
 			// Arrange
 			var provider = Substitute.For<IServiceProvider>();
@@ -24,12 +23,8 @@ public class SendAsync_Tests
 			var r1 = await dispatcher.SendAsync(command);
 
 			// Assert
-			var n0 = r0.AssertNone();
-			var m0 = Assert.IsAssignableFrom<UnableToGetCommandHandlerMsg>(n0);
-			Assert.Equal(typeof(TestCommand), m0.Value);
-			var n1 = r1.AssertNone();
-			var m1 = Assert.IsAssignableFrom<UnableToGetCommandHandlerMsg>(n1);
-			Assert.Equal(typeof(TestCommand), m1.Value);
+			_ = r0.AssertFail("Unable to get command handler {Type}.", typeof(TestCommand));
+			_ = r0.AssertFail("Unable to get command handler {Type}.", typeof(TestCommand));
 		}
 
 		[Fact]
@@ -57,7 +52,7 @@ public class SendAsync_Tests
 	public class With_Query
 	{
 		[Fact]
-		public async Task Unregistered_Handler_Returns_None_With_UnableToGetQueryHandlerMsg()
+		public async Task Unregistered_Handler_Returns_Fail()
 		{
 			// Arrange
 			var provider = Substitute.For<IServiceProvider>();
@@ -70,12 +65,8 @@ public class SendAsync_Tests
 			var r1 = await dispatcher.SendAsync(query);
 
 			// Assert
-			var n0 = r0.AssertNone();
-			var m0 = Assert.IsAssignableFrom<UnableToGetQueryHandlerMsg>(n0);
-			Assert.Equal(typeof(TestQuery), m0.Value);
-			var n1 = r1.AssertNone();
-			var m1 = Assert.IsAssignableFrom<UnableToGetQueryHandlerMsg>(n1);
-			Assert.Equal(typeof(TestQuery), m1.Value);
+			_ = r0.AssertFail("Unable to get query handler {Type}.", typeof(TestQuery));
+			_ = r1.AssertFail("Unable to get query handler {Type}.", typeof(TestQuery));
 		}
 
 		[Fact]
