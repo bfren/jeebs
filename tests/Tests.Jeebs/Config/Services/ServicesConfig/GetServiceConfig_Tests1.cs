@@ -2,23 +2,24 @@
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using Jeebs.Config.Services.Seq;
+using Jeebs.Config.Services.Slack;
 
 namespace Jeebs.Config.Services.ServicesConfig_Tests;
 
 public partial class GetServiceConfig_Tests
 {
 	[Fact]
-	public void Splits_Definition_Unknown_Service_Type_Returns_Fail()
+	public void Splits_Definition_Unknown_Service_Returns_Fail()
 	{
 		// Arrange
 		var config = new ServicesConfig();
-		var type = Rnd.Str;
+		var name = Rnd.Str;
 
 		// Act
-		var result = config.GetServiceConfig($"{type}.{Rnd.Str}");
+		var result = config.GetServiceConfig(c => c.Slack, name);
 
 		// Assert
-		result.AssertFail("Unsupported service type: {Type}.", type);
+		result.AssertFail("No {Type} service named '{Name}' is configured.", nameof(SlackConfig), name);
 	}
 
 	[Fact]
@@ -36,7 +37,7 @@ public partial class GetServiceConfig_Tests
 		config.Seq.Add(name, service);
 
 		// Act
-		var result = config.GetServiceConfig($"seq.{name}");
+		var result = config.GetServiceConfig(c => c.Seq, name);
 
 		// Assert
 		Assert.Equal(service, result);
