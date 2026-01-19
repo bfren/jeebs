@@ -22,7 +22,7 @@ internal sealed class DateTimeJsonConverter : JsonConverter<DateTime>
 	public override DateTime Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options) =>
 		M.ParseDateTime(reader.GetString()).Match(
 			none: DateTime.MinValue.ToUniversalTime,
-			some: x => x.ToUniversalTime()
+			some: x => new DateTime(x.Ticks, DateTimeKind.Utc)
 		);
 
 	/// <summary>

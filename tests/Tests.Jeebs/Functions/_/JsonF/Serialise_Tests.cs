@@ -29,7 +29,14 @@ public class Serialise_Tests
 		var v2 = Rnd.Int;
 		var v3 = Rnd.DateTime;
 		var v4 = Rnd.Flip;
-		var input = new Test { Id = new(v0), Str = v1, Num = v2, DT = v3, Mbe = v4 };
+		var input = new Test
+		{
+			Id = TestId.Wrap(v0),
+			Str = v1,
+			Num = v2,
+			DT = v3,
+			Mbe = v4
+		};
 		var expected =
 			"{" +
 			$"\"id\":\"{v0}\"," +

@@ -2,7 +2,6 @@
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using System.Collections;
-using StrongId;
 
 namespace Jeebs.Functions.JsonF_Tests;
 
@@ -58,7 +57,7 @@ public class Deserialise_Tests
 			"}";
 		var expected = new Test
 		{
-			Id = new(v0),
+			Id = TestId.Wrap(v0),
 			Str = v1,
 			Num = v2,
 			DT = new(v3.Year, v3.Month, v3.Day, v3.Hour, v3.Minute, v3.Second, v3.Kind),
@@ -87,12 +86,7 @@ public class Deserialise_Tests
 		public string? Empty { get; set; }
 	}
 
-	public sealed record class TestId : LongId
-	{
-		public TestId() { }
-
-		public TestId(long value) : base(value) { }
-	}
+	public sealed record class TestId : LongId<TestId>;
 
 	public sealed class TestComparer : IEqualityComparer<Test>, IEqualityComparer
 	{

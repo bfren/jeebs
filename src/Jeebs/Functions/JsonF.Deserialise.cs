@@ -21,7 +21,7 @@ public static partial class JsonF
 			R.Fail(nameof(JsonF), nameof(Deserialise), message);
 
 		// Check for null string
-		if (string.IsNullOrWhiteSpace(str))
+		if (string.IsNullOrWhiteSpace(str) || string.Equals(str, Empty, StringComparison.Ordinal))
 		{
 			return fail("Cannot deserialise a null or empty string to JSON.");
 		}

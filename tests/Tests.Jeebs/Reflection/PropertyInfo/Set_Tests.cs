@@ -5,33 +5,31 @@ namespace Jeebs.Reflection.PropertyInfo_Tests;
 
 public class Set_Tests
 {
-	[Theory]
-	[InlineData(null)]
-	public void Set_WithNullObject_ThrowsArgumentNullException(Foo? obj)
+	[Fact]
+	public void Set_WithNullObject_ThrowsArgumentNullException()
 	{
 		// Arrange
 		var info = new PropertyInfo<Foo, string>(nameof(Foo.Bar));
 
 		// Act
-		var result = void () => info.Set(obj!, Rnd.Str);
+		var result = void () => info.Set(null!, Rnd.Str);
 
 		// Assert
 		Assert.Throws<ArgumentNullException>(result);
 	}
 
-	[Theory]
-	[InlineData(null)]
-	public void Set_WithNullValue_ThrowsArgumentNullException(string? value)
+	[Fact]
+	public void Set_NullReferenceType_SetsToNull()
 	{
 		// Arrange
-		var foo = new Foo();
+		var foo = new Foo { Bar = Rnd.Str };
 		var info = new PropertyInfo<Foo, string>(nameof(Foo.Bar));
 
 		// Act
-		var result = void () => info.Set(foo, value!);
+		info.Set(foo, null!);
 
 		// Assert
-		Assert.Throws<ArgumentNullException>(result);
+		Assert.Null(foo.Bar);
 	}
 
 	[Fact]
@@ -52,5 +50,7 @@ public class Set_Tests
 	public sealed class Foo
 	{
 		public string Bar { get; set; } = string.Empty;
+
+		public int Baz { get; set; }
 	}
 }

@@ -2,7 +2,6 @@
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using System;
-using System.Diagnostics.CodeAnalysis;
 using System.Reflection;
 
 namespace Jeebs.Reflection;
@@ -60,7 +59,7 @@ public class PropertyInfo<TObject, TProperty>
 	/// </summary>
 	/// <param name="obj">Object.</param>
 	/// <returns>Property value.</returns>
-	public Maybe<TProperty> Get([DisallowNull] TObject obj)
+	public Maybe<TProperty> Get(TObject obj)
 	{
 		if (obj is not null && Info.GetValue(obj, null) is TProperty value)
 		{
@@ -75,6 +74,9 @@ public class PropertyInfo<TObject, TProperty>
 	/// </summary>
 	/// <param name="obj">Object.</param>
 	/// <param name="value">Value.</param>
-	public void Set([DisallowNull] TObject obj, [DisallowNull] TProperty value) =>
+	public void Set(TObject obj, TProperty value)
+	{
+		ArgumentNullException.ThrowIfNull(obj, nameof(obj));
 		Info.SetValue(obj, value);
+	}
 }

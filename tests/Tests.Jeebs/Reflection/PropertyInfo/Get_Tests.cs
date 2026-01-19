@@ -20,31 +20,30 @@ public class Get_Tests
 	}
 
 	[Fact]
-	public void WithPropertyNotSet_ThrowsInvalidOperationException()
+	public void WithPropertyNotSet_ReturnsNone()
 	{
 		// Arrange
 		var foo = new Foo();
 		var info = new PropertyInfo<Foo, string>(nameof(Foo.Bar));
 
 		// Act
-		var result = void () => info.Get(foo);
+		var result = info.Get(foo);
 
 		// Assert
-		Assert.Throws<InvalidOperationException>(result);
+		result.AssertNone();
 	}
 
-	[Theory]
-	[InlineData(null)]
-	public void FromNullObject_ThrowsArgumentNullException(Foo? obj)
+	[Fact]
+	public void FromNullObject_ReturnsNone()
 	{
 		// Arrange
 		var info = new PropertyInfo<Foo, string>(nameof(Foo.Bar));
 
 		// Act
-		var result = void () => info.Get(obj!);
+		var result = info.Get(null!);
 
 		// Assert
-		Assert.Throws<ArgumentNullException>(result);
+		result.AssertNone();
 	}
 
 	public sealed class Foo

@@ -16,7 +16,7 @@ public static partial class JsonF
 	/// <summary>
 	/// Empty JSON string.
 	/// </summary>
-	public static string Empty { get; } = "\"\"";
+	public static string Empty { get; } = "{}";
 
 	/// <summary>
 	/// Default JsonSerializerOptions.

@@ -21,7 +21,7 @@ public class ReadJson_Tests
 	}
 
 	[Fact]
-	public void Deserialise_Null_Returns_Object_With_Empty_Value()
+	public void Deserialise_Null_Returns_Fail()
 	{
 		// Arrange
 		var json = JsonF.Empty;
@@ -30,8 +30,7 @@ public class ReadJson_Tests
 		var result = JsonF.Deserialise<EnumeratedTest0>(json);
 
 		// Assert
-		var ok = result.AssertOk();
-		Assert.Equal(string.Empty, ok.ToString());
+		result.AssertFail("Cannot deserialise a null or empty string to JSON.");
 	}
 
 	[Fact]
