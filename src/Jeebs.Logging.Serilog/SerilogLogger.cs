@@ -3,6 +3,7 @@
 
 using System;
 using System.Globalization;
+using Wrap.Logging;
 using S = Serilog;
 using SE = Serilog.Events;
 
@@ -58,35 +59,35 @@ public class SerilogLogger : Log
 		logger.IsEnabled((SE.LogEventLevel)level);
 
 	/// <inheritdoc/>
-	public override void Vrb(string message, params object[] args) =>
+	public override void Vrb(string message, params object?[] args) =>
 		logger.Verbose(Prefix(message), args);
 
 	/// <inheritdoc/>
-	public override void Dbg(string message, params object[] args) =>
+	public override void Dbg(string message, params object?[] args) =>
 		logger.Debug(Prefix(message), args);
 
 	/// <inheritdoc/>
-	public override void Inf(string message, params object[] args) =>
+	public override void Inf(string message, params object?[] args) =>
 		logger.Information(Prefix(message), args);
 
 	/// <inheritdoc/>
-	public override void Wrn(string message, params object[] args) =>
+	public override void Wrn(string message, params object?[] args) =>
 		logger.Warning(Prefix(message), args);
 
 	/// <inheritdoc/>
-	public override void Err(string message, params object[] args) =>
+	public override void Err(string message, params object?[] args) =>
 		logger.Error(Prefix(message), args);
 
 	/// <inheritdoc/>
-	public override void Err(Exception ex, string message, params object[] args) =>
+	public override void Err(Exception ex, string message, params object?[] args) =>
 		logger.Error(ex, Prefix(message), args);
 
 	/// <inheritdoc/>
-	public override void Ftl(string message, params object[] args) =>
+	public override void Ftl(string message, params object?[] args) =>
 		logger.Fatal(Prefix(message), args);
 
 	/// <inheritdoc/>
-	public override void Ftl(Exception ex, string message, params object[] args) =>
+	public override void Ftl(Exception ex, string message, params object?[] args) =>
 		logger.Fatal(ex, Prefix(message), args);
 
 	/// <inheritdoc/>
