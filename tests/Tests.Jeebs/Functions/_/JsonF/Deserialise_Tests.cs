@@ -20,7 +20,7 @@ public class Deserialise_Tests
 		var result = JsonF.Deserialise<Test>(input);
 
 		// Assert
-		result.AssertFail("Cannot deserialise a null or empty string to JSON.");
+		result.AssertFail("Cannot deserialise a null or empty string.");
 	}
 
 	[Fact]
