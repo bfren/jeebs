@@ -1,21 +1,18 @@
-﻿// Jeebs Unit Tests
+// Jeebs Unit Tests
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
-
-using Jeebs.Cryptography.Functions;
 
 namespace Jeebs.Cryptography.StringExtensions_Tests;
 
 public partial class Decrypt_Tests
 {
-	[Theory]
-	[InlineData(null)]
-	public void Without_Type_Null_Input_Byte_Key_Returns_Empty(string input)
+	[Fact]
+	public void Without_Type_Null_Input_Byte_Key_Returns_Empty()
 	{
 		// Arrange
-		var key = CryptoF.GenerateKey().UnsafeUnwrap();
+		var key = Rnd.ByteF.Get(32);
 
 		// Act
-		var result = input.Decrypt(key);
+		var result = StringExtensions.Decrypt(null!, key);
 
 		// Assert
 		Assert.Equal(string.Empty, result);
@@ -25,7 +22,7 @@ public partial class Decrypt_Tests
 	public void Without_Type_Invalid_Json_Input_Byte_Key_Returns_Empty()
 	{
 		// Arrange
-		var key = CryptoF.GenerateKey().UnsafeUnwrap();
+		var key = Rnd.ByteF.Get(32);
 		var json = Rnd.Str;
 
 		// Act
@@ -41,7 +38,7 @@ public partial class Decrypt_Tests
 		// Arrange
 
 		// Act
-		var result = defaultInputStringEncryptedWithByteKey.Decrypt(Array.Empty<byte>());
+		var result = defaultInputStringEncryptedWithByteKey.Decrypt([]);
 
 		// Assert
 		Assert.Equal(string.Empty, result);
@@ -51,7 +48,7 @@ public partial class Decrypt_Tests
 	public void Without_Type_Incorrect_Byte_Key_Returns_Empty()
 	{
 		// Arrange
-		var key = CryptoF.GenerateKey().UnsafeUnwrap();
+		var key = Rnd.ByteF.Get(32);
 
 		// Act
 		var result = defaultInputStringEncryptedWithByteKey.Decrypt(key);
@@ -64,7 +61,7 @@ public partial class Decrypt_Tests
 	public void Without_Type_Incorrect_Json_Input_Byte_Key_Returns_Empty()
 	{
 		// Arrange
-		var key = CryptoF.GenerateKey().UnsafeUnwrap();
+		var key = Rnd.ByteF.Get(32);
 		const string json = /*lang=json,strict*/ "{\"foo\":\"bar\"}";
 
 		// Act

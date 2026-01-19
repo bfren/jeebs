@@ -1,7 +1,5 @@
-﻿// Jeebs Unit Tests
+// Jeebs Unit Tests
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
-
-using Jeebs.Cryptography.Functions;
 
 namespace Jeebs.Cryptography.Locked_Tests;
 
@@ -25,7 +23,7 @@ public class Constructor_Tests
 	{
 		// Arrange
 		var value = Rnd.Str;
-		var key = CryptoF.GenerateKey().UnsafeUnwrap();
+		var key = Rnd.ByteF.Get(32);
 
 		// Act
 		var result = new Locked<string>(value, key);

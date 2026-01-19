@@ -1,8 +1,6 @@
 // Jeebs Unit Tests
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
-using static Jeebs.Cryptography.Functions.CryptoF.M;
-
 namespace Jeebs.Cryptography.Functions.CryptoF_Tests;
 
 public class GeneratePassphrase_Tests
@@ -12,9 +10,7 @@ public class GeneratePassphrase_Tests
 	[InlineData(0)]
 	[InlineData(1)]
 	[InlineData(2)]
-	[InlineData(3)]
-	[InlineData(4)]
-	public void NumberOfWords_Less_Than_Five_Returns_None_With_CryptographicallySecurePassphrasesMustContainAtLeastFiveWordsMsg(int input)
+	public void NumberOfWords_Less_Than_Three_Returns_Fail(int input)
 	{
 		// Arrange
 
@@ -22,8 +18,7 @@ public class GeneratePassphrase_Tests
 		var result = CryptoF.GeneratePassphrase(input);
 
 		// Assert
-		var none = result.AssertNone().AssertType<CryptographicallySecurePassphrasesMustContainAtLeastFiveWordsMsg>();
-		Assert.Equal(input, none.Value);
+		result.AssertFail("Cryptographically secure passphrases must contain at least three words ({Number} requested).", input);
 	}
 
 	[Fact]
@@ -35,8 +30,8 @@ public class GeneratePassphrase_Tests
 		var result = CryptoF.GeneratePassphrase();
 
 		// Assert
-		var some = result.AssertSome().Split('-');
-		Assert.Equal(8, some.Length);
+		var ok = result.AssertOk();
+		Assert.Equal(8, ok.Split('-').Length);
 	}
 
 	[Theory]
@@ -51,8 +46,8 @@ public class GeneratePassphrase_Tests
 		var result = CryptoF.GeneratePassphrase(input);
 
 		// Assert
-		var some = result.AssertSome().Split('-');
-		Assert.Equal(input, some.Length);
+		var ok = result.AssertOk();
+		Assert.Equal(input, ok.Split('-').Length);
 	}
 
 	[Fact]
@@ -64,8 +59,8 @@ public class GeneratePassphrase_Tests
 		var result = CryptoF.GeneratePassphrase();
 
 		// Assert
-		var some = result.AssertSome();
-		Assert.NotEqual(some, some.ToLowerInvariant());
+		var ok = result.AssertOk();
+		Assert.NotEqual(ok, ok.ToLowerInvariant());
 	}
 
 	[Fact]
@@ -77,7 +72,7 @@ public class GeneratePassphrase_Tests
 		var result = CryptoF.GeneratePassphrase();
 
 		// Assert
-		var some = result.AssertSome();
-		Assert.Contains(some, x => char.IsNumber(x));
+		var ok = result.AssertOk();
+		Assert.Contains(ok, char.IsNumber);
 	}
 }

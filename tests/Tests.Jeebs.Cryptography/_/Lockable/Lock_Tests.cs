@@ -1,12 +1,24 @@
 // Jeebs Unit Tests
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
-using static Jeebs.Cryptography.Lockable.M;
-
 namespace Jeebs.Cryptography.Lockable_Tests;
 
 public class Lock_Tests
 {
+	[Fact]
+	public void Empty_Contents_Returns_Fail()
+	{
+		// Arrange
+		var box = new Lockable<string>(null!);
+		var key = Rnd.ByteF.Get(32);
+
+		// Act
+		var result = box.Lock(key);
+
+		// Assert
+		result.AssertFail("Contents cannot be null.");
+	}
+
 	[Fact]
 	public void Incorrect_Key_Length_Returns_None_With_InvalidKeyLengthMsg()
 	{
@@ -18,7 +30,7 @@ public class Lock_Tests
 		var result = box.Lock(key);
 
 		// Assert
-		result.AssertNone().AssertType<InvalidKeyLengthMsg>();
+		result.AssertFail("Key must be {Bytes} bytes long.", 32);
 	}
 
 	[Fact]
@@ -32,8 +44,8 @@ public class Lock_Tests
 		var result = box.Lock(key);
 
 		// Assert
-		var some = result.AssertSome();
-		Assert.NotNull(some.EncryptedContents);
+		var ok = result.AssertOk();
+		Assert.NotNull(ok.EncryptedContents);
 	}
 
 	[Fact]
@@ -47,6 +59,7 @@ public class Lock_Tests
 		var result = box.Lock(key);
 
 		// Assert
-		Assert.NotNull(result.EncryptedContents);
+		var ok = result.AssertOk();
+		Assert.NotNull(ok.EncryptedContents);
 	}
 }

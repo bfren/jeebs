@@ -3,6 +3,9 @@
     <RootNamespace>Jeebs.Cryptography</RootNamespace>
   </PropertyGroup>
   <ItemGroup>
+    <PackageReference Include="Sodium.Core" />
+  </ItemGroup>
+  <ItemGroup>
     <ProjectReference Include="..\..\src\Jeebs.Cryptography\Jeebs.Cryptography.csproj" />
     <ProjectReference Include="..\..\src\Jeebs\Jeebs.csproj" />
   </ItemGroup>

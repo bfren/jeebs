@@ -1,10 +1,6 @@
 // Jeebs Unit Tests
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
-using Jeebs.Cryptography.Functions;
-using static Jeebs.Cryptography.Locked.M;
-using static Jeebs.Functions.JsonF.M;
-
 namespace Jeebs.Cryptography.StringExtensions_Tests;
 
 public partial class Decrypt_Tests
@@ -13,32 +9,31 @@ public partial class Decrypt_Tests
 	private readonly string defaultInputStringEncryptedWithByteKey = /*lang=json,strict*/ "{\"salt\":\"EyWHXBL0TyCMvlLXAd5Ecw==\",\"nonce\":\"KrErRaHfQwWdMif7iuO6bMICMljBkdts\",\"encryptedContents\":\"9PlILzx6y4HqaDhHO9ioqW760nqQ+VXqvhlSNd/u89qqG2DS\"}";
 	private readonly byte[] defaultByteKey = Convert.FromBase64String("nXhxz39cHyPx3aZmjeXtNEFTRCzjhVlW+6oVPUPtddA=");
 
-	[Theory]
-	[InlineData(null)]
-	public void Null_Input_Byte_Key_Returns_None(string input)
+	[Fact]
+	public void Null_Input_Byte_Key_Returns_None()
 	{
 		// Arrange
-		var key = CryptoF.GenerateKey().UnsafeUnwrap();
+		var key = Rnd.ByteF.Get(32);
 
 		// Act
-		var result = input.Decrypt<int>(key);
+		var result = StringExtensions.Decrypt<int>(null!, key);
 
 		// Assert
-		result.AssertNone().AssertType<DeserialisingNullOrEmptyStringMsg>();
+		_ = result.AssertFail("Cannot deserialise a null or empty string.");
 	}
 
 	[Fact]
 	public void Invalid_Json_Input_Byte_Key_Returns_None()
 	{
 		// Arrange
-		var key = CryptoF.GenerateKey().UnsafeUnwrap();
+		var key = Rnd.ByteF.Get(32);
 		var json = Rnd.Str;
 
 		// Act
 		var result = json.Decrypt<int>(key);
 
 		// Assert
-		result.AssertNone().AssertType<DeserialiseExceptionMsg>();
+		_ = result.AssertFail();
 	}
 
 	[Fact]
@@ -47,37 +42,37 @@ public partial class Decrypt_Tests
 		// Arrange
 
 		// Act
-		var result = defaultInputStringEncryptedWithByteKey.Decrypt<int>(Array.Empty<byte>());
+		var result = defaultInputStringEncryptedWithByteKey.Decrypt<int>([]);
 
 		// Assert
-		result.AssertNone().AssertType<InvalidKeyExceptionMsg>();
+		_ = result.AssertFail("Invalid key.");
 	}
 
 	[Fact]
 	public void Incorrect_Byte_Key_Returns_None()
 	{
 		// Arrange
-		var key = CryptoF.GenerateKey().UnsafeUnwrap();
+		var key = Rnd.ByteF.Get(32);
 
 		// Act
 		var result = defaultInputStringEncryptedWithByteKey.Decrypt<string>(key);
 
 		// Assert
-		result.AssertNone().AssertType<IncorrectKeyOrNonceExceptionMsg>();
+		result.AssertFail("Incorrect key or nonce.");
 	}
 
 	[Fact]
 	public void Incorrect_Json_Input_Byte_Key_Returns_None()
 	{
 		// Arrange
-		var key = CryptoF.GenerateKey().UnsafeUnwrap();
+		var key = Rnd.ByteF.Get(32);
 		const string json = /*lang=json,strict*/ "{\"foo\":\"bar\"}";
 
 		// Act
 		var result = json.Decrypt<int>(key);
 
 		// Assert
-		result.AssertNone().AssertType<UnlockWhenEncryptedContentsIsNoneMsg>();
+		result.AssertFail("There are no encrypted contents to unlock.");
 	}
 
 	[Fact]

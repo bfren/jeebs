@@ -1,9 +1,6 @@
 // Jeebs Unit Tests
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
-using static Jeebs.Cryptography.Locked.M;
-using static Jeebs.Functions.JsonF.M;
-
 namespace Jeebs.Cryptography.StringExtensions_Tests;
 
 public partial class Decrypt_Tests
@@ -11,18 +8,17 @@ public partial class Decrypt_Tests
 	private readonly string defaultInputStringEncryptedWithStringKey = /*lang=json,strict*/ "{\"value\":{},\"encryptedContents\":\"RKDdTvdBrxf28cMuuBF+mKkVkYEhJSgwnCnTprGtHeeIMr56\",\"salt\":\"kJ3HSzbuEssDYpGmK9ix1A==\",\"nonce\":\"ehg2foprhsqf7UTrBRpU0cjWvkK0sn/f\"}";
 	private readonly string defaultStringKey = "nXhxz39cHyPx3a";
 
-	[Theory]
-	[InlineData(null)]
-	public void Null_Input_String_Key_Returns_None(string input)
+	[Fact]
+	public void Null_Input_String_Key_Returns_None()
 	{
 		// Arrange
 		var key = Rnd.Str;
 
 		// Act
-		var result = input.Decrypt<int>(key);
+		var result = StringExtensions.Decrypt<int>(null!, key);
 
 		// Assert
-		result.AssertNone().AssertType<DeserialisingNullOrEmptyStringMsg>();
+		_ = result.AssertFail("Cannot deserialise a null or empty string.");
 	}
 
 	[Fact]
@@ -36,7 +32,7 @@ public partial class Decrypt_Tests
 		var result = json.Decrypt<int>(key);
 
 		// Assert
-		result.AssertNone().AssertType<DeserialiseExceptionMsg>();
+		_ = result.AssertFail();
 	}
 
 	[Fact]
@@ -48,7 +44,7 @@ public partial class Decrypt_Tests
 		var result = defaultInputStringEncryptedWithStringKey.Decrypt<int>(string.Empty);
 
 		// Assert
-		result.AssertNone().AssertType<IncorrectKeyOrNonceExceptionMsg>();
+		result.AssertFail("Incorrect key or nonce.");
 	}
 
 	[Fact]
@@ -61,7 +57,7 @@ public partial class Decrypt_Tests
 		var result = defaultInputStringEncryptedWithStringKey.Decrypt<string>(key);
 
 		// Assert
-		result.AssertNone().AssertType<IncorrectKeyOrNonceExceptionMsg>();
+		result.AssertFail("Incorrect key or nonce.");
 	}
 
 	[Fact]
@@ -75,7 +71,7 @@ public partial class Decrypt_Tests
 		var result = json.Decrypt<int>(key);
 
 		// Assert
-		result.AssertNone().AssertType<UnlockWhenEncryptedContentsIsNoneMsg>();
+		result.AssertFail("There are no encrypted contents to unlock.");
 	}
 
 	[Fact]
