@@ -3,6 +3,7 @@
 
 using Jeebs.Calendar.Models;
 using Jeebs.Collections;
+using Jeebs.Functions;
 
 namespace Jeebs.Calendar.JsonCalendar_Tests;
 
@@ -65,7 +66,7 @@ public class Constructor_Tests
 		var e0 = new EventModel(Rnd.DateTime, Rnd.DateTime, false, Rnd.Str, Rnd.Str, Rnd.Str, false);
 		var e1 = new EventModel(Rnd.DateTime, Rnd.DateTime, false, Rnd.Str, Rnd.Str, Rnd.Str, false);
 		var e2 = new EventModel(Rnd.DateTime, Rnd.DateTime, false, Rnd.Str, Rnd.Str, Rnd.Str, false);
-		var events = ImmutableList.Create(e0, e1, e2);
+		var events = ListF.Create(e0, e1, e2);
 		var calendar = new CalendarModel(events, Rnd.DateTime);
 
 		// Act

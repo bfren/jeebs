@@ -3,7 +3,7 @@
 
 using System.Text;
 using Jeebs.Calendar.Models;
-using Jeebs.Collections;
+using Jeebs.Functions;
 
 namespace Jeebs.Calendar.VCalendar_Tests;
 
@@ -15,7 +15,7 @@ public class ToString_Tests
 		// Arrange
 		var e0 = new EventModel(Rnd.DateTime, Rnd.DateTime, false, Rnd.Str, Rnd.Str, Rnd.Str, false);
 		var e1 = new EventModel(Rnd.DateTime, Rnd.DateTime, false, Rnd.Str, Rnd.Str, Rnd.Str, true);
-		var events = ImmutableList.Create(e0, e1);
+		var events = ListF.Create(e0, e1);
 		var lastModified = Rnd.DateTime;
 		var lastModifiedStr = VCalendar.Format(lastModified);
 		var calendar = new CalendarModel(events, lastModified);
