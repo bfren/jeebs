@@ -1,8 +1,8 @@
 // Jeebs Rapid Application Development
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
-using Jeebs.Messages;
 using Serilog.Events;
+using Wrap.Logging;
 
 namespace Jeebs.Logging.Serilog.Functions;
 
@@ -12,7 +12,7 @@ public static partial class LevelF
 	/// Convert a <see cref="LogLevel"/> to a <see cref="LogEventLevel"/>.
 	/// </summary>
 	/// <param name="level"></param>
-	public static Maybe<LogEventLevel> ConvertToSerilogLevel(LogLevel level) =>
+	public static Result<LogEventLevel> ConvertToSerilogLevel(LogLevel level) =>
 		level switch
 		{
 			LogLevel.Verbose =>
@@ -33,17 +33,7 @@ public static partial class LevelF
 			LogLevel.Fatal =>
 				LogEventLevel.Fatal,
 
-			LogLevel.Unknown =>
-				LogEventLevel.Information,
-
 			_ =>
-				F.None<LogEventLevel>(new M.UnknownLogLevelMsg(level))
+				R.Fail<LogEventLevel>("Unknown LogLevel: {LogLevel}.", level)
 		};
-
-	public static partial class M
-	{
-		/// <summary>Unknown LogLevel value</summary>
-		/// <param name="Value"></param>
-		public sealed record class UnknownLogLevelMsg(LogLevel Value) : WithValueMsg<LogLevel>;
-	}
 }

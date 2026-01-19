@@ -18,19 +18,18 @@ public sealed class ConsoleLoggingProvider : ILoggingProvider
 		"console";
 
 	/// <inheritdoc/>
-	public void Configure(LoggerConfiguration logger, JeebsConfig jeebs, string name, LogEventLevel minimum)
-	{
-		var config = jeebs.Services.GetServiceConfig(c => c.Console, name);
-
-		if (config.AddPrefix)
+	public void Configure(LoggerConfiguration logger, JeebsConfig jeebs, string name, LogEventLevel minimum) =>
+		jeebs.Services.GetServiceConfig(c => c.Console, name).IfOk(c =>
 		{
-			SerilogLogger.ConsoleMessagePrefix = jeebs.App.FullName;
-		}
+			if (c.AddPrefix)
+			{
+				SerilogLogger.ConsoleMessagePrefix = jeebs.App.FullName;
+			}
 
-		_ = logger.WriteTo.Console(
-			restrictedToMinimumLevel: minimum,
-			outputTemplate: config.Template ?? "[{Timestamp:HH:mm:ss} {Level:u3}] {Message:lj} | {SourceContext}{NewLine}{Exception}",
-			formatProvider: CultureInfo.InvariantCulture
-		);
-	}
+			_ = logger.WriteTo.Console(
+				restrictedToMinimumLevel: minimum,
+				outputTemplate: c.Template ?? "[{Timestamp:HH:mm:ss} {Level:u3}] {Message:lj} | {SourceContext}{NewLine}{Exception}",
+				formatProvider: CultureInfo.InvariantCulture
+			);
+		});
 }

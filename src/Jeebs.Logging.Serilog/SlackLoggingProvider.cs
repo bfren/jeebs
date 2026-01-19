@@ -19,13 +19,14 @@ public sealed class SlackLoggingProvider : ILoggingProvider
 		"slack";
 
 	/// <inheritdoc/>
-	public void Configure(LoggerConfiguration logger, JeebsConfig jeebs, string name, LogEventLevel minimum)
-	{
-		var config = jeebs.Services.GetServiceConfig(c => c.Slack, name);
-		_ = logger.WriteTo.Async(a => a.Slack(
-			webhookUrl: config.Webhook,
-			restrictedToMinimumLevel: minimum,
-			formatProvider: CultureInfo.InvariantCulture
-		));
-	}
+	public void Configure(LoggerConfiguration logger, JeebsConfig jeebs, string name, LogEventLevel minimum) =>
+		jeebs.Services.GetServiceConfig(c => c.Slack, name).IfOk(c =>
+			_ = logger.WriteTo.Async(
+				a => a.Slack(
+					webhookUrl: c.Webhook,
+					restrictedToMinimumLevel: minimum,
+					formatProvider: CultureInfo.InvariantCulture
+				)
+			)
+		);
 }

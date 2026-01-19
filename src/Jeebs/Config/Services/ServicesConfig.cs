@@ -37,53 +37,27 @@ public sealed record class ServicesConfig : IOptions<ServicesConfig>
 		this;
 
 	/// <summary>
-	/// Get a service configuration by definition.
-	/// </summary>
-	/// <param name="definition">Configuration definition - in format <c>service_type.service_name</c>.</param>
-	/// <returns>Service configuration.</returns>
-	public Result<IServiceConfig> GetServiceConfig(string definition) =>
-		SplitDefinition(definition).Match(
-			none: () => R.Fail(nameof(ServicesConfig), nameof(GetServiceConfig),
-				"Invalid service definition: '{Definition}'.", definition
-			),
-			some: x => x switch
-			{
-				("console", string name) =>
-					GetServiceConfig(c => c.Console, name),
-
-				("seq", string name) =>
-					GetServiceConfig(c => c.Seq, name),
-
-				("slack", string name) =>
-					GetServiceConfig(c => c.Slack, name),
-
-				(string type, _) =>
-					R.Fail(nameof(ServicesConfig), nameof(GetServiceConfig),
-						"Unsupported service type: {Type}.", type
-					)
-			}
-		);
-
-	/// <summary>
 	/// Get a named service configuration.
 	/// </summary>
 	/// <typeparam name="T">Service Config type</typeparam>
 	/// <param name="getCollection">The service collection to use.</param>
 	/// <param name="name">The name of the service to get.</param>
 	/// <returns>Service configuration.</returns>
-	public Result<IServiceConfig> GetServiceConfig<T>(Func<ServicesConfig, Dictionary<string, T>> getCollection, string name)
+	public Result<T> GetServiceConfig<T>(Func<ServicesConfig, Dictionary<string, T>> getCollection, string name)
 		where T : IServiceConfig, new() =>
 		getCollection(this).GetValueOrNone(name).Match(
-			none: () => new T(),
+			none: () => R.Fail(nameof(ServicesConfig), nameof(GetServiceConfig),
+				"No {Type} service named '{Name}' is configured.", typeof(T).Name, name
+			),
 			some: x => x.IsValid switch
 			{
+				true =>
+					R.Wrap(x),
+
 				false =>
 					R.Fail(nameof(ServicesConfig), nameof(GetServiceConfig),
 						"Definition of {Type} service named '{Name}' is invalid.", typeof(T).Name, name
-					),
-
-				true =>
-					R.Wrap((IServiceConfig)x)
+					)
 			}
 		);
 

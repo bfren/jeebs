@@ -13,6 +13,7 @@ using Jeebs.Logging.Serilog.Exceptions;
 using Jeebs.Logging.Serilog.Functions;
 using Serilog;
 using Serilog.Events;
+using Wrap.Logging;
 
 namespace Jeebs.Logging.Serilog;
 
@@ -26,7 +27,6 @@ public static class LoggerConfigurationExtensions
 	/// </summary>
 	/// <param name="this">LoggerConfiguration.</param>
 	/// <param name="jeebs">JeebsConfig.</param>
-	/// <exception cref="LoadFromJeebsConfigException"></exception>
 	public static void LoadFromJeebsConfig(this LoggerConfiguration @this, JeebsConfig jeebs)
 	{
 		// Set the application name
@@ -71,7 +71,7 @@ public static class LoggerConfigurationExtensions
 
 		return LevelF
 			.ConvertToSerilogLevel(min)
-			.Unwrap(r => throw new LoadFromJeebsConfigException(r));
+			.Unwrap(v => throw new LoadFromJeebsConfigException(v));
 	}
 
 	/// <summary>
@@ -105,15 +105,16 @@ public static class LoggerConfigurationExtensions
 		foreach (var (providerInfo, providerConfig) in enabledProviders)
 		{
 			// Get service definition
-			var (serviceType, serviceName) = ServicesConfig.SplitDefinition(providerInfo);
-
-			// Get hook minimum - default minimum will override this if it's higher
-			var providerMinimum = GetMinimum(providerConfig.Minimum, jeebs.Logging.Minimum);
-
-			// Configure provider
-			if (providers.TryGetValue(serviceType, out var provider))
+			if (ServicesConfig.SplitDefinition(providerInfo) is Some<(string type, string name)> x)
 			{
-				provider.Configure(serilog, jeebs, serviceName, providerMinimum);
+				// Get hook minimum - default minimum will override this if it's higher
+				var providerMinimum = GetMinimum(providerConfig.Minimum, jeebs.Logging.Minimum);
+
+				// Configure provider
+				if (providers.TryGetValue(x.Value.type, out var provider))
+				{
+					provider.Configure(serilog, jeebs, x.Value.name, providerMinimum);
+				}
 			}
 		}
 	}

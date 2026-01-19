@@ -18,14 +18,15 @@ public sealed class SeqLoggingProvider : ILoggingProvider
 		"seq";
 
 	/// <inheritdoc/>
-	public void Configure(LoggerConfiguration logger, JeebsConfig jeebs, string name, LogEventLevel minimum)
-	{
-		var config = jeebs.Services.GetServiceConfig(c => c.Seq, name);
-		_ = logger.WriteTo.Async(a => a.Seq(
-			serverUrl: config.Server,
-			apiKey: config.ApiKey,
-			restrictedToMinimumLevel: minimum,
-			formatProvider: CultureInfo.InvariantCulture
-		));
-	}
+	public void Configure(LoggerConfiguration logger, JeebsConfig jeebs, string name, LogEventLevel minimum) =>
+		jeebs.Services.GetServiceConfig(c => c.Seq, name).IfOk(c =>
+			_ = logger.WriteTo.Async(a =>
+				a.Seq(
+					serverUrl: c.Server,
+					apiKey: c.ApiKey,
+					restrictedToMinimumLevel: minimum,
+					formatProvider: CultureInfo.InvariantCulture
+				)
+			)
+		);
 }

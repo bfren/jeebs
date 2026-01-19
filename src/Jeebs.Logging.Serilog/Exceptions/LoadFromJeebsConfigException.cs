@@ -16,10 +16,10 @@ public class LoadFromJeebsConfigException : Exception
 	public LoadFromJeebsConfigException() { }
 
 	/// <summary>
-	/// Create with reason message.
+	/// Create with FailValue.
 	/// </summary>
 	/// <param name="reason"></param>
-	public LoadFromJeebsConfigException(IMsg reason) : this(reason.ToString() ?? string.Empty) { }
+	public LoadFromJeebsConfigException(FailValue fail) : this(fail.ToString()) { }
 
 	/// <summary>
 	/// Create with message.
