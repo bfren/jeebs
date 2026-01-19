@@ -9,17 +9,20 @@ namespace Jeebs.Config.Services.ServicesConfig_Tests;
 public partial class GetServiceConfig_Tests
 {
 	[Fact]
-	public void Splits_Definition_Unknown_Service_Returns_Fail()
+	public void Splits_Definition_Unknown_Service_Type_Returns_Fail()
 	{
 		// Arrange
 		var config = new ServicesConfig();
+		var type = Rnd.Str;
 		var name = Rnd.Str;
 
 		// Act
-		var result = config.GetServiceConfig(c => c.Slack, name);
+		var r0 = config.GetServiceConfig($"{type}.{Rnd.Str}");
+		var r1 = config.GetServiceConfig($"slack.{name}");
 
 		// Assert
-		result.AssertFail("No {Type} service named '{Name}' is configured.", nameof(SlackConfig), name);
+		r0.AssertFail("Service type '{Type}' is not recognised.", type);
+		r1.AssertFail("No {Type} service named '{Name}' is configured.", nameof(SlackConfig), name);
 	}
 
 	[Fact]
@@ -37,7 +40,7 @@ public partial class GetServiceConfig_Tests
 		config.Seq.Add(name, service);
 
 		// Act
-		var result = config.GetServiceConfig(c => c.Seq, name);
+		var result = config.GetServiceConfig($"seq.{name}");
 
 		// Assert
 		Assert.Equal(service, result);
