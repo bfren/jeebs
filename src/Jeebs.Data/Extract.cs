@@ -1,11 +1,9 @@
 // Jeebs Rapid Application Development
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
-using System;
 using System.Linq;
 using Jeebs.Data.Map;
 using Jeebs.Data.Query.Functions;
-using Jeebs.Messages;
 
 namespace Jeebs.Data;
 
@@ -13,23 +11,8 @@ namespace Jeebs.Data;
 public sealed class Extract : IExtract
 {
 	/// <inheritdoc/>
-	public IColumnList From<TModel>(params ITable[] tables) =>
-		Extract<TModel>.From(tables).Unwrap(() => new ColumnList());
-
-	/// <summary>Messages</summary>
-	public static class M
-	{
-		/// <summary>An error occurred extracting columns from a table</summary>
-		/// <param name="Value">Exception object.</param>
-		public sealed record class ErrorExtractingColumnsFromTableExceptionMsg(Exception Value) : ExceptionMsg;
-
-		/// <summary>An error occurred getting distinct columns</summary>
-		/// <param name="Value">Exception object.</param>
-		public sealed record class ErrorExtractingDistinctColumnsExceptionMsg(Exception Value) : ExceptionMsg;
-
-		/// <summary>No matching columns were extracted from the table</summary>
-		public sealed record class NoColumnsExtractedFromTableMsg : Msg;
-	}
+	public Result<IColumnList> From<TModel>(params ITable[] tables) =>
+		Extract<TModel>.From(tables);
 }
 
 /// <summary>
@@ -43,7 +26,7 @@ public static class Extract<TModel>
 	/// </summary>
 	/// <param name="tables">List of tables.</param>
 #pragma warning disable CA1000 // Do not declare static members on generic types
-	public static Maybe<IColumnList> From(params ITable[] tables)
+	public static Result<IColumnList> From(params ITable[] tables)
 #pragma warning restore CA1000 // Do not declare static members on generic types
 	{
 		// If no tables, return empty extracted list
@@ -54,23 +37,28 @@ public static class Extract<TModel>
 
 		// Extract distinct columns
 		return
-			F.Some(
+			R.Try(
 				() => from table in tables
 					  from column in QueryF.GetColumnsFromTable<TModel>(table)
 					  select column,
-				e => new Extract.M.ErrorExtractingColumnsFromTableExceptionMsg(e)
+				e => R.Fail(nameof(Extract), nameof(From),
+					e, "Error getting columns from table."
+				)
 			)
-			.SwitchIf(
+			.ContinueIf(
 				x => x.Any(),
-				_ => new Extract.M.NoColumnsExtractedFromTableMsg()
+				_ => R.Fail(nameof(Extract), nameof(From),
+					"No columns were extracted from the tables."
+				)
 			)
 			.Map(
 				x => x.Distinct(new Column.AliasComparer()),
-				e => new Extract.M.ErrorExtractingDistinctColumnsExceptionMsg(e)
+				e => R.Fail(nameof(Extract), nameof(From),
+					e, "Error getting distinct columns from the list."
+				)
 			)
 			.Map(
-				x => (IColumnList)new ColumnList(x),
-				F.DefaultHandler
+				x => (IColumnList)new ColumnList(x)
 			);
 	}
 }

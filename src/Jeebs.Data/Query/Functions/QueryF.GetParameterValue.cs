@@ -1,8 +1,6 @@
 // Jeebs Rapid Application Development
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
-using StrongId;
-
 namespace Jeebs.Data.Query.Functions;
 
 public static partial class QueryF
@@ -14,8 +12,8 @@ public static partial class QueryF
 	public static dynamic GetParameterValue(dynamic value) =>
 		value switch
 		{
-			IStrongId id =>
-				id.Value,
+			IUnion id =>
+				id.Value ?? new object(),
 
 			{ } x =>
 				x,

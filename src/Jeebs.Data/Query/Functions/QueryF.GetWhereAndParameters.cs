@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using Jeebs.Collections;
 using Jeebs.Data.Enums;
 using Jeebs.Data.Map;
+using Jeebs.Functions;
 
 namespace Jeebs.Data.Query.Functions;
 
@@ -92,6 +93,6 @@ public static partial class QueryF
 		}
 
 		// Return
-		return (ImmutableList.Create(items: where), param);
+		return (ListF.Create(items: where), param);
 	}
 }

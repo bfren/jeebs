@@ -6,8 +6,4 @@ namespace Jeebs.Data.Map.Functions;
 /// <summary>
 /// Mapping Functions.
 /// </summary>
-public static partial class MapF
-{
-	/// <summary>Messages</summary>
-	public static partial class M { }
-}
+public static partial class MapF { }

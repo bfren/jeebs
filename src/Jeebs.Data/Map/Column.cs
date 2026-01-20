@@ -71,11 +71,9 @@ public sealed record class Column : IColumn
 	/// <param name="column">Column selector.</param>
 	public static Maybe<Column> From<T>(T table, Expression<Func<T, string>> column)
 		where T : ITable =>
-		column.GetPropertyInfo()
-			.Map(
-				x => new Column(table, x.Get(table), x.Info),
-				F.DefaultHandler
-			);
+		from c in column.GetPropertyInfo()
+		from t in c.Get(table)
+		select new Column(table.GetName(), t, c.Info);
 
 	/// <summary>
 	/// Column Alias Comparer.

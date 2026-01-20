@@ -18,11 +18,9 @@ public static partial class QueryF
 	/// <param name="column">Column expression.</param>
 	public static Maybe<IColumn> GetColumnFromExpression<TTable>(TTable table, Expression<Func<TTable, string>> column)
 		where TTable : ITable =>
-		column.GetPropertyInfo()
-			.Map<IColumn>(
-				x => new Column(table, x.Get(table), x.Info),
-				F.DefaultHandler
-			);
+		from i in column.GetPropertyInfo()
+		from t in i.Get(table)
+		select (IColumn)new Column(table.GetName(), t, i.Info);
 
 	/// <inheritdoc cref="GetColumnFromExpression{TTable}(TTable, Expression{Func{TTable, string}})"/>
 	public static Maybe<IColumn> GetColumnFromExpression<TTable>(Expression<Func<TTable, string>> column)

@@ -7,7 +7,7 @@ using Dapper;
 using Jeebs.Cryptography;
 using Jeebs.Data.TypeHandlers;
 using Jeebs.Functions;
-using StrongId;
+using Wrap.Dapper;
 using static Jeebs.Data.IDbTypeMapper;
 
 namespace Jeebs.Data;
@@ -67,8 +67,14 @@ public class DbTypeMapper : IDbTypeMapper
 		AddTypeHandler(new JsonTypeHandler<T>());
 
 	/// <inheritdoc/>
-	public virtual void AddStrongIdTypeHandlers() =>
-		AddGenericTypeHandlers<IStrongId>(typeof(StrongIdTypeHandler<>), SqlMapper.AddTypeHandler);
+	public virtual void AddStrongIdTypeHandlers()
+	{
+		AddGenericTypeHandlers<IGuidId>(typeof(GuidIdTypeHandler<>), SqlMapper.AddTypeHandler);
+		AddGenericTypeHandlers<IIntId>(typeof(IntIdTypeHandler<>), SqlMapper.AddTypeHandler);
+		AddGenericTypeHandlers<ILongId>(typeof(LongIdTypeHandler<>), SqlMapper.AddTypeHandler);
+		AddGenericTypeHandlers<IUintId>(typeof(UIntIdTypeHandler<>), SqlMapper.AddTypeHandler);
+		AddGenericTypeHandlers<IULongId>(typeof(ULongIdTypeHandler<>), SqlMapper.AddTypeHandler);
+	}
 
 	/// <inheritdoc/>
 	public virtual void AddLockedTypeHandlers() =>

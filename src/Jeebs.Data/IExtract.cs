@@ -15,5 +15,5 @@ public interface IExtract
 	/// </summary>
 	/// <typeparam name="TModel">Model type</typeparam>
 	/// <param name="tables">Tables.</param>
-	IColumnList From<TModel>(params ITable[] tables);
+	Result<IColumnList> From<TModel>(params ITable[] tables);
 }

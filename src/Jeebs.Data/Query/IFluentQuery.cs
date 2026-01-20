@@ -7,7 +7,6 @@ using System.Data;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 using Jeebs.Data.Enums;
-using StrongId;
 
 namespace Jeebs.Data.Query;
 
@@ -18,7 +17,7 @@ namespace Jeebs.Data.Query;
 /// <typeparam name="TId">StrongId type</typeparam>
 public interface IFluentQuery<TEntity, TId>
 	where TEntity : IWithId
-	where TId : class, IStrongId, new()
+	where TId : class, IUnion, new()
 {
 	#region Where
 
@@ -109,7 +108,7 @@ public interface IFluentQuery<TEntity, TId>
 	#region Execute
 
 	/// <inheritdoc cref="ExecuteAsync{TValue}(string, IDbTransaction)"/>
-	Task<Maybe<TValue>> ExecuteAsync<TValue>(string columnAlias);
+	Task<Result<TValue>> ExecuteAsync<TValue>(string columnAlias);
 
 	/// <summary>
 	/// Select a single column and return its value as <typeparamref name="TValue"/>.
@@ -117,52 +116,52 @@ public interface IFluentQuery<TEntity, TId>
 	/// <typeparam name="TValue"></typeparam>
 	/// <param name="columnAlias">Column to be selected and returned.</param>
 	/// <param name="transaction"></param>
-	Task<Maybe<TValue>> ExecuteAsync<TValue>(string columnAlias, IDbTransaction transaction);
+	Task<Result<TValue>> ExecuteAsync<TValue>(string columnAlias, IDbTransaction transaction);
 
 	/// <inheritdoc cref="ExecuteAsync{TValue}(Expression{Func{TEntity, TValue}}, IDbTransaction)"/>
-	Task<Maybe<TValue>> ExecuteAsync<TValue>(Expression<Func<TEntity, TValue>> aliasSelector);
+	Task<Result<TValue>> ExecuteAsync<TValue>(Expression<Func<TEntity, TValue>> aliasSelector);
 
 	/// <inheritdoc cref="ExecuteAsync{TValue}(string, IDbTransaction)"/>
 	/// <param name="aliasSelector">Column to be selected and returned.</param>
 	/// <param name="transaction"></param>
-	Task<Maybe<TValue>> ExecuteAsync<TValue>(Expression<Func<TEntity, TValue>> aliasSelector, IDbTransaction transaction);
+	Task<Result<TValue>> ExecuteAsync<TValue>(Expression<Func<TEntity, TValue>> aliasSelector, IDbTransaction transaction);
 
 	#endregion Execute
 
 	#region Count
 
 	/// <inheritdoc cref="CountAsync(IDbTransaction)"/>
-	Task<Maybe<long>> CountAsync();
+	Task<Result<long>> CountAsync();
 
 	/// <summary>
 	/// Return the number of rows matching the query.
 	/// </summary>
 	/// <param name="transaction"></param>
-	Task<Maybe<long>> CountAsync(IDbTransaction transaction);
+	Task<Result<long>> CountAsync(IDbTransaction transaction);
 
 	#endregion Count
 
 	#region Query
 
 	/// <inheritdoc cref="QueryAsync{TModel}(IDbTransaction)"/>/>
-	Task<Maybe<IEnumerable<TModel>>> QueryAsync<TModel>();
+	Task<Result<IEnumerable<TModel>>> QueryAsync<TModel>();
 
 	/// <summary>
 	/// Execute the query and return multiple items.
 	/// </summary>
 	/// <typeparam name="TModel">Return model type</typeparam>
 	/// <param name="transaction"></param>
-	Task<Maybe<IEnumerable<TModel>>> QueryAsync<TModel>(IDbTransaction transaction);
+	Task<Result<IEnumerable<TModel>>> QueryAsync<TModel>(IDbTransaction transaction);
 
 	/// <inheritdoc cref="QuerySingleAsync{TModel}(IDbTransaction)"/>
-	Task<Maybe<TModel>> QuerySingleAsync<TModel>();
+	Task<Result<TModel>> QuerySingleAsync<TModel>();
 
 	/// <summary>
 	/// Perform the query and return a single item.
 	/// </summary>
 	/// <typeparam name="TModel">Return model type</typeparam>
 	/// <param name="transaction"></param>
-	Task<Maybe<TModel>> QuerySingleAsync<TModel>(IDbTransaction transaction);
+	Task<Result<TModel>> QuerySingleAsync<TModel>(IDbTransaction transaction);
 
 	#endregion Query
 }

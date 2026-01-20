@@ -6,7 +6,6 @@ using System.Data.Common;
 using Jeebs.Data.Enums;
 using Jeebs.Data.Map;
 using Jeebs.Data.Query;
-using StrongId;
 
 namespace Jeebs.Data;
 
@@ -113,7 +112,7 @@ public interface IDbClient
 	/// <typeparam name="TEntity">Entity type</typeparam>
 	/// <typeparam name="TModel">Return model type</typeparam>
 	/// <param name="predicates">Predicates (matched using AND).</param>
-	Maybe<(string query, IQueryParametersDictionary param)> GetQuery<TEntity, TModel>(
+	Result<(string query, IQueryParametersDictionary param)> GetQuery<TEntity, TModel>(
 		(string, Compare, dynamic)[] predicates
 	)
 		where TEntity : IWithId;
@@ -138,7 +137,7 @@ public interface IDbClient
 	/// Return a query to create an entity.
 	/// </summary>
 	/// <typeparam name="TEntity">Entity type</typeparam>
-	Maybe<string> GetCreateQuery<TEntity>()
+	Result<string> GetCreateQuery<TEntity>()
 		where TEntity : IWithId;
 
 	/// <summary>
@@ -147,7 +146,7 @@ public interface IDbClient
 	/// <typeparam name="TEntity">Entity type</typeparam>
 	/// <typeparam name="TModel">Return model type</typeparam>
 	/// <param name="id">Entity ID.</param>
-	Maybe<string> GetRetrieveQuery<TEntity, TModel>(object id)
+	Result<string> GetRetrieveQuery<TEntity, TModel>(object id)
 		where TEntity : IWithId;
 
 	/// <summary>
@@ -156,7 +155,7 @@ public interface IDbClient
 	/// <typeparam name="TEntity">Entity type</typeparam>
 	/// <typeparam name="TModel">Return model type</typeparam>
 	/// <param name="id">Entity ID.</param>
-	Maybe<string> GetUpdateQuery<TEntity, TModel>(object id)
+	Result<string> GetUpdateQuery<TEntity, TModel>(object id)
 		where TEntity : IWithId;
 
 	/// <summary>
@@ -164,7 +163,7 @@ public interface IDbClient
 	/// </summary>
 	/// <typeparam name="TEntity">Entity type</typeparam>
 	/// <param name="id">Entity ID.</param>
-	Maybe<string> GetDeleteQuery<TEntity>(object id)
+	Result<string> GetDeleteQuery<TEntity>(object id)
 		where TEntity : IWithId;
 
 	#endregion CRUD Queries

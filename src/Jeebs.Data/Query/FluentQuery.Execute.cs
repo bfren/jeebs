@@ -14,14 +14,14 @@ namespace Jeebs.Data.Query;
 public sealed partial record class FluentQuery<TEntity, TId>
 {
 	/// <inheritdoc/>
-	public async Task<Maybe<TValue>> ExecuteAsync<TValue>(string columnAlias)
+	public async Task<Result<TValue>> ExecuteAsync<TValue>(string columnAlias)
 	{
 		using var w = await Db.StartWorkAsync();
 		return await ExecuteAsync<TValue>(columnAlias, w.Transaction).ConfigureAwait(false);
 	}
 
 	/// <inheritdoc/>
-	public Task<Maybe<TValue>> ExecuteAsync<TValue>(string columnAlias, IDbTransaction transaction) =>
+	public Task<Result<TValue>> ExecuteAsync<TValue>(string columnAlias, IDbTransaction transaction) =>
 		QueryF.GetColumnFromAlias(Table, columnAlias)
 			.BindAsync(x =>
 				Update(parts => parts with
@@ -32,15 +32,16 @@ public sealed partial record class FluentQuery<TEntity, TId>
 			);
 
 	/// <inheritdoc/>
-	public async Task<Maybe<TValue>> ExecuteAsync<TValue>(Expression<Func<TEntity, TValue>> aliasSelector)
+	public async Task<Result<TValue>> ExecuteAsync<TValue>(Expression<Func<TEntity, TValue>> aliasSelector)
 	{
 		using var w = await Db.StartWorkAsync();
 		return await ExecuteAsync(aliasSelector, w.Transaction).ConfigureAwait(false);
 	}
 
 	/// <inheritdoc/>
-	public Task<Maybe<TValue>> ExecuteAsync<TValue>(Expression<Func<TEntity, TValue>> aliasSelector, IDbTransaction transaction) =>
+	public Task<Result<TValue>> ExecuteAsync<TValue>(Expression<Func<TEntity, TValue>> aliasSelector, IDbTransaction transaction) =>
 		aliasSelector.GetPropertyInfo()
+			.ToResult(nameof(FluentQuery), nameof(ExecuteAsync))
 			.BindAsync(
 				x => ExecuteAsync<TValue>(x.Name, transaction)
 			);

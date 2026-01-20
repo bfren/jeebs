@@ -6,7 +6,6 @@ using Jeebs.Data.Enums;
 using Jeebs.Data.Map;
 using Jeebs.Data.Query;
 using Jeebs.Data.Query.Functions;
-using StrongId;
 
 namespace Jeebs.Data;
 
@@ -25,7 +24,7 @@ public abstract partial class DbClient : IDbClient
 	);
 
 	/// <inheritdoc/>
-	public Maybe<(string query, IQueryParametersDictionary param)> GetQuery<TEntity, TModel>(
+	public Result<(string query, IQueryParametersDictionary param)> GetQuery<TEntity, TModel>(
 		(string, Compare, dynamic)[] predicates
 	)
 		where TEntity : IWithId =>
@@ -36,8 +35,7 @@ public abstract partial class DbClient : IDbClient
 			select (map, sel, whr)
 		)
 		.Map(
-			x => GetQuery(x.map.Name, x.sel, x.whr),
-			e => new M.ErrorGettingGeneralRetrieveQueryExceptionMsg(e)
+			x => GetQuery(x.map.Name, x.sel, x.whr)
 		);
 
 	/// <inheritdoc/>

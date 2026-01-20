@@ -2,6 +2,7 @@
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using Jeebs.Collections;
+using Jeebs.Functions;
 
 namespace Jeebs.Data.TypeHandlers;
 
@@ -16,5 +17,5 @@ public sealed class ImmutableListJsonTypeHandler<T> : JsonTypeHandler<ImmutableL
 	/// </summary>
 	/// <param name="xml">JSON string.</param>
 	protected override ImmutableList<T> Parse(string xml) =>
-		ImmutableList.Deserialise<T>(xml);
+		ListF.Deserialise<T>(xml);
 }

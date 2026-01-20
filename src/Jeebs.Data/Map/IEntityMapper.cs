@@ -1,8 +1,6 @@
 // Jeebs Rapid Application Development
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
-using StrongId;
-
 namespace Jeebs.Data.Map;
 
 /// <summary>
@@ -24,6 +22,6 @@ public interface IEntityMapper
 	/// Get table map for <typeparamref name="TEntity"/>.
 	/// </summary>
 	/// <typeparam name="TEntity">Entity type</typeparam>
-	Maybe<ITableMap> GetTableMapFor<TEntity>()
+	Result<ITableMap> GetTableMapFor<TEntity>()
 		where TEntity : IWithId;
 }
