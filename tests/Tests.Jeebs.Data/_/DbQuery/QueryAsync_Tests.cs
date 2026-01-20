@@ -4,7 +4,6 @@
 using System.Data;
 using Jeebs.Data.Query;
 using NSubstitute.ExceptionExtensions;
-using static Jeebs.Data.DbQuery.M;
 
 namespace Jeebs.Data.DbQuery_Tests;
 
@@ -63,8 +62,8 @@ public class QueryAsync_Tests
 		var r1 = await query.QueryAsync<int>(parts, transaction);
 
 		// Assert
-		r0.AssertNone().AssertType<ErrorGettingQueryFromPartsExceptionMsg>();
-		r1.AssertNone().AssertType<ErrorGettingQueryFromPartsExceptionMsg>();
+		_ = r0.AssertFail("Error creating query from parts.", parts);
+		_ = r1.AssertFail("Error creating query from parts.", parts);
 	}
 
 	[Fact]
@@ -81,8 +80,8 @@ public class QueryAsync_Tests
 		var r1 = await query.QueryAsync<int>(Rnd.ULng, parts, transaction);
 
 		// Assert
-		r0.AssertNone().AssertType<ErrorGettingCountQueryFromPartsExceptionMsg>();
-		r1.AssertNone().AssertType<ErrorGettingCountQueryFromPartsExceptionMsg>();
+		_ = r0.AssertFail("Error creating count query from parts.", parts);
+		_ = r1.AssertFail("Error creating count query from parts.", parts);
 	}
 
 	[Fact]
@@ -99,8 +98,8 @@ public class QueryAsync_Tests
 		var r1 = await query.QueryAsync<int>(Rnd.ULng, parts, transaction);
 
 		// Assert
-		r0.AssertNone().AssertType<ErrorGettingQueryFromPartsExceptionMsg>();
-		r1.AssertNone().AssertType<ErrorGettingQueryFromPartsExceptionMsg>();
+		_ = r0.AssertFail("Error creating query from parts.", parts);
+		_ = r1.AssertFail("Error creating query from parts.", parts);
 	}
 
 	[Fact]

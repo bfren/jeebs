@@ -1,4 +1,4 @@
-﻿// Jeebs Unit Tests
+// Jeebs Unit Tests
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using Base = Jeebs.MimeType_Tests.Parse_Tests;
@@ -21,15 +21,14 @@ public class Parse_Tests
 		Assert.Same(expected, result);
 	}
 
-	[Theory]
-	[InlineData(null)]
-	public void Null_Value_Returns_Blank_MimeType(object input)
+	[Fact]
+	public void Null_Value_Returns_Blank_MimeType()
 	{
 		// Arrange
 		var handler = new MimeTypeTypeHandler();
 
 		// Act
-		var result = handler.Parse(input);
+		var result = handler.Parse(null!);
 
 		// Assert
 		Assert.Same(MimeType.Blank, result);

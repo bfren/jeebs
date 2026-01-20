@@ -10,7 +10,7 @@ public class TryAdd_Tests
 	[InlineData(42)]
 	[InlineData(true)]
 	[InlineData('c')]
-	public void Ignores_Null_And_Primitive_Types(object input)
+	public void Ignores_Null_And_Primitive_Types(object? input)
 	{
 		// Arrange
 		var parameters = new QueryParametersDictionary();

@@ -1,4 +1,4 @@
-﻿// Jeebs Unit Tests
+// Jeebs Unit Tests
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 namespace Jeebs.Data.TypeHandlers.Enumerated_Tests;
@@ -20,16 +20,15 @@ public class Parse_Tests
 		parse.Received().Invoke(value);
 	}
 
-	[Theory]
-	[InlineData(null)]
-	public void Null_Value_Returns_IfNull(object input)
+	[Fact]
+	public void Null_Value_Returns_IfNull()
 	{
 		// Arrange
 		var handler = Substitute.ForPartsOf<EnumeratedTypeHandler<EnumeratedTest>>();
 		var parse = Substitute.For<Func<string, EnumeratedTest>>();
 
 		// Act
-		var result = handler.ParseTest(input, parse, EnumeratedTest.Bar);
+		var result = handler.ParseTest(null!, parse, EnumeratedTest.Bar);
 
 		// Assert
 		Assert.Same(EnumeratedTest.Bar, result);

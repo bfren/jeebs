@@ -37,7 +37,7 @@ public class GetSetListForUpdateQuery_Tests
 		var column = new Column(new DbName(Rnd.Str), name, propertyInfo);
 		var expected = $"--{name}-- = ##{alias}##";
 
-		var columns = new ColumnList(new[] { column });
+		var columns = new ColumnList([column]);
 
 		// Act
 		var result = client.GetSetListForUpdateQueryTest(columns);

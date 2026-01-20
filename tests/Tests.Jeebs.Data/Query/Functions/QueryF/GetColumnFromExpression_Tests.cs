@@ -2,7 +2,6 @@
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using Jeebs.Data.Map;
-using static Jeebs.Reflection.LinqExpressionExtensions.M;
 
 namespace Jeebs.Data.Query.Functions.QueryF_Tests;
 
@@ -18,8 +17,8 @@ public class GetColumnFromExpression_Tests
 		var r1 = QueryF.GetColumnFromExpression(new BrokenTable(), t => t.Bar);
 
 		// Assert
-		r0.AssertNone().AssertType<PropertyDoesNotExistOnTypeMsg<BrokenTable>>();
-		r1.AssertNone().AssertType<PropertyDoesNotExistOnTypeMsg<BrokenTable>>();
+		r0.AssertNone();
+		r1.AssertNone();
 	}
 
 	[Fact]

@@ -4,9 +4,7 @@
 using System.Data;
 using Jeebs.Data.Map;
 using Jeebs.Logging;
-using MaybeF;
 using NSubstitute.Extensions;
-using StrongId;
 
 namespace Jeebs.Data.Query.FluentQuery_Tests;
 
@@ -45,7 +43,7 @@ public abstract class FluentQuery_Tests
 
 		var mapper = Substitute.For<IEntityMapper>();
 		mapper.GetTableMapFor<TestEntity>()
-			.Returns(F.Some(map));
+			.Returns(R.Wrap(map));
 
 		return (new(db, mapper, log), new(client, db, log, mapper, table, map, transation));
 	}
@@ -60,9 +58,9 @@ public abstract class FluentQuery_Tests
 		IDbTransaction Transaction
 	);
 
-	public sealed record class TestId : LongId;
+	public sealed record class TestId : LongId<TestId>;
 
-	public sealed record class TestEntity(TestId Id, string? Foo) : IWithId<TestId>;
+	public sealed record class TestEntity(string? Foo) : WithId<TestId, long>;
 
 	public sealed record class TestTable() : Table(Rnd.Str)
 	{

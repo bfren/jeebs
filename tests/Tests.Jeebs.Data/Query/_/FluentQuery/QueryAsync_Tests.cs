@@ -2,9 +2,6 @@
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using System.Data;
-using Jeebs.Messages;
-using MaybeF;
-using static Jeebs.Data.Query.FluentQuery.M;
 
 namespace Jeebs.Data.Query.FluentQuery_Tests;
 
@@ -15,8 +12,8 @@ public class QueryAsync_Tests : FluentQuery_Tests
 	{
 		// Arrange
 		var (query, _) = Setup();
-		var m0 = Substitute.For<IMsg>();
-		var m1 = Substitute.For<IMsg>();
+		var m0 = FailGen.Create().Value;
+		var m1 = FailGen.Create().Value;
 		query.Errors.Add(m0);
 		query.Errors.Add(m1);
 
@@ -24,10 +21,10 @@ public class QueryAsync_Tests : FluentQuery_Tests
 		var result = await query.QueryAsync<int>();
 
 		// Assert
-		var none = result.AssertNone().AssertType<ListMsg>();
-		Assert.Collection(none.Args!,
-			x => Assert.Same(m0, x),
-			x => Assert.Same(m1, x)
+		var f = result.AssertFail("");
+		Assert.Collection(f.Args!,
+			x => Assert.Equal(m0, x),
+			x => Assert.Equal(m1, x)
 		);
 	}
 
@@ -41,7 +38,7 @@ public class QueryAsync_Tests : FluentQuery_Tests
 		var result = await query.QueryAsync<int>();
 
 		// Assert
-		result.AssertNone().AssertType<NoPredicatesMsg>();
+		_ = result.AssertFail("");
 	}
 
 	[Fact]

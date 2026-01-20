@@ -1,10 +1,9 @@
 // Jeebs Unit Tests
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
-using Jeebs.Collections;
 using Jeebs.Data.Enums;
 using Jeebs.Data.Map;
-using StrongId;
+using Jeebs.Functions;
 
 namespace Jeebs.Data.Query.Functions.QueryF_Tests;
 
@@ -18,9 +17,9 @@ public class GetWhereAndParameters_Tests
 		var column = Substitute.For<IColumn>();
 		column.ColName.Returns(name);
 
-		var predicates = ImmutableList.Create(
+		var predicates = ListF.Create(
 		[
-			(column, Compare.LessThan, Rnd.Int)
+			(column, Compare.LessThan, (dynamic)Rnd.Int)
 		]);
 
 		var client = Substitute.ForPartsOf<TestClient>();
@@ -43,9 +42,9 @@ public class GetWhereAndParameters_Tests
 		column.ColName.Returns(columnName);
 		column.TblName.Returns(tableName);
 
-		var predicates = ImmutableList.Create(
+		var predicates = ListF.Create(
 		[
-			(column, Compare.LessThan, Rnd.Int)
+			(column, Compare.LessThan, (dynamic)Rnd.Int)
 		]);
 
 		var client = Substitute.ForPartsOf<TestClient>();
@@ -75,9 +74,9 @@ Assert.Single(where);
 		column.ColName.Returns(name);
 
 		var value = Rnd.Int;
-		var predicates = ImmutableList.Create(
+		var predicates = ListF.Create(
 		[
-			(column, input, value)
+			(column, input, (dynamic)value)
 		]);
 
 		var client = Substitute.ForPartsOf<TestClient>();
@@ -109,9 +108,9 @@ Assert.Single(where);
 		column.ColName.Returns(name);
 
 		var value = Rnd.Lng;
-		var predicates = ImmutableList.Create(
+		var predicates = ListF.Create(
 		[
-			(column, input, new TestId(value))
+			(column, input, (dynamic)TestId.Wrap(value))
 		]);
 
 		var client = Substitute.ForPartsOf<TestClient>();
@@ -131,9 +130,9 @@ Assert.Single(where);
 	{
 		// Arrange
 		var column = Substitute.For<IColumn>();
-		var predicates = ImmutableList.Create(
+		var predicates = ListF.Create(
 		[
-			(column, cmp, Rnd.Int)
+			(column, cmp, (dynamic)Rnd.Int)
 		]);
 
 		var client = Substitute.ForPartsOf<TestClient>();
@@ -169,7 +168,7 @@ Assert.Single(where);
 		var v1 = Rnd.Lng;
 		var v2 = Rnd.Lng;
 		var value = getValue(v0, v1, v2);
-		var predicates = ImmutableList.Create(
+		var predicates = ListF.Create(
 		[
 			(column, cmp, value)
 		]);
@@ -211,7 +210,7 @@ Assert.Single(where);
 	[Fact]
 	public void Operator_Is_In_And_Value_Is_Array_Joins_Value_And_Adds_StrongId_Param()
 	{
-		Test_In_With_Enumerable(Compare.In, (v0, v1, v2) => new[] { new TestId(v0), new(v1), new(v2) });
+		Test_In_With_Enumerable(Compare.In, (v0, v1, v2) => new[] { TestId.Wrap(v0), TestId.Wrap(v1), TestId.Wrap(v2) });
 	}
 
 	[Fact]
@@ -223,7 +222,7 @@ Assert.Single(where);
 	[Fact]
 	public void Operator_Is_In_And_Value_Is_IEnumerable_Joins_Value_And_Adds_StrongId_Param()
 	{
-		Test_In_With_Enumerable(Compare.In, (v0, v1, v2) => new[] { new TestId(v0), new(v1), new(v2) }.AsEnumerable());
+		Test_In_With_Enumerable(Compare.In, (v0, v1, v2) => new[] { TestId.Wrap(v0), TestId.Wrap(v1), TestId.Wrap(v2) }.AsEnumerable());
 	}
 
 	[Fact]
@@ -235,7 +234,7 @@ Assert.Single(where);
 	[Fact]
 	public void Operator_Is_In_And_Value_Is_List_Joins_Value_And_Adds_StrongId_Param()
 	{
-		Test_In_With_Enumerable(Compare.In, (v0, v1, v2) => new[] { new TestId(v0), new(v1), new(v2) }.ToList());
+		Test_In_With_Enumerable(Compare.In, (v0, v1, v2) => new[] { TestId.Wrap(v0), TestId.Wrap(v1), TestId.Wrap(v2) }.ToList());
 	}
 
 	[Fact]
@@ -247,7 +246,7 @@ Assert.Single(where);
 	[Fact]
 	public void Operator_Is_NotIn_And_Value_Is_Array_Joins_Value_And_Adds_StrongId_Param()
 	{
-		Test_In_With_Enumerable(Compare.NotIn, (v0, v1, v2) => new[] { new TestId(v0), new(v1), new(v2) });
+		Test_In_With_Enumerable(Compare.NotIn, (v0, v1, v2) => new[] { TestId.Wrap(v0), TestId.Wrap(v1), TestId.Wrap(v2) });
 	}
 
 	[Fact]
@@ -259,7 +258,7 @@ Assert.Single(where);
 	[Fact]
 	public void Operator_Is_NotIn_And_Value_Is_IEnumerable_Joins_Value_And_Adds_StrongId_Param()
 	{
-		Test_In_With_Enumerable(Compare.NotIn, (v0, v1, v2) => new[] { new TestId(v0), new(v1), new(v2) }.AsEnumerable());
+		Test_In_With_Enumerable(Compare.NotIn, (v0, v1, v2) => new[] { TestId.Wrap(v0), TestId.Wrap(v1), TestId.Wrap(v2) }.AsEnumerable());
 	}
 
 	[Fact]
@@ -271,7 +270,7 @@ Assert.Single(where);
 	[Fact]
 	public void Operator_Is_NotIn_And_Value_Is_List_Joins_Value_And_Adds_StrongId_Param()
 	{
-		Test_In_With_Enumerable(Compare.NotIn, (v0, v1, v2) => new[] { new TestId(v0), new(v1), new(v2) }.ToList());
+		Test_In_With_Enumerable(Compare.NotIn, (v0, v1, v2) => new[] { TestId.Wrap(v0), TestId.Wrap(v1), TestId.Wrap(v2) }.ToList());
 	}
 
 	public abstract class TestClient : DbClient
@@ -295,5 +294,5 @@ Assert.Single(where);
 			$"({string.Join('|', objects)})";
 	}
 
-	private sealed record class TestId(long Value) : LongId(Value);
+	private sealed record class TestId : LongId<TestId>;
 }

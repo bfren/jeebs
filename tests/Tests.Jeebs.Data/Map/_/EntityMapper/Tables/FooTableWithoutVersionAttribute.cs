@@ -3,7 +3,7 @@
 
 using Jeebs.Data.Attributes;
 
-namespace Jeebs.Data.Map._.Mapper.Tables;
+namespace Jeebs.Data.Map.Mapper.Tables;
 
 public record class FooTableWithoutVersionAttribute : Table
 {

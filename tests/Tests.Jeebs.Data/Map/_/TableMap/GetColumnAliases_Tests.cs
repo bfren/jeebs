@@ -38,7 +38,7 @@ public class GetColumnAliases_Tests
 		var (a2, c2) = Get();
 		var (a3, c3) = Get();
 		var table = Substitute.For<ITable>();
-		var map = new TableMap(table, new ColumnList(new[] { c0, c1, c2, c3 }), c0);
+		var map = new TableMap(table, new ColumnList([c0, c1, c2, c3]), c0);
 
 		// Act
 		var result = map.GetColumnAliases(true);
@@ -61,7 +61,7 @@ public class GetColumnAliases_Tests
 		var (a2, c2) = Get();
 		var (a3, c3) = Get();
 		var table = Substitute.For<ITable>();
-		var map = new TableMap(table, new ColumnList(new[] { c0, c1, c2, c3 }), c0);
+		var map = new TableMap(table, new ColumnList([c0, c1, c2, c3]), c0);
 
 		// Act
 		var result = map.GetColumnAliases(false);

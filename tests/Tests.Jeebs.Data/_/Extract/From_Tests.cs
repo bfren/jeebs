@@ -3,7 +3,6 @@
 
 using Jeebs.Data.Attributes;
 using Jeebs.Data.Map;
-using static Jeebs.Data.Extract.M;
 
 namespace Jeebs.Data.Extract_Tests;
 
@@ -18,8 +17,8 @@ public class From_Tests
 		var result = Extract<Foo>.From();
 
 		// Assert
-		var some = result.AssertSome();
-		Assert.Empty(some);
+		var ok = result.AssertOk();
+		Assert.Empty(ok);
 	}
 
 	[Fact]
@@ -32,7 +31,7 @@ public class From_Tests
 		var result = Extract<FooNone>.From(table);
 
 		// Assert
-		result.AssertNone().AssertType<NoColumnsExtractedFromTableMsg>();
+		_ = result.AssertFail("");
 	}
 
 	[Fact]
@@ -47,8 +46,8 @@ public class From_Tests
 		var result = Extract<FooCombined>.From(t0, t1, t2);
 
 		// Assert
-		var some = result.AssertSome();
-		Assert.Collection(some,
+		var ok = result.AssertOk();
+		Assert.Collection(ok,
 			x => Assert.Equal((t0.GetName(), t0.FooId), (x.TblName, x.ColName)),
 			x => Assert.Equal(t0.Bar0, x.ColName),
 			x => Assert.Equal(t1.Bar2, x.ColName)

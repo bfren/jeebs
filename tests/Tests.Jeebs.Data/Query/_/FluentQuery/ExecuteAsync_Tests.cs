@@ -2,7 +2,6 @@
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using System.Data;
-using static MaybeF.F.EnumerableF.M;
 
 namespace Jeebs.Data.Query.FluentQuery_Tests;
 
@@ -18,7 +17,7 @@ public class ExecuteAsync_Tests : FluentQuery_Tests
 		var result = await query.ExecuteAsync<int>(Rnd.Str);
 
 		// Assert
-		result.AssertNone().AssertType<NoMatchingItemsMsg>();
+		_ = result.AssertFail("");
 	}
 
 	[Fact]

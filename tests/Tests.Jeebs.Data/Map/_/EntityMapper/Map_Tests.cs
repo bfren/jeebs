@@ -1,11 +1,8 @@
 // Jeebs Unit Tests
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
-using Jeebs.Data.Attributes;
 using Jeebs.Data.Exceptions;
-using Jeebs.Data.Map._.Mapper.Tables;
-using StrongId;
-using static Jeebs.Data.Map.Functions.MapF.M;
+using Jeebs.Data.Map.Mapper.Tables;
 
 namespace Jeebs.Data.Map.EntityMapper_Tests;
 
@@ -60,15 +57,13 @@ public class Map_Tests
 	{
 		// Arrange
 		using var mapper = new EntityMapper();
-		var error = $"{typeof(NoIdPropertyMsg<FooTableWithoutIdAttribute>)} " +
-			$"Required {nameof(IWithId.Id)} or {typeof(IdAttribute)} missing on table {typeof(FooTableWithoutIdAttribute)}.";
 
 		// Act
 		var action = void () => mapper.Map<Foo, FooTableWithoutIdAttribute>(new());
 
 		// Assert
-		var ex = Assert.Throws<UnableToFindIdColumnException>(action);
-		Assert.Equal(error, ex.Message);
+		var ex = Assert.Throws<InvalidTableMapException>(action);
+		Assert.Contains("Unable to get Id column from table '{Table}'.", ex.Message);
 	}
 
 	[Fact]
@@ -76,15 +71,13 @@ public class Map_Tests
 	{
 		// Arrange
 		using var svc = new EntityMapper();
-		var error = $"{typeof(NoIdPropertyMsg<FooTableWithMultipleIdAttributes>)} " +
-			$"Required {nameof(IWithId.Id)} or {typeof(IdAttribute)} missing on table {typeof(FooTableWithMultipleIdAttributes)}.";
 
 		// Act
 		var action = void () => svc.Map<Foo, FooTableWithMultipleIdAttributes>(new());
 
 		// Assert
-		var ex = Assert.Throws<UnableToFindIdColumnException>(action);
-		Assert.Equal(error, ex.Message);
+		var ex = Assert.Throws<InvalidTableMapException>(action);
+		Assert.Contains("Unable to get Id column from table '{Table}'.", ex.Message);
 	}
 
 	[Fact]
@@ -92,15 +85,13 @@ public class Map_Tests
 	{
 		// Arrange
 		using var mapper = new EntityMapper();
-		var error = $"{typeof(NoPropertyWithAttributeMsg<FooTableWithoutVersionAttribute, VersionAttribute>)} " +
-			$"Required {typeof(VersionAttribute)} missing on table {typeof(FooTableWithoutVersionAttribute)}.";
 
 		// Act
 		var action = void () => mapper.Map<FooWithVersion, FooTableWithoutVersionAttribute>(new());
 
 		// Assert
-		var ex = Assert.Throws<UnableToFindVersionColumnException>(action);
-		Assert.Equal(error, ex.Message);
+		var ex = Assert.Throws<InvalidTableMapException>(action);
+		Assert.Contains("Unable to get Id column from table '{Table}'.", ex.Message);
 	}
 
 	[Fact]
@@ -108,14 +99,12 @@ public class Map_Tests
 	{
 		// Arrange
 		using var svc = new EntityMapper();
-		var error = $"{typeof(TooManyPropertiesWithAttributeMsg<FooTableWithMultipleVersionAttributes, VersionAttribute>)} " +
-			$"More than one {typeof(VersionAttribute)} found on table {typeof(FooTableWithMultipleVersionAttributes)}.";
 
 		// Act
 		var action = void () => svc.Map<FooWithVersion, FooTableWithMultipleVersionAttributes>(new());
 
 		// Assert
-		var ex = Assert.Throws<UnableToFindVersionColumnException>(action);
-		Assert.Equal(error, ex.Message);
+		var ex = Assert.Throws<InvalidTableMapException>(action);
+		Assert.Contains("Unable to get Id column from table '{Table}'.", ex.Message);
 	}
 }
