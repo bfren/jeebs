@@ -8,10 +8,9 @@ using Sodium;
 namespace Jeebs.Cryptography;
 
 /// <summary>
-/// Contains contents that have been encrypted - see <see cref="Locked{T}.EncryptedContents"/>.
+/// Contains contents that have been encrypted - see <see cref="EncryptedContents"/>.
 /// </summary>
-/// <typeparam name="T">Contents type.</typeparam>
-public sealed class Locked<T>
+public abstract class Locked
 {
 	/// <summary>
 	/// Encrypted contents.
@@ -32,15 +31,21 @@ public sealed class Locked<T>
 	/// <summary>
 	/// Create new Locked box with random salt and nonce.
 	/// </summary>
-	public Locked() =>
+	internal Locked() =>
 		(Salt, Nonce) = (SodiumCore.GetRandomBytes(16), SecretBox.GenerateNonce());
+}
+
+/// <inheritdoc/>
+/// <typeparam name="T">Contents type.</typeparam>
+public sealed class Locked<T> : Locked
+{
 
 	/// <summary>
 	/// Internal creation only.
 	/// </summary>
 	/// <param name="json">JSON-encoded contents to encrypt.</param>
 	/// <param name="key">Encryption key.</param>
-	internal Locked(string json, byte[] key) : this() =>
+	internal Locked(string json, byte[] key) : base() =>
 		EncryptedContents = SecretBox.Create(json, Nonce, key);
 
 	/// <summary>
@@ -48,7 +53,7 @@ public sealed class Locked<T>
 	/// </summary>
 	/// <param name="json">JSON-encoded contents to encrypt.</param>
 	/// <param name="key">Encryption key.</param>
-	internal Locked(string json, string key) : this() =>
+	internal Locked(string json, string key) : base() =>
 		EncryptedContents = SecretBox.Create(json, Nonce, HashKey(key));
 
 	/// <summary>
