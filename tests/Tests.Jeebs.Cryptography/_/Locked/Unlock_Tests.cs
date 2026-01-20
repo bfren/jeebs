@@ -14,7 +14,7 @@ public class Unlock_Tests
 	public void No_EncryptedContents_Returns_Fail()
 	{
 		// Arrange
-		var box = new Locked<int>();
+		var box = new Locked<int>(Rnd.Str, Rnd.Str);
 		var key = Rnd.ByteF.Get(32);
 
 		// Act

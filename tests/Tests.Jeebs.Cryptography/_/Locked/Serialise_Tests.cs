@@ -11,7 +11,7 @@ public class Serialise_Tests
 	public void No_EncryptedContents_Returns_Empty_Json()
 	{
 		// Arrange
-		var box = new Locked<string>();
+		var box = new Locked<string>(Rnd.Str, Rnd.Str);
 
 		// Act
 		var result = box.Serialise();

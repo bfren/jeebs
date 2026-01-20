@@ -11,7 +11,7 @@ public class Constructor_Tests
 		// Arrange
 
 		// Act
-		var result = new Locked<int>();
+		var result = new Locked<int>(Rnd.Str, Rnd.Str);
 
 		// Assert
 		Assert.NotEmpty(result.Salt);
