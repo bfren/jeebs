@@ -39,7 +39,7 @@ public static partial class StringExtensions
 	/// <param name="key">Encryption Key (must be 32 bytes).</param>
 	/// <returns>Decrypted object.</returns>
 	public static string Decrypt(this string @this, byte[] key) =>
-		Decrypt<string>(@this, key).Unwrap(_ => string.Empty);
+		Decrypt<string>(@this, key).Discard().Unwrap(() => string.Empty);
 
 	/// <summary>
 	/// Decrypt a string using the specified key.
@@ -49,5 +49,5 @@ public static partial class StringExtensions
 	/// <param name="key">Encryption Key (must be 32 bytes).</param>
 	/// <returns>Decrypted object.</returns>
 	public static string Decrypt(this string @this, string key) =>
-		Decrypt<string>(@this, key).Unwrap(_ => string.Empty);
+		Decrypt<string>(@this, key).Discard().Unwrap(() => string.Empty);
 }
