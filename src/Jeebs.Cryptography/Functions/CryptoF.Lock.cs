@@ -1,7 +1,6 @@
 // Jeebs Rapid Application Development
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
-using System.Diagnostics.CodeAnalysis;
 using Jeebs.Functions;
 
 namespace Jeebs.Cryptography.Functions;
@@ -57,7 +56,7 @@ public static partial class CryptoF
 	/// <param name="contents">Value to encrypt.</param>
 	/// <param name="key">Encryption key.</param>
 	/// <returns>Locked box.</returns>
-	public static Result<Locked<T>> Lock<T>([DisallowNull] T contents, byte[] key) =>
+	public static Result<Locked<T>> Lock<T>(T contents, byte[] key) =>
 		from c in CheckContents(contents)
 		from k in CheckKey(key)
 		select new Locked<T>(c, k);
