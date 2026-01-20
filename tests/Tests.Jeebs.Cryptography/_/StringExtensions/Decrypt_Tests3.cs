@@ -1,19 +1,18 @@
-﻿// Jeebs Unit Tests
+// Jeebs Unit Tests
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 namespace Jeebs.Cryptography.StringExtensions_Tests;
 
 public partial class Decrypt_Tests
 {
-	[Theory]
-	[InlineData(null)]
-	public void Without_Null_Input_String_Key_Returns_Empty(string input)
+	[Fact]
+	public void Without_Null_Input_String_Key_Returns_Empty()
 	{
 		// Arrange
 		var key = Rnd.Str;
 
 		// Act
-		var result = input.Decrypt(key);
+		var result = StringExtensions.Decrypt(null!, key);
 
 		// Assert
 		Assert.Equal(string.Empty, result);

@@ -1,4 +1,4 @@
-﻿// Jeebs Unit Tests
+// Jeebs Unit Tests
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using Jeebs.Functions;
@@ -9,14 +9,13 @@ public partial class Encrypt_Tests
 {
 	private readonly string defaultStringKey = "nXhxz39cHyPx3a";
 
-	[Theory]
-	[InlineData(null)]
-	public void Null_Input_String_Key_Returns_Empty(string input)
+	[Fact]
+	public void Null_Input_String_Key_Returns_Empty()
 	{
 		// Arrange
 
 		// Act
-		var result = input.Encrypt(defaultStringKey);
+		var result = ObjectExtensions.Encrypt<string>(null!, defaultStringKey);
 
 		// Assert
 		Assert.Equal(JsonF.Empty, result);
