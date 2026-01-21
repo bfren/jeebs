@@ -39,6 +39,10 @@ public abstract class Locked
 /// <typeparam name="T">Contents type.</typeparam>
 public sealed class Locked<T> : Locked
 {
+	/// <summary>
+	/// Required for JSON deserialisation.
+	/// </summary>
+	public Locked() { }
 
 	/// <summary>
 	/// Internal creation only.
