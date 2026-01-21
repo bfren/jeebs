@@ -44,7 +44,7 @@ public abstract class AddWhere_Tests<TBuilder, TId> : QueryPartsBuilder_Tests<TB
 		var result = builder.AddWhere<TestTable>(v.Parts, new(Rnd.Str, Rnd.Str), _ => Rnd.Str, cmp, val);
 
 		// Assert
-		_ = result.AssertFail("");
+		_ = result.AssertFail("Unable to get column from expression for table '{Table}'.");
 	}
 
 	public sealed record class TestTable(string Foo, string Bar) : Table(Rnd.Str);

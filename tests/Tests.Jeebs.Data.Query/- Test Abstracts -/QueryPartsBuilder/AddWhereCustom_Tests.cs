@@ -25,7 +25,7 @@ public abstract class AddWhereCustom_Tests<TBuilder, TId> : QueryPartsBuilder_Te
 		var result = builder.AddWhereCustom(v.Parts, input, new());
 
 		// Assert
-		_ = result.AssertFail("");
+		_ = result.AssertFail("You cannot add an empty WHERE clause.");
 	}
 
 	public abstract void Test01_Invalid_Parameters_Returns_None_With_UnableToAddParametersToWhereCustomMsg(object input);
@@ -48,7 +48,7 @@ public abstract class AddWhereCustom_Tests<TBuilder, TId> : QueryPartsBuilder_Te
 		var result = builder.AddWhereCustom(v.Parts, clause, input);
 
 		// Assert
-		_ = result.AssertFail("");
+		_ = result.AssertFail("Failed to add parameters to WHERE clause.");
 	}
 
 	public abstract void Test02_Returns_New_Parts_With_Clause_And_Parameters();
