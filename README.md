@@ -20,13 +20,13 @@ I am definitely a backend developer at heart, although like everyone I have to w
 
 The code in these libraries has been under active development and use for over a decade, powering all my own websites, and some for other people as well.
 
-### Jeebs v9
+### Jeebs v9 (under development)
 
-Jeebs v9 targets .NET 8 and brings in various optimisations and a re-write of the authentication projects.
+Jeebs v9 targets .NET 10 and switches from the `Maybe` project to use the more versatile `Wrap`, splitting `Maybe` and `Result` types, and bringing in `Id` and generic `Either` monads.
 
 ### Jeebs v8
 
-Jeebs v8 targets .NET 7 (<= 8.3.13) and .Net 8 (>= 8.4.0, applies StyleCop conventions and best practices, and removes two utility projects (`Maybe` and `Random`) to separate repos / packages (see [here](https://github.com/bfren/maybe) and [here](https://github.com/bfren/rnd)).
+Jeebs v8 targeted .NET 7 (<= 8.3.13), .NET 8 (>= 8.4.0), .NET 9 (>= 8.5.0) and finally .NET 10 (>= 8.6.0), applied StyleCop conventions and best practices, and removed two utility projects (`Maybe` and `Random`) to separate repos / packages (see [here](https://github.com/bfren/maybe) and [here](https://github.com/bfren/rnd)).
 
 ### Jeebs v7
 
