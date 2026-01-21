@@ -70,7 +70,7 @@ public abstract class Repository<TEntity, TId> : IRepository<TEntity, TId>
 	public virtual async Task<Result<TId>> CreateAsync(TEntity entity)
 	{
 		using var w = await Db.StartWorkAsync();
-		return await CreateAsync(entity, w.Transaction).ConfigureAwait(false);
+		return await CreateAsync(entity, w.Transaction);
 	}
 
 	/// <inheritdoc/>
@@ -87,7 +87,7 @@ public abstract class Repository<TEntity, TId> : IRepository<TEntity, TId>
 	public virtual async Task<Result<TModel>> RetrieveAsync<TModel>(TId id)
 	{
 		using var w = await Db.StartWorkAsync();
-		return await RetrieveAsync<TModel>(id, w.Transaction).ConfigureAwait(false);
+		return await RetrieveAsync<TModel>(id, w.Transaction);
 	}
 
 	/// <inheritdoc/>
@@ -105,7 +105,7 @@ public abstract class Repository<TEntity, TId> : IRepository<TEntity, TId>
 		where TModel : IWithId
 	{
 		using var w = await Db.StartWorkAsync();
-		return await UpdateAsync(model, w.Transaction).ConfigureAwait(false);
+		return await UpdateAsync(model, w.Transaction);
 	}
 
 	/// <inheritdoc/>
@@ -124,7 +124,7 @@ public abstract class Repository<TEntity, TId> : IRepository<TEntity, TId>
 		where TModel : IWithId
 	{
 		using var w = await Db.StartWorkAsync();
-		return await DeleteAsync(model, w.Transaction).ConfigureAwait(false);
+		return await DeleteAsync(model, w.Transaction);
 	}
 
 	/// <inheritdoc/>

@@ -27,7 +27,7 @@ public static partial class AuthF
 	public static async Task<AuthResult> DoSignOutAsync(SignOutArgs v)
 	{
 		// Sign out
-		await v.SignOutAsync().ConfigureAwait(false);
+		await v.SignOutAsync();
 
 		// Show a friendly message to the user
 		v.AddInfoAlert("Goodbye!");

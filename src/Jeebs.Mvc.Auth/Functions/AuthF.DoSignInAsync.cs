@@ -55,14 +55,13 @@ public static partial class AuthF
 			.AuditAsync(
 				some: x => v.Log.Dbg("User {UserId} validated.", x.Id.Value),
 				none: v.Log.Msg
-			)
-			.ConfigureAwait(false);
+			);
 
 		// Perform sign in
 		if (validateResult.IsSome(out var user))
 		{
 			// Get user principal
-			var principal = await GetPrincipalAsync(user, v.Model.Password, v.GetClaims).ConfigureAwait(false);
+			var principal = await GetPrincipalAsync(user, v.Model.Password, v.GetClaims);
 
 			// Update last sign in
 			ThreadF.FireAndForget(() => UpdateUserLastSignInAsync(v.Auth, user.Id, v.Log));

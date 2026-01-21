@@ -132,7 +132,7 @@ public abstract class Db : IDb
 	public async Task<Result<IEnumerable<T>>> QueryAsync<T>(string query, object? param, CommandType type)
 	{
 		using var w = await StartWorkAsync();
-		return await QueryAsync<T>(query, param, type, w.Transaction).ConfigureAwait(false);
+		return await QueryAsync<T>(query, param, type, w.Transaction);
 	}
 
 	/// <inheritdoc/>
@@ -151,7 +151,7 @@ public abstract class Db : IDb
 	public async Task<Result<T>> QuerySingleAsync<T>(string query, object? param, CommandType type)
 	{
 		using var w = await StartWorkAsync();
-		return await QuerySingleAsync<T>(query, param, type, w.Transaction).ConfigureAwait(false);
+		return await QuerySingleAsync<T>(query, param, type, w.Transaction);
 	}
 
 	/// <inheritdoc/>
@@ -182,7 +182,7 @@ public abstract class Db : IDb
 	public async Task<Result<bool>> ExecuteAsync(string query, object? param, CommandType type)
 	{
 		using var w = await StartWorkAsync();
-		return await ExecuteAsync(query, param, type, w.Transaction).ConfigureAwait(false);
+		return await ExecuteAsync(query, param, type, w.Transaction);
 	}
 
 	/// <inheritdoc/>
@@ -204,7 +204,7 @@ public abstract class Db : IDb
 	public async Task<Result<T>> ExecuteAsync<T>(string query, object? param, CommandType type)
 	{
 		using var w = await StartWorkAsync();
-		return await ExecuteAsync<T>(query, param, type, w.Transaction).ConfigureAwait(false);
+		return await ExecuteAsync<T>(query, param, type, w.Transaction);
 	}
 
 	/// <inheritdoc/>

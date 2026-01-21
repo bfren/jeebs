@@ -40,7 +40,7 @@ public class AuthController : Jeebs.Mvc.Auth.Controllers.AuthController
 			from ur1 in Auth.UserRole.CreateAsync(user, r1)
 			from ur2 in Auth.UserRole.CreateAsync(user, r2)
 			select user
-		).ConfigureAwait(false);
+		);
 
 		return Content(userId.ToString());
 	}
@@ -56,8 +56,7 @@ public class AuthController : Jeebs.Mvc.Auth.Controllers.AuthController
 			)
 			.UnwrapAsync(
 				x => x.Value(() => View("Unknown"))
-			)
-			.ConfigureAwait(false);
+			);
 
 	[HttpPost]
 	public async Task<IActionResult> UpdateUser(UpdateUserModel model) =>
@@ -71,8 +70,7 @@ public class AuthController : Jeebs.Mvc.Auth.Controllers.AuthController
 			)
 			.UnwrapAsync(
 				x => x.Value(() => throw new Exception())
-			)
-			.ConfigureAwait(false);
+			);
 
 	public async Task<IActionResult> UpdateUser() =>
 		await Auth
@@ -80,7 +78,7 @@ public class AuthController : Jeebs.Mvc.Auth.Controllers.AuthController
 				new AuthUserId { Value = 1 }
 			)
 			.SwitchAsync(
-				some: async x => await Auth.User.UpdateAsync(x with { FriendlyName = Rnd.Str }).ConfigureAwait(false),
+				some: async x => await Auth.User.UpdateAsync(x with { FriendlyName = Rnd.Str }),
 				none: r => F.None<bool>(r).AsTask()
 			)
 			.BindAsync(
@@ -92,8 +90,7 @@ public class AuthController : Jeebs.Mvc.Auth.Controllers.AuthController
 			)
 			.UnwrapAsync(
 				x => x.Value(Content("Ooops"))
-			)
-			.ConfigureAwait(false);
+			);
 
 	public async Task<IActionResult> ShowUserByEmail(string email) =>
 		await Auth
@@ -106,8 +103,7 @@ public class AuthController : Jeebs.Mvc.Auth.Controllers.AuthController
 			)
 			.UnwrapAsync(
 				x => x.Value(() => View("Unknown"))
-			)
-			.ConfigureAwait(false);
+			);
 
 	public sealed record class UpdateUserModel : IWithId<AuthUserId>, IWithVersion
 	{

@@ -60,7 +60,7 @@ public sealed class AuthDataProvider : IAuthDataProvider
 		}
 
 		// Get user for authentication
-		foreach (var user in await User.RetrieveAsync<AuthUserEntity>(email).ConfigureAwait(false))
+		foreach (var user in await User.RetrieveAsync<AuthUserEntity>(email))
 		{
 			// Verify the user is enabled
 			if (!user.IsEnabled)
@@ -75,7 +75,7 @@ public sealed class AuthDataProvider : IAuthDataProvider
 			}
 
 			// Get user model
-			return await User.RetrieveAsync<TModel>(user.Id).ConfigureAwait(false);
+			return await User.RetrieveAsync<TModel>(user.Id);
 		}
 
 		// User not found
@@ -114,7 +114,7 @@ public sealed class AuthDataProvider : IAuthDataProvider
 		}
 
 		// Get user for authentication
-		foreach (var user in await User.RetrieveAsync<AuthUserEntity>(model.Id).ConfigureAwait(false))
+		foreach (var user in await User.RetrieveAsync<AuthUserEntity>(model.Id))
 		{
 			// Verify the entered password
 			if (!user.PasswordHash.VerifyPassword(model.CurrentPassword))

@@ -71,7 +71,7 @@ public static class ControllerExtensions
 		{
 			@this.Response.Clear();
 			@this.Response.StatusCode = StatusCodes.Status500InternalServerError;
-			await @this.Response.WriteAsync(unableToFindViews).ConfigureAwait(false);
+			await @this.Response.WriteAsync(unableToFindViews);
 		}
 
 		// Return empty result

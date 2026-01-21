@@ -47,8 +47,7 @@ await bcg.Db.Query.PostsAsync<PostModel>(opt => opt with
 		}
 	},
 	none: r => log.Msg(r)
-)
-.ConfigureAwait(false);
+);
 
 //
 // Search for sermons with a string term
@@ -80,8 +79,7 @@ await bcg.Db.Query.PostsAsync<SermonModel>(2, opt => opt with
 		}
 	},
 	none: r => log.Msg(r)
-)
-.ConfigureAwait(false);
+);
 
 //
 // Get sermons with taxonomies
@@ -111,8 +109,7 @@ await bcg.Db.Query.PostsAsync<SermonModelWithTaxonomies>(opt => opt with
 		}
 	},
 	none: r => log.Msg(r)
-)
-.ConfigureAwait(false);
+);
 
 //
 // Search for sermons with a taxonomy
@@ -150,8 +147,7 @@ await bcg.Db.Query.PostsAsync<SermonModelWithTaxonomies>(opt => opt with
 		}
 	},
 	none: r => log.Msg(r)
-)
-.ConfigureAwait(false);
+);
 
 //
 // Get taxonomies
@@ -179,8 +175,7 @@ await usa.Db.Query.TermsAsync<TaxonomyModel>(opt => opt with
 		}
 	},
 	none: r => log.Msg(r)
-)
-.ConfigureAwait(false);
+);
 
 //
 // Get posts with custom fields
@@ -204,8 +199,7 @@ await usa.Db.Query.PostsAsync<PostModelWithCustomFields>(opt => opt)
 		}
 	},
 	none: r => log.Msg(r)
-)
-.ConfigureAwait(false);
+);
 
 //
 // Get sermons with custom fields
@@ -237,8 +231,7 @@ await bcg.Db.Query.PostsAsync<SermonModelWithCustomFields>(opt => opt with
 		}
 	},
 	none: r => log.Msg(r)
-)
-.ConfigureAwait(false);
+);
 
 //
 // Search for sermons with custom fields
@@ -275,8 +268,7 @@ await bcg.Db.Query.PostsAsync<SermonModelWithCustomFields>(opt => opt with
 		}
 	},
 	none: r => log.Msg(r)
-)
-.ConfigureAwait(false);
+);
 
 //
 // Generate Excerpts
@@ -302,8 +294,7 @@ await bcg.Db.Query.PostsAsync<PostModelWithContent>(opt => opt with
 		}
 	},
 	none: r => log.Msg(r)
-)
-.ConfigureAwait(false);
+);
 
 //
 // Get attachments
@@ -333,8 +324,7 @@ await bcg.Db.Query.AttachmentsAsync<Attachment>(opt => opt with
 		}
 	},
 	none: r => log.Msg(r)
-)
-.ConfigureAwait(false);
+);
 
 //
 // Get attachment file path
@@ -347,7 +337,7 @@ await bcg.Db.Query.AttachmentFilePathAsync(new() { Value = 802L })
 	some: x => log.Dbg("Path: {FilePath}", x),
 	none: r => log.Msg(r)
 )
-.ConfigureAwait(false);
+;
 
 //
 // Test paging
@@ -376,8 +366,7 @@ await bcg.Db.Query.PostsAsync<PostModel>(2, opt => opt with
 		log.Dbg("  - Last Item: {LastItem}", x.Values.LastItem);
 	},
 	none: r => log.Msg(r)
-)
-.ConfigureAwait(false);
+);
 
 // End
 Console.WriteLine();

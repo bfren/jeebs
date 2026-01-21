@@ -31,8 +31,7 @@ await db
 		$"CREATE SCHEMA IF NOT EXISTS {schema};",
 		null,
 		CommandType.Text
-	)
-	.ConfigureAwait(false);
+	);
 Console.WriteLine();
 
 // Create table
@@ -48,8 +47,7 @@ await db
 		");",
 		null,
 		CommandType.Text
-	)
-	.ConfigureAwait(false);
+	);
 Console.WriteLine();
 
 // Insert into the table
@@ -62,8 +60,7 @@ await db
 	)
 	.AuditAsync(
 		none: r => log.Msg(r)
-	)
-	.ConfigureAwait(false);
+	);
 Console.WriteLine();
 
 // Get data from the table
@@ -76,8 +73,7 @@ await db
 	.AuditAsync(
 		some: x => { if (x.Foo == foo) { log.Dbg("Succeeded: {@Test}.", x); id = x.Id; } else { log.Err("Failed."); } },
 		none: r => log.Msg(r)
-	)
-	.ConfigureAwait(false);
+	);
 Console.WriteLine();
 
 // Update data
@@ -89,8 +85,7 @@ await db
 	)
 	.AuditAsync(
 		none: r => log.Msg(r)
-	)
-	.ConfigureAwait(false);
+	);
 
 await db
 	.QuerySingleAsync<ParamTest>(
@@ -99,8 +94,7 @@ await db
 	.AuditAsync(
 		some: x => { if (x.Foo == newFoo) { log.Dbg("Succeeded: {@Test}.", x); } else { log.Err("Failed."); } },
 		none: r => log.Msg(r)
-	)
-	.ConfigureAwait(false);
+	);
 Console.WriteLine();
 
 // Delete data
@@ -112,8 +106,7 @@ await db
 	.AuditAsync(
 		some: x => { if (x) { log.Dbg("Succeeded."); } else { log.Err("Failed."); } },
 		none: r => log.Msg(r)
-	)
-	.ConfigureAwait(false);
+	);
 Console.WriteLine();
 
 // Drop table
@@ -121,8 +114,7 @@ log.Dbg("== Dropping table == ");
 await db
 	.ExecuteAsync(
 		$"DROP TABLE {table};", null, CommandType.Text
-	)
-	.ConfigureAwait(false);
+	);
 Console.WriteLine();
 
 // Create table
@@ -137,8 +129,7 @@ await db
 		");",
 		null,
 		CommandType.Text
-	)
-	.ConfigureAwait(false);
+	);
 Console.WriteLine();
 
 // Insert values using Jsonb
@@ -156,8 +147,7 @@ using (var w = await db.StartWorkAsync())
 			)
 			.AuditAsync(
 				none: r => log.Msg(r)
-			)
-			.ConfigureAwait(false);
+			);
 	}
 }
 Console.WriteLine();
@@ -170,8 +160,7 @@ await db
 	.AuditAsync(
 		some: x => { if (x == 18) { log.Dbg("Succeeded: {@Test}.", x); } else { log.Err("Failed."); } },
 		none: r => log.Msg(r)
-	)
-	.ConfigureAwait(false);
+	);
 Console.WriteLine();
 
 // Select values using Mapping
@@ -185,8 +174,7 @@ await db
 	.AuditAsync(
 		some: x => { if (x.Value.Id == 18) { log.Dbg("Succeeded: {@Test}.", x); } else { log.Err("Failed."); } },
 		none: r => log.Msg(r)
-	)
-	.ConfigureAwait(false);
+	);
 Console.WriteLine();
 
 // Insert values using repository
@@ -205,8 +193,7 @@ using (var w = await db.StartWorkAsync())
 			.AuditAsync(
 				some: x => log.Dbg("New ID: {Id}", x.Value),
 				none: r => log.Msg(r)
-			)
-			.ConfigureAwait(false);
+			);
 	}
 }
 Console.WriteLine();
@@ -216,8 +203,7 @@ log.Dbg("== Dropping table == ");
 await db
 	.ExecuteAsync(
 		$"DROP TABLE {jsonTable};", null, CommandType.Text
-	)
-	.ConfigureAwait(false);
+	);
 Console.WriteLine();
 
 // Migrate auth tablse

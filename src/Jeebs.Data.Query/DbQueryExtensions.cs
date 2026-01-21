@@ -23,7 +23,7 @@ public static class DbQueryExtensions
 	)
 	{
 		using var w = await @this.StartWorkAsync();
-		return await QueryAsync<T>(@this, page, builder, w.Transaction).ConfigureAwait(false);
+		return await QueryAsync<T>(@this, page, builder, w.Transaction);
 	}
 
 	/// <summary>
@@ -54,7 +54,7 @@ public static class DbQueryExtensions
 	)
 	{
 		using var w = await @this.StartWorkAsync();
-		return await QueryAsync<T>(@this, builder, w.Transaction).ConfigureAwait(false);
+		return await QueryAsync<T>(@this, builder, w.Transaction);
 	}
 
 	/// <inheritdoc cref="QueryAsync{T}(IDbQuery, ulong, Func{IQueryBuilder, IQueryBuilderWithFrom}, IDbTransaction)"/>
@@ -77,7 +77,7 @@ public static class DbQueryExtensions
 	)
 	{
 		using var w = await @this.StartWorkAsync();
-		return await QuerySingleAsync<T>(@this, builder, w.Transaction).ConfigureAwait(false);
+		return await QuerySingleAsync<T>(@this, builder, w.Transaction);
 	}
 
 	/// <inheritdoc cref="QueryAsync{T}(IDbQuery, ulong, Func{IQueryBuilder, IQueryBuilderWithFrom}, IDbTransaction)"/>

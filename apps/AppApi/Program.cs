@@ -26,8 +26,7 @@ static async Task<IResult> HandleSayHello(
 		)
 		.UnwrapAsync(
 			x => x.Value(ifNone: "Nothing to say.")
-		)
-		.ConfigureAwait(false);
+		);
 
 	return Results.Text(text);
 }

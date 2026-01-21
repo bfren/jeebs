@@ -113,7 +113,7 @@ public abstract class WebhookDriver<TConfig, TMessage> : Driver<TConfig>, IWebho
 			try
 			{
 				var client = Factory.CreateClient();
-				var response = await client.SendAsync(request).ConfigureAwait(false);
+				var response = await client.SendAsync(request);
 				if (!response.IsSuccessStatusCode)
 				{
 					Log.Wrn("Unable to send message: {@Response}", response);

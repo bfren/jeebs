@@ -1,4 +1,4 @@
-﻿// Jeebs Unit Tests
+// Jeebs Unit Tests
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using System.Data;
@@ -29,8 +29,8 @@ public static class DbQuery_Setup
 
 		var db = Substitute.For<IDb>();
 		db.Client.Returns(client);
-		db.ExecuteAsync(text, param, CommandType.Text, Arg.Any<IDbTransaction>()).Returns(true);
-		db.ExecuteAsync<ulong>(text, param, CommandType.Text, Arg.Any<IDbTransaction>()).Returns(1U);
+		db.ExecuteAsync(text, param, CommandType.Text, Arg.Any<IDbTransaction>()).Returns(R.True);
+		db.ExecuteAsync<ulong>(text, param, CommandType.Text, Arg.Any<IDbTransaction>()).Returns(R.Wrap(1UL));
 
 		var log = Substitute.For<ILog>();
 		var query = Substitute.ForPartsOf<DbQuery<IDb>>(db, log);

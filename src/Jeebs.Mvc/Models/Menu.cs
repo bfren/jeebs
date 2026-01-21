@@ -172,7 +172,7 @@ public abstract class Menu
 			try
 			{
 				// Attempt to load the URL and ensure it is successful
-				var response = await client.GetAsync(uri, token).ConfigureAwait(false);
+				var response = await client.GetAsync(uri, token);
 				_ = response.EnsureSuccessStatusCode();
 
 				// Successful

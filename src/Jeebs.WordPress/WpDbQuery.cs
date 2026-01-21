@@ -29,14 +29,14 @@ internal sealed class WpDbQuery : DbQuery<IWpDb>, IWpDbQuery
 		where T : IPostAttachment
 	{
 		using var w = await Db.StartWorkAsync();
-		return await QueryAttachmentsF.ExecuteAsync<T>(Db, w, opt).ConfigureAwait(false);
+		return await QueryAttachmentsF.ExecuteAsync<T>(Db, w, opt);
 	}
 
 	/// <inheritdoc/>
 	public async Task<Maybe<string>> AttachmentFilePathAsync(WpPostId fileId)
 	{
 		using var w = await Db.StartWorkAsync();
-		return await QueryAttachmentsF.GetFilePathAsync(Db, w, fileId).ConfigureAwait(false);
+		return await QueryAttachmentsF.GetFilePathAsync(Db, w, fileId);
 	}
 
 	/// <inheritdoc/>
@@ -44,7 +44,7 @@ internal sealed class WpDbQuery : DbQuery<IWpDb>, IWpDbQuery
 		where T : IWithId<WpPostId>
 	{
 		using var w = await Db.StartWorkAsync();
-		return await QueryPostsF.ExecuteAsync<T>(Db, w, opt, filters).ConfigureAwait(false);
+		return await QueryPostsF.ExecuteAsync<T>(Db, w, opt, filters);
 	}
 
 	/// <inheritdoc/>
@@ -52,14 +52,14 @@ internal sealed class WpDbQuery : DbQuery<IWpDb>, IWpDbQuery
 		where T : IWithId<WpPostId>
 	{
 		using var w = await Db.StartWorkAsync();
-		return await QueryPostsF.ExecuteAsync<T>(Db, w, page, opt, filters).ConfigureAwait(false);
+		return await QueryPostsF.ExecuteAsync<T>(Db, w, page, opt, filters);
 	}
 
 	/// <inheritdoc/>
 	public async Task<Maybe<(WpPostId? prev, WpPostId? next)>> PreviousAndNextPostsAsync(WpPostId id, Query.GetPostsOptions opt)
 	{
 		using var w = await Db.StartWorkAsync();
-		return await QueryPostsF.GetPreviousAndNextAsync(Db, w, id, opt).ConfigureAwait(false);
+		return await QueryPostsF.GetPreviousAndNextAsync(Db, w, id, opt);
 	}
 
 	/// <inheritdoc/>
@@ -67,7 +67,7 @@ internal sealed class WpDbQuery : DbQuery<IWpDb>, IWpDbQuery
 		where T : IWithId<WpPostMetaId>
 	{
 		using var w = await Db.StartWorkAsync();
-		return await QueryPostsMetaF.ExecuteAsync<T>(Db, w, opt).ConfigureAwait(false);
+		return await QueryPostsMetaF.ExecuteAsync<T>(Db, w, opt);
 	}
 
 	/// <inheritdoc/>
@@ -75,7 +75,7 @@ internal sealed class WpDbQuery : DbQuery<IWpDb>, IWpDbQuery
 		where T : IWithId<WpTermId>
 	{
 		using var w = await Db.StartWorkAsync();
-		return await QueryPostsTaxonomyF.ExecuteAsync<T>(Db, w, opt).ConfigureAwait(false);
+		return await QueryPostsTaxonomyF.ExecuteAsync<T>(Db, w, opt);
 	}
 
 	/// <inheritdoc/>
@@ -83,6 +83,6 @@ internal sealed class WpDbQuery : DbQuery<IWpDb>, IWpDbQuery
 		where T : IWithId<WpTermId>
 	{
 		using var w = await Db.StartWorkAsync();
-		return await QueryTermsF.ExecuteAsync<T>(Db, w, opt).ConfigureAwait(false);
+		return await QueryTermsF.ExecuteAsync<T>(Db, w, opt);
 	}
 }

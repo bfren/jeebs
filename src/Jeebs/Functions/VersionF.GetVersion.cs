@@ -23,7 +23,7 @@ public static partial class VersionF
 			try
 			{
 				using var reader = new StreamReader(s);
-				return await reader.ReadToEndAsync().ConfigureAwait(false);
+				return await reader.ReadToEndAsync();
 			}
 			catch
 			{

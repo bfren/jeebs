@@ -15,7 +15,7 @@ public sealed partial record class FluentQuery<TEntity, TId>
 	public async Task<Result<IEnumerable<TModel>>> QueryAsync<TModel>()
 	{
 		using var w = await Db.StartWorkAsync();
-		return await QueryAsync<TModel>(w.Transaction).ConfigureAwait(false);
+		return await QueryAsync<TModel>(w.Transaction);
 	}
 
 	/// <inheritdoc/>
@@ -59,7 +59,7 @@ public sealed partial record class FluentQuery<TEntity, TId>
 	public async Task<Result<TModel>> QuerySingleAsync<TModel>()
 	{
 		using var w = await Db.StartWorkAsync();
-		return await QuerySingleAsync<TModel>(w.Transaction).ConfigureAwait(false);
+		return await QuerySingleAsync<TModel>(w.Transaction);
 	}
 
 	/// <inheritdoc/>

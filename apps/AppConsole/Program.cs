@@ -22,7 +22,7 @@ var jeebs = app.Services.GetRequiredService<IOptions<JeebsConfig>>().Value;
 log.Dbg("Services loaded");
 log.Dbg("Project {Name}", jeebs.App.Name);
 
-log.Dbg("Version: {0}", await VersionF.GetJeebsVersionAsync().ConfigureAwait(false));
+log.Dbg("Version: {0}", await VersionF.GetJeebsVersionAsync());
 
 log.Err("Test error");
 log.Err(new Exception("Test"), "Something went badly wrong {here}", "just now");
@@ -41,20 +41,20 @@ var notifier = app.Services.GetRequiredService<INotifier>();
 notifier.Send("test notification");
 
 var one = async Task<Maybe<int>> (int input) =>
-	await Task.FromResult(input + 1).ConfigureAwait(false);
+	await Task.FromResult(input + 1);
 
 var two = async Task<Maybe<string>> (int input) =>
-	await Task.FromResult(input.ToString()).ConfigureAwait(false);
+	await Task.FromResult(input.ToString());
 
 var three = async Task<Maybe<bool>> (string input) =>
-	await Task.FromResult(input == "3").ConfigureAwait(false);
+	await Task.FromResult(input == "3");
 
 var result = from r0 in one(2)
 			 from r1 in two(r0)
 			 from r2 in three(r1)
 			 select r2;
 
-(await result.ConfigureAwait(false)).Audit(
+(await result).Audit(
 	some: x => log.Inf("Result: {0}", x),
 	none: _ => log.Inf("No result")
 );

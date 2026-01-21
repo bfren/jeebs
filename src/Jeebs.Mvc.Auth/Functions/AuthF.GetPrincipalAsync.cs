@@ -43,7 +43,7 @@ public static partial class AuthF
 		// Add custom Claims
 		if (getClaims != null)
 		{
-			claims.AddRange(await getClaims(user, password).ConfigureAwait(false));
+			claims.AddRange(await getClaims(user, password));
 		}
 
 		// Create and return identity and principal objects

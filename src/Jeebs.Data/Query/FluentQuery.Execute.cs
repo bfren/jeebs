@@ -17,7 +17,7 @@ public sealed partial record class FluentQuery<TEntity, TId>
 	public async Task<Result<TValue>> ExecuteAsync<TValue>(string columnAlias)
 	{
 		using var w = await Db.StartWorkAsync();
-		return await ExecuteAsync<TValue>(columnAlias, w.Transaction).ConfigureAwait(false);
+		return await ExecuteAsync<TValue>(columnAlias, w.Transaction);
 	}
 
 	/// <inheritdoc/>
@@ -35,7 +35,7 @@ public sealed partial record class FluentQuery<TEntity, TId>
 	public async Task<Result<TValue>> ExecuteAsync<TValue>(Expression<Func<TEntity, TValue>> aliasSelector)
 	{
 		using var w = await Db.StartWorkAsync();
-		return await ExecuteAsync(aliasSelector, w.Transaction).ConfigureAwait(false);
+		return await ExecuteAsync(aliasSelector, w.Transaction);
 	}
 
 	/// <inheritdoc/>

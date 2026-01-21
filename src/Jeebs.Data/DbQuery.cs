@@ -91,7 +91,7 @@ public abstract class DbQuery<TDb> : IDbQuery
 	public async Task<Result<IPagedList<T>>> QueryAsync<T>(ulong page, IQueryParts parts)
 	{
 		using var w = await Db.StartWorkAsync();
-		return await QueryAsync<T>(page, parts, w.Transaction).ConfigureAwait(false);
+		return await QueryAsync<T>(page, parts, w.Transaction);
 	}
 
 	/// <inheritdoc/>
@@ -132,7 +132,7 @@ public abstract class DbQuery<TDb> : IDbQuery
 	public async Task<Result<IEnumerable<T>>> QueryAsync<T>(IQueryParts parts)
 	{
 		using var w = await Db.StartWorkAsync();
-		return await QueryAsync<T>(parts, w.Transaction).ConfigureAwait(false);
+		return await QueryAsync<T>(parts, w.Transaction);
 	}
 
 	/// <inheritdoc/>
@@ -171,7 +171,7 @@ public abstract class DbQuery<TDb> : IDbQuery
 	public async Task<Result<T>> QuerySingleAsync<T>(IQueryParts parts)
 	{
 		using var w = await Db.StartWorkAsync();
-		return await QuerySingleAsync<T>(parts, w.Transaction).ConfigureAwait(false);
+		return await QuerySingleAsync<T>(parts, w.Transaction);
 	}
 
 	/// <inheritdoc/>

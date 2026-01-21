@@ -11,6 +11,6 @@ public class App : Jeebs.Apps.Web.WebApp
 	{
 		base.Configure(app);
 
-		app.Run(async ctx => await ctx.Response.WriteAsync("Hello, world!").ConfigureAwait(false));
+		app.Run(async ctx => await ctx.Response.WriteAsync("Hello, world!"));
 	}
 }

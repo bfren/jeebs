@@ -10,9 +10,9 @@ public static partial class ResultExtensions
 {
 	/// <inheritdoc cref="LogBool(Result{bool}, ILog, string, string)"/>
 	public static async Task<Result<bool>> LogBoolAsync(this Task<Result<bool>> @this, ILog log) =>
-		(await @this.ConfigureAwait(false)).LogBool(log);
+		(await @this).LogBool(log);
 
 	/// <inheritdoc cref="LogBool(Result{bool}, ILog, string, string)"/>
 	public static async Task<Result<bool>> LogBoolAsync(this Task<Result<bool>> @this, ILog log, string ifTrue, string ifFalse) =>
-		(await @this.ConfigureAwait(false)).LogBool(log, ifTrue, ifFalse);
+		(await @this).LogBool(log, ifTrue, ifFalse);
 }

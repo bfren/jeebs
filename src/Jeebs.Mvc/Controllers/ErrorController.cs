@@ -24,7 +24,7 @@ public abstract class ErrorController : Controller
 	/// Default error view.
 	/// </summary>
 	public async Task<IActionResult> Index() =>
-		await Handle(StatusCodes.Status500InternalServerError).ConfigureAwait(false);
+		await Handle(StatusCodes.Status500InternalServerError);
 
 	/// <summary>
 	/// Handle an error with the specified code.
@@ -32,7 +32,7 @@ public abstract class ErrorController : Controller
 	/// <param name="code">Http Status Code.</param>
 	[Route("/Error/{code:int}")]
 	public async Task<IActionResult> Handle(int code) =>
-		await this.ExecuteErrorAsync(new M.UnknownErrorMsg(), code).ConfigureAwait(false);
+		await this.ExecuteErrorAsync(new M.UnknownErrorMsg(), code);
 
 	/// <summary>Messages</summary>
 	public static class M

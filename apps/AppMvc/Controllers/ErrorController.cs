@@ -16,7 +16,7 @@ public class ErrorController : Jeebs.Mvc.Controllers.ErrorController
 		throw new Exception("Something");
 
 	public async Task<IActionResult> ReturnError() =>
-		await this.ExecuteErrorAsync(new TestErrorMsg()).ConfigureAwait(false);
+		await this.ExecuteErrorAsync(new TestErrorMsg());
 
 	public IActionResult ReturnNotFound() =>
 		NotFound();
@@ -28,7 +28,7 @@ public class ErrorController : Jeebs.Mvc.Controllers.ErrorController
 		NotAllowed();
 
 	public async Task<IActionResult> ReturnError404() =>
-		await this.ExecuteErrorAsync(new NotFoundMsg(42)).ConfigureAwait(false);
+		await this.ExecuteErrorAsync(new NotFoundMsg(42));
 
 	public record class NotFoundMsg(int Value) : NotFoundMsg<int>
 	{

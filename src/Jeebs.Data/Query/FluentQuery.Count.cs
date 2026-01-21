@@ -14,7 +14,7 @@ public sealed partial record class FluentQuery<TEntity, TId>
 	public async Task<Result<long>> CountAsync()
 	{
 		using var w = await Db.StartWorkAsync();
-		return await CountAsync(w.Transaction).ConfigureAwait(false);
+		return await CountAsync(w.Transaction);
 	}
 
 	/// <inheritdoc/>

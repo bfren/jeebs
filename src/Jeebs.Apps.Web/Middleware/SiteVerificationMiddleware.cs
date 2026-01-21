@@ -39,7 +39,7 @@ public sealed class SiteVerificationMiddleware : IMiddleware
 		{
 			if (path == config.Google)
 			{
-				await WriteAsync(context, "text/html", $"google-site-verification: {path}").ConfigureAwait(false);
+				await WriteAsync(context, "text/html", $"google-site-verification: {path}");
 				return;
 			}
 		}
@@ -48,14 +48,14 @@ public sealed class SiteVerificationMiddleware : IMiddleware
 			logger.Error(ex, "Unable to return Site Verification page '{Path}'.", path);
 		}
 
-		await next(context).ConfigureAwait(false);
+		await next(context);
 	}
 
 	private static async Task WriteAsync(HttpContext context, string contentType, string content)
 	{
 		context.Response.Clear();
 		context.Response.ContentType = contentType;
-		await context.Response.WriteAsync(content).ConfigureAwait(false);
-		await context.Response.CompleteAsync().ConfigureAwait(false);
+		await context.Response.WriteAsync(content);
+		await context.Response.CompleteAsync();
 	}
 }

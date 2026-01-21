@@ -49,7 +49,7 @@ public static partial class QueryPostsF
 				if (GetCustomField(post, info) is ICustomField customField)
 				{
 					// Hydrate the field
-					var result = await customField.HydrateAsync(db, w, metaDict, required).ConfigureAwait(false);
+					var result = await customField.HydrateAsync(db, w, metaDict, required);
 
 					// If it failed and it's required, return None
 					if (result.IsNone(out var reason) && required)
