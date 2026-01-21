@@ -1,4 +1,4 @@
-﻿// Jeebs Rapid Application Development
+// Jeebs Rapid Application Development
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using System;
@@ -9,7 +9,7 @@ namespace Jeebs.Data.Query.Exceptions;
 /// <summary>
 /// Thrown when something goes wrong while building a query.
 /// </summary>
-/// <typeparam name="TTable">Table type</typeparam>
+/// <typeparam name="TTable">Table type.</typeparam>
 public abstract class QueryBuilderException<TTable> : Exception
 	where TTable : ITable
 {

@@ -4,13 +4,12 @@
 using Jeebs.Collections;
 using Jeebs.Data.Enums;
 using Jeebs.Data.Map;
-using StrongId;
 
 namespace Jeebs.Data.Query;
 
 /// <inheritdoc cref="IQueryOptions{TId}"/>
 public abstract record class QueryOptions<TId> : IQueryOptions<TId>
-	where TId : class, IStrongId, new()
+	where TId : class, IUnion, new()
 {
 	/// <summary>
 	/// Abstraction for building query parts.
@@ -45,26 +44,23 @@ public abstract record class QueryOptions<TId> : IQueryOptions<TId>
 		Builder = builder;
 
 	/// <inheritdoc/>
-	public Maybe<IQueryParts> ToParts<TModel>() =>
+	public Result<IQueryParts> ToParts<TModel>() =>
 		Build(
 			Builder.Create<TModel>(Maximum, Skip)
 		)
 		.Map(
-			x => (IQueryParts)x,
-			F.DefaultHandler
+			x => (IQueryParts)x
 		);
 
 	/// <summary>
 	/// Build QueryParts.
 	/// </summary>
 	/// <param name="parts">Initial QueryParts.</param>
-	protected virtual Maybe<QueryParts> Build(Maybe<QueryParts> parts) =>
-		parts.SwitchIf(
-			_ => Id is not null || Ids.Count > 0,
+	protected virtual Result<QueryParts> Build(Result<QueryParts> parts) =>
+		parts.If(_ => Id is not null || Ids.Count > 0,
 			x => Builder.AddWhereId(x, Id, Ids)
 		)
-		.SwitchIf(
-			_ => SortRandom || Sort.Count > 0,
+		.If(_ => SortRandom || Sort.Count > 0,
 			x => Builder.AddSort(x, SortRandom, Sort)
 		);
 }

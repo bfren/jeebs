@@ -1,4 +1,4 @@
-﻿// Jeebs Rapid Application Development
+// Jeebs Rapid Application Development
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using System;
@@ -16,8 +16,8 @@ public interface IQueryBuilderWithFrom
 	/// <summary>
 	/// Create a table JOIN.
 	/// </summary>
-	/// <typeparam name="TFrom">Join from table type</typeparam>
-	/// <typeparam name="TTo">Join to table type</typeparam>
+	/// <typeparam name="TFrom">Join from table type.</typeparam>
+	/// <typeparam name="TTo">Join to table type.</typeparam>
 	/// <param name="type">Join type.</param>
 	/// <param name="fromColumn">Join from this column.</param>
 	/// <param name="toColumn">Join to this table and column.</param>

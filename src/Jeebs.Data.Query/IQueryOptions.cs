@@ -4,7 +4,6 @@
 using Jeebs.Collections;
 using Jeebs.Data.Enums;
 using Jeebs.Data.Map;
-using StrongId;
 
 namespace Jeebs.Data.Query;
 
@@ -13,7 +12,7 @@ namespace Jeebs.Data.Query;
 /// </summary>
 /// <typeparam name="TId">Entity ID type</typeparam>
 public interface IQueryOptions<TId>
-	where TId : class, IStrongId, new()
+	where TId : class, IUnion, new()
 {
 	/// <summary>
 	/// Query Id.
@@ -41,5 +40,5 @@ public interface IQueryOptions<TId>
 	/// Convert the query options to <see cref="IQueryParts"/> for use in a database query.
 	/// </summary>
 	/// <typeparam name="TModel">Model type to use for selecting columns</typeparam>
-	Maybe<IQueryParts> ToParts<TModel>();
+	Result<IQueryParts> ToParts<TModel>();
 }

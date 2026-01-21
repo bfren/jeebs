@@ -4,7 +4,6 @@
 using System;
 using System.Linq.Expressions;
 using Jeebs.Data.Map;
-using Jeebs.Data.Query.Exceptions;
 
 namespace Jeebs.Data.Query.Functions;
 
@@ -18,10 +17,7 @@ public static partial class QueryBuilderF
 	/// <param name="column">Column expression.</param>
 	public static IColumn GetColumnFromExpression<TTable>(TTable table, Expression<Func<TTable, string>> column)
 		where TTable : ITable =>
-		QueryF.GetColumnFromExpression(table, column)
-			.Unwrap(
-				() => throw new UnableToGetColumnFromExpressionException<TTable>()
-			);
+		QueryF.GetColumnFromExpression(table, column).Unwrap();
 
 	/// <inheritdoc cref="GetColumnFromExpression{TTable}(TTable, Expression{Func{TTable, string}})"/>
 	public static IColumn GetColumnFromExpression<TTable>(Expression<Func<TTable, string>> column)

@@ -1,4 +1,4 @@
-﻿// Jeebs Rapid Application Development
+// Jeebs Rapid Application Development
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using Jeebs.Data.Map;
@@ -17,7 +17,7 @@ public interface IQueryBuilder
 	IQueryBuilderWithFrom From(ITable table);
 
 	/// <inheritdoc cref="From(ITable)"/>
-	/// <typeparam name="TTable">Table type</typeparam>
+	/// <typeparam name="TTable">Table type.</typeparam>
 	IQueryBuilderWithFrom From<TTable>()
 		where TTable : ITable, new();
 }

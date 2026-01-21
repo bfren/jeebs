@@ -39,8 +39,8 @@ public sealed record class QueryBuilderWithFrom : IQueryBuilderWithFrom
 	/// Select matching columns based on the specified model.
 	/// </summary>
 	/// <typeparam name="TModel">Model type</typeparam>
-	internal Maybe<IQueryParts> Select<TModel>() =>
-		from cols in Extract<TModel>.From(Tables.ToArray())
+	internal Result<IQueryParts> Select<TModel>() =>
+		from cols in Extract<TModel>.From([.. Tables])
 		select (IQueryParts)(Parts with { SelectColumns = cols });
 
 	/// <summary>

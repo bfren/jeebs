@@ -6,7 +6,6 @@ using System.Linq.Expressions;
 using Jeebs.Collections;
 using Jeebs.Data.Enums;
 using Jeebs.Data.Map;
-using StrongId;
 
 namespace Jeebs.Data.Query;
 
@@ -16,7 +15,7 @@ namespace Jeebs.Data.Query;
 /// </summary>
 /// <typeparam name="TId">Entity ID type</typeparam>
 public interface IQueryPartsBuilder<TId>
-	where TId : class, IStrongId, new()
+	where TId : class, IUnion, new()
 {
 	/// <summary>
 	/// The primary table for this query.
@@ -32,7 +31,7 @@ public interface IQueryPartsBuilder<TId>
 	/// Retrieve columns matching the specified model.
 	/// </summary>
 	/// <typeparam name="TModel">Return Model type</typeparam>
-	IColumnList GetColumns<TModel>();
+	Result<IColumnList> GetColumns<TModel>();
 
 	/// <summary>
 	/// Create a new QueryParts object, adding <paramref name="maximum"/> and <paramref name="skip"/> values.
@@ -40,7 +39,7 @@ public interface IQueryPartsBuilder<TId>
 	/// <typeparam name="TModel">Return Model type</typeparam>
 	/// <param name="maximum">Maximum number of results to select.</param>
 	/// <param name="skip">Number of results to skip.</param>
-	QueryParts Create<TModel>(ulong? maximum, ulong skip);
+	Result<QueryParts> Create<TModel>(ulong? maximum, ulong skip);
 
 	/// <summary>
 	/// Add Join.
@@ -52,19 +51,19 @@ public interface IQueryPartsBuilder<TId>
 	/// <param name="fromSelector">From column.</param>
 	/// <param name="toTable">To table - should be a new table not already added to the query.</param>
 	/// <param name="toSelector">To column.</param>
-	Maybe<QueryParts> AddInnerJoin<TFrom, TTo>(QueryParts parts,
+	Result<QueryParts> AddInnerJoin<TFrom, TTo>(QueryParts parts,
 		TFrom fromTable, Expression<Func<TFrom, string>> fromSelector, TTo toTable, Expression<Func<TTo, string>> toSelector)
 		where TFrom : ITable
 		where TTo : ITable;
 
 	/// <inheritdoc cref="AddInnerJoin"/>
-	Maybe<QueryParts> AddLeftJoin<TFrom, TTo>(QueryParts parts,
+	Result<QueryParts> AddLeftJoin<TFrom, TTo>(QueryParts parts,
 		TFrom fromTable, Expression<Func<TFrom, string>> fromSelector, TTo toTable, Expression<Func<TTo, string>> toSelector)
 		where TFrom : ITable
 		where TTo : ITable;
 
 	/// <inheritdoc cref="AddInnerJoin"/>
-	Maybe<QueryParts> AddRightJoin<TFrom, TTo>(QueryParts parts,
+	Result<QueryParts> AddRightJoin<TFrom, TTo>(QueryParts parts,
 		TFrom fromTable, Expression<Func<TFrom, string>> fromSelector, TTo toTable, Expression<Func<TTo, string>> toSelector)
 		where TFrom : ITable
 		where TTo : ITable;
@@ -75,7 +74,7 @@ public interface IQueryPartsBuilder<TId>
 	/// <param name="parts">QueryParts.</param>
 	/// <param name="id">Single ID.</param>
 	/// <param name="ids">List of IDs.</param>
-	Maybe<QueryParts> AddWhereId(QueryParts parts,
+	Result<QueryParts> AddWhereId(QueryParts parts,
 		TId? id, IImmutableList<TId> ids);
 
 	/// <summary>
@@ -84,7 +83,7 @@ public interface IQueryPartsBuilder<TId>
 	/// <param name="parts">QueryParts.</param>
 	/// <param name="sortRandom">If true, will sort results randomly.</param>
 	/// <param name="sort">Sort columns.</param>
-	Maybe<QueryParts> AddSort(QueryParts parts,
+	Result<QueryParts> AddSort(QueryParts parts,
 		bool sortRandom, IImmutableList<(IColumn, SortOrder)> sort);
 
 	/// <summary>
@@ -96,7 +95,7 @@ public interface IQueryPartsBuilder<TId>
 	/// <param name="column">Column selector.</param>
 	/// <param name="cmp">Compare operator.</param>
 	/// <param name="value">Search value.</param>
-	Maybe<QueryParts> AddWhere<TTable>(QueryParts parts,
+	Result<QueryParts> AddWhere<TTable>(QueryParts parts,
 		TTable table, Expression<Func<TTable, string>> column, Compare cmp, object value)
 		where TTable : ITable;
 
@@ -106,6 +105,6 @@ public interface IQueryPartsBuilder<TId>
 	/// <param name="parts">QueryParts.</param>
 	/// <param name="clause">Clause text.</param>
 	/// <param name="parameters">Clause parameters.</param>
-	Maybe<QueryParts> AddWhereCustom(QueryParts parts,
+	Result<QueryParts> AddWhereCustom(QueryParts parts,
 		string clause, object parameters);
 }
