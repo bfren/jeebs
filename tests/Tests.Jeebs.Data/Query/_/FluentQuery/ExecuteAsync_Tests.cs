@@ -17,7 +17,7 @@ public class ExecuteAsync_Tests : FluentQuery_Tests
 		var result = await query.ExecuteAsync<int>(Rnd.Str);
 
 		// Assert
-		_ = result.AssertFail("");
+		_ = result.AssertFail("Column with alias '{Alias}' not found in table '{Table}'.");
 	}
 
 	[Fact]
@@ -56,8 +56,8 @@ public class ExecuteAsync_Tests : FluentQuery_Tests
 		});
 
 		// Act
-		await withWhere.ExecuteAsync<string>(nameof(TestEntity.Foo));
-		await withWhere.ExecuteAsync(x => x.Foo);
+		var r0 = await withWhere.ExecuteAsync<string>(nameof(TestEntity.Foo));
+		var r1 = await withWhere.ExecuteAsync(x => x.Foo);
 
 		// Assert
 		v.Db.Client.Received(2).GetQuery(Arg.Is<IQueryParts>(x => x.Maximum == 1));

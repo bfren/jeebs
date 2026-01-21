@@ -15,7 +15,7 @@ public class GetTableMapFor_Tests
 		var result = mapper.GetTableMapFor<Foo>();
 
 		// Assert
-		_ = result.AssertFail("");
+		_ = result.AssertFail("Trying to get table map for an umapped entity.");
 	}
 
 	[Fact]

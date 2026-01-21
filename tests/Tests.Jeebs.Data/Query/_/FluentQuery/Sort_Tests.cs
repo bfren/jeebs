@@ -69,7 +69,7 @@ public class Sort_Tests : FluentQuery_Tests
 		// Assert
 		var fluent = Assert.IsType<FluentQuery<TestEntity, TestId>>(result);
 		var single = Assert.Single(fluent.Errors);
-		Assert.Equal("", single.Message);
+		Assert.Equal("Column with alias '{Alias}' not found in table '{Table}'.", single.Message);
 		Assert.Same(query, fluent);
 	}
 }

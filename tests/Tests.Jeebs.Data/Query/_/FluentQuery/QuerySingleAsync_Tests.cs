@@ -18,7 +18,7 @@ public class QuerySingleAsync_Tests : FluentQuery_Tests
 		});
 
 		// Act
-		await withWhere.QuerySingleAsync<int>();
+		await withWhere.QuerySingleAsync<long>();
 
 		// Assert
 		Assert.IsType<FluentQuery<TestEntity, TestId>>(withWhere);
@@ -30,16 +30,16 @@ public class QuerySingleAsync_Tests : FluentQuery_Tests
 	{
 		// Arrange
 		var (query, _) = Setup();
-		var m0 = FailGen.Create();
-		var m1 = FailGen.Create();
-		query.Errors.Add(m0.Value);
-		query.Errors.Add(m1.Value);
+		var m0 = FailGen.Create().Value;
+		var m1 = FailGen.Create().Value;
+		query.Errors.Add(m0);
+		query.Errors.Add(m1);
 
 		// Act
-		var result = await query.QuerySingleAsync<int>();
+		var result = await query.QuerySingleAsync<long>();
 
 		// Assert
-		var f = result.AssertFail("");
+		var f = result.AssertFail("Query errors.");
 		Assert.Collection(f.Args!,
 			x => Assert.Equal(m0, x),
 			x => Assert.Equal(m1, x)
@@ -53,10 +53,10 @@ public class QuerySingleAsync_Tests : FluentQuery_Tests
 		var (query, _) = Setup();
 
 		// Act
-		var result = await query.QuerySingleAsync<int>();
+		var result = await query.QuerySingleAsync<long>();
 
 		// Assert
-		_ = result.AssertFail("");
+		_ = result.AssertFail("No predicates defined for WHERE clause.");
 	}
 
 	[Fact]
@@ -71,8 +71,8 @@ public class QuerySingleAsync_Tests : FluentQuery_Tests
 		});
 
 		// Act
-		await withWhere.QuerySingleAsync<int>();
-		await withWhere.QuerySingleAsync<int>(v.Transaction);
+		await withWhere.QuerySingleAsync<long>();
+		await withWhere.QuerySingleAsync<long>(v.Transaction);
 
 		// Assert
 		var fluent = Assert.IsType<FluentQuery<TestEntity, TestId>>(withWhere);
@@ -93,11 +93,11 @@ public class QuerySingleAsync_Tests : FluentQuery_Tests
 		});
 
 		// Act
-		await withWhere.QuerySingleAsync<int>();
-		await withWhere.QuerySingleAsync<int>(v.Transaction);
+		await withWhere.QuerySingleAsync<long>();
+		await withWhere.QuerySingleAsync<long>(v.Transaction);
 
 		// Assert
 		Assert.IsType<FluentQuery<TestEntity, TestId>>(withWhere);
-		await v.Db.Received(2).QueryAsync<int>(sql, param, CommandType.Text, v.Transaction);
+		await v.Db.Received(2).QueryAsync<long>(sql, param, CommandType.Text, v.Transaction);
 	}
 }

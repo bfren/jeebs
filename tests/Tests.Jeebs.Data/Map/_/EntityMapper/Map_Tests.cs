@@ -91,7 +91,7 @@ public class Map_Tests
 
 		// Assert
 		var ex = Assert.Throws<InvalidTableMapException>(action);
-		Assert.Contains("Unable to get Id column from table '{Table}'.", ex.Message);
+		Assert.Contains("Unable to get single column with attribute '{Attribute}' from table '{Table}'.", ex.Message);
 	}
 
 	[Fact]
@@ -105,6 +105,6 @@ public class Map_Tests
 
 		// Assert
 		var ex = Assert.Throws<InvalidTableMapException>(action);
-		Assert.Contains("Unable to get Id column from table '{Table}'.", ex.Message);
+		Assert.Contains("Unable to get single column with attribute '{Attribute}' from table '{Table}'.", ex.Message);
 	}
 }

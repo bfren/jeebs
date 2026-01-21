@@ -38,7 +38,7 @@ public class Where_Tests0 : FluentQuery_Tests
 		Assert.Empty(fluent.Parts.Where);
 		Assert.Same(query, fluent);
 		var single = Assert.Single(fluent.Errors);
-		Assert.Equal("", single.Message);
+		Assert.Equal("Trying to add empty clause to WHERE.", single.Message);
 	}
 
 	[Theory]
@@ -61,7 +61,7 @@ public class Where_Tests0 : FluentQuery_Tests
 		Assert.Empty(fluent.Parts.Where);
 		Assert.Same(query, fluent);
 		var single = Assert.Single(fluent.Errors);
-		Assert.Equal("", single.Message);
+		Assert.Equal("Unable to add parameters to WHERE.", single.Message);
 	}
 
 	[Fact]

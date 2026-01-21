@@ -208,7 +208,7 @@ public class ConvertPredicatesToColumns_Tests
 		var result = QueryF.ConvertPredicatesToColumns(columns, predicates);
 
 		// Assert
-		_ = result.AssertFail("");
+		_ = result.AssertFail("IN operator requires value to be a list.");
 	}
 
 	public sealed record class TestId : LongId<TestId>;

@@ -9,7 +9,7 @@ namespace Jeebs.Data.Extract_Tests;
 public class From_Tests
 {
 	[Fact]
-	public void No_Tables_Returns_Some_With_Empty_List()
+	public void No_Tables_Returns_Ok_With_Empty_List()
 	{
 		// Arrange
 
@@ -22,7 +22,7 @@ public class From_Tests
 	}
 
 	[Fact]
-	public void No_Matching_Columns_Returns_None_With_NoColumnsExtractedFromTableMsg()
+	public void No_Matching_Columns_Returns_Fail_With_NoColumnsExtractedFromTableMsg()
 	{
 		// Arrange
 		var table = new FooTable();
@@ -31,7 +31,7 @@ public class From_Tests
 		var result = Extract<FooNone>.From(table);
 
 		// Assert
-		_ = result.AssertFail("");
+		_ = result.AssertFail("No columns were extracted from the tables.");
 	}
 
 	[Fact]

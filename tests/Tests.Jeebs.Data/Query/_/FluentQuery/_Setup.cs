@@ -4,7 +4,6 @@
 using System.Data;
 using Jeebs.Data.Map;
 using Jeebs.Logging;
-using NSubstitute.Extensions;
 
 namespace Jeebs.Data.Query.FluentQuery_Tests;
 
@@ -16,36 +15,35 @@ public abstract class FluentQuery_Tests
 	public static (FluentQuery<TestEntity, TestId> query, Vars v) Setup(string? query, IQueryParametersDictionary? param)
 	{
 		var client = Substitute.For<IDbClient>();
-		client.GetQuery(default!)
-			.ReturnsForAnyArgs((query ?? Rnd.Str, param ?? new QueryParametersDictionary()));
+		var notNullQuery = query ?? Rnd.Str;
+		var notNullParam = param ?? new QueryParametersDictionary();
+		client.GetQuery(default!).ReturnsForAnyArgs((notNullQuery, notNullParam));
+		client.GetCountQuery(default!).ReturnsForAnyArgs((notNullQuery, notNullParam));
 
-		var transation = Substitute.For<IDbTransaction>();
+		var transaction = Substitute.For<IDbTransaction>();
 
 		var unitOfWork = Substitute.For<IUnitOfWork>();
-		unitOfWork.Transaction
-			.Returns(transation);
+		unitOfWork.Transaction.Returns(transaction);
 
 		var db = Substitute.For<IDb>();
-		db.Client
-			.Returns(client);
-		db.Configure().StartWork()
-			.Returns(unitOfWork);
-		db.Configure().StartWorkAsync()
-			.Returns(unitOfWork);
+		db.Client.Returns(client);
+		db.StartWork().Returns(unitOfWork);
+		db.StartWorkAsync().Returns(unitOfWork);
+		db.QueryAsync<long>(notNullQuery, notNullParam, CommandType.Text, Arg.Any<IDbTransaction>()).Returns(new[] { Rnd.Lng });
+		db.QueryAsync<string>(notNullQuery, notNullParam, CommandType.Text, Arg.Any<IDbTransaction>()).Returns(new[] { Rnd.Str });
+		db.QuerySingleAsync<long>(notNullQuery, notNullParam, CommandType.Text, Arg.Any<IDbTransaction>()).Returns(Rnd.Lng);
 
 		var log = Substitute.For<ILog>();
 
 		var table = new TestTable();
 
 		var map = Substitute.For<ITableMap>();
-		map.Table
-			.Returns(table);
+		map.Table.Returns(table);
 
 		var mapper = Substitute.For<IEntityMapper>();
-		mapper.GetTableMapFor<TestEntity>()
-			.Returns(R.Wrap(map));
+		mapper.GetTableMapFor<TestEntity>().Returns(R.Wrap(map));
 
-		return (new(db, mapper, log), new(client, db, log, mapper, table, map, transation));
+		return (new(db, mapper, log), new(client, db, log, mapper, table, map, transaction));
 	}
 
 	public sealed record class Vars(

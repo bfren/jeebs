@@ -18,8 +18,8 @@ public class GetColumnFromAlias_Tests
 		var r1 = QueryF.GetColumnFromAlias<TestTable>(Rnd.Str);
 
 		// Assert
-		_ = r0.AssertFail("");
-		_ = r1.AssertFail("");
+		_ = r0.AssertFail("Column with alias '{Alias}' not found in table '{Table}'.");
+		_ = r1.AssertFail("Column with alias '{Alias}' not found in table '{Table}'.");
 	}
 
 	[Fact]
@@ -34,15 +34,15 @@ public class GetColumnFromAlias_Tests
 		var r1 = QueryF.GetColumnFromAlias<TestTable>(alias);
 
 		// Assert
-		var f0 = r0.AssertFail("");
+		var f0 = r0.AssertFail("Column with alias '{Alias}' has null or empty name in table '{Table}'.");
 		Assert.Collection(f0.Args!,
-			x => Assert.Equal(table, x),
-			x => Assert.Equal(alias, x)
+			x => Assert.Equal(alias, x),
+			x => Assert.Equal(table, x)
 		);
-		var f1 = r1.AssertFail("");
+		var f1 = r1.AssertFail("Column with alias '{Alias}' has null or empty name in table '{Table}'.");
 		Assert.Collection(f1.Args!,
-			x => Assert.Equal(table, x),
-			x => Assert.Equal(alias, x)
+			x => Assert.Equal(alias, x),
+			x => Assert.Equal(table, x)
 		);
 	}
 

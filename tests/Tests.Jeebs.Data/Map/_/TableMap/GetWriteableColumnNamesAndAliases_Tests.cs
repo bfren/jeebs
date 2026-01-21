@@ -19,7 +19,7 @@ public class GetWriteableColumnNamesAndAliases_Tests
 		var result = map.GetWriteableColumnNamesAndAliases();
 
 		// Assert
-		_ = result.AssertFail("");
+		_ = result.AssertFail("No writeable columns found.");
 	}
 
 	[Fact]
