@@ -3,7 +3,6 @@
 
 using Jeebs.Data.Query;
 using NSubstitute.Core;
-using StrongId;
 using Xunit.Sdk;
 
 namespace Jeebs.Data.Testing.Query;
@@ -22,7 +21,7 @@ public static class FluentQueryExtensions
 	/// <param name="inspectors">Call inspectors.</param>
 	/// <exception cref="CollectionException"></exception>
 	public static void AssertCalls<TEntity, TId>(this IFluentQuery<TEntity, TId> @this, params Action<ICall>[] inspectors)
-		where TEntity : IWithId<TId>
-		where TId : class, IStrongId, new() =>
-		FluentQueryHelper.AssertCollection(@this.ReceivedCalls().ToArray(), inspectors);
+		where TEntity : IWithId
+		where TId : class, IUnion, new() =>
+		FluentQueryHelper.AssertCollection([.. @this.ReceivedCalls()], inspectors);
 }

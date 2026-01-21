@@ -3,7 +3,6 @@
 
 using Jeebs.Data.Query;
 using NSubstitute.Extensions;
-using StrongId;
 
 namespace Jeebs.Data.Testing.Query;
 
@@ -15,8 +14,8 @@ public static partial class FluentQueryHelper
 	/// <typeparam name="TEntity">Entity Type</typeparam>
 	/// <typeparam name="TId">Entity ID Type</typeparam>
 	public static IFluentQuery<TEntity, TId> CreateSubstitute<TEntity, TId>()
-		where TEntity : IWithId<TId>
-		where TId : class, IStrongId, new()
+		where TEntity : IWithId
+		where TId : class, IUnion, new()
 	{
 		var fluent = Substitute.For<IFluentQuery<TEntity, TId>>();
 		fluent.ReturnsForAll(fluent);

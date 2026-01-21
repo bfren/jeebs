@@ -24,7 +24,7 @@ public static partial class FluentQueryHelper
 		try
 		{
 			var actualName = Assert.IsAssignableFrom<Expression<Func<TEntity, TValue>>>(actual)
-				.GetPropertyInfo().UnsafeUnwrap().Name;
+				.GetPropertyInfo().Unsafe().Unwrap().Name;
 
 			try
 			{

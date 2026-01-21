@@ -21,8 +21,8 @@ public static partial class FluentQueryHelper
 		try
 		{
 			Assert.Equal(
-				expected: JsonF.Serialise(expected).UnsafeUnwrap(),
-				actual: JsonF.Serialise(actual).UnsafeUnwrap()
+				expected: JsonF.Serialise(expected).Unsafe().Unwrap(),
+				actual: JsonF.Serialise(actual).Unsafe().Unwrap()
 			);
 		}
 		catch (EqualException ex)

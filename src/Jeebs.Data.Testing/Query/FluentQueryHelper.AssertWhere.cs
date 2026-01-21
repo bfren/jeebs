@@ -20,7 +20,7 @@ public static partial class FluentQueryHelper
 	) =>
 		AssertWhere<TEntity, TValue>(
 			call,
-			expectedProperty.GetPropertyInfo().UnsafeUnwrap().Name,
+			expectedProperty.GetPropertyInfo().Unsafe().Unwrap().Name,
 			expectedCompare,
 			expectedValue
 		);

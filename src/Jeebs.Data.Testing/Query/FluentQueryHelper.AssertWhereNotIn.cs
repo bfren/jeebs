@@ -18,7 +18,7 @@ public static partial class FluentQueryHelper
 	) =>
 		AssertWhereNotIn<TEntity, TValue>(
 			call,
-			expectedProperty.GetPropertyInfo().UnsafeUnwrap().Name,
+			expectedProperty.GetPropertyInfo().Unsafe().Unwrap().Name,
 			expectedValues
 		);
 

@@ -12,7 +12,7 @@ public static partial class FluentQueryHelper
 {
 	/// <inheritdoc cref="AssertExecute{TEntity, TValue}(ICall, string, bool)"/>
 	public static void AssertExecute<TEntity, TValue>(ICall call, Expression<Func<TEntity, TValue>> expected, bool withTransaction) =>
-		AssertExecute<TEntity, TValue>(call, expected.GetPropertyInfo().UnsafeUnwrap().Name, withTransaction);
+		AssertExecute<TEntity, TValue>(call, expected.GetPropertyInfo().Unsafe().Unwrap().Name, withTransaction);
 
 	/// <summary>
 	/// Validate a call to <see cref="IFluentQuery{TEntity, TId}.ExecuteAsync{TValue}(Expression{Func{TEntity, TValue}})"/>.
