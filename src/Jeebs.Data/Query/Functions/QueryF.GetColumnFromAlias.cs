@@ -21,8 +21,10 @@ public static partial class QueryF
 		table.GetProperties()
 			.Where(x => x.Name == columnAlias)
 			.SingleOrNone()
-			.ToResult(nameof(QueryF), nameof(GetColumnFromAlias),
-				"Column with alias '{Alias}' not found in table '{Table}'.", columnAlias, table
+			.ToResult(
+				() => R.Fail(nameof(QueryF), nameof(GetColumnFromAlias),
+					"Column with alias '{Alias}' not found in table '{Table}'.", columnAlias, table
+				)
 			)
 			.Map(
 				x => (name: x.GetValue(table)?.ToString()!, prop: x)
