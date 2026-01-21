@@ -121,13 +121,13 @@ public interface IDbClient
 	/// Return a query to retrieve how many entities match the specified query parts.
 	/// </summary>
 	/// <param name="parts">IQueryParts.</param>
-	(string query, IQueryParametersDictionary param) GetCountQuery(IQueryParts parts);
+	Result<(string query, IQueryParametersDictionary param)> GetCountQuery(IQueryParts parts);
 
 	/// <summary>
 	/// Return a query to retrieve a list of entities using the specified query parts.
 	/// </summary>
 	/// <param name="parts">IQueryParts.</param>
-	(string query, IQueryParametersDictionary param) GetQuery(IQueryParts parts);
+	Result<(string query, IQueryParametersDictionary param)> GetQuery(IQueryParts parts);
 
 	#endregion Custom Queries
 

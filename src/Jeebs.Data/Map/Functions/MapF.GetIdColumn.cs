@@ -23,13 +23,16 @@ public static partial class MapF
 			columns
 		)
 		.Map(
-			x => x.Where(p => p.PropertyInfo.Name == nameof(IWithId.Id) && p.PropertyInfo.GetCustomAttribute<IgnoreAttribute>() is null).ToList(),
+			x => x.Where(p => (p.PropertyInfo.Name == nameof(IWithId.Id) || p.PropertyInfo.GetCustomAttribute<IdAttribute>() is not null) && p.PropertyInfo.GetCustomAttribute<IgnoreAttribute>() is null).ToList(),
 			e => R.Fail(nameof(MapF), nameof(GetIdColumn),
-				e, "Unable to get Id column from table '{Table}'.", typeof(TTable).Name
+				e, "Error getting Id properties from table '{Table}'.", typeof(TTable).Name
 			)
 		)
 		.GetSingle(
-			x => x.Value<IColumn>()
+			x => x.Value<IColumn>(),
+			() => R.Fail(nameof(MapF), nameof(GetIdColumn),
+				"Unable to get Id column from table '{Table}'.", typeof(TTable).Name
+			)
 		)
 		.Map(
 			x => new Column(x)

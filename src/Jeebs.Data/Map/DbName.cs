@@ -43,9 +43,9 @@ public sealed record class DbName : IDbName
 		Schema switch
 		{
 			{ } =>
-				$"{escape(Schema)}{schemaSeparator}{escape(Name)}",
+				$"{escape(Schema)}{schemaSeparator}{escape(Name)}".Trim(),
 
 			_ =>
-				escape(Name)
+				escape(Name).Trim()
 		};
 }

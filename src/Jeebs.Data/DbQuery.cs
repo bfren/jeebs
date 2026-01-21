@@ -96,37 +96,25 @@ public abstract class DbQuery<TDb> : IDbQuery
 
 	/// <inheritdoc/>
 	public Task<Result<IPagedList<T>>> QueryAsync<T>(ulong page, IQueryParts parts, IDbTransaction transaction) =>
-		R.Try(
-			() => Db.Client.GetCountQuery(parts),
+		from count in Db.Client.GetCountQuery(parts)
+		from countResults in Db.ExecuteAsync<ulong>(
+			count.query, count.param, CommandType.Text, transaction
+		)
+		from paging in R.Try(
+			() => new PagingValues(countResults, page, parts.Maximum ?? Defaults.ItemsPer, Defaults.PagesPer),
 			e => R.Fail(GetType().Name, nameof(QueryAsync),
-				e, "Error creating count query from parts.", parts
+				e, "Error creating paging values.", countResults, page, parts.Maximum
 			)
 		)
-		.BindAsync(
-			x => Db.ExecuteAsync<ulong>(x.query, x.param, CommandType.Text, transaction)
+		from items in Db.Client.GetQuery(new QueryParts(parts) with
+		{
+			Skip = (paging.Page - 1) * paging.ItemsPer,
+			Maximum = paging.ItemsPer
+		})
+		from itemsResults in Db.QueryAsync<T>(
+			items.query, items.param, CommandType.Text, transaction
 		)
-		.MapAsync(
-			x => new PagingValues(x, page, parts.Maximum ?? Defaults.ItemsPer, Defaults.PagesPer)
-		)
-		.BindAsync(
-			pagingValues =>
-				R.Try(
-					() => Db.Client.GetQuery(new QueryParts(parts) with
-					{
-						Skip = (pagingValues.Page - 1) * pagingValues.ItemsPer,
-						Maximum = pagingValues.ItemsPer
-					}),
-					e => R.Fail(GetType().Name, nameof(QueryAsync),
-						e, "Error creating query from parts.", parts
-					)
-				)
-				.BindAsync(
-					x => Db.QueryAsync<T>(x.query, x.param, CommandType.Text, transaction)
-				)
-				.MapAsync(
-					x => (IPagedList<T>)new PagedList<T>(pagingValues, x)
-				)
-		);
+		select (IPagedList<T>)new PagedList<T>(paging, itemsResults);
 
 	/// <inheritdoc/>
 	public async Task<Result<IEnumerable<T>>> QueryAsync<T>(IQueryParts parts)
@@ -137,15 +125,9 @@ public abstract class DbQuery<TDb> : IDbQuery
 
 	/// <inheritdoc/>
 	public Task<Result<IEnumerable<T>>> QueryAsync<T>(IQueryParts parts, IDbTransaction transaction) =>
-		R.Try(
-			() => Db.Client.GetQuery(parts),
-			e => R.Fail(GetType().Name, nameof(QueryAsync),
-				e, "Error creating query from parts.", parts
-			)
-		)
-		.BindAsync(
-			x => Db.QueryAsync<T>(x.query, x.param, CommandType.Text, transaction)
-		);
+		from q in Db.Client.GetQuery(parts)
+		from r in Db.QueryAsync<T>(q.query, q.param, CommandType.Text, transaction)
+		select r;
 
 	#endregion QueryAsync
 
@@ -176,15 +158,9 @@ public abstract class DbQuery<TDb> : IDbQuery
 
 	/// <inheritdoc/>
 	public Task<Result<T>> QuerySingleAsync<T>(IQueryParts parts, IDbTransaction transaction) =>
-		R.Try(
-			() => Db.Client.GetQuery(parts),
-			e => R.Fail(GetType().Name, nameof(QuerySingleAsync),
-				e, "Error creating query from parts.", parts
-			)
-		)
-		.BindAsync(
-			x => Db.QuerySingleAsync<T>(x.query, x.param, CommandType.Text, transaction)
-		);
+		from q in Db.Client.GetQuery(parts)
+		from r in Db.QuerySingleAsync<T>(q.query, q.param, CommandType.Text, transaction)
+		select r;
 
 	#endregion QuerySingleAsync
 

@@ -1,7 +1,6 @@
 // Jeebs Rapid Application Development
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
-using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Threading.Tasks;
@@ -25,7 +24,7 @@ public sealed partial record class FluentQuery<TEntity, TId>
 		if (Errors.Count > 0)
 		{
 			return R.Fail(nameof(FluentQuery), nameof(QueryAsync),
-				string.Join(Environment.NewLine, Errors)
+				"Query errors.", [.. Errors]
 			);
 		}
 
@@ -50,9 +49,12 @@ public sealed partial record class FluentQuery<TEntity, TId>
 				Parts
 		};
 
-		// If there are
-		var (query, param) = Db.Client.GetQuery(parts);
-		return await Db.QueryAsync<TModel>(query, param, CommandType.Text, transaction);
+		// Get and execute query
+		return await (
+			from q in Db.Client.GetQuery(parts)
+			from r in Db.QueryAsync<TModel>(q.query, q.param, CommandType.Text, transaction)
+			select r
+		);
 	}
 
 	/// <inheritdoc/>
@@ -73,7 +75,4 @@ public sealed partial record class FluentQuery<TEntity, TId>
 		.GetSingleAsync(
 			x => x.Value<TModel>()
 		);
-	//.UnwrapAsync(
-	//	x => x.SingleValue<TModel>()
-	//);
 }

@@ -1,6 +1,7 @@
 // Jeebs Rapid Application Development
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
+using System.Linq;
 using System.Reflection;
 using Jeebs.Data.Map;
 using Jeebs.Reflection;
@@ -18,13 +19,10 @@ public static partial class QueryF
 	public static Result<IColumn> GetColumnFromAlias<TTable>(TTable table, string columnAlias)
 		where TTable : ITable =>
 		table.GetProperties()
+			.Where(x => x.Name == columnAlias)
 			.SingleOrNone()
-			.ToResult(nameof(QueryF), nameof(GetColumnFromAlias))
-			.ContinueIf(
-				x => x.Name == columnAlias,
-				x => R.Fail(nameof(QueryF), nameof(GetColumnFromAlias),
-					"Column with alias '{Alias}' not found in table '{Table}'.", columnAlias, table.GetName()
-				)
+			.ToResult(nameof(QueryF), nameof(GetColumnFromAlias),
+				"Column with alias '{Alias}' not found in table '{Table}'.", columnAlias, table
 			)
 			.Map(
 				x => (name: x.GetValue(table)?.ToString()!, prop: x)
@@ -32,7 +30,7 @@ public static partial class QueryF
 			.ContinueIf(
 				x => !string.IsNullOrEmpty(x.name),
 				x => R.Fail(nameof(QueryF), nameof(GetColumnFromAlias),
-					"Column with alias '{Alias}' has null or empty name in table '{Table}'.", columnAlias, table.GetName()
+					"Column with alias '{Alias}' has null or empty name in table '{Table}'.", columnAlias, table
 				)
 			)
 			.Map(
