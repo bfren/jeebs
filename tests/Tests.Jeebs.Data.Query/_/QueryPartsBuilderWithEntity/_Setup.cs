@@ -2,8 +2,6 @@
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using Jeebs.Data.Map;
-using MaybeF.Extensions;
-using StrongId;
 
 namespace Jeebs.Data.Query.QueryPartsBuilderWithEntity_Tests;
 
@@ -14,7 +12,7 @@ public abstract class QueryPartsBuilderWithEntity_Tests
 		var mapper = Substitute.For<IEntityMapper>();
 
 		var map = Substitute.For<ITableMap>();
-		mapper.GetTableMapFor<TestEntity>().Returns(map.Some());
+		mapper.GetTableMapFor<TestEntity>().Returns(R.Wrap(map));
 
 		var builder = Substitute.ForPartsOf<TestBuilder>(mapper);
 
@@ -27,11 +25,8 @@ public abstract class QueryPartsBuilderWithEntity_Tests
 	);
 }
 
-public sealed record class TestId : LongId;
+public sealed record class TestId : LongId<TestId>;
 
-public record class TestEntity(TestId Id, int Foo, bool Bar) : IWithId<TestId>;
+public record class TestEntity(int Foo, bool Bar) : WithId<TestId, long>;
 
-public abstract class TestBuilder : QueryPartsBuilderWithEntity<TestEntity, TestId>
-{
-	protected TestBuilder(IEntityMapper mapper) : base(mapper) { }
-}
+public abstract class TestBuilder(IEntityMapper mapper) : QueryPartsBuilderWithEntity<TestEntity, TestId>(mapper);

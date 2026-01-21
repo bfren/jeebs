@@ -4,15 +4,14 @@
 using Jeebs.Collections;
 using Jeebs.Data.Enums;
 using Jeebs.Data.Map;
-using StrongId;
-using static StrongId.Testing.Generator;
+using Jeebs.Functions;
 
 namespace Jeebs.Data.Query.QueryOptions_Tests;
 
 public abstract class ToParts_Tests<TOptions, TBuilder, TId> : QueryOptions_Tests<TOptions, TBuilder, TId>
 	where TOptions : QueryOptions<TId>
 	where TBuilder : class, IQueryPartsBuilder<TId>
-	where TId : ULongId, new()
+	where TId : ULongId<TId>, new()
 {
 	public abstract void Test00_Calls_Builder_Create_With_Maximum_And_Skip();
 
@@ -55,7 +54,7 @@ public abstract class ToParts_Tests<TOptions, TBuilder, TId> : QueryOptions_Test
 	{
 		// Arrange
 		var (options, builder) = Setup();
-		var id = ULongId<TId>();
+		var id = IdGen.ULongId<TId>();
 		var opt = options with
 		{
 			Id = id
@@ -74,9 +73,9 @@ public abstract class ToParts_Tests<TOptions, TBuilder, TId> : QueryOptions_Test
 	{
 		// Arrange
 		var (options, builder) = Setup();
-		var i0 = ULongId<TId>();
-		var i1 = ULongId<TId>();
-		var ids = ImmutableList.Create(i0, i1);
+		var i0 = IdGen.ULongId<TId>();
+		var i1 = IdGen.ULongId<TId>();
+		var ids = ListF.Create(i0, i1);
 		var opt = options with
 		{
 			Ids = ids
@@ -127,7 +126,7 @@ public abstract class ToParts_Tests<TOptions, TBuilder, TId> : QueryOptions_Test
 	{
 		// Arrange
 		var (options, builder) = Setup();
-		var sort = ImmutableList.Create(
+		var sort = ListF.Create(
 			(Substitute.For<IColumn>(), SortOrder.Ascending),
 			(Substitute.For<IColumn>(), SortOrder.Descending)
 		);

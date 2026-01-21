@@ -17,8 +17,8 @@ public class GetColumnFromExpression_Tests
 		var r1 = QueryF.GetColumnFromExpression(new BrokenTable(), t => t.Bar);
 
 		// Assert
-		r0.AssertNone();
-		r1.AssertNone();
+		r0.AssertFail("Unable to get column from expression for table '{Table}'.");
+		r1.AssertFail("Unable to get column from expression for table '{Table}'.");
 	}
 
 	[Fact]
@@ -33,14 +33,14 @@ public class GetColumnFromExpression_Tests
 		var r1 = QueryF.GetColumnFromExpression<TestTable>(t => t.Foo);
 
 		// Assert
-		var s0 = r0.AssertSome();
-		Assert.Equal(tableName, s0.TblName.Name);
-		Assert.Equal(table.Foo, s0.ColName);
-		Assert.Equal(nameof(table.Foo), s0.ColAlias);
-		var s1 = r1.AssertSome();
-		Assert.Equal("TestTable", s1.TblName.Name);
-		Assert.Equal(table.Foo, s1.ColName);
-		Assert.Equal(nameof(table.Foo), s1.ColAlias);
+		var ok0 = r0.AssertOk();
+		Assert.Equal(tableName, ok0.TblName.Name);
+		Assert.Equal(table.Foo, ok0.ColName);
+		Assert.Equal(nameof(table.Foo), ok0.ColAlias);
+		var ok1 = r1.AssertOk();
+		Assert.Equal("TestTable", ok1.TblName.Name);
+		Assert.Equal(table.Foo, ok1.ColName);
+		Assert.Equal(nameof(table.Foo), ok1.ColAlias);
 	}
 
 	public record class BrokenTable : TestTable

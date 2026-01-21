@@ -2,7 +2,6 @@
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using Jeebs.Data.Map;
-using StrongId;
 
 namespace Jeebs.Data.Query.QueryPartsBuilder_Tests;
 
@@ -12,19 +11,15 @@ public abstract class Setup
 		new(extract);
 }
 
-public sealed record class TestId : ULongId;
+public sealed record class TestId : ULongId<TestId>;
 
 public record class TestModel;
 
-public class TestBuilder : QueryPartsBuilder<TestId>
+public class TestBuilder(IExtract extract) : QueryPartsBuilder<TestId>(extract)
 {
-	public override ITable Table { get; }
+	public override ITable Table { get; } =
+		Substitute.For<ITable>();
 
-	public override IColumn IdColumn { get; }
-
-	public TestBuilder(IExtract extract) : base(extract)
-	{
-		Table = Substitute.For<ITable>();
-		IdColumn = Substitute.For<IColumn>();
-	}
+	public override IColumn IdColumn { get; } =
+		Substitute.For<IColumn>();
 }

@@ -1,16 +1,14 @@
 // Jeebs Unit Tests
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
-using Jeebs.Collections;
 using Jeebs.Data.Enums;
-using StrongId;
-using static StrongId.Testing.Generator;
+using Jeebs.Functions;
 
 namespace Jeebs.Data.Query.QueryPartsBuilder_Tests;
 
 public abstract class AddWhereId_Tests<TBuilder, TId> : QueryPartsBuilder_Tests<TBuilder, TId>
 	where TBuilder : QueryPartsBuilder<TId>
-	where TId : ULongId, new()
+	where TId : ULongId<TId>, new()
 {
 	public abstract void Test00_Id_And_Ids_Null_Returns_Original_Parts();
 
@@ -20,11 +18,11 @@ public abstract class AddWhereId_Tests<TBuilder, TId> : QueryPartsBuilder_Tests<
 		var (builder, v) = Setup();
 
 		// Act
-		var result = builder.AddWhereId(v.Parts, default, ImmutableList.Empty<TId>());
+		var result = builder.AddWhereId(v.Parts, default, ListF.Empty<TId>());
 
 		// Assert
-		var some = result.AssertSome();
-		Assert.Same(v.Parts, some);
+		var ok = result.AssertOk();
+		Assert.Same(v.Parts, ok);
 	}
 
 	public abstract void Test01_Id_Set_Adds_Where_Id_Equal();
@@ -32,14 +30,14 @@ public abstract class AddWhereId_Tests<TBuilder, TId> : QueryPartsBuilder_Tests<
 	protected void Test01()
 	{
 		// Arrange
-		var id = ULongId<TId>();
+		var id = IdGen.ULongId<TId>();
 		var (builder, v) = Setup();
 
 		// Act
-		var result = builder.AddWhereId(v.Parts, id, ImmutableList.Empty<TId>());
+		var result = builder.AddWhereId(v.Parts, id, ListF.Empty<TId>());
 
 		// Assert
-		var some = result.AssertSome();
+		var some = result.AssertOk();
 		Assert.NotSame(v.Parts, some);
 		var (column, compare, value) = Assert.Single(some.Where);
 		Assert.Equal(builder.IdColumn, column);
@@ -52,19 +50,19 @@ public abstract class AddWhereId_Tests<TBuilder, TId> : QueryPartsBuilder_Tests<
 	protected void Test02()
 	{
 		// Arrange
-		var i0 = ULongId<TId>();
-		var i1 = ULongId<TId>();
-		var i2 = ULongId<TId>();
-		var ids = ImmutableList.Create(i1, i2);
+		var i0 = IdGen.ULongId<TId>();
+		var i1 = IdGen.ULongId<TId>();
+		var i2 = IdGen.ULongId<TId>();
+		var ids = ListF.Create(i1, i2);
 		var (builder, v) = Setup();
 
 		// Act
 		var result = builder.AddWhereId(v.Parts, i0, ids);
 
 		// Assert
-		var some = result.AssertSome();
-		Assert.NotSame(v.Parts, some);
-		var (column, compare, value) = Assert.Single(some.Where);
+		var ok = result.AssertOk();
+		Assert.NotSame(v.Parts, ok);
+		var (column, compare, value) = Assert.Single(ok.Where);
 		Assert.Equal(builder.IdColumn, column);
 		Assert.Equal(Compare.Equal, compare);
 		Assert.Equal(i0.Value, value);
@@ -75,18 +73,18 @@ public abstract class AddWhereId_Tests<TBuilder, TId> : QueryPartsBuilder_Tests<
 	protected void Test03()
 	{
 		// Arrange
-		var i0 = ULongId<TId>();
-		var i1 = ULongId<TId>();
-		var ids = ImmutableList.Create(i0, i1);
+		var i0 = IdGen.ULongId<TId>();
+		var i1 = IdGen.ULongId<TId>();
+		var ids = ListF.Create(i0, i1);
 		var (builder, v) = Setup();
 
 		// Act
 		var result = builder.AddWhereId(v.Parts, default, ids);
 
 		// Assert
-		var some = result.AssertSome();
-		Assert.NotSame(v.Parts, some);
-		var (column, compare, value) = Assert.Single(some.Where);
+		var ok = result.AssertOk();
+		Assert.NotSame(v.Parts, ok);
+		var (column, compare, value) = Assert.Single(ok.Where);
 		Assert.Equal(builder.IdColumn, column);
 		Assert.Equal(Compare.In, compare);
 		Assert.Collection((IEnumerable<object>)value,

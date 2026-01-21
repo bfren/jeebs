@@ -2,13 +2,12 @@
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using Jeebs.Data.Map;
-using StrongId;
 
 namespace Jeebs.Data.Query.QueryPartsBuilder_Tests;
 
 public abstract class QueryPartsBuilder_Tests<TBuilder, TId>
 	where TBuilder : QueryPartsBuilder<TId>
-	where TId : class, IStrongId, new()
+	where TId : class, IUnion, new()
 {
 	protected abstract TBuilder GetConfiguredBuilder(IExtract extract);
 

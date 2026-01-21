@@ -2,13 +2,12 @@
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using Jeebs.Data.Map;
-using StrongId;
 
 namespace Jeebs.Data.Query.QueryPartsBuilder_Tests;
 
 public abstract class Create_Tests<TBuilder, TId, TModel> : QueryPartsBuilder_Tests<TBuilder, TId>
 	where TBuilder : QueryPartsBuilder<TId>
-	where TId : class, IStrongId, new()
+	where TId : class, IUnion, new()
 {
 	public abstract void Test00_Returns_With_Table();
 
@@ -18,7 +17,7 @@ public abstract class Create_Tests<TBuilder, TId, TModel> : QueryPartsBuilder_Te
 		var (builder, v) = Setup();
 
 		// Act
-		var result = builder.Create<TModel>(null, Rnd.ULng);
+		var result = builder.Create<TModel>(null, Rnd.ULng).Unsafe().Unwrap();
 
 		// Assert
 		Assert.NotSame(v.Parts, result);
@@ -49,7 +48,7 @@ public abstract class Create_Tests<TBuilder, TId, TModel> : QueryPartsBuilder_Te
 		var (builder, v) = Setup();
 
 		// Act
-		var result = builder.Create<TModel>(maximum, Rnd.ULng);
+		var result = builder.Create<TModel>(maximum, Rnd.ULng).Unsafe().Unwrap();
 
 		// Assert
 		Assert.NotSame(v.Parts, result);
@@ -65,7 +64,7 @@ public abstract class Create_Tests<TBuilder, TId, TModel> : QueryPartsBuilder_Te
 		var (builder, v) = Setup();
 
 		// Act
-		var result = builder.Create<TModel>(null, skip);
+		var result = builder.Create<TModel>(null, skip).Unsafe().Unwrap();
 
 		// Assert
 		Assert.NotSame(v.Parts, result);

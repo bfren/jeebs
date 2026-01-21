@@ -2,13 +2,12 @@
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using Jeebs.Data.Map;
-using StrongId;
 
 namespace Jeebs.Data.Query.QueryPartsBuilder_Tests;
 
 public abstract class AddRightJoin_Tests<TBuilder, TId> : QueryPartsBuilder_Tests<TBuilder, TId>
 	where TBuilder : QueryPartsBuilder<TId>
-	where TId : class, IStrongId, new()
+	where TId : class, IUnion, new()
 {
 	public abstract void Test00_Adds_Columns_To_RightJoin();
 
@@ -29,9 +28,9 @@ public abstract class AddRightJoin_Tests<TBuilder, TId> : QueryPartsBuilder_Test
 		var result = builder.AddRightJoin(v.Parts, t0, t => t.Foo, t1, t => t.Bar);
 
 		// Assert
-		var some = result.AssertSome();
-		Assert.NotSame(v.Parts, some);
-		var (from, to) = Assert.Single(some.RightJoin);
+		var ok = result.AssertOk();
+		Assert.NotSame(v.Parts, ok);
+		var (from, to) = Assert.Single(ok.RightJoin);
 		Assert.Equal(t0Name, from.TblName);
 		Assert.Equal(t0Column, from.ColName);
 		Assert.Equal(t1Name, to.TblName);

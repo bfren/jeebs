@@ -1,8 +1,8 @@
-﻿// Jeebs Unit Tests
+// Jeebs Unit Tests
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using Jeebs.Data.Map;
-using Jeebs.Data.Query.Exceptions;
+using Wrap.Exceptions;
 
 namespace Jeebs.Data.Query.Functions.QueryBuilderF_Tests;
 
@@ -18,8 +18,10 @@ public class GetColumnFromExpression_Tests
 		var a1 = void () => QueryBuilderF.GetColumnFromExpression(new BrokenTable(), t => t.Bar);
 
 		// Assert
-		Assert.Throws<UnableToGetColumnFromExpressionException<BrokenTable>>(a0);
-		Assert.Throws<UnableToGetColumnFromExpressionException<BrokenTable>>(a1);
+		var ex0 = Assert.Throws<FailureException>(a0);
+		Assert.Equal("Unable to get column from expression for table '{Table}'.", ex0.Message);
+		var ex1 = Assert.Throws<FailureException>(a1);
+		Assert.Equal("Unable to get column from expression for table '{Table}'.", ex1.Message);
 	}
 
 	[Fact]
