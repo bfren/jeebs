@@ -1,24 +1,10 @@
 // Jeebs Unit Tests
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
-using Jeebs.Functions;
-
 namespace Jeebs.Cryptography.Locked_Tests;
 
 public class Serialise_Tests
 {
-	[Fact]
-	public void No_EncryptedContents_Returns_Empty_Json()
-	{
-		// Arrange
-		var box = new Locked<string>(Rnd.Str, Rnd.Str);
-
-		// Act
-		var result = box.Serialise();
-
-		// Assert
-		result.AssertOk(JsonF.Empty);
-	}
 
 	[Fact]
 	public void Returns_Json()

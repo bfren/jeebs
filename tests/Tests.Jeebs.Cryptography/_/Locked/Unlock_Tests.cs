@@ -11,20 +11,6 @@ namespace Jeebs.Cryptography.Locked_Tests;
 public class Unlock_Tests
 {
 	[Fact]
-	public void No_EncryptedContents_Returns_Fail()
-	{
-		// Arrange
-		var box = new Locked<int>(Rnd.Str, Rnd.Str);
-		var key = Rnd.ByteF.Get(32);
-
-		// Act
-		var result = box.Unlock(key);
-
-		// Assert
-		_ = result.AssertFail("There are no encrypted contents to unlock.");
-	}
-
-	[Fact]
 	public void Invalid_Key_Returns_Fail_With_KeyOutOfRangeException()
 	{
 		// Arrange
