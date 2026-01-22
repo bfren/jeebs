@@ -140,8 +140,8 @@ public sealed class UnitOfWork : IUnitOfWork
 	{
 		Commit();
 		transaction.Dispose();
-		connection.Close();
 		connection.Dispose();
+		GC.SuppressFinalize(this);
 	}
 
 	/// <summary>
@@ -151,7 +151,7 @@ public sealed class UnitOfWork : IUnitOfWork
 	{
 		await CommitAsync();
 		await transaction.DisposeAsync();
-		await connection.CloseAsync();
 		await connection.DisposeAsync();
+		GC.SuppressFinalize(this);
 	}
 }
