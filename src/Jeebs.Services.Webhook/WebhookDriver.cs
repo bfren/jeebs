@@ -3,10 +3,10 @@
 
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Net.Http;
 using Jeebs.Config;
 using Jeebs.Functions;
-using Jeebs.Messages;
 using Jeebs.Services.Notify;
 using Jeebs.Services.Webhook.Models;
 
@@ -41,38 +41,21 @@ public abstract class WebhookDriver<TConfig, TMessage> : Driver<TConfig>, IWebho
 		Send(new Message { Content = message, Level = level });
 
 	/// <inheritdoc/>
-	public virtual void Send(IMsg msg)
+	public virtual void Send(Fail failure)
 	{
-		// Get message content
-		var content = msg.ToString() ?? msg.GetType().ToString();
-
 		// Convert to notification Message
-		var message = msg switch
+		var message = new Message
 		{
-			ExceptionMsg x =>
-				new Message
-				{
-					Content = content,
-					Level = NotificationLevel.Error,
-					Fields = new Dictionary<string, object>
-					{
-						{ "Exception", x.Value }
-					}
-				},
+			Content = string.Format(CultureInfo.InvariantCulture, failure.Value.Message, [.. failure.Value.Args ?? []]),
+			Level = failure.Value.Level.ToNotificationLevel(),
+			Fields = failure.Value.Exception switch
+			{
+				{ } e =>
+					new Dictionary<string, object> { { "Exception", e } },
 
-			Msg x =>
-				new Message
-				{
-					Content = content,
-					Level = x.Level.ToNotificationLevel()
-				},
-
-			_ =>
-				new Message
-				{
-					Content = content,
-					Level = NotificationLevel.Information
-				}
+				_ =>
+					[]
+			}
 		};
 
 		// Send message

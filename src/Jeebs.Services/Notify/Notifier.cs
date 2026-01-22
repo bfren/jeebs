@@ -31,11 +31,11 @@ public sealed class Notifier : INotifier
 	}
 
 	/// <inheritdoc/>
-	public void Send(IMsg msg)
+	public void Send(Fail failure)
 	{
 		foreach (var listener in listeners)
 		{
-			listener.Send(msg);
+			listener.Send(failure);
 		}
 	}
 }

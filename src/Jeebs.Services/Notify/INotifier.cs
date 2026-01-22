@@ -22,8 +22,8 @@ public interface INotifier
 	void Send(string message, NotificationLevel level);
 
 	/// <summary>
-	/// Send a notification message.
+	/// Send notification of a failure.
 	/// </summary>
-	/// <param name="msg">The message to send as a notification.</param>
-	void Send(IMsg msg);
+	/// <param name="failure">The failure to send as a notification.</param>
+	void Send(Fail failure);
 }

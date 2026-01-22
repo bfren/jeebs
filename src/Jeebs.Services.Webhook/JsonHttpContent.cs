@@ -23,5 +23,5 @@ public sealed class JsonHttpContent : StringContent
 	/// </summary>
 	/// <param name="obj">Content to be encoded.</param>
 	/// <param name="type">Content-type.</param>
-	public JsonHttpContent(object obj, string type) : base(JsonF.Serialise(obj).Unwrap(string.Empty), Encoding.UTF8, type) { }
+	public JsonHttpContent(object obj, string type) : base(JsonF.Serialise(obj).Unwrap(), Encoding.UTF8, type) { }
 }

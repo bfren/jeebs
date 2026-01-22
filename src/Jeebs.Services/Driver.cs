@@ -41,6 +41,6 @@ public abstract class Driver<TConfig> : IDriver<TConfig>
 	protected Driver(string name, DriverArgs<TConfig> args)
 	{
 		(Name, Log, JeebsConfig) = (name, args.Log, args.JeebsConfig.Value);
-		ServiceConfig = JeebsConfig.Services.GetServiceConfig(args.ServiceConfigs, name);
+		ServiceConfig = JeebsConfig.Services.GetServiceConfig(args.ServiceConfigs, name).Unwrap();
 	}
 }
