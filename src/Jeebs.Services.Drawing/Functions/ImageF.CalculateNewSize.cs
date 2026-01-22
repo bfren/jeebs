@@ -5,9 +5,6 @@ using Jeebs.Services.Drawing.Geometry;
 
 namespace Jeebs.Services.Drawing.Functions;
 
-/// <summary>
-/// Image functions.
-/// </summary>
 public static partial class ImageF
 {
 	/// <summary>

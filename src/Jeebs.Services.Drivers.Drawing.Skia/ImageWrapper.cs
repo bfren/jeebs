@@ -36,11 +36,11 @@ public sealed class ImageWrapper : Services.Drawing.ImageWrapper, IDisposable
 	}
 
 	/// <inheritdoc/>
-	public override byte[] ToJpegByteArray(int quality) =>
+	public override Result<byte[]> ToJpegByteArray(int quality) =>
 		ToByteArray(SKEncodedImageFormat.Jpeg, quality);
 
 	/// <inheritdoc/>
-	public override byte[] ToPngByteArray(int quality) =>
+	public override Result<byte[]> ToPngByteArray(int quality) =>
 		ToByteArray(SKEncodedImageFormat.Png, quality);
 
 	/// <summary>
@@ -48,16 +48,22 @@ public sealed class ImageWrapper : Services.Drawing.ImageWrapper, IDisposable
 	/// </summary>
 	/// <param name="format">SKEncodedImageFormat.</param>
 	/// <param name="quality">Image quality (0 - 100).</param>
-	internal byte[] ToByteArray(SKEncodedImageFormat format, int quality)
-	{
-		using var data = SKImage.FromEncodedData(image).Encode(format, quality);
-		using var ms = new MemoryStream();
-		data.SaveTo(ms);
-		return ms.ToArray();
-	}
+	internal Result<byte[]> ToByteArray(SKEncodedImageFormat format, int quality) =>
+		R.Try(
+			() =>
+			{
+				using var data = SKImage.FromEncodedData(image).Encode(format, quality);
+				using var ms = new MemoryStream();
+				data.SaveTo(ms);
+				return ms.ToArray();
+			},
+			e => R.Fail(nameof(ImageWrapper), nameof(ToByteArray),
+				e, "Error converting image to byte array."
+			)
+		);
 
 	/// <inheritdoc/>
-	public override Maybe<IImageWrapper> ApplyMask(int width, int height) =>
+	public override Result<IImageWrapper> ApplyMask(int width, int height) =>
 		ApplyMask(width, height, (size, mask) =>
 		{
 			// Create source and destination rectangles

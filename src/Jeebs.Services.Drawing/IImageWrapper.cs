@@ -34,29 +34,29 @@ public interface IImageWrapper
 	/// <summary>
 	/// Return image as a JPEG byte array with quality 80.
 	/// </summary>
-	byte[] ToJpegByteArray();
+	Result<byte[]> ToJpegByteArray();
 
 	/// <summary>
 	/// Return image as a JPEG byte array.
 	/// </summary>
 	/// <param name="quality">Image quality (0 - 100).</param>
-	byte[] ToJpegByteArray(int quality);
+	Result<byte[]> ToJpegByteArray(int quality);
 
 	/// <summary>
 	/// Return image as a PNG byte array with quality 80.
 	/// </summary>
-	byte[] ToPngByteArray();
+	Result<byte[]> ToPngByteArray();
 
 	/// <summary>
 	/// Return image as a PNG byte array.
 	/// </summary>
 	/// <param name="quality">[Optional] Image quality (0 - 100).</param>
-	byte[] ToPngByteArray(int quality);
+	Result<byte[]> ToPngByteArray(int quality);
 
 	/// <summary>
 	/// Resize and crop an image to fill a mask of specified width and height.
 	/// </summary>
 	/// <param name="width">Mask width.</param>
 	/// <param name="height">Mask height.</param>
-	Maybe<IImageWrapper> ApplyMask(int width, int height);
+	Result<IImageWrapper> ApplyMask(int width, int height);
 }

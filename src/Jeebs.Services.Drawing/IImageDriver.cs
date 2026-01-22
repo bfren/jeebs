@@ -14,7 +14,7 @@ public interface IImageDriver
 	/// Create image object from a file path.
 	/// </summary>
 	/// <param name="path">File path.</param>
-	Maybe<IImageWrapper> FromFile(string path);
+	Result<IImageWrapper> FromFile(string path);
 
 	/// <summary>
 	/// Create image object from a stream.
