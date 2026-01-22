@@ -13,7 +13,11 @@ namespace Jeebs.Apps.Web;
 /// <summary>
 /// Razor Pages Web Application - see <see cref="MvcApp"/>.
 /// </summary>
-public class RazorApp : MvcApp
+/// <remarks>
+/// Create Razor application.
+/// </remarks>
+/// <param name="useHsts">HSTS should only be disabled if the application is in development mode, or behind a reverse proxy.</param>
+public class RazorApp(bool useHsts) : MvcApp(useHsts)
 {
 	#region Run
 
@@ -54,18 +58,11 @@ public class RazorApp : MvcApp
 	/// </summary>
 	public RazorApp() : this(true) { }
 
-	/// <summary>
-	/// Create Razor application.
-	/// </summary>
-	/// <param name="useHsts">HSTS should only be disabled if the application is in development mode, or behind a reverse proxy.</param>
-	public RazorApp(bool useHsts) : base(useHsts) { }
-
 	/// <inheritdoc/>
 	protected override void ConfigureServicesEndpoints(HostBuilderContext ctx, IServiceCollection services) =>
 		_ = services
 			.AddRazorPages(opt => ConfigureServicesRazorPagesOptions(ctx, opt))
 			.AddMvcOptions(opt => ConfigureServicesMvcOptions(ctx, opt))
-			.AddRazorRuntimeCompilation(opt => ConfigureServicesRuntimeCompilation(ctx, opt))
 			.AddJsonOptions(opt => ConfigureServicesEndpointsJson(ctx, opt));
 
 	/// <summary>

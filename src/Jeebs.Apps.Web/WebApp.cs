@@ -18,7 +18,11 @@ namespace Jeebs.Apps.Web;
 /// <summary>
 /// Web Application - see <see cref="App"/>.
 /// </summary>
-public class WebApp : App
+/// <remarks>
+/// Create web application.
+/// </remarks>
+/// <param name="useHsts">HSTS should only be disabled if the application is in development mode, or behind a reverse proxy.</param>
+public class WebApp(bool useHsts) : App
 {
 	#region Run
 
@@ -57,19 +61,12 @@ public class WebApp : App
 	/// <summary>
 	/// Whether or not to use HSTS.
 	/// </summary>
-	private readonly bool useHsts;
+	private readonly bool useHsts = useHsts;
 
 	/// <summary>
 	/// Create web application with HSTS enabled.
 	/// </summary>
 	public WebApp() : this(true) { }
-
-	/// <summary>
-	/// Create web application.
-	/// </summary>
-	/// <param name="useHsts">HSTS should only be disabled if the application is in development mode, or behind a reverse proxy.</param>
-	public WebApp(bool useHsts) =>
-		this.useHsts = useHsts;
 
 	/// <inheritdoc/>
 	public override void ConfigureServices(HostBuilderContext ctx, IServiceCollection services)

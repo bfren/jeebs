@@ -5,7 +5,6 @@ using System;
 using Jeebs.Logging;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Serilog;
 
 namespace Jeebs.Apps;
 
@@ -112,13 +111,8 @@ public static class Host
 		var app = new T();
 
 		// Create and configure host
-		return Microsoft.Extensions.Hosting.Host
-			.CreateDefaultBuilder(args)
-			.ConfigureHostConfiguration(app.ConfigureHost)
-			.ConfigureAppConfiguration(app.ConfigureApp)
-			.ConfigureServices(app.ConfigureServices)
-			.ConfigureServices(configureServices)
-			.UseSerilog(app.ConfigureSerilog);
+		var builder = Microsoft.Extensions.Hosting.Host.CreateDefaultBuilder(args);
+		return builder.ConfigureHostBuilder(app, configureServices);
 	}
 
 	#endregion Create Builder

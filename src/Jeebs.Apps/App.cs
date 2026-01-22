@@ -34,14 +34,8 @@ public class App
 	/// </summary>
 	/// <param name="services">IServiceProvider.</param>
 	/// <param name="log">ILog.</param>
-	public virtual void Ready(IServiceProvider services, ILog log)
-	{
-		// Set Maybe Audit log
-		F.DefaultLogger = e => log.Err(e, "Maybe Exception: {Exception}.");
-
-		// Log application is ready
+	public virtual void Ready(IServiceProvider services, ILog log) =>
 		log.Inf("Application ready.");
-	}
 
 	/// <summary>
 	/// Configure Host.
