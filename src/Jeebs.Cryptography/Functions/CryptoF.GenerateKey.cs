@@ -12,5 +12,5 @@ public static partial class CryptoF
 	/// </summary>
 	/// <returns>Encryption key as byte array.</returns>
 	public static Result<byte[]> GenerateKey() =>
-		R.Try(SecretBox.GenerateKey, e => R.Fail(nameof(CryptoF), nameof(GenerateKey), e));
+		R.Try(SecretBox.GenerateKey);
 }

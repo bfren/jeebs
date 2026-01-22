@@ -45,7 +45,7 @@ public class LogBoolAsyncAsync_Tests
 	public async Task Is_Fail__Calls_Log_Failure__With_Correct_Values()
 	{
 		// Arrange
-		var failure = R.Fail<bool>(nameof(LogBoolAsyncAsync_Tests), nameof(Is_Fail__Calls_Log_Failure__With_Correct_Values));
+		var failure = FailGenerator.Create();
 		Result<bool> fail() => failure;
 		var result = fail().AsTask();
 		var log = Substitute.For<ILog>();

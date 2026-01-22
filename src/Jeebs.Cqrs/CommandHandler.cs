@@ -24,6 +24,6 @@ public abstract class CommandHandler<T> : ICommandHandler
 				HandleAsync(x),
 
 			_ =>
-				R.Fail(GetType().Name, nameof(HandleAsync), "Incorrect command type.").AsTask<bool>()
+				R.Fail("Incorrect command type.").Ctx(GetType().Name, nameof(HandleAsync)).AsTask<bool>()
 		};
 }

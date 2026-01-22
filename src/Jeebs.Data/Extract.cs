@@ -41,21 +41,15 @@ public static class Extract<TModel>
 				() => from table in tables
 					  from column in QueryF.GetColumnsFromTable<TModel>(table)
 					  select column,
-				e => R.Fail(nameof(Extract), nameof(From),
-					e, "Error getting columns from table."
-				)
+				e => R.Fail(e).Msg("Error getting columns from table.").Ctx(nameof(Extract), nameof(From))
 			)
 			.ContinueIf(
 				x => x.Any(),
-				_ => R.Fail(nameof(Extract), nameof(From),
-					"No columns were extracted from the tables."
-				)
+				_ => R.Fail("No columns were extracted from the tables.").Ctx(nameof(Extract), nameof(From))
 			)
 			.Map(
 				x => x.Distinct(new Column.AliasComparer()),
-				e => R.Fail(nameof(Extract), nameof(From),
-					e, "Error getting distinct columns from the list."
-				)
+				e => R.Fail(e).Msg("Error getting distinct columns from the list.").Ctx(nameof(Extract), nameof(From))
 			)
 			.Map(
 				x => (IColumnList)new ColumnList(x)

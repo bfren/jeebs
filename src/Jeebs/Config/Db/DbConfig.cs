@@ -27,13 +27,10 @@ public sealed record class DbConfig : IOptions<DbConfig>
 	public string Authentication
 	{
 		get =>
-			authenticationConnectionValue ?? Default;
+			field ?? Default;
 
-		init =>
-			authenticationConnectionValue = value;
+		init;
 	}
-
-	private readonly string? authenticationConnectionValue;
 
 	/// <summary>
 	/// Dictionary of database connections.
@@ -57,7 +54,7 @@ public sealed record class DbConfig : IOptions<DbConfig>
 	public Result<DbConnectionConfig> GetConnection(string name)
 	{
 		static Result<DbConnectionConfig> fail(string message, params object[] args) =>
-			R.Fail(nameof(DbConfig), nameof(GetConnection), message, args);
+			R.Fail(message, args).Ctx(nameof(DbConfig), nameof(GetConnection));
 
 		// Name cannot be null or empty
 		if (string.IsNullOrEmpty(name))

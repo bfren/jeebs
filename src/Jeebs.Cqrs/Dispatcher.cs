@@ -33,9 +33,9 @@ public sealed class Dispatcher : IDispatcher
 				handler.HandleAsync(command),
 
 			_ =>
-				R.Fail(nameof(Dispatcher), nameof(SendAsync),
-					"Unable to get command handler {Type}.", command.GetType()
-				).AsTask<bool>()
+				R.Fail("Unable to get command handler {Type}.", command.GetType().Name)
+					.Ctx(nameof(Dispatcher), nameof(SendAsync))
+					.AsTask<bool>()
 		};
 	}
 
@@ -54,9 +54,9 @@ public sealed class Dispatcher : IDispatcher
 				handler.HandleAsync(query),
 
 			_ =>
-				R.Fail(nameof(Dispatcher), nameof(SendAsync),
-					"Unable to get query handler {Type}.", query.GetType()
-				).AsTask<T>()
+				R.Fail("Unable to get query handler {Type}.", query.GetType().Name)
+					.Ctx(nameof(Dispatcher), nameof(SendAsync))
+					.AsTask<T>()
 		};
 	}
 

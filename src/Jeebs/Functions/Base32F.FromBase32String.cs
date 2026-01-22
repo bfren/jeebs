@@ -15,7 +15,7 @@ public static partial class Base32F
 	public static Result<byte[]> FromBase32String(string base32String)
 	{
 		static Result<byte[]> fail(string message, params object[] args) =>
-			R.Fail(nameof(Base32F), nameof(FromBase32String), message, args);
+			R.Fail(message, args).Ctx(nameof(Base32F), nameof(FromBase32String));
 
 		// Check if string is empty
 		if (string.IsNullOrEmpty(base32String))

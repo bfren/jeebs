@@ -180,18 +180,16 @@ public abstract class QueryPartsBuilder<TId>(IExtract extract) : IQueryPartsBuil
 		// Check clause
 		if (string.IsNullOrWhiteSpace(clause))
 		{
-			return R.Fail(nameof(QueryPartsBuilder<>), nameof(AddWhereCustom),
-				"You cannot add an empty WHERE clause."
-			);
+			return R.Fail("You cannot add an empty WHERE clause.")
+				.Ctx(nameof(QueryPartsBuilder<>), nameof(AddWhereCustom));
 		}
 
 		// Get parameters
 		var param = new QueryParametersDictionary();
 		if (!param.TryAdd(parameters))
 		{
-			return R.Fail(nameof(QueryPartsBuilder<>), nameof(AddWhereCustom),
-				"Failed to add parameters to WHERE clause."
-			);
+			return R.Fail("Failed to add parameters to WHERE clause.")
+				.Ctx(nameof(QueryPartsBuilder<>), nameof(AddWhereCustom));
 		}
 
 		// Add clause and return

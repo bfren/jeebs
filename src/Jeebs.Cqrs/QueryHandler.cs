@@ -25,6 +25,6 @@ public abstract class QueryHandler<TQuery, TResult> : IQueryHandler<TResult>
 				HandleAsync(x),
 
 			_ =>
-				R.Fail(GetType().Name, nameof(HandleAsync), "Incorrect query type.").AsTask<TResult>()
+				R.Fail("Incorrect query type.").Ctx(GetType().Name, nameof(HandleAsync)).AsTask<TResult>()
 		};
 }

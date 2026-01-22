@@ -102,7 +102,8 @@ public readonly partial struct DateTimeInt
 				new DateTime(Year, Month, Day, Hour, Minute, 0),
 
 			{ } x =>
-				R.Fail(nameof(DateTimeInt), nameof(ToDateTime), "Invalid {Part} - 'Y:{Year} M:{Month} D:{Day} H:{Hour} m:{Minute}'.", x.Part, Year, Month, Day, Hour, Minute)
+				R.Fail("Invalid {Part} - 'Y:{Year} M:{Month} D:{Day} H:{Hour} m:{Minute}'.", x.Part, Year, Month, Day, Hour, Minute)
+					.Ctx(nameof(DateTimeInt), nameof(ToDateTime))
 		};
 
 	/// <summary>

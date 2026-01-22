@@ -54,9 +54,8 @@ public sealed record class TableMap : ITableMap
 				  select c
 		)
 		.ContinueIf(x => x.Any(),
-			_ => R.Fail(nameof(TableMap), nameof(GetWriteableColumnNamesAndAliases),
-				"No writeable columns found."
-			)
+			_ => R.Fail("No writeable columns found.")
+				.Ctx(nameof(TableMap), nameof(GetWriteableColumnNamesAndAliases))
 		)
 		.Map(
 			x => (x.Select(w => w.ColName).ToList(), x.Select(w => w.ColAlias).ToList())

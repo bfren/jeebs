@@ -17,9 +17,8 @@ public sealed class ImageDriver : IImageDriver
 	{
 		if (!File.Exists(path))
 		{
-			return R.Fail(nameof(ImageDriver), nameof(FromFile),
-				"Image file does not exist: '{Path}'.", path
-			);
+			return R.Fail("Image file does not exist: '{Path}'.", path)
+				.Ctx(nameof(ImageDriver), nameof(FromFile));
 		}
 
 		// Create and return image object

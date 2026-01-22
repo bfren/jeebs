@@ -12,10 +12,7 @@ public static partial class CryptoF
 	/// </summary>
 	/// <returns>Passphrase.</returns>
 	public static Result<string> GeneratePassphrase() =>
-		R.Try(
-			Rnd.StringF.Passphrase,
-			e => R.Fail(nameof(CryptoF), nameof(GeneratePassphrase), e)
-		);
+		R.Try(Rnd.StringF.Passphrase);
 
 	/// <summary>
 	/// Generate a passphrase.
@@ -27,13 +24,11 @@ public static partial class CryptoF
 		{
 			>= 3 =>
 				R.Try(
-					() => Rnd.StringF.Passphrase(numberOfWords),
-					e => R.Fail(nameof(CryptoF), nameof(GeneratePassphrase), e)
+					() => Rnd.StringF.Passphrase(numberOfWords)
 				),
 
 			_ =>
-				R.Fail(nameof(CryptoF), nameof(GeneratePassphrase),
-					"Cryptographically secure passphrases must contain at least three words ({Number} requested).", numberOfWords
-				)
+				R.Fail("Cryptographically secure passphrases must contain at least three words ({Number} requested).", numberOfWords)
+					.Ctx(nameof(CryptoF), nameof(GeneratePassphrase))
 		};
 }

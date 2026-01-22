@@ -22,18 +22,16 @@ public static partial class QueryF
 			.Where(x => x.Name == columnAlias)
 			.SingleOrNone()
 			.ToResult(
-				() => R.Fail(nameof(QueryF), nameof(GetColumnFromAlias),
-					"Column with alias '{Alias}' not found in table '{Table}'.", columnAlias, table
-				)
+				() => R.Fail("Column with alias '{Alias}' not found in table '{Table}'.", columnAlias, table)
+					.Ctx(nameof(QueryF), nameof(GetColumnFromAlias))
 			)
 			.Map(
 				x => (name: x.GetValue(table)?.ToString()!, prop: x)
 			)
 			.ContinueIf(
 				x => !string.IsNullOrEmpty(x.name),
-				x => R.Fail(nameof(QueryF), nameof(GetColumnFromAlias),
-					"Column with alias '{Alias}' has null or empty name in table '{Table}'.", columnAlias, table
-				)
+				x => R.Fail("Column with alias '{Alias}' has null or empty name in table '{Table}'.", columnAlias, table)
+					.Ctx(nameof(QueryF), nameof(GetColumnFromAlias))
 			)
 			.Map(
 				x => (IColumn)new Column(table.GetName(), x.name, x.prop)
@@ -42,7 +40,5 @@ public static partial class QueryF
 	/// <inheritdoc cref="GetColumnFromAlias{TTable}(TTable, string)"/>
 	public static Result<IColumn> GetColumnFromAlias<TTable>(string columnAlias)
 		where TTable : ITable, new() =>
-		GetColumnFromAlias(
-			new TTable(), columnAlias
-		);
+		GetColumnFromAlias(new TTable(), columnAlias);
 }

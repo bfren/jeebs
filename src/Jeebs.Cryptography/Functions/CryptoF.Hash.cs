@@ -26,18 +26,17 @@ public static partial class CryptoF
 	public static Result<byte[]> Hash(string input, int bytes) =>
 		R
 			.Try(
-				() => Encoding.UTF8.GetBytes(input),
-				e => R.Fail(nameof(CryptoF), nameof(Hash), e)
+				() => Encoding.UTF8.GetBytes(input)
 			)
 			.Map(
 				x => GenericHash.Hash(x, null, bytes),
 				e => e switch
 				{
 					BytesOutOfRangeException =>
-						R.Fail(nameof(CryptoF), nameof(Hash), "Hash bytes must be between {Min} and {Max}.", 16, 64),
+						R.Fail("Hash bytes must be between {Min} and {Max}.", 16, 64).Ctx(nameof(CryptoF), nameof(Hash)),
 
 					_ =>
-						R.Fail(nameof(CryptoF), nameof(Hash), e)
+						R.Fail(e)
 				}
 			);
 }

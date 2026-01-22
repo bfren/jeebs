@@ -18,9 +18,7 @@ public static partial class QueryBuilderF
 		)
 		.Map(
 			x => (QueryBuilderWithFrom)builder(x),
-			e => R.Fail(nameof(QueryBuilderF), nameof(Build),
-				e, "Error building query."
-			)
+			e => R.Fail(e).Msg("Error building query.").Ctx(nameof(QueryBuilderF), nameof(Build))
 		)
 		.Bind(
 			x => x.Select<TModel>()

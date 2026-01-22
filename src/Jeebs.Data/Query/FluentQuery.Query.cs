@@ -23,17 +23,13 @@ public sealed partial record class FluentQuery<TEntity, TId>
 		// Return if there were any errors (usually when converting a column alias to a column object)
 		if (Errors.Count > 0)
 		{
-			return R.Fail(nameof(FluentQuery), nameof(QueryAsync),
-				"Query errors.", [.. Errors]
-			);
+			return R.Fail("Query errors.", [.. Errors]).Ctx(nameof(FluentQuery), nameof(QueryAsync));
 		}
 
 		// Return if there are no where clauses
 		if (Parts.Where.Count == 0 && Parts.WhereCustom.Count == 0)
 		{
-			return R.Fail(nameof(FluentQuery), nameof(QueryAsync),
-				"No predicates defined for WHERE clause."
-			);
+			return R.Fail("No predicates defined for WHERE clause.").Ctx(nameof(FluentQuery), nameof(QueryAsync));
 		}
 
 		// Add select columns to query

@@ -44,9 +44,8 @@ public static partial class QueryF
 				&& (item.value is not IEnumerable || item.value is string) // string implements IEnumerable but is not valid for IN
 			)
 			{
-				return R.Fail(nameof(QueryF), nameof(ConvertPredicatesToColumns),
-					"IN operator requires value to be a list."
-				);
+				return R.Fail("IN operator requires value to be a list.")
+					.Ctx(nameof(QueryF), nameof(ConvertPredicatesToColumns));
 			}
 
 			// Get parameter value (to support StrongId)

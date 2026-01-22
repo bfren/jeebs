@@ -54,10 +54,10 @@
     <PackageVersion Include="System.Data.SQLite.Core" Version="1.0.119" />
     <PackageVersion Include="System.IdentityModel.Tokens.Jwt" Version="8.15.0" />
     <PackageVersion Include="System.Text.Json" Version="10.0.2" />
-    <PackageVersion Include="Wrap" Version="1.0.0-beta.26012110" />
-    <PackageVersion Include="Wrap.Id.Dapper" Version="1.0.0-beta.26012110" />
-    <PackageVersion Include="Wrap.Maybe.System.Text.Json" Version="1.0.0-beta.26012110" />
-    <PackageVersion Include="Wrap.Testing" Version="1.0.0-beta.26012110" />
+    <PackageVersion Include="Wrap" Version="1.0.0-beta.26012206" />
+    <PackageVersion Include="Wrap.Id.Dapper" Version="1.0.0-beta.26012206" />
+    <PackageVersion Include="Wrap.Maybe.System.Text.Json" Version="1.0.0-beta.26012206" />
+    <PackageVersion Include="Wrap.Testing" Version="1.0.0-beta.26012206" />
     <PackageVersion Include="xunit" Version="2.9.3" />
     <PackageVersion Include="xunit.assert" Version="2.9.3" />
     <PackageVersion Include="xunit.runner.visualstudio" Version="3.1.5" />

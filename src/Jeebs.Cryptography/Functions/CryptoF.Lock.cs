@@ -28,7 +28,7 @@ public static partial class CryptoF
 
 			// contents cannot be null
 			_ =>
-				R.Fail(nameof(CryptoF), nameof(Lock), "Contents cannot be null.")
+				R.Fail("Contents cannot be null.").Ctx(nameof(CryptoF), nameof(Lock))
 		};
 
 	/// <summary>
@@ -46,7 +46,7 @@ public static partial class CryptoF
 				key,
 
 			false =>
-				R.Fail(nameof(CryptoF), nameof(Lock), "Key must be {Bytes} bytes long.", Lockable.KeyLength)
+				R.Fail("Key must be {Bytes} bytes long.", Lockable.KeyLength).Ctx(nameof(CryptoF), nameof(Lock))
 		};
 
 	/// <summary>

@@ -42,9 +42,8 @@ public sealed partial record class FluentQuery<TEntity, TId>
 	public Task<Result<TValue>> ExecuteAsync<TValue>(Expression<Func<TEntity, TValue>> aliasSelector, IDbTransaction transaction) =>
 		aliasSelector.GetPropertyInfo()
 			.ToResult(
-				() => R.Fail(nameof(FluentQuery), nameof(ExecuteAsync),
-					"Unable to get PropertyInfo for alias selector."
-				)
+				() => R.Fail("Unable to get PropertyInfo for alias selector.")
+					.Ctx(nameof(FluentQuery), nameof(ExecuteAsync))
 			)
 			.BindAsync(
 				x => ExecuteAsync<TValue>(x.Name, transaction)

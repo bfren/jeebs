@@ -47,9 +47,8 @@ public sealed record class ServicesConfig : IOptions<ServicesConfig>
 	/// <returns>Service configuration.</returns>
 	public Result<IServiceConfig> GetServiceConfig(string definition) =>
 		SplitDefinition(definition).Match(
-			none: () => R.Fail(nameof(ServicesConfig), nameof(GetServiceConfig),
-				"Invalid service definition: {Definition}.", definition
-			),
+			none: () => R.Fail("Invalid service definition: {Definition}.", definition)
+				.Ctx(nameof(ServicesConfig), nameof(GetServiceConfig)),
 			some: x => x switch
 			{
 				("console", string name) =>
@@ -62,9 +61,8 @@ public sealed record class ServicesConfig : IOptions<ServicesConfig>
 					GetServiceConfig(c => c.Slack, name).Map(c => (IServiceConfig)c),
 
 				(string type, var _) =>
-					R.Fail(nameof(ServicesConfig), nameof(GetServiceConfig),
-						"Service type '{Type}' is not recognised.", type
-					)
+					R.Fail("Service type '{Type}' is not recognised.", type)
+						.Ctx(nameof(ServicesConfig), nameof(GetServiceConfig))
 			}
 		);
 
@@ -78,18 +76,15 @@ public sealed record class ServicesConfig : IOptions<ServicesConfig>
 	public Result<T> GetServiceConfig<T>(Func<ServicesConfig, Dictionary<string, T>> getCollection, string name)
 		where T : IServiceConfig, new() =>
 		getCollection(this).GetValueOrNone(name).Match(
-			none: () => R.Fail(nameof(ServicesConfig), nameof(GetServiceConfig),
-				"No {Type} service named '{Name}' is configured.", typeof(T).Name, name
-			),
+			none: () => new T(),
 			some: x => x.IsValid switch
 			{
 				true =>
 					R.Wrap(x),
 
 				false =>
-					R.Fail(nameof(ServicesConfig), nameof(GetServiceConfig),
-						"Definition of {Type} service named '{Name}' is invalid.", typeof(T).Name, name
-					)
+					R.Fail("Definition of {Type} service named '{Name}' is invalid.", typeof(T).Name, name)
+						.Ctx(nameof(ServicesConfig), nameof(GetServiceConfig))
 			}
 		);
 

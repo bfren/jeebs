@@ -172,9 +172,8 @@ public abstract class Db : IDb
 					R.Wrap(x),
 
 				_ =>
-					R.Fail(nameof(Db), nameof(QuerySingleAsync),
-						"Item not found or multiple items returned.", query, param
-					)
+					R.Fail("Item not found or multiple items returned.", query, param)
+						.Ctx(nameof(Db), nameof(QuerySingleAsync))
 			}
 		);
 
@@ -225,9 +224,8 @@ public abstract class Db : IDb
 					R.Wrap(x),
 
 				_ =>
-					R.Fail(nameof(Db), nameof(ExecuteAsync),
-						"Execution returned null value.", query, param
-					)
+					R.Fail("Execution returned null value.", query, param)
+						.Ctx(nameof(Db), nameof(ExecuteAsync))
 			}
 		);
 

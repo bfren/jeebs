@@ -32,8 +32,8 @@ public static partial class MapF
 					  colName: column,
 					  propertyInfo: tableProperty
 				  ),
-			e => R.Fail(nameof(MapF), nameof(GetColumns),
-				e, "Error getting columns from table '{Table}'.", table
+			e => R.Fail(e).Msg("Error getting columns from table '{Table}'.", table)
+				.Ctx(nameof(MapF), nameof(GetColumns)
 			)
 		)
 		.Map(

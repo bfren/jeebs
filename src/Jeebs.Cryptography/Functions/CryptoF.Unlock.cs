@@ -16,10 +16,11 @@ public static partial class CryptoF
 	{
 
 		static Result<Lockable<T>> fail(Exception ex, string? message) =>
-			R.Fail(nameof(CryptoF), nameof(Unlock), ex, message);
+			R.Fail(ex).Msg(message).Ctx(nameof(CryptoF), nameof(Unlock));
 
 		return box.EncryptedContents.Match(
-			none: () => R.Fail(nameof(CryptoF), nameof(Unlock), "There are no encrypted contents to unlock."),
+			none: () => R.Fail("There are no encrypted contents to unlock.")
+				.Ctx(nameof(CryptoF), nameof(Unlock)),
 			some: x =>
 			{
 				try

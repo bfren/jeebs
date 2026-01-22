@@ -18,7 +18,7 @@ public static partial class JsonF
 	public static Result<T> Deserialise<T>(string? str, JsonSerializerOptions options)
 	{
 		static Result<T> fail(string message) =>
-			R.Fail(nameof(JsonF), nameof(Deserialise), message);
+			R.Fail(message).Ctx(nameof(JsonF), nameof(Deserialise));
 
 		// Check for null string
 		if (string.IsNullOrWhiteSpace(str) || string.Equals(str, Empty, StringComparison.Ordinal))
@@ -40,7 +40,7 @@ public static partial class JsonF
 		}
 		catch (Exception ex)
 		{
-			return R.Fail(nameof(JsonF), nameof(Deserialise), ex);
+			return R.Fail(ex);
 		}
 	}
 
