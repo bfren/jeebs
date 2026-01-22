@@ -2,6 +2,7 @@
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using Jeebs.Collections;
+using Jeebs.Functions;
 
 namespace Jeebs.Data.Clients.PostgreSql.TypeHandlers;
 
@@ -19,7 +20,7 @@ public sealed class ImmutableListJsonbTypeHandler<T> : JsonbTypeHandler<Immutabl
 		value switch
 		{
 			string json =>
-				ImmutableList.Deserialise<T>(json),
+				ListF.Deserialise<T>(json),
 
 			_ =>
 				new()

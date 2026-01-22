@@ -25,7 +25,7 @@ public class JsonbTypeHandler<T> : Dapper.SqlMapper.TypeHandler<T>
 		value switch
 		{
 			string json =>
-				JsonF.Deserialise<T>(json).Unwrap(() => throw new JsonException($"Unable to deserialise JSON for {typeof(T)}: {value}.")),
+				JsonF.Deserialise<T>(json).Unwrap(),
 
 			_ =>
 				throw new JsonException($"Invalid JSON: {value}.")
@@ -46,7 +46,7 @@ public class JsonbTypeHandler<T> : Dapper.SqlMapper.TypeHandler<T>
 		parameter.Value = value switch
 		{
 			T x =>
-				JsonF.Serialise(x).Unwrap(JsonF.Empty),
+				JsonF.Serialise(x).Unwrap(_ => JsonF.Empty),
 
 			_ =>
 				DBNull.Value

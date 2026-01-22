@@ -9,16 +9,15 @@ namespace Jeebs.Data.Clients.PostgreSql.TypeHandlers.Json_Tests;
 
 public class Format_Tests
 {
-	[Theory]
-	[InlineData(null)]
-	public void Null_Sets_Null_Value(Test input)
+	[Fact]
+	public void Null_Sets_Null_Value()
 	{
 		// Arrange
 		var handler = new JsonbTypeHandler<Test>();
 		var parameter = Substitute.For<IDbDataParameter>();
 
 		// Act
-		handler.SetValue(parameter, input);
+		handler.SetValue(parameter, null!);
 
 		// Assert
 		Assert.IsType<DBNull>(parameter.Value);

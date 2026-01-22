@@ -34,7 +34,7 @@ public class GetUpdateQuery_Tests
 		c2Property.Name.Returns(c2Alias);
 		var c2 = new Column(table, c2Name, c2Property);
 
-		var list = new ColumnList(new[] { c0, c1 });
+		var list = new ColumnList([c0, c1]);
 		var client = new PostgreSqlDbClient();
 
 		var id = Rnd.Lng;
@@ -83,7 +83,7 @@ public class GetUpdateQuery_Tests
 		c3Property.Name.Returns(c3Alias);
 		var c3 = new Column(table, c3Name, c3Property);
 
-		var list = new ColumnList(new[] { c0, c1 });
+		var list = new ColumnList([c0, c1]);
 		var client = new PostgreSqlDbClient();
 
 		var id = Rnd.Lng;
