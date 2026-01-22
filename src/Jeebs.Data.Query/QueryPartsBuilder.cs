@@ -15,13 +15,17 @@ namespace Jeebs.Data.Query;
 /// Builds a <see cref="QueryParts"/> object from various options.
 /// </summary>
 /// <typeparam name="TId">Entity ID type</typeparam>
-public abstract class QueryPartsBuilder<TId> : IQueryPartsBuilder<TId>
+/// <remarks>
+/// Inject extract object.
+/// </remarks>
+/// <param name="extract">IExtract.</param>
+public abstract class QueryPartsBuilder<TId>(IExtract extract) : IQueryPartsBuilder<TId>
 	where TId : class, IUnion, new()
 {
 	/// <summary>
 	/// IExtract.
 	/// </summary>
-	protected IExtract Extract { get; private init; }
+	protected IExtract Extract { get; private init; } = extract;
 
 	/// <inheritdoc/>
 	public abstract ITable Table { get; }
@@ -33,13 +37,6 @@ public abstract class QueryPartsBuilder<TId> : IQueryPartsBuilder<TId>
 	/// Create object with default extractor.
 	/// </summary>
 	protected QueryPartsBuilder() : this(new Extract()) { }
-
-	/// <summary>
-	/// Inject extract object.
-	/// </summary>
-	/// <param name="extract">IExtract.</param>
-	protected QueryPartsBuilder(IExtract extract) =>
-		Extract = extract;
 
 	/// <inheritdoc/>
 	public Result<QueryParts> Create<TModel>(ulong? maximum, ulong skip) =>
