@@ -17,10 +17,6 @@ public static partial class ListF
 	public static ImmutableList<T> Create<T>(IEnumerable<T> items) =>
 		new(items);
 
-	/// <inheritdoc cref="Create{T}(IEnumerable{T})"/>
-	public static IImmutableList<T> ICreate<T>(IEnumerable<T> items) =>
-		Create(items: items);
-
 	/// <summary>
 	/// Create a new <see cref="ImmutableList{T}"/> with the specified <paramref name="args"/>.
 	/// </summary>
@@ -36,8 +32,4 @@ public static partial class ListF
 			_ =>
 				new()
 		};
-
-	/// <inheritdoc cref="Create{T}(T[]?)"/>
-	public static IImmutableList<T> ICreate<T>(params T[]? args) =>
-		Create(args: args);
 }

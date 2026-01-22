@@ -252,7 +252,7 @@ public class GetQuery_Tests
 
 		var parts = new QueryParts(v.Table)
 		{
-			WhereCustom = ListF.ICreate(
+			WhereCustom = ListF.Create(
 			[
 				(w0, parametersToAdd0),
 				(w1, parametersToAdd1)
@@ -362,7 +362,7 @@ public class GetQuery_Tests
 
 		var parts = new QueryParts(v.Table)
 		{
-			Sort = ListF.ICreate(
+			Sort = ListF.Create(
 			[
 				(sort0, SortOrder.Ascending),
 				(sort1, SortOrder.Descending)

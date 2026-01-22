@@ -362,7 +362,7 @@ public class GetQuery_Tests
 
 		var parts = new QueryParts(v.Table)
 		{
-			Sort = ListF.ICreate(
+			Sort = ListF.Create(
 			[
 				(sort0, SortOrder.Ascending),
 				(sort1, SortOrder.Descending)

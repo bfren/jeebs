@@ -159,7 +159,7 @@ public class GetQuery_Tests
 		var to1Name = Rnd.Str;
 		IColumn to1 = new Column(to1Table, to1Name, Helpers.CreateInfoFromAlias());
 
-		var join = ListF.ICreate([(from, to0), (to0, to1)]);
+		var join = ListF.Create([(from, to0), (to0, to1)]);
 
 		var parts = setJoin(new(v.Table), join);
 
