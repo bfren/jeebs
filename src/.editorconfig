@@ -1,5 +1,7 @@
-﻿[*.{cs,csx,cake,vb,vbx}]
+[*.{cs,csx,cake,vb,vbx}]
 
 file_header_template = Jeebs Rapid Application Development\nCopyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 insert_final_newline = true
+
+csharp_style_prefer_primary_constructors = false

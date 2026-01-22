@@ -16,8 +16,7 @@ namespace Jeebs.Apps.Web;
 /// <remarks>
 /// Create Razor application.
 /// </remarks>
-/// <param name="useHsts">HSTS should only be disabled if the application is in development mode, or behind a reverse proxy.</param>
-public class RazorApp(bool useHsts) : MvcApp(useHsts)
+public class RazorApp : MvcApp
 {
 	#region Run
 
@@ -57,6 +56,12 @@ public class RazorApp(bool useHsts) : MvcApp(useHsts)
 	/// Create Razor application with HSTS enabled.
 	/// </summary>
 	public RazorApp() : this(true) { }
+
+	/// <summary>
+	/// Create Razor application.
+	/// </summary>
+	/// <param name="useHsts">HSTS should only be disabled if the application is in development mode, or behind a reverse proxy.</param>
+	public RazorApp(bool useHsts) : base(useHsts) { }
 
 	/// <inheritdoc/>
 	protected override void ConfigureServicesEndpoints(HostBuilderContext ctx, IServiceCollection services) =>
