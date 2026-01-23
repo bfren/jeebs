@@ -30,7 +30,7 @@ public class Convert_Tests
 		// Assert
 		result.AssertFail(
 			"'{Value}' is not a valid value of {Type}.",
-			new { Value = nameof(TestB.Test5), Type = typeof(TestA).FullName }
+			nameof(TestB.Test5), typeof(TestA).FullName
 		);
 	}
 

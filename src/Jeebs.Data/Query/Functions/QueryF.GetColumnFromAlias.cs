@@ -24,7 +24,7 @@ public static partial class QueryF
 			.ToResult(
 				() => R.Fail(
 						"Column with alias '{Alias}' not found in table '{Table}'.",
-						new { alias, Table = table.GetType().Name }
+						alias, table.GetType().Name
 					)
 					.Ctx(nameof(QueryF), nameof(GetColumnFromAlias))
 			)
@@ -35,7 +35,7 @@ public static partial class QueryF
 				x => !string.IsNullOrEmpty(x.name),
 				x => R.Fail(
 						"Column with alias '{Alias}' has null or empty name in table '{Table}'.",
-						new { alias, Table = table.GetType().Name }
+						alias, table.GetType().Name
 					)
 					.Ctx(nameof(QueryF), nameof(GetColumnFromAlias))
 			)

@@ -38,7 +38,7 @@ public class Map_Tests
 		var ex = Assert.Throws<InvalidTableMapException>(action);
 		Assert.Single(ex.Errors).AssertMessage(
 			"The definition of table '{Table}' is missing field '{Field}'.",
-			new { table, field }
+			table, field
 		);
 	}
 
@@ -57,7 +57,7 @@ public class Map_Tests
 		var ex = Assert.Throws<InvalidTableMapException>(action);
 		Assert.Single(ex.Errors).AssertMessage(
 			"The definition of entity '{Entity}' is missing property '{Property}'.",
-			new { entity, property }
+			entity, property
 		);
 	}
 
@@ -73,10 +73,7 @@ public class Map_Tests
 
 		// Assert
 		var ex = Assert.Throws<InvalidTableMapException>(action);
-		Assert.Single(ex.Errors).AssertMessage(
-			"Unable to get Id column from table '{Name}'.",
-			new { name }
-		);
+		Assert.Single(ex.Errors).AssertMessage("Unable to get Id column from table '{Name}'.", name);
 	}
 
 	[Fact]
@@ -93,7 +90,7 @@ public class Map_Tests
 		var ex = Assert.Throws<InvalidTableMapException>(action);
 		Assert.Single(ex.Errors).AssertMessage(
 			"Unable to get Id column from table '{Name}'.",
-			new { name }
+			name
 		);
 	}
 
@@ -112,7 +109,7 @@ public class Map_Tests
 		var ex = Assert.Throws<InvalidTableMapException>(action);
 		Assert.Single(ex.Errors).AssertMessage(
 			"Unable to get single column with attribute '{Attribute}' from table '{Table}'.",
-			new { attribute, table }
+			attribute, table
 		);
 	}
 
@@ -131,7 +128,7 @@ public class Map_Tests
 		var ex = Assert.Throws<InvalidTableMapException>(action);
 		Assert.Single(ex.Errors).AssertMessage(
 			"Unable to get single column with attribute '{Attribute}' from table '{Table}'.",
-			new { attribute, table }
+			attribute, table
 		);
 	}
 }

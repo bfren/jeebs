@@ -42,9 +42,6 @@ public abstract class WebhookDriver<TConfig, TMessage> : Driver<TConfig>, IWebho
 	/// <inheritdoc/>
 	public virtual void Send(FailValue failure)
 	{
-		// Get fields
-		var fields = DictionaryF.FromObject(failure.Args ?? new());
-
 		// Convert to notification Message
 		var message = new Message
 		{
@@ -53,10 +50,10 @@ public abstract class WebhookDriver<TConfig, TMessage> : Driver<TConfig>, IWebho
 			Fields = failure.Exception switch
 			{
 				{ } e =>
-					fields.WithItem("Exception", e).ToDictionary(),
+					new Dictionary<string, object> { { "Exception", e } },
 
 				_ =>
-					fields.ToDictionary()
+					[]
 			}
 		};
 
@@ -111,27 +108,4 @@ public abstract class WebhookDriver<TConfig, TMessage> : Driver<TConfig>, IWebho
 		});
 
 	#endregion Actually Send
-}
-
-public static class PrototypeExtensions
-{
-	public static IDictionary<string, object> ToDictionary<T>(this object anon)
-	{
-		var dict = new Dictionary<string, object>(StringComparer.OrdinalIgnoreCase);
-
-		if (anon == null)
-		{
-			return dict;
-		}
-
-		foreach (var info in anon.GetType().GetProperties())
-		{
-			if (info.GetValue(anon) is object value)
-			{
-				dict.Add(info.Name, value);
-			}
-		}
-
-		return dict;
-	}
 }

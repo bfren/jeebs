@@ -47,7 +47,7 @@ public sealed record class ServicesConfig : IOptions<ServicesConfig>
 	/// <returns>Service configuration.</returns>
 	public Result<IServiceConfig> GetServiceConfig(string definition) =>
 		SplitDefinition(definition).Match(
-			none: () => R.Fail("Invalid service definition: {Definition}.", new { definition })
+			none: () => R.Fail("Invalid service definition: {Definition}.", definition)
 				.Ctx(nameof(ServicesConfig), nameof(GetServiceConfig)),
 			some: x => x switch
 			{
@@ -61,7 +61,7 @@ public sealed record class ServicesConfig : IOptions<ServicesConfig>
 					GetServiceConfig(c => c.Slack, name).Map(c => (IServiceConfig)c),
 
 				(string type, var _) =>
-					R.Fail("Service type '{Type}' is not recognised.", new { type })
+					R.Fail("Service type '{Type}' is not recognised.", type)
 						.Ctx(nameof(ServicesConfig), nameof(GetServiceConfig))
 			}
 		);
@@ -83,7 +83,7 @@ public sealed record class ServicesConfig : IOptions<ServicesConfig>
 					R.Wrap(x),
 
 				false =>
-					R.Fail("Definition of {Type} service named '{Name}' is invalid.", new { Type = typeof(T).Name, name })
+					R.Fail("Definition of {Type} service named '{Name}' is invalid.", typeof(T).Name, name)
 						.Ctx(nameof(ServicesConfig), nameof(GetServiceConfig))
 			}
 		);

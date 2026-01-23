@@ -26,12 +26,18 @@ public static partial class MapF
 		)
 		.Map(
 			x => x.Where(p => p.PropertyInfo.GetCustomAttribute<TAttribute>() != null).ToList(),
-			e => R.Fail(e).Msg("Error getting properties with attribute '{Attribute}' from table '{Table}'.", new { Attribute = typeof(TAttribute).Name, Table = typeof(TTable).Name })
+			e => R.Fail(e).Msg(
+					"Error getting properties with attribute '{Attribute}' from table '{Table}'.",
+					typeof(TAttribute).Name, typeof(TTable).Name
+				)
 				.Ctx(nameof(MapF), nameof(GetColumnWithAttribute))
 		)
 		.GetSingle(
 			x => x.Value<IColumn>(),
-			() => R.Fail("Unable to get single column with attribute '{Attribute}' from table '{Table}'.", new { Attribute = typeof(TAttribute).Name, Table = typeof(TTable).Name })
+			() => R.Fail(
+					"Unable to get single column with attribute '{Attribute}' from table '{Table}'.",
+					typeof(TAttribute).Name, typeof(TTable).Name
+				)
 				.Ctx(nameof(MapF), nameof(GetColumnWithAttribute))
 		)
 		.Map(

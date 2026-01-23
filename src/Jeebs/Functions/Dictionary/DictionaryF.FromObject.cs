@@ -3,7 +3,6 @@
 
 using System;
 using System.Collections.Generic;
-using Jeebs.Collections;
 
 namespace Jeebs.Functions;
 
@@ -12,27 +11,27 @@ public static partial class DictionaryF
 	/// <summary>
 	/// Convert an anonymous object into a dictionary where property names are the keys.
 	/// </summary>
-	/// <param name="obj">Anonymous object</param>
-	/// <returns>ImmutableDictionary object</returns>
-	public static ImmutableDictionary<string, object> FromObject(object obj)
+	/// <param name="obj">Anonymous object.</param>
+	/// <returns>Dictionary object.</returns>
+	public static Dictionary<string, object> FromObject(object? obj)
 	{
-		// Create empty dictionary
-		var dict = new Dictionary<string, object>(StringComparer.OrdinalIgnoreCase);
+		// Return empty dictionary
 		if (obj is null)
 		{
-			return new(dict);
+			return [];
 		}
 
 		// Add non-null properties to the dictionary
+		var dict = new Dictionary<string, object>(StringComparer.OrdinalIgnoreCase);
 		foreach (var info in obj.GetType().GetProperties())
 		{
 			if (info.GetValue(obj) is object value)
 			{
-				dict.Add(info.Name, value);
+				dict.Add(info.Name.ToLowerInvariant(), value);
 			}
 		}
 
 		// Return dictionary
-		return new(dict);
+		return dict;
 	}
 }

@@ -53,7 +53,7 @@ public sealed record class DbConfig : IOptions<DbConfig>
 	/// <param name="name">Connection name.</param>
 	public Result<DbConnectionConfig> GetConnection(string name)
 	{
-		static Result<DbConnectionConfig> fail(string message, object? args = null) =>
+		static Result<DbConnectionConfig> fail(string message, params object?[] args) =>
 			R.Fail(message, args).Ctx(nameof(DbConfig), nameof(GetConnection));
 
 		// Name cannot be null or empty
@@ -74,7 +74,7 @@ public sealed record class DbConfig : IOptions<DbConfig>
 			return config;
 		}
 
-		return fail("A connection named '{Name}' could not be found.", new { name });
+		return fail("A connection named '{Name}' could not be found.", name);
 	}
 
 	/// <summary>

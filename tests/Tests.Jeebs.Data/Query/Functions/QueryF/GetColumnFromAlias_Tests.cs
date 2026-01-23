@@ -21,11 +21,11 @@ public class GetColumnFromAlias_Tests
 		// Assert
 		_ = r0.AssertFail(
 			"Column with alias '{Alias}' not found in table '{Table}'.",
-			new { alias, Table = nameof(TestTable) }
+			alias, nameof(TestTable)
 		);
 		_ = r1.AssertFail(
 			"Column with alias '{Alias}' not found in table '{Table}'.",
-			new { alias, Table = nameof(TestTable) }
+			alias, nameof(TestTable)
 		);
 	}
 
@@ -43,11 +43,11 @@ public class GetColumnFromAlias_Tests
 		// Assert
 		_ = r0.AssertFail(
 			"Column with alias '{Alias}' has null or empty name in table '{Table}'.",
-			new { alias, Table = nameof(TestTable) }
+			alias, nameof(TestTable)
 		);
 		_ = r1.AssertFail(
 			"Column with alias '{Alias}' has null or empty name in table '{Table}'.",
-			new { alias, Table = nameof(TestTable) }
+			alias, nameof(TestTable)
 		);
 	}
 

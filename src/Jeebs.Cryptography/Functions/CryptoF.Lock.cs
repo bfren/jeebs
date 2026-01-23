@@ -46,7 +46,7 @@ public static partial class CryptoF
 				key,
 
 			false =>
-				R.Fail("Key must be {Bytes} bytes long.", new { Bytes = Lockable.KeyLength })
+				R.Fail("Key must be {Bytes} bytes long.", Lockable.KeyLength)
 					.Ctx(nameof(CryptoF), nameof(Lock))
 		};
 

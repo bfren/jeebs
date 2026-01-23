@@ -35,7 +35,7 @@ public partial class GetServiceConfig_Tests
 		// Assert
 		result.AssertFail(
 			"Definition of {Type} service named '{Name}' is invalid.",
-			new { Type = nameof(SeqConfig)!, name }
+			nameof(SeqConfig), name
 		);
 	}
 

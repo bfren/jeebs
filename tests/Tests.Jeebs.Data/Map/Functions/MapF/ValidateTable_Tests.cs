@@ -22,7 +22,7 @@ public class ValidateTable_Tests
 		Assert.Single(errors)
 			.AssertMessage(
 				"The definition of table '{Table}' is missing field '{Field}'.",
-				new { table, field }
+				table, field
 			);
 	}
 
@@ -42,9 +42,9 @@ public class ValidateTable_Tests
 		// Assert
 		Assert.False(valid);
 		Assert.Collection(errors,
-			x => x.AssertMessage(message, new { table, field = f0 }),
-			x => x.AssertMessage(message, new { table, field = f1 }),
-			x => x.AssertMessage(message, new { table, field = f2 })
+			x => x.AssertMessage(message, table, f0),
+			x => x.AssertMessage(message, table, f1),
+			x => x.AssertMessage(message, table, f2)
 		);
 	}
 
@@ -62,7 +62,7 @@ public class ValidateTable_Tests
 		Assert.Single(errors)
 			.AssertMessage(
 				"The definition of entity '{Entity}' is missing property '{Property}'.",
-				new { Entity = nameof(Foo), Property = nameof(FooTableWithBar2.Bar2) }
+				nameof(Foo), nameof(FooTableWithBar2.Bar2)
 			);
 	}
 
@@ -82,9 +82,9 @@ public class ValidateTable_Tests
 		// Assert
 		Assert.False(valid);
 		Assert.Collection(errors,
-			x => x.AssertMessage(message, new { entity, property = p0 }),
-			x => x.AssertMessage(message, new { entity, property = p1 }),
-			x => x.AssertMessage(message, new { entity, property = p2 })
+			x => x.AssertMessage(message, entity, p0),
+			x => x.AssertMessage(message, entity, p1),
+			x => x.AssertMessage(message, entity, p2)
 		);
 	}
 }

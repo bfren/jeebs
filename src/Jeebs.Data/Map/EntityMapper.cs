@@ -79,7 +79,7 @@ internal sealed class EntityMapper : IEntityMapper, IDisposable
 			return map;
 		}
 
-		return R.Fail("Trying to get table map for an umapped entity.", new { Entity = typeof(TEntity).Name })
+		return R.Fail("Trying to get table map for an umapped entity ('{Entity}').", typeof(TEntity).Name)
 			.Ctx(nameof(EntityMapper), nameof(GetTableMapFor));
 	}
 

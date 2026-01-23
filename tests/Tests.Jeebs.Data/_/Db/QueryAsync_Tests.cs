@@ -38,7 +38,7 @@ public class QueryAsync_Tests
 		// Assert
 		v.Log.Received().Vrb(
 			"Query Type: {Type} | Return: {Return} | {Query} | Parameters: {Param}",
-			Arg.Is<object>(x => Db_Setup.Cmp(new { type, Return = typeof(int), query, param }, x))
+			type, typeof(int), query, param
 		);
 	}
 }

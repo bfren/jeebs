@@ -48,7 +48,7 @@ public static partial class MapF
 			{
 				var f = FailValue.Create(
 					"The definition of table '{Table}' is missing field '{Field}'.",
-					new { Table = tableType.Name, field }
+					tableType.Name, field
 				);
 				errors.Add(f);
 			}
@@ -62,7 +62,7 @@ public static partial class MapF
 			{
 				var f = FailValue.Create(
 					"The definition of entity '{Entity}' is missing property '{Property}'.",
-					new { Entity = entityType.Name, property }
+					entityType.Name, property
 				);
 				errors.Add(f);
 			}

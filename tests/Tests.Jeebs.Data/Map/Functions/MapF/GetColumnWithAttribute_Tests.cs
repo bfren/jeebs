@@ -21,7 +21,7 @@ public class GetColumnWithAttribute_Tests
 		// Assert
 		_ = result.AssertFail(
 			"Unable to get single column with attribute '{Attribute}' from table '{Table}'.",
-			new { Attribute = "IdAttribute", Table = "FooTableWithoutIdAttribute" }
+			"IdAttribute", "FooTableWithoutIdAttribute"
 		);
 	}
 
@@ -37,7 +37,7 @@ public class GetColumnWithAttribute_Tests
 		// Assert
 		_ = result.AssertFail(
 			"Unable to get single column with attribute '{Attribute}' from table '{Table}'.",
-			new { Attribute = "IdAttribute", Table = "FooTableWithMultipleIdAttributes" }
+			"IdAttribute", "FooTableWithMultipleIdAttributes"
 		);
 	}
 }

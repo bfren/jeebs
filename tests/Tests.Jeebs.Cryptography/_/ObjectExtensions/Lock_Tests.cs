@@ -15,7 +15,7 @@ public sealed class Lock_Tests
 		var result = Rnd.Guid.Lock(key);
 
 		// Assert
-		result.AssertFail("Key must be {Bytes} bytes long.", new { Bytes = 32 });
+		result.AssertFail("Key must be {Bytes} bytes long.", 32);
 	}
 
 	[Fact]

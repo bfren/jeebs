@@ -60,42 +60,42 @@ public interface ILog
 	/// <inheritdoc cref="LogLevel.Verbose"/>
 	/// <param name="message">Message.</param>
 	/// <param name="args">Arguments (if message supports string.Format()).</param>
-	void Vrb(string message, object? args = null);
+	void Vrb(string message, params object?[] args);
 
 	/// <inheritdoc cref="LogLevel.Debug"/>
 	/// <param name="message">Message.</param>
 	/// <param name="args">Arguments (if message supports string.Format()).</param>
-	void Dbg(string message, object? args = null);
+	void Dbg(string message, params object?[] args);
 
 	/// <inheritdoc cref="LogLevel.Information"/>
 	/// <param name="message">Message.</param>
 	/// <param name="args">Arguments (if message supports string.Format()).</param>
-	void Inf(string message, object? args = null);
+	void Inf(string message, params object?[] args);
 
 	/// <inheritdoc cref="LogLevel.Warning"/>
 	/// <param name="message">Message.</param>
 	/// <param name="args">Arguments (if message supports string.Format()).</param>
-	void Wrn(string message, object? args = null);
+	void Wrn(string message, params object?[] args);
 
 	/// <inheritdoc cref="LogLevel.Error"/>
 	/// <param name="message">Message.</param>
 	/// <param name="args">Arguments (if message supports string.Format()).</param>
-	void Err(string message, object? args = null);
+	void Err(string message, params object?[] args);
 
 	/// <inheritdoc cref="LogLevel.Error"/>
 	/// <param name="ex">Exception.</param>
 	/// <param name="message">Message.</param>
 	/// <param name="args">Arguments (if message supports string.Format()).</param>
-	void Err(Exception ex, string message, object? args = null);
+	void Err(Exception ex, string message, params object?[] args);
 
 	/// <inheritdoc cref="LogLevel.Fatal"/>
 	/// <param name="message">Message.</param>
 	/// <param name="args">Arguments (if message supports string.Format()).</param>
-	void Ftl(string message, object? args = null);
+	void Ftl(string message, params object?[] args);
 
 	/// <inheritdoc cref="LogLevel.Fatal"/>
 	/// <param name="ex">Exception.</param>
 	/// <param name="message">Message.</param>
 	/// <param name="args">Arguments (if message supports string.Format()).</param>
-	void Ftl(Exception ex, string message, object? args = null);
+	void Ftl(Exception ex, string message, params object?[] args);
 }

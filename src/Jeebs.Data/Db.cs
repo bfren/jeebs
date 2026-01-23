@@ -98,7 +98,7 @@ public abstract class Db : IDb
 	/// <summary>
 	/// Use Verbose log by default - override to send elsewhere (or to disable entirely).
 	/// </summary>
-	protected virtual Action<string, object> WriteToLog =>
+	protected virtual Action<string, object?[]> WriteToLog =>
 		Log.Vrb;
 
 	/// <summary>
@@ -112,16 +112,17 @@ public abstract class Db : IDb
 
 		// Always log query type, return type, and query
 		var message = "Query Type: {Type} | Return: {Return} | {Query}";
+		object?[] args = [type, typeof(TReturn), query];
 
 		// Log with or without parameters
 		if (parameters is null)
 		{
-			WriteToLog(message, new { type, Return = typeof(TReturn), query });
+			WriteToLog(message, [.. args]);
 		}
 		else if (parameters.ToString() is string param)
 		{
 			message += " | Parameters: {Param}";
-			WriteToLog(message, new { type, Return = typeof(TReturn), query, param });
+			WriteToLog(message, [.. args, param]);
 		}
 	}
 
@@ -171,7 +172,7 @@ public abstract class Db : IDb
 					R.Wrap(x),
 
 				_ =>
-					R.Fail("Item not found or multiple items returned.", new { query, param })
+					R.Fail("Item not found or multiple items returned.", query, param)
 						.Ctx(nameof(Db), nameof(QuerySingleAsync))
 			}
 		);
@@ -223,7 +224,7 @@ public abstract class Db : IDb
 					R.Wrap(x),
 
 				_ =>
-					R.Fail("Execution returned null value.", new { query, param })
+					R.Fail("Execution returned null value.", query, param)
 						.Ctx(nameof(Db), nameof(ExecuteAsync))
 			}
 		);

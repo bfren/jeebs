@@ -44,7 +44,7 @@ public class Parse_Tests
 		// Assert
 		result.AssertFail(
 			"'{Value}' is not a valid value of {Type}.",
-			new { Value = input, Type = typeof(TestA).FullName }
+			input, typeof(TestA).FullName
 		);
 	}
 
@@ -60,7 +60,7 @@ public class Parse_Tests
 		// Assert
 		result.AssertFail(
 			"'{Value}' is not a valid value of {Type}.",
-			new { Value = input, Type = typeof(TestB).FullName }
+			input, typeof(TestB).FullName
 		);
 	}
 

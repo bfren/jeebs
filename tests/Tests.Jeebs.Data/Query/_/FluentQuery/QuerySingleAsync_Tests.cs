@@ -39,7 +39,7 @@ public class QuerySingleAsync_Tests : FluentQuery_Tests
 		var result = await query.QuerySingleAsync<long>();
 
 		// Assert
-		_ = result.AssertFail("Query errors.", new { query.Errors });
+		_ = result.AssertFail("Query errors.", query.Errors);
 	}
 
 	[Fact]

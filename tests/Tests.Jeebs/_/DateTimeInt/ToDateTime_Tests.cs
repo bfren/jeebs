@@ -31,6 +31,6 @@ public class ToDateTime_Tests
 		var result = input.ToDateTime();
 
 		// Assert
-		result.AssertFail("Invalid {Part} - 'Y:{Year} M:{Month} D:{Day} H:{Hour} m:{Minute}'.", new { part, year, month, day, hour, minute });
+		result.AssertFail("Invalid {Part} - 'Y:{Year} M:{Month} D:{Day} H:{Hour} m:{Minute}'.", part, year, month, day, hour, minute);
 	}
 }

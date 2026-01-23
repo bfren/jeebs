@@ -2,7 +2,7 @@
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using System.Collections.Generic;
-using Jeebs.Collections;
+using System.Collections.Immutable;
 
 namespace Jeebs.Functions;
 
@@ -16,7 +16,7 @@ public static partial class DictionaryF
 	/// <returns>New <see cref="ImmutableDictionary{TKey, TValue}"/> containing <paramref name="items"/>.</returns>
 	public static ImmutableDictionary<TKey, TValue> Create<TKey, TValue>(IDictionary<TKey, TValue> items)
 		where TKey : notnull =>
-		new(items);
+		items.ToImmutableDictionary();
 
 	/// <summary>
 	/// Create a new <see cref="ImmutableDictionary{TKey, TValue}"/> with the specified <paramref name="args"/>.
@@ -29,9 +29,9 @@ public static partial class DictionaryF
 		args switch
 		{
 			{ } =>
-				new(args),
+				ImmutableDictionary<TKey, TValue>.Empty.AddRange(args),
 
 			_ =>
-				new()
+				[]
 		};
 }

@@ -23,7 +23,7 @@ public sealed partial record class FluentQuery<TEntity, TId>
 		// Return if there were any errors (usually when converting a column alias to a column object)
 		if (Errors.Count > 0)
 		{
-			return R.Fail("Query errors.", new { Errors }).Ctx(nameof(FluentQuery), nameof(QueryAsync));
+			return R.Fail("Query errors.", Errors).Ctx(nameof(FluentQuery), nameof(QueryAsync));
 		}
 
 		// Return if there are no where clauses
