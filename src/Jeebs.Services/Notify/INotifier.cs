@@ -25,5 +25,5 @@ public interface INotifier
 	/// Send notification of a failure.
 	/// </summary>
 	/// <param name="failure">The failure to send as a notification.</param>
-	void Send(Fail failure);
+	void Send(FailValue failure);
 }

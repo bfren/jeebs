@@ -51,7 +51,7 @@ public abstract class ImageWrapper : IImageWrapper
 		// At least one of width and height should be greater than zero
 		if (width == 0 && height == 0)
 		{
-			return R.Fail("Mask width or height is required,")
+			return R.Fail("Mask width or height is required.")
 				.Ctx(nameof(ImageWrapper), nameof(ApplyMask));
 		}
 

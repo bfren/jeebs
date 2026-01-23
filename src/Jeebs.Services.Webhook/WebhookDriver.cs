@@ -3,7 +3,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Globalization;
 using System.Net.Http;
 using Jeebs.Config;
 using Jeebs.Functions;
@@ -41,20 +40,23 @@ public abstract class WebhookDriver<TConfig, TMessage> : Driver<TConfig>, IWebho
 		Send(new Message { Content = message, Level = level });
 
 	/// <inheritdoc/>
-	public virtual void Send(Fail failure)
+	public virtual void Send(FailValue failure)
 	{
+		// Get fields
+		var fields = DictionaryF.FromObject(failure.Args ?? new());
+
 		// Convert to notification Message
 		var message = new Message
 		{
-			Content = string.Format(CultureInfo.InvariantCulture, failure.Value.Message, [.. failure.Value.Args ?? []]),
-			Level = failure.Value.Level.ToNotificationLevel(),
-			Fields = failure.Value.Exception switch
+			Content = failure.Message.FormatWith(failure.Args),
+			Level = failure.Level.ToNotificationLevel(),
+			Fields = failure.Exception switch
 			{
 				{ } e =>
-					new Dictionary<string, object> { { "Exception", e } },
+					fields.WithItem("Exception", e).ToDictionary(),
 
 				_ =>
-					[]
+					fields.ToDictionary()
 			}
 		};
 
@@ -109,4 +111,27 @@ public abstract class WebhookDriver<TConfig, TMessage> : Driver<TConfig>, IWebho
 		});
 
 	#endregion Actually Send
+}
+
+public static class PrototypeExtensions
+{
+	public static IDictionary<string, object> ToDictionary<T>(this object anon)
+	{
+		var dict = new Dictionary<string, object>(StringComparer.OrdinalIgnoreCase);
+
+		if (anon == null)
+		{
+			return dict;
+		}
+
+		foreach (var info in anon.GetType().GetProperties())
+		{
+			if (info.GetValue(anon) is object value)
+			{
+				dict.Add(info.Name, value);
+			}
+		}
+
+		return dict;
+	}
 }

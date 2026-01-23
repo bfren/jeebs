@@ -24,7 +24,7 @@ public static partial class QueryF
 			select (IColumn)new Column(table.GetName(), t, i.Info)
 		)
 		.ToResult(
-			() => R.Fail("Unable to get column from expression for table '{Table}'.", table)
+			() => R.Fail("Unable to get column from expression for table '{Table}'.", new { table })
 				.Ctx(nameof(QueryF), nameof(GetColumnFromExpression))
 		);
 

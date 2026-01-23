@@ -24,12 +24,12 @@ public static partial class MapF
 		)
 		.Map(
 			x => x.Where(p => (p.PropertyInfo.Name == nameof(IWithId.Id) || p.PropertyInfo.GetCustomAttribute<IdAttribute>() is not null) && p.PropertyInfo.GetCustomAttribute<IgnoreAttribute>() is null).ToList(),
-			e => R.Fail(e).Msg("Error getting Id properties from table '{Table}'.", typeof(TTable).Name)
+			e => R.Fail(e).Msg("Error getting Id properties from table '{Name}'.", new { typeof(TTable).Name })
 				.Ctx(nameof(MapF), nameof(GetIdColumn))
 		)
 		.GetSingle(
 			x => x.Value<IColumn>(),
-			() => R.Fail("Unable to get Id column from table '{Table}'.", typeof(TTable).Name)
+			() => R.Fail("Unable to get Id column from table '{Name}'.", new { typeof(TTable).Name })
 				.Ctx(nameof(MapF), nameof(GetIdColumn))
 		)
 		.Map(

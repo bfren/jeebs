@@ -101,9 +101,8 @@ public abstract class DbQuery<TDb> : IDbQuery
 		)
 		from paging in R.Try(
 			() => new PagingValues(countResults, page, parts.Maximum ?? Defaults.ItemsPer, Defaults.PagesPer),
-			e => R.Fail(GetType().Name, nameof(QueryAsync),
-				e, "Error creating paging values.", countResults, page, parts.Maximum
-			)
+			e => R.Fail(e).Msg("Error creating paging values.", new { countResults, page, parts.Maximum })
+				.Ctx(GetType().Name, nameof(QueryAsync))
 		)
 		from items in Db.Client.GetQuery(new QueryParts(parts) with
 		{

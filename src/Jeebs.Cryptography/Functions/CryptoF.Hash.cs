@@ -33,7 +33,8 @@ public static partial class CryptoF
 				e => e switch
 				{
 					BytesOutOfRangeException =>
-						R.Fail("Hash bytes must be between {Min} and {Max}.", 16, 64).Ctx(nameof(CryptoF), nameof(Hash)),
+						R.Fail("Hash bytes must be between {Min} and {Max}.", new { Min = 16, Max = 64 })
+							.Ctx(nameof(CryptoF), nameof(Hash)),
 
 					_ =>
 						R.Fail(e)

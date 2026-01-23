@@ -63,11 +63,11 @@ internal sealed class EntityMapper : IEntityMapper, IDisposable
 									 from map in mapResult
 									 from version in MapF.GetColumnWithAttribute<TTable, VersionAttribute>(col)
 									 select map with { VersionColumn = version };
-				return mapWithVersion.Unwrap(f => throw new InvalidTableMapException(f.ToString()));
+				return mapWithVersion.Unwrap(f => throw new InvalidTableMapException([f]));
 			}
 
 			// Return map without Version property
-			return mapResult.Unwrap(f => throw new InvalidTableMapException(f.ToString()));
+			return mapResult.Unwrap(f => throw new InvalidTableMapException([f]));
 		});
 
 	/// <inheritdoc/>
@@ -79,7 +79,7 @@ internal sealed class EntityMapper : IEntityMapper, IDisposable
 			return map;
 		}
 
-		return R.Fail("Trying to get table map for an umapped entity.", typeof(TEntity).Name)
+		return R.Fail("Trying to get table map for an umapped entity.", new { Entity = typeof(TEntity).Name })
 			.Ctx(nameof(EntityMapper), nameof(GetTableMapFor));
 	}
 

@@ -2,8 +2,10 @@
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using System;
-using System.Text.Json.Serialization;
+using System.Collections.Generic;
+using System.Dynamic;
 using Jeebs.Services.Notify;
+using Jeebs.Services.Webhook;
 
 namespace Jeebs.Services.Drivers.Webhook.Seq;
 
@@ -13,32 +15,26 @@ namespace Jeebs.Services.Drivers.Webhook.Seq;
 public sealed record class SeqEvent
 {
 	/// <summary>
-	/// Timestamp - ISO 8601 format.
+	/// Custom event properties.
 	/// </summary>
-	[JsonPropertyName("@t")]
-	public string Timestamp { get; private init; }
-
-	/// <summary>
-	/// Message content.
-	/// </summary>
-	[JsonPropertyName("@m")]
-	public string Message { get; private init; }
-
-	/// <summary>
-	/// Message level.
-	/// </summary>
-	[JsonPropertyName("@l")]
-	public string Level { get; private init; }
+	public ExpandoObject Properties { get; init; } = new()!;
 
 	/// <summary>
 	/// Create event.
 	/// </summary>
 	/// <param name="message"></param>
 	/// <param name="level"></param>
-	public SeqEvent(string message, NotificationLevel level)
+	public SeqEvent(IWebhookMessage message)
 	{
-		Timestamp = DateTime.Now.ToString("O");
-		Message = message;
-		Level = Enum.GetName(level) ?? nameof(NotificationLevel.Information);
+		var prop = Properties as IDictionary<string, object>;
+
+		prop["@t"] = DateTime.Now.ToString("O");
+		prop["@mt"] = message.Content;
+		prop["@l"] = Enum.GetName(message.Level) ?? nameof(NotificationLevel.Information);
+
+		foreach (var (key, value) in message.Fields)
+		{
+			prop[key] = value;
+		}
 	}
 }

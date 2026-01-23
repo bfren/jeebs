@@ -19,7 +19,7 @@ public static partial class MapF
 	/// </summary>
 	/// <typeparam name="TTable">Table type</typeparam>
 	/// <typeparam name="TEntity">Entity type</typeparam>
-	public static (bool valid, List<string> errors) ValidateTable<TTable, TEntity>()
+	public static (bool valid, List<FailValue> errors) ValidateTable<TTable, TEntity>()
 		where TTable : ITable
 		where TEntity : IWithId
 	{
@@ -38,7 +38,7 @@ public static partial class MapF
 		var entityPropertyNames = getPropertyNames(entityType);
 
 		// Compare the table columns with the entity properties
-		var errors = new List<string>();
+		var errors = new List<FailValue>();
 
 		// Check for missing table columns
 		var missingTableFields = entityPropertyNames.Except(tablePropertyNames);
@@ -46,7 +46,11 @@ public static partial class MapF
 		{
 			foreach (var field in missingTableFields)
 			{
-				errors.Add($"The definition of table '{tableType.FullName}' is missing field '{field}'.");
+				var f = FailValue.Create(
+					"The definition of table '{Table}' is missing field '{Field}'.",
+					new { Table = tableType.Name, field }
+				);
+				errors.Add(f);
 			}
 		}
 
@@ -56,7 +60,11 @@ public static partial class MapF
 		{
 			foreach (var property in missingEntityProperties)
 			{
-				errors.Add($"The definition of entity '{entityType.FullName}' is missing property '{property}'.");
+				var f = FailValue.Create(
+					"The definition of entity '{Entity}' is missing property '{Property}'.",
+					new { Entity = entityType.Name, property }
+				);
+				errors.Add(f);
 			}
 		}
 

@@ -21,7 +21,7 @@ public abstract class SeqWebhookDriver : WebhookDriver<SeqConfig, SeqEvent>
 
 	/// <inheritdoc/>
 	public override void Send(IWebhookMessage message) =>
-		Send(new SeqEvent(message.Content, message.Level));
+		Send(new SeqEvent(message));
 
 	/// <inheritdoc/>
 	public override void Send(SeqEvent message)
@@ -31,7 +31,7 @@ public abstract class SeqWebhookDriver : WebhookDriver<SeqConfig, SeqEvent>
 		request.Headers.Add("X-Seq-ApiKey", ServiceConfig.ApiKey);
 
 		// Add content
-		request.Content = new JsonHttpContent(message, "application/vnd.serilog.clef");
+		request.Content = new JsonHttpContent(message.Properties, "application/vnd.serilog.clef");
 
 		// Send request
 		Send(request);
