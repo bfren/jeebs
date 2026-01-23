@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.Globalization;
+using System.Reflection;
 using System.Text.RegularExpressions;
 
 namespace Jeebs.Functions;
@@ -71,6 +72,7 @@ public static partial class StringF
 			var template = templateGroup.Value.TrimStart('@');
 
 			// Switch on the source type, using variety of methods to get this template's value
+			var flags = BindingFlags.IgnoreCase | BindingFlags.Public | BindingFlags.Instance;
 			var value = source switch
 			{
 				// Source array - get next item in array
@@ -78,7 +80,7 @@ public static partial class StringF
 					val,
 
 				// Source object - get matching property value
-				{ } obj when typeof(T).GetProperty(template)?.GetValue(obj) is object val =>
+				{ } obj when typeof(T).GetProperty(template, flags)?.GetValue(obj) is object val =>
 					val,
 
 				// Nothing has matched yet so to be safe put the template back

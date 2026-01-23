@@ -17,7 +17,7 @@ public static partial class EnumF
 	/// <returns>A failed result containing an error message that the value is not a valid enumeration of type <typeparamref
 	/// name="T"/>.</returns>
 	internal static Result<T> FailNotAValidEnum<T>(string @class, string function) =>
-		R.Fail(@class, function, "'{Value}' Type is not a valid Enum.", typeof(T));
+		R.Fail("'{Type}' Type is not a valid Enum.", new { Type = typeof(T).FullName }).Ctx(@class, function);
 
 	/// <summary>
 	/// Creates a failed result indicating that a null value was encountered during parsing.
@@ -27,7 +27,7 @@ public static partial class EnumF
 	/// <param name="function">The name of the function where the null value was encountered.</param>
 	/// <returns>A failed result containing an error message about the null value.</returns>
 	internal static Result<T> FailNullValue<T>(string @class, string function) =>
-		R.Fail(@class, function, "Attempting to parse a null value.");
+		R.Fail("Attempting to parse a null value.").Ctx(@class, function);
 
 	/// <summary>
 	/// Creates a failed result indicating that the specified value is not a valid value for the given type.
@@ -39,5 +39,5 @@ public static partial class EnumF
 	/// <returns>A failed result containing an error message that the specified value is not valid for the type <typeparamref
 	/// name="T"/>.</returns>
 	internal static Result<T> FailNotAValidValue<T>(string @class, string function, string? value) =>
-		R.Fail(@class, function, "'{Value}' is not a valid value of {Type}.", value, typeof(T));
+		R.Fail("'{Value}' is not a valid value of {Type}.", new { value, Type = typeof(T).FullName }).Ctx(@class, function);
 }
