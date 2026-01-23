@@ -3,7 +3,7 @@
 
 using System;
 
-namespace Jeebs.Extensions;
+namespace Jeebs;
 
 /// <summary>
 /// Extension methods for <see cref="string"/> objects.
