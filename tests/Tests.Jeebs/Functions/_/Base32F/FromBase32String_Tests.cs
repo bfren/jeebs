@@ -44,7 +44,7 @@ public class FromBase32String_Tests
 		var result = Base32F.FromBase32String(str);
 
 		// Assert
-		result.AssertFail("'{Character}' is not in Base32 alphabet.", input);
+		result.AssertFail("'{Character}' is not in Base32 alphabet.", new { Character = input });
 	}
 
 	[Fact]

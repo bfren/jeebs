@@ -21,11 +21,7 @@ public class QueryAsync_Tests : FluentQuery_Tests
 		var result = await query.QueryAsync<int>();
 
 		// Assert
-		var f = result.AssertFail();
-		Assert.Collection(f.Args!,
-			x => Assert.Equal(m0, x),
-			x => Assert.Equal(m1, x)
-		);
+		_ = result.AssertFail("Query errors.", new { query.Errors });
 	}
 
 	[Fact]

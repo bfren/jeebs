@@ -14,15 +14,26 @@ public partial class GetServiceConfig_Tests
 		// Arrange
 		var config = new ServicesConfig();
 		var type = Rnd.Str;
+
+		// Act
+		var result = config.GetServiceConfig($"{type}.{Rnd.Str}");
+
+		// Assert
+		_ = result.AssertFail("Service type '{Type}' is not recognised.", new { type });
+	}
+
+	[Fact]
+	public void Splits_Definition_Unknown_Service_Name_Returns_Default_Config()
+	{
+		// Arrange
+		var config = new ServicesConfig();
 		var name = Rnd.Str;
 
 		// Act
-		var r0 = config.GetServiceConfig($"{type}.{Rnd.Str}");
-		var r1 = config.GetServiceConfig($"slack.{name}");
+		var result = config.GetServiceConfig($"slack.{name}");
 
 		// Assert
-		r0.AssertFail("Service type '{Type}' is not recognised.", type);
-		r1.AssertFail("No {Type} service named '{Name}' is configured.", nameof(SlackConfig), name);
+		result.AssertOk(new SlackConfig());
 	}
 
 	[Fact]

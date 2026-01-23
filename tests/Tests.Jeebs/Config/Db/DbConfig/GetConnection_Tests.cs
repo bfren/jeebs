@@ -43,7 +43,7 @@ public class GetConnection_Tests
 		var result = config.GetConnection();
 
 		// Assert
-		result.AssertFail("A connection named {ConnectionName} could not be found.", name);
+		result.AssertFail("A connection named '{Name}' could not be found.", new { name });
 	}
 
 	[Fact]

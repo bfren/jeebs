@@ -28,7 +28,10 @@ public class Convert_Tests
 		var result = EnumF.Convert(input).To<TestA>();
 
 		// Assert
-		result.AssertFail("'{Value}' is not a valid value of {Type}.", nameof(TestB.Test5), typeof(TestA));
+		result.AssertFail(
+			"'{Value}' is not a valid value of {Type}.",
+			new { Value = nameof(TestB.Test5), Type = typeof(TestA).FullName }
+		);
 	}
 
 	public enum TestA

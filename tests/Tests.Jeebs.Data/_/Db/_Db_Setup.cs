@@ -4,6 +4,7 @@
 using System.Data;
 using System.Data.Common;
 using Jeebs.Config.Db;
+using Jeebs.Functions;
 using Jeebs.Logging;
 using NSubstitute.Extensions;
 
@@ -43,4 +44,10 @@ public static class Db_Setup
 		ILog Log,
 		IDbTransaction Transaction
 	);
+
+	public static bool Cmp(object expected, object actual) =>
+		Equals(
+			JsonF.Serialise(expected).Unsafe().Unwrap(),
+			JsonF.Serialise(actual).Unsafe().Unwrap()
+		);
 }

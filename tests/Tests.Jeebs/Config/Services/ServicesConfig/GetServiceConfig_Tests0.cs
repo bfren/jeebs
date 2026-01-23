@@ -2,14 +2,13 @@
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using Jeebs.Config.Services.Seq;
-using Jeebs.Config.Services.Slack;
 
 namespace Jeebs.Config.Services.ServicesConfig_Tests;
 
 public partial class GetServiceConfig_Tests
 {
 	[Fact]
-	public void Service_Does_Not_Exist_Returns_Fail()
+	public void Service_Does_Not_Exist_Returns_Default_Config()
 	{
 		// Arrange
 		var config = new ServicesConfig();
@@ -19,7 +18,7 @@ public partial class GetServiceConfig_Tests
 		var result = config.GetServiceConfig(x => x.Slack, name);
 
 		// Assert
-		result.AssertFail("No {Type} service named '{Name}' is configured.", nameof(SlackConfig), name);
+		result.AssertOk(new());
 	}
 
 	[Fact]
@@ -34,7 +33,10 @@ public partial class GetServiceConfig_Tests
 		var result = config.GetServiceConfig(x => x.Seq, name);
 
 		// Assert
-		result.AssertFail("Definition of {Type} service named '{Name}' is invalid.", nameof(SeqConfig)!, name);
+		result.AssertFail(
+			"Definition of {Type} service named '{Name}' is invalid.",
+			new { Type = nameof(SeqConfig)!, name }
+		);
 	}
 
 	[Fact]

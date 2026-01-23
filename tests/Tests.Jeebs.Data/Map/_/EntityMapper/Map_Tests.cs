@@ -1,6 +1,7 @@
 // Jeebs Unit Tests
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
+using Jeebs.Data.Attributes;
 using Jeebs.Data.Exceptions;
 using Jeebs.Data.Map.Mapper.Tables;
 
@@ -27,14 +28,18 @@ public class Map_Tests
 	{
 		// Arrange
 		using var mapper = new EntityMapper();
-		var error = $"The definition of table '{typeof(FooTableWithoutBar0)}' is missing field '{nameof(Foo.Bar0)}'.";
+		var table = nameof(FooTableWithoutBar0);
+		var field = nameof(Foo.Bar0);
 
 		// Act
 		var action = void () => mapper.Map<Foo, FooTableWithoutBar0>(new());
 
 		// Assert
 		var ex = Assert.Throws<InvalidTableMapException>(action);
-		Assert.Equal(error, ex.Message);
+		Assert.Single(ex.Errors).AssertMessage(
+			"The definition of table '{Table}' is missing field '{Field}'.",
+			new { table, field }
+		);
 	}
 
 	[Fact]
@@ -42,14 +47,18 @@ public class Map_Tests
 	{
 		// Arrange
 		using var mapper = new EntityMapper();
-		var error = $"The definition of entity '{typeof(Foo)}' is missing property '{nameof(FooTableWithBar2.Bar2)}'.";
+		var entity = nameof(Foo);
+		var property = nameof(FooTableWithBar2.Bar2);
 
 		// Act
 		var action = void () => mapper.Map<Foo, FooTableWithBar2>(new());
 
 		// Assert
 		var ex = Assert.Throws<InvalidTableMapException>(action);
-		Assert.Equal(error, ex.Message);
+		Assert.Single(ex.Errors).AssertMessage(
+			"The definition of entity '{Entity}' is missing property '{Property}'.",
+			new { entity, property }
+		);
 	}
 
 	[Fact]
@@ -57,13 +66,17 @@ public class Map_Tests
 	{
 		// Arrange
 		using var mapper = new EntityMapper();
+		var name = nameof(FooTableWithoutIdAttribute);
 
 		// Act
 		var action = void () => mapper.Map<Foo, FooTableWithoutIdAttribute>(new());
 
 		// Assert
 		var ex = Assert.Throws<InvalidTableMapException>(action);
-		Assert.Contains("Unable to get Id column from table '{Table}'.", ex.Message);
+		Assert.Single(ex.Errors).AssertMessage(
+			"Unable to get Id column from table '{Name}'.",
+			new { name }
+		);
 	}
 
 	[Fact]
@@ -71,13 +84,17 @@ public class Map_Tests
 	{
 		// Arrange
 		using var svc = new EntityMapper();
+		var name = nameof(FooTableWithMultipleIdAttributes);
 
 		// Act
 		var action = void () => svc.Map<Foo, FooTableWithMultipleIdAttributes>(new());
 
 		// Assert
 		var ex = Assert.Throws<InvalidTableMapException>(action);
-		Assert.Contains("Unable to get Id column from table '{Table}'.", ex.Message);
+		Assert.Single(ex.Errors).AssertMessage(
+			"Unable to get Id column from table '{Name}'.",
+			new { name }
+		);
 	}
 
 	[Fact]
@@ -85,13 +102,18 @@ public class Map_Tests
 	{
 		// Arrange
 		using var mapper = new EntityMapper();
+		var attribute = nameof(VersionAttribute);
+		var table = nameof(FooTableWithoutVersionAttribute);
 
 		// Act
 		var action = void () => mapper.Map<FooWithVersion, FooTableWithoutVersionAttribute>(new());
 
 		// Assert
 		var ex = Assert.Throws<InvalidTableMapException>(action);
-		Assert.Contains("Unable to get single column with attribute '{Attribute}' from table '{Table}'.", ex.Message);
+		Assert.Single(ex.Errors).AssertMessage(
+			"Unable to get single column with attribute '{Attribute}' from table '{Table}'.",
+			new { attribute, table }
+		);
 	}
 
 	[Fact]
@@ -99,12 +121,17 @@ public class Map_Tests
 	{
 		// Arrange
 		using var svc = new EntityMapper();
+		var attribute = nameof(VersionAttribute);
+		var table = nameof(FooTableWithMultipleVersionAttributes);
 
 		// Act
 		var action = void () => svc.Map<FooWithVersion, FooTableWithMultipleVersionAttributes>(new());
 
 		// Assert
 		var ex = Assert.Throws<InvalidTableMapException>(action);
-		Assert.Contains("Unable to get single column with attribute '{Attribute}' from table '{Table}'.", ex.Message);
+		Assert.Single(ex.Errors).AssertMessage(
+			"Unable to get single column with attribute '{Attribute}' from table '{Table}'.",
+			new { attribute, table }
+		);
 	}
 }

@@ -42,7 +42,10 @@ public class Parse_Tests
 		var result = EnumF.Parse<TestA>(input);
 
 		// Assert
-		result.AssertFail("'{Value}' is not a valid value of {Type}.", input, typeof(TestA));
+		result.AssertFail(
+			"'{Value}' is not a valid value of {Type}.",
+			new { Value = input, Type = typeof(TestA).FullName }
+		);
 	}
 
 	[Fact]
@@ -55,7 +58,10 @@ public class Parse_Tests
 		var result = EnumF.Parse<TestB>(input);
 
 		// Assert
-		result.AssertFail("'{Value}' is not a valid value of {Type}.", input, typeof(TestB));
+		result.AssertFail(
+			"'{Value}' is not a valid value of {Type}.",
+			new { Value = input, Type = typeof(TestB).FullName }
+		);
 	}
 
 	public enum TestA

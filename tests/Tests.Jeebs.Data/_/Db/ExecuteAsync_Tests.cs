@@ -13,11 +13,11 @@ public class ExecuteAsync_Tests
 		// Arrange
 		var (db, _) = Db_Setup.Get();
 		var query = Rnd.Str;
-		var parameters = Rnd.Guid.ToString();
+		var param = Rnd.Guid.ToString();
 		const CommandType type = CommandType.Text;
 
 		// Act
-		await db.ExecuteAsync(query, parameters, type);
+		await db.ExecuteAsync(query, param, type);
 
 		// Assert
 		await db.Received().StartWorkAsync();
@@ -29,15 +29,17 @@ public class ExecuteAsync_Tests
 		// Arrange
 		var (db, v) = Db_Setup.Get();
 		var query = Rnd.Str;
-		var parameters = Rnd.Guid.ToString();
+		var param = Rnd.Guid.ToString();
 		const CommandType type = CommandType.Text;
-		var transaction = Substitute.For<IDbTransaction>();
 
 		// Act
-		await db.ExecuteAsync(query, parameters, type, v.Transaction);
+		await db.ExecuteAsync(query, param, type, v.Transaction);
 
 		// Assert
-		v.Log.Received().Vrb("Query Type: {Type} | Return: {Return} | {Query} | Parameters: {Parameters}", type, typeof(bool), query, parameters);
+		v.Log.Received().Vrb(
+			"Query Type: {Type} | Return: {Return} | {Query} | Parameters: {Param}",
+			Arg.Is<object>(x => Db_Setup.Cmp(new { type, Return = typeof(int), query, param }, x))
+		);
 	}
 
 	[Fact]
@@ -46,14 +48,17 @@ public class ExecuteAsync_Tests
 		// Arrange
 		var (db, v) = Db_Setup.Get();
 		var query = Rnd.Str;
-		var parameters = Rnd.Guid.ToString();
+		var param = Rnd.Guid.ToString();
 		const CommandType type = CommandType.Text;
 
 		// Act
-		await db.ExecuteAsync<int>(query, parameters, type);
-		await db.ExecuteAsync<int>(query, parameters, type, v.Transaction);
+		await db.ExecuteAsync<int>(query, param, type);
+		await db.ExecuteAsync<int>(query, param, type, v.Transaction);
 
 		// Assert
-		v.Log.Received().Vrb("Query Type: {Type} | Return: {Return} | {Query} | Parameters: {Parameters}", type, typeof(int), query, parameters);
+		v.Log.Received().Vrb(
+			"Query Type: {Type} | Return: {Return} | {Query} | Parameters: {Param}",
+			Arg.Is<object>(x => Db_Setup.Cmp(new { type, Return = typeof(int), query, param }, x))
+		);
 	}
 }

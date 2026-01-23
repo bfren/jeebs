@@ -11,24 +11,30 @@ public class ValidateTable_Tests
 	public void Table_Missing_Column_Returns_Invalid_With_Error()
 	{
 		// Arrange
-		var e0 = $"The definition of table '{typeof(FooTableWithoutBar0).FullName}' is missing field '{nameof(Foo.Bar0)}'.";
+		var table = nameof(FooTableWithoutBar0);
+		var field = nameof(Foo.Bar0);
 
 		// Act
 		var (valid, errors) = MapF.ValidateTable<FooTableWithoutBar0, Foo>();
 
 		// Assert
 		Assert.False(valid);
-		var single = Assert.Single(errors);
-		Assert.Equal(e0, single);
+		Assert.Single(errors)
+			.AssertMessage(
+				"The definition of table '{Table}' is missing field '{Field}'.",
+				new { table, field }
+			);
 	}
 
 	[Fact]
 	public void Table_Missing_Columns_Returns_Invalid_With_Errors()
 	{
 		// Arrange
-		var e0 = $"The definition of table '{typeof(FooTableWithoutAny).FullName}' is missing field '{nameof(Foo.FooId)}'.";
-		var e1 = $"The definition of table '{typeof(FooTableWithoutAny).FullName}' is missing field '{nameof(Foo.Bar0)}'.";
-		var e2 = $"The definition of table '{typeof(FooTableWithoutAny).FullName}' is missing field '{nameof(Foo.Bar1)}'.";
+		var message = "The definition of table '{Table}' is missing field '{Field}'.";
+		var table = nameof(FooTableWithoutAny);
+		var f0 = nameof(Foo.FooId);
+		var f1 = nameof(Foo.Bar0);
+		var f2 = nameof(Foo.Bar1);
 
 		// Act
 		var (valid, errors) = MapF.ValidateTable<FooTableWithoutAny, Foo>();
@@ -36,9 +42,9 @@ public class ValidateTable_Tests
 		// Assert
 		Assert.False(valid);
 		Assert.Collection(errors,
-			x => Assert.Equal(e0, x),
-			x => Assert.Equal(e1, x),
-			x => Assert.Equal(e2, x)
+			x => x.AssertMessage(message, new { table, field = f0 }),
+			x => x.AssertMessage(message, new { table, field = f1 }),
+			x => x.AssertMessage(message, new { table, field = f2 })
 		);
 	}
 
@@ -46,7 +52,6 @@ public class ValidateTable_Tests
 	public void Entity_Missing_Property_Returns_Invalid_With_Error()
 	{
 		// Arrange
-		var e0 = $"The definition of entity '{typeof(Foo).FullName}' is missing property '{nameof(FooTableWithBar2.Bar2)}'.";
 
 		// Act
 		var (valid, errors) = MapF.ValidateTable<FooTableWithBar2, Foo>();
@@ -54,16 +59,22 @@ public class ValidateTable_Tests
 		// Assert
 		Assert.False(valid);
 		var single = Assert.Single(errors);
-		Assert.Equal(e0, single);
+		Assert.Single(errors)
+			.AssertMessage(
+				"The definition of entity '{Entity}' is missing property '{Property}'.",
+				new { Entity = nameof(Foo), Property = nameof(FooTableWithBar2.Bar2) }
+			);
 	}
 
 	[Fact]
 	public void Entity_Missing_Properties_Returns_Invalid_With_Errors()
 	{
 		// Arrange
-		var e0 = $"The definition of entity '{typeof(Foo).FullName}' is missing property '{nameof(FooTableWithBar234.Bar2)}'.";
-		var e1 = $"The definition of entity '{typeof(Foo).FullName}' is missing property '{nameof(FooTableWithBar234.Bar3)}'.";
-		var e2 = $"The definition of entity '{typeof(Foo).FullName}' is missing property '{nameof(FooTableWithBar234.Bar4)}'.";
+		var message = "The definition of entity '{Entity}' is missing property '{Property}'.";
+		var entity = nameof(Foo);
+		var p0 = nameof(FooTableWithBar234.Bar2);
+		var p1 = nameof(FooTableWithBar234.Bar3);
+		var p2 = nameof(FooTableWithBar234.Bar4);
 
 		// Act
 		var (valid, errors) = MapF.ValidateTable<FooTableWithBar234, Foo>();
@@ -71,9 +82,9 @@ public class ValidateTable_Tests
 		// Assert
 		Assert.False(valid);
 		Assert.Collection(errors,
-			x => Assert.Equal(e0, x),
-			x => Assert.Equal(e1, x),
-			x => Assert.Equal(e2, x)
+			x => x.AssertMessage(message, new { entity, property = p0 }),
+			x => x.AssertMessage(message, new { entity, property = p1 }),
+			x => x.AssertMessage(message, new { entity, property = p2 })
 		);
 	}
 }

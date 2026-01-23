@@ -19,10 +19,9 @@ public class GetColumnWithAttribute_Tests
 		var result = MapF.GetColumnWithAttribute<FooTableWithoutIdAttribute, IdAttribute>(columns);
 
 		// Assert
-		var f = result.AssertFail("Unable to get single column with attribute '{Attribute}' from table '{Table}'.");
-		Assert.Collection(f.Args!,
-			x => Assert.Equal("IdAttribute", x),
-			x => Assert.Equal("FooTableWithoutIdAttribute", x)
+		_ = result.AssertFail(
+			"Unable to get single column with attribute '{Attribute}' from table '{Table}'.",
+			new { Attribute = "IdAttribute", Table = "FooTableWithoutIdAttribute" }
 		);
 	}
 
@@ -36,10 +35,9 @@ public class GetColumnWithAttribute_Tests
 		var result = MapF.GetColumnWithAttribute<FooTableWithMultipleIdAttributes, IdAttribute>(columns);
 
 		// Assert
-		var f = result.AssertFail("Unable to get single column with attribute '{Attribute}' from table '{Table}'.");
-		Assert.Collection(f.Args!,
-			x => Assert.Equal("IdAttribute", x),
-			x => Assert.Equal("FooTableWithMultipleIdAttributes", x)
+		_ = result.AssertFail(
+			"Unable to get single column with attribute '{Attribute}' from table '{Table}'.",
+			new { Attribute = "IdAttribute", Table = "FooTableWithMultipleIdAttributes" }
 		);
 	}
 }
