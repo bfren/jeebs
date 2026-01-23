@@ -24,7 +24,7 @@ public class JsonbTypeHandler<T> : Dapper.SqlMapper.TypeHandler<T>
 	public override T Parse(object value) =>
 		value switch
 		{
-			string json =>
+			string json when !string.IsNullOrWhiteSpace(json) =>
 				JsonF.Deserialise<T>(json).Unwrap(),
 
 			_ =>
