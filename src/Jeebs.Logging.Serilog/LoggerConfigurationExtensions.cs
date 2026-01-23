@@ -7,7 +7,6 @@ using System.Globalization;
 using System.Linq;
 using Jeebs.Config;
 using Jeebs.Config.Services;
-using Jeebs.Extensions;
 using Jeebs.Functions;
 using Jeebs.Logging.Serilog.Exceptions;
 using Jeebs.Logging.Serilog.Functions;

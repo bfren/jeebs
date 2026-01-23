@@ -1,5 +1,5 @@
-// Mileage Tracker
-// Copyright (c) bfren - licensed under https://mit.bfren.dev/2022
+// Jeebs Rapid Application Development
+// Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using System;
 using Npgsql.Internal;
