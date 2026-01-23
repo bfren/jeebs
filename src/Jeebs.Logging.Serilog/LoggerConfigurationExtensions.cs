@@ -24,7 +24,7 @@ public static class LoggerConfigurationExtensions
 	/// <summary>
 	/// Load Serilog configuration from JeebsConfig object.
 	/// </summary>
-	/// <param name="this">LoggerConfiguration.</param>
+	/// <param name="this">Serilog configuration object.</param>
 	/// <param name="jeebs">JeebsConfig.</param>
 	public static void LoadFromJeebsConfig(this LoggerConfiguration @this, JeebsConfig jeebs)
 	{
@@ -54,9 +54,10 @@ public static class LoggerConfigurationExtensions
 	/// Returns <paramref name="testMinimum"/> if it is not null and greater than <paramref name="overallMinimum"/> -
 	/// otherwise returns <paramref name="overallMinimum"/>
 	/// </summary>
-	/// <param name="testMinimum"></param>
-	/// <param name="overallMinimum"></param>
+	/// <param name="testMinimum">Potential minimum log level.</param>
+	/// <param name="overallMinimum">System minimum log level.</param>
 	/// <exception cref="LoadFromJeebsConfigException"></exception>
+	/// <returns>The greater of two minimum log levels.</returns>
 	internal static LogEventLevel GetMinimum(LogLevel? testMinimum, LogLevel overallMinimum)
 	{
 		var min = testMinimum switch
@@ -76,8 +77,8 @@ public static class LoggerConfigurationExtensions
 	/// <summary>
 	/// Configure all enabled <see cref="ILoggingProvider"/> services.
 	/// </summary>
-	/// <param name="serilog"></param>
-	/// <param name="jeebs"></param>
+	/// <param name="serilog">Seilog configuration object.</param>
+	/// <param name="jeebs">JeebsConfig.</param>
 	internal static void ConfigureProviders(ref LoggerConfiguration serilog, JeebsConfig jeebs)
 	{
 		// Get enabled providers
@@ -121,8 +122,8 @@ public static class LoggerConfigurationExtensions
 	/// <summary>
 	/// Enable all <see cref="ILoggingConnector"/> services.
 	/// </summary>
-	/// <param name="serilog"></param>
-	/// <param name="jeebs"></param>
+	/// <param name="serilog">Seilog configuration object.</param>
+	/// <param name="jeebs">JeebsConfig.</param>
 	internal static void EnableConnectors(LoggerConfiguration serilog, JeebsConfig jeebs)
 	{
 		// Get all connectors

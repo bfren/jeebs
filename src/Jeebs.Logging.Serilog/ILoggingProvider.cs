@@ -21,7 +21,7 @@ public interface ILoggingProvider
 	/// <summary>
 	/// Configure this provider.
 	/// </summary>
-	/// <param name="logger">LoggerConfiguration.</param>
+	/// <param name="logger">Serilog configuration object..</param>
 	/// <param name="jeebs">JeebsConfig.</param>
 	/// <param name="name">The service name (e.g. 'slack.dev').</param>
 	/// <param name="minimum">Minimum logging level.</param>
