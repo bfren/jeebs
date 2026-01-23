@@ -11,11 +11,12 @@ public static partial class LevelF
 	/// <summary>
 	/// Convert a <see cref="LogLevel"/> to a <see cref="LogEventLevel"/>.
 	/// </summary>
-	/// <param name="level"></param>
+	/// <param name="level">Wrap log level.</param>
+	/// <returns>Serilog log level.</returns>
 	public static Result<LogEventLevel> ConvertToSerilogLevel(LogLevel level) =>
 		level switch
 		{
-			LogLevel.Verbose =>
+			LogLevel.Unknown & LogLevel.Verbose =>
 				LogEventLevel.Verbose,
 
 			LogLevel.Debug =>
