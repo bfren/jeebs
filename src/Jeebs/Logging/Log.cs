@@ -19,36 +19,54 @@ public abstract class Log : ILog
 	/// <inheritdoc/>
 	public void Failure(FailValue failure, LogLevel level)
 	{
-		// Get failure message and arguments
-		var (text, args) = failure.Context switch
+		// Add context to message
+		var text = failure.Context switch
 		{
 			string context =>
-				($"{context} | " + failure.Message, failure.Args),
+				$"{context} | " + failure.Message,
 
 			_ =>
-				(failure.Message, failure.Args)
+				failure.Message
 		};
 
 		// Switch different levels
 		switch (level)
 		{
+			case LogLevel.Verbose when failure.Exception is not null:
+				Vrb(failure.Exception, text, failure.Args);
+				break;
 			case LogLevel.Verbose:
-				Vrb(text, args);
+				Vrb(text, failure.Args);
+				break;
+			case LogLevel.Debug when failure.Exception is not null:
+				Dbg(failure.Exception, text, failure.Args);
 				break;
 			case LogLevel.Debug:
-				Dbg(text, args);
+				Dbg(text, failure.Args);
+				break;
+			case LogLevel.Information when failure.Exception is not null:
+				Inf(failure.Exception, text, failure.Args);
 				break;
 			case LogLevel.Information:
-				Inf(text, args);
+				Inf(text, failure.Args);
+				break;
+			case LogLevel.Warning when failure.Exception is not null:
+				Wrn(failure.Exception, text, failure.Args);
 				break;
 			case LogLevel.Warning:
-				Wrn(text, args);
+				Wrn(text, failure.Args);
+				break;
+			case LogLevel.Error when failure.Exception is not null:
+				Err(failure.Exception, text, failure.Args);
 				break;
 			case LogLevel.Error:
-				Err(text, args);
+				Err(text, failure.Args);
+				break;
+			case LogLevel.Fatal when failure.Exception is not null:
+				Ftl(failure.Exception, text, failure.Args);
 				break;
 			case LogLevel.Fatal:
-				Ftl(text, args);
+				Ftl(text, failure.Args);
 				break;
 			case LogLevel.Unknown:
 			default:
@@ -82,13 +100,25 @@ public abstract class Log : ILog
 	public abstract void Vrb(string message, params object?[] args);
 
 	/// <inheritdoc/>
+	public abstract void Vrb(Exception ex, string message, params object?[] args);
+
+	/// <inheritdoc/>
 	public abstract void Dbg(string message, params object?[] args);
+
+	/// <inheritdoc/>
+	public abstract void Dbg(Exception ex, string message, params object?[] args);
 
 	/// <inheritdoc/>
 	public abstract void Inf(string message, params object?[] args);
 
 	/// <inheritdoc/>
+	public abstract void Inf(Exception ex, string message, params object?[] args);
+
+	/// <inheritdoc/>
 	public abstract void Wrn(string message, params object?[] args);
+
+	/// <inheritdoc/>
+	public abstract void Wrn(Exception ex, string message, params object?[] args);
 
 	/// <inheritdoc/>
 	public abstract void Err(string message, params object?[] args);

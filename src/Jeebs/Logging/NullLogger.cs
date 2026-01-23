@@ -29,7 +29,19 @@ public class NullLogger : Log
 	}
 
 	/// <inheritdoc/>
+	public override void Vrb(Exception ex, string message, params object?[] args)
+	{
+		// Nothing to do
+	}
+
+	/// <inheritdoc/>
 	public override void Dbg(string message, params object?[] args)
+	{
+		// Nothing to do
+	}
+
+	/// <inheritdoc/>
+	public override void Dbg(Exception ex, string message, params object?[] args)
 	{
 		// Nothing to do
 	}
@@ -41,7 +53,19 @@ public class NullLogger : Log
 	}
 
 	/// <inheritdoc/>
+	public override void Inf(Exception ex, string message, params object?[] args)
+	{
+		// Nothing to do
+	}
+
+	/// <inheritdoc/>
 	public override void Wrn(string message, params object?[] args)
+	{
+		// Nothing to do
+	}
+
+	/// <inheritdoc/>
+	public override void Wrn(Exception ex, string message, params object?[] args)
 	{
 		// Nothing to do
 	}

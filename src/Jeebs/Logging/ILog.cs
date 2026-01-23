@@ -62,20 +62,44 @@ public interface ILog
 	/// <param name="args">Arguments (if message supports string.Format()).</param>
 	void Vrb(string message, params object?[] args);
 
+	/// <inheritdoc cref="LogLevel.Verbose"/>
+	/// <param name="ex">Exception.</param>
+	/// <param name="message">Message.</param>
+	/// <param name="args">Arguments (if message supports string.Format()).</param>
+	void Vrb(Exception ex, string message, params object?[] args);
+
 	/// <inheritdoc cref="LogLevel.Debug"/>
 	/// <param name="message">Message.</param>
 	/// <param name="args">Arguments (if message supports string.Format()).</param>
 	void Dbg(string message, params object?[] args);
+
+	/// <inheritdoc cref="LogLevel.Debug"/>
+	/// <param name="ex">Exception.</param>
+	/// <param name="message">Message.</param>
+	/// <param name="args">Arguments (if message supports string.Format()).</param>
+	void Dbg(Exception ex, string message, params object?[] args);
 
 	/// <inheritdoc cref="LogLevel.Information"/>
 	/// <param name="message">Message.</param>
 	/// <param name="args">Arguments (if message supports string.Format()).</param>
 	void Inf(string message, params object?[] args);
 
+	/// <inheritdoc cref="LogLevel.Information"/>
+	/// <param name="ex">Exception.</param>
+	/// <param name="message">Message.</param>
+	/// <param name="args">Arguments (if message supports string.Format()).</param>
+	void Inf(Exception ex, string message, params object?[] args);
+
 	/// <inheritdoc cref="LogLevel.Warning"/>
 	/// <param name="message">Message.</param>
 	/// <param name="args">Arguments (if message supports string.Format()).</param>
 	void Wrn(string message, params object?[] args);
+
+	/// <inheritdoc cref="LogLevel.Warning"/>
+	/// <param name="ex">Exception.</param>
+	/// <param name="message">Message.</param>
+	/// <param name="args">Arguments (if message supports string.Format()).</param>
+	void Wrn(Exception ex, string message, params object?[] args);
 
 	/// <inheritdoc cref="LogLevel.Error"/>
 	/// <param name="message">Message.</param>
