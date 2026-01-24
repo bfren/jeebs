@@ -31,12 +31,12 @@ public abstract class AddWhereCustom_Tests<TBuilder, TId> : QueryPartsBuilder_Te
 	public abstract void Test01_Invalid_Parameters_Returns_None_With_UnableToAddParametersToWhereCustomMsg(object input);
 
 	public static TheoryData<object?> Test01_Data() =>
-		new(
-			null,
+		[
+			null!,
 			42,
 			true,
 			'c'
-		);
+		];
 
 	protected void Test01(object input)
 	{

@@ -6,8 +6,4 @@
     <ProjectReference Include="..\..\src\Jeebs.Data\Jeebs.Data.csproj" />
     <ProjectReference Include="..\Tests.Jeebs\Tests.Jeebs.csproj" />
   </ItemGroup>
-  <ItemGroup>
-    <Using Include="Wrap.Testing.IdGenerator" Alias="IdGen" />
-    <Using Include="Wrap.Testing.FailGenerator" Alias="FailGen" />
-  </ItemGroup>
 </Project>

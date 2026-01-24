@@ -26,7 +26,7 @@ public class Parse_Tests
 			{ "text/plain", MimeType.Text },
 			{ "application/vnd.ms-excel", MimeType.Xls },
 			{ "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", MimeType.Xlsx },
-			{ "application/zip", MimeType.Zip },
+			{ "application/zip", MimeType.Zip }
 		};
 
 	[Theory]
