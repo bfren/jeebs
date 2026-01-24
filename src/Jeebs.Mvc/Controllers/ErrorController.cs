@@ -3,7 +3,7 @@
 
 using System.Threading.Tasks;
 using Jeebs.Logging;
-using Jeebs.Messages;
+using Jeebs.Mvc.Extensions;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -12,7 +12,7 @@ namespace Jeebs.Mvc.Controllers;
 /// <summary>
 /// Error Controller.
 /// </summary>
-public abstract class ErrorController : Controller
+public abstract class ErrorController : MvcController
 {
 	/// <summary>
 	/// Create object.
@@ -32,12 +32,5 @@ public abstract class ErrorController : Controller
 	/// <param name="code">Http Status Code.</param>
 	[Route("/Error/{code:int}")]
 	public async Task<IActionResult> Handle(int code) =>
-		await this.ExecuteErrorAsync(new M.UnknownErrorMsg(), code);
-
-	/// <summary>Messages</summary>
-	public static class M
-	{
-		/// <summary>An unknown error has occured</summary>
-		public sealed record class UnknownErrorMsg : Msg;
-	}
+		await this.ExecuteErrorAsync(FailValue.Create("Unknown error."), code);
 }

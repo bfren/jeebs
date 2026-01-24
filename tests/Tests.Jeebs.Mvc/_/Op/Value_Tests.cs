@@ -1,19 +1,17 @@
 // Jeebs Unit Tests
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
-using MaybeF;
-
-namespace Jeebs.Mvc.Result_Tests;
+namespace Jeebs.Mvc.Op_Tests;
 
 public class Value_Tests
 {
 	[Fact]
-	public void Maybe_Is_Some__Returns_Value()
+	public void Result_Is_Ok__Returns_Value()
 	{
 		// Arrange
 		var value = Rnd.Guid;
-		var maybe = F.Some(value);
-		var jsonResult = new Result<Guid>(maybe);
+		var maybe = R.Wrap(value);
+		var jsonResult = new Op<Guid>(maybe);
 
 		// Act
 		var result = jsonResult.Value;
@@ -22,11 +20,11 @@ public class Value_Tests
 		Assert.Equal(value, result);
 	}
 
-	private void Maybe_Is_None__Returns_Null<T>()
+	private void Result_Is_Fail__Returns_Null<T>()
 	{
 		// Arrange
-		var maybe = Create.None<T>();
-		var jsonResult = new Result<T>(maybe);
+		var failure = FailGen.Create();
+		var jsonResult = new Op<T>(failure);
 
 		// Act
 		var result = jsonResult.Value;
@@ -37,17 +35,17 @@ public class Value_Tests
 
 	[Fact]
 	public void Nullable_Int__Returns_Null() =>
-		Maybe_Is_None__Returns_Null<int?>();
+		Result_Is_Fail__Returns_Null<int?>();
 
 	[Fact]
 	public void Nullable_String__Returns_Null() =>
-		Maybe_Is_None__Returns_Null<string?>();
+		Result_Is_Fail__Returns_Null<string?>();
 
 	[Fact]
 	public void Nullable_Guid__Returns_Null() =>
-		Maybe_Is_None__Returns_Null<Guid?>();
+		Result_Is_Fail__Returns_Null<Guid?>();
 
 	[Fact]
 	public void Nullable_Class__Returns_Null() =>
-		Maybe_Is_None__Returns_Null<Value_Tests?>();
+		Result_Is_Fail__Returns_Null<Value_Tests?>();
 }

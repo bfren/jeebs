@@ -2,13 +2,13 @@
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using System.Threading.Tasks;
-using Jeebs.Messages;
+using Jeebs.Mvc.Controllers;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ViewEngines;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace Jeebs.Mvc.Controllers;
+namespace Jeebs.Mvc.Extensions;
 
 /// <summary>
 /// Controller extension methods.
@@ -19,23 +19,20 @@ public static class ControllerExtensions
 	/// Execute a Maybe.None result and return the View.
 	/// </summary>
 	/// <param name="this">Controller.</param>
-	/// <param name="msg">None.</param>
-	public static Task<IActionResult> ExecuteErrorAsync(this Controller @this, IMsg msg) =>
-		ExecuteErrorAsync(@this, msg, null);
+	/// <param name="failure">Failure value.</param>
+	public static Task<IActionResult> ExecuteErrorAsync(this MvcController @this, FailValue failure) =>
+		ExecuteErrorAsync(@this, failure, null);
 
 	/// <summary>
 	/// Execute a Maybe.None result and return the View.
 	/// </summary>
 	/// <param name="this">Controller.</param>
-	/// <param name="msg">None.</param>
+	/// <param name="failure">Failure value.</param>
 	/// <param name="code">HTTP Status Code.</param>
-	public static async Task<IActionResult> ExecuteErrorAsync(this Controller @this, IMsg msg, int? code)
+	public static async Task<IActionResult> ExecuteErrorAsync(this MvcController @this, FailValue failure, int? code)
 	{
 		// Log error
-		if (msg is IMsg m)
-		{
-			@this.Log.Msg(m);
-		}
+		@this.Log.Failure(failure);
 
 		// Check for 404
 		var status = code switch
@@ -44,23 +41,16 @@ public static class ControllerExtensions
 				x,
 
 			_ =>
-				msg switch
-				{
-					INotFoundMsg =>
-						StatusCodes.Status404NotFound,
-
-					_ =>
-						StatusCodes.Status500InternalServerError
-				}
+				StatusCodes.Status500InternalServerError
 		};
 
 		// Look for a view
 		var viewName = $"Error{status}";
-		@this.Log.Vrb("Search for View {ViewName}", viewName);
+		@this.Log.Vrb("Search for View {ViewName}.", viewName);
 		if ((findView(viewName) ?? findView("Default")) is string view)
 		{
 			@this.Log.Vrb("Found view {view}", view);
-			return @this.View(view, msg);
+			return @this.View(view, failure);
 		}
 
 		// If response has stared we can't do anything

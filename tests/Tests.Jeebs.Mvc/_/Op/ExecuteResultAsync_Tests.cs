@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Infrastructure;
 
-namespace Jeebs.Mvc.Result_Tests;
+namespace Jeebs.Mvc.Op_Tests;
 
 public class ExecuteResultAsync_Tests
 {
@@ -23,7 +23,7 @@ public class ExecuteResultAsync_Tests
 		var actionContext = new ActionContext { HttpContext = httpContext };
 		var value = Rnd.Str;
 		var statusCode = Rnd.Int;
-		var jsonResult = Result.Create(value) with { StatusCode = statusCode };
+		var jsonResult = Op.Create(value) with { StatusCode = statusCode };
 
 		// Act
 		await jsonResult.ExecuteResultAsync(actionContext);

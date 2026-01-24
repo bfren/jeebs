@@ -2,7 +2,6 @@
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using System.Text.Encodings.Web;
-using Jeebs.Extensions;
 using Microsoft.AspNetCore.Html;
 using Microsoft.AspNetCore.Mvc.Razor.TagHelpers;
 using Microsoft.AspNetCore.Mvc.Routing;
@@ -36,7 +35,9 @@ public sealed class EmailTagHelper : UrlResolutionTagHelper
 	/// </summary>
 	/// <param name="urlHelperFactory">IUrlHelperFactory object.</param>
 	/// <param name="htmlEncoder">HtmlEncoder.</param>
-	public EmailTagHelper(IUrlHelperFactory urlHelperFactory, HtmlEncoder htmlEncoder) : base(urlHelperFactory, htmlEncoder) { }
+	public EmailTagHelper(IUrlHelperFactory urlHelperFactory, HtmlEncoder htmlEncoder) :
+		base(urlHelperFactory, htmlEncoder)
+	{ }
 
 	/// <summary>
 	/// Process the tag helper.

@@ -31,7 +31,7 @@ public static class TempDataDictionaryExtensions
 		@this.TryGetValue(AlertsKey, out var value) switch
 		{
 			true when value is string alerts =>
-				JsonF.Deserialise<List<Alert>>(alerts).Unwrap(() => new List<Alert>()),
+				JsonF.Deserialise<List<Alert>>(alerts).Unwrap(_ => []),
 
 			_ =>
 				[]
@@ -46,27 +46,11 @@ public static class TempDataDictionaryExtensions
 		AddAlert(@this, AlertType.Info, message);
 
 	/// <summary>
-	/// Add info alert.
-	/// </summary>
-	/// <param name="this">ITempDataDictionary.</param>
-	/// <param name="message">Message.</param>
-	public static void AddInfoAlert(this ITempDataDictionary @this, IMsg message) =>
-		AddAlert(@this, AlertType.Info, message);
-
-	/// <summary>
 	/// Add success alert.
 	/// </summary>
 	/// <param name="this">ITempDataDictionary.</param>
 	/// <param name="message"></param>
 	public static void AddSuccessAlert(this ITempDataDictionary @this, string message) =>
-		AddAlert(@this, AlertType.Success, message);
-
-	/// <summary>
-	/// Add success alert.
-	/// </summary>
-	/// <param name="this">ITempDataDictionary.</param>
-	/// <param name="message"></param>
-	public static void AddSuccessAlert(this ITempDataDictionary @this, IMsg message) =>
 		AddAlert(@this, AlertType.Success, message);
 
 	/// <summary>
@@ -78,32 +62,12 @@ public static class TempDataDictionaryExtensions
 		AddAlert(@this, AlertType.Warning, message);
 
 	/// <summary>
-	/// Add warning alert.
-	/// </summary>
-	/// <param name="this">ITempDataDictionary.</param>
-	/// <param name="message">Message.</param>
-	public static void AddWarningAlert(this ITempDataDictionary @this, IMsg message) =>
-		AddAlert(@this, AlertType.Warning, message);
-
-	/// <summary>
 	/// Add Error alert.
 	/// </summary>
 	/// <param name="this">ITempDataDictionary.</param>
 	/// <param name="message">Message.</param>
 	public static void AddErrorAlert(this ITempDataDictionary @this, string message) =>
 		AddAlert(@this, AlertType.Error, message);
-
-	/// <summary>
-	/// Add Error alert.
-	/// </summary>
-	/// <param name="this">ITempDataDictionary.</param>
-	/// <param name="message">Message.</param>
-	public static void AddErrorAlert(this ITempDataDictionary @this, IMsg message) =>
-		AddAlert(@this, AlertType.Error, message);
-
-	/// <inheritdoc cref="AddAlert(ITempDataDictionary, AlertType, string)"/>
-	private static void AddAlert(ITempDataDictionary tempData, AlertType messageType, IMsg message) =>
-		AddAlert(tempData, messageType, message.ToString() ?? message.GetType().Name);
 
 	/// <summary>
 	/// Add alert to TempData.
@@ -115,7 +79,7 @@ public static class TempDataDictionaryExtensions
 	{
 		var alerts = GetAlerts(tempData);
 		alerts.Insert(0, new Alert(messageType, message));
-		var json = JsonF.Serialise(alerts).Unwrap(JsonF.Empty);
+		var json = JsonF.Serialise(alerts).Unwrap(_ => JsonF.Empty);
 
 		if (HasAlerts(tempData))
 		{

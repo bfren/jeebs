@@ -3,9 +3,8 @@
 
 using Jeebs.Mvc.Enums;
 using Jeebs.Mvc.Models;
-using MaybeF;
 
-namespace Jeebs.Mvc.Result_Tests;
+namespace Jeebs.Mvc.Op_Tests;
 
 public class Message_Tests
 {
@@ -14,7 +13,7 @@ public class Message_Tests
 	{
 		// Arrange
 		var message = Alert.Info(Rnd.Str);
-		var jsonResult = (Result<int>)Result.Create(Rnd.Int, message);
+		var jsonResult = (Op<int>)Op.Create(Rnd.Int, message);
 
 		// Act
 		var result = jsonResult.Message;
@@ -24,10 +23,10 @@ public class Message_Tests
 	}
 
 	[Fact]
-	public void Maybe_Is_Some__Returns_Success()
+	public void Result_Is_Ok__Returns_Success()
 	{
 		// Arrange
-		var jsonResult = new Result<Guid>(Rnd.Guid);
+		var jsonResult = new Op<Guid>(Rnd.Guid);
 
 		// Act
 		var result = jsonResult.Message;
@@ -38,18 +37,18 @@ public class Message_Tests
 	}
 
 	[Fact]
-	public void Maybe_Is_None__Returns_Reason()
+	public void Result_Is_Failure__Returns_Error()
 	{
 		// Arrange
-		var msg = Substitute.For<IMsg>();
-		var maybe = F.None<long>(msg);
-		var jsonResult = new Result<long>(maybe);
+		var failure = FailGen.Create().Value;
+		var fail = R.Fail(failure);
+		var jsonResult = new Op<long>(fail);
 
 		// Act
 		var result = jsonResult.Message;
 
 		// Assert
 		Assert.Equal(AlertType.Error, result.Type);
-		Assert.Same(msg.ToString(), result.Text);
+		Assert.Equal(failure.ToString(), result.Text);
 	}
 }

@@ -8,7 +8,7 @@ namespace Jeebs.Mvc;
 /// <summary>
 /// Represents the result of an operation, and can be returned by MVC / Razor Page methods.
 /// </summary>
-public interface IResult : IActionResult
+public interface IOp : IActionResult
 {
 	/// <summary>
 	/// Whether or not the operation was successful.
@@ -21,9 +21,9 @@ public interface IResult : IActionResult
 	int StatusCode { get; }
 }
 
-/// <inheritdoc cref="IResult"/>
+/// <inheritdoc cref="IOp"/>
 /// <typeparam name="T">Value type</typeparam>
-public interface IResult<out T> : IResult
+public interface IOp<T> : IOp
 {
 	/// <summary>
 	/// Returns the value if the operation succeeded, or null if not.

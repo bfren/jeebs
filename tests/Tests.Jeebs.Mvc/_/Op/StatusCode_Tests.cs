@@ -1,9 +1,7 @@
 // Jeebs Unit Tests
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
-using MaybeF;
-
-namespace Jeebs.Mvc.Result_Tests;
+namespace Jeebs.Mvc.Op_Tests;
 
 public class StatusCode_Tests
 {
@@ -12,7 +10,7 @@ public class StatusCode_Tests
 	{
 		// Arrange
 		var code = Rnd.Int;
-		var jsonResult = Result.Create(F.True) with { StatusCode = code };
+		var jsonResult = Op.Create(R.True) with { StatusCode = code };
 
 		// Act
 		var result = jsonResult.StatusCode;
@@ -25,7 +23,7 @@ public class StatusCode_Tests
 	public void StatusCode_Not_Set__Success_Is_True__Returns_200()
 	{
 		// Arrange
-		var jsonResult = Result.Create(F.True);
+		var jsonResult = Op.Create(R.True);
 
 		// Act
 		var result = jsonResult.StatusCode;
@@ -38,7 +36,7 @@ public class StatusCode_Tests
 	public void StatusCode_Not_Set__Success_Is_False__Returns_500()
 	{
 		// Arrange
-		var jsonResult = Result.Create(F.False);
+		var jsonResult = Op.Create(R.False);
 
 		// Act
 		var result = jsonResult.StatusCode;
