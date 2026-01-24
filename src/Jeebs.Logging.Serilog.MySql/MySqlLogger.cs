@@ -38,7 +38,7 @@ public sealed partial class MySqlLogger : IMySqlConnectorLogger
 	/// </summary>
 	/// <param name="level">Requested level.</param>
 	public bool IsEnabled(MySqlConnectorLogLevel level) =>
-		LevelF.ConvertToSerilogLevel(level).Switch(
+		LevelF.ConvertToSerilogLevel(level).Match(
 			some: Logger.IsEnabled,
 			none: false
 		);
@@ -68,9 +68,9 @@ public sealed partial class MySqlLogger : IMySqlConnectorLogger
 	/// <param name="args">[Optional] Message arguments.</param>
 	/// <param name="exception">[Optional] Exception.</param>
 	public void Log(MySqlConnectorLogLevel level, string message, object?[]? args, Exception? exception) =>
-		LevelF.ConvertToSerilogLevel(level).Switch(
+		LevelF.ConvertToSerilogLevel(level).Match(
 			some: x => Log(x, message, args, exception),
-			none: r => Log(LogEventLevel.Fatal, "Unable to log: {Reason}.", [r], null)
+			none: () => throw new InvalidOperationException($"Unable to convert {level} to Serilog LogEventLevel.")
 		);
 
 	/// <summary>
