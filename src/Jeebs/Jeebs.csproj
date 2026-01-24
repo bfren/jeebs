@@ -7,7 +7,6 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Rnd" PrivateAssets="All" />
-    <PackageReference Include="Wrap.Maybe.System.Text.Json" />
   </ItemGroup>
   <ItemGroup Label="Embed Version">
     <EmbeddedResource Include="$(VersionPath)" />
