@@ -17,9 +17,6 @@
         },
         "seq.local": {
           "enabled": true
-        },
-        "seq.wrong": {
-          "enabled": false
         }
       }
     },
