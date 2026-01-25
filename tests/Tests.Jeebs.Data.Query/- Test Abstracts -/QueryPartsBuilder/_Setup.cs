@@ -14,7 +14,7 @@ public abstract class QueryPartsBuilder_Tests<TBuilder, TId>
 	public (TBuilder builder, Vars v) Setup()
 	{
 		var extract = Substitute.For<IExtract>();
-		extract.From<TestModel>(Arg.Any<ITable[]>()).Returns(new ColumnList());
+		extract.From<Arg.AnyType>(Arg.Any<ITable[]>()).Returns(new ColumnList());
 		var builder = GetConfiguredBuilder(extract);
 		var parts = new QueryParts(builder.Table);
 
