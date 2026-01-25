@@ -5,7 +5,7 @@ using Jeebs.Config.Db;
 using Jeebs.Data;
 using Jeebs.Logging;
 using Microsoft.Extensions.Options;
-using Wrap;
+using Wrap.Extensions;
 
 namespace AppConsolePg;
 

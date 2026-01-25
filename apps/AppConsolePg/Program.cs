@@ -8,7 +8,7 @@ using Jeebs.Data.Clients.PostgreSql.Parameters;
 using Jeebs.Data.Clients.PostgreSql.TypeHandlers;
 using Microsoft.Extensions.DependencyInjection;
 using RndF;
-using Wrap;
+using Wrap.Extensions;
 
 var (app, log) = Jeebs.Apps.Host.Create<App>(args);
 

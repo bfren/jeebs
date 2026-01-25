@@ -11,6 +11,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using RndF;
 using Wrap;
+using Wrap.Extensions;
 using Wrap.Linq;
 
 var (app, log) = Jeebs.Apps.Host.Create(args, (_, services) => services.AddDrivers());
