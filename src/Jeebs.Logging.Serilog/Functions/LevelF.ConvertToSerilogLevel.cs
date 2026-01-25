@@ -16,7 +16,7 @@ public static partial class LevelF
 	public static Result<LogEventLevel> ConvertToSerilogLevel(LogLevel level) =>
 		level switch
 		{
-			LogLevel.Unknown & LogLevel.Verbose =>
+			LogLevel x when (x & LogLevel.Unknown) == x || (x & LogLevel.Verbose) == x =>
 				LogEventLevel.Verbose,
 
 			LogLevel.Debug =>

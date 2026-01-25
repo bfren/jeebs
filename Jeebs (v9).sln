@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 18
-VisualStudioVersion = 18.2.11415.280 d18.0
+VisualStudioVersion = 18.2.11415.280
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{1172BF25-0DDE-4B03-9075-9EB0B75A4537}"
 	ProjectSection(SolutionItems) = preProject
@@ -181,6 +181,10 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tests.Jeebs.Data.Clients.Sqlite", "tests\Tests.Jeebs.Data.Clients.Sqlite\Tests.Jeebs.Data.Clients.Sqlite.csproj", "{DEEDD4E1-585C-451C-AF4E-F4CD3EE71100}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Jeebs.Auth.Data.Clients.Sqlite", "src\Jeebs.Auth.Data.Clients.Sqlite\Jeebs.Auth.Data.Clients.Sqlite.csproj", "{1EDD7215-A436-4AEA-84F9-ED6CDE48BE4E}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".Logging", ".Logging", "{A41C59B6-41FC-4247-AC0B-D8A12AF22B6E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tests.Jeebs.Logging.Serilog", "tests\Tests.Jeebs.Logging.Serilog\Tests.Jeebs.Logging.Serilog.csproj", "{9F4FCCAB-2319-4414-A9C4-26DA2DE50625}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -489,6 +493,12 @@ Global
 		{1EDD7215-A436-4AEA-84F9-ED6CDE48BE4E}.Release|Any CPU.Build.0 = Release|Any CPU
 		{1EDD7215-A436-4AEA-84F9-ED6CDE48BE4E}.Test|Any CPU.ActiveCfg = Debug|Any CPU
 		{1EDD7215-A436-4AEA-84F9-ED6CDE48BE4E}.Test|Any CPU.Build.0 = Debug|Any CPU
+		{9F4FCCAB-2319-4414-A9C4-26DA2DE50625}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9F4FCCAB-2319-4414-A9C4-26DA2DE50625}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9F4FCCAB-2319-4414-A9C4-26DA2DE50625}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9F4FCCAB-2319-4414-A9C4-26DA2DE50625}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9F4FCCAB-2319-4414-A9C4-26DA2DE50625}.Test|Any CPU.ActiveCfg = Debug|Any CPU
+		{9F4FCCAB-2319-4414-A9C4-26DA2DE50625}.Test|Any CPU.Build.0 = Debug|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -566,6 +576,8 @@ Global
 		{A19EEE68-1088-48DD-B5BA-2394B45CAF4C} = {9BE173C5-9B68-4F6D-BF76-283EA7C8C73A}
 		{DEEDD4E1-585C-451C-AF4E-F4CD3EE71100} = {D899A9DC-CBCF-44E8-BECE-73EB8911C6C2}
 		{1EDD7215-A436-4AEA-84F9-ED6CDE48BE4E} = {28F7202A-D487-41AC-BC70-E2E821267FA3}
+		{A41C59B6-41FC-4247-AC0B-D8A12AF22B6E} = {1172BF25-0DDE-4B03-9075-9EB0B75A4537}
+		{9F4FCCAB-2319-4414-A9C4-26DA2DE50625} = {A41C59B6-41FC-4247-AC0B-D8A12AF22B6E}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {0BD20814-DF83-4144-92D6-B07D57B7836F}
