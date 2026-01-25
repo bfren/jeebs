@@ -1,9 +1,9 @@
-﻿// Jeebs Unit Tests
+// Jeebs Unit Tests
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using Jeebs.Data;
 using Jeebs.Data.Query.QueryPartsBuilder_Tests;
-using Jeebs.WordPress.Entities.StrongIds;
+using Jeebs.WordPress.Entities.Ids;
 using static Jeebs.WordPress.Query.PostsPartsBuilder_Tests.Setup;
 
 namespace Jeebs.WordPress.Query.PostsPartsBuilder_Tests;
@@ -15,12 +15,12 @@ public class AddWhereCustom_Tests : AddWhereCustom_Tests<PostsPartsBuilder, WpPo
 
 	[Theory]
 	[MemberData(nameof(Test00_Data))]
-	public override void Test00_Clause_Null_Or_Empty_Returns_None_With_TryingToAddEmptyClauseToWhereCustomMsg(string input) =>
+	public override void Test00_Clause_Null_Or_Empty_Returns_None_With_TryingToAddEmptyClauseToWhereCustomMsg(string? input) =>
 		Test00(input);
 
 	[Theory]
 	[MemberData(nameof(Test01_Data))]
-	public override void Test01_Invalid_Parameters_Returns_None_With_UnableToAddParametersToWhereCustomMsg(object input) =>
+	public override void Test01_Invalid_Parameters_Returns_None_With_UnableToAddParametersToWhereCustomMsg(object? input) =>
 		Test01(input);
 
 	[Fact]

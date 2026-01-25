@@ -3,7 +3,6 @@
 
 using Jeebs.Data.Query;
 using Jeebs.WordPress.Entities;
-using static Jeebs.WordPress.Functions.QueryPostsMetaF.M;
 
 namespace Jeebs.WordPress.Functions.QueryPostsMetaF_Tests;
 
@@ -19,7 +18,7 @@ public class ExecuteAsync_Tests : Query_Tests
 		var result = await QueryPostsMetaF.ExecuteAsync<Test>(db, w, _ => throw new Exception());
 
 		// Assert
-		result.AssertNone().AssertType<ErrorGettingQueryPostsMetaOptionsMsg>();
+		_ = result.AssertFail("Error getting query posts meta options.");
 	}
 
 	[Fact]

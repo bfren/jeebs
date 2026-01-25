@@ -6,7 +6,7 @@ using Jeebs.Data;
 using Jeebs.Data.Enums;
 using Jeebs.Data.Map;
 using Jeebs.Data.Query.QueryPartsBuilder_Tests;
-using Jeebs.WordPress.Entities.StrongIds;
+using Jeebs.WordPress.Entities.Ids;
 using Jeebs.WordPress.Tables;
 using static Jeebs.WordPress.Query.TermsPartsBuilder_Tests.Setup;
 
@@ -29,9 +29,9 @@ public class AddSort_Tests : AddSort_Tests<TermsPartsBuilder, WpTermId>
 		var result = builder.AddSort(v.Parts, input, Substitute.For<IImmutableList<(IColumn, SortOrder)>>());
 
 		// Assert
-		var some = result.AssertSome();
-		Assert.NotSame(v.Parts, some);
-		Assert.Collection(some.Sort,
+		var ok = result.AssertOk();
+		Assert.NotSame(v.Parts, ok);
+		Assert.Collection(ok.Sort,
 			x =>
 			{
 				Assert.Equal(builder.TTest.Terms.GetName(), x.column.TblName);

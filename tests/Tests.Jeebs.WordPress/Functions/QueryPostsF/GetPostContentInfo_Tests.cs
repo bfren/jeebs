@@ -2,7 +2,6 @@
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using Jeebs.WordPress.Entities;
-using static Jeebs.WordPress.Functions.QueryPostsF.M;
 
 namespace Jeebs.WordPress.Functions.QueryPostsF_Tests;
 
@@ -17,7 +16,9 @@ public class GetPostContentInfo_Tests
 		var result = QueryPostsF.GetPostContentInfo<NoContentProperty>();
 
 		// Assert
-		result.AssertNone().AssertType<ContentPropertyNotFoundMsg<NoContentProperty>>();
+		_ = result.AssertFail("Content property not found on model '{Type}'.",
+			nameof(NoContentProperty)
+		);
 	}
 
 	[Fact]
@@ -29,7 +30,9 @@ public class GetPostContentInfo_Tests
 		var result = QueryPostsF.GetPostContentInfo<WithContentPropertyWrongType>();
 
 		// Assert
-		result.AssertNone().AssertType<ContentPropertyNotFoundMsg<WithContentPropertyWrongType>>();
+		_ = result.AssertFail("Content property not found on model '{Type}'.",
+			nameof(WithContentPropertyWrongType)
+		);
 	}
 
 	[Fact]
@@ -41,8 +44,8 @@ public class GetPostContentInfo_Tests
 		var result = QueryPostsF.GetPostContentInfo<WithContentProperty>();
 
 		// Assert
-		var some = result.AssertSome();
-		Assert.Equal(nameof(WpPostEntity.Content), some.Name);
+		var ok = result.AssertOk();
+		Assert.Equal(nameof(WpPostEntity.Content), ok.Name);
 	}
 
 	public sealed record class NoContentProperty;

@@ -1,8 +1,6 @@
 // Jeebs Unit Tests
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
-using static Jeebs.WordPress.CustomFields.AttachmentCustomField.M;
-
 namespace Jeebs.WordPress.CustomFields.AttachmentCustomField_Tests;
 
 public class ParseAttachmentPostId_Tests
@@ -18,7 +16,9 @@ public class ParseAttachmentPostId_Tests
 		var result = AttachmentCustomField.ParseAttachmentPostId(type, value);
 
 		// Assert
-		result.AssertNone().AssertType<ValueIsInvalidPostIdMsg>();
+		_ = result.AssertFail("'{Value}' is not a valid Post ID.",
+			value
+		);
 	}
 
 	[Fact]
@@ -32,7 +32,7 @@ public class ParseAttachmentPostId_Tests
 		var result = AttachmentCustomField.ParseAttachmentPostId(type, value.ToString());
 
 		// Assert
-		var some = result.AssertSome();
-		Assert.Equal(value, some.Value);
+		var ok = result.AssertOk();
+		Assert.Equal(value, ok.Value);
 	}
 }

@@ -1,4 +1,4 @@
-﻿// Jeebs Unit Tests
+// Jeebs Unit Tests
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 namespace Jeebs.WordPress.TypeHandlers.BooleanTypeHandler_Tests;
@@ -37,13 +37,13 @@ public class Parse_Tests
 	[InlineData("n")]
 	[InlineData("N")]
 	[InlineData("no")]
-	public void Invalid_Value_Returns_False(object input)
+	public void Invalid_Value_Returns_False(object? input)
 	{
 		// Arrange
 		var handler = new BooleanTypeHandler();
 
 		// Act
-		var result = handler.Parse(input);
+		var result = handler.Parse(input!);
 
 		// Assert
 		Assert.False(result);

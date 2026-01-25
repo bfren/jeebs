@@ -3,7 +3,6 @@
 
 using Jeebs.Data.Query;
 using Jeebs.WordPress.Entities;
-using static Jeebs.WordPress.Functions.QueryTermsF.M;
 
 namespace Jeebs.WordPress.Functions.QueryTermsF_Tests;
 
@@ -19,7 +18,7 @@ public class ExecuteAsync_Tests : Query_Tests
 		var result = await QueryTermsF.ExecuteAsync<Test>(db, w, _ => throw new Exception());
 
 		// Assert
-		result.AssertNone().AssertType<ErrorGettingQueryTermsOptionsMsg>();
+		_ = result.AssertFail("Error getting query terms options.");
 	}
 
 	[Fact]

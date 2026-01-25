@@ -4,7 +4,7 @@
 using Jeebs.Data;
 using Jeebs.Data.Enums;
 using Jeebs.Data.Query.QueryPartsBuilder_Tests;
-using Jeebs.WordPress.Entities.StrongIds;
+using Jeebs.WordPress.Entities.Ids;
 using Jeebs.WordPress.Enums;
 using static Jeebs.WordPress.Query.TermsPartsBuilder_Tests.Setup;
 
@@ -25,8 +25,8 @@ public class AddWhereTaxonomy_Tests : QueryPartsBuilder_Tests<TermsPartsBuilder,
 		var result = builder.AddWhereTaxonomy(v.Parts, null);
 
 		// Assert
-		var some = result.AssertSome();
-		Assert.Same(v.Parts, some);
+		var ok = result.AssertOk();
+		Assert.Same(v.Parts, ok);
 	}
 
 	[Fact]
@@ -40,9 +40,9 @@ public class AddWhereTaxonomy_Tests : QueryPartsBuilder_Tests<TermsPartsBuilder,
 		var result = builder.AddWhereTaxonomy(v.Parts, taxonomy);
 
 		// Assert
-		var some = result.AssertSome();
-		Assert.NotSame(v.Parts, some);
-		var (column, compare, value) = Assert.Single(some.Where);
+		var ok = result.AssertOk();
+		Assert.NotSame(v.Parts, ok);
+		var (column, compare, value) = Assert.Single(ok.Where);
 		Assert.Equal(builder.TTest.TermTaxonomies.GetName(), column.TblName);
 		Assert.Equal(builder.TTest.TermTaxonomies.Taxonomy, column.ColName);
 		Assert.Equal(Compare.Equal, compare);

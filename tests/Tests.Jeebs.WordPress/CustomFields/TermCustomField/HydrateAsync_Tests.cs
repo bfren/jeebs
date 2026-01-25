@@ -3,7 +3,6 @@
 
 using Jeebs.Data;
 using Jeebs.WordPress.Query;
-using static Jeebs.WordPress.CustomFields.TermCustomField.M;
 using Term = Jeebs.WordPress.CustomFields.TermCustomField.Term;
 
 namespace Jeebs.WordPress.CustomFields.TermCustomField_Tests;
@@ -24,9 +23,9 @@ public class HydrateAsync_Tests
 		var result = await field.HydrateAsync(db, unitOfWork, meta, true);
 
 		// Assert
-		var none = result.AssertNone().AssertType<MetaKeyNotFoundMsg>();
-		Assert.Equal(typeof(Test), none.Type);
-		Assert.Equal(key, none.Value);
+		_ = result.AssertFail("Meta Key '{Key}' not found for Custom Field '{Type}'.",
+			key, nameof(Test)
+		);
 	}
 
 	[Fact]
@@ -69,8 +68,9 @@ public class HydrateAsync_Tests
 		var result = await field.HydrateAsync(db, unitOfWork, meta, true);
 
 		// Assert
-		var none = result.AssertNone().AssertType<MultipleTermsFoundMsg>();
-		Assert.Equal(value.ToString(), none.Value);
+		_ = result.AssertFail("Unable to get single '{ValueStr}': Cannot get single value from a list with multiple values.",
+			value.ToString()
+		);
 	}
 
 	[Fact]
@@ -99,8 +99,5 @@ public class HydrateAsync_Tests
 		Assert.Same(term, field.ValueObj);
 	}
 
-	public class Test : TermCustomField
-	{
-		public Test(IQueryTerms queryTerms, string key) : base(queryTerms, key) { }
-	}
+	public class Test(IQueryTerms queryTerms, string key) : TermCustomField(queryTerms, key);
 }

@@ -1,10 +1,10 @@
-﻿// Jeebs Unit Tests
+// Jeebs Unit Tests
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using Jeebs.Data;
 using Jeebs.Data.Enums;
 using Jeebs.Data.Query.QueryPartsBuilder_Tests;
-using Jeebs.WordPress.Entities.StrongIds;
+using Jeebs.WordPress.Entities.Ids;
 using static Jeebs.WordPress.Query.PostsMetaPartsBuilder_Tests.Setup;
 
 namespace Jeebs.WordPress.Query.PostsMetaPartsBuilder_Tests;
@@ -24,8 +24,8 @@ public class AddWhereKey_Tests : QueryPartsBuilder_Tests<PostsMetaPartsBuilder, 
 		var result = builder.AddWhereKey(v.Parts, null);
 
 		// Assert
-		var some = result.AssertSome();
-		Assert.Same(v.Parts, some);
+		var ok = result.AssertOk();
+		Assert.Same(v.Parts, ok);
 	}
 
 	[Fact]
@@ -36,7 +36,7 @@ public class AddWhereKey_Tests : QueryPartsBuilder_Tests<PostsMetaPartsBuilder, 
 		var key = Rnd.Str;
 
 		// Act
-		var result = builder.AddWhereKey(v.Parts, key);
+		var result = builder.AddWhereKey(v.Parts, key).Unsafe().Unwrap();
 
 		// Assert
 		AssertWhere(v.Parts, result, PostsMeta.Key, Compare.Equal, key);

@@ -6,10 +6,10 @@ using Jeebs.Collections;
 using Jeebs.Data.Enums;
 using Jeebs.Data.Map;
 using Jeebs.Data.Query.QueryOptions_Tests;
-using Jeebs.WordPress.Entities.StrongIds;
+using Jeebs.Functions;
+using Jeebs.WordPress.Entities.Ids;
 using Jeebs.WordPress.Enums;
 using Jeebs.WordPress.Tables;
-using static StrongId.Testing.Generator;
 
 namespace Jeebs.WordPress.Query.PostsTaxonomyOptions_Tests;
 
@@ -71,7 +71,7 @@ public class ToParts_Tests : ToParts_Tests<PostsTaxonomyOptions, IQueryPostsTaxo
 	{
 		// Arrange
 		var (options, builder) = Setup();
-		var taxonomies = ImmutableList.Create(Taxonomy.NavMenu);
+		var taxonomies = ListF.Create(Taxonomy.NavMenu);
 		var opt = options with
 		{
 			Taxonomies = taxonomies
@@ -102,9 +102,9 @@ public class ToParts_Tests : ToParts_Tests<PostsTaxonomyOptions, IQueryPostsTaxo
 	{
 		// Arrange
 		var (options, builder) = Setup();
-		var i0 = ULongId<WpPostId>();
-		var i1 = ULongId<WpPostId>();
-		var postIds = ImmutableList.Create(i0, i1);
+		var i0 = IdGen.ULongId<WpPostId>();
+		var i1 = IdGen.ULongId<WpPostId>();
+		var postIds = ListF.Create(i0, i1);
 		var opt = options with
 		{
 			PostIds = postIds

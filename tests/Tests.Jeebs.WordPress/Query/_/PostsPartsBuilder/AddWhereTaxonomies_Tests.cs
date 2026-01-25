@@ -4,10 +4,10 @@
 using Jeebs.Collections;
 using Jeebs.Data;
 using Jeebs.Data.Query.QueryPartsBuilder_Tests;
-using Jeebs.WordPress.Entities.StrongIds;
+using Jeebs.Functions;
+using Jeebs.WordPress.Entities.Ids;
 using Jeebs.WordPress.Enums;
 using static Jeebs.WordPress.Query.PostsPartsBuilder_Tests.Setup;
-using static StrongId.Testing.Generator;
 
 namespace Jeebs.WordPress.Query.PostsPartsBuilder_Tests;
 
@@ -26,8 +26,8 @@ public class AddWhereTaxonomies_Tests : QueryPartsBuilder_Tests<PostsPartsBuilde
 		var result = builder.AddWhereTaxonomies(v.Parts, Substitute.For<IImmutableList<(Taxonomy, WpTermId)>>());
 
 		// Assert
-		var some = result.AssertSome();
-		Assert.Same(v.Parts, some);
+		var ok = result.AssertOk();
+		Assert.Same(v.Parts, ok);
 	}
 
 	[Fact]
@@ -36,8 +36,8 @@ public class AddWhereTaxonomies_Tests : QueryPartsBuilder_Tests<PostsPartsBuilde
 		// Arrange
 		var (builder, v) = Setup();
 		var taxonomy = Taxonomy.PostCategory;
-		var id = ULongId<WpTermId>();
-		var taxonomies = ImmutableList.Create((taxonomy, id));
+		var id = IdGen.ULongId<WpTermId>();
+		var taxonomies = ListF.Create((taxonomy, id));
 
 		var tt = builder.TTest.TermTaxonomies.ToString();
 		var tr = builder.TTest.TermRelationships.ToString();
@@ -47,8 +47,8 @@ public class AddWhereTaxonomies_Tests : QueryPartsBuilder_Tests<PostsPartsBuilde
 		var result = builder.AddWhereTaxonomies(v.Parts, taxonomies);
 
 		// Assert
-		var some = result.AssertSome();
-		var (clause, _) = Assert.Single(some.WhereCustom);
+		var ok = result.AssertOk();
+		var (clause, _) = Assert.Single(ok.WhereCustom);
 		Assert.Equal("(" +
 			$"SELECT COUNT(1) FROM `{tr}` " +
 			$"INNER JOIN `{tt}` ON `{tr}`.`term_taxonomy_id` = `{tt}`.`term_taxonomy_id` " +
@@ -66,15 +66,15 @@ public class AddWhereTaxonomies_Tests : QueryPartsBuilder_Tests<PostsPartsBuilde
 		// Arrange
 		var (builder, v) = Setup();
 		var taxonomy = Taxonomy.PostCategory;
-		var id = ULongId<WpTermId>();
-		var taxonomies = ImmutableList.Create((taxonomy, id));
+		var id = IdGen.ULongId<WpTermId>();
+		var taxonomies = ListF.Create((taxonomy, id));
 
 		// Act
 		var result = builder.AddWhereTaxonomies(v.Parts, taxonomies);
 
 		// Assert
-		var some = result.AssertSome();
-		var (_, parameters) = Assert.Single(some.WhereCustom);
+		var ok = result.AssertOk();
+		var (_, parameters) = Assert.Single(ok.WhereCustom);
 		Assert.Collection(parameters,
 			y =>
 			{
@@ -95,11 +95,11 @@ public class AddWhereTaxonomies_Tests : QueryPartsBuilder_Tests<PostsPartsBuilde
 		// Arrange
 		var (builder, v) = Setup();
 		var t0 = Taxonomy.PostCategory;
-		var id0 = ULongId<WpTermId>();
+		var id0 = IdGen.ULongId<WpTermId>();
 		var t1 = Taxonomy.NavMenu;
-		var id1 = ULongId<WpTermId>();
-		var id2 = ULongId<WpTermId>();
-		var taxonomies = ImmutableList.Create((t0, id0), (t1, id1), (t1, id2));
+		var id1 = IdGen.ULongId<WpTermId>();
+		var id2 = IdGen.ULongId<WpTermId>();
+		var taxonomies = ListF.Create((t0, id0), (t1, id1), (t1, id2));
 
 		var tt = builder.TTest.TermTaxonomies.ToString();
 		var tr = builder.TTest.TermRelationships.ToString();
@@ -109,8 +109,8 @@ public class AddWhereTaxonomies_Tests : QueryPartsBuilder_Tests<PostsPartsBuilde
 		var result = builder.AddWhereTaxonomies(v.Parts, taxonomies);
 
 		// Assert
-		var some = result.AssertSome();
-		var (clause, _) = Assert.Single(some.WhereCustom);
+		var ok = result.AssertOk();
+		var (clause, _) = Assert.Single(ok.WhereCustom);
 		Assert.Equal("(" +
 			$"SELECT COUNT(1) FROM `{tr}` " +
 			$"INNER JOIN `{tt}` ON `{tr}`.`term_taxonomy_id` = `{tt}`.`term_taxonomy_id` " +
@@ -134,18 +134,18 @@ public class AddWhereTaxonomies_Tests : QueryPartsBuilder_Tests<PostsPartsBuilde
 		// Arrange
 		var (builder, v) = Setup();
 		var t0 = Taxonomy.PostCategory;
-		var id0 = ULongId<WpTermId>();
-		var id1 = ULongId<WpTermId>();
+		var id0 = IdGen.ULongId<WpTermId>();
+		var id1 = IdGen.ULongId<WpTermId>();
 		var t1 = Taxonomy.LinkCategory;
-		var id2 = ULongId<WpTermId>();
-		var taxonomies = ImmutableList.Create((t0, id0), (t0, id1), (t1, id2));
+		var id2 = IdGen.ULongId<WpTermId>();
+		var taxonomies = ListF.Create((t0, id0), (t0, id1), (t1, id2));
 
 		// Act
 		var result = builder.AddWhereTaxonomies(v.Parts, taxonomies);
 
 		// Assert
-		var some = result.AssertSome();
-		var (_, parameters) = Assert.Single(some.WhereCustom);
+		var ok = result.AssertOk();
+		var (_, parameters) = Assert.Single(ok.WhereCustom);
 		Assert.Collection(parameters,
 			y =>
 			{

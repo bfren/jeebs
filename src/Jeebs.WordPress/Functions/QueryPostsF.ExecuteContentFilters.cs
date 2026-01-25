@@ -30,7 +30,7 @@ public static partial class QueryPostsF
 		foreach (var post in posts)
 		{
 			// Get post content
-			_ = content.Get(post).IfSome(postContent =>
+			if (content.Get(post).Unsafe().IsSome(out var postContent))
 			{
 				// Apply filters
 				foreach (var filter in filters)
@@ -40,7 +40,7 @@ public static partial class QueryPostsF
 
 				// Set filtered content
 				content.Set(post, postContent);
-			});
+			}
 		}
 
 		return posts;

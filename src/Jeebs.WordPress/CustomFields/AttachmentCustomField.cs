@@ -46,7 +46,7 @@ public abstract class AttachmentCustomField : CustomField<AttachmentCustomField.
 		{
 			if (isRequired)
 			{
-				return R.Fail("Meta Key '{Key}' not found for Custom Field '{Type}'.", Key, GetType())
+				return R.Fail("Meta Key '{Key}' not found for Custom Field '{Type}'.", Key, GetType().Name)
 					.Ctx(GetType().Name, nameof(HydrateAsync))
 					.AsTask<bool>();
 			}

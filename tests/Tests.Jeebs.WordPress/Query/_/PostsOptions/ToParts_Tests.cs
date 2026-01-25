@@ -4,10 +4,10 @@
 using Jeebs.Collections;
 using Jeebs.Data.Enums;
 using Jeebs.Data.Query.QueryOptions_Tests;
+using Jeebs.Functions;
 using Jeebs.WordPress.CustomFields;
-using Jeebs.WordPress.Entities.StrongIds;
+using Jeebs.WordPress.Entities.Ids;
 using Jeebs.WordPress.Enums;
-using static StrongId.Testing.Generator;
 
 namespace Jeebs.WordPress.Query.PostsOptions_Tests;
 
@@ -61,13 +61,13 @@ public class ToParts_Tests : ToParts_Tests<PostsOptions, IQueryPostsPartsBuilder
 	[Theory]
 	[InlineData(null)]
 	[InlineData("")]
-	public void SearchText_Null_Or_Empty_Does_Not_Call_Builder_AddWhereSearch(string input)
+	public void SearchText_Null_Or_Empty_Does_Not_Call_Builder_AddWhereSearch(string? input)
 	{
 		// Arrange
 		var (options, builder) = Setup();
 		var opt = options with
 		{
-			SearchText = input
+			SearchText = input!
 		};
 
 		// Act
@@ -179,7 +179,7 @@ public class ToParts_Tests : ToParts_Tests<PostsOptions, IQueryPostsPartsBuilder
 	{
 		// Arrange
 		var (options, builder) = Setup();
-		var parentId = ULongId<WpPostId>();
+		var parentId = IdGen.ULongId<WpPostId>();
 		var opt = options with
 		{
 			ParentId = parentId
@@ -210,8 +210,8 @@ public class ToParts_Tests : ToParts_Tests<PostsOptions, IQueryPostsPartsBuilder
 	{
 		// Arrange
 		var (options, builder) = Setup();
-		var taxonomies = ImmutableList.Create(
-			(Taxonomy.LinkCategory, ULongId<WpTermId>())
+		var taxonomies = ListF.Create(
+			(Taxonomy.LinkCategory, IdGen.ULongId<WpTermId>())
 		);
 		var opt = options with
 		{
@@ -243,7 +243,7 @@ public class ToParts_Tests : ToParts_Tests<PostsOptions, IQueryPostsPartsBuilder
 	{
 		// Arrange
 		var (options, builder) = Setup();
-		var fields = ImmutableList.Create(
+		var fields = ListF.Create(
 			(Substitute.For<ICustomField>(), Compare.Like, (object)Rnd.Guid)
 		);
 		var opt = options with

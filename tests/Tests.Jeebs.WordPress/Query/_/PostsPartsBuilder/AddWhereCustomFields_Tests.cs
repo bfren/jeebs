@@ -6,8 +6,9 @@ using Jeebs.Data;
 using Jeebs.Data.Clients.MySql;
 using Jeebs.Data.Enums;
 using Jeebs.Data.Query.QueryPartsBuilder_Tests;
+using Jeebs.Functions;
 using Jeebs.WordPress.CustomFields;
-using Jeebs.WordPress.Entities.StrongIds;
+using Jeebs.WordPress.Entities.Ids;
 using static Jeebs.WordPress.Query.PostsPartsBuilder_Tests.Setup;
 
 namespace Jeebs.WordPress.Query.PostsPartsBuilder_Tests;
@@ -27,11 +28,11 @@ public class AddWhereCustomFields_Tests : QueryPartsBuilder_Tests<PostsPartsBuil
 		var result = builder.AddWhereCustomFields(v.Parts, Substitute.For<IImmutableList<(ICustomField, Compare, object)>>());
 
 		// Assert
-		var some = result.AssertSome();
-		Assert.Same(v.Parts, some);
+		var ok = result.AssertOk();
+		Assert.Same(v.Parts, ok);
 	}
 
-	public static IEnumerable<object[]> Single_CustomField_Adds_Where_Clause_Data() =>
+	public static TheoryData<Compare> Single_CustomField_Adds_Where_Clause_Data() =>
 		GetCompareValues();
 
 	[Theory]
@@ -47,7 +48,7 @@ public class AddWhereCustomFields_Tests : QueryPartsBuilder_Tests<PostsPartsBuil
 		var field = Substitute.For<ICustomField>();
 		field.Key.Returns(key);
 
-		var customFields = ImmutableList.Create((field, input, value));
+		var customFields = ListF.Create((field, input, value));
 
 		var p = builder.TTest.Posts.ToString();
 		var pm = builder.TTest.PostsMeta.ToString();
@@ -56,8 +57,8 @@ public class AddWhereCustomFields_Tests : QueryPartsBuilder_Tests<PostsPartsBuil
 		var result = builder.AddWhereCustomFields(v.Parts, customFields);
 
 		// Assert
-		var some = result.AssertSome();
-		var (clause, _) = Assert.Single(some.WhereCustom);
+		var ok = result.AssertOk();
+		var (clause, _) = Assert.Single(ok.WhereCustom);
 		Assert.Equal("(" +
 			$"SELECT COUNT(1) FROM `{pm}` " +
 			$"WHERE `{pm}`.`post_id` = `{p}`.`ID` " +
@@ -80,14 +81,14 @@ public class AddWhereCustomFields_Tests : QueryPartsBuilder_Tests<PostsPartsBuil
 		var field = Substitute.For<ICustomField>();
 		field.Key.Returns(key);
 
-		var customFields = ImmutableList.Create((field, Compare.Equal, value));
+		var customFields = ListF.Create((field, Compare.Equal, value));
 
 		// Act
 		var result = builder.AddWhereCustomFields(v.Parts, customFields);
 
 		// Assert
-		var some = result.AssertSome();
-		var (_, parameters) = Assert.Single(some.WhereCustom);
+		var ok = result.AssertOk();
+		var (_, parameters) = Assert.Single(ok.WhereCustom);
 		Assert.Collection(parameters,
 			y =>
 			{
@@ -118,7 +119,7 @@ public class AddWhereCustomFields_Tests : QueryPartsBuilder_Tests<PostsPartsBuil
 		var f1 = Substitute.For<ICustomField>();
 		f1.Key.Returns(k1);
 
-		var customFields = ImmutableList.Create((f0, Compare.Equal, v0), (f0, Compare.Equal, v1));
+		var customFields = ListF.Create((f0, Compare.Equal, v0), (f0, Compare.Equal, v1));
 
 		var p = builder.TTest.Posts.ToString();
 		var pm = builder.TTest.PostsMeta.ToString();
@@ -127,8 +128,8 @@ public class AddWhereCustomFields_Tests : QueryPartsBuilder_Tests<PostsPartsBuil
 		var result = builder.AddWhereCustomFields(v.Parts, customFields);
 
 		// Assert
-		var some = result.AssertSome();
-		var (clause, _) = Assert.Single(some.WhereCustom);
+		var ok = result.AssertOk();
+		var (clause, _) = Assert.Single(ok.WhereCustom);
 		Assert.Equal("(" +
 			$"SELECT COUNT(1) FROM `{pm}` " +
 			$"WHERE `{pm}`.`post_id` = `{p}`.`ID` " +
@@ -160,14 +161,14 @@ public class AddWhereCustomFields_Tests : QueryPartsBuilder_Tests<PostsPartsBuil
 		var f1 = Substitute.For<ICustomField>();
 		f1.Key.Returns(k1);
 
-		var customFields = ImmutableList.Create((f0, Compare.Equal, v0), (f1, Compare.Equal, v1));
+		var customFields = ListF.Create((f0, Compare.Equal, v0), (f1, Compare.Equal, v1));
 
 		// Act
 		var result = builder.AddWhereCustomFields(v.Parts, customFields);
 
 		// Assert
-		var some = result.AssertSome();
-		var (_, parameters) = Assert.Single(some.WhereCustom);
+		var ok = result.AssertOk();
+		var (_, parameters) = Assert.Single(ok.WhereCustom);
 		Assert.Collection(parameters,
 			y =>
 			{

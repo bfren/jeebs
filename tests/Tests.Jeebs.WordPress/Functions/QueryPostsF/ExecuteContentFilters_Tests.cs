@@ -1,4 +1,4 @@
-﻿// Jeebs Unit Tests
+// Jeebs Unit Tests
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using Jeebs.WordPress.ContentFilters;
@@ -12,14 +12,14 @@ public class ExecuteContentFilters_Tests
 	{
 		// Arrange
 		var posts = Substitute.For<IEnumerable<Model>>();
-		var content = QueryPostsF.GetPostContentInfo<Model>().UnsafeUnwrap();
+		var content = QueryPostsF.GetPostContentInfo<Model>().Unsafe().Unwrap();
 		var filters = new[] { Substitute.For<IContentFilter>() };
 
 		// Act
 		var result = QueryPostsF.ExecuteContentFilters(posts, content, filters);
 
 		// Assert
-		Assert.Same(posts, result);
+		Assert.Equal(posts, result);
 	}
 
 	[Fact]
@@ -27,14 +27,14 @@ public class ExecuteContentFilters_Tests
 	{
 		// Arrange
 		var posts = new[] { new Model(Rnd.Str) };
-		var content = QueryPostsF.GetPostContentInfo<Model>().UnsafeUnwrap();
+		var content = QueryPostsF.GetPostContentInfo<Model>().Unsafe().Unwrap();
 		var filters = Array.Empty<IContentFilter>();
 
 		// Act
 		var result = QueryPostsF.ExecuteContentFilters(posts, content, filters);
 
 		// Assert
-		Assert.Same(posts, result);
+		Assert.Equal(posts, result);
 	}
 
 	[Fact]
@@ -47,7 +47,7 @@ public class ExecuteContentFilters_Tests
 		var p1 = new Model(c1);
 		var posts = new[] { p0, p1 };
 
-		var content = QueryPostsF.GetPostContentInfo<Model>().UnsafeUnwrap();
+		var content = QueryPostsF.GetPostContentInfo<Model>().Unsafe().Unwrap();
 
 		var f0 = Substitute.For<IContentFilter>();
 		f0.Execute(Arg.Any<string>()).Returns(x => x.ArgAt<string>(0));

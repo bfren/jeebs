@@ -1,10 +1,10 @@
-﻿// Jeebs Unit Tests
+// Jeebs Unit Tests
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using Jeebs.Data;
 using Jeebs.Data.Enums;
 using Jeebs.Data.Query.QueryPartsBuilder_Tests;
-using Jeebs.WordPress.Entities.StrongIds;
+using Jeebs.WordPress.Entities.Ids;
 using static Jeebs.WordPress.Query.PostsPartsBuilder_Tests.Setup;
 
 namespace Jeebs.WordPress.Query.PostsPartsBuilder_Tests;
@@ -24,8 +24,8 @@ public class AddWherePublishedFrom_Tests : QueryPartsBuilder_Tests<PostsPartsBui
 		var result = builder.AddWherePublishedFrom(v.Parts, null);
 
 		// Assert
-		var some = result.AssertSome();
-		Assert.Same(v.Parts, some);
+		var ok = result.AssertOk();
+		Assert.Same(v.Parts, ok);
 	}
 
 	[Fact]
@@ -37,7 +37,7 @@ public class AddWherePublishedFrom_Tests : QueryPartsBuilder_Tests<PostsPartsBui
 		var expectedFrom = from.StartOfDay().ToMySqlString();
 
 		// Act
-		var result = builder.AddWherePublishedFrom(v.Parts, from);
+		var result = builder.AddWherePublishedFrom(v.Parts, from).Unsafe().Unwrap();
 
 		// Assert
 		AssertWhere(v.Parts, result, Post.PublishedOn, Compare.MoreThanOrEqual, expectedFrom);

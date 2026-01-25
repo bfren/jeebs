@@ -45,7 +45,7 @@ public abstract class TermCustomField : CustomField<TermCustomField.Term>
 		{
 			if (isRequired)
 			{
-				return R.Fail("Meta Key '{Key}' not found for Custom Field '{Type}'.", Key, GetType())
+				return R.Fail("Meta Key '{Key}' not found for Custom Field '{Type}'.", Key, GetType().Name)
 					.Ctx(GetType().Name, nameof(HydrateAsync))
 					.AsTask<bool>();
 			}

@@ -23,7 +23,7 @@ public static partial class QueryAttachmentsF
 		)
 		.GetSingleAsync(
 			x => x.Value<Attachment>(),
-			(msg, args) => R.Fail("Unable to get attachment for File {Id}: " + msg, [fileId, .. args])
+			(msg, args) => R.Fail("Unable to get attachment for File {Id}: " + msg, [fileId.Value, .. args])
 				.Ctx(nameof(QueryAttachmentsF), nameof(GetFilePathAsync))
 		)
 		.MapAsync(

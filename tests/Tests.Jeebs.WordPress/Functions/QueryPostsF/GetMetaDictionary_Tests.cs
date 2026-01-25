@@ -1,8 +1,6 @@
 // Jeebs Unit Tests
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
-using static Jeebs.WordPress.Functions.QueryPostsF.M;
-
 namespace Jeebs.WordPress.Functions.QueryPostsF_Tests;
 
 public class GetMetaDictionary_Tests
@@ -16,7 +14,9 @@ public class GetMetaDictionary_Tests
 		var result = QueryPostsF.GetMetaDictionary<NoMetaDictionaryProperties>();
 
 		// Assert
-		result.AssertNone().AssertType<MetaDictionaryPropertyNotFoundMsg<NoMetaDictionaryProperties>>();
+		_ = result.AssertFail("MetaDictionary property not found for model '{Type}'.",
+			nameof(NoMetaDictionaryProperties)
+		);
 	}
 
 	[Fact]
@@ -28,7 +28,9 @@ public class GetMetaDictionary_Tests
 		var result = QueryPostsF.GetMetaDictionary<MoreThanOneMetaDictionaryProperty>();
 
 		// Assert
-		result.AssertNone().AssertType<MoreThanOneMetaDictionaryMsg<MoreThanOneMetaDictionaryProperty>>();
+		_ = result.AssertFail("Multiple MetaDictionary properties found for model '{Type}'.",
+			nameof(MoreThanOneMetaDictionaryProperty)
+		);
 	}
 
 	[Fact]
@@ -40,8 +42,8 @@ public class GetMetaDictionary_Tests
 		var result = QueryPostsF.GetMetaDictionary<SingleMetaDictionaryProperty>();
 
 		// Assert
-		var some = result.AssertSome();
-		Assert.Equal(nameof(SingleMetaDictionaryProperty.Meta), some.Name);
+		var ok = result.AssertOk();
+		Assert.Equal(nameof(SingleMetaDictionaryProperty.Meta), ok.Name);
 	}
 
 	public sealed record class NoMetaDictionaryProperties;
