@@ -10,14 +10,14 @@
 				"Microsoft": "Warning",
 				"Microsoft.Hosting.Lifetime": "Information"
 			},
-			"providers": {
-				"console": {
-					"enabled": true
-				},
-				"seq.server04": {
-					"enabled": true
-				}
-			}
+      "providers": {
+        "console": {
+          "enabled": true
+        },
+        "seq.local": {
+          "enabled": true
+        }
+      }
 		},
     "services": {
       "seq": {

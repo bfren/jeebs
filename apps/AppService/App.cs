@@ -6,17 +6,10 @@ using Microsoft.Extensions.Hosting;
 
 namespace ServiceApp;
 
-public class App : Jeebs.Apps.ServiceApp<AppService>
+public class App : Jeebs.Apps.ServiceApp<AppService>;
+
+public class AppService(ILog log) : IHostedService
 {
-}
-
-public class AppService : IHostedService
-{
-	private readonly ILog log;
-
-	public AppService(ILog log) =>
-		this.log = log;
-
 	public Task StartAsync(CancellationToken cancellationToken)
 	{
 		log.Dbg("Hello, world!");
