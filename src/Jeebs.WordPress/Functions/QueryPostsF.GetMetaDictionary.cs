@@ -24,7 +24,7 @@ public static partial class QueryPostsF
 		if (!metaDictionary.Any())
 		{
 			return R.Fail("MetaDictionary property not found for model '{Type}'.", typeof(TModel).Name)
-				.Lvl(Wrap.Logging.LogLevel.Information)
+				.Lvl(Wrap.Logging.LogLevel.Debug)
 				.Ctx(nameof(QueryPostsF), nameof(GetMetaDictionary));
 		}
 
