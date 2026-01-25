@@ -14,14 +14,14 @@
 				"console": {
 					"enabled": true
 				},
-				"seq.server04": {
+				"seq.local": {
 					"enabled": true
 				}
 			}
 		},
     "services": {
       "seq": {
-        "server04": {
+        "local": {
           "server": "",
           "apiKey": ""
         }
