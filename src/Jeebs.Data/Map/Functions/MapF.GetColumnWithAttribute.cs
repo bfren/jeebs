@@ -34,9 +34,9 @@ public static partial class MapF
 		)
 		.GetSingle(
 			x => x.Value<IColumn>(),
-			() => R.Fail(
-					"Unable to get single column with attribute '{Attribute}' from table '{Table}'.",
-					typeof(TAttribute).Name, typeof(TTable).Name
+			(msg, args) => R.Fail(
+					"Unable to get single column with attribute '{Attribute}' from table '{Table}': " + msg,
+					[typeof(TAttribute).Name, typeof(TTable).Name, .. args]
 				)
 				.Ctx(nameof(MapF), nameof(GetColumnWithAttribute))
 		)

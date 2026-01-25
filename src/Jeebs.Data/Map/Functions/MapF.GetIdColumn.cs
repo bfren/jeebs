@@ -29,7 +29,7 @@ public static partial class MapF
 		)
 		.GetSingle(
 			x => x.Value<IColumn>(),
-			() => R.Fail("Unable to get Id column from table '{Name}'.", typeof(TTable).Name)
+			(msg, args) => R.Fail("Unable to get Id column from table '{Name}': " + msg, [typeof(TTable).Name, .. args])
 				.Ctx(nameof(MapF), nameof(GetIdColumn))
 		)
 		.Map(
