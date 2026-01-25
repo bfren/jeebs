@@ -15,7 +15,7 @@ public interface IWebhookDriver<in TConfig, in TMessage>
 	where TConfig : IServiceConfig
 	where TMessage : notnull
 {
-	/// <inheritdoc cref="INotifier.Send(Fail)"/>
+	/// <inheritdoc cref="INotifier.Send(FailValue)"/>
 	void Send(FailValue failure);
 
 	/// <inheritdoc cref="INotifier.Send(string, NotificationLevel)"/>

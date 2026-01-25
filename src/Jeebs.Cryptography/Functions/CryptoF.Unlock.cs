@@ -12,6 +12,13 @@ namespace Jeebs.Cryptography.Functions;
 
 public static partial class CryptoF
 {
+	/// <summary>
+	/// Unlock a Locked box using the specified <paramref name="key"/>.
+	/// </summary>
+	/// <typeparam name="T">Value type.</typeparam>
+	/// <param name="box">Locked box.</param>
+	/// <param name="key">Encryption key.</param>
+	/// <returns>Unlocked box.</returns>
 	public static Result<Lockable<T>> Unlock<T>(this Locked<T> box, byte[] key)
 	{
 

@@ -34,7 +34,6 @@ public static partial class StringExtensions
 	/// <summary>
 	/// Decrypt a string using the specified key.
 	/// </summary>
-	/// <typeparam name="T">Type of object being encrypted.</typeparam>
 	/// <param name="this">JSON-serialised Box.</param>
 	/// <param name="key">Encryption Key (must be 32 bytes).</param>
 	/// <returns>Decrypted object.</returns>
@@ -44,7 +43,6 @@ public static partial class StringExtensions
 	/// <summary>
 	/// Decrypt a string using the specified key.
 	/// </summary>
-	/// <typeparam name="T">Type of object being encrypted.</typeparam>
 	/// <param name="this">JSON-serialised Box.</param>
 	/// <param name="key">Encryption Key (must be 32 bytes).</param>
 	/// <returns>Decrypted object.</returns>

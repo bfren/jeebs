@@ -18,6 +18,7 @@ public static partial class StringF
 	/// <typeparam name="T">Object type.</typeparam>
 	/// <param name="formatString">Format string.</param>
 	/// <param name="obj">Object (nullable).</param>
+	/// <param name="ifNull">String to use when <paramref name="obj"/> is null.</param>
 	/// <returns>Formatted string.</returns>
 	public static string Format<T>(string formatString, T obj, string? ifNull) =>
 		obj switch

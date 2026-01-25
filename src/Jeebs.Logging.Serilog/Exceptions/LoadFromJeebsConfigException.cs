@@ -18,7 +18,7 @@ public class LoadFromJeebsConfigException : Exception
 	/// <summary>
 	/// Create with FailValue.
 	/// </summary>
-	/// <param name="reason"></param>
+	/// <param name="fail"></param>
 	public LoadFromJeebsConfigException(FailValue fail) : this(fail.ToString()) { }
 
 	/// <summary>

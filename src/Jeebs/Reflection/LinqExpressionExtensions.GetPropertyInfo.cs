@@ -13,7 +13,7 @@ public static partial class LinqExpressionExtensions
 	/// Prepare a Linq MemberExpression for use as property setter / getter.
 	/// </summary>
 	/// <typeparam name="TObject">Object type.</typeparam>
-	/// <typeparam name="TProperty">Property type<./typeparam>
+	/// <typeparam name="TProperty">Property type.</typeparam>
 	/// <param name="this">Expression to get property.</param>
 	/// <returns>PropertyInfo.</returns>
 	public static Maybe<PropertyInfo<TObject, TProperty>> GetPropertyInfo<TObject, TProperty>(

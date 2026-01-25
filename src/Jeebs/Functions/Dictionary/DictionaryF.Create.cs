@@ -11,7 +11,8 @@ public static partial class DictionaryF
 	/// <summary>
 	/// Create a new <see cref="ImmutableDictionary{TKey, TValue}"/> with the specified <paramref name="items"/>.
 	/// </summary>
-	/// <typeparam name="T">List Item type.</typeparam>
+	/// <typeparam name="TKey">Dictionary key type.</typeparam>
+	/// <typeparam name="TValue">Dictionary value type.</typeparam>
 	/// <param name="items">Collection of items to add.</param>
 	/// <returns>New <see cref="ImmutableDictionary{TKey, TValue}"/> containing <paramref name="items"/>.</returns>
 	public static ImmutableDictionary<TKey, TValue> Create<TKey, TValue>(IDictionary<TKey, TValue> items)
@@ -21,7 +22,8 @@ public static partial class DictionaryF
 	/// <summary>
 	/// Create a new <see cref="ImmutableDictionary{TKey, TValue}"/> with the specified <paramref name="args"/>.
 	/// </summary>
-	/// <typeparam name="T">List Item type.</typeparam>
+	/// <typeparam name="TKey">Dictionary key type.</typeparam>
+	/// <typeparam name="TValue">Dictionary value type.</typeparam>
 	/// <param name="args">Items to add.</param>
 	/// <returns>New <see cref="ImmutableDictionary{TKey, TValue}"/> containing <paramref name="args"/>.</returns>
 	public static ImmutableDictionary<TKey, TValue> Create<TKey, TValue>(params KeyValuePair<TKey, TValue>[]? args)

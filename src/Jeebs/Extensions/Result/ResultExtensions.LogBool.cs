@@ -14,7 +14,6 @@ public static partial class ResultExtensions
 	/// <summary>
 	/// Log a boolean result - or the reason if <see cref="Fail"/>.
 	/// </summary>
-	/// <typeparam name="T">Ok value type.</typeparam>
 	/// <param name="this">Result object.</param>
 	/// <param name="usingLog">Log implementation.</param>
 	/// <param name="ifTrue">Text when <paramref name="this"/> is <see cref="Ok{T}"/> and the value is true.</param>

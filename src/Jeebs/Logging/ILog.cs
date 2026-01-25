@@ -38,8 +38,7 @@ public interface ILog
 	bool IsEnabled(Microsoft.Extensions.Logging.LogLevel level);
 
 	/// <summary>
-	/// Log a <see cref="FailValue"/> using the <see cref="LogLevel"/> it defines,
-	/// or <see cref="Messages.Msg.DefaultLevel"/>.
+	/// Log a <see cref="FailValue"/> using the <see cref="LogLevel"/> it defines.
 	/// </summary>
 	/// <param name="failure">Failure to log.</param>
 	void Failure(FailValue failure);
