@@ -15,8 +15,8 @@ public static partial class MapF
 	/// <summary>
 	/// Get all columns as <see cref="Column"/> objects.
 	/// </summary>
-	/// <typeparam name="TTable">Table type</typeparam>
-	/// <typeparam name="TEntity">Entity type</typeparam>
+	/// <typeparam name="TTable">Table type.</typeparam>
+	/// <typeparam name="TEntity">Entity type.</typeparam>
 	/// <param name="table">Table object.</param>
 	public static Result<ColumnList> GetColumns<TTable, TEntity>(TTable table)
 		where TTable : ITable

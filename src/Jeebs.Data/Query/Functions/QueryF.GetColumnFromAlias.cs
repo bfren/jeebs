@@ -13,7 +13,7 @@ public static partial class QueryF
 	/// <summary>
 	/// Build a column object from a column alias.
 	/// </summary>
-	/// <typeparam name="TTable">Table type</typeparam>
+	/// <typeparam name="TTable">Table type.</typeparam>
 	/// <param name="table">Table object.</param>
 	/// <param name="alias">Column alias.</param>
 	public static Result<IColumn> GetColumnFromAlias<TTable>(TTable table, string alias)

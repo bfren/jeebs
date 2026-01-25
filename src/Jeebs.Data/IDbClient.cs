@@ -109,8 +109,8 @@ public interface IDbClient
 	/// <summary>
 	/// Return a query to retrieve a list of entities that match all the specified parameters.
 	/// </summary>
-	/// <typeparam name="TEntity">Entity type</typeparam>
-	/// <typeparam name="TModel">Return model type</typeparam>
+	/// <typeparam name="TEntity">Entity type.</typeparam>
+	/// <typeparam name="TModel">Return model type.</typeparam>
 	/// <param name="predicates">Predicates (matched using AND).</param>
 	Result<(string query, IQueryParametersDictionary param)> GetQuery<TEntity, TModel>(
 		(string, Compare, dynamic)[] predicates
@@ -136,15 +136,15 @@ public interface IDbClient
 	/// <summary>
 	/// Return a query to create an entity.
 	/// </summary>
-	/// <typeparam name="TEntity">Entity type</typeparam>
+	/// <typeparam name="TEntity">Entity type.</typeparam>
 	Result<string> GetCreateQuery<TEntity>()
 		where TEntity : IWithId;
 
 	/// <summary>
 	/// Return a query to retrieve a single entity by ID.
 	/// </summary>
-	/// <typeparam name="TEntity">Entity type</typeparam>
-	/// <typeparam name="TModel">Return model type</typeparam>
+	/// <typeparam name="TEntity">Entity type.</typeparam>
+	/// <typeparam name="TModel">Return model type.</typeparam>
 	/// <param name="id">Entity ID.</param>
 	Result<string> GetRetrieveQuery<TEntity, TModel>(object id)
 		where TEntity : IWithId;
@@ -152,8 +152,8 @@ public interface IDbClient
 	/// <summary>
 	/// Return a query to update a single entity.
 	/// </summary>
-	/// <typeparam name="TEntity">Entity type</typeparam>
-	/// <typeparam name="TModel">Return model type</typeparam>
+	/// <typeparam name="TEntity">Entity type.</typeparam>
+	/// <typeparam name="TModel">Return model type.</typeparam>
 	/// <param name="id">Entity ID.</param>
 	Result<string> GetUpdateQuery<TEntity, TModel>(object id)
 		where TEntity : IWithId;
@@ -161,7 +161,7 @@ public interface IDbClient
 	/// <summary>
 	/// Return a query to delete a single entity by ID.
 	/// </summary>
-	/// <typeparam name="TEntity">Entity type</typeparam>
+	/// <typeparam name="TEntity">Entity type.</typeparam>
 	/// <param name="id">Entity ID.</param>
 	Result<string> GetDeleteQuery<TEntity>(object id)
 		where TEntity : IWithId;

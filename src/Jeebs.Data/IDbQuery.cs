@@ -39,7 +39,7 @@ public interface IDbQuery
 	/// <summary>
 	/// Build a query from <see cref="IQueryParts"/> and return multiple items.
 	/// </summary>
-	/// <typeparam name="T">Return value type</typeparam>
+	/// <typeparam name="T">Return value type.</typeparam>
 	/// <param name="page">Page number.</param>
 	/// <param name="parts">Query parts.</param>
 	/// <param name="transaction">[Optional] Database transaction.</param>

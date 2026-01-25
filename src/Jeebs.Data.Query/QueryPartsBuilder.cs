@@ -30,7 +30,7 @@ public abstract class QueryPartsBuilder
 /// <summary>
 /// Builds a <see cref="QueryParts"/> object from various options.
 /// </summary>
-/// <typeparam name="TId">Entity ID type</typeparam>
+/// <typeparam name="TId">Entity ID type.</typeparam>
 /// <remarks>
 /// Inject extract object.
 /// </remarks>
@@ -71,8 +71,8 @@ public abstract class QueryPartsBuilder<TId>(IExtract extract) : QueryPartsBuild
 	/// <summary>
 	/// Add Join.
 	/// </summary>
-	/// <typeparam name="TFrom">From Table type</typeparam>
-	/// <typeparam name="TTo">To Table type</typeparam>
+	/// <typeparam name="TFrom">From Table type.</typeparam>
+	/// <typeparam name="TTo">To Table type.</typeparam>
 	/// <param name="parts">QueryParts.</param>
 	/// <param name="fromTable">From table - should already be added to the query.</param>
 	/// <param name="fromSelector">From column.</param>

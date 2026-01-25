@@ -25,8 +25,8 @@ public static partial class FluentQueryHelper
 	/// <summary>
 	/// Validate a call to <see cref="IFluentQuery{TEntity, TId}.WhereNotIn{TValue}(Expression{Func{TEntity, TValue}}, IEnumerable{TValue})"/>.
 	/// </summary>
-	/// <typeparam name="TEntity">Entity type</typeparam>
-	/// <typeparam name="TValue">Column select value type</typeparam>
+	/// <typeparam name="TEntity">Entity type.</typeparam>
+	/// <typeparam name="TValue">Column select value type.</typeparam>
 	/// <param name="call">Call.</param>
 	/// <param name="expectedProperty">Expected property.</param>
 	/// <param name="expectedValues">Expected values.</param>

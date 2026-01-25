@@ -17,8 +17,8 @@ public static partial class FluentQueryHelper
 	/// <summary>
 	/// Validate a call to <see cref="IFluentQuery{TEntity, TId}.ExecuteAsync{TValue}(Expression{Func{TEntity, TValue}})"/>.
 	/// </summary>
-	/// <typeparam name="TEntity">Entity type</typeparam>
-	/// <typeparam name="TValue">Column select value type</typeparam>
+	/// <typeparam name="TEntity">Entity type.</typeparam>
+	/// <typeparam name="TValue">Column select value type.</typeparam>
 	/// <param name="call">Call.</param>
 	/// <param name="expected">Expected property.</param>
 	/// <param name="withTransaction">Whether or not to check for a transaction.</param>

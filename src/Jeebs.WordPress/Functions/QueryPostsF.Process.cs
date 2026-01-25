@@ -14,8 +14,8 @@ public static partial class QueryPostsF
 	/// <summary>
 	/// Process a list of posts, adding meta / taxonomies / custom fields as required.
 	/// </summary>
-	/// <typeparam name="TList">List type</typeparam>
-	/// <typeparam name="TModel">Model type</typeparam>
+	/// <typeparam name="TList">List type.</typeparam>
+	/// <typeparam name="TModel">Model type.</typeparam>
 	/// <param name="db">IWpDb.</param>
 	/// <param name="w">IUnitOfWork.</param>
 	/// <param name="posts">Posts.</param>

@@ -12,7 +12,7 @@ public static partial class QueryPostsF
 	/// <summary>
 	/// Get query parts using the specific options.
 	/// </summary>
-	/// <typeparam name="TModel">Return value type</typeparam>
+	/// <typeparam name="TModel">Return value type.</typeparam>
 	/// <param name="db">IWpDb.</param>
 	/// <param name="opt">Function to return query options.</param>
 	internal static Result<IQueryParts> GetQueryParts<TModel>(IWpDb db, GetPostsOptions opt)

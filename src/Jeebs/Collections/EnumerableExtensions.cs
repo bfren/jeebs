@@ -68,7 +68,7 @@ public static class EnumerableExtensions
 	/// </summary>
 	/// <typeparam name="T">Item type.</typeparam>
 	/// <param name="this">Collection.</param>
-	/// <returns>Immutable List</returns>
+	/// <returns>Immutable List.</returns>
 	public static IImmutableList<T> ToImmutableList<T>(this IEnumerable<T> @this) =>
 		new ImmutableList<T>(@this);
 

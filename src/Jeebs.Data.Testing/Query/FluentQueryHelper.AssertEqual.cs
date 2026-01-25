@@ -11,7 +11,7 @@ public static partial class FluentQueryHelper
 	/// <summary>
 	/// Assert that <paramref name="actual"/> is equal to <paramref name="expected"/>.
 	/// </summary>
-	/// <typeparam name="T">Value Type</typeparam>
+	/// <typeparam name="T">Value Type.</typeparam>
 	/// <param name="expected">Expected value.</param>
 	/// <param name="actual">Actual value.</param>
 	/// <exception cref="EqualTypeException"></exception>

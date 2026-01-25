@@ -102,7 +102,7 @@ public abstract class Db : IDb
 	/// <summary>
 	/// Write query to the log.
 	/// </summary>
-	/// <typeparam name="TReturn">Query return type</typeparam>
+	/// <typeparam name="TReturn">Query return type.</typeparam>
 	/// <param name="input">Input values.</param>
 	private void LogQuery<TReturn>((string query, object? parameters, CommandType type) input)
 	{

@@ -66,7 +66,7 @@ public sealed record class Column : IColumn
 	/// <summary>
 	/// Create a column from a table object and expression.
 	/// </summary>
-	/// <typeparam name="T">Table type</typeparam>
+	/// <typeparam name="T">Table type.</typeparam>
 	/// <param name="table">Table.</param>
 	/// <param name="column">Column selector.</param>
 	public static Maybe<Column> From<T>(T table, Expression<Func<T, string>> column)

@@ -27,7 +27,7 @@ public interface ICustomField
 }
 
 /// <inheritdoc/>
-/// <typeparam name="T">Value type</typeparam>
+/// <typeparam name="T">Value type.</typeparam>
 public interface ICustomField<out T> : ICustomField
 {
 	/// <summary>

@@ -101,7 +101,7 @@ public static class Host
 	///   - Default services are registered with the DI container<br/>
 	///   - Logging is enabled using Serilog
 	/// </remarks>
-	/// <typeparam name="T">App type</typeparam>
+	/// <typeparam name="T">App type.</typeparam>
 	/// <param name="args">Command-line arguments.</param>
 	/// <param name="configureServices">Add additional services.</param>
 	internal static IHostBuilder CreateBuilder<T>(string[] args, Action<HostBuilderContext, IServiceCollection> configureServices)

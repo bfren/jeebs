@@ -11,7 +11,7 @@ namespace Jeebs.Auth.Data;
 /// <summary>
 /// Provides Authentication functions for interacting with User.
 /// </summary>
-/// <typeparam name="TUserEntity">User Entity type</typeparam>
+/// <typeparam name="TUserEntity">User Entity type.</typeparam>
 public interface IAuthUserRepository<TUserEntity> : IRepository<TUserEntity, AuthUserId>
 	where TUserEntity : IAuthUser, IWithId
 {
@@ -39,7 +39,7 @@ public interface IAuthUserRepository<TUserEntity> : IRepository<TUserEntity, Aut
 	/// <summary>
 	/// Retrieve a user by email address.
 	/// </summary>
-	/// <typeparam name="TModel">User model type</typeparam>
+	/// <typeparam name="TModel">User model type.</typeparam>
 	/// <param name="email">Email address.</param>
 	/// <param name="transaction">IDbTransaction.</param>
 	Task<Maybe<TModel>> RetrieveAsync<TModel>(string email, IDbTransaction transaction);

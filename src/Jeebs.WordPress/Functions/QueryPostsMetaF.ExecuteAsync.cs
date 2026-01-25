@@ -14,7 +14,7 @@ public static partial class QueryPostsMetaF
 	/// <summary>
 	/// Execute Posts Meta query.
 	/// </summary>
-	/// <typeparam name="TModel">Return Model type</typeparam>
+	/// <typeparam name="TModel">Return Model type.</typeparam>
 	/// <param name="db">IWpDbQuery.</param>
 	/// <param name="w">IUnitOfWork.</param>
 	/// <param name="opt">Function to return query options.</param>

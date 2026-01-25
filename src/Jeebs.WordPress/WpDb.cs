@@ -20,18 +20,18 @@ namespace Jeebs.WordPress;
 /// It should be registered with a DI container as a singleton to avoid the (expensive) table creation
 /// each time the instance is required
 /// </remarks>
-/// <typeparam name="TC">WpCommentEntity</typeparam>
-/// <typeparam name="TCm">WpCommentMetaEntity</typeparam>
-/// <typeparam name="TL">WpLinkEntity</typeparam>
-/// <typeparam name="TO">WpOptionEntity</typeparam>
-/// <typeparam name="TP">WpPostEntity</typeparam>
-/// <typeparam name="TPm">WpPostMetaEntity</typeparam>
-/// <typeparam name="TT">WpTermEntity</typeparam>
-/// <typeparam name="TTm">WpTermMetaEntity</typeparam>
-/// <typeparam name="TTr">WpTermRelationshipEntity</typeparam>
-/// <typeparam name="TTt">WpTermTaxonomyEntity</typeparam>
-/// <typeparam name="TU">WpUserEntity</typeparam>
-/// <typeparam name="TUm">WpUserMetaEntity</typeparam>
+/// <typeparam name="TC">WpCommentEntity.</typeparam>
+/// <typeparam name="TCm">WpCommentMetaEntity.</typeparam>
+/// <typeparam name="TL">WpLinkEntity.</typeparam>
+/// <typeparam name="TO">WpOptionEntity.</typeparam>
+/// <typeparam name="TP">WpPostEntity.</typeparam>
+/// <typeparam name="TPm">WpPostMetaEntity.</typeparam>
+/// <typeparam name="TT">WpTermEntity.</typeparam>
+/// <typeparam name="TTm">WpTermMetaEntity.</typeparam>
+/// <typeparam name="TTr">WpTermRelationshipEntity.</typeparam>
+/// <typeparam name="TTt">WpTermTaxonomyEntity.</typeparam>
+/// <typeparam name="TU">WpUserEntity.</typeparam>
+/// <typeparam name="TUm">WpUserMetaEntity.</typeparam>
 public sealed class WpDb<TC, TCm, TL, TO, TP, TPm, TT, TTm, TTr, TTt, TU, TUm> : Db, IWpDb
 	where TC : WpCommentEntity
 	where TCm : WpCommentMetaEntity

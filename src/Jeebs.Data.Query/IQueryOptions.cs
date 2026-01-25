@@ -10,7 +10,7 @@ namespace Jeebs.Data.Query;
 /// <summary>
 /// An alternative method to <see cref="IQueryParts"/> for building a database query.
 /// </summary>
-/// <typeparam name="TId">Entity ID type</typeparam>
+/// <typeparam name="TId">Entity ID type.</typeparam>
 public interface IQueryOptions<TId>
 	where TId : class, IUnion, new()
 {
@@ -39,6 +39,6 @@ public interface IQueryOptions<TId>
 	/// <summary>
 	/// Convert the query options to <see cref="IQueryParts"/> for use in a database query.
 	/// </summary>
-	/// <typeparam name="TModel">Model type to use for selecting columns</typeparam>
+	/// <typeparam name="TModel">Model type to use for selecting columns.</typeparam>
 	Result<IQueryParts> ToParts<TModel>();
 }

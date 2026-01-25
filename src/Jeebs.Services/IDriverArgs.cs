@@ -8,5 +8,5 @@ namespace Jeebs.Services;
 /// <summary>
 /// Service driver arguments.
 /// </summary>
-/// <typeparam name="TConfig">Service configuration type</typeparam>
+/// <typeparam name="TConfig">Service configuration type.</typeparam>
 public interface IDriverArgs<TConfig> where TConfig : IServiceConfig { }

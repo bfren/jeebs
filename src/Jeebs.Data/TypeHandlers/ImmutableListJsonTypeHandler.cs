@@ -9,7 +9,7 @@ namespace Jeebs.Data.TypeHandlers;
 /// <summary>
 /// ImmutableList JsonTypeHandler.
 /// </summary>
-/// <typeparam name="T">Enumerated type</typeparam>
+/// <typeparam name="T">Enumerated type.</typeparam>
 public sealed class ImmutableListJsonTypeHandler<T> : JsonTypeHandler<ImmutableList<T>>
 {
 	/// <summary>

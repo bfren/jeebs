@@ -51,7 +51,7 @@ public abstract record class Enumerated : IEquatable<Enumerated>, IEquatable<str
 	/// <summary>
 	/// Return the name of this value.
 	/// </summary>
-	/// <returns>Name of this value</returns>
+	/// <returns>Name of this value.</returns>
 	public sealed override string ToString() =>
 		name;
 
@@ -71,7 +71,7 @@ public abstract record class Enumerated : IEquatable<Enumerated>, IEquatable<str
 	/// <summary>
 	/// Check whether or not the specified name matches the given value.
 	/// </summary>
-	/// <typeparam name="T">Enum value type</typeparam>
+	/// <typeparam name="T">Enum value type.</typeparam>
 	/// <param name="name">Enum name.</param>
 	/// <param name="value">Enum value.</param>
 	internal static Result<T> Check<T>(string name, T value)
@@ -88,7 +88,7 @@ public abstract record class Enumerated : IEquatable<Enumerated>, IEquatable<str
 	/// <summary>
 	/// Parse a given name and return the correct Enum value - or throw an exception if no match is found.
 	/// </summary>
-	/// <typeparam name="T">Enum value type</typeparam>
+	/// <typeparam name="T">Enum value type.</typeparam>
 	/// <param name="name">Enum name.</param>
 	/// <param name="values">Enum values to check name against.</param>
 	protected static Result<T> Parse<T>(string name, T[] values)
@@ -115,7 +115,7 @@ public abstract record class Enumerated : IEquatable<Enumerated>, IEquatable<str
 	/// <summary>
 	/// Returns true if the given name matches a registered Enum value.
 	/// </summary>
-	/// <typeparam name="T">Enum value type</typeparam>
+	/// <typeparam name="T">Enum value type.</typeparam>
 	/// <param name="name">Enum name.</param>
 	/// <param name="values">Enum values to check name against.</param>
 	protected static bool IsRegistered<T>(string name, T[] values)
@@ -125,7 +125,7 @@ public abstract record class Enumerated : IEquatable<Enumerated>, IEquatable<str
 	/// <summary>
 	/// Parse Arguments.
 	/// </summary>
-	/// <typeparam name="T">Enum Type</typeparam>
+	/// <typeparam name="T">Enum Type.</typeparam>
 	private sealed class ParseArgs<T>
 		where T : Enumerated
 	{

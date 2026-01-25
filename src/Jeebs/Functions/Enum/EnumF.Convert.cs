@@ -13,7 +13,7 @@ public static partial class EnumF
 	/// Throws
 	///		KeyNotFoundException when the value does not exist in the specified Enum type
 	/// </summary>
-	/// <typeparam name="TFrom">Enum type</typeparam>
+	/// <typeparam name="TFrom">Enum type.</typeparam>
 	/// <param name="value">The value to parse.</param>
 	public static FluentConvert<TFrom> Convert<TFrom>(TFrom value)
 		where TFrom : struct, Enum =>
@@ -22,7 +22,7 @@ public static partial class EnumF
 	/// <summary>
 	/// FluentConvert.
 	/// </summary>
-	/// <typeparam name="TFrom">Convert from type</typeparam>
+	/// <typeparam name="TFrom">Convert from type.</typeparam>
 	/// <remarks>
 	/// Construct object
 	/// </remarks>
@@ -35,7 +35,7 @@ public static partial class EnumF
 		/// <summary>
 		/// Convert value to specified type.
 		/// </summary>
-		/// <typeparam name="TTo">Convert To type</typeparam>
+		/// <typeparam name="TTo">Convert To type.</typeparam>
 		public Result<TTo> To<TTo>()
 			where TTo : struct, Enum
 		{

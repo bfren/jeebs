@@ -29,7 +29,7 @@ public static class DbQueryExtensions
 	/// <summary>
 	/// Use a fluent <see cref="IQueryBuilder"/> to create a query to run against the database.
 	/// </summary>
-	/// <typeparam name="T">Return model type</typeparam>
+	/// <typeparam name="T">Return model type.</typeparam>
 	/// <param name="this">IDbQuery.</param>
 	/// <param name="page">Page number.</param>
 	/// <param name="builder">Query builder.</param>

@@ -19,14 +19,14 @@ public interface IDbTypeMapper
 	/// <summary>
 	/// Add a type handler.
 	/// </summary>
-	/// <typeparam name="T">Type to handle</typeparam>
+	/// <typeparam name="T">Type to handle.</typeparam>
 	/// <param name="typeHandler">Type handler.</param>
 	void AddTypeHandler<T>(SqlMapper.TypeHandler<T> typeHandler);
 
 	/// <summary>
 	/// Persist an <see cref="Collections.EnumeratedList{T}"/> to the database by encoding it as JSON.
 	/// </summary>
-	/// <typeparam name="T">Type to handle</typeparam>
+	/// <typeparam name="T">Type to handle.</typeparam>
 	void AddEnumeratedListTypeHandler<T>()
 	   where T : Enumerated;
 
@@ -46,7 +46,7 @@ public interface IDbTypeMapper
 	/// <summary>
 	/// Persist a type to the database by encoding it as JSON.
 	/// </summary>
-	/// <typeparam name="T">Type to handle</typeparam>
+	/// <typeparam name="T">Type to handle.</typeparam>
 	void AddJsonTypeHandler<T>();
 
 	/// <summary>
@@ -62,7 +62,7 @@ public interface IDbTypeMapper
 	/// <summary>
 	/// Add generic type handlers.
 	/// </summary>
-	/// <typeparam name="T">Base (abstract or interface) type to map</typeparam>
+	/// <typeparam name="T">Base (abstract or interface) type to map.</typeparam>
 	/// <param name="handlerType">Handler type (with generic argument).</param>
 	/// <param name="addTypeHandler">Function to add a type handler.</param>
 	void AddGenericTypeHandlers<T>(Type handlerType, AddGenericTypeHandler addTypeHandler);
@@ -77,6 +77,6 @@ public interface IDbTypeMapper
 	/// <summary>
 	/// Whether or not the specified type has a custom type handler registered.
 	/// </summary>
-	/// <typeparam name="T">The type to check</typeparam>
+	/// <typeparam name="T">The type to check.</typeparam>
 	bool HasTypeHandler<T>();
 }

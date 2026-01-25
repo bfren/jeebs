@@ -17,8 +17,8 @@ public static partial class MapF
 	/// <summary>
 	/// Validate that the properties on the entity and the columns on the table match.
 	/// </summary>
-	/// <typeparam name="TTable">Table type</typeparam>
-	/// <typeparam name="TEntity">Entity type</typeparam>
+	/// <typeparam name="TTable">Table type.</typeparam>
+	/// <typeparam name="TEntity">Entity type.</typeparam>
 	public static (bool valid, List<FailValue> errors) ValidateTable<TTable, TEntity>()
 		where TTable : ITable
 		where TEntity : IWithId

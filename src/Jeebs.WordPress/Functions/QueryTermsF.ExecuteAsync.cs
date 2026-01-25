@@ -14,7 +14,7 @@ public static partial class QueryTermsF
 	/// <summary>
 	/// Execute Terms query.
 	/// </summary>
-	/// <typeparam name="TModel">Return Model type</typeparam>
+	/// <typeparam name="TModel">Return Model type.</typeparam>
 	/// <param name="db">IWpDb.</param>
 	/// <param name="w">IUnitOfWork.</param>
 	/// <param name="opt">Function to return query options.</param>

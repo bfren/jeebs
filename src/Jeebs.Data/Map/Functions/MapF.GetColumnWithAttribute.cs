@@ -15,8 +15,8 @@ public static partial class MapF
 	/// <summary>
 	/// Get the column with the specified attribute.
 	/// </summary>
-	/// <typeparam name="TTable">Table type</typeparam>
-	/// <typeparam name="TAttribute">Attribute type</typeparam>
+	/// <typeparam name="TTable">Table type.</typeparam>
+	/// <typeparam name="TAttribute">Attribute type.</typeparam>
 	/// <param name="columns">List of mapped columns.</param>
 	public static Result<Column> GetColumnWithAttribute<TTable, TAttribute>(ColumnList columns)
 		where TTable : ITable

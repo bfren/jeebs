@@ -14,8 +14,8 @@ public static partial class QueryPostsF
 	/// <summary>
 	/// Set Taxonomies for each post.
 	/// </summary>
-	/// <typeparam name="TList">List type</typeparam>
-	/// <typeparam name="TModel">Post type</typeparam>
+	/// <typeparam name="TList">List type.</typeparam>
+	/// <typeparam name="TModel">Post type.</typeparam>
 	/// <param name="posts">Posts.</param>
 	/// <param name="terms">Terms.</param>
 	/// <param name="termLists">Term List properties.</param>

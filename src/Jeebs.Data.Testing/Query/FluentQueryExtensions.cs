@@ -15,8 +15,8 @@ public static class FluentQueryExtensions
 	/// <summary>
 	/// Assert calls to an <see cref="IFluentQuery{TEntity, TId}"/> object.
 	/// </summary>
-	/// <typeparam name="TEntity">Entity Type</typeparam>
-	/// <typeparam name="TId">Entity ID Type</typeparam>
+	/// <typeparam name="TEntity">Entity Type.</typeparam>
+	/// <typeparam name="TId">Entity ID Type.</typeparam>
 	/// <param name="this">Fluent Query object.</param>
 	/// <param name="inspectors">Call inspectors.</param>
 	/// <exception cref="CollectionException"></exception>

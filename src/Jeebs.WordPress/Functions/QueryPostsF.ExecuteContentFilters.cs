@@ -12,8 +12,8 @@ public static partial class QueryPostsF
 	/// <summary>
 	/// Apply content filters to each post.
 	/// </summary>
-	/// <typeparam name="TList">List type</typeparam>
-	/// <typeparam name="TModel">Post Model type</typeparam>
+	/// <typeparam name="TList">List type.</typeparam>
+	/// <typeparam name="TModel">Post Model type.</typeparam>
 	/// <param name="posts">Posts.</param>
 	/// <param name="content">Content Property for <typeparamref name="TModel"/>.</param>
 	/// <param name="filters">Content Filters.</param>

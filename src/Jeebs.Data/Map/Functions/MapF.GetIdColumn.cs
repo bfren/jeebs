@@ -15,7 +15,7 @@ public static partial class MapF
 	/// <summary>
 	/// Get the ID column.
 	/// </summary>
-	/// <typeparam name="TTable">Table type</typeparam>
+	/// <typeparam name="TTable">Table type.</typeparam>
 	/// <param name="columns">List of mapped columns.</param>
 	public static Result<Column> GetIdColumn<TTable>(ColumnList columns)
 		where TTable : ITable =>

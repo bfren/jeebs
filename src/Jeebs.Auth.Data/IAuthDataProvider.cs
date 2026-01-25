@@ -10,9 +10,9 @@ namespace Jeebs.Auth.Data;
 /// <summary>
 /// Provides Authentication database functionality.
 /// </summary>
-/// <typeparam name="TUserEntity">User entity type</typeparam>
-/// <typeparam name="TRoleEntity">Role entity type</typeparam>
-/// <typeparam name="TUserRoleEntity">User Role entity type</typeparam>
+/// <typeparam name="TUserEntity">User entity type.</typeparam>
+/// <typeparam name="TRoleEntity">Role entity type.</typeparam>
+/// <typeparam name="TUserRoleEntity">User Role entity type.</typeparam>
 public interface IAuthDataProvider<TUserEntity, TRoleEntity, TUserRoleEntity>
 	where TUserEntity : IAuthUser, IWithId
 	where TRoleEntity : IAuthRole, IWithId
@@ -41,7 +41,7 @@ public interface IAuthDataProvider<TUserEntity, TRoleEntity, TUserRoleEntity>
 	/// <summary>
 	/// Validate a User based on their email and password.
 	/// </summary>
-	/// <typeparam name="TModel">Create Auth User Model type</typeparam>
+	/// <typeparam name="TModel">Create Auth User Model type.</typeparam>
 	/// <param name="email">Email address.</param>
 	/// <param name="password">Password entered by the user.</param>
 	Task<Maybe<TModel>> ValidateUserAsync<TModel>(string email, string password)
@@ -50,8 +50,8 @@ public interface IAuthDataProvider<TUserEntity, TRoleEntity, TUserRoleEntity>
 	/// <summary>
 	/// Retrieve a User with their Roles.
 	/// </summary>
-	/// <typeparam name="TUser">User Model type</typeparam>
-	/// <typeparam name="TRole">Role Model type</typeparam>
+	/// <typeparam name="TUser">User Model type.</typeparam>
+	/// <typeparam name="TRole">Role Model type.</typeparam>
 	/// <param name="id">User ID.</param>
 	Task<Maybe<TUser>> RetrieveUserWithRolesAsync<TUser, TRole>(AuthUserId id)
 		where TUser : AuthUserWithRoles<TRole>
@@ -60,8 +60,8 @@ public interface IAuthDataProvider<TUserEntity, TRoleEntity, TUserRoleEntity>
 	/// <summary>
 	/// Retrieve a User with their Roles.
 	/// </summary>
-	/// <typeparam name="TUser">User Model type</typeparam>
-	/// <typeparam name="TRole">Role Model type</typeparam>
+	/// <typeparam name="TUser">User Model type.</typeparam>
+	/// <typeparam name="TRole">Role Model type.</typeparam>
 	/// <param name="email">User email address.</param>
 	Task<Maybe<TUser>> RetrieveUserWithRolesAsync<TUser, TRole>(string email)
 		where TUser : AuthUserWithRoles<TRole>

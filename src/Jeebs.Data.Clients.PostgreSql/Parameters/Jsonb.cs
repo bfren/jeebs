@@ -16,7 +16,7 @@ public sealed class Jsonb : Dapper.SqlMapper.ICustomQueryParameter
 	/// <summary>
 	/// Create a new Jsonb parameter.
 	/// </summary>
-	/// <typeparam name="T">Object type</typeparam>
+	/// <typeparam name="T">Object type.</typeparam>
 	/// <param name="obj">Object value.</param>
 	public static Jsonb Create<T>(T obj) =>
 		obj switch

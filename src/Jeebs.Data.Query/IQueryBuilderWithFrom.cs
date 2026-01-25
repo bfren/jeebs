@@ -32,7 +32,7 @@ public interface IQueryBuilderWithFrom
 	/// <summary>
 	/// Add a WHERE predicate (predicates are added using AND) - you will need to write more complex queries manually.
 	/// </summary>
-	/// <typeparam name="TTable">Table type</typeparam>
+	/// <typeparam name="TTable">Table type.</typeparam>
 	/// <param name="column">Table column.</param>
 	/// <param name="cmp">Search operator.</param>
 	/// <param name="value">Search value.</param>
@@ -42,7 +42,7 @@ public interface IQueryBuilderWithFrom
 	/// <summary>
 	/// Sort by column in Ascending order.
 	/// </summary>
-	/// <typeparam name="TTable">Table type</typeparam>
+	/// <typeparam name="TTable">Table type.</typeparam>
 	/// <param name="column">Table column.</param>
 	IQueryBuilderWithFrom SortBy<TTable>(Expression<Func<TTable, string>> column)
 		where TTable : ITable, new();
@@ -50,7 +50,7 @@ public interface IQueryBuilderWithFrom
 	/// <summary>
 	/// Sort by column in Descending order.
 	/// </summary>
-	/// <typeparam name="TTable">Table type</typeparam>
+	/// <typeparam name="TTable">Table type.</typeparam>
 	/// <param name="column">Table column.</param>
 	IQueryBuilderWithFrom SortByDescending<TTable>(Expression<Func<TTable, string>> column)
 		where TTable : ITable, new();

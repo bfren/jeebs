@@ -38,12 +38,11 @@ public sealed record class ServicesConfig : IOptions<ServicesConfig>
 
 	/// <summary>
 	/// Get a service configuration from the definition.
-	/// 
 	/// </summary>
 	/// <remarks>
 	/// Definition must be in the format <c>service_type.service_name</c>
 	/// </remarks>
-	/// <param name="definition">Service definition - in format <c>service_type.service_name</c></param>
+	/// <param name="definition">Service definition - in format <c>service_type.service_name</c>.</param>
 	/// <returns>Service configuration.</returns>
 	public Result<IServiceConfig> GetServiceConfig(string definition) =>
 		SplitDefinition(definition).Match(
@@ -69,7 +68,7 @@ public sealed record class ServicesConfig : IOptions<ServicesConfig>
 	/// <summary>
 	/// Get a named service configuration.
 	/// </summary>
-	/// <typeparam name="T">Service Config type</typeparam>
+	/// <typeparam name="T">Service Config type.</typeparam>
 	/// <param name="getCollection">The service collection to use.</param>
 	/// <param name="name">The name of the service to get.</param>
 	/// <returns>Service configuration.</returns>

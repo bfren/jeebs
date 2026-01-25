@@ -158,7 +158,7 @@ public abstract record class Op : IOp
 	/// <summary>
 	/// Create with value and message.
 	/// </summary>
-	/// <typeparam name="T">Value type</typeparam>
+	/// <typeparam name="T">Value type.</typeparam>
 	/// <param name="value"></param>
 	/// <param name="message"></param>
 	public static Op Create<T>(T value, Alert message) =>
@@ -167,7 +167,7 @@ public abstract record class Op : IOp
 	/// <summary>
 	/// Create with value and message.
 	/// </summary>
-	/// <typeparam name="T">Value type</typeparam>
+	/// <typeparam name="T">Value type.</typeparam>
 	/// <param name="value"></param>
 	/// <param name="message"></param>
 	public static Op Create<T>(Result<T> value, Alert message) =>

@@ -12,7 +12,7 @@ public static partial class QueryPostsF
 	/// <summary>
 	/// Get the Meta Dictionary Info for <typeparamref name="TModel"/>.
 	/// </summary>
-	/// <typeparam name="TModel">Post Model type</typeparam>
+	/// <typeparam name="TModel">Post Model type.</typeparam>
 	internal static Result<Meta<TModel>> GetMetaDictionary<TModel>()
 	{
 		// Get meta dictionary property for model type
@@ -41,7 +41,7 @@ public static partial class QueryPostsF
 	/// <summary>
 	/// Meta Info alias.
 	/// </summary>
-	/// <typeparam name="TModel">Post Model type</typeparam>
+	/// <typeparam name="TModel">Post Model type.</typeparam>
 	public sealed class Meta<TModel> : PropertyInfo<TModel, MetaDictionary>
 	{
 		/// <summary>

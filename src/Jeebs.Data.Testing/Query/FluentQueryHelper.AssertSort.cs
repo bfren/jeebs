@@ -22,8 +22,8 @@ public static partial class FluentQueryHelper
 	/// <summary>
 	/// Validate a call to <see cref="IFluentQuery{TEntity, TId}.Sort{TValue}(Expression{Func{TEntity, TValue}}, SortOrder)"/>.
 	/// </summary>
-	/// <typeparam name="TEntity">Entity type</typeparam>
-	/// <typeparam name="TValue">Column select value type</typeparam>
+	/// <typeparam name="TEntity">Entity type.</typeparam>
+	/// <typeparam name="TValue">Column select value type.</typeparam>
 	/// <param name="call">Call.</param>
 	/// <param name="expectedProperty">Expected property.</param>
 	/// <param name="expectedOrder">Expected sort order.</param>

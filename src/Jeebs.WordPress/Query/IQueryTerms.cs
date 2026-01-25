@@ -16,7 +16,7 @@ public interface IQueryTerms
 	/// <summary>
 	/// Execute Terms query.
 	/// </summary>
-	/// <typeparam name="T">Return Model type</typeparam>
+	/// <typeparam name="T">Return Model type.</typeparam>
 	/// <param name="db">IWpDb.</param>
 	/// <param name="w">IUnitOfWork.</param>
 	/// <param name="opt">Function to return query options.</param>

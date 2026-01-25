@@ -22,7 +22,7 @@ public interface IOp : IActionResult
 }
 
 /// <inheritdoc cref="IOp"/>
-/// <typeparam name="T">Value type</typeparam>
+/// <typeparam name="T">Value type.</typeparam>
 public interface IOp<T> : IOp
 {
 	/// <summary>

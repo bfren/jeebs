@@ -19,7 +19,7 @@ public interface IWpDbQuery : IDbQuery
 	/// <summary>
 	/// Get Attachments matching the specified options.
 	/// </summary>
-	/// <typeparam name="T">Return Model type</typeparam>
+	/// <typeparam name="T">Return Model type.</typeparam>
 	/// <param name="opt">Function to return query options.</param>
 	Task<Result<IEnumerable<T>>> AttachmentsAsync<T>(Query.GetAttachmentsOptions opt)
 		where T : IPostAttachment;
@@ -33,7 +33,7 @@ public interface IWpDbQuery : IDbQuery
 	/// <summary>
 	/// Get Posts matching the specified options.
 	/// </summary>
-	/// <typeparam name="T">Return Model type</typeparam>
+	/// <typeparam name="T">Return Model type.</typeparam>
 	/// <param name="opt">Function to return query options.</param>
 	/// <param name="filters">Optional content filters to apply.</param>
 	Task<Result<IEnumerable<T>>> PostsAsync<T>(Query.GetPostsOptions opt, params IContentFilter[] filters)
@@ -42,7 +42,7 @@ public interface IWpDbQuery : IDbQuery
 	/// <summary>
 	/// Get Posts matching the specified options, with paging.
 	/// </summary>
-	/// <typeparam name="T">Return Model type</typeparam>
+	/// <typeparam name="T">Return Model type.</typeparam>
 	/// <param name="page">Page number.</param>
 	/// <param name="opt">Function to return query options.</param>
 	/// <param name="filters">Optional content filters to apply.</param>
@@ -59,7 +59,7 @@ public interface IWpDbQuery : IDbQuery
 	/// <summary>
 	/// Get Posts Meta matching the specified options.
 	/// </summary>
-	/// <typeparam name="T">Return Model type</typeparam>
+	/// <typeparam name="T">Return Model type.</typeparam>
 	/// <param name="opt">Function to return query options.</param>
 	Task<Result<IEnumerable<T>>> PostsMetaAsync<T>(Query.GetPostsMetaOptions opt)
 		where T : IWithId<WpPostMetaId, ulong>;
@@ -67,7 +67,7 @@ public interface IWpDbQuery : IDbQuery
 	/// <summary>
 	/// Get Posts Taxonomy matching the specified options.
 	/// </summary>
-	/// <typeparam name="T">Return Model type</typeparam>
+	/// <typeparam name="T">Return Model type.</typeparam>
 	/// <param name="opt">Function to return query options.</param>
 	Task<Result<IEnumerable<T>>> PostsTaxonomyAsync<T>(Query.GetPostsTaxonomyOptions opt)
 		where T : IWithId<WpTermId, ulong>;
@@ -75,7 +75,7 @@ public interface IWpDbQuery : IDbQuery
 	/// <summary>
 	/// Get Terms matching the specified options.
 	/// </summary>
-	/// <typeparam name="T">Return Model type</typeparam>
+	/// <typeparam name="T">Return Model type.</typeparam>
 	/// <param name="opt">Function to return query options.</param>
 	Task<Result<IEnumerable<T>>> TermsAsync<T>(Query.GetTermsOptions opt)
 		where T : IWithId<WpTermId, ulong>;

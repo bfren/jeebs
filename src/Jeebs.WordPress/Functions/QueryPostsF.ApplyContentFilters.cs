@@ -13,8 +13,8 @@ public static partial class QueryPostsF
 	/// <summary>
 	/// Apply the specified content filters to the list of posts.
 	/// </summary>
-	/// <typeparam name="TList">List type</typeparam>
-	/// <typeparam name="TModel">Post type</typeparam>
+	/// <typeparam name="TList">List type.</typeparam>
+	/// <typeparam name="TModel">Post type.</typeparam>
 	/// <param name="posts">Posts.</param>
 	/// <param name="filters">Content Filters.</param>
 	internal static Result<TList> ApplyContentFilters<TList, TModel>(TList posts, IContentFilter[] filters)

@@ -14,7 +14,7 @@ namespace Jeebs.WordPress.Query;
 /// <summary>
 /// Common functions for building QueryParts.
 /// </summary>
-/// <typeparam name="TId">Entity ID type</typeparam>
+/// <typeparam name="TId">Entity ID type.</typeparam>
 public abstract class PartsBuilder<TId> : QueryPartsBuilder<TId>
 	where TId : ULongId<TId>, new()
 {
@@ -59,7 +59,7 @@ public abstract class PartsBuilder<TId> : QueryPartsBuilder<TId>
 	/// <summary>
 	/// Escape a table.
 	/// </summary>
-	/// <typeparam name="TTable">Table type</typeparam>
+	/// <typeparam name="TTable">Table type.</typeparam>
 	/// <param name="table">Table object.</param>
 #pragma warning disable IDE1006 // Naming Styles
 #pragma warning disable CA1707 // Identifiers should not contain underscores
@@ -72,7 +72,7 @@ public abstract class PartsBuilder<TId> : QueryPartsBuilder<TId>
 	/// <summary>
 	/// Get and escape a column using a Linq Expression selector.
 	/// </summary>
-	/// <typeparam name="TTable">Table type</typeparam>
+	/// <typeparam name="TTable">Table type.</typeparam>
 	/// <param name="table">Table object.</param>
 	/// <param name="selector">Column selector.</param>
 #pragma warning disable IDE1006 // Naming Styles

@@ -8,7 +8,7 @@ using Microsoft.Extensions.DependencyInjection;
 namespace Jeebs.WordPress;
 
 /// <summary>
-/// IServiceCollection extension methods.
+/// IServiceCollection extension methods
 /// </summary>
 public static class ServiceCollectionExtensions
 {
@@ -46,8 +46,8 @@ public static class ServiceCollectionExtensions
 		/// <summary>
 		/// Register WordPress instance and configuration type.
 		/// </summary>
-		/// <typeparam name="TWp">WordPress instance type</typeparam>
-		/// <typeparam name="TWpConfig">WordPress configuration type</typeparam>
+		/// <typeparam name="TWp">WordPress instance type.</typeparam>
+		/// <typeparam name="TWpConfig">WordPress configuration type.</typeparam>
 		/// <param name="config">IConfiguration.</param>
 		public IServiceCollection Using<TWp, TWpConfig>(IConfiguration config)
 			where TWp : class, IWp<TWpConfig>

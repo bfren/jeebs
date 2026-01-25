@@ -15,8 +15,8 @@ public static partial class QueryPostsF
 	/// <summary>
 	/// Add meta dictionary to posts.
 	/// </summary>
-	/// <typeparam name="TList">List type</typeparam>
-	/// <typeparam name="TModel">Model type</typeparam>
+	/// <typeparam name="TList">List type.</typeparam>
+	/// <typeparam name="TModel">Model type.</typeparam>
 	/// <param name="db">IWpDb.</param>
 	/// <param name="w">IUnitOfWork.</param>
 	/// <param name="posts">Posts.</param>

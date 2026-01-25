@@ -45,7 +45,7 @@ public interface IDb
 	/// <summary>
 	/// Run a query and return multiple items.
 	/// </summary>
-	/// <typeparam name="T">Return value type</typeparam>
+	/// <typeparam name="T">Return value type.</typeparam>
 	/// <param name="query">Query text.</param>
 	/// <param name="param">Query parameters.</param>
 	/// <param name="type">Command type.</param>
@@ -58,7 +58,7 @@ public interface IDb
 	/// <summary>
 	/// Run a query and return a single item.
 	/// </summary>
-	/// <typeparam name="T">Return value type</typeparam>
+	/// <typeparam name="T">Return value type.</typeparam>
 	/// <param name="query">Query text.</param>
 	/// <param name="param">Query parameters.</param>
 	/// <param name="type">Command type.</param>
@@ -83,7 +83,7 @@ public interface IDb
 	/// <summary>
 	/// Execute a query and return a single scalar value.
 	/// </summary>
-	/// <typeparam name="TReturn">Return value type</typeparam>
+	/// <typeparam name="TReturn">Return value type.</typeparam>
 	/// <param name="query">Query text.</param>
 	/// <param name="param">Query parameters.</param>
 	/// <param name="type">Command type.</param>

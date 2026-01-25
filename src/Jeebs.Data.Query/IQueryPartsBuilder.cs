@@ -13,7 +13,7 @@ namespace Jeebs.Data.Query;
 /// Build an <see cref="QueryParts"/> object
 /// This must be in Jeebs.Data project as it requires access to the <see cref="QueryParts"/> definition
 /// </summary>
-/// <typeparam name="TId">Entity ID type</typeparam>
+/// <typeparam name="TId">Entity ID type.</typeparam>
 public interface IQueryPartsBuilder<TId>
 	where TId : class, IUnion, new()
 {
@@ -30,13 +30,13 @@ public interface IQueryPartsBuilder<TId>
 	/// <summary>
 	/// Retrieve columns matching the specified model.
 	/// </summary>
-	/// <typeparam name="TModel">Return Model type</typeparam>
+	/// <typeparam name="TModel">Return Model type.</typeparam>
 	Result<IColumnList> GetColumns<TModel>();
 
 	/// <summary>
 	/// Create a new QueryParts object, adding <paramref name="maximum"/> and <paramref name="skip"/> values.
 	/// </summary>
-	/// <typeparam name="TModel">Return Model type</typeparam>
+	/// <typeparam name="TModel">Return Model type.</typeparam>
 	/// <param name="maximum">Maximum number of results to select.</param>
 	/// <param name="skip">Number of results to skip.</param>
 	Result<QueryParts> Create<TModel>(ulong? maximum, ulong skip);
@@ -44,8 +44,8 @@ public interface IQueryPartsBuilder<TId>
 	/// <summary>
 	/// Add Join.
 	/// </summary>
-	/// <typeparam name="TFrom">From Table type</typeparam>
-	/// <typeparam name="TTo">To Table type</typeparam>
+	/// <typeparam name="TFrom">From Table type.</typeparam>
+	/// <typeparam name="TTo">To Table type.</typeparam>
 	/// <param name="parts">QueryParts.</param>
 	/// <param name="fromTable">From table - should already be added to the query.</param>
 	/// <param name="fromSelector">From column.</param>
@@ -89,7 +89,7 @@ public interface IQueryPartsBuilder<TId>
 	/// <summary>
 	/// Add a Where predicate using Linq Expressions.
 	/// </summary>
-	/// <typeparam name="TTable">Table type</typeparam>
+	/// <typeparam name="TTable">Table type.</typeparam>
 	/// <param name="parts">QueryParts.</param>
 	/// <param name="table">Table object.</param>
 	/// <param name="column">Column selector.</param>

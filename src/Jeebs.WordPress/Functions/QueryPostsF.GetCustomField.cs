@@ -12,7 +12,7 @@ public static partial class QueryPostsF
 	/// <summary>
 	/// Get value of custom field - and if it's null, create it.
 	/// </summary>
-	/// <typeparam name="TModel">Post model type</typeparam>
+	/// <typeparam name="TModel">Post model type.</typeparam>
 	/// <param name="post">Post object.</param>
 	/// <param name="info">Custom Field property info.</param>
 	internal static ICustomField? GetCustomField<TModel>(TModel post, PropertyInfo info)

@@ -12,7 +12,7 @@ public static partial class FluentQueryHelper
 	/// Provides alternative to <see cref="Assert.Collection{T}(IEnumerable{T}, Action{T}[])"/>
 	/// that doesn't wrap thrown <see cref="FluentQueryHelperException"/> objects
 	/// </summary>
-	/// <typeparam name="T">Value type</typeparam>
+	/// <typeparam name="T">Value type.</typeparam>
 	/// <param name="collection">Calls.</param>
 	/// <param name="inspectors">Element Inspectors.</param>
 	/// <exception cref="CollectionException"></exception>

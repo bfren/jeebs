@@ -12,7 +12,7 @@ public static partial class QueryPostsF
 	/// <summary>
 	/// Get Post Content property for specified model.
 	/// </summary>
-	/// <typeparam name="TModel">Model type</typeparam>
+	/// <typeparam name="TModel">Model type.</typeparam>
 	internal static Result<PropertyInfo> GetPostContent<TModel>()
 	{
 		// Get content property for model type

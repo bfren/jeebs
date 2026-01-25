@@ -8,7 +8,7 @@ namespace Jeebs.Data;
 /// <summary>
 /// Map an entity to a table in a fluent style.
 /// </summary>
-/// <typeparam name="TEntity">Entity type</typeparam>
+/// <typeparam name="TEntity">Entity type.</typeparam>
 public static class Map<TEntity>
 	where TEntity : IWithId
 {
@@ -22,7 +22,7 @@ public static class Map<TEntity>
 	/// <summary>
 	/// Map entity to the specified table type.
 	/// </summary>
-	/// <typeparam name="TTable">Table type</typeparam>
+	/// <typeparam name="TTable">Table type.</typeparam>
 	/// <param name="mapper">IMapper.</param>
 	internal static ITableMap To<TTable>(IEntityMapper mapper)
 		where TTable : Table, new() =>
@@ -31,7 +31,7 @@ public static class Map<TEntity>
 	/// <summary>
 	/// Map entity to the specified table.
 	/// </summary>
-	/// <typeparam name="TTable">Table type</typeparam>
+	/// <typeparam name="TTable">Table type.</typeparam>
 	/// <param name="table">The table to map <typeparamref name="TEntity"/> to.</param>
 #pragma warning disable CA1000 // Do not declare static members on generic types
 	public static ITableMap To<TTable>(TTable table)
@@ -42,7 +42,7 @@ public static class Map<TEntity>
 	/// <summary>
 	/// Map entity to the specified table.
 	/// </summary>
-	/// <typeparam name="TTable">Table type</typeparam>
+	/// <typeparam name="TTable">Table type.</typeparam>
 	/// <param name="table">The table to map <typeparamref name="TEntity"/> to.</param>
 	/// <param name="mapper">IMapper.</param>
 	internal static ITableMap To<TTable>(TTable table, IEntityMapper mapper)

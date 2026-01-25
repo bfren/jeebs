@@ -10,7 +10,7 @@ public static partial class QueryBuilderF
 	/// <summary>
 	/// Build a query and return query parts.
 	/// </summary>
-	/// <typeparam name="TModel">Model type</typeparam>
+	/// <typeparam name="TModel">Model type.</typeparam>
 	/// <param name="builder">Query builder.</param>
 	public static Result<IQueryParts> Build<TModel>(Func<IQueryBuilder, IQueryBuilderWithFrom> builder) =>
 		R.Wrap(

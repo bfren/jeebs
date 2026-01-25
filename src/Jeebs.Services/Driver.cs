@@ -9,7 +9,7 @@ namespace Jeebs.Services;
 /// <summary>
 /// Service driver base class.
 /// </summary>
-/// <typeparam name="TConfig">Service configuration type</typeparam>
+/// <typeparam name="TConfig">Service configuration type.</typeparam>
 public abstract class Driver<TConfig> : IDriver<TConfig>
 	where TConfig : IServiceConfig, new()
 {

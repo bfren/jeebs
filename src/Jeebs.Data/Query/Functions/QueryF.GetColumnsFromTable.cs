@@ -12,7 +12,7 @@ public static partial class QueryF
 	/// <summary>
 	/// Get columns from a table that match properties in <typeparamref name="TModel"/>.
 	/// </summary>
-	/// <typeparam name="TModel">Model type</typeparam>
+	/// <typeparam name="TModel">Model type.</typeparam>
 	/// <param name="table">Table.</param>
 	public static ColumnList GetColumnsFromTable<TModel>(ITable table)
 	{

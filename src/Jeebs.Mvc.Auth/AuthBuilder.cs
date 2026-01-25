@@ -124,7 +124,7 @@ public sealed class AuthBuilder
 	/// <summary>
 	/// Enable custom data authentication and authorisation.
 	/// </summary>
-	/// <typeparam name="TDbClient">IAuthDbClient type</typeparam>
+	/// <typeparam name="TDbClient">IAuthDbClient type.</typeparam>
 	/// <param name="useAuthDbClientAsMain">If true, <typeparamref name="TDbClient"/> will be registered as <see cref="IDbClient"/>.</param>
 	/// <exception cref="AuthDataAlreadyAddedException"></exception>
 	public AuthBuilder WithData<TDbClient>(bool useAuthDbClientAsMain)

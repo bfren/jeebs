@@ -27,7 +27,7 @@ public interface IQueryPosts
 	/// <summary>
 	/// Run a query and return multiple items with paging.
 	/// </summary>
-	/// <typeparam name="T">Return value type</typeparam>
+	/// <typeparam name="T">Return value type.</typeparam>
 	/// <param name="db">IWpDb.</param>
 	/// <param name="w">IUnitOfWork.</param>
 	/// <param name="page">Page number.</param>

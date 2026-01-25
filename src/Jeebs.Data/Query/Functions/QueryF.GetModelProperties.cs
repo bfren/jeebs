@@ -22,7 +22,7 @@ public static partial class QueryF
 	/// <summary>
 	/// Get all properties from a model not marked with <see cref="IgnoreAttribute"/>.
 	/// </summary>
-	/// <typeparam name="TModel">Model type</typeparam>
+	/// <typeparam name="TModel">Model type.</typeparam>
 	public static IEnumerable<PropertyInfo> GetModelProperties<TModel>()
 	{
 		return EnablePropertiesCache switch

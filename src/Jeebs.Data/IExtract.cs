@@ -13,7 +13,7 @@ public interface IExtract
 	/// <summary>
 	/// Extract columns from the list of <paramref name="tables"/> that match properties on <typeparamref name="TModel"/>.
 	/// </summary>
-	/// <typeparam name="TModel">Model type</typeparam>
+	/// <typeparam name="TModel">Model type.</typeparam>
 	/// <param name="tables">Tables.</param>
 	Result<IColumnList> From<TModel>(params ITable[] tables);
 }

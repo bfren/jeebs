@@ -24,7 +24,7 @@ public abstract class Wp
 	/// <summary>
 	/// Initialise WordPress instance - but only once per <typeparamref name="TConfig"/>.
 	/// </summary>
-	/// <typeparam name="TConfig">WpConfig type</typeparam>
+	/// <typeparam name="TConfig">WpConfig type.</typeparam>
 	/// <param name="log">ILog.</param>
 	protected void Init<TConfig>(ILog<Wp> log) =>
 		// If a WordPress instance of the specified configuration type hasn't been created yet,
@@ -53,19 +53,19 @@ public abstract class Wp
 }
 
 /// <inheritdoc cref="IWp{TConfig}"/>
-/// <typeparam name="TConfig">WpConfig type</typeparam>
-/// <typeparam name="TC">WpCommentEntity type</typeparam>
-/// <typeparam name="TCm">WpCommentMetaEntity type</typeparam>
-/// <typeparam name="TL">WpLinkEntity type</typeparam>
-/// <typeparam name="TO">WpOptionEntity type</typeparam>
-/// <typeparam name="TP">WpPostEntity type</typeparam>
-/// <typeparam name="TPm">WpPostMetaEntity type</typeparam>
-/// <typeparam name="TT">WpTermEntity type</typeparam>
-/// <typeparam name="TTm">WpTermMetaEntity type</typeparam>
-/// <typeparam name="TTr">WpTermRelationshipEntity type</typeparam>
-/// <typeparam name="TTt">WpTermTaxonomyEntity type</typeparam>
-/// <typeparam name="TU">WpUserEntity type</typeparam>
-/// <typeparam name="TUm">WpUserMetaEntity type</typeparam>
+/// <typeparam name="TConfig">WpConfig type.</typeparam>
+/// <typeparam name="TC">WpCommentEntity type.</typeparam>
+/// <typeparam name="TCm">WpCommentMetaEntity type.</typeparam>
+/// <typeparam name="TL">WpLinkEntity type.</typeparam>
+/// <typeparam name="TO">WpOptionEntity type.</typeparam>
+/// <typeparam name="TP">WpPostEntity type.</typeparam>
+/// <typeparam name="TPm">WpPostMetaEntity type.</typeparam>
+/// <typeparam name="TT">WpTermEntity type.</typeparam>
+/// <typeparam name="TTm">WpTermMetaEntity type.</typeparam>
+/// <typeparam name="TTr">WpTermRelationshipEntity type.</typeparam>
+/// <typeparam name="TTt">WpTermTaxonomyEntity type.</typeparam>
+/// <typeparam name="TU">WpUserEntity type.</typeparam>
+/// <typeparam name="TUm">WpUserMetaEntity type.</typeparam>
 public abstract class Wp<TConfig, TC, TCm, TL, TO, TP, TPm, TT, TTm, TTr, TTt, TU, TUm> : Wp, IWp<TConfig>
 	where TConfig : WpConfig
 	where TC : WpCommentEntity

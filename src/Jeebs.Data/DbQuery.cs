@@ -51,7 +51,7 @@ public abstract class DbQuery<TDb> : IDbQuery
 	/// <summary>
 	/// Shorthand for escaping a column with its table name and alias.
 	/// </summary>
-	/// <typeparam name="TTable">Table type</typeparam>
+	/// <typeparam name="TTable">Table type.</typeparam>
 	/// <param name="table">Table object.</param>
 	/// <param name="column">Column selector.</param>
 #pragma warning disable CA1707 // Identifiers should not contain underscores

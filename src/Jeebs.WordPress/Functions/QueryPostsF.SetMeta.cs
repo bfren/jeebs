@@ -12,8 +12,8 @@ public static partial class QueryPostsF
 	/// <summary>
 	/// Set meta dictionary property for each post.
 	/// </summary>
-	/// <typeparam name="TList">List type</typeparam>
-	/// <typeparam name="TModel">Model type</typeparam>
+	/// <typeparam name="TList">List type.</typeparam>
+	/// <typeparam name="TModel">Model type.</typeparam>
 	/// <param name="posts">Posts.</param>
 	/// <param name="postsMeta">Posts Meta.</param>
 	/// <param name="metaDict">Meta Dictionary property for <typeparamref name="TModel"/>.</param>

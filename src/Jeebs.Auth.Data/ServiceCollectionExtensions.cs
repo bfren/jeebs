@@ -15,7 +15,7 @@ public static class ServiceCollectionExtensions
 	/// <summary>
 	/// Add required data services for authentication.
 	/// </summary>
-	/// <typeparam name="TDbClient">IAuthDbClient type</typeparam>
+	/// <typeparam name="TDbClient">IAuthDbClient type.</typeparam>
 	/// <param name="services"></param>
 	/// <param name="useAuthDbClientAsMain">If true, <typeparamref name="TDbClient"/> will be registered as <see cref="IDbClient"/>.</param>
 	public static IServiceCollection AddAuthData<TDbClient>(this IServiceCollection services, bool useAuthDbClientAsMain)

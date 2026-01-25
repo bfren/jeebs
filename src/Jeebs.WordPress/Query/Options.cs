@@ -8,7 +8,7 @@ namespace Jeebs.WordPress.Query;
 /// <summary>
 /// WordPress Query Options.
 /// </summary>
-/// <typeparam name="TId">Entity ID type</typeparam>
+/// <typeparam name="TId">Entity ID type.</typeparam>
 public abstract record class Options<TId> : QueryOptions<TId>
 	where TId : ULongId<TId>, new()
 {

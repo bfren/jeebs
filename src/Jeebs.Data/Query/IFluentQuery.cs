@@ -13,8 +13,8 @@ namespace Jeebs.Data.Query;
 /// <summary>
 /// Build a database query using fluent syntax.
 /// </summary>
-/// <typeparam name="TEntity">Entity type</typeparam>
-/// <typeparam name="TId">StrongId type</typeparam>
+/// <typeparam name="TEntity">Entity type.</typeparam>
+/// <typeparam name="TId">StrongId type.</typeparam>
 public interface IFluentQuery<TEntity, TId>
 	where TEntity : IWithId
 	where TId : class, IUnion, new()
@@ -32,7 +32,7 @@ public interface IFluentQuery<TEntity, TId>
 	/// <summary>
 	/// Add a WHERE predicate (multiple predicates will be added using AND).
 	/// </summary>
-	/// <typeparam name="TValue">Column value type</typeparam>
+	/// <typeparam name="TValue">Column value type.</typeparam>
 	/// <param name="aliasSelector">Column alias selector.</param>
 	/// <param name="compare">Comparison operator.</param>
 	/// <param name="value">Column value.</param>
@@ -47,7 +47,7 @@ public interface IFluentQuery<TEntity, TId>
 	/// <summary>
 	/// Add a WHERE IN predicate (multiple predicates will be added using AND).
 	/// </summary>
-	/// <typeparam name="TValue">Column value type</typeparam>
+	/// <typeparam name="TValue">Column value type.</typeparam>
 	/// <param name="columnAlias">Column alias.</param>
 	/// <param name="values">Array of column values.</param>
 	IFluentQuery<TEntity, TId> WhereIn<TValue>(string columnAlias, IEnumerable<TValue> values);
@@ -58,7 +58,7 @@ public interface IFluentQuery<TEntity, TId>
 	/// <summary>
 	/// Add a WHERE NOT IN predicate (multiple predicates will be added using AND).
 	/// </summary>
-	/// <typeparam name="TValue">Column value type</typeparam>
+	/// <typeparam name="TValue">Column value type.</typeparam>
 	/// <param name="columnAlias">Column alias.</param>
 	/// <param name="values">Array of column values.</param>
 	IFluentQuery<TEntity, TId> WhereNotIn<TValue>(string columnAlias, IEnumerable<TValue> values);
@@ -149,7 +149,7 @@ public interface IFluentQuery<TEntity, TId>
 	/// <summary>
 	/// Execute the query and return multiple items.
 	/// </summary>
-	/// <typeparam name="TModel">Return model type</typeparam>
+	/// <typeparam name="TModel">Return model type.</typeparam>
 	/// <param name="transaction"></param>
 	Task<Result<IEnumerable<TModel>>> QueryAsync<TModel>(IDbTransaction transaction);
 
@@ -159,7 +159,7 @@ public interface IFluentQuery<TEntity, TId>
 	/// <summary>
 	/// Perform the query and return a single item.
 	/// </summary>
-	/// <typeparam name="TModel">Return model type</typeparam>
+	/// <typeparam name="TModel">Return model type.</typeparam>
 	/// <param name="transaction"></param>
 	Task<Result<TModel>> QuerySingleAsync<TModel>(IDbTransaction transaction);
 

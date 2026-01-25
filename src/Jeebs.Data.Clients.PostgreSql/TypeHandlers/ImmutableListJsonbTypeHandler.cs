@@ -9,7 +9,7 @@ namespace Jeebs.Data.Clients.PostgreSql.TypeHandlers;
 /// <summary>
 /// ImmutableList JsonTypeHandler.
 /// </summary>
-/// <typeparam name="T">Enumerated type</typeparam>
+/// <typeparam name="T">Enumerated type.</typeparam>
 public sealed class ImmutableListJsonbTypeHandler<T> : JsonbTypeHandler<ImmutableList<T>>
 {
 	/// <summary>
