@@ -1,4 +1,4 @@
-﻿// Jeebs Test Applications
+// Jeebs Test Applications
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using Jeebs.Config.Db;
@@ -11,7 +11,17 @@ namespace AppConsoleWp.Usa;
 /// <summary>
 /// USA WordPress instance.
 /// </summary>
-public sealed class WpUsa : Wp<
+/// <remarks>
+/// Create instance.
+/// </remarks>
+/// <param name="dbConfig">DbConfig.</param>
+/// <param name="wpConfig">WpUsaConfig.</param>
+/// <param name="log">ILog.</param>
+public sealed class WpUsa(
+	IOptions<DbConfig> dbConfig,
+	IOptions<WpUsaConfig> wpConfig,
+	ILog<WpUsa> log
+) : Wp<
 	WpUsaConfig,
 	Entities.Comment,
 	Entities.CommentMeta,
@@ -25,15 +35,8 @@ public sealed class WpUsa : Wp<
 	Entities.TermTaxonomy,
 	Entities.User,
 	Entities.UserMeta
->
+>(dbConfig, wpConfig, log)
 {
-	/// <summary>
-	/// Create instance.
-	/// </summary>
-	/// <param name="dbConfig">DbConfig.</param>
-	/// <param name="wpConfig">WpUsaConfig.</param>
-	/// <param name="log">ILog.</param>
-	public WpUsa(IOptions<DbConfig> dbConfig, IOptions<WpUsaConfig> wpConfig, ILog<WpUsa> log) : base(dbConfig, wpConfig, log) { }
 
 	/// <summary>
 	/// Register custom post types.

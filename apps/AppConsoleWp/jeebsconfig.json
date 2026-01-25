@@ -5,9 +5,9 @@
       "suite": "Jeebs"
     },
     "db": {
-      "default": "server04",
+      "default": "arwen",
       "connections": {
-        "server04": {
+        "arwen": {
           "connectionString": ""
         }
       }
@@ -22,14 +22,14 @@
 				"console": {
 					"enabled": true
 				},
-				"seq.server04": {
+				"seq.local": {
 					"enabled": true
 				}
 			}
 		},
     "services": {
       "seq": {
-        "server04": {
+        "local": {
           "server": "",
           "apiKey": ""
         }
