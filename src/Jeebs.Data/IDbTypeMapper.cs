@@ -50,9 +50,9 @@ public interface IDbTypeMapper
 	void AddJsonTypeHandler<T>();
 
 	/// <summary>
-	/// Persist <see cref="StrongId.IStrongId"/> properties to the database.
+	/// Persist <see cref="Id{TId, TValue}"/> properties to the database.
 	/// </summary>
-	void AddStrongIdTypeHandlers();
+	void AddIdTypeHandlers();
 
 	/// <summary>
 	/// Persist <see cref="Cryptography.Locked{T}"/> properties to the database.

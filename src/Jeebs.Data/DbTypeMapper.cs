@@ -67,7 +67,7 @@ public class DbTypeMapper : IDbTypeMapper
 		AddTypeHandler(new JsonTypeHandler<T>());
 
 	/// <inheritdoc/>
-	public virtual void AddStrongIdTypeHandlers()
+	public virtual void AddIdTypeHandlers()
 	{
 		AddGenericTypeHandlers<IGuidId>(typeof(GuidIdTypeHandler<>), SqlMapper.AddTypeHandler);
 		AddGenericTypeHandlers<IIntId>(typeof(IntIdTypeHandler<>), SqlMapper.AddTypeHandler);
