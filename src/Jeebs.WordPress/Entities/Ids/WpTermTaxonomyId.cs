@@ -1,11 +1,9 @@
 // Jeebs Rapid Application Development
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
-using StrongId;
-
-namespace Jeebs.WordPress.Entities.StrongIds;
+namespace Jeebs.WordPress.Entities.Ids;
 
 /// <summary>
 /// WordPress Term Taxonomy ID.
 /// </summary>
-public sealed record class WpTermTaxonomyId : ULongId;
+public sealed record class WpTermTaxonomyId : ULongId<WpTermTaxonomyId>;

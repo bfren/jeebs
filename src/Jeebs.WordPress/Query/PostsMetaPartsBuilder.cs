@@ -7,7 +7,7 @@ using Jeebs.Data;
 using Jeebs.Data.Enums;
 using Jeebs.Data.Map;
 using Jeebs.Data.Query;
-using Jeebs.WordPress.Entities.StrongIds;
+using Jeebs.WordPress.Entities.Ids;
 
 namespace Jeebs.WordPress.Query;
 
@@ -36,7 +36,7 @@ public sealed class PostsMetaPartsBuilder : PartsBuilder<WpPostMetaId>, IQueryPo
 	internal PostsMetaPartsBuilder(IExtract extract, IWpDbSchema schema) : base(extract, schema) { }
 
 	/// <inheritdoc/>
-	public Maybe<QueryParts> AddWherePostId(QueryParts parts, WpPostId? postId, IImmutableList<WpPostId> postIds)
+	public Result<QueryParts> AddWherePostId(QueryParts parts, WpPostId? postId, IImmutableList<WpPostId> postIds)
 	{
 		// Add Post ID EQUAL
 		if (postId is WpPostId id and { Value: > 0 })
@@ -56,7 +56,7 @@ public sealed class PostsMetaPartsBuilder : PartsBuilder<WpPostMetaId>, IQueryPo
 	}
 
 	/// <inheritdoc/>
-	public Maybe<QueryParts> AddWhereKey(QueryParts parts, string? key)
+	public Result<QueryParts> AddWhereKey(QueryParts parts, string? key)
 	{
 		// Add Key
 		if (!string.IsNullOrEmpty(key))

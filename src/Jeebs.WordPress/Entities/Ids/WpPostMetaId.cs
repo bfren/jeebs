@@ -1,11 +1,9 @@
 // Jeebs Rapid Application Development
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
-using StrongId;
-
-namespace Jeebs.WordPress.Entities.StrongIds;
+namespace Jeebs.WordPress.Entities.Ids;
 
 /// <summary>
-/// WordPress Option ID.
+/// WordPress Post Meta ID.
 /// </summary>
-public sealed record class WpOptionId : ULongId;
+public sealed record class WpPostMetaId : ULongId<WpPostMetaId>;

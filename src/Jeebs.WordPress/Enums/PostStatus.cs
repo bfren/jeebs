@@ -1,4 +1,4 @@
-﻿// Jeebs Rapid Application Development
+// Jeebs Rapid Application Development
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 namespace Jeebs.WordPress.Enums;
@@ -48,5 +48,5 @@ public sealed record class PostStatus : Enumerated
 	/// </summary>
 	/// <param name="name">Value name.</param>
 	public static PostStatus Parse(string name) =>
-		Parse(name, values: [Publish, Inherit, Pending, Draft, AutoDraft]).Unwrap(() => Draft);
+		Parse(name, values: [Publish, Inherit, Pending, Draft, AutoDraft]).Unwrap(_ => Draft);
 }

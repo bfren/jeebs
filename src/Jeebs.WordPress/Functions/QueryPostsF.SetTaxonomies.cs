@@ -5,8 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using Jeebs.Reflection;
-using Jeebs.WordPress.Entities.StrongIds;
-using StrongId;
+using Jeebs.WordPress.Entities.Ids;
 
 namespace Jeebs.WordPress.Functions;
 
@@ -20,30 +19,29 @@ public static partial class QueryPostsF
 	/// <param name="posts">Posts.</param>
 	/// <param name="terms">Terms.</param>
 	/// <param name="termLists">Term List properties.</param>
-	internal static Maybe<TList> SetTaxonomies<TList, TModel>(TList posts, IEnumerable<Term> terms, List<PropertyInfo> termLists)
+	internal static Result<TList> SetTaxonomies<TList, TModel>(TList posts, IEnumerable<Term> terms, List<PropertyInfo> termLists)
 		where TList : IEnumerable<TModel>
-		where TModel : IWithId<WpPostId>
+		where TModel : IWithId<WpPostId, ulong>
 	{
 		foreach (var post in posts)
 		{
 			foreach (var info in termLists)
 			{
 				// Get PropertyInfo<> for the TermList
-				var list = new PropertyInfo<TModel, TermList>(info).Get(post);
-
-				// Get terms
-				var termsForThisPost = from t in terms
-									   where t.PostId == post.Id.Value
-									   && t.Taxonomy == list.Taxonomy
-									   select (TermList.Term)t;
-
-				// Add terms to post
-				if (!termsForThisPost.Any())
+				_ = new PropertyInfo<TModel, TermList>(info).Get(post).IfSome(list =>
 				{
-					continue;
-				}
+					// Get terms
+					var termsForThisPost = from t in terms
+										   where t.PostId == post.Id.Value
+										   && t.Taxonomy == list.Taxonomy
+										   select (TermList.Term)t;
 
-				list.AddRange(termsForThisPost);
+					// Add terms to post
+					if (termsForThisPost.Any())
+					{
+						list.AddRange(termsForThisPost);
+					}
+				});
 			}
 		}
 

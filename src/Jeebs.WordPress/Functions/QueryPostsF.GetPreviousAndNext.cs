@@ -3,7 +3,7 @@
 
 using System.Collections.Generic;
 using Jeebs.Collections;
-using Jeebs.WordPress.Entities.StrongIds;
+using Jeebs.WordPress.Entities.Ids;
 
 namespace Jeebs.WordPress.Functions;
 
@@ -19,8 +19,8 @@ public static partial class QueryPostsF
 		var (prev, next) = ids.GetEitherSide(currentId);
 
 		return (
-			prev.IsSome(out var x) ? new WpPostId { Value = x } : null,
-			next.IsSome(out var y) ? new WpPostId { Value = y } : null
+			prev.Unsafe().IsSome(out var x) ? new WpPostId { Value = x } : null,
+			next.Unsafe().IsSome(out var y) ? new WpPostId { Value = y } : null
 		);
 	}
 }

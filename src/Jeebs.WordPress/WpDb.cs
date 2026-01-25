@@ -1,6 +1,7 @@
 // Jeebs Rapid Application Development
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
+using System.Threading;
 using Jeebs.Config.Db;
 using Jeebs.Config.WordPress;
 using Jeebs.Data;
@@ -8,7 +9,7 @@ using Jeebs.Data.Clients.MySql;
 using Jeebs.Data.TypeHandlers;
 using Jeebs.Logging;
 using Jeebs.WordPress.Entities;
-using Jeebs.WordPress.Entities.StrongIds;
+using Jeebs.WordPress.Entities.Ids;
 using Jeebs.WordPress.TypeHandlers;
 using Microsoft.Extensions.Options;
 
@@ -45,7 +46,7 @@ public sealed class WpDb<TC, TCm, TL, TO, TP, TPm, TT, TTm, TTr, TTt, TU, TUm> :
 	where TU : WpUserEntity
 	where TUm : WpUserMetaEntity
 {
-	private static readonly object X = new();
+	private static readonly Lock X = new();
 
 	/// <inheritdoc/>
 	public WpConfig WpConfig { get; private init; }
@@ -105,7 +106,7 @@ public sealed class WpDb<TC, TCm, TL, TO, TP, TPm, TT, TTm, TTr, TTt, TU, TUm> :
 				client.Types.AddTypeHandler(new PostStatusTypeHandler());
 				client.Types.AddTypeHandler(new PostTypeTypeHandler());
 				client.Types.AddTypeHandler(new TaxonomyTypeHandler());
-				client.Types.AddStrongIdTypeHandlers();
+				client.Types.AddIdTypeHandlers();
 			}
 		}
 	}

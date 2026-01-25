@@ -35,7 +35,7 @@ internal static partial class Embed
 		{
 			// Info is encoded as JSON so deserialise it first
 			var info = match.Groups[1].Value;
-			_ = JsonF.Deserialise<EmbedParsed>(info).IfSome(embed =>
+			_ = JsonF.Deserialise<EmbedParsed>(info).IfOk(embed =>
 			{
 				// Only replace matching embed types
 				if (embed.Type == type && embed.ProviderNameSlug == provider)

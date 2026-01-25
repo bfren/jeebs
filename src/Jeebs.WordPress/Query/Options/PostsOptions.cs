@@ -5,7 +5,7 @@ using System;
 using Jeebs.Collections;
 using Jeebs.Data.Enums;
 using Jeebs.WordPress.CustomFields;
-using Jeebs.WordPress.Entities.StrongIds;
+using Jeebs.WordPress.Entities.Ids;
 using Jeebs.WordPress.Enums;
 
 namespace Jeebs.WordPress.Query.Options;

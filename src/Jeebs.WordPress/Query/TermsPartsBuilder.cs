@@ -7,7 +7,7 @@ using Jeebs.Data.Enums;
 using Jeebs.Data.Map;
 using Jeebs.Data.Query;
 using Jeebs.Data.Query.Functions;
-using Jeebs.WordPress.Entities.StrongIds;
+using Jeebs.WordPress.Entities.Ids;
 using Jeebs.WordPress.Enums;
 
 namespace Jeebs.WordPress.Query;
@@ -21,7 +21,7 @@ public sealed class TermsPartsBuilder : PartsBuilder<WpTermId>, IQueryTermsParts
 
 	/// <inheritdoc/>
 	public override IColumn IdColumn =>
-		new Column(T.Terms, T.Terms.Id, GetIdColumn(T.Terms));
+		new Column(T.Terms.GetName(), T.Terms.Id, GetIdColumn(T.Terms));
 
 	/// <summary>
 	/// Internal creation only.
@@ -37,11 +37,11 @@ public sealed class TermsPartsBuilder : PartsBuilder<WpTermId>, IQueryTermsParts
 	internal TermsPartsBuilder(IExtract extract, IWpDbSchema schema) : base(extract, schema) { }
 
 	/// <inheritdoc/>
-	public override IColumnList GetColumns<TModel>() =>
+	public override Result<IColumnList> GetColumns<TModel>() =>
 		Extract.From<TModel>(Table, T.TermTaxonomies);
 
 	/// <inheritdoc/>
-	public Maybe<QueryParts> AddWhereTaxonomy(QueryParts parts, Taxonomy? taxonomy)
+	public Result<QueryParts> AddWhereTaxonomy(QueryParts parts, Taxonomy? taxonomy)
 	{
 		// Add Taxonomy
 		if (taxonomy is not null)
@@ -54,7 +54,7 @@ public sealed class TermsPartsBuilder : PartsBuilder<WpTermId>, IQueryTermsParts
 	}
 
 	/// <inheritdoc/>
-	public Maybe<QueryParts> AddWhereSlug(QueryParts parts, string? slug)
+	public Result<QueryParts> AddWhereSlug(QueryParts parts, string? slug)
 	{
 		// Add Slug
 		if (!string.IsNullOrEmpty(slug))
@@ -67,7 +67,7 @@ public sealed class TermsPartsBuilder : PartsBuilder<WpTermId>, IQueryTermsParts
 	}
 
 	/// <inheritdoc/>
-	public Maybe<QueryParts> AddWhereCount(QueryParts parts, long countAtLeast)
+	public Result<QueryParts> AddWhereCount(QueryParts parts, long countAtLeast)
 	{
 		// Add Count
 		if (countAtLeast > 0)
@@ -80,7 +80,7 @@ public sealed class TermsPartsBuilder : PartsBuilder<WpTermId>, IQueryTermsParts
 	}
 
 	/// <inheritdoc/>
-	public override Maybe<QueryParts> AddSort(QueryParts parts, bool sortRandom, IImmutableList<(IColumn, SortOrder)> sort) =>
+	public override Result<QueryParts> AddSort(QueryParts parts, bool sortRandom, IImmutableList<(IColumn, SortOrder)> sort) =>
 		from title in QueryF.GetColumnFromExpression(T.Terms, t => t.Title)
 		from count in QueryF.GetColumnFromExpression(T.TermTaxonomies, tx => tx.Count)
 		select parts with

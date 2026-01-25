@@ -12,7 +12,7 @@ using Jeebs.Data.Enums;
 using Jeebs.Data.Map;
 using Jeebs.Data.Query;
 using Jeebs.WordPress.CustomFields;
-using Jeebs.WordPress.Entities.StrongIds;
+using Jeebs.WordPress.Entities.Ids;
 using Jeebs.WordPress.Enums;
 
 namespace Jeebs.WordPress.Query;
@@ -42,15 +42,15 @@ public sealed class PostsPartsBuilder : PartsBuilder<WpPostId>, IQueryPostsParts
 	internal PostsPartsBuilder(IExtract extract, IWpDbSchema schema) : base(extract, schema) { }
 
 	/// <inheritdoc/>
-	public Maybe<QueryParts> AddWhereType(QueryParts parts, PostType type) =>
+	public Result<QueryParts> AddWhereType(QueryParts parts, PostType type) =>
 		AddWhere(parts, T.Posts, p => p.Type, Compare.Equal, type);
 
 	/// <inheritdoc/>
-	public Maybe<QueryParts> AddWhereStatus(QueryParts parts, PostStatus status) =>
+	public Result<QueryParts> AddWhereStatus(QueryParts parts, PostStatus status) =>
 		AddWhere(parts, T.Posts, p => p.Status, Compare.Equal, status);
 
 	/// <inheritdoc/>
-	public Maybe<QueryParts> AddWhereSearch(QueryParts parts, SearchPostField fields, Compare cmp, string? text)
+	public Result<QueryParts> AddWhereSearch(QueryParts parts, SearchPostField fields, Compare cmp, string? text)
 	{
 		// If there isn't any search text, don't do anything
 		if (text is null)
@@ -115,7 +115,7 @@ public sealed class PostsPartsBuilder : PartsBuilder<WpPostId>, IQueryPostsParts
 	}
 
 	/// <inheritdoc/>
-	public Maybe<QueryParts> AddWherePublishedFrom(QueryParts parts, DateTime? fromDate)
+	public Result<QueryParts> AddWherePublishedFrom(QueryParts parts, DateTime? fromDate)
 	{
 		// Add From (use start of the day)
 		if (fromDate is DateTime fromBase)
@@ -129,7 +129,7 @@ public sealed class PostsPartsBuilder : PartsBuilder<WpPostId>, IQueryPostsParts
 	}
 
 	/// <inheritdoc/>
-	public Maybe<QueryParts> AddWherePublishedTo(QueryParts parts, DateTime? toDate)
+	public Result<QueryParts> AddWherePublishedTo(QueryParts parts, DateTime? toDate)
 	{
 		// Add To (use end of the day)
 		if (toDate is DateTime toBase)
@@ -143,7 +143,7 @@ public sealed class PostsPartsBuilder : PartsBuilder<WpPostId>, IQueryPostsParts
 	}
 
 	/// <inheritdoc/>
-	public Maybe<QueryParts> AddWhereParentId(QueryParts parts, WpPostId? parentId)
+	public Result<QueryParts> AddWhereParentId(QueryParts parts, WpPostId? parentId)
 	{
 		// Add Parent ID
 		if (parentId is WpPostId id and { Value: > 0 })
@@ -156,7 +156,7 @@ public sealed class PostsPartsBuilder : PartsBuilder<WpPostId>, IQueryPostsParts
 	}
 
 	/// <inheritdoc/>
-	public Maybe<QueryParts> AddWhereTaxonomies(QueryParts parts, IImmutableList<(Taxonomy taxonomy, WpTermId id)> taxonomies)
+	public Result<QueryParts> AddWhereTaxonomies(QueryParts parts, IImmutableList<(Taxonomy taxonomy, WpTermId id)> taxonomies)
 	{
 		// If there aren't any, don't do anything
 		if (taxonomies.Count == 0)
@@ -236,7 +236,7 @@ public sealed class PostsPartsBuilder : PartsBuilder<WpPostId>, IQueryPostsParts
 	}
 
 	/// <inheritdoc/>
-	public Maybe<QueryParts> AddWhereCustomFields(QueryParts parts, IImmutableList<(ICustomField, Compare, object)> customFields)
+	public Result<QueryParts> AddWhereCustomFields(QueryParts parts, IImmutableList<(ICustomField, Compare, object)> customFields)
 	{
 		// If there aren't any, don't do anything
 		if (customFields.Count == 0)

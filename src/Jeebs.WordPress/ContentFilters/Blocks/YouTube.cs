@@ -36,7 +36,7 @@ internal static partial class YouTube
 		{
 			// Info is encoded as JSON so deserialise it first
 			var info = match.Groups[2].Value;
-			_ = JsonF.Deserialise<YouTubeParsed>(info).IfSome(youTube =>
+			_ = JsonF.Deserialise<YouTubeParsed>(info).IfOk(youTube =>
 			{
 				// Get URI
 				var uri = new Uri(youTube.Url);

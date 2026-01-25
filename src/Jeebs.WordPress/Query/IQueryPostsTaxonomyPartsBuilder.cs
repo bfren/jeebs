@@ -5,7 +5,7 @@ using Jeebs.Collections;
 using Jeebs.Data.Enums;
 using Jeebs.Data.Map;
 using Jeebs.Data.Query;
-using Jeebs.WordPress.Entities.StrongIds;
+using Jeebs.WordPress.Entities.Ids;
 using Jeebs.WordPress.Enums;
 
 namespace Jeebs.WordPress.Query;
@@ -18,14 +18,14 @@ public interface IQueryPostsTaxonomyPartsBuilder : IQueryPartsBuilder<WpTermId>
 	/// </summary>
 	/// <param name="parts">QueryParts.</param>
 	/// <param name="taxonomies">Taxonomies.</param>
-	Maybe<QueryParts> AddWhereTaxonomies(QueryParts parts, IImmutableList<Taxonomy> taxonomies);
+	Result<QueryParts> AddWhereTaxonomies(QueryParts parts, IImmutableList<Taxonomy> taxonomies);
 
 	/// <summary>
 	/// Add Where Post IDs.
 	/// </summary>
 	/// <param name="parts">QueryParts.</param>
 	/// <param name="postIds">Post IDs.</param>
-	Maybe<QueryParts> AddWherePostIds(QueryParts parts, IImmutableList<WpPostId> postIds);
+	Result<QueryParts> AddWherePostIds(QueryParts parts, IImmutableList<WpPostId> postIds);
 
 	/// <summary>
 	/// Add custom Sort or default Sort.
@@ -34,5 +34,5 @@ public interface IQueryPostsTaxonomyPartsBuilder : IQueryPartsBuilder<WpTermId>
 	/// <param name="sortRandom">Whether or not to sort randomly.</param>
 	/// <param name="sort">Sort columns.</param>
 	/// <param name="sortBy">Taxonomy sort.</param>
-	Maybe<QueryParts> AddSort(QueryParts parts, bool sortRandom, IImmutableList<(IColumn, SortOrder)> sort, TaxonomySort sortBy);
+	Result<QueryParts> AddSort(QueryParts parts, bool sortRandom, IImmutableList<(IColumn, SortOrder)> sort, TaxonomySort sortBy);
 }

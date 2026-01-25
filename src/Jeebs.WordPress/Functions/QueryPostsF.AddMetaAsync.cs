@@ -6,8 +6,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Jeebs.Collections;
 using Jeebs.Data;
-using Jeebs.WordPress.Entities.StrongIds;
-using StrongId;
+using Jeebs.WordPress.Entities.Ids;
 
 namespace Jeebs.WordPress.Functions;
 
@@ -21,27 +20,31 @@ public static partial class QueryPostsF
 	/// <param name="db">IWpDb.</param>
 	/// <param name="w">IUnitOfWork.</param>
 	/// <param name="posts">Posts.</param>
-	internal static Task<Maybe<TList>> AddMetaAsync<TList, TModel>(IWpDb db, IUnitOfWork w, TList posts)
+	internal static Task<Result<TList>> AddMetaAsync<TList, TModel>(IWpDb db, IUnitOfWork w, TList posts)
 		where TList : IEnumerable<TModel>
-		where TModel : IWithId<WpPostId>
+		where TModel : IWithId<WpPostId, ulong>
 	{
 		// If there are no posts, do nothing
 		if (!posts.Any())
 		{
-			return F.Some(posts).AsTask();
+			return R.Wrap(posts).AsTask();
 		}
 
 		// Get Meta values
 		return GetMetaDictionary<TModel>()
-			.SwitchAsync(
-				some: x =>
-					from postMeta in QueryPostsMetaF.ExecuteAsync<PostMeta>(db, w, opt => opt with
-					{
-						PostIds = posts.Select(p => p.Id).ToImmutableList()
-					})
-					from withMeta in SetMeta(posts, postMeta.ToList(), x)
-					select posts,
-				none: F.Some(posts)
+			.MatchAsync(
+				ok: x =>
+				{
+					var ids = posts.Select(p => p.Id).ToImmutableList();
+					return from postMeta in QueryPostsMetaF.ExecuteAsync<PostMeta>(db, w, opt => opt with { PostIds = ids })
+						   from withMeta in SetMeta(posts, [.. postMeta], x)
+						   select posts;
+				},
+				fail: f =>
+				{
+					db.Log.Failure(f);
+					return posts;
+				}
 			);
 	}
 }

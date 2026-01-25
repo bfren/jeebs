@@ -1,11 +1,9 @@
 // Jeebs Rapid Application Development
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
-using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Jeebs.Data;
-using Jeebs.Messages;
 using Jeebs.WordPress.Entities;
 using Jeebs.WordPress.Query;
 
@@ -20,11 +18,12 @@ public static partial class QueryAttachmentsF
 	/// <param name="db">IWpDb.</param>
 	/// <param name="w">IUnitOfWork.</param>
 	/// <param name="opt">Function to return query options.</param>
-	internal static Task<Maybe<IEnumerable<T>>> ExecuteAsync<T>(IWpDb db, IUnitOfWork w, GetAttachmentsOptions opt)
+	internal static Task<Result<IEnumerable<T>>> ExecuteAsync<T>(IWpDb db, IUnitOfWork w, GetAttachmentsOptions opt)
 		where T : IPostAttachment =>
-		F.Some(
+		R.Try(
 			() => opt(new AttachmentsOptions()),
-			e => new M.ErrorGettingQueryAttachmentsOptionsMsg(e)
+			e => R.Fail(e).Msg("Error getting query attachments options.")
+				.Ctx(nameof(QueryAttachmentsF), nameof(ExecuteAsync))
 		)
 		.Bind(
 			x => GetQuery(db.Schema, x.Ids, db.WpConfig.VirtualUploadsUrl)
@@ -32,11 +31,4 @@ public static partial class QueryAttachmentsF
 		.BindAsync(
 			x => db.QueryAsync<T>(x, null, System.Data.CommandType.Text, w.Transaction)
 		);
-
-	public static partial class M
-	{
-		/// <summary>Unable to get attachments query</summary>
-		/// <param name="Value">Exception object.</param>
-		public sealed record class ErrorGettingQueryAttachmentsOptionsMsg(Exception Value) : ExceptionMsg;
-	}
 }

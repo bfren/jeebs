@@ -33,5 +33,5 @@ public sealed record class CommentType : Enumerated
 	/// </summary>
 	/// <param name="name">Value name.</param>
 	public static CommentType Parse(string name) =>
-		Parse(name, values: [Blank, Pingback]).Unwrap(() => Blank);
+		Parse(name, values: [Blank, Pingback]).Unwrap(_ => Blank);
 }

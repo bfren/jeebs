@@ -35,7 +35,7 @@ internal static partial class Gallery
 		{
 			// Info is encoded as JSON so deserialise it first
 			var info = match.Groups[1].Value;
-			_ = JsonF.Deserialise<GalleryParsed>(info).IfSome(gallery =>
+			_ = JsonF.Deserialise<GalleryParsed>(info).IfOk(gallery =>
 				content = content.Replace(
 					match.Value,
 					string.Format(CultureInfo.InvariantCulture, format, Rnd.StringF.Get(10), string.Join(",", gallery.Ids), gallery.Columns)

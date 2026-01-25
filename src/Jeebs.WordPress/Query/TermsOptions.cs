@@ -22,23 +22,23 @@ public sealed record class TermsOptions : Options.TermsOptions
 	internal TermsOptions(IWpDbSchema schema, IQueryTermsPartsBuilder builder) : base(schema, builder) { }
 
 	/// <inheritdoc/>
-	protected override Maybe<QueryParts> Build(Maybe<QueryParts> parts) =>
+	protected override Result<QueryParts> Build(Result<QueryParts> parts) =>
 		base.Build(
 			parts
 		)
 		.Bind(
 			x => Builder.AddInnerJoin(x, T.Terms, t => t.Id, T.TermTaxonomies, tx => tx.TermId)
 		)
-		.SwitchIf(
+		.If(
 			_ => Taxonomy is not null,
-			ifTrue: x => Builder.AddWhereTaxonomy(x, Taxonomy)
+			x => Builder.AddWhereTaxonomy(x, Taxonomy)
 		)
-		.SwitchIf(
-			_ => string.IsNullOrEmpty(Slug),
-			ifFalse: x => Builder.AddWhereSlug(x, Slug)
+		.If(
+			_ => !string.IsNullOrEmpty(Slug),
+			x => Builder.AddWhereSlug(x, Slug)
 		)
-		.SwitchIf(
+		.If(
 			_ => CountAtLeast > 0,
-			ifTrue: x => Builder.AddWhereCount(x, CountAtLeast)
+			x => Builder.AddWhereCount(x, CountAtLeast)
 		);
 }

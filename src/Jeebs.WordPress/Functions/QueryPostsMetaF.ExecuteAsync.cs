@@ -1,14 +1,11 @@
 // Jeebs Rapid Application Development
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
-using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Jeebs.Data;
-using Jeebs.Messages;
-using Jeebs.WordPress.Entities.StrongIds;
+using Jeebs.WordPress.Entities.Ids;
 using Jeebs.WordPress.Query;
-using StrongId;
 
 namespace Jeebs.WordPress.Functions;
 
@@ -21,11 +18,12 @@ public static partial class QueryPostsMetaF
 	/// <param name="db">IWpDbQuery.</param>
 	/// <param name="w">IUnitOfWork.</param>
 	/// <param name="opt">Function to return query options.</param>
-	public static Task<Maybe<IEnumerable<TModel>>> ExecuteAsync<TModel>(IWpDb db, IUnitOfWork w, GetPostsMetaOptions opt)
-		where TModel : IWithId<WpPostMetaId> =>
-		F.Some(
+	public static Task<Result<IEnumerable<TModel>>> ExecuteAsync<TModel>(IWpDb db, IUnitOfWork w, GetPostsMetaOptions opt)
+		where TModel : IWithId<WpPostMetaId, ulong> =>
+		R.Try(
 			() => opt(new PostsMetaOptions(db.Schema)),
-			e => new M.ErrorGettingQueryPostsMetaOptionsMsg(e)
+			e => R.Fail(e).Msg("Error getting query posts meta options.")
+				.Ctx(nameof(QueryPostsMetaF), nameof(ExecuteAsync))
 		)
 		.Bind(
 			x => x.ToParts<TModel>()
@@ -33,12 +31,4 @@ public static partial class QueryPostsMetaF
 		.BindAsync(
 			x => db.Query.QueryAsync<TModel>(x, w.Transaction)
 		);
-
-	/// <summary>Messages</summary>
-	public static partial class M
-	{
-		/// <summary>Unable to get posts meta query</summary>
-		/// <param name="Value">Exception object.</param>
-		public sealed record class ErrorGettingQueryPostsMetaOptionsMsg(Exception Value) : ExceptionMsg;
-	}
 }

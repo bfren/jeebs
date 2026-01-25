@@ -5,8 +5,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Jeebs.Data;
 using Jeebs.WordPress.ContentFilters;
-using Jeebs.WordPress.Entities.StrongIds;
-using StrongId;
+using Jeebs.WordPress.Entities.Ids;
 
 namespace Jeebs.WordPress.Functions;
 
@@ -21,10 +20,10 @@ public static partial class QueryPostsF
 	/// <param name="w">IUnitOfWork.</param>
 	/// <param name="posts">Posts.</param>
 	/// <param name="filters">Optional content filters.</param>
-	internal static Task<Maybe<TList>> Process<TList, TModel>(IWpDb db, IUnitOfWork w, TList posts, params IContentFilter[] filters)
+	internal static Task<Result<TList>> Process<TList, TModel>(IWpDb db, IUnitOfWork w, TList posts, params IContentFilter[] filters)
 		where TList : IEnumerable<TModel>
-		where TModel : IWithId<WpPostId> =>
-		F.Some(
+		where TModel : IWithId<WpPostId, ulong> =>
+		R.Wrap(
 			posts
 		)
 		.BindAsync(
@@ -36,8 +35,8 @@ public static partial class QueryPostsF
 		.BindAsync(
 			x => AddTaxonomiesAsync<TList, TModel>(db, w, x)
 		)
-		.SwitchIfAsync(
-			check: _ => filters.Length > 0,
-			ifTrue: x => ApplyContentFilters<TList, TModel>(x, filters)
+		.IfAsync(
+			_ => filters.Length > 0,
+			x => ApplyContentFilters<TList, TModel>(x, filters)
 		);
 }

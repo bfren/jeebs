@@ -4,9 +4,8 @@
 using System;
 using System.Threading.Tasks;
 using Jeebs.Data;
-using Jeebs.Messages;
 using Jeebs.WordPress.Entities;
-using Jeebs.WordPress.Entities.StrongIds;
+using Jeebs.WordPress.Entities.Ids;
 using Jeebs.WordPress.Query;
 
 namespace Jeebs.WordPress.CustomFields;
@@ -33,7 +32,7 @@ public abstract class TermCustomField : CustomField<TermCustomField.Term>
 		QueryTerms = queryTerms;
 
 	/// <inheritdoc/>
-	public override Task<Maybe<bool>> HydrateAsync(IWpDb db, IUnitOfWork w, MetaDictionary meta, bool isRequired)
+	public override Task<Result<bool>> HydrateAsync(IWpDb db, IUnitOfWork w, MetaDictionary meta, bool isRequired)
 	{
 		// First, get the Term ID from the meta dictionary
 		// If meta doesn't contain the key and this is a required field, return failure
@@ -46,15 +45,17 @@ public abstract class TermCustomField : CustomField<TermCustomField.Term>
 		{
 			if (isRequired)
 			{
-				return F.None<bool>(new M.MetaKeyNotFoundMsg(GetType(), Key)).AsTask();
+				return R.Fail("Meta Key '{Key}' not found for Custom Field '{Type}'.", Key, GetType())
+					.Ctx(GetType().Name, nameof(HydrateAsync))
+					.AsTask<bool>();
 			}
 
-			return F.False.AsTask();
+			return R.False.AsTask();
 		}
 
 		// If we're here we have a Term ID, so get it and hydrate the custom field
 		return
-			F.Some(
+			R.Wrap(
 				ValueStr
 			)
 			.Bind(
@@ -63,18 +64,17 @@ public abstract class TermCustomField : CustomField<TermCustomField.Term>
 			.BindAsync(
 				x => QueryTerms.ExecuteAsync<Term>(db, w, opt => opt with { Id = x })
 			)
-			.UnwrapAsync(
-				x => x.SingleValue<Term>(
-					tooMany: () => new M.MultipleTermsFoundMsg(ValueStr)
-				)
+			.GetSingleAsync(
+				x => x.Value<Term>(),
+				(msg, args) => R.Fail("Unable to get single '{ValueStr}': " + msg, [ValueStr, .. args])
+					.Ctx(GetType().Name, nameof(HydrateAsync))
 			)
 			.MapAsync(
 				x =>
 				{
 					ValueObj = x;
 					return true;
-				},
-				F.DefaultHandler
+				}
 			);
 	}
 
@@ -83,10 +83,11 @@ public abstract class TermCustomField : CustomField<TermCustomField.Term>
 	/// </summary>
 	/// <param name="type">Term Custom Field type.</param>
 	/// <param name="value">Term ID value.</param>
-	internal static Maybe<WpTermId> ParseTermId(Type type, string value) =>
-		F.ParseUInt64(value).Switch(
-			some: x => F.Some(new WpTermId { Value = x }),
-			none: _ => F.None<WpTermId>(new M.ValueIsInvalidTermIdMsg(type, value))
+	internal static Result<WpTermId> ParseTermId(Type type, string value) =>
+		M.ParseUInt64(value).Match(
+			some: x => R.Wrap(new WpTermId { Value = x }),
+			none: () => R.Fail("'{Value}' is not a valid Term ID.", value)
+				.Ctx(type.Name, nameof(ParseTermId))
 		);
 
 	/// <summary>
@@ -102,22 +103,4 @@ public abstract class TermCustomField : CustomField<TermCustomField.Term>
 	/// Term class.
 	/// </summary>
 	public sealed record class Term : WpTermEntity { }
-
-	/// <summary>Messages</summary>
-	public static class M
-	{
-		/// <summary>Meta key not found in MetaDictionary</summary>
-		/// <param name="Type">Custom Field type.</param>
-		/// <param name="Value">Meta Key.</param>
-		public sealed record class MetaKeyNotFoundMsg(Type Type, string Value) : WithValueMsg<string>;
-
-		/// <summary>Multiple matching terms were found (should always be 1)</summary>
-		/// <param name="Value">Term ID.</param>
-		public sealed record class MultipleTermsFoundMsg(string Value) : WithValueMsg<string>;
-
-		/// <summary>The value in the meta dictionary is not a valid ID</summary>
-		/// <param name="Type">Custom Field type.</param>
-		/// <param name="Value">Meta Key.</param>
-		public sealed record class ValueIsInvalidTermIdMsg(Type Type, string Value) : WithValueMsg<string>;
-	}
 }

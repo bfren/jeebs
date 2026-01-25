@@ -1,10 +1,8 @@
 // Jeebs Rapid Application Development
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
-using System;
 using System.Threading.Tasks;
 using Jeebs.Data;
-using Jeebs.Messages;
 
 namespace Jeebs.WordPress.CustomFields;
 
@@ -29,23 +27,25 @@ public abstract class TextCustomField : CustomField<string>
 	protected TextCustomField(string key) : base(key, string.Empty) { }
 
 	/// <inheritdoc/>
-	public override Task<Maybe<bool>> HydrateAsync(IWpDb db, IUnitOfWork w, MetaDictionary meta, bool isRequired)
+	public override Task<Result<bool>> HydrateAsync(IWpDb db, IUnitOfWork w, MetaDictionary meta, bool isRequired)
 	{
 		// If meta contains the key, return it
 		if (meta.TryGetValue(Key, out var value))
 		{
 			ValueStr = value;
-			return F.True.AsTask();
+			return R.True.AsTask();
 		}
 
 		// Return error if the field is required
 		if (isRequired)
 		{
-			return F.None<bool>(new M.MetaKeyNotFoundMsg(GetType(), Key)).AsTask();
+			return R.Fail("Meta Key '{Key}' not found for Custom Field '{Type}'.", Key, GetType())
+				.Ctx(GetType().Name, nameof(HydrateAsync))
+				.AsTask<bool>();
 		}
 
 		// Return OK but not set
-		return F.False.AsTask();
+		return R.False.AsTask();
 	}
 
 	/// <inheritdoc/>
@@ -54,13 +54,4 @@ public abstract class TextCustomField : CustomField<string>
 
 	internal string GetValueAsStringTest() =>
 		GetValueAsString();
-
-	/// <summary>Messages</summary>
-	public static class M
-	{
-		/// <summary>Meta key not found in MetaDictionary</summary>
-		/// <param name="Type">Custom Field type.</param>
-		/// <param name="Value">Meta Key.</param>
-		public sealed record class MetaKeyNotFoundMsg(Type Type, string Value) : WithValueMsg<string>;
-	}
 }

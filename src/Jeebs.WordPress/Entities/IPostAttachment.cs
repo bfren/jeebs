@@ -1,14 +1,12 @@
 // Jeebs Rapid Application Development
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
-using StrongId;
-
 namespace Jeebs.WordPress.Entities;
 
 /// <summary>
 /// Attachment entity.
 /// </summary>
-public interface IPostAttachment : IWithId<StrongIds.WpPostId>
+public interface IPostAttachment : IWithId<Ids.WpPostId, ulong>
 {
 	/// <summary>
 	/// Attachment description.

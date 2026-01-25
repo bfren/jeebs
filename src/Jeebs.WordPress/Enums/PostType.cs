@@ -1,4 +1,4 @@
-﻿// Jeebs Rapid Application Development
+// Jeebs Rapid Application Development
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using System.Collections.Generic;
@@ -78,5 +78,5 @@ public sealed record class PostType : Enumerated
 	/// </summary>
 	/// <param name="name">Value name.</param>
 	public static PostType Parse(string name) =>
-		Parse(name, All.ToArray()).Unwrap(() => Post);
+		Parse(name, All.ToArray()).Unwrap(_ => Post);
 }

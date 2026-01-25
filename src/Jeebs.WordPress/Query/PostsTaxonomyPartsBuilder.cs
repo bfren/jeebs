@@ -8,7 +8,7 @@ using Jeebs.Data.Enums;
 using Jeebs.Data.Map;
 using Jeebs.Data.Query;
 using Jeebs.Data.Query.Functions;
-using Jeebs.WordPress.Entities.StrongIds;
+using Jeebs.WordPress.Entities.Ids;
 using Jeebs.WordPress.Enums;
 
 namespace Jeebs.WordPress.Query;
@@ -22,7 +22,7 @@ public sealed class PostsTaxonomyPartsBuilder : PartsBuilder<WpTermId>, IQueryPo
 
 	/// <inheritdoc/>
 	public override IColumn IdColumn =>
-		new Column(T.Terms, T.Terms.Id, GetIdColumn(T.Terms));
+		new Column(T.Terms.GetName(), T.Terms.Id, GetIdColumn(T.Terms));
 
 	/// <summary>
 	/// Internal creation only.
@@ -38,11 +38,11 @@ public sealed class PostsTaxonomyPartsBuilder : PartsBuilder<WpTermId>, IQueryPo
 	internal PostsTaxonomyPartsBuilder(IExtract extract, IWpDbSchema schema) : base(extract, schema) { }
 
 	/// <inheritdoc/>
-	public override IColumnList GetColumns<TModel>() =>
+	public override Result<IColumnList> GetColumns<TModel>() =>
 		Extract.From<TModel>(Table, T.TermRelationships, T.TermTaxonomies);
 
 	/// <inheritdoc/>
-	public Maybe<QueryParts> AddWhereTaxonomies(QueryParts parts, IImmutableList<Taxonomy> taxonomies)
+	public Result<QueryParts> AddWhereTaxonomies(QueryParts parts, IImmutableList<Taxonomy> taxonomies)
 	{
 		// Add Taxonomies
 		if (taxonomies.Count > 0)
@@ -55,7 +55,7 @@ public sealed class PostsTaxonomyPartsBuilder : PartsBuilder<WpTermId>, IQueryPo
 	}
 
 	/// <inheritdoc/>
-	public Maybe<QueryParts> AddWherePostIds(QueryParts parts, IImmutableList<WpPostId> postIds)
+	public Result<QueryParts> AddWherePostIds(QueryParts parts, IImmutableList<WpPostId> postIds)
 	{
 		// Add Post IDs
 		if (postIds.Count > 0)
@@ -69,7 +69,7 @@ public sealed class PostsTaxonomyPartsBuilder : PartsBuilder<WpTermId>, IQueryPo
 	}
 
 	/// <inheritdoc/>
-	public Maybe<QueryParts> AddSort(
+	public Result<QueryParts> AddSort(
 		QueryParts parts,
 		bool sortRandom,
 		IImmutableList<(IColumn, SortOrder)> sort,

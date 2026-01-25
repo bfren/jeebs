@@ -3,7 +3,6 @@
 
 using System;
 using System.Text.RegularExpressions;
-using Jeebs.Extensions;
 
 namespace Jeebs.WordPress.ContentFilters;
 

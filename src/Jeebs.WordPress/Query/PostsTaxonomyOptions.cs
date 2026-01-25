@@ -22,7 +22,7 @@ public sealed record class PostsTaxonomyOptions : Options.PostsTaxonomyOptions
 	internal PostsTaxonomyOptions(IWpDbSchema schema, IQueryPostsTaxonomyPartsBuilder builder) : base(schema, builder) { }
 
 	/// <inheritdoc/>
-	protected override Maybe<QueryParts> Build(Maybe<QueryParts> parts) =>
+	protected override Result<QueryParts> Build(Result<QueryParts> parts) =>
 		base.Build(
 			parts
 		)
@@ -32,17 +32,17 @@ public sealed record class PostsTaxonomyOptions : Options.PostsTaxonomyOptions
 		.Bind(
 			x => Builder.AddInnerJoin(x, T.TermTaxonomies, tx => tx.Id, T.TermRelationships, tr => tr.TermTaxonomyId)
 		)
-		.SwitchIf(
+		.If(
 			_ => Id?.Value > 0 || Ids.Count > 0,
 			x => Builder.AddWhereId(x, Id, Ids)
 		)
-		.SwitchIf(
+		.If(
 			_ => Taxonomies.Count > 0,
-			ifTrue: x => Builder.AddWhereTaxonomies(x, Taxonomies)
+			x => Builder.AddWhereTaxonomies(x, Taxonomies)
 		)
-		.SwitchIf(
+		.If(
 			_ => PostIds.Count > 0,
-			ifTrue: x => Builder.AddWherePostIds(x, PostIds)
+			x => Builder.AddWherePostIds(x, PostIds)
 		)
 		.Bind(
 			x => Builder.AddSort(x, SortRandom, Sort, SortBy)

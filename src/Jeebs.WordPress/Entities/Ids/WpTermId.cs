@@ -1,9 +1,9 @@
 // Jeebs Rapid Application Development
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
-namespace Jeebs.WordPress.Functions;
+namespace Jeebs.WordPress.Entities.Ids;
 
 /// <summary>
-/// Query Terms Functions.
+/// WordPress Term ID.
 /// </summary>
-public static partial class QueryTermsF { }
+public sealed record class WpTermId : ULongId<WpTermId>;

@@ -3,7 +3,7 @@
 
 using Jeebs.Collections;
 using Jeebs.Data.Query;
-using Jeebs.WordPress.Entities.StrongIds;
+using Jeebs.WordPress.Entities.Ids;
 
 namespace Jeebs.WordPress.Query.Options;
 

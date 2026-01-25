@@ -3,7 +3,6 @@
 
 using System;
 using Jeebs.Data.Attributes;
-using StrongId;
 
 namespace Jeebs.WordPress.Entities;
 
@@ -17,7 +16,7 @@ public abstract record class WpTermRelationshipEntity : IWithId
 	/// </summary>
 	/// <exception cref="NotSupportedException"></exception>
 	[Ignore]
-	public IStrongId Id
+	public IUnion Id
 	{
 		get => throw NotSupported;
 		init => throw NotSupported;
@@ -29,12 +28,12 @@ public abstract record class WpTermRelationshipEntity : IWithId
 	/// <summary>
 	/// PostId.
 	/// </summary>
-	public StrongIds.WpPostId PostId { get; init; } = new();
+	public Ids.WpPostId PostId { get; init; } = new();
 
 	/// <summary>
 	/// TermTaxonomyId.
 	/// </summary>
-	public StrongIds.WpTermTaxonomyId TermTaxonomyId { get; init; } = new();
+	public Ids.WpTermTaxonomyId TermTaxonomyId { get; init; } = new();
 
 	/// <summary>
 	/// SortOrder.

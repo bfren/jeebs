@@ -33,7 +33,7 @@ public abstract record class WpLinkEntity : WpLinkEntityWithId
 	/// <summary>
 	/// CategoryId.
 	/// </summary>
-	public StrongIds.WpTermId CategoryId { get; init; } = new();
+	public Ids.WpTermId CategoryId { get; init; } = new();
 
 	/// <summary>
 	/// Description.
@@ -48,7 +48,7 @@ public abstract record class WpLinkEntity : WpLinkEntityWithId
 	/// <summary>
 	/// OwnerId.
 	/// </summary>
-	public StrongIds.WpUserId OwnerId { get; init; } = new();
+	public Ids.WpUserId OwnerId { get; init; } = new();
 
 	/// <summary>
 	/// Rating.

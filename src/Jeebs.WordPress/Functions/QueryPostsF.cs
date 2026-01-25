@@ -11,9 +11,6 @@ namespace Jeebs.WordPress.Functions;
 /// </summary>
 public static partial class QueryPostsF
 {
-	/// <summary>Messages</summary>
-	public static partial class M { }
-
 	/// <summary>
 	/// Internal Post Meta type for getting meta values.
 	/// </summary>

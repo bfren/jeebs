@@ -1,4 +1,4 @@
-﻿// Jeebs Rapid Application Development
+// Jeebs Rapid Application Development
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using System.Collections.Generic;
@@ -73,7 +73,7 @@ public sealed record class Taxonomy : Enumerated
 	/// </summary>
 	/// <param name="name">Value name.</param>
 	public static Taxonomy Parse(string name) =>
-		Parse(name, All.ToArray()).Unwrap(() => Blank);
+		Parse(name, All.ToArray()).Unwrap(_ => Blank);
 
 	/// <summary>
 	/// Returns whether or not the specified taxonomy has been registered.

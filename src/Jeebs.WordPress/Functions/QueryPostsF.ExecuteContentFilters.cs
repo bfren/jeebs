@@ -30,16 +30,17 @@ public static partial class QueryPostsF
 		foreach (var post in posts)
 		{
 			// Get post content
-			var postContent = content.Get(post);
-
-			// Apply filters
-			foreach (var filter in filters)
+			_ = content.Get(post).IfSome(postContent =>
 			{
-				postContent = filter.Execute(postContent);
-			}
+				// Apply filters
+				foreach (var filter in filters)
+				{
+					postContent = filter.Execute(postContent);
+				}
 
-			// Set filtered content
-			content.Set(post, postContent);
+				// Set filtered content
+				content.Set(post, postContent);
+			});
 		}
 
 		return posts;

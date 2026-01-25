@@ -29,7 +29,7 @@ public abstract class CustomField<T> : ICustomField<T>
 		(Key, ValueObj) = (key, value);
 
 	/// <inheritdoc/>
-	public abstract Task<Maybe<bool>> HydrateAsync(IWpDb db, IUnitOfWork w, MetaDictionary meta, bool isRequired);
+	public abstract Task<Result<bool>> HydrateAsync(IWpDb db, IUnitOfWork w, MetaDictionary meta, bool isRequired);
 
 	/// <summary>
 	/// Return the value, or post_meta key (instead of the class name).

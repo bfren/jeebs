@@ -11,7 +11,7 @@ public abstract record class WpCommentMetaEntity : WpCommentMetaEntityWithId
 	/// <summary>
 	/// CommentId.
 	/// </summary>
-	public StrongIds.WpCommentId CommentId { get; init; } = new();
+	public Ids.WpCommentId CommentId { get; init; } = new();
 
 	/// <summary>
 	/// Key.

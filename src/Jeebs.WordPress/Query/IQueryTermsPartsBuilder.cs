@@ -2,7 +2,7 @@
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using Jeebs.Data.Query;
-using Jeebs.WordPress.Entities.StrongIds;
+using Jeebs.WordPress.Entities.Ids;
 using Jeebs.WordPress.Enums;
 
 namespace Jeebs.WordPress.Query;
@@ -15,19 +15,19 @@ public interface IQueryTermsPartsBuilder : IQueryPartsBuilder<WpTermId>
 	/// </summary>
 	/// <param name="parts">QueryParts.</param>
 	/// <param name="taxonomy">Taxonomy.</param>
-	Maybe<QueryParts> AddWhereTaxonomy(QueryParts parts, Taxonomy? taxonomy);
+	Result<QueryParts> AddWhereTaxonomy(QueryParts parts, Taxonomy? taxonomy);
 
 	/// <summary>
 	/// Add Where Slug.
 	/// </summary>
 	/// <param name="parts">QueryParts.</param>
 	/// <param name="slug">Term Slug.</param>
-	Maybe<QueryParts> AddWhereSlug(QueryParts parts, string? slug);
+	Result<QueryParts> AddWhereSlug(QueryParts parts, string? slug);
 
 	/// <summary>
 	/// Add Where Count.
 	/// </summary>
 	/// <param name="parts">QueryParts.</param>
 	/// <param name="countAtLeast">Terms with at least this many posts.</param>
-	Maybe<QueryParts> AddWhereCount(QueryParts parts, long countAtLeast);
+	Result<QueryParts> AddWhereCount(QueryParts parts, long countAtLeast);
 }
