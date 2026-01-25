@@ -8,6 +8,7 @@ using Jeebs.Cryptography;
 using Jeebs.Data.TypeHandlers;
 using Jeebs.Functions;
 using Wrap.Dapper;
+using Wrap.Ids;
 using static Jeebs.Data.IDbTypeMapper;
 
 namespace Jeebs.Data;

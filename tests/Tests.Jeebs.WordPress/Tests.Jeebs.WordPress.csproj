@@ -6,4 +6,7 @@
     <ProjectReference Include="..\..\src\Jeebs.WordPress\Jeebs.WordPress.csproj" />
     <ProjectReference Include="..\Tests.Jeebs.Data.Query\Tests.Jeebs.Data.Query.csproj" />
   </ItemGroup>
+  <ItemGroup>
+    <Using Include="Wrap.Ids"/>
+  </ItemGroup>
 </Project>

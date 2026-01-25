@@ -8,6 +8,7 @@ using Jeebs.Data.Clients.MySql;
 using Jeebs.Data.Map;
 using Jeebs.Data.Query;
 using Jeebs.Data.Query.Functions;
+using Wrap.Ids;
 
 namespace Jeebs.WordPress.Query;
 
