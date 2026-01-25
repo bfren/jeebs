@@ -5,6 +5,7 @@ using Jeebs.Config.Db;
 using Jeebs.Data;
 using Jeebs.Logging;
 using Microsoft.Extensions.Options;
+using Wrap;
 
 namespace AppConsolePg;
 
@@ -12,12 +13,13 @@ internal sealed class Db : Jeebs.Data.Db
 {
 	public JsonTable Json { get; init; }
 
-	public Db(IDbClient client, IOptions<DbConfig> config, ILog<Db> log) : base(client, config.Value.GetConnection("server04"), log)
+	public Db(IDbClient client, IOptions<DbConfig> config, ILog<Db> log) :
+		base(client, config.Value.GetConnection("arwen").Unwrap(), log)
 	{
 		Json = new("console");
 
-		Map<EntityTest>.To(Json);
+		Map<TestEntity>.To(Json);
 
-		client.Types.AddStrongIdTypeHandlers();
+		client.Types.AddIdTypeHandlers();
 	}
 }

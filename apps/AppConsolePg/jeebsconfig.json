@@ -4,37 +4,40 @@
 			"name": "PostgreSQL",
 			"suite": "Jeebs"
 		},
-		"db": {
-			"default": "server04",
-			"connections": {
-				"server04": {
-					"connectionString": ""
-				}
-			}
-		},
+    "db": {
+      "default": "arwen",
+      "connections": {
+        "arwen": {
+          "connectionString": ""
+        }
+      }
+    },
 		"logging": {
 			"minimum": "Verbose",
-			"overrides": {
-				"Microsoft": "Warning",
-				"Microsoft.Hosting.Lifetime": "Information"
-			},
+      "overrides": {
+        "Microsoft": "Warning",
+        "Microsoft.Hosting.Lifetime": "Information",
+        "Npgsql.Command": "Information",
+        "Npgsql.Connection": "Information",
+        "Npgsql.Transaction": "Information"
+      },
 			"providers": {
 				"console": {
 					"enabled": true
 				},
-				"seq.server04": {
+				"seq.local": {
 					"enabled": true,
 					"minimum": "Information"
 				}
 			}
 		},
 		"services": {
-			"seq": {
-				"server04": {
-					"server": "",
-					"apiKey": ""
-				}
-			}
+      "seq": {
+        "local": {
+          "server": "",
+          "apiKey": ""
+        }
+      }
 		}
 	}
 }
