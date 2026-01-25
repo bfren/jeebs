@@ -7,7 +7,7 @@ public abstract class AddWhereCustom_Tests<TBuilder, TId> : QueryPartsBuilder_Te
 	where TBuilder : QueryPartsBuilder<TId>
 	where TId : class, IUnion, new()
 {
-	public abstract void Test00_Clause_Null_Or_Empty_Returns_None_With_TryingToAddEmptyClauseToWhereCustomMsg(string input);
+	public abstract void Test00_Clause_Null_Or_Empty_Returns_None_With_TryingToAddEmptyClauseToWhereCustomMsg(string? input);
 
 	public static TheoryData<string?> Test00_Data() =>
 		new(
@@ -16,19 +16,19 @@ public abstract class AddWhereCustom_Tests<TBuilder, TId> : QueryPartsBuilder_Te
 			" "
 		);
 
-	protected void Test00(string input)
+	protected void Test00(string? input)
 	{
 		// Arrange
 		var (builder, v) = Setup();
 
 		// Act
-		var result = builder.AddWhereCustom(v.Parts, input, new());
+		var result = builder.AddWhereCustom(v.Parts, input!, new());
 
 		// Assert
 		_ = result.AssertFail("You cannot add an empty WHERE clause.");
 	}
 
-	public abstract void Test01_Invalid_Parameters_Returns_None_With_UnableToAddParametersToWhereCustomMsg(object input);
+	public abstract void Test01_Invalid_Parameters_Returns_None_With_UnableToAddParametersToWhereCustomMsg(object? input);
 
 	public static TheoryData<object?> Test01_Data() =>
 		[
@@ -38,14 +38,14 @@ public abstract class AddWhereCustom_Tests<TBuilder, TId> : QueryPartsBuilder_Te
 			'c'
 		];
 
-	protected void Test01(object input)
+	protected void Test01(object? input)
 	{
 		// Arrange
 		var (builder, v) = Setup();
 		var clause = Rnd.Str;
 
 		// Act
-		var result = builder.AddWhereCustom(v.Parts, clause, input);
+		var result = builder.AddWhereCustom(v.Parts, clause, input!);
 
 		// Assert
 		_ = result.AssertFail("Failed to add parameters to WHERE clause.");
