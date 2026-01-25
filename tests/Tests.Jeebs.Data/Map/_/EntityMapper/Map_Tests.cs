@@ -73,7 +73,7 @@ public class Map_Tests
 
 		// Assert
 		var ex = Assert.Throws<InvalidTableMapException>(action);
-		Assert.Single(ex.Errors).AssertMessage("Unable to get Id column from table '{Name}'.", name);
+		Assert.Single(ex.Errors).AssertMessage("Unable to get Id column from table '{Name}': Cannot get single value from an empty list.", name);
 	}
 
 	[Fact]
@@ -89,7 +89,7 @@ public class Map_Tests
 		// Assert
 		var ex = Assert.Throws<InvalidTableMapException>(action);
 		Assert.Single(ex.Errors).AssertMessage(
-			"Unable to get Id column from table '{Name}'.",
+			"Unable to get Id column from table '{Name}': Cannot get single value from a list with multiple values.",
 			name
 		);
 	}
@@ -108,7 +108,7 @@ public class Map_Tests
 		// Assert
 		var ex = Assert.Throws<InvalidTableMapException>(action);
 		Assert.Single(ex.Errors).AssertMessage(
-			"Unable to get single column with attribute '{Attribute}' from table '{Table}'.",
+			"Unable to get single column with attribute '{Attribute}' from table '{Table}': Cannot get single value from an empty list.",
 			attribute, table
 		);
 	}
@@ -127,7 +127,7 @@ public class Map_Tests
 		// Assert
 		var ex = Assert.Throws<InvalidTableMapException>(action);
 		Assert.Single(ex.Errors).AssertMessage(
-			"Unable to get single column with attribute '{Attribute}' from table '{Table}'.",
+			"Unable to get single column with attribute '{Attribute}' from table '{Table}': Cannot get single value from a list with multiple values.",
 			attribute, table
 		);
 	}

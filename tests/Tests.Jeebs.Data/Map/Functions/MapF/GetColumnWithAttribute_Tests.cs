@@ -20,7 +20,7 @@ public class GetColumnWithAttribute_Tests
 
 		// Assert
 		_ = result.AssertFail(
-			"Unable to get single column with attribute '{Attribute}' from table '{Table}'.",
+			"Unable to get single column with attribute '{Attribute}' from table '{Table}': Cannot get single value from an empty list.",
 			"IdAttribute", "FooTableWithoutIdAttribute"
 		);
 	}
@@ -36,7 +36,7 @@ public class GetColumnWithAttribute_Tests
 
 		// Assert
 		_ = result.AssertFail(
-			"Unable to get single column with attribute '{Attribute}' from table '{Table}'.",
+			"Unable to get single column with attribute '{Attribute}' from table '{Table}': Cannot get single value from a list with multiple values.",
 			"IdAttribute", "FooTableWithMultipleIdAttributes"
 		);
 	}
