@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Threading.Tasks;
 using Jeebs.Config.Db;
+using Jeebs.Logging;
 
 namespace Jeebs.Data;
 
@@ -22,6 +23,11 @@ public interface IDb
 	/// Configuration for this database connection.
 	/// </summary>
 	DbConnectionConfig Config { get; }
+
+	/// <summary>
+	/// ILog (should be given a context of the implementing class).
+	/// </summary>
+	ILog Log { get; }
 
 	/// <summary>
 	/// Start a new Unit of Work.

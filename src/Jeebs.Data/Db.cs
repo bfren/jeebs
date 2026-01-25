@@ -21,10 +21,8 @@ public abstract class Db : IDb
 	/// <inheritdoc/>
 	public DbConnectionConfig Config { get; private init; }
 
-	/// <summary>
-	/// ILog (should be given a context of the implementing class).
-	/// </summary>
-	protected ILog Log { get; private init; }
+	/// <inheritdoc/>
+	public ILog Log { get; private init; }
 
 	internal ILog LogTest =>
 		Log;
