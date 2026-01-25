@@ -15,7 +15,7 @@ public class GetConnection_Tests
 		var result = config.GetConnection();
 
 		// Assert
-		result.AssertFail("You must specify the name of the database connection.");
+		result.AssertFail("You must specify the name of the default database connection.");
 	}
 
 	[Fact]

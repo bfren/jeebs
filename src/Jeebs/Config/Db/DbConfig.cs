@@ -57,9 +57,10 @@ public sealed record class DbConfig : IOptions<DbConfig>
 			R.Fail(message, args).Ctx(nameof(DbConfig), nameof(GetConnection));
 
 		// Name cannot be null or empty
-		if (string.IsNullOrEmpty(name))
+		var nameOrDefault = string.IsNullOrWhiteSpace(name) ? Default : name;
+		if (string.IsNullOrWhiteSpace(nameOrDefault))
 		{
-			return fail("You must specify the name of the database connection.");
+			return fail("You must specify the name of the default database connection.");
 		}
 
 		// The list of defined connections cannot be empty
@@ -69,12 +70,12 @@ public sealed record class DbConfig : IOptions<DbConfig>
 		}
 
 		// Attempt to retrieve the connection
-		if (Connections.TryGetValue(name, out var config))
+		if (Connections.TryGetValue(nameOrDefault, out var config))
 		{
 			return config;
 		}
 
-		return fail("A connection named '{Name}' could not be found.", name);
+		return fail("A connection named '{Name}' could not be found.", nameOrDefault);
 	}
 
 	/// <summary>
