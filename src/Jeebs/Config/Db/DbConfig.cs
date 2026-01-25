@@ -59,7 +59,7 @@ public sealed record class DbConfig : IOptions<DbConfig>
 		// Name cannot be null or empty
 		if (string.IsNullOrEmpty(name))
 		{
-			return fail("Default database connection is not defined.");
+			return fail("You must specify the name of the database connection.");
 		}
 
 		// The list of defined connections cannot be empty
