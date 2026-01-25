@@ -4,12 +4,28 @@
 using System;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Reflection;
 using Jeebs.Collections;
 using Jeebs.Data.Enums;
 using Jeebs.Data.Map;
+using Jeebs.Data.Query.Exceptions;
 using Jeebs.Data.Query.Functions;
 
 namespace Jeebs.Data.Query;
+
+/// <inheritdoc cref="QueryPartsBuilder{TId}"/>
+public abstract class QueryPartsBuilder
+{
+	/// <summary>
+	/// Get ID column from the specified table
+	/// </summary>
+	/// <typeparam name="T"></typeparam>
+	/// <param name="table"></param>
+	/// <exception cref="UnableToGetIdColumnFromTableException"></exception>
+	protected PropertyInfo GetIdColumn<T>(T table) where
+		T : ITable =>
+		table.GetType().GetProperty(nameof(IWithId.Id)) ?? throw new UnableToGetIdColumnFromTableException();
+}
 
 /// <summary>
 /// Builds a <see cref="QueryParts"/> object from various options.
@@ -19,7 +35,7 @@ namespace Jeebs.Data.Query;
 /// Inject extract object.
 /// </remarks>
 /// <param name="extract">IExtract.</param>
-public abstract class QueryPartsBuilder<TId>(IExtract extract) : IQueryPartsBuilder<TId>
+public abstract class QueryPartsBuilder<TId>(IExtract extract) : QueryPartsBuilder, IQueryPartsBuilder<TId>
 	where TId : class, IUnion, new()
 {
 	/// <summary>
