@@ -25,5 +25,5 @@ public interface ILoggingProvider
 	/// <param name="jeebs">JeebsConfig.</param>
 	/// <param name="name">The service name (e.g. 'slack.dev').</param>
 	/// <param name="minimum">Minimum logging level.</param>
-	void Configure(LoggerConfiguration logger, JeebsConfig jeebs, string name, LogEventLevel minimum);
+	Result<bool> Configure(LoggerConfiguration logger, JeebsConfig jeebs, string name, LogEventLevel minimum);
 }

@@ -3,6 +3,7 @@
 
 using System.Globalization;
 using Jeebs.Config;
+using Jeebs.Config.Services.Console;
 using Serilog;
 using Serilog.Events;
 
@@ -18,18 +19,30 @@ public sealed class ConsoleLoggingProvider : ILoggingProvider
 		"console";
 
 	/// <inheritdoc/>
-	public void Configure(LoggerConfiguration logger, JeebsConfig jeebs, string name, LogEventLevel minimum) =>
-		jeebs.Services.GetServiceConfig(c => c.Console, name).IfOk(c =>
-		{
-			if (c.AddPrefix)
-			{
-				SerilogLogger.ConsoleMessagePrefix = jeebs.App.FullName;
-			}
+	public Result<bool> Configure(LoggerConfiguration logger, JeebsConfig jeebs, string name, LogEventLevel minimum) =>
+		jeebs.Services.GetServiceConfig(
+			c => c.Console, name
+		)
+		.IfOk(
+			c => AddConsoleConfig(logger, c, jeebs.App.Name)
+		)
+		.Map(
+			_ => true
+		);
 
-			_ = logger.WriteTo.Console(
-				restrictedToMinimumLevel: minimum,
-				outputTemplate: c.Template ?? "[{Timestamp:HH:mm:ss} {Level:u3}] {Message:lj} | {SourceContext}{NewLine}{Exception}",
-				formatProvider: CultureInfo.InvariantCulture
-			);
-		});
+	internal static void AddDefaultConsoleConfig(LoggerConfiguration logger) =>
+		AddConsoleConfig(logger, new() { AddPrefix = false });
+
+	internal static void AddConsoleConfig(LoggerConfiguration logger, ConsoleConfig config, string? name = null)
+	{
+		if (config.AddPrefix && !string.IsNullOrWhiteSpace(name))
+		{
+			SerilogLogger.ConsoleMessagePrefix = name;
+		}
+
+		_ = logger.WriteTo.Console(
+			outputTemplate: config.Template,
+			formatProvider: CultureInfo.InvariantCulture
+		);
+	}
 }

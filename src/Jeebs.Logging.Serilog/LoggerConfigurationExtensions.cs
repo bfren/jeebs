@@ -3,7 +3,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Globalization;
 using System.Linq;
 using Jeebs.Config;
 using Jeebs.Config.Services;
@@ -87,7 +86,7 @@ public static class LoggerConfigurationExtensions
 		// If no providers are enabled, add basic console logging and return
 		if (enabledProviders.Count == 0)
 		{
-			_ = serilog.WriteTo.Console(formatProvider: CultureInfo.InvariantCulture);
+			ConsoleLoggingProvider.AddDefaultConsoleConfig(serilog);
 			return;
 		}
 
@@ -102,20 +101,34 @@ public static class LoggerConfigurationExtensions
 		});
 
 		// Configure enabled providers
+		var atLeastOneEnabled = false;
 		foreach (var (providerInfo, providerConfig) in enabledProviders)
 		{
-			// Get service definition
-			if (ServicesConfig.SplitDefinition(providerInfo) is Some<(string type, string name)> x)
-			{
-				// Get hook minimum - default minimum will override this if it's higher
-				var providerMinimum = GetMinimum(providerConfig.Minimum, jeebs.Logging.Minimum);
+			// Get hook minimum - default minimum will override this if it's higher
+			var providerMinimum = GetMinimum(providerConfig.Minimum, jeebs.Logging.Minimum);
 
-				// Configure provider
-				if (providers.TryGetValue(x.Value.type, out var provider))
-				{
-					provider.Configure(serilog, jeebs, x.Value.name, providerMinimum);
-				}
+			// Get service definition
+			var service = from d in ServicesConfig.SplitDefinition(providerInfo)
+						  from p in providers.GetValueOrNone(d.type)
+						  select (p, d.name);
+
+			if (service is Some<(ILoggingProvider provider, string name)> s)
+			{
+				// Configure the provider and keep track of whether at least one is successfully configured
+				var configure = s.Value.provider.Configure(serilog, jeebs, s.Value.name, providerMinimum);
+				atLeastOneEnabled = atLeastOneEnabled || configure.IsTrue();
+
+				// Output any errors to the console
+				_ = configure.IfFail(
+					f => Console.WriteLine(f.Message.FormatWith(f.Args))
+				);
 			}
+		}
+
+		// If nothing is configured, add default console config
+		if (!atLeastOneEnabled)
+		{
+			ConsoleLoggingProvider.AddDefaultConsoleConfig(serilog);
 		}
 	}
 

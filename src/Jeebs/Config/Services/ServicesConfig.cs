@@ -75,7 +75,8 @@ public sealed record class ServicesConfig : IOptions<ServicesConfig>
 	public Result<T> GetServiceConfig<T>(Func<ServicesConfig, Dictionary<string, T>> getCollection, string name)
 		where T : IServiceConfig, new() =>
 		getCollection(this).GetValueOrNone(name).Match(
-			none: () => new T(),
+			none: () => R.Fail("Unable to find {Type} service named '{Name}'.", typeof(T).Name, name)
+				.Ctx(nameof(ServicesConfig), nameof(GetServiceConfig)),
 			some: x => x.IsValid switch
 			{
 				true =>
