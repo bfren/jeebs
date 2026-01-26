@@ -10,7 +10,7 @@ namespace Jeebs;
 /// <summary>
 /// DateTime Integer.
 /// </summary>
-public readonly partial struct DateTimeInt
+public readonly partial struct DateTimeInt : IEquatable<DateTimeInt>, IParsable<DateTimeInt>
 {
 	private const string FormatString = "000000000000";
 

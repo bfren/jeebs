@@ -70,13 +70,10 @@ public record class Op<T> : Op, IOp<T>
 	[JsonIgnore]
 	public override int StatusCode
 	{
-		get => statusCode switch
-		{
-			int statusCode =>
-				statusCode,
-
-			_ =>
-				Success switch
+		get =>
+			statusCode.Match(
+				some: x => x,
+				none: () => Success switch
 				{
 					true =>
 						(int)HttpStatusCode.OK,
@@ -84,11 +81,13 @@ public record class Op<T> : Op, IOp<T>
 					false =>
 						(int)HttpStatusCode.InternalServerError
 				}
-		};
-		init => statusCode = value;
+			);
+
+		init =>
+			statusCode = value;
 	}
 
-	private int? statusCode;
+	private Maybe<int> statusCode = M.None;
 
 	/// <inheritdoc cref="ActionResult.ExecuteResultAsync(ActionContext)"/>
 	public override Task ExecuteResultAsync(ActionContext context)

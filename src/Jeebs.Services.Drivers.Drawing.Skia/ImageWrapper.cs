@@ -71,7 +71,7 @@ public sealed class ImageWrapper : Services.Drawing.ImageWrapper, IDisposable
 
 			// Create surface on which to draw the masked and resized image
 			using var surface = SKSurface.Create(info: new(size.Width, size.Height));
-			using var paint = new SKPaint() { IsAntialias = width > 200 || height > 200 };
+			using var paint = new SKPaint { IsAntialias = width > 200 || height > 200 };
 
 			// Draw the actual image
 			surface.Canvas.DrawImage(SKImage.FromEncodedData(image), source, destination, paint);

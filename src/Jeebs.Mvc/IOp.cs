@@ -23,7 +23,7 @@ public interface IOp : IActionResult
 
 /// <inheritdoc cref="IOp"/>
 /// <typeparam name="T">Value type.</typeparam>
-public interface IOp<T> : IOp
+public interface IOp<out T> : IOp
 {
 	/// <summary>
 	/// Returns the value if the operation succeeded, or null if not.

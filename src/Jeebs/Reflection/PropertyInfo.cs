@@ -74,9 +74,6 @@ public class PropertyInfo<TObject, TProperty>
 	/// </summary>
 	/// <param name="obj">Object.</param>
 	/// <param name="value">Value.</param>
-	public void Set(TObject obj, TProperty value)
-	{
-		ArgumentNullException.ThrowIfNull(obj, nameof(obj));
+	public void Set(TObject obj, TProperty value) =>
 		Info.SetValue(obj, value);
-	}
 }

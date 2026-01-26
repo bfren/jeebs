@@ -38,7 +38,7 @@ public sealed class Lockable<T>(T contents) : Lockable
 /// <summary>
 /// Holds constants for <see cref="Lockable{T}"/>.
 /// </summary>
-public abstract class Lockable()
+public abstract class Lockable
 {
 	/// <summary>
 	/// Length of encryption key (if it's a byte array).

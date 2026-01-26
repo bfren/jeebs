@@ -49,7 +49,7 @@ public sealed class Locked<T> : Locked
 	/// </summary>
 	/// <param name="json">JSON-encoded contents to encrypt.</param>
 	/// <param name="key">Encryption key.</param>
-	internal Locked(string json, byte[] key) : base() =>
+	internal Locked(string json, byte[] key) =>
 		EncryptedContents = SecretBox.Create(json, Nonce, key);
 
 	/// <summary>
@@ -57,7 +57,7 @@ public sealed class Locked<T> : Locked
 	/// </summary>
 	/// <param name="json">JSON-encoded contents to encrypt.</param>
 	/// <param name="key">Encryption key.</param>
-	internal Locked(string json, string key) : base() =>
+	internal Locked(string json, string key) =>
 		EncryptedContents = SecretBox.Create(json, Nonce, HashKey(key));
 
 	/// <summary>

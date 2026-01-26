@@ -18,7 +18,7 @@ public static partial class ObjectExtensions
 	public static Result<string> Encrypt<T>(this T @this, byte[] key) =>
 		@this switch
 		{
-			T x =>
+			T =>
 				from l in CryptoF.Lock(@this, key)
 				from s in l.Serialise()
 				select s,
@@ -37,7 +37,7 @@ public static partial class ObjectExtensions
 	public static Result<string> Encrypt<T>(this T @this, string key) =>
 		@this switch
 		{
-			T x =>
+			T =>
 				from l in CryptoF.Lock(@this, key)
 				from s in l.Serialise()
 				select s,
