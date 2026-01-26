@@ -45,7 +45,7 @@ public class LogBool_Tests
 	public void Is_Fail__Calls_Log_Failure__With_Correct_Values()
 	{
 		// Arrange
-		var failure = FailGenerator.Create();
+		var failure = FailGen.Create();
 		Result<bool> fail() => failure;
 		var result = fail();
 		var log = Substitute.For<ILog>();
