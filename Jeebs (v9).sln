@@ -152,6 +152,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".Logging", ".Logging", "{A4
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tests.Jeebs.Logging.Serilog", "tests\Tests.Jeebs.Logging.Serilog\Tests.Jeebs.Logging.Serilog.csproj", "{9F4FCCAB-2319-4414-A9C4-26DA2DE50625}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AppMvc", "apps\AppMvc\AppMvc.csproj", "{F8CEB192-0BDC-C471-5C27-CD8F505ABA5B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -392,6 +394,12 @@ Global
 		{9F4FCCAB-2319-4414-A9C4-26DA2DE50625}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9F4FCCAB-2319-4414-A9C4-26DA2DE50625}.Test|Any CPU.ActiveCfg = Debug|Any CPU
 		{9F4FCCAB-2319-4414-A9C4-26DA2DE50625}.Test|Any CPU.Build.0 = Debug|Any CPU
+		{F8CEB192-0BDC-C471-5C27-CD8F505ABA5B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F8CEB192-0BDC-C471-5C27-CD8F505ABA5B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F8CEB192-0BDC-C471-5C27-CD8F505ABA5B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F8CEB192-0BDC-C471-5C27-CD8F505ABA5B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F8CEB192-0BDC-C471-5C27-CD8F505ABA5B}.Test|Any CPU.ActiveCfg = Debug|Any CPU
+		{F8CEB192-0BDC-C471-5C27-CD8F505ABA5B}.Test|Any CPU.Build.0 = Debug|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -454,6 +462,7 @@ Global
 		{DEEDD4E1-585C-451C-AF4E-F4CD3EE71100} = {D899A9DC-CBCF-44E8-BECE-73EB8911C6C2}
 		{A41C59B6-41FC-4247-AC0B-D8A12AF22B6E} = {1172BF25-0DDE-4B03-9075-9EB0B75A4537}
 		{9F4FCCAB-2319-4414-A9C4-26DA2DE50625} = {A41C59B6-41FC-4247-AC0B-D8A12AF22B6E}
+		{F8CEB192-0BDC-C471-5C27-CD8F505ABA5B} = {A256449B-4234-43DD-B18F-741D69906712}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {0BD20814-DF83-4144-92D6-B07D57B7836F}
