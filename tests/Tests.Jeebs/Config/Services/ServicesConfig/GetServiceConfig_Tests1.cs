@@ -33,7 +33,10 @@ public partial class GetServiceConfig_Tests
 		var result = config.GetServiceConfig($"slack.{name}");
 
 		// Assert
-		result.AssertOk(new SlackConfig());
+		_ = result.AssertFailure(
+			"Unable to find {Type} service named '{Name}'.",
+			nameof(SlackConfig), name
+		);
 	}
 
 	[Fact]

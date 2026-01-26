@@ -2,6 +2,7 @@
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using Jeebs.Config.Services.Seq;
+using Jeebs.Config.Services.Slack;
 
 namespace Jeebs.Config.Services.ServicesConfig_Tests;
 
@@ -18,7 +19,10 @@ public partial class GetServiceConfig_Tests
 		var result = config.GetServiceConfig(x => x.Slack, name);
 
 		// Assert
-		result.AssertOk(new());
+		_ = result.AssertFailure(
+			"Unable to find {Type} service named '{Name}'.",
+			nameof(SlackConfig), name
+		);
 	}
 
 	[Fact]
