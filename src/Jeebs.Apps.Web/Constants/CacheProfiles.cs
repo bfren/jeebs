@@ -14,7 +14,7 @@ public static class CacheProfiles
 	/// <remarks>
 	/// It is a constant so it can be used in the <see cref="Microsoft.AspNetCore.Mvc.CacheProfile"/> attribute
 	/// </remarks>
-	public const string None = nameof(None);
+	public static readonly string None = nameof(None);
 
 	/// <summary>
 	/// Specifies default caching profile.
@@ -22,5 +22,5 @@ public static class CacheProfiles
 	/// <remarks>
 	/// It is a constant so it can be used in the <see cref="Microsoft.AspNetCore.Mvc.CacheProfile"/> attribute
 	/// </remarks>
-	public const string Default = nameof(Default);
+	public static readonly string Default = nameof(Default);
 }
