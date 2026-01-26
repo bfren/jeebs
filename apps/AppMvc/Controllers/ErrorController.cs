@@ -1,22 +1,20 @@
-﻿// Jeebs Test Applications
+// Jeebs Test Applications
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using Jeebs.Logging;
-using Jeebs.Messages;
-using Jeebs.Mvc.Controllers;
+using Jeebs.Mvc.Extensions;
 using Microsoft.AspNetCore.Mvc;
+using Wrap;
 
 namespace AppMvc.Controllers;
 
-public class ErrorController : Jeebs.Mvc.Controllers.ErrorController
+public class ErrorController(ILog log) : Jeebs.Mvc.Controllers.ErrorController(log)
 {
-	public ErrorController(ILog log) : base(log) { }
-
 	public IActionResult ThrowException() =>
 		throw new Exception("Something");
 
 	public async Task<IActionResult> ReturnError() =>
-		await this.ExecuteErrorAsync(new TestErrorMsg());
+		await this.ExecuteErrorAsync(FailureValue.Create("Test error."));
 
 	public IActionResult ReturnNotFound() =>
 		NotFound();
@@ -28,13 +26,5 @@ public class ErrorController : Jeebs.Mvc.Controllers.ErrorController
 		NotAllowed();
 
 	public async Task<IActionResult> ReturnError404() =>
-		await this.ExecuteErrorAsync(new NotFoundMsg(42));
-
-	public record class NotFoundMsg(int Value) : NotFoundMsg<int>
-	{
-		public override string Name =>
-			"Code";
-	}
+		await this.ExecuteErrorAsync(FailureValue.Create("Not found.", 404));
 }
-
-public record class TestErrorMsg : Msg;

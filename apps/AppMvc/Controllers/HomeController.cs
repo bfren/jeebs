@@ -3,8 +3,9 @@
 
 using Jeebs.Apps.Web.Constants;
 using Jeebs.Logging;
+using Jeebs.Mvc.Controllers;
 using Microsoft.AspNetCore.Mvc;
-using StrongId;
+using Wrap.Ids;
 
 namespace MvcApp.Controllers;
 
@@ -13,10 +14,8 @@ namespace MvcApp.Controllers;
 #else
 [ResponseCache(CacheProfileName = CacheProfiles.Default)]
 #endif
-public class HomeController : Jeebs.Mvc.Controllers.Controller
+public class HomeController(ILog<HomeController> log) : MvcController(log)
 {
-	public HomeController(ILog<HomeController> log) : base(log) { }
-
 	public IActionResult Index()
 	{
 		Log.Inf("Hello, world!");
@@ -30,4 +29,4 @@ public class HomeController : Jeebs.Mvc.Controllers.Controller
 		View(testId);
 }
 
-public sealed record class TestId : LongId;
+public sealed record class TestId : LongId<TestId>;

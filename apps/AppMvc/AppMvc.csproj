@@ -1,16 +1,10 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
   <ItemGroup>
-    <PackageReference Include="Microsoft.EntityFrameworkCore" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Relational" />
-    <PackageReference Include="MySql.Data" />
-    <PackageReference Include="MySql.EntityFrameworkCore" />
-    <PackageReference Include="StrongId.Mvc" />
+    <PackageReference Include="Wrap.Id.Mvc" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\src\Jeebs.Apps.Web\Jeebs.Apps.Web.csproj" />
-    <ProjectReference Include="..\..\src\Jeebs.Auth.Data.Clients.MySql\Jeebs.Auth.Data.Clients.MySql.csproj" />
     <ProjectReference Include="..\..\src\Jeebs.Data.Query\Jeebs.Data.Query.csproj" />
-    <ProjectReference Include="..\..\src\Jeebs.Mvc.Auth\Jeebs.Mvc.Auth.csproj" />
     <ProjectReference Include="..\..\src\Jeebs.Mvc\Jeebs.Mvc.csproj" />
     <ProjectReference Include="..\..\src\Jeebs.Services.Drivers.Drawing.Skia\Jeebs.Services.Drivers.Drawing.Skia.csproj" />
   </ItemGroup>
