@@ -61,8 +61,8 @@ public class QueryAsync_Tests
 		var r1 = await query.QueryAsync<int>(parts, transaction);
 
 		// Assert
-		_ = r0.AssertFail();
-		_ = r1.AssertFail();
+		_ = r0.AssertFailure();
+		_ = r1.AssertFailure();
 	}
 
 	[Fact]
@@ -79,8 +79,8 @@ public class QueryAsync_Tests
 		var r1 = await query.QueryAsync<int>(Rnd.ULng, parts, transaction);
 
 		// Assert
-		_ = r0.AssertFail();
-		_ = r1.AssertFail();
+		_ = r0.AssertFailure();
+		_ = r1.AssertFailure();
 	}
 
 	[Fact]
@@ -97,8 +97,8 @@ public class QueryAsync_Tests
 		var r1 = await query.QueryAsync<int>(Rnd.ULng, parts, transaction);
 
 		// Assert
-		_ = r0.AssertFail();
-		_ = r1.AssertFail();
+		_ = r0.AssertFailure();
+		_ = r1.AssertFailure();
 	}
 
 	[Fact]

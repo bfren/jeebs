@@ -33,7 +33,7 @@ public partial class GetServiceConfig_Tests
 		var result = config.GetServiceConfig(x => x.Seq, name);
 
 		// Assert
-		result.AssertFail(
+		result.AssertFailure(
 			"Definition of {Type} service named '{Name}' is invalid.",
 			nameof(SeqConfig), name
 		);

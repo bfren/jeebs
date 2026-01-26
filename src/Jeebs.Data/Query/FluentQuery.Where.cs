@@ -25,7 +25,7 @@ public sealed partial record class FluentQuery<TEntity, TId>
 		// Check clause
 		if (string.IsNullOrWhiteSpace(clause))
 		{
-			Errors.Add(FailureValue.Create("Trying to add empty clause to WHERE."));
+			Errors.Add(new("Trying to add empty clause to WHERE."));
 			return this;
 		}
 
@@ -33,7 +33,7 @@ public sealed partial record class FluentQuery<TEntity, TId>
 		var param = new QueryParametersDictionary();
 		if (!param.TryAdd(parameters))
 		{
-			Errors.Add(FailureValue.Create("Unable to add parameters to WHERE."));
+			Errors.Add(new("Unable to add parameters to WHERE."));
 			return this;
 		}
 

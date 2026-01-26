@@ -32,7 +32,7 @@ public class HandleAsync_Tests
 		var result = await ((IQueryHandler<string>)handler).HandleAsync(query);
 
 		// Assert
-		_ = result.AssertFail("Incorrect query type.");
+		_ = result.AssertFailure("Incorrect query type.");
 	}
 
 	[Fact]

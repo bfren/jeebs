@@ -16,7 +16,7 @@ public class ParseTermId_Tests
 		var result = TermCustomField.ParseTermId(type, value);
 
 		// Assert
-		_ = result.AssertFail("'{Value}' is not a valid Term ID.", value);
+		_ = result.AssertFailure("'{Value}' is not a valid Term ID.", value);
 	}
 
 	[Fact]

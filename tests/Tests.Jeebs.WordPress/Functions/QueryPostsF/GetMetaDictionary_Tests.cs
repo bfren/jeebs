@@ -14,7 +14,7 @@ public class GetMetaDictionary_Tests
 		var result = QueryPostsF.GetMetaDictionary<NoMetaDictionaryProperties>();
 
 		// Assert
-		_ = result.AssertFail("MetaDictionary property not found for model '{Type}'.",
+		_ = result.AssertFailure("MetaDictionary property not found for model '{Type}'.",
 			nameof(NoMetaDictionaryProperties)
 		);
 	}
@@ -28,7 +28,7 @@ public class GetMetaDictionary_Tests
 		var result = QueryPostsF.GetMetaDictionary<MoreThanOneMetaDictionaryProperty>();
 
 		// Assert
-		_ = result.AssertFail("Multiple MetaDictionary properties found for model '{Type}'.",
+		_ = result.AssertFailure("Multiple MetaDictionary properties found for model '{Type}'.",
 			nameof(MoreThanOneMetaDictionaryProperty)
 		);
 	}

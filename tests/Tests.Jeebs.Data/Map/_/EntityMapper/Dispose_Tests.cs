@@ -16,6 +16,6 @@ public class Dispose_Tests
 		svc.Dispose();
 
 		// Assert
-		_ = svc.GetTableMapFor<Foo>().AssertFail();
+		_ = svc.GetTableMapFor<Foo>().AssertFailure();
 	}
 }

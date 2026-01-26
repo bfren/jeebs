@@ -32,7 +32,7 @@ public class HandleAsync_Tests
 		var result = await ((ICommandHandler)handler).HandleAsync(command);
 
 		// Assert
-		_ = result.AssertFail("Incorrect command type.");
+		_ = result.AssertFailure("Incorrect command type.");
 	}
 
 	[Fact]

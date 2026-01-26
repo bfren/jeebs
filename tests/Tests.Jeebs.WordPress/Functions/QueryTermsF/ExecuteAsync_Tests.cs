@@ -18,7 +18,7 @@ public class ExecuteAsync_Tests : Query_Tests
 		var result = await QueryTermsF.ExecuteAsync<Test>(db, w, _ => throw new Exception());
 
 		// Assert
-		_ = result.AssertFail("Error getting query terms options.");
+		_ = result.AssertFailure("Error getting query terms options.");
 	}
 
 	[Fact]

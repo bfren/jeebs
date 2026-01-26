@@ -44,7 +44,7 @@ public class ConvertToSerilogLevel_Tests
 			var result = ConvertToSerilogLevel(input);
 
 			// Assert
-			result.AssertFail(expected, input);
+			result.AssertFailure(expected, input);
 		}
 	}
 }

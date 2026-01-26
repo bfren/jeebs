@@ -17,7 +17,7 @@ public sealed class Hash_Tests
 		var result = StringExtensions.Hash(input!);
 
 		// Assert
-		result.AssertFail("Cannot hash a null or empty string.");
+		result.AssertFailure("Cannot hash a null or empty string.");
 	}
 
 	[Theory]

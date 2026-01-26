@@ -4,7 +4,6 @@
 using Jeebs.Logging;
 using Jeebs.Mvc.Extensions;
 using Microsoft.AspNetCore.Mvc;
-using Wrap;
 
 namespace AppMvc.Controllers;
 
@@ -14,7 +13,7 @@ public class ErrorController(ILog log) : Jeebs.Mvc.Controllers.ErrorController(l
 		throw new Exception("Something");
 
 	public async Task<IActionResult> ReturnError() =>
-		await this.ExecuteErrorAsync(FailureValue.Create("Test error."));
+		await this.ExecuteErrorAsync(new("Test error."));
 
 	public IActionResult ReturnNotFound() =>
 		NotFound();
@@ -26,5 +25,5 @@ public class ErrorController(ILog log) : Jeebs.Mvc.Controllers.ErrorController(l
 		NotAllowed();
 
 	public async Task<IActionResult> ReturnError404() =>
-		await this.ExecuteErrorAsync(FailureValue.Create("Not found.", 404));
+		await this.ExecuteErrorAsync(new("Not found."), 404);
 }

@@ -18,7 +18,7 @@ public class ExecuteAsync_Tests : FluentQuery_Tests
 		var result = await query.ExecuteAsync<int>(alias);
 
 		// Assert
-		_ = result.AssertFail("Column with alias '{Alias}' not found in table '{Table}'.", alias, nameof(TestTable));
+		_ = result.AssertFailure("Column with alias '{Alias}' not found in table '{Table}'.", alias, nameof(TestTable));
 	}
 
 	[Fact]

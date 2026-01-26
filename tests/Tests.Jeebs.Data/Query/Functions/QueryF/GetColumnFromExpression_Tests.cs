@@ -17,8 +17,8 @@ public class GetColumnFromExpression_Tests
 		var r1 = QueryF.GetColumnFromExpression(new BrokenTable(), t => t.Bar);
 
 		// Assert
-		r0.AssertFail("Unable to get column from expression for table '{Table}'.", nameof(BrokenTable));
-		r1.AssertFail("Unable to get column from expression for table '{Table}'.", nameof(BrokenTable));
+		r0.AssertFailure("Unable to get column from expression for table '{Table}'.", nameof(BrokenTable));
+		r1.AssertFailure("Unable to get column from expression for table '{Table}'.", nameof(BrokenTable));
 	}
 
 	[Fact]

@@ -19,7 +19,7 @@ public class GetQuery_Tests
 		var result = QueryAttachmentsF.GetQuery(schema, fileIds, Rnd.Str);
 
 		// Assert
-		_ = result.AssertFail("No File IDs were provided.");
+		_ = result.AssertFailure("No File IDs were provided.");
 	}
 
 	[Fact]

@@ -16,7 +16,7 @@ public class GetPostContent_Tests
 		var result = QueryPostsF.GetPostContent<NoContentProperty>();
 
 		// Assert
-		_ = result.AssertFail("Content property not found on model '{Type}'.",
+		_ = result.AssertFailure("Content property not found on model '{Type}'.",
 			nameof(NoContentProperty)
 		);
 	}
@@ -30,7 +30,7 @@ public class GetPostContent_Tests
 		var result = QueryPostsF.GetPostContent<WithContentPropertyWrongType>();
 
 		// Assert
-		_ = result.AssertFail("Content property not found on model '{Type}'.",
+		_ = result.AssertFailure("Content property not found on model '{Type}'.",
 			nameof(WithContentPropertyWrongType)
 		);
 	}

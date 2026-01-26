@@ -22,7 +22,7 @@ public class GetFilePathAsync_Tests : Query_Tests
 		var result = await QueryAttachmentsF.GetFilePathAsync(db, w, fileId);
 
 		// Assert
-		_ = result.AssertFail("Unable to get attachment for File {Id}: Cannot get single value from an empty list.",
+		_ = result.AssertFailure("Unable to get attachment for File {Id}: Cannot get single value from an empty list.",
 			fileId.Value
 		);
 	}
@@ -40,7 +40,7 @@ public class GetFilePathAsync_Tests : Query_Tests
 		var result = await QueryAttachmentsF.GetFilePathAsync(db, w, fileId);
 
 		// Assert
-		_ = result.AssertFail("Unable to get attachment for File {Id}: Cannot get single value from a list with multiple values.",
+		_ = result.AssertFailure("Unable to get attachment for File {Id}: Cannot get single value from a list with multiple values.",
 			fileId.Value
 		);
 	}

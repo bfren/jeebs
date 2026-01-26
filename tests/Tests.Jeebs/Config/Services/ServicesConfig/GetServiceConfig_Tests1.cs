@@ -19,7 +19,7 @@ public partial class GetServiceConfig_Tests
 		var result = config.GetServiceConfig($"{type}.{Rnd.Str}");
 
 		// Assert
-		_ = result.AssertFail("Service type '{Type}' is not recognised.", type);
+		_ = result.AssertFailure("Service type '{Type}' is not recognised.", type);
 	}
 
 	[Fact]

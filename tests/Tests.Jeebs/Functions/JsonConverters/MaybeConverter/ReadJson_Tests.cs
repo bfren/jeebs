@@ -51,7 +51,7 @@ public class ReadJson_Tests
 		var result = JsonF.Deserialise<Maybe<Test>>(input);
 
 		// Assert
-		var fail = result.AssertFail();
+		var fail = result.AssertFailure();
 		Assert.NotNull(fail.Exception);
 	}
 
@@ -70,7 +70,7 @@ public class ReadJson_Tests
 		var result = JsonF.Deserialise<Wrapper>(json);
 
 		// Assert
-		var fail = result.AssertFail();
+		var fail = result.AssertFailure();
 		Assert.NotNull(fail.Exception);
 	}
 

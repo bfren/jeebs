@@ -19,7 +19,7 @@ public partial class Decrypt_Tests
 		var result = StringExtensions.Decrypt<int>(null!, key);
 
 		// Assert
-		_ = result.AssertFail("Cannot deserialise a null or empty string.");
+		_ = result.AssertFailure("Cannot deserialise a null or empty string.");
 	}
 
 	[Fact]
@@ -33,7 +33,7 @@ public partial class Decrypt_Tests
 		var result = json.Decrypt<int>(key);
 
 		// Assert
-		_ = result.AssertFail();
+		_ = result.AssertFailure();
 	}
 
 	[Fact]
@@ -45,7 +45,7 @@ public partial class Decrypt_Tests
 		var result = defaultInputStringEncryptedWithByteKey.Decrypt<int>([]);
 
 		// Assert
-		_ = result.AssertFail("Invalid key.");
+		_ = result.AssertFailure("Invalid key.");
 	}
 
 	[Fact]
@@ -58,7 +58,7 @@ public partial class Decrypt_Tests
 		var result = defaultInputStringEncryptedWithByteKey.Decrypt<string>(key);
 
 		// Assert
-		result.AssertFail("Incorrect key or nonce.");
+		result.AssertFailure("Incorrect key or nonce.");
 	}
 
 	[Fact]
@@ -72,7 +72,7 @@ public partial class Decrypt_Tests
 		var result = json.Decrypt<int>(key);
 
 		// Assert
-		result.AssertFail("There are no encrypted contents to unlock.");
+		result.AssertFailure("There are no encrypted contents to unlock.");
 	}
 
 	[Fact]

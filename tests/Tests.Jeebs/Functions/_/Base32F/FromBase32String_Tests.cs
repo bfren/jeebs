@@ -27,7 +27,7 @@ public class FromBase32String_Tests
 		var result = Base32F.FromBase32String(input);
 
 		// Assert
-		result.AssertFail("Input string is not long enough.");
+		result.AssertFailure("Input string is not long enough.");
 	}
 
 	[Theory]
@@ -44,7 +44,7 @@ public class FromBase32String_Tests
 		var result = Base32F.FromBase32String(str);
 
 		// Assert
-		result.AssertFail("'{Character}' is not in Base32 alphabet.", input);
+		result.AssertFailure("'{Character}' is not in Base32 alphabet.", input);
 	}
 
 	[Fact]

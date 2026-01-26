@@ -18,6 +18,6 @@ public class Build_Tests
 		var result = QueryBuilderF.Build<int>(builder);
 
 		// Assert
-		_ = result.AssertFail("Error building query.");
+		_ = result.AssertFailure("Error building query.");
 	}
 }

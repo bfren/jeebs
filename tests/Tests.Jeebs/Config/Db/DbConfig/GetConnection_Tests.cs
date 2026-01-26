@@ -15,7 +15,7 @@ public class GetConnection_Tests
 		var result = config.GetConnection();
 
 		// Assert
-		result.AssertFail("You must specify the name of the default database connection.");
+		result.AssertFailure("You must specify the name of the default database connection.");
 	}
 
 	[Fact]
@@ -28,7 +28,7 @@ public class GetConnection_Tests
 		var result = config.GetConnection(Rnd.Str);
 
 		// Assert
-		result.AssertFail("At least one database connection must be defined.");
+		result.AssertFailure("At least one database connection must be defined.");
 	}
 
 	[Fact]
@@ -42,7 +42,7 @@ public class GetConnection_Tests
 		var result = config.GetConnection(name);
 
 		// Assert
-		result.AssertFail("A connection named '{Name}' could not be found.", name);
+		result.AssertFailure("A connection named '{Name}' could not be found.", name);
 	}
 
 	[Fact]

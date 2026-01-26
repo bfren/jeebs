@@ -22,7 +22,7 @@ public class Unlock_Tests
 		var result = box.Unlock(Rnd.ByteF.Get(16));
 
 		// Assert
-		var fail = result.AssertFail("Invalid key.");
+		var fail = result.AssertFailure("Invalid key.");
 		Assert.IsType<KeyOutOfRangeException>(fail.Exception);
 	}
 
@@ -41,7 +41,7 @@ public class Unlock_Tests
 		var result = box.Unlock(key);
 
 		// Assert
-		var fail = result.AssertFail("Invalid nonce.");
+		var fail = result.AssertFailure("Invalid nonce.");
 		Assert.IsType<NonceOutOfRangeException>(fail.Exception);
 	}
 
@@ -58,7 +58,7 @@ public class Unlock_Tests
 		var result = box.Unlock(incorrectKey);
 
 		// Assert
-		var fail = result.AssertFail("Incorrect key or nonce.");
+		var fail = result.AssertFailure("Incorrect key or nonce.");
 		Assert.IsType<CryptographicException>(fail.Exception);
 	}
 
@@ -77,7 +77,7 @@ public class Unlock_Tests
 		var result = box.Unlock(key);
 
 		// Assert
-		var fail = result.AssertFail("Incorrect key or nonce.");
+		var fail = result.AssertFailure("Incorrect key or nonce.");
 		Assert.IsType<CryptographicException>(fail.Exception);
 	}
 

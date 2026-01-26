@@ -21,7 +21,7 @@ public class QueryAsync_Tests : FluentQuery_Tests
 		var result = await query.QueryAsync<int>();
 
 		// Assert
-		_ = result.AssertFail("Query errors.", query.Errors);
+		_ = result.AssertFailure("Query errors.", query.Errors);
 	}
 
 	[Fact]
@@ -34,7 +34,7 @@ public class QueryAsync_Tests : FluentQuery_Tests
 		var result = await query.QueryAsync<string>();
 
 		// Assert
-		_ = result.AssertFail("No predicates defined for WHERE clause.");
+		_ = result.AssertFailure("No predicates defined for WHERE clause.");
 	}
 
 	[Fact]

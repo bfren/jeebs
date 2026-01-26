@@ -31,7 +31,7 @@ public class From_Tests
 		var result = Extract<FooNone>.From(table);
 
 		// Assert
-		_ = result.AssertFail("No columns were extracted from the tables.");
+		_ = result.AssertFailure("No columns were extracted from the tables.");
 	}
 
 	[Fact]

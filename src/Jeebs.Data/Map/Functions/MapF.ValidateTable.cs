@@ -46,11 +46,10 @@ public static partial class MapF
 		{
 			foreach (var field in missingTableFields)
 			{
-				var f = FailureValue.Create(
+				errors.Add(new(
 					"The definition of table '{Table}' is missing field '{Field}'.",
 					tableType.Name, field
-				);
-				errors.Add(f);
+				));
 			}
 		}
 
@@ -60,11 +59,10 @@ public static partial class MapF
 		{
 			foreach (var property in missingEntityProperties)
 			{
-				var f = FailureValue.Create(
+				errors.Add(new(
 					"The definition of entity '{Entity}' is missing property '{Property}'.",
 					entityType.Name, property
-				);
-				errors.Add(f);
+				));
 			}
 		}
 

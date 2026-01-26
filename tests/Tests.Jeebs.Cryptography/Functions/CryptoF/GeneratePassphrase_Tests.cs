@@ -18,7 +18,7 @@ public class GeneratePassphrase_Tests
 		var result = CryptoF.GeneratePassphrase(input);
 
 		// Assert
-		result.AssertFail("Secure passphrases must contain at least three words ({Number} requested).", input);
+		result.AssertFailure("Secure passphrases must contain at least three words ({Number} requested).", input);
 	}
 
 	[Fact]

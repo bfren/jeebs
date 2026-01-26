@@ -15,7 +15,7 @@ public sealed class Lock_Tests
 		var result = CryptoF.Lock<string>(null!, key);
 
 		// Assert
-		result.AssertFail("Contents cannot be null.");
+		result.AssertFailure("Contents cannot be null.");
 	}
 
 	[Fact]
@@ -28,7 +28,7 @@ public sealed class Lock_Tests
 		var result = CryptoF.Lock(Rnd.Str, key);
 
 		// Assert
-		result.AssertFail("Key must be {Bytes} bytes long.", 32);
+		result.AssertFailure("Key must be {Bytes} bytes long.", 32);
 	}
 
 	[Fact]

@@ -53,7 +53,7 @@ public class ApplyContentFilters_Tests
 		var result = QueryPostsF.ApplyContentFilters<IEnumerable<Model>, Model>(posts, filters);
 
 		// Assert
-		_ = result.AssertFail(ex);
+		_ = result.AssertFailure(ex);
 	}
 
 	[Fact]

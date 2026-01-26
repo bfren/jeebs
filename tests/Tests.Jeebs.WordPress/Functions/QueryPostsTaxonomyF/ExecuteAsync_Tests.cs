@@ -18,7 +18,7 @@ public class ExecuteAsync_Tests : Query_Tests
 		var result = await QueryPostsTaxonomyF.ExecuteAsync<Test>(db, w, _ => throw new Exception());
 
 		// Assert
-		_ = result.AssertFail("Error getting query posts taxonomy options.");
+		_ = result.AssertFailure("Error getting query posts taxonomy options.");
 	}
 
 	[Fact]

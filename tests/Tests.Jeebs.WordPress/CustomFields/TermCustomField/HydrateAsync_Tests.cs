@@ -23,7 +23,7 @@ public class HydrateAsync_Tests
 		var result = await field.HydrateAsync(db, unitOfWork, meta, true);
 
 		// Assert
-		_ = result.AssertFail("Meta Key '{Key}' not found for Custom Field '{Type}'.",
+		_ = result.AssertFailure("Meta Key '{Key}' not found for Custom Field '{Type}'.",
 			key, nameof(Test)
 		);
 	}
@@ -68,7 +68,7 @@ public class HydrateAsync_Tests
 		var result = await field.HydrateAsync(db, unitOfWork, meta, true);
 
 		// Assert
-		_ = result.AssertFail("Unable to get single '{ValueStr}': Cannot get single value from a list with multiple values.",
+		_ = result.AssertFailure("Unable to get single '{ValueStr}': Cannot get single value from a list with multiple values.",
 			value.ToString()
 		);
 	}

@@ -20,7 +20,7 @@ public class ExecuteAsync_Tests : Query_Tests
 		var result = await QueryAttachmentsF.ExecuteAsync<PostAttachment>(db, w, _ => throw new Exception());
 
 		// Assert
-		_ = result.AssertFail("Error getting query attachments options.");
+		_ = result.AssertFailure("Error getting query attachments options.");
 	}
 
 	[Fact]

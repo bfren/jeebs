@@ -39,7 +39,7 @@ public class QuerySingleAsync_Tests : FluentQuery_Tests
 		var result = await query.QuerySingleAsync<long>();
 
 		// Assert
-		_ = result.AssertFail("Query errors.", query.Errors);
+		_ = result.AssertFailure("Query errors.", query.Errors);
 	}
 
 	[Fact]
@@ -52,7 +52,7 @@ public class QuerySingleAsync_Tests : FluentQuery_Tests
 		var result = await query.QuerySingleAsync<long>();
 
 		// Assert
-		_ = result.AssertFail("No predicates defined for WHERE clause.");
+		_ = result.AssertFailure("No predicates defined for WHERE clause.");
 	}
 
 	[Fact]

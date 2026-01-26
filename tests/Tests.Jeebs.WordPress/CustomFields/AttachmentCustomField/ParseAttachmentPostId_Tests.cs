@@ -16,7 +16,7 @@ public class ParseAttachmentPostId_Tests
 		var result = AttachmentCustomField.ParseAttachmentPostId(type, value);
 
 		// Assert
-		_ = result.AssertFail("'{Value}' is not a valid Post ID.",
+		_ = result.AssertFailure("'{Value}' is not a valid Post ID.",
 			value
 		);
 	}

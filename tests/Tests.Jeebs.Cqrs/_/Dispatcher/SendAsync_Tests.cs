@@ -23,8 +23,8 @@ public class SendAsync_Tests
 			var r1 = await dispatcher.SendAsync(command);
 
 			// Assert
-			_ = r0.AssertFail("Unable to get command handler {Type}.", nameof(TestCommand));
-			_ = r1.AssertFail("Unable to get command handler {Type}.", nameof(TestCommand));
+			_ = r0.AssertFailure("Unable to get command handler {Type}.", nameof(TestCommand));
+			_ = r1.AssertFailure("Unable to get command handler {Type}.", nameof(TestCommand));
 		}
 
 		[Fact]
@@ -65,8 +65,8 @@ public class SendAsync_Tests
 			var r1 = await dispatcher.SendAsync(query);
 
 			// Assert
-			_ = r0.AssertFail("Unable to get query handler {Type}.", nameof(TestQuery));
-			_ = r1.AssertFail("Unable to get query handler {Type}.", nameof(TestQuery));
+			_ = r0.AssertFailure("Unable to get query handler {Type}.", nameof(TestQuery));
+			_ = r1.AssertFailure("Unable to get query handler {Type}.", nameof(TestQuery));
 		}
 
 		[Fact]

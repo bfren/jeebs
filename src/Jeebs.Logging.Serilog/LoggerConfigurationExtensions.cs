@@ -119,7 +119,7 @@ public static class LoggerConfigurationExtensions
 				atLeastOneEnabled = atLeastOneEnabled || configure.IsTrue();
 
 				// Output any errors to the console
-				_ = configure.IfFailure(
+				_ = configure.IfFailed(
 					f => Console.WriteLine(f.Message.FormatWith(f.Args))
 				);
 			}

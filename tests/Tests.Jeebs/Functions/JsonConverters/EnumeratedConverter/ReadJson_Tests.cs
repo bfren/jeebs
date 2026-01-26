@@ -30,7 +30,7 @@ public class ReadJson_Tests
 		var result = JsonF.Deserialise<EnumeratedTest0>(json);
 
 		// Assert
-		result.AssertFail("Cannot deserialise a null or empty string.");
+		result.AssertFailure("Cannot deserialise a null or empty string.");
 	}
 
 	[Fact]
@@ -63,7 +63,7 @@ public class ReadJson_Tests
 		var result = JsonF.Deserialise<EnumeratedWrapperTest1>(json);
 
 		// Assert
-		var fail = result.AssertFail();
+		var fail = result.AssertFailure();
 		Assert.NotNull(fail.Exception);
 	}
 
