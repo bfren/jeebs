@@ -12,15 +12,24 @@
         "System.Net.Http": "Warning"
       },
       "providers": {
-        "console": {
+        "console.local": {
           "enabled": true
         },
-        "seq.local": {
+        "seq.live": {
           "enabled": true
         }
       }
     },
     "services": {
+      "console": {
+        "local": {}
+      },
+      "seq": {
+        "live": {
+          "apiKey": "",
+          "server": ""
+        }
+      },
       "slack": {
         "bcgdesign": {
           "webhook": ""

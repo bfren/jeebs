@@ -10,18 +10,21 @@
 				"Microsoft": "Warning",
 				"Microsoft.Hosting.Lifetime": "Information"
 			},
-			"providers": {
-				"console": {
-					"enabled": true
-				},
-				"seq.local": {
-					"enabled": true
-				}
-			}
+      "providers": {
+        "console.local": {
+          "enabled": true
+        },
+        "seq.live": {
+          "enabled": true
+        }
+      }
 		},
     "services": {
+      "console": {
+        "local": {}
+      },
       "seq": {
-        "local": {
+        "live": {
           "server": "",
           "apiKey": ""
         }

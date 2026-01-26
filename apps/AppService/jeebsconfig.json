@@ -11,17 +11,17 @@
 				"Microsoft.Hosting.Lifetime": "Information"
 			},
       "providers": {
-        "console": {
+        "console.local": {
           "enabled": true
         },
-        "seq.local": {
+        "seq.live": {
           "enabled": true
         }
       }
 		},
     "services": {
       "seq": {
-        "server04": {
+        "live": {
           "server": "",
           "apiKey": ""
         }

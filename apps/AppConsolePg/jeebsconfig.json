@@ -21,23 +21,26 @@
         "Npgsql.Connection": "Information",
         "Npgsql.Transaction": "Information"
       },
-			"providers": {
-				"console": {
-					"enabled": true
-				},
-				"seq.local": {
-					"enabled": true,
-					"minimum": "Information"
-				}
-			}
+      "providers": {
+        "console.local": {
+          "enabled": true
+        },
+        "seq.live": {
+          "enabled": true,
+          "minimum": "Information"
+        }
+      }
 		},
-		"services": {
+    "services": {
+      "console": {
+        "local": {}
+      },
       "seq": {
-        "local": {
+        "live": {
           "server": "",
           "apiKey": ""
         }
       }
-		}
+    }
 	}
 }
