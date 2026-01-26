@@ -32,5 +32,5 @@ public abstract class ErrorController : MvcController
 	/// <param name="code">Http Status Code.</param>
 	[Route("/Error/{code:int}")]
 	public async Task<IActionResult> Handle(int code) =>
-		await this.ExecuteErrorAsync(FailValue.Create("Unknown error."), code);
+		await this.ExecuteErrorAsync(FailureValue.Create("Unknown error."), code);
 }

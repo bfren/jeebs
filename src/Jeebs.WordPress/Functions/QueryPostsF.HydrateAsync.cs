@@ -51,7 +51,7 @@ public static partial class QueryPostsF
 						var result = await customField.HydrateAsync(db, w, metaDict, required);
 
 						// If it failed and it's required, return Fail
-						if (result.Unsafe().IsFail(out var failure) && required)
+						if (result.Unsafe().Failed(out var failure) && required)
 						{
 							return R.Fail(failure);
 						}

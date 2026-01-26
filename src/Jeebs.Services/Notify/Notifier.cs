@@ -31,7 +31,7 @@ public sealed class Notifier : INotifier
 	}
 
 	/// <inheritdoc/>
-	public void Send(FailValue failure)
+	public void Send(FailureValue failure)
 	{
 		foreach (var listener in listeners)
 		{

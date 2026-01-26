@@ -20,7 +20,7 @@ public static class ControllerExtensions
 	/// </summary>
 	/// <param name="this">Controller.</param>
 	/// <param name="failure">Failure value.</param>
-	public static Task<IActionResult> ExecuteErrorAsync(this MvcController @this, FailValue failure) =>
+	public static Task<IActionResult> ExecuteErrorAsync(this MvcController @this, FailureValue failure) =>
 		ExecuteErrorAsync(@this, failure, null);
 
 	/// <summary>
@@ -29,20 +29,13 @@ public static class ControllerExtensions
 	/// <param name="this">Controller.</param>
 	/// <param name="failure">Failure value.</param>
 	/// <param name="code">HTTP Status Code.</param>
-	public static async Task<IActionResult> ExecuteErrorAsync(this MvcController @this, FailValue failure, int? code)
+	public static async Task<IActionResult> ExecuteErrorAsync(this MvcController @this, FailureValue failure, int? code)
 	{
 		// Log error
 		@this.Log.Failure(failure);
 
-		// Check for 404
-		var status = code switch
-		{
-			int x =>
-				x,
-
-			_ =>
-				StatusCodes.Status500InternalServerError
-		};
+		// Use 500 error as default
+		var status = code ?? StatusCodes.Status500InternalServerError;
 
 		// Look for a view
 		var viewName = $"Error{status}";
@@ -54,8 +47,8 @@ public static class ControllerExtensions
 		}
 
 		// If response has stared we can't do anything
-		var unableToFindViews = $"Unable to find views '{viewName}' or 'Default'.";
-		@this.Log.Wrn(unableToFindViews);
+		var unableToFindViews = "Unable to find view '{Name}' or 'Default'.";
+		@this.Log.Wrn(unableToFindViews, viewName);
 
 		if (!@this.Response.HasStarted)
 		{

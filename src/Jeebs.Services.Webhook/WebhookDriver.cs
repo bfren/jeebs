@@ -40,7 +40,7 @@ public abstract class WebhookDriver<TConfig, TMessage> : Driver<TConfig>, IWebho
 		Send(new Message { Content = message, Level = level });
 
 	/// <inheritdoc/>
-	public virtual void Send(FailValue failure)
+	public virtual void Send(FailureValue failure)
 	{
 		// Convert to notification Message
 		var message = new Message

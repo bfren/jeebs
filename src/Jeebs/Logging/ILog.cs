@@ -38,23 +38,23 @@ public interface ILog
 	bool IsEnabled(Microsoft.Extensions.Logging.LogLevel level);
 
 	/// <summary>
-	/// Log a <see cref="FailValue"/> using the <see cref="LogLevel"/> it defines.
+	/// Log a <see cref="FailureValue"/> using the <see cref="LogLevel"/> it defines.
 	/// </summary>
 	/// <param name="failure">Failure to log.</param>
-	void Failure(FailValue failure);
+	void Failure(FailureValue failure);
 
 	/// <summary>
-	/// Log a <see cref="FailValue"/> using the specified <paramref name="level"/>.
+	/// Log a <see cref="FailureValue"/> using the specified <paramref name="level"/>.
 	/// </summary>
 	/// <param name="failure">Failure to log.</param>
 	/// <param name="level">Log level.</param>
-	void Failure(FailValue failure, LogLevel level);
+	void Failure(FailureValue failure, LogLevel level);
 
 	/// <summary>
-	/// Log an array of <see cref="FailValue"/> values.
+	/// Log an array of <see cref="FailureValue"/> values.
 	/// </summary>
 	/// <param name="failures">Failures to log.</param>
-	void Failures(params FailValue[] failures);
+	void Failures(params FailureValue[] failures);
 
 	/// <inheritdoc cref="LogLevel.Verbose"/>
 	/// <param name="message">Message.</param>

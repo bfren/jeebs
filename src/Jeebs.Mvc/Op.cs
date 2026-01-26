@@ -19,12 +19,12 @@ public record class Op<T> : Op, IOp<T>
 	/// <summary>
 	/// Create with value.
 	/// </summary>
-	/// <param name="value"></param>
+	/// <param name="value">Result value.</param>
 	public Op(Result<T> value) =>
 		Result = value;
 
 	/// <summary>
-	/// Maybe result object.
+	/// Result object.
 	/// </summary>
 	internal Result<T> Result { get; private init; }
 
@@ -136,7 +136,7 @@ public abstract record class Op : IOp
 	/// Create an error result with a failure message.
 	/// </summary>
 	/// <param name="failure">Failure value.</param>
-	public static Op Error(FailValue failure) =>
+	public static Op Error(FailureValue failure) =>
 		new Op<bool>(R.Fail(failure));
 
 	/// <summary>

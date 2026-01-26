@@ -13,11 +13,11 @@ public abstract class Log : ILog
 	public abstract ILog<T> ForContext<T>();
 
 	/// <inheritdoc/>
-	public void Failure(FailValue failure) =>
+	public void Failure(FailureValue failure) =>
 		Failure(failure, failure.Level);
 
 	/// <inheritdoc/>
-	public void Failure(FailValue failure, LogLevel level)
+	public void Failure(FailureValue failure, LogLevel level)
 	{
 		// Add context to message
 		var text = failure.Context switch
@@ -76,7 +76,7 @@ public abstract class Log : ILog
 	}
 
 	/// <inheritdoc/>
-	public void Failures(params FailValue[] failures)
+	public void Failures(params FailureValue[] failures)
 	{
 		if (failures.Length == 0)
 		{
