@@ -13,60 +13,60 @@ public abstract class Log : ILog
 	public abstract ILog<T> ForContext<T>();
 
 	/// <inheritdoc/>
-	public void Failure(FailureValue failure) =>
-		Failure(failure, failure.Level);
+	public void Failure(FailureValue value) =>
+		Failure(value, value.Level);
 
 	/// <inheritdoc/>
-	public void Failure(FailureValue failure, LogLevel level)
+	public void Failure(FailureValue value, LogLevel level)
 	{
 		// Add context to message
-		var text = failure.Context switch
+		var text = value.Context switch
 		{
 			string context =>
-				$"{context} | " + failure.Message,
+				$"{context} | " + value.Message,
 
 			_ =>
-				failure.Message
+				value.Message
 		};
 
 		// Switch different levels
 		switch (level)
 		{
-			case LogLevel.Verbose when failure.Exception is not null:
-				Vrb(failure.Exception, text, failure.Args);
+			case LogLevel.Verbose when value.Exception is not null:
+				Vrb(value.Exception, text, value.Args);
 				break;
 			case LogLevel.Verbose:
-				Vrb(text, failure.Args);
+				Vrb(text, value.Args);
 				break;
-			case LogLevel.Debug when failure.Exception is not null:
-				Dbg(failure.Exception, text, failure.Args);
+			case LogLevel.Debug when value.Exception is not null:
+				Dbg(value.Exception, text, value.Args);
 				break;
 			case LogLevel.Debug:
-				Dbg(text, failure.Args);
+				Dbg(text, value.Args);
 				break;
-			case LogLevel.Information when failure.Exception is not null:
-				Inf(failure.Exception, text, failure.Args);
+			case LogLevel.Information when value.Exception is not null:
+				Inf(value.Exception, text, value.Args);
 				break;
 			case LogLevel.Information:
-				Inf(text, failure.Args);
+				Inf(text, value.Args);
 				break;
-			case LogLevel.Warning when failure.Exception is not null:
-				Wrn(failure.Exception, text, failure.Args);
+			case LogLevel.Warning when value.Exception is not null:
+				Wrn(value.Exception, text, value.Args);
 				break;
 			case LogLevel.Warning:
-				Wrn(text, failure.Args);
+				Wrn(text, value.Args);
 				break;
-			case LogLevel.Error when failure.Exception is not null:
-				Err(failure.Exception, text, failure.Args);
+			case LogLevel.Error when value.Exception is not null:
+				Err(value.Exception, text, value.Args);
 				break;
 			case LogLevel.Error:
-				Err(text, failure.Args);
+				Err(text, value.Args);
 				break;
-			case LogLevel.Fatal when failure.Exception is not null:
-				Ftl(failure.Exception, text, failure.Args);
+			case LogLevel.Fatal when value.Exception is not null:
+				Ftl(value.Exception, text, value.Args);
 				break;
 			case LogLevel.Fatal:
-				Ftl(text, failure.Args);
+				Ftl(text, value.Args);
 				break;
 			case LogLevel.Unknown:
 			default:
@@ -76,14 +76,14 @@ public abstract class Log : ILog
 	}
 
 	/// <inheritdoc/>
-	public void Failures(params FailureValue[] failures)
+	public void Failures(params FailureValue[] values)
 	{
-		if (failures.Length == 0)
+		if (values.Length == 0)
 		{
 			return;
 		}
 
-		foreach (var f in failures)
+		foreach (var f in values)
 		{
 			Failure(f);
 		}
