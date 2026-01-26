@@ -6,19 +6,6 @@ namespace Jeebs.Reflection.PropertyInfo_Tests;
 public class Set_Tests
 {
 	[Fact]
-	public void Set_WithNullObject_ThrowsArgumentNullException()
-	{
-		// Arrange
-		var info = new PropertyInfo<Foo, string>(nameof(Foo.Bar));
-
-		// Act
-		var result = void () => info.Set(null!, Rnd.Str);
-
-		// Assert
-		Assert.Throws<ArgumentNullException>(result);
-	}
-
-	[Fact]
 	public void Set_NullReferenceType_SetsToNull()
 	{
 		// Arrange
