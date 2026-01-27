@@ -139,8 +139,8 @@ public sealed class UnitOfWork : IUnitOfWork
 	public void Dispose()
 	{
 		Commit();
-		transaction.Dispose();
-		connection.Dispose();
+
+		Dispose(true);
 		GC.SuppressFinalize(this);
 	}
 
@@ -150,8 +150,22 @@ public sealed class UnitOfWork : IUnitOfWork
 	public async ValueTask DisposeAsync()
 	{
 		await CommitAsync();
+
 		await transaction.DisposeAsync();
 		await connection.DisposeAsync();
+
+		Dispose(false);
 		GC.SuppressFinalize(this);
+	}
+
+	private void Dispose(bool disposing)
+	{
+		if (!disposing)
+		{
+			return;
+		}
+
+		transaction.Dispose();
+		connection.Dispose();
 	}
 }
