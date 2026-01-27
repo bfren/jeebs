@@ -10,8 +10,6 @@ using Jeebs.Data.Enums;
 using Jeebs.Data.Map;
 using Jeebs.Data.Query.Exceptions;
 using Jeebs.Data.Query.Functions;
-using Jeebs.Messages;
-using StrongId;
 
 namespace Jeebs.Data.Query;
 
@@ -27,29 +25,23 @@ public abstract class QueryPartsBuilder
 	protected PropertyInfo GetIdColumn<T>(T table) where
 		T : ITable =>
 		table.GetType().GetProperty(nameof(IWithId.Id)) ?? throw new UnableToGetIdColumnFromTableException();
-
-	/// <summary>Messages</summary>
-	public static class M
-	{
-		/// <summary>Trying to add an empty where clause</summary>
-		public sealed record class TryingToAddEmptyClauseToWhereCustomMsg : Msg;
-
-		/// <summary>Unable to add parameters to custom where</summary>
-		public sealed record class UnableToAddParametersToWhereCustomMsg : Msg;
-	}
 }
 
 /// <summary>
-/// Builds a <see cref="QueryParts"/> object from various options
+/// Builds a <see cref="QueryParts"/> object from various options.
 /// </summary>
-/// <typeparam name="TId">Entity ID type</typeparam>
-public abstract class QueryPartsBuilder<TId> : QueryPartsBuilder, IQueryPartsBuilder<TId>
-	where TId : class, IStrongId, new()
+/// <typeparam name="TId">Entity ID type.</typeparam>
+/// <remarks>
+/// Inject extract object.
+/// </remarks>
+/// <param name="extract">IExtract.</param>
+public abstract class QueryPartsBuilder<TId>(IExtract extract) : QueryPartsBuilder, IQueryPartsBuilder<TId>
+	where TId : class, IUnion, new()
 {
 	/// <summary>
-	/// IExtract
+	/// IExtract.
 	/// </summary>
-	protected IExtract Extract { get; private init; }
+	protected IExtract Extract { get; private init; } = extract;
 
 	/// <inheritdoc/>
 	public abstract ITable Table { get; }
@@ -58,42 +50,36 @@ public abstract class QueryPartsBuilder<TId> : QueryPartsBuilder, IQueryPartsBui
 	public abstract IColumn IdColumn { get; }
 
 	/// <summary>
-	/// Create object with default extractor
+	/// Create object with default extractor.
 	/// </summary>
 	protected QueryPartsBuilder() : this(new Extract()) { }
 
-	/// <summary>
-	/// Inject extract object
-	/// </summary>
-	/// <param name="extract">IExtract</param>
-	protected QueryPartsBuilder(IExtract extract) =>
-		Extract = extract;
-
 	/// <inheritdoc/>
-	public QueryParts Create<TModel>(ulong? maximum, ulong skip) =>
-		new(Table)
+	public Result<QueryParts> Create<TModel>(ulong? maximum, ulong skip) =>
+		from c in GetColumns<TModel>()
+		select new QueryParts(Table)
 		{
-			SelectColumns = GetColumns<TModel>(),
+			SelectColumns = c,
 			Maximum = maximum,
 			Skip = skip
 		};
 
 	/// <inheritdoc/>
-	public virtual IColumnList GetColumns<TModel>() =>
+	public virtual Result<IColumnList> GetColumns<TModel>() =>
 		Extract.From<TModel>(Table);
 
 	/// <summary>
-	/// Add Join
+	/// Add Join.
 	/// </summary>
-	/// <typeparam name="TFrom">From Table type</typeparam>
-	/// <typeparam name="TTo">To Table type</typeparam>
-	/// <param name="parts">QueryParts</param>
-	/// <param name="fromTable">From table - should already be added to the query</param>
-	/// <param name="fromSelector">From column</param>
-	/// <param name="toTable">To table - should be a new table not already added to the query</param>
-	/// <param name="toSelector">To column</param>
-	/// <param name="withJoin">Function to add the Join to the correct list</param>
-	protected internal Maybe<QueryParts> AddJoin<TFrom, TTo>(
+	/// <typeparam name="TFrom">From Table type.</typeparam>
+	/// <typeparam name="TTo">To Table type.</typeparam>
+	/// <param name="parts">QueryParts.</param>
+	/// <param name="fromTable">From table - should already be added to the query.</param>
+	/// <param name="fromSelector">From column.</param>
+	/// <param name="toTable">To table - should be a new table not already added to the query.</param>
+	/// <param name="toSelector">To column.</param>
+	/// <param name="withJoin">Function to add the Join to the correct list.</param>
+	protected internal Result<QueryParts> AddJoin<TFrom, TTo>(
 		QueryParts parts,
 		TFrom fromTable,
 		Expression<Func<TFrom, string>> fromSelector,
@@ -108,7 +94,7 @@ public abstract class QueryPartsBuilder<TId> : QueryPartsBuilder, IQueryPartsBui
 		select withJoin(parts, colFrom, colTo);
 
 	/// <inheritdoc/>
-	public virtual Maybe<QueryParts> AddInnerJoin<TFrom, TTo>(
+	public virtual Result<QueryParts> AddInnerJoin<TFrom, TTo>(
 		QueryParts parts,
 		TFrom fromTable,
 		Expression<Func<TFrom, string>> fromSelector,
@@ -122,7 +108,7 @@ public abstract class QueryPartsBuilder<TId> : QueryPartsBuilder, IQueryPartsBui
 		);
 
 	/// <inheritdoc/>
-	public virtual Maybe<QueryParts> AddLeftJoin<TFrom, TTo>(
+	public virtual Result<QueryParts> AddLeftJoin<TFrom, TTo>(
 		QueryParts parts,
 		TFrom fromTable,
 		Expression<Func<TFrom, string>> fromSelector,
@@ -136,7 +122,7 @@ public abstract class QueryPartsBuilder<TId> : QueryPartsBuilder, IQueryPartsBui
 		);
 
 	/// <inheritdoc/>
-	public virtual Maybe<QueryParts> AddRightJoin<TFrom, TTo>(
+	public virtual Result<QueryParts> AddRightJoin<TFrom, TTo>(
 		QueryParts parts,
 		TFrom fromTable,
 		Expression<Func<TFrom, string>> fromSelector,
@@ -150,7 +136,7 @@ public abstract class QueryPartsBuilder<TId> : QueryPartsBuilder, IQueryPartsBui
 		);
 
 	/// <inheritdoc/>
-	public virtual Maybe<QueryParts> AddWhereId(QueryParts parts, TId? id, IImmutableList<TId> ids)
+	public virtual Result<QueryParts> AddWhereId(QueryParts parts, TId? id, IImmutableList<TId> ids)
 	{
 		// Add Id EQUAL
 		if (id is not null)
@@ -170,7 +156,7 @@ public abstract class QueryPartsBuilder<TId> : QueryPartsBuilder, IQueryPartsBui
 	}
 
 	/// <inheritdoc/>
-	public virtual Maybe<QueryParts> AddSort(QueryParts parts, bool sortRandom, IImmutableList<(IColumn, SortOrder)> sort)
+	public virtual Result<QueryParts> AddSort(QueryParts parts, bool sortRandom, IImmutableList<(IColumn, SortOrder)> sort)
 	{
 		// Add random sort
 		if (sortRandom)
@@ -189,7 +175,7 @@ public abstract class QueryPartsBuilder<TId> : QueryPartsBuilder, IQueryPartsBui
 	}
 
 	/// <inheritdoc/>
-	public virtual Maybe<QueryParts> AddWhere<TTable>(
+	public virtual Result<QueryParts> AddWhere<TTable>(
 		QueryParts parts,
 		TTable table,
 		Expression<Func<TTable, string>> column,
@@ -201,24 +187,25 @@ public abstract class QueryPartsBuilder<TId> : QueryPartsBuilder, IQueryPartsBui
 			table, column
 		)
 		.Map(
-			x => parts with { Where = parts.Where.WithItem((x, cmp, value)) },
-			F.DefaultHandler
+			x => parts with { Where = parts.Where.WithItem((x, cmp, value)) }
 		);
 
 	/// <inheritdoc/>
-	public virtual Maybe<QueryParts> AddWhereCustom(QueryParts parts, string clause, object parameters)
+	public virtual Result<QueryParts> AddWhereCustom(QueryParts parts, string clause, object parameters)
 	{
 		// Check clause
 		if (string.IsNullOrWhiteSpace(clause))
 		{
-			return F.None<QueryParts, M.TryingToAddEmptyClauseToWhereCustomMsg>();
+			return R.Fail("You cannot add an empty WHERE clause.")
+				.Ctx(nameof(QueryPartsBuilder<>), nameof(AddWhereCustom));
 		}
 
 		// Get parameters
 		var param = new QueryParametersDictionary();
 		if (!param.TryAdd(parameters))
 		{
-			return F.None<QueryParts, M.UnableToAddParametersToWhereCustomMsg>();
+			return R.Fail("Failed to add parameters to WHERE clause.")
+				.Ctx(nameof(QueryPartsBuilder<>), nameof(AddWhereCustom));
 		}
 
 		// Add clause and return

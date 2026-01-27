@@ -1,4 +1,4 @@
-﻿// Jeebs Unit Tests
+// Jeebs Unit Tests
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 namespace Jeebs.DateTimeInt_Tests;
@@ -63,7 +63,7 @@ public class Constructor_Tests
 	[Theory]
 	[InlineData(null)]
 	[InlineData("")]
-	public void From_Null_Or_Empty_String_Returns_Zeroes(string input)
+	public void From_Null_Or_Empty_String_Returns_Zeroes(string? input)
 	{
 		// Arrange
 

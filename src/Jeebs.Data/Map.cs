@@ -2,14 +2,13 @@
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using Jeebs.Data.Map;
-using StrongId;
 
 namespace Jeebs.Data;
 
 /// <summary>
-/// Map an entity to a table in a fluent style
+/// Map an entity to a table in a fluent style.
 /// </summary>
-/// <typeparam name="TEntity">Entity type</typeparam>
+/// <typeparam name="TEntity">Entity type.</typeparam>
 public static class Map<TEntity>
 	where TEntity : IWithId
 {
@@ -21,19 +20,19 @@ public static class Map<TEntity>
 		To<TTable>(EntityMapper.Instance);
 
 	/// <summary>
-	/// Map entity to the specified table type
+	/// Map entity to the specified table type.
 	/// </summary>
-	/// <typeparam name="TTable">Table type</typeparam>
-	/// <param name="mapper">IMapper</param>
+	/// <typeparam name="TTable">Table type.</typeparam>
+	/// <param name="mapper">IMapper.</param>
 	internal static ITableMap To<TTable>(IEntityMapper mapper)
 		where TTable : Table, new() =>
 		mapper.Map<TEntity, TTable>(new TTable());
 
 	/// <summary>
-	/// Map entity to the specified table
+	/// Map entity to the specified table.
 	/// </summary>
-	/// <typeparam name="TTable">Table type</typeparam>
-	/// <param name="table">The table to map <typeparamref name="TEntity"/> to</param>
+	/// <typeparam name="TTable">Table type.</typeparam>
+	/// <param name="table">The table to map <typeparamref name="TEntity"/> to.</param>
 #pragma warning disable CA1000 // Do not declare static members on generic types
 	public static ITableMap To<TTable>(TTable table)
 #pragma warning restore CA1000 // Do not declare static members on generic types
@@ -41,11 +40,11 @@ public static class Map<TEntity>
 		To(table, EntityMapper.Instance);
 
 	/// <summary>
-	/// Map entity to the specified table
+	/// Map entity to the specified table.
 	/// </summary>
-	/// <typeparam name="TTable">Table type</typeparam>
-	/// <param name="table">The table to map <typeparamref name="TEntity"/> to</param>
-	/// <param name="mapper">IMapper</param>
+	/// <typeparam name="TTable">Table type.</typeparam>
+	/// <param name="table">The table to map <typeparamref name="TEntity"/> to.</param>
+	/// <param name="mapper">IMapper.</param>
 	internal static ITableMap To<TTable>(TTable table, IEntityMapper mapper)
 		where TTable : Table =>
 		mapper.Map<TEntity, TTable>(table);

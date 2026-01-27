@@ -8,17 +8,17 @@ using System.Threading.Tasks;
 namespace Jeebs.Data;
 
 /// <summary>
-/// Database unit of work
+/// Database unit of work.
 /// </summary>
 public interface IUnitOfWork : IAsyncDisposable, IDisposable
 {
 	/// <summary>
-	/// Database connection for this Unit of Work
+	/// Database connection for this Unit of Work.
 	/// </summary>
 	IDbConnection Connection { get; }
 
 	/// <summary>
-	/// Database transaction for this Unit of Work
+	/// Database transaction for this Unit of Work.
 	/// </summary>
 	IDbTransaction Transaction { get; }
 
@@ -26,7 +26,7 @@ public interface IUnitOfWork : IAsyncDisposable, IDisposable
 	void Commit();
 
 	/// <summary>
-	/// Commits all queries - should normally be called as part of Dispose()
+	/// Commits all queries - should normally be called as part of Dispose().
 	/// </summary>
 	Task CommitAsync();
 
@@ -34,7 +34,7 @@ public interface IUnitOfWork : IAsyncDisposable, IDisposable
 	void Rollback();
 
 	/// <summary>
-	/// Rollback all queries
+	/// Rollback all queries.
 	/// </summary>
 	Task RollbackAsync();
 }

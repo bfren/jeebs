@@ -1,6 +1,8 @@
 // Jeebs Unit Tests
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
+using Jeebs.Functions;
+
 namespace Jeebs.Collections.ImmutableList_Tests;
 
 public class Count_Tests
@@ -15,7 +17,7 @@ public class Count_Tests
 		{
 			items.Add(Rnd.Int);
 		}
-		var list = ImmutableList.Create(items: items);
+		var list = ListF.Create(items: items);
 
 		// Act
 		var result = list.Count;

@@ -18,18 +18,18 @@ public static partial class FluentQueryHelper
 	) =>
 		AssertWhereNotIn<TEntity, TValue>(
 			call,
-			expectedProperty.GetPropertyInfo().UnsafeUnwrap().Name,
+			expectedProperty.GetPropertyInfo().Unsafe().Unwrap().Name,
 			expectedValues
 		);
 
 	/// <summary>
-	/// Validate a call to <see cref="IFluentQuery{TEntity, TId}.WhereNotIn{TValue}(Expression{Func{TEntity, TValue}}, IEnumerable{TValue})"/>
+	/// Validate a call to <see cref="IFluentQuery{TEntity, TId}.WhereNotIn{TValue}(Expression{Func{TEntity, TValue}}, IEnumerable{TValue})"/>.
 	/// </summary>
-	/// <typeparam name="TEntity">Entity type</typeparam>
-	/// <typeparam name="TValue">Column select value type</typeparam>
-	/// <param name="call">Call</param>
-	/// <param name="expectedProperty">Expected property</param>
-	/// <param name="expectedValues">Expected values</param>
+	/// <typeparam name="TEntity">Entity type.</typeparam>
+	/// <typeparam name="TValue">Column select value type.</typeparam>
+	/// <param name="call">Call.</param>
+	/// <param name="expectedProperty">Expected property.</param>
+	/// <param name="expectedValues">Expected values.</param>
 	public static void AssertWhereNotIn<TEntity, TValue>(ICall call, string expectedProperty, TValue[] expectedValues)
 	{
 		// Check the method

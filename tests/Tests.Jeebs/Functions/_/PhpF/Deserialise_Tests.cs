@@ -38,9 +38,9 @@ public class Deserialise_Tests
 		var result = PhpF.Deserialise(SerialisedArray);
 
 		// Assert
-		var outer = Assert.IsType<PhpF.AssocArray>(result);
+		var outer = Assert.IsType<PhpF.AssociativeArray>(result);
 		Assert.Equal("Sample Array", outer[0]);
-		var inner = Assert.IsType<PhpF.AssocArray>(outer[1]);
+		var inner = Assert.IsType<PhpF.AssociativeArray>(outer[1]);
 		Assert.Equal("Apple", inner[0]);
 		Assert.Equal("Orange", inner[1]);
 	}

@@ -1,14 +1,12 @@
 // Jeebs Unit Tests
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
-using static Jeebs.Reflection.ObjectExtensions.M;
-
 namespace Jeebs.Reflection.ObjectExtensions_Tests;
 
 public class GetPropertyValue_Tests
 {
 	[Fact]
-	public void Property_Does_Not_Exist_Returns_None_With_PropertyNotFoundMsg()
+	public void Property_Does_Not_Exist_Returns_None()
 	{
 		// Arrange
 		var test = new Test(Rnd.Str);
@@ -18,12 +16,12 @@ public class GetPropertyValue_Tests
 		var r1 = test.GetPropertyValue<string>(Rnd.Str);
 
 		// Assert
-		r0.AssertNone().AssertType<PropertyNotFoundMsg>();
-		r1.AssertNone().AssertType<PropertyNotFoundMsg>();
+		r0.AssertNone();
+		r1.AssertNone();
 	}
 
 	[Fact]
-	public void TypeParam_Is_Wrong_Type_Returns_None_With_UnexpectedPropertyTypeMsg()
+	public void TypeParam_Is_Wrong_Type_Returns_None()
 	{
 		// Arrange
 		var test = new Test(Rnd.Str);
@@ -32,12 +30,12 @@ public class GetPropertyValue_Tests
 		var result = test.GetPropertyValue<int>(nameof(Test.Foo));
 
 		// Assert
-		result.AssertNone().AssertType<UnexpectedPropertyTypeMsg<int>>();
+		result.AssertNone();
 	}
 
 	[Theory]
 	[InlineData(null)]
-	public void Value_Is_Null_Returns_None_With_NullValueMsg(string input)
+	public void Value_Is_Null_Returns_None_With_NullValueMsg(string? input)
 	{
 		// Arrange
 		var test = new Test(input);
@@ -47,8 +45,8 @@ public class GetPropertyValue_Tests
 		var r1 = test.GetPropertyValue<string>(nameof(Test.Foo));
 
 		// Assert
-		r0.AssertNone().AssertType<NullValueMsg<object>>();
-		r1.AssertNone().AssertType<NullValueMsg<string>>();
+		r0.AssertNone();
+		r1.AssertNone();
 	}
 
 	[Fact]
@@ -69,5 +67,5 @@ public class GetPropertyValue_Tests
 		Assert.Equal(value, s1);
 	}
 
-	public sealed record class Test(string Foo);
+	public sealed record class Test(string? Foo);
 }

@@ -7,31 +7,31 @@ using Jeebs.Data;
 namespace Jeebs.WordPress.CustomFields;
 
 /// <summary>
-/// Represents a CustomField, which are stored in the post_meta table
+/// Represents a CustomField, which are stored in the post_meta table.
 /// </summary>
 public interface ICustomField
 {
 	/// <summary>
-	/// Custom Field key
+	/// Custom Field key.
 	/// </summary>
 	string Key { get; }
 
 	/// <summary>
-	/// Hydrate this Custom Field using <see cref="IWpDb"/>, and <see cref="MetaDictionary"/>
+	/// Hydrate this Custom Field using <see cref="IWpDb"/>, and <see cref="MetaDictionary"/>.
 	/// </summary>
-	/// <param name="db">IWpDb</param>
-	/// <param name="w">IUnitOfWork</param>
-	/// <param name="meta">Meta Dictionary</param>
-	/// <param name="isRequired">Whether or not the field is required</param>
-	Task<Maybe<bool>> HydrateAsync(IWpDb db, IUnitOfWork w, MetaDictionary meta, bool isRequired);
+	/// <param name="db">IWpDb.</param>
+	/// <param name="w">IUnitOfWork.</param>
+	/// <param name="meta">Meta Dictionary.</param>
+	/// <param name="isRequired">Whether or not the field is required.</param>
+	Task<Result<bool>> HydrateAsync(IWpDb db, IUnitOfWork w, MetaDictionary meta, bool isRequired);
 }
 
 /// <inheritdoc/>
-/// <typeparam name="T">Value type</typeparam>
+/// <typeparam name="T">Value type.</typeparam>
 public interface ICustomField<out T> : ICustomField
 {
 	/// <summary>
-	/// Custom Field Value
+	/// Custom Field Value.
 	/// </summary>
 	T ValueObj { get; }
 }

@@ -6,19 +6,21 @@ using Microsoft.Extensions.Options;
 namespace Jeebs.Config.Services.Console;
 
 /// <summary>
-/// Console configuration
+/// Console configuration.
 /// </summary>
 public sealed record class ConsoleConfig : IOptions<ConsoleConfig>, IServiceConfig
 {
 	/// <summary>
-	/// Override default template
+	/// Log message template.
 	/// </summary>
-	public string? Template { get; init; }
+	public string Template { get; init; } =
+		"[{Timestamp:yyMMdd HHmm} {Level:u3}] {Message:lj} | {SourceContext}{NewLine}";
 
 	/// <summary>
-	/// Whether or not to add a prefix to the output
+	/// Whether or not to add a prefix to the output.
 	/// </summary>
-	public bool AddPrefix { get; init; } = true;
+	public bool AddPrefix { get; init; } =
+		true;
 
 	/// <inheritdoc/>
 	public bool IsValid =>

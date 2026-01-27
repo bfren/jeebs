@@ -17,69 +17,69 @@ namespace Jeebs.Logging.Serilog.MySql;
 public sealed partial class MySqlLogger : IMySqlConnectorLogger
 {
 	/// <summary>
-	/// Logger instance
+	/// Logger instance.
 	/// </summary>
 	internal ILogger Logger { get; private init; }
 
 	/// <summary>
-	/// Token replacement regular expression
+	/// Token replacement regular expression.
 	/// </summary>
 	internal static Regex TokenReplacer { get; } = LogMessageTokenRegex();
 
 	/// <summary>
-	/// Create log instance by name
+	/// Create log instance by name.
 	/// </summary>
-	/// <param name="name">Log instance name</param>
+	/// <param name="name">Log instance name.</param>
 	public MySqlLogger(string name) =>
 		Logger = global::Serilog.Log.ForContext("SourceContext", "MySqlConnector." + name);
 
 	/// <summary>
-	/// Returns true if the log is enabled for <paramref name="level"/>
+	/// Returns true if the log is enabled for <paramref name="level"/>.
 	/// </summary>
-	/// <param name="level">Requested level</param>
+	/// <param name="level">Requested level.</param>
 	public bool IsEnabled(MySqlConnectorLogLevel level) =>
-		LevelF.ConvertToSerilogLevel(level).Switch(
+		LevelF.ConvertToSerilogLevel(level).Match(
 			some: Logger.IsEnabled,
 			none: false
 		);
 
 	/// <summary>
-	/// Send a message to the log
+	/// Send a message to the log.
 	/// </summary>
-	/// <param name="level">Event level</param>
-	/// <param name="message">Log message</param>
+	/// <param name="level">Event level.</param>
+	/// <param name="message">Log message.</param>
 	public void Log(MySqlConnectorLogLevel level, string message) =>
 		Log(level, message, null, null);
 
 	/// <summary>
-	/// Send a message to the log
+	/// Send a message to the log.
 	/// </summary>
-	/// <param name="level">Event level</param>
-	/// <param name="message">Log message</param>
-	/// <param name="args">[Optional] Message arguments</param>
+	/// <param name="level">Event level.</param>
+	/// <param name="message">Log message.</param>
+	/// <param name="args">[Optional] Message arguments.</param>
 	public void Log(MySqlConnectorLogLevel level, string message, object?[]? args) =>
 		Log(level, message, args, null);
 
 	/// <summary>
-	/// Send a message to the log
+	/// Send a message to the log.
 	/// </summary>
-	/// <param name="level">Event level</param>
-	/// <param name="message">Log message</param>
-	/// <param name="args">[Optional] Message arguments</param>
-	/// <param name="exception">[Optional] Exception</param>
+	/// <param name="level">Event level.</param>
+	/// <param name="message">Log message.</param>
+	/// <param name="args">[Optional] Message arguments.</param>
+	/// <param name="exception">[Optional] Exception.</param>
 	public void Log(MySqlConnectorLogLevel level, string message, object?[]? args, Exception? exception) =>
-		LevelF.ConvertToSerilogLevel(level).Switch(
+		LevelF.ConvertToSerilogLevel(level).Match(
 			some: x => Log(x, message, args, exception),
-			none: r => Log(LogEventLevel.Fatal, "Unable to log: {Reason}.", [r], null)
+			none: () => throw new InvalidOperationException($"Unable to convert {level} to Serilog LogEventLevel.")
 		);
 
 	/// <summary>
-	/// Send a message to the log
+	/// Send a message to the log.
 	/// </summary>
-	/// <param name="level">Event level</param>
-	/// <param name="message">Log message</param>
-	/// <param name="args">[Optional] Message arguments</param>
-	/// <param name="exception">[Optional] Exception</param>
+	/// <param name="level">Event level.</param>
+	/// <param name="message">Log message.</param>
+	/// <param name="args">[Optional] Message arguments.</param>
+	/// <param name="exception">[Optional] Exception.</param>
 	private void Log(LogEventLevel level, string message, object?[]? args, Exception? exception)
 	{
 		if (args is null || args.Length == 0)

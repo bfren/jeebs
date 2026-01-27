@@ -2,7 +2,6 @@
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using Jeebs.Cqrs.Internals;
-using Jeebs.Cqrs.Messages;
 
 namespace Jeebs.Cqrs.CommandHandler_Tests;
 
@@ -33,9 +32,7 @@ public class HandleAsync_Tests
 		var result = await ((ICommandHandler)handler).HandleAsync(command);
 
 		// Assert
-		var none = result.AssertNone().AssertType<IncorrectCommandTypeMsg>();
-		Assert.Equal(typeof(Command), none.ExpectedType);
-		Assert.Equal(typeof(IncorrectCommand), none.ActualType);
+		_ = result.AssertFailure("Incorrect command type.");
 	}
 
 	[Fact]

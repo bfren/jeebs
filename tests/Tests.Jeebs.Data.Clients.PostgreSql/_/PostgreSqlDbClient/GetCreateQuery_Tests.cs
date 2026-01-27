@@ -31,7 +31,7 @@ public class GetCreateQuery_Tests
 		c1Property.Configure().CustomAttributes.Returns(Array.Empty<CustomAttributeData>());
 		var c1 = new Column(table, c1Name, c1Property);
 
-		var list = new ColumnList(new[] { c0, c1 });
+		var list = new ColumnList([c0, c1]);
 		var client = new PostgreSqlDbClient();
 
 		var expected = $"INSERT INTO {schema}.{name} ({c0Name}, {c1Name}) VALUES (@{c0Alias}, @{c1Alias}); " +

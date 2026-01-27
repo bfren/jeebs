@@ -1,8 +1,6 @@
 // Jeebs Unit Tests
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
-using static Jeebs.Functions.Base32F.M;
-
 namespace Jeebs.Functions.Base32F_Tests;
 
 public class FromBase32String_Tests
@@ -13,7 +11,7 @@ public class FromBase32String_Tests
 		// Arrange
 
 		// Act
-		var result = Base32F.FromBase32String(string.Empty).UnsafeUnwrap();
+		var result = Base32F.FromBase32String(string.Empty).Unsafe().Unwrap();
 
 		// Assert
 		Assert.Empty(result);
@@ -21,7 +19,7 @@ public class FromBase32String_Tests
 
 	[Theory]
 	[InlineData("0")]
-	public void Input_String_Too_Short_Returns_None_With_InputStringNotLongEnoughMsg(string input)
+	public void Input_String_Too_Short_Returns_Fail(string input)
 	{
 		// Arrange
 
@@ -29,7 +27,7 @@ public class FromBase32String_Tests
 		var result = Base32F.FromBase32String(input);
 
 		// Assert
-		result.AssertNone().AssertType<InputStringNotLongEnoughMsg>();
+		result.AssertFailure("Input string is not long enough.");
 	}
 
 	[Theory]
@@ -37,7 +35,7 @@ public class FromBase32String_Tests
 	[InlineData('1')]
 	[InlineData('8')]
 	[InlineData('9')]
-	public void Invalid_Character_In_Input_String_Returns_None_With_CharacterNotInBase32AlphabetMsg(char input)
+	public void Invalid_Character_In_Input_String_Returns_Fail(char input)
 	{
 		// Arrange
 		var str = Rnd.Str + input;
@@ -46,8 +44,7 @@ public class FromBase32String_Tests
 		var result = Base32F.FromBase32String(str);
 
 		// Assert
-		var none = result.AssertNone().AssertType<CharacterNotInBase32AlphabetMsg>();
-		Assert.Equal(input, none.Value);
+		result.AssertFailure("'{Character}' is not in Base32 alphabet.", input);
 	}
 
 	[Fact]
@@ -57,7 +54,7 @@ public class FromBase32String_Tests
 		var str = "5C5NHZDVBT4RWPBK";
 
 		// Act
-		var result = Base32F.FromBase32String(str).UnsafeUnwrap();
+		var result = Base32F.FromBase32String(str).Unsafe().Unwrap();
 
 		// Assert
 		Assert.Equal(10, result.Length);
@@ -67,11 +64,11 @@ public class FromBase32String_Tests
 	public void Works_Both_Ways()
 	{
 		// Arrange
-		var expected = Base32F.FromBase32String("5C5NHZDVBT4RWPBK").UnsafeUnwrap();
+		var expected = Base32F.FromBase32String("5C5NHZDVBT4RWPBK").Unsafe().Unwrap();
 		var str = Base32F.ToBase32String(expected);
 
 		// Act
-		var result = Base32F.FromBase32String(str).UnsafeUnwrap();
+		var result = Base32F.FromBase32String(str).Unsafe().Unwrap();
 
 		// Assert
 		Assert.Equal(expected, result);

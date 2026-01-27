@@ -10,14 +10,14 @@ using Microsoft.AspNetCore.Razor.TagHelpers;
 namespace Jeebs.Mvc.TagHelpers;
 
 /// <summary>
-/// Image TagHelper
+/// Image TagHelper.
 /// </summary>
 /// <remarks>
 /// Setup dependencies
 /// </remarks>
-/// <param name="fileVersionProvider">IFileVersionProvider object</param>
-/// <param name="urlHelperFactory">IUrlHelperFactory object</param>
-/// <param name="htmlEncoder">HtmlEncoder</param>
+/// <param name="fileVersionProvider">IFileVersionProvider object.</param>
+/// <param name="urlHelperFactory">IUrlHelperFactory object.</param>
+/// <param name="htmlEncoder">HtmlEncoder.</param>
 [HtmlTargetElement("image", TagStructure = TagStructure.WithoutEndTag)]
 public sealed class ImageTagHelper(
 	IFileVersionProvider fileVersionProvider,
@@ -26,35 +26,36 @@ public sealed class ImageTagHelper(
 ) : UrlResolutionTagHelper(urlHelperFactory, htmlEncoder)
 {
 	/// <summary>
-	/// Image src - if this starts '/' then it is assumed it is a path within the default wwwroot/images directory
+	/// Image src - if this starts '/' then it is assumed it is a path within the wwwroot/img directory -
+	/// otherwise use ~/... to reference an image elsewhere within wwwroot or an absolute URL
 	/// </summary>
 	public string Src { get; set; } = string.Empty;
 
 	/// <summary>
-	/// If true, will override the '/' test and use Src as the image source
+	/// If true, will override the '/' test and use Src as the image source.
 	/// </summary>
 	public bool SrcDirect { get; set; }
 
 	/// <summary>
-	/// Required alternative text (will be used to set the title attribute as well)
+	/// Required alternative text (will be used to set the title attribute as well).
 	/// </summary>
 	public string Alt { get; set; } = string.Empty;
 
 	/// <summary>
-	/// [Optional] CSS class to apply to the element
+	/// [Optional] CSS class to apply to the element.
 	/// </summary>
 	public string CssClass { get; set; } = string.Empty;
 
 	/// <summary>
-	/// FileVersionProvider object
+	/// FileVersionProvider object.
 	/// </summary>
 	private readonly IFileVersionProvider fileVersionProvider = fileVersionProvider;
 
 	/// <summary>
-	/// Process the tag helper
+	/// Process the tag helper.
 	/// </summary>
-	/// <param name="context">TagHelperContext object</param>
-	/// <param name="output">TagHelperOutput object</param>
+	/// <param name="context">TagHelperContext object.</param>
+	/// <param name="output">TagHelperOutput object.</param>
 	public override void Process(TagHelperContext context, TagHelperOutput output)
 	{
 		// Check source

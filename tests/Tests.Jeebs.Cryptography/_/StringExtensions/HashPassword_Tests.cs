@@ -11,12 +11,12 @@ public sealed class HashPassword_Tests
 	[InlineData(null)]
 	[InlineData("")]
 	[InlineData(" ")]
-	public void HashPassword_NullOrWhiteSpace_Returns_Empty_String(string input)
+	public void HashPassword_NullOrWhiteSpace_Returns_Empty_String(string? input)
 	{
 		// Arrange
 
 		// Act
-		var result = input.HashPassword();
+		var result = StringExtensions.HashPassword(input!);
 
 		// Assert
 		Assert.Equal(string.Empty, result);

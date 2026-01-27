@@ -159,10 +159,10 @@ public class AssertWhere_Tests : Setup
 		// Arrange
 		var fluent = Create();
 		var clause = Rnd.Str;
-		fluent.Where(clause, new { value = Rnd.Lng });
+		fluent.Where(clause, Rnd.Lng);
 
 		// Act
-		var action = (ICall c) => FluentQueryHelper.AssertWhere(c, clause, new { value = Rnd.Lng });
+		var action = (ICall c) => FluentQueryHelper.AssertWhere(c, clause, Rnd.Lng);
 
 		// Assert
 		Assert.Throws<EqualJsonException>(() => fluent.AssertCalls(action));

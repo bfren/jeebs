@@ -9,9 +9,19 @@ using Microsoft.Extensions.Options;
 namespace AppConsoleWp.Bcg;
 
 /// <summary>
-/// BCG WordPress instance
+/// BCG WordPress instance.
 /// </summary>
-public sealed class WpBcg : Wp<
+/// <remarks>
+/// Create instance.
+/// </remarks>
+/// <param name="dbConfig">DbConfig.</param>
+/// <param name="wpConfig">WpBcgConfig.</param>
+/// <param name="log">ILog.</param>
+public sealed class WpBcg(
+	IOptions<DbConfig> dbConfig,
+	IOptions<WpBcgConfig> wpConfig,
+	Jeebs.Logging.ILog<WpBcg> log
+) : Wp<
 	WpBcgConfig,
 	Entities.Comment,
 	Entities.CommentMeta,
@@ -25,24 +35,17 @@ public sealed class WpBcg : Wp<
 	Entities.TermTaxonomy,
 	Entities.User,
 	Entities.UserMeta
->
+>(dbConfig, wpConfig, log)
 {
-	/// <summary>
-	/// Create instance
-	/// </summary>
-	/// <param name="dbConfig">DbConfig</param>
-	/// <param name="wpConfig">WpBcgConfig</param>
-	/// <param name="log">ILog</param>
-	public WpBcg(IOptions<DbConfig> dbConfig, IOptions<WpBcgConfig> wpConfig, Jeebs.Logging.ILog<WpBcg> log) : base(dbConfig, wpConfig, log) { }
 
 	/// <summary>
-	/// Register custom post types
+	/// Register custom post types.
 	/// </summary>
 	public override void RegisterCustomPostTypes() =>
 		PostType.AddCustomPostType(PostTypes.Sermon);
 
 	/// <summary>
-	/// Register custom taxonomies
+	/// Register custom taxonomies.
 	/// </summary>
 	public override void RegisterCustomTaxonomies()
 	{
@@ -54,7 +57,7 @@ public sealed class WpBcg : Wp<
 	}
 
 	/// <summary>
-	/// Custom Fields
+	/// Custom Fields.
 	/// </summary>
 	public static class CustomFields
 	{
@@ -66,7 +69,7 @@ public sealed class WpBcg : Wp<
 	}
 
 	/// <summary>
-	/// Custom Post Types
+	/// Custom Post Types.
 	/// </summary>
 	public static class PostTypes
 	{
@@ -74,7 +77,7 @@ public sealed class WpBcg : Wp<
 	}
 
 	/// <summary>
-	/// Custom Taxonomies
+	/// Custom Taxonomies.
 	/// </summary>
 	public static class Taxonomies
 	{

@@ -13,9 +13,9 @@ namespace Jeebs.Logging.Serilog;
 public interface ILoggingConnector
 {
 	/// <summary>
-	/// Enable this user
+	/// Enable this user.
 	/// </summary>
-	/// <param name="serilog"></param>
-	/// <param name="jeebs"></param>
+	/// <param name="serilog">Serilog configuration object.</param>
+	/// <param name="jeebs">JeebsConfig.</param>
 	void Enable(LoggerConfiguration serilog, JeebsConfig jeebs);
 }

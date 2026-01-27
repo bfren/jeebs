@@ -6,49 +6,49 @@ using System.Collections.Generic;
 namespace Jeebs.Data.Map;
 
 /// <summary>
-/// Table Map
+/// Table Map.
 /// </summary>
 public interface ITableMap
 {
 	/// <summary>
-	/// Table object
+	/// Table object.
 	/// </summary>
 	ITable Table { get; init; }
 
 	/// <summary>
-	/// Table Name
+	/// Table Name.
 	/// </summary>
 	IDbName Name { get; }
 
 	/// <summary>
-	/// Mapped Columns
+	/// Mapped Columns.
 	/// </summary>
 	IColumnList Columns { get; init; }
 
 	/// <summary>
-	/// Id Column
+	/// Id Column.
 	/// </summary>
 	IColumn IdColumn { get; init; }
 
 	/// <summary>
-	/// [Optional] Version Column
+	/// [Optional] Version Column.
 	/// </summary>
 	IColumn? VersionColumn { get; }
 
 	/// <summary>
-	/// Get all column names
+	/// Get all column names.
 	/// </summary>
 	IEnumerable<string> GetColumnNames();
 
 	/// <summary>
-	/// Get all column aliases
+	/// Get all column aliases.
 	/// </summary>
-	/// <param name="includeIdAlias">If true, the ID column alias will be included</param>
+	/// <param name="includeIdAlias">If true, the ID column alias will be included.</param>
 	IEnumerable<string> GetColumnAliases(bool includeIdAlias);
 
 	/// <summary>
 	/// Get all column names and aliases for writeable columns
 	/// (i.e. not marked as Id / Computed / Readonly)
 	/// </summary>
-	Maybe<(List<string> names, List<string> aliases)> GetWriteableColumnNamesAndAliases();
+	Result<(List<string> names, List<string> aliases)> GetWriteableColumnNamesAndAliases();
 }

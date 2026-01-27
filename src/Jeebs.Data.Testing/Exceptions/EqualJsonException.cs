@@ -4,7 +4,7 @@
 namespace Jeebs.Data.Testing.Exceptions;
 
 /// <summary>
-/// See <see cref="Query.FluentQueryHelper.AssertEqualJson(object, object?)"/>
+/// See <see cref="Query.FluentQueryHelper.AssertEqualJson(object, object?)"/>.
 /// </summary>
 public sealed class EqualJsonException : FluentQueryHelperException
 {

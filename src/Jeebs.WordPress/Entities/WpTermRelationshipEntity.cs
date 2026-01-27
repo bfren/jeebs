@@ -3,21 +3,20 @@
 
 using System;
 using Jeebs.Data.Attributes;
-using StrongId;
 
 namespace Jeebs.WordPress.Entities;
 
 /// <summary>
-/// TermRelationship entity
+/// TermRelationship entity.
 /// </summary>
 public abstract record class WpTermRelationshipEntity : IWithId
 {
 	/// <summary>
-	/// Required to enable mapping - but the WP database does not have a unique key for the Term Relationship table
+	/// Required to enable mapping - but the WP database does not have a unique key for the Term Relationship table.
 	/// </summary>
 	/// <exception cref="NotSupportedException"></exception>
 	[Ignore]
-	public IStrongId Id
+	public IUnion Id
 	{
 		get => throw NotSupported;
 		init => throw NotSupported;
@@ -27,17 +26,17 @@ public abstract record class WpTermRelationshipEntity : IWithId
 		new("Term Relationships do not have unique IDs in the WordPress database.");
 
 	/// <summary>
-	/// PostId
+	/// PostId.
 	/// </summary>
-	public StrongIds.WpPostId PostId { get; init; } = new();
+	public Ids.WpPostId PostId { get; init; } = new();
 
 	/// <summary>
-	/// TermTaxonomyId
+	/// TermTaxonomyId.
 	/// </summary>
-	public StrongIds.WpTermTaxonomyId TermTaxonomyId { get; init; } = new();
+	public Ids.WpTermTaxonomyId TermTaxonomyId { get; init; } = new();
 
 	/// <summary>
-	/// SortOrder
+	/// SortOrder.
 	/// </summary>
 	public ulong SortOrder { get; init; }
 }

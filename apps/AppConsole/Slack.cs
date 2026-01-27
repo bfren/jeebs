@@ -6,7 +6,4 @@ using Jeebs.Services.Notify;
 
 namespace AppConsole;
 
-internal sealed class Slack : SlackWebhookDriver, INotificationListener
-{
-	public Slack(SlackWebhookDriverArgs args) : base("bcgdesign", args) { }
-}
+internal sealed class Slack(SlackWebhookDriverArgs args) : SlackWebhookDriver("bcgdesign", args), INotificationListener;

@@ -1,21 +1,19 @@
-﻿// Jeebs Unit Tests
+// Jeebs Unit Tests
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
-
-using Jeebs.Extensions;
 
 namespace Jeebs.StringExtensions_Tests;
 
 public class ReplaceHtmlTags_Tests
 {
-	public static IEnumerable<object[]> String_Returns_Value_With_Html_Tags_Replaced_Data()
-	{
-		yield return new object[] { "<p>Ben</p>", "Ben" };
-		yield return new object[] { "<p class=\"attr\">Ben</p>", "Ben" };
-		yield return new object[] { "<p class=\"attr\">Ben <strong>Green</strong></p>", "Ben Green" };
-	}
+	public static TheoryData<string, string> String_Returns_Value_With_Html_Tags_Replaced_Data() =>
+		new()
+		{
+			{ "<p>Ben</p>", "Ben" },
+			{ "<p class=\"attr\">Ben</p>", "Ben" },
+			{ "<p class=\"attr\">Ben <strong>Green</strong></p>", "Ben Green" }
+		};
 
 	[Theory]
-	[InlineData(null)]
 	[InlineData("")]
 	public void Null_Or_Empty_Returns_Original(string input)
 	{

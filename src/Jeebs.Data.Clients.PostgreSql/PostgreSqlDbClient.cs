@@ -13,7 +13,7 @@ namespace Jeebs.Data.Clients.PostgreSql;
 public partial class PostgreSqlDbClient : DbClient
 {
 	/// <summary>
-	/// Use PostgreSQL type mapper
+	/// Use PostgreSQL type mapper.
 	/// </summary>
 	public PostgreSqlDbClient() : base(new PostgreSqlDbTypeMapper()) { }
 

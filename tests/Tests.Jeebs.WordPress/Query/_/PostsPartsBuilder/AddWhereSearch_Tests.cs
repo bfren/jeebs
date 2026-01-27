@@ -5,7 +5,7 @@ using Jeebs.Data;
 using Jeebs.Data.Clients.MySql;
 using Jeebs.Data.Enums;
 using Jeebs.Data.Query.QueryPartsBuilder_Tests;
-using Jeebs.WordPress.Entities.StrongIds;
+using Jeebs.WordPress.Entities.Ids;
 using Jeebs.WordPress.Enums;
 using static Jeebs.WordPress.Query.PostsPartsBuilder_Tests.Setup;
 
@@ -26,8 +26,8 @@ public class AddWhereSearch_Tests : QueryPartsBuilder_Tests<PostsPartsBuilder, W
 		var result = builder.AddWhereSearch(v.Parts, SearchPostField.Title, Compare.LessThanOrEqual, null);
 
 		// Assert
-		var some = result.AssertSome();
-		Assert.Same(v.Parts, some);
+		var ok = result.AssertOk();
+		Assert.Equal(v.Parts, ok);
 	}
 
 	[Fact]
@@ -40,8 +40,8 @@ public class AddWhereSearch_Tests : QueryPartsBuilder_Tests<PostsPartsBuilder, W
 		var result = builder.AddWhereSearch(v.Parts, SearchPostField.Title, Compare.Equal, Rnd.Str);
 
 		// Assert
-		var some = result.AssertSome();
-		var (_, parameters) = Assert.Single(some.WhereCustom);
+		var ok = result.AssertOk();
+		var (_, parameters) = Assert.Single(ok.WhereCustom);
 		var single = Assert.Single(parameters);
 		Assert.Equal("search", single.Key);
 	}
@@ -58,8 +58,8 @@ public class AddWhereSearch_Tests : QueryPartsBuilder_Tests<PostsPartsBuilder, W
 		var result = builder.AddWhereSearch(v.Parts, SearchPostField.Title, Compare.Equal, textWithWhitespace);
 
 		// Assert
-		var some = result.AssertSome();
-		var (_, parameters) = Assert.Single(some.WhereCustom);
+		var ok = result.AssertOk();
+		var (_, parameters) = Assert.Single(ok.WhereCustom);
 		var single = Assert.Single(parameters);
 		Assert.Equal(text, single.Value);
 	}
@@ -75,20 +75,23 @@ public class AddWhereSearch_Tests : QueryPartsBuilder_Tests<PostsPartsBuilder, W
 		var result = builder.AddWhereSearch(v.Parts, SearchPostField.Title, Compare.Like, text);
 
 		// Assert
-		var some = result.AssertSome();
-		var (_, parameters) = Assert.Single(some.WhereCustom);
+		var ok = result.AssertOk();
+		var (_, parameters) = Assert.Single(ok.WhereCustom);
 		var single = Assert.Single(parameters);
 		Assert.Equal($"%{text}%", single.Value);
 	}
 
-	public static IEnumerable<object[]> Adds_SearchPostField_Data()
+	public static TheoryData<SearchPostField, string> Adds_SearchPostField_Data()
 	{
 		var post = new WpDbSchema(Rnd.Str).Posts;
 
-		yield return new object[] { SearchPostField.Title, post.Title };
-		yield return new object[] { SearchPostField.Slug, post.Slug };
-		yield return new object[] { SearchPostField.Content, post.Content };
-		yield return new object[] { SearchPostField.Excerpt, post.Excerpt };
+		return
+		[
+			(SearchPostField.Title, post.Title),
+			(SearchPostField.Slug, post.Slug),
+			(SearchPostField.Content, post.Content),
+			(SearchPostField.Excerpt, post.Excerpt)
+		];
 	}
 
 	[Theory]
@@ -103,12 +106,12 @@ public class AddWhereSearch_Tests : QueryPartsBuilder_Tests<PostsPartsBuilder, W
 		var result = builder.AddWhereSearch(v.Parts, field, Compare.Equal, Rnd.Str);
 
 		// Assert
-		var some = result.AssertSome();
-		var (clause, _) = Assert.Single(some.WhereCustom);
+		var ok = result.AssertOk();
+		var (clause, _) = Assert.Single(ok.WhereCustom);
 		Assert.Contains($"`{table}`.`{column}`", clause);
 	}
 
-	public static IEnumerable<object[]> Adds_Comparison_Data() =>
+	public static TheoryData<Compare> Adds_Comparison_Data() =>
 		GetCompareValues();
 
 	[Theory]
@@ -122,8 +125,8 @@ public class AddWhereSearch_Tests : QueryPartsBuilder_Tests<PostsPartsBuilder, W
 		var result = builder.AddWhereSearch(v.Parts, SearchPostField.Title, cmp, Rnd.Str);
 
 		// Assert
-		var some = result.AssertSome();
-		var (clause, _) = Assert.Single(some.WhereCustom);
+		var ok = result.AssertOk();
+		var (clause, _) = Assert.Single(ok.WhereCustom);
 		Assert.Contains($"{cmp.ToOperator()}", clause);
 	}
 
@@ -139,8 +142,8 @@ public class AddWhereSearch_Tests : QueryPartsBuilder_Tests<PostsPartsBuilder, W
 		var result = builder.AddWhereSearch(v.Parts, SearchPostField.All, Compare.Equal, Rnd.Str);
 
 		// Assert
-		var some = result.AssertSome();
-		var (clause, _) = Assert.Single(some.WhereCustom);
+		var ok = result.AssertOk();
+		var (clause, _) = Assert.Single(ok.WhereCustom);
 		Assert.Contains($"`{table}`.`{post.Title}`", clause);
 		Assert.Contains($" OR `{table}`.`{post.Slug}`", clause);
 		Assert.Contains($" OR `{table}`.`{post.Content}`", clause);

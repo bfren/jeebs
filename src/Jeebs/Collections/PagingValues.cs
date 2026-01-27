@@ -43,25 +43,27 @@ public sealed record class PagingValues : IPagingValues
 	public int Take { get; init; }
 
 	/// <summary>
-	/// Create an empty object
+	/// Create an empty object.
 	/// </summary>
 	public PagingValues() { }
 
 	/// <summary>
-	/// Set and calculate values using <see cref="D.ItemsPer"/> and <see cref="D.PagesPer"/>
+	/// Set and calculate values using <see cref="D.ItemsPer"/> and <see cref="D.PagesPer"/>.
 	/// </summary>
-	/// <param name="items">Total number of items</param>
-	/// <param name="page">Current page</param>
+	/// <param name="items">Total number of items.</param>
+	/// <param name="page">Current page.</param>
 	public PagingValues(ulong items, ulong page) : this(items, page, D.ItemsPer, D.PagesPer) { }
 
 	/// <summary>
-	/// Set and calculate values
-	/// If <paramref name="itemsPer"/> is 0, paging will not be used
+	/// Set and calculate values.
 	/// </summary>
-	/// <param name="items">Total number of items</param>
-	/// <param name="page">Current page</param>
-	/// <param name="itemsPer">Number of items per page</param>
-	/// <param name="pagesPer">Number of page numbers before using next / previous</param>
+	/// <remarks>
+	/// If <paramref name="itemsPer"/> is 0, paging will not be used.
+	/// </remarks>
+	/// <param name="items">Total number of items.</param>
+	/// <param name="page">Current page.</param>
+	/// <param name="itemsPer">Number of items per page.</param>
+	/// <param name="pagesPer">Number of page numbers before using next / previous.</param>
 	public PagingValues(ulong items, ulong page, ulong itemsPer, ulong pagesPer)
 	{
 		// If itemsPerPage is zero, use totalItems instead (i.e. no paging)

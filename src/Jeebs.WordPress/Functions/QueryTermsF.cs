@@ -1,13 +1,9 @@
-﻿// Jeebs Rapid Application Development
+// Jeebs Rapid Application Development
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 namespace Jeebs.WordPress.Functions;
 
 /// <summary>
-/// Query Terms Functions
+/// Query Terms Functions.
 /// </summary>
-public static partial class QueryTermsF
-{
-	/// <summary>Messages</summary>
-	public static partial class M { }
-}
+public static partial class QueryTermsF { }

@@ -5,7 +5,7 @@ using Jeebs.Collections;
 using Jeebs.Data.Enums;
 using Jeebs.Data.Map;
 using Jeebs.Data.Query;
-using Jeebs.WordPress.Entities.StrongIds;
+using Jeebs.WordPress.Entities.Ids;
 using Jeebs.WordPress.Enums;
 
 namespace Jeebs.WordPress.Query;
@@ -14,25 +14,25 @@ namespace Jeebs.WordPress.Query;
 public interface IQueryPostsTaxonomyPartsBuilder : IQueryPartsBuilder<WpTermId>
 {
 	/// <summary>
-	/// Add Where Taxonomies
+	/// Add Where Taxonomies.
 	/// </summary>
-	/// <param name="parts">QueryParts</param>
-	/// <param name="taxonomies">Taxonomies</param>
-	Maybe<QueryParts> AddWhereTaxonomies(QueryParts parts, IImmutableList<Taxonomy> taxonomies);
+	/// <param name="parts">QueryParts.</param>
+	/// <param name="taxonomies">Taxonomies.</param>
+	Result<QueryParts> AddWhereTaxonomies(QueryParts parts, IImmutableList<Taxonomy> taxonomies);
 
 	/// <summary>
-	/// Add Where Post IDs
+	/// Add Where Post IDs.
 	/// </summary>
-	/// <param name="parts">QueryParts</param>
-	/// <param name="postIds">Post IDs</param>
-	Maybe<QueryParts> AddWherePostIds(QueryParts parts, IImmutableList<WpPostId> postIds);
+	/// <param name="parts">QueryParts.</param>
+	/// <param name="postIds">Post IDs.</param>
+	Result<QueryParts> AddWherePostIds(QueryParts parts, IImmutableList<WpPostId> postIds);
 
 	/// <summary>
-	/// Add custom Sort or default Sort
+	/// Add custom Sort or default Sort.
 	/// </summary>
-	/// <param name="parts">QueryParts</param>
-	/// <param name="sortRandom">Whether or not to sort randomly</param>
-	/// <param name="sort">Sort columns</param>
-	/// <param name="sortBy">Taxonomy sort</param>
-	Maybe<QueryParts> AddSort(QueryParts parts, bool sortRandom, IImmutableList<(IColumn, SortOrder)> sort, TaxonomySort sortBy);
+	/// <param name="parts">QueryParts.</param>
+	/// <param name="sortRandom">Whether or not to sort randomly.</param>
+	/// <param name="sort">Sort columns.</param>
+	/// <param name="sortBy">Taxonomy sort.</param>
+	Result<QueryParts> AddSort(QueryParts parts, bool sortRandom, IImmutableList<(IColumn, SortOrder)> sort, TaxonomySort sortBy);
 }

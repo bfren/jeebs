@@ -1,17 +1,16 @@
 // Jeebs Test Applications
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
-using StrongId;
+using Wrap;
+using Wrap.Ids;
 
 namespace AppConsolePg;
 
-public record struct ParamTest(int Id, string Foo, string Bar);
+public record struct TestObj(int Id, string Foo, string Bar);
 
-public sealed record class EntityTestId : LongId;
+public sealed record class TestId : LongId<TestId>;
 
-public sealed record class EntityTest : IWithId<EntityTestId>
+public sealed record class TestEntity : WithId<TestId, long>
 {
-	public EntityTestId Id { get; init; } = new();
-
-	public ParamTest Value { get; init; }
+	public TestObj Value { get; init; }
 }

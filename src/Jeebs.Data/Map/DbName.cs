@@ -9,7 +9,7 @@ namespace Jeebs.Data.Map;
 public sealed record class DbName : IDbName
 {
 	/// <summary>
-	/// Schema Separator
+	/// Schema Separator.
 	/// </summary>
 	public static readonly char SchemaSeparator = '.';
 
@@ -20,17 +20,17 @@ public sealed record class DbName : IDbName
 	public string Name { get; init; }
 
 	/// <summary>
-	/// Create with only a name
+	/// Create with only a name.
 	/// </summary>
-	/// <param name="name">Database object name</param>
+	/// <param name="name">Database object name.</param>
 	public DbName(string name) =>
 		Name = name;
 
 	/// <summary>
-	/// Create with schema and name
+	/// Create with schema and name.
 	/// </summary>
-	/// <param name="schema">Database schema</param>
-	/// <param name="name">Database object name</param>
+	/// <param name="schema">Database schema.</param>
+	/// <param name="name">Database object name.</param>
 	public DbName(string schema, string name) : this(name) =>
 		Schema = schema;
 
@@ -43,9 +43,9 @@ public sealed record class DbName : IDbName
 		Schema switch
 		{
 			{ } =>
-				$"{escape(Schema)}{schemaSeparator}{escape(Name)}",
+				$"{escape(Schema)}{schemaSeparator}{escape(Name)}".Trim(),
 
 			_ =>
-				escape(Name)
+				escape(Name).Trim()
 		};
 }

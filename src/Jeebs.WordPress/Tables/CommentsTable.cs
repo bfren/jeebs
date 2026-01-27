@@ -7,110 +7,110 @@ using Jeebs.Data.Map;
 namespace Jeebs.WordPress.Tables;
 
 /// <summary>
-/// Comment Table
+/// Comment Table.
 /// </summary>
 public sealed record class CommentsTable : Table
 {
 	/// <summary>
-	/// CommentId
+	/// CommentId.
 	/// </summary>
 	[Id]
 	public string Id =>
 		"comment_ID";
 
 	/// <summary>
-	/// PostId
+	/// PostId.
 	/// </summary>
 	public string PostId =>
 		"comment_post_ID";
 
 	/// <summary>
-	/// AuthorName
+	/// AuthorName.
 	/// </summary>
 	public string AuthorName =>
 		"comment_author";
 
 	/// <summary>
-	/// AuthorEmail
+	/// AuthorEmail.
 	/// </summary>
 	public string AuthorEmail =>
 		"comment_author_email";
 
 	/// <summary>
-	/// AuthorUrl
+	/// AuthorUrl.
 	/// </summary>
 	public string AuthorUrl =>
 		"comment_author_url";
 
 	/// <summary>
-	/// AuthorIp
+	/// AuthorIp.
 	/// </summary>
 	public string AuthorIp =>
 		"comment_author_IP";
 
 	/// <summary>
-	/// PublishedOn
+	/// PublishedOn.
 	/// </summary>
 	public string PublishedOn =>
 		"comment_date";
 
 	/// <summary>
-	/// PublishedOnGmt
+	/// PublishedOnGmt.
 	/// </summary>
 	public string PublishedOnGmt =>
 		"comment_date_gmt";
 
 	/// <summary>
-	/// Content
+	/// Content.
 	/// </summary>
 	public string Content =>
 		"comment_content";
 
 	/// <summary>
-	/// Karma
+	/// Karma.
 	/// </summary>
 	public string Karma =>
 		"comment_karma";
 
 	/// <summary>
-	/// IsApproved
+	/// IsApproved.
 	/// </summary>
 	public string IsApproved =>
 		"comment_approved";
 
 	/// <summary>
-	/// AuthorUserAgent
+	/// AuthorUserAgent.
 	/// </summary>
 	public string AuthorUserAgent =>
 		"comment_agent";
 
 	/// <summary>
-	/// Type
+	/// Type.
 	/// </summary>
 	public string Type =>
 		"comment_type";
 
 	/// <summary>
-	/// ParentId
+	/// ParentId.
 	/// </summary>
 	public string ParentId =>
 		"comment_parent";
 
 	/// <summary>
-	/// AuthorId
+	/// AuthorId.
 	/// </summary>
 	public string AuthorId =>
 		"user_id";
 
 	/// <summary>
-	/// AuthorIsSubscribed
+	/// AuthorIsSubscribed.
 	/// </summary>
 	public string AuthorIsSubscribed =>
 		"comment_subscribe";
 
 	/// <summary>
-	/// Create object
+	/// Create object.
 	/// </summary>
-	/// <param name="prefix">Table prefix</param>
+	/// <param name="prefix">Table prefix.</param>
 	public CommentsTable(string prefix) : base($"{prefix}comments") { }
 }

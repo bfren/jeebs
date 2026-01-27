@@ -7,33 +7,34 @@ using Dapper;
 using Jeebs.Cryptography;
 using Jeebs.Data.TypeHandlers;
 using Jeebs.Functions;
-using StrongId;
+using Wrap.Dapper;
+using Wrap.Ids;
 using static Jeebs.Data.IDbTypeMapper;
 
 namespace Jeebs.Data;
 
 /// <summary>
-/// Default DbType mapper
+/// Default DbType mapper.
 /// </summary>
 public class DbTypeMapper : IDbTypeMapper
 {
 	#region Static
 
 	/// <summary>
-	/// Default (global) instance
+	/// Default (global) instance.
 	/// </summary>
 	internal static IDbTypeMapper Instance =>
 		LazyInstance.Value;
 
 	/// <summary>
-	/// Lazily create a <see cref="DbTypeMapper"/>
+	/// Lazily create a <see cref="DbTypeMapper"/>.
 	/// </summary>
 	private static Lazy<IDbTypeMapper> LazyInstance { get; } = new(() => new DbTypeMapper(), true);
 
 	#endregion Static
 
 	/// <summary>
-	/// Only allow creation from <see cref="Db"/> or implementing classes
+	/// Only allow creation from <see cref="Db"/> or implementing classes.
 	/// </summary>
 	protected internal DbTypeMapper() { }
 
@@ -67,8 +68,14 @@ public class DbTypeMapper : IDbTypeMapper
 		AddTypeHandler(new JsonTypeHandler<T>());
 
 	/// <inheritdoc/>
-	public virtual void AddStrongIdTypeHandlers() =>
-		AddGenericTypeHandlers<IStrongId>(typeof(StrongIdTypeHandler<>), SqlMapper.AddTypeHandler);
+	public virtual void AddIdTypeHandlers()
+	{
+		AddGenericTypeHandlers<IGuidId>(typeof(GuidIdTypeHandler<>), SqlMapper.AddTypeHandler);
+		AddGenericTypeHandlers<IIntId>(typeof(IntIdTypeHandler<>), SqlMapper.AddTypeHandler);
+		AddGenericTypeHandlers<ILongId>(typeof(LongIdTypeHandler<>), SqlMapper.AddTypeHandler);
+		AddGenericTypeHandlers<IUintId>(typeof(UIntIdTypeHandler<>), SqlMapper.AddTypeHandler);
+		AddGenericTypeHandlers<IULongId>(typeof(ULongIdTypeHandler<>), SqlMapper.AddTypeHandler);
+	}
 
 	/// <inheritdoc/>
 	public virtual void AddLockedTypeHandlers() =>

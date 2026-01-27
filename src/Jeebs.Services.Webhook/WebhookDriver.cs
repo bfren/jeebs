@@ -6,7 +6,6 @@ using System.Collections.Generic;
 using System.Net.Http;
 using Jeebs.Config;
 using Jeebs.Functions;
-using Jeebs.Messages;
 using Jeebs.Services.Notify;
 using Jeebs.Services.Webhook.Models;
 
@@ -18,15 +17,15 @@ public abstract class WebhookDriver<TConfig, TMessage> : Driver<TConfig>, IWebho
 	where TMessage : notnull
 {
 	/// <summary>
-	/// IHttpClientFactory
+	/// IHttpClientFactory.
 	/// </summary>
 	internal IHttpClientFactory Factory { get; }
 
 	/// <summary>
-	/// Create object
+	/// Create object.
 	/// </summary>
-	/// <param name="name">Service name</param>
-	/// <param name="args">WebhookServiceArgs</param>
+	/// <param name="name">Service name.</param>
+	/// <param name="args">WebhookServiceArgs.</param>
 	protected WebhookDriver(string name, WebhookDriverArgs<TConfig> args) : base(name, args) =>
 		Factory = args.Factory;
 
@@ -41,38 +40,21 @@ public abstract class WebhookDriver<TConfig, TMessage> : Driver<TConfig>, IWebho
 		Send(new Message { Content = message, Level = level });
 
 	/// <inheritdoc/>
-	public virtual void Send(IMsg msg)
+	public virtual void Send(FailureValue failure)
 	{
-		// Get message content
-		var content = msg.ToString() ?? msg.GetType().ToString();
-
 		// Convert to notification Message
-		var message = msg switch
+		var message = new Message
 		{
-			ExceptionMsg x =>
-				new Message
-				{
-					Content = content,
-					Level = NotificationLevel.Error,
-					Fields = new Dictionary<string, object>
-					{
-						{ "Exception", x.Value }
-					}
-				},
+			Content = failure.Message.FormatWith(failure.Args),
+			Level = failure.Level.ToNotificationLevel(),
+			Fields = failure.Exception switch
+			{
+				{ } e =>
+					new Dictionary<string, object> { { "Exception", e } },
 
-			Msg x =>
-				new Message
-				{
-					Content = content,
-					Level = x.Level.ToNotificationLevel()
-				},
-
-			_ =>
-				new Message
-				{
-					Content = content,
-					Level = NotificationLevel.Information
-				}
+				_ =>
+					[]
+			}
 		};
 
 		// Send message
@@ -104,7 +86,7 @@ public abstract class WebhookDriver<TConfig, TMessage> : Driver<TConfig>, IWebho
 	#region Actually Send
 
 	/// <summary>
-	/// Use <see cref="Factory"/> to send the message
+	/// Use <see cref="Factory"/> to send the message.
 	/// </summary>
 	/// <param name="request"></param>
 	protected void Send(HttpRequestMessage request) =>
@@ -113,7 +95,7 @@ public abstract class WebhookDriver<TConfig, TMessage> : Driver<TConfig>, IWebho
 			try
 			{
 				var client = Factory.CreateClient();
-				var response = await client.SendAsync(request).ConfigureAwait(false);
+				var response = await client.SendAsync(request);
 				if (!response.IsSuccessStatusCode)
 				{
 					Log.Wrn("Unable to send message: {@Response}", response);

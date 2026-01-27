@@ -6,22 +6,22 @@ using Microsoft.Extensions.Options;
 namespace Jeebs.Config.Azure;
 
 /// <summary>
-/// Azure Configuration
+/// Azure Configuration.
 /// </summary>
 public sealed record class AzureConfig : IOptions<AzureConfig>
 {
 	/// <summary>
-	/// Path to this configuration section
+	/// Path to this configuration section.
 	/// </summary>
 	public static readonly string Key = JeebsConfig.Key + ":azure";
 
 	/// <summary>
-	/// DataProtectionConfig
+	/// DataProtectionConfig.
 	/// </summary>
 	public DataProtection.DataProtectionConfig Verification { get; init; } = new();
 
 	/// <summary>
-	/// KeyVaultConfig
+	/// KeyVaultConfig.
 	/// </summary>
 	public KeyVault.KeyVaultConfig Redirections { get; init; } = new();
 

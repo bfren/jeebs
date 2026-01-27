@@ -25,35 +25,29 @@ using Serilog;
 namespace Jeebs.Apps;
 
 /// <summary>
-/// Configure and run an application using <seealso cref="IHost"/>
+/// Configure and run an application using <seealso cref="IHost"/>.
 /// </summary>
 public class App
 {
 	/// <summary>
-	/// Runs when the application is ready to go but before it is run
+	/// Runs when the application is ready to go but before it is run.
 	/// </summary>
-	/// <param name="services">IServiceProvider</param>
-	/// <param name="log">ILog</param>
-	public virtual void Ready(IServiceProvider services, ILog log)
-	{
-		// Set Maybe Audit log
-		F.DefaultLogger = e => log.Err(e, "Maybe Exception: {Exception}.");
-
-		// Log application is ready
+	/// <param name="services">IServiceProvider.</param>
+	/// <param name="log">ILog.</param>
+	public virtual void Ready(IServiceProvider services, ILog log) =>
 		log.Inf("Application ready.");
-	}
 
 	/// <summary>
-	/// Configure Host
+	/// Configure Host.
 	/// </summary>
-	/// <param name="config">IConfigurationBuilder</param>
+	/// <param name="config">IConfigurationBuilder.</param>
 	public virtual void ConfigureHost(IConfigurationBuilder config) { }
 
 	/// <summary>
-	/// Configure App
+	/// Configure App.
 	/// </summary>
-	/// <param name="ctx">HostBuilderContext</param>
-	/// <param name="config">IConfigurationBuilder</param>
+	/// <param name="ctx">HostBuilderContext.</param>
+	/// <param name="config">IConfigurationBuilder.</param>
 	public virtual void ConfigureApp(HostBuilderContext ctx, IConfigurationBuilder config)
 	{
 		// Shortcut for environment
@@ -85,10 +79,10 @@ public class App
 	}
 
 	/// <summary>
-	/// Configure Services
+	/// Configure Services.
 	/// </summary>
-	/// <param name="ctx">HostBuilderContext</param>
-	/// <param name="services">IServiceCollection</param>
+	/// <param name="ctx">HostBuilderContext.</param>
+	/// <param name="services">IServiceCollection.</param>
 	public virtual void ConfigureServices(HostBuilderContext ctx, IServiceCollection services)
 	{
 		// Shorthand for configuration
@@ -118,10 +112,10 @@ public class App
 	}
 
 	/// <summary>
-	/// Configure Serilog
+	/// Configure Serilog.
 	/// </summary>
-	/// <param name="ctx">HostBuilderContext</param>
-	/// <param name="loggerConfig">LoggerConfiguration</param>
+	/// <param name="ctx">HostBuilderContext.</param>
+	/// <param name="loggerConfig">LoggerConfiguration.</param>
 	public virtual void ConfigureSerilog(HostBuilderContext ctx, LoggerConfiguration loggerConfig)
 	{
 		// Load Serilog config

@@ -29,7 +29,7 @@ public class GetColumnsForRetrieveQuery_Tests
 		var client = Substitute.ForPartsOf<DbClient>();
 		var info = Substitute.For<PropertyInfo>();
 		var column = new Column(new DbName(Rnd.Str), Rnd.Str, info);
-		var list = new ColumnList(new[] { column });
+		var list = new ColumnList([column]);
 
 		// Act
 		client.GetColumnsForRetrieveQueryTest(list);

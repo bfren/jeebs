@@ -9,10 +9,10 @@ namespace Jeebs.Data.Query.Functions;
 public static partial class QueryF
 {
 	/// <summary>
-	/// Escape and join a list of columns for a select query
+	/// Escape and join a list of columns for a select query.
 	/// </summary>
-	/// <param name="client">IDbClient</param>
-	/// <param name="columns">IColumnList</param>
+	/// <param name="client">IDbClient.</param>
+	/// <param name="columns">IColumnList.</param>
 	public static string GetSelectFromList(IDbClient client, IColumnList columns)
 	{
 		// Do nothing if there are no columns

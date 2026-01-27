@@ -9,7 +9,7 @@ using SkiaSharp;
 namespace Jeebs.Services.Drivers.Drawing.Skia;
 
 /// <summary>
-/// Image Wrapper - using SkiaSharp
+/// Image Wrapper - using SkiaSharp.
 /// </summary>
 public sealed class ImageWrapper : Services.Drawing.ImageWrapper, IDisposable
 {
@@ -36,28 +36,33 @@ public sealed class ImageWrapper : Services.Drawing.ImageWrapper, IDisposable
 	}
 
 	/// <inheritdoc/>
-	public override byte[] ToJpegByteArray(int quality) =>
+	public override Result<byte[]> ToJpegByteArray(int quality) =>
 		ToByteArray(SKEncodedImageFormat.Jpeg, quality);
 
 	/// <inheritdoc/>
-	public override byte[] ToPngByteArray(int quality) =>
+	public override Result<byte[]> ToPngByteArray(int quality) =>
 		ToByteArray(SKEncodedImageFormat.Png, quality);
 
 	/// <summary>
-	/// Output image as byte array
+	/// Output image as byte array.
 	/// </summary>
-	/// <param name="format">SKEncodedImageFormat</param>
-	/// <param name="quality">Image quality (0 - 100)</param>
-	internal byte[] ToByteArray(SKEncodedImageFormat format, int quality)
-	{
-		using var data = SKImage.FromEncodedData(image).Encode(format, quality);
-		using var ms = new MemoryStream();
-		data.SaveTo(ms);
-		return ms.ToArray();
-	}
+	/// <param name="format">SKEncodedImageFormat.</param>
+	/// <param name="quality">Image quality (0 - 100).</param>
+	internal Result<byte[]> ToByteArray(SKEncodedImageFormat format, int quality) =>
+		R.Try(
+			() =>
+			{
+				using var data = SKImage.FromEncodedData(image).Encode(format, quality);
+				using var ms = new MemoryStream();
+				data.SaveTo(ms);
+				return ms.ToArray();
+			},
+			e => R.Fail(e).Msg("Error converting image to byte array.")
+				.Ctx(nameof(ImageWrapper), nameof(ToByteArray))
+		);
 
 	/// <inheritdoc/>
-	public override Maybe<IImageWrapper> ApplyMask(int width, int height) =>
+	public override Result<IImageWrapper> ApplyMask(int width, int height) =>
 		ApplyMask(width, height, (size, mask) =>
 		{
 			// Create source and destination rectangles
@@ -66,7 +71,7 @@ public sealed class ImageWrapper : Services.Drawing.ImageWrapper, IDisposable
 
 			// Create surface on which to draw the masked and resized image
 			using var surface = SKSurface.Create(info: new(size.Width, size.Height));
-			using var paint = new SKPaint() { IsAntialias = width > 200 || height > 200 };
+			using var paint = new SKPaint { IsAntialias = width > 200 || height > 200 };
 
 			// Draw the actual image
 			surface.Canvas.DrawImage(SKImage.FromEncodedData(image), source, destination, paint);

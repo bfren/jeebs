@@ -9,23 +9,23 @@ public abstract record class Table : ITable
 	private IDbName TableName { get; init; }
 
 	/// <summary>
-	/// Create with <see cref="IDbName"/>
+	/// Create with <see cref="IDbName"/>.
 	/// </summary>
-	/// <param name="name">ITableName</param>
+	/// <param name="name">ITableName.</param>
 	protected Table(IDbName name) =>
 		TableName = name;
 
 	/// <summary>
-	/// Create with table name
+	/// Create with table name.
 	/// </summary>
-	/// <param name="name">Table Name</param>
+	/// <param name="name">Table Name.</param>
 	protected Table(string name) : this(new DbName(name)) { }
 
 	/// <summary>
-	/// Create with table schema and name
+	/// Create with table schema and name.
 	/// </summary>
-	/// <param name="schema">Table Schema</param>
-	/// <param name="name">Table Name</param>
+	/// <param name="schema">Table Schema.</param>
+	/// <param name="name">Table Name.</param>
 	protected Table(string schema, string name) : this(new DbName(schema, name)) { }
 
 	/// <inheritdoc/>
@@ -33,13 +33,13 @@ public abstract record class Table : ITable
 		TableName;
 
 	/// <summary>
-	/// See <see cref="IDbName.GetFullName(System.Func{string, string})"/>
+	/// See <see cref="IDbName.GetFullName(System.Func{string, string})"/>.
 	/// </summary>
 	public sealed override string ToString() =>
 		TableName.GetFullName(s => s);
 }
 
 /// <summary>
-/// Represents a null / unknown table
+/// Represents a null / unknown table.
 /// </summary>
 public sealed record class NullTable() : Table(string.Empty);

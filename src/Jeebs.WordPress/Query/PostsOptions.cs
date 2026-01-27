@@ -9,20 +9,20 @@ namespace Jeebs.WordPress.Query;
 public sealed record class PostsOptions : Options.PostsOptions
 {
 	/// <summary>
-	/// Internal creation only
+	/// Internal creation only.
 	/// </summary>
-	/// <param name="schema">IWpDbSchema</param>
+	/// <param name="schema">IWpDbSchema.</param>
 	internal PostsOptions(IWpDbSchema schema) : base(schema, new PostsPartsBuilder(schema)) { }
 
 	/// <summary>
-	/// Allow Builder to be injected
+	/// Allow Builder to be injected.
 	/// </summary>
-	/// <param name="schema">IWpDbSchema</param>
-	/// <param name="builder">IQueryPostsPartsBuilder</param>
+	/// <param name="schema">IWpDbSchema.</param>
+	/// <param name="builder">IQueryPostsPartsBuilder.</param>
 	internal PostsOptions(IWpDbSchema schema, IQueryPostsPartsBuilder builder) : base(schema, builder) { }
 
 	/// <inheritdoc/>
-	protected override Maybe<QueryParts> Build(Maybe<QueryParts> parts) =>
+	protected override Result<QueryParts> Build(Result<QueryParts> parts) =>
 		base.Build(
 			parts
 		)
@@ -32,28 +32,28 @@ public sealed record class PostsOptions : Options.PostsOptions
 		.Bind(
 			x => Builder.AddWhereStatus(x, Status)
 		)
-		.SwitchIf(
-			_ => string.IsNullOrEmpty(SearchText),
-			ifFalse: x => Builder.AddWhereSearch(x, SearchFields, SearchComparison, SearchText)
+		.If(
+			_ => !string.IsNullOrEmpty(SearchText),
+			x => Builder.AddWhereSearch(x, SearchFields, SearchComparison, SearchText)
 		)
-		.SwitchIf(
+		.If(
 			_ => FromDate is not null,
-			ifTrue: x => Builder.AddWherePublishedFrom(x, FromDate)
+			x => Builder.AddWherePublishedFrom(x, FromDate)
 		)
-		.SwitchIf(
+		.If(
 			_ => ToDate is not null,
-			ifTrue: x => Builder.AddWherePublishedTo(x, ToDate)
+			x => Builder.AddWherePublishedTo(x, ToDate)
 		)
-		.SwitchIf(
+		.If(
 			_ => ParentId is not null,
-			ifTrue: x => Builder.AddWhereParentId(x, ParentId)
+			x => Builder.AddWhereParentId(x, ParentId)
 		)
-		.SwitchIf(
+		.If(
 			_ => Taxonomies.Count > 0,
-			ifTrue: x => Builder.AddWhereTaxonomies(x, Taxonomies)
+			x => Builder.AddWhereTaxonomies(x, Taxonomies)
 		)
-		.SwitchIf(
+		.If(
 			_ => CustomFields.Count > 0,
-			ifTrue: x => Builder.AddWhereCustomFields(x, CustomFields)
+			x => Builder.AddWhereCustomFields(x, CustomFields)
 		);
 }

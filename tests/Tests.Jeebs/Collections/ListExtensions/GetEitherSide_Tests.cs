@@ -1,14 +1,12 @@
 // Jeebs Unit Tests
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
-using static Jeebs.Collections.ListExtensions.M;
-
 namespace Jeebs.Collections.ListExtensions_Tests;
 
 public class GetEitherSide_Tests
 {
 	[Fact]
-	public void Empty_List_Returns_None_With_ListIsEmptyMsg()
+	public void Empty_List_Returns_None()
 	{
 		// Arrange
 		var list = new List<int>();
@@ -17,12 +15,12 @@ public class GetEitherSide_Tests
 		var (r0, r1) = list.GetEitherSide(Rnd.Int);
 
 		// Assert
-		r0.AssertNone().AssertType<ListIsEmptyMsg>();
-		r1.AssertNone().AssertType<ListIsEmptyMsg>();
+		r0.AssertNone();
+		r1.AssertNone();
 	}
 
 	[Fact]
-	public void Single_Item_Returns_None_With_ListContainsSingleItemMsg()
+	public void Single_Item_Returns_None()
 	{
 		// Arrange
 		var list = new List<int> { Rnd.Int };
@@ -31,12 +29,12 @@ public class GetEitherSide_Tests
 		var (r0, r1) = list.GetEitherSide(Rnd.Int);
 
 		// Assert
-		r0.AssertNone().AssertType<ListContainsSingleItemMsg>();
-		r1.AssertNone().AssertType<ListContainsSingleItemMsg>();
+		r0.AssertNone();
+		r1.AssertNone();
 	}
 
 	[Fact]
-	public void Item_Not_In_List_Returns_None_With_ListDoesNotContainItemMsg()
+	public void Item_Not_In_List_Returns_None()
 	{
 		// Arrange
 		var value = -1;
@@ -46,10 +44,8 @@ public class GetEitherSide_Tests
 		var (r0, r1) = list.GetEitherSide(value);
 
 		// Assert
-		var n0 = r0.AssertNone().AssertType<ListDoesNotContainItemMsg<int>>();
-		Assert.Equal(value, n0.Value);
-		var n1 = r1.AssertNone().AssertType<ListDoesNotContainItemMsg<int>>();
-		Assert.Equal(value, n1.Value);
+		r0.AssertNone();
+		r1.AssertNone();
 	}
 
 	[Fact]
@@ -64,7 +60,7 @@ public class GetEitherSide_Tests
 		var (r0, r1) = list.GetEitherSide(value);
 
 		// Assert
-		r0.AssertNone().AssertType<ItemIsFirstItemMsg>();
+		r0.AssertNone();
 		var some = r1.AssertSome();
 		Assert.Equal(next, some);
 	}
@@ -83,7 +79,7 @@ public class GetEitherSide_Tests
 		// Assert
 		var some = r0.AssertSome();
 		Assert.Equal(prev, some);
-		r1.AssertNone().AssertType<ItemIsLastItemMsg>();
+		r1.AssertNone();
 	}
 
 	[Fact]

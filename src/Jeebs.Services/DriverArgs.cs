@@ -11,33 +11,33 @@ using Microsoft.Extensions.Options;
 namespace Jeebs.Services;
 
 /// <summary>
-/// Service driver arguments base type
+/// Service driver arguments base type.
 /// </summary>
-/// <typeparam name="TConfig">Service configuration type</typeparam>
+/// <typeparam name="TConfig">Service configuration type.</typeparam>
 public abstract class DriverArgs<TConfig> : IDriverArgs<TConfig>
 	where TConfig : IServiceConfig
 {
 	/// <summary>
-	/// ILog
+	/// ILog.
 	/// </summary>
 	public ILog Log { get; }
 
 	/// <summary>
-	/// JeebsConfig
+	/// JeebsConfig.
 	/// </summary>
 	public IOptions<JeebsConfig> JeebsConfig { get; }
 
 	/// <summary>
-	/// Function to return all service configurations for this type
+	/// Function to return all service configurations for this type.
 	/// </summary>
 	public Func<ServicesConfig, Dictionary<string, TConfig>> ServiceConfigs { get; }
 
 	/// <summary>
-	/// Create object
+	/// Create object.
 	/// </summary>
-	/// <param name="log">ILog</param>
-	/// <param name="jeebsConfig">JeebsConfig</param>
-	/// <param name="serviceConfigs">Function to return all service configurations for this type</param>
+	/// <param name="log">ILog.</param>
+	/// <param name="jeebsConfig">JeebsConfig.</param>
+	/// <param name="serviceConfigs">Function to return all service configurations for this type.</param>
 	protected DriverArgs(
 		ILog log,
 		IOptions<JeebsConfig> jeebsConfig,

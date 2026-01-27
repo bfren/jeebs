@@ -1,38 +1,34 @@
-﻿// Jeebs Unit Tests
+// Jeebs Unit Tests
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
-
-using System.Globalization;
 
 namespace Jeebs.Config.Db.DbConfig_Tests;
 
 public class GetConnection_Tests
 {
 	[Fact]
-	public void Default_Not_Set_Throws_DefaultDbConnectionUndefinedException()
+	public void Default_Not_Set_Returns_Fail()
 	{
 		// Arrange
 		var config = new DbConfig();
 
 		// Act
-		var action = void () => config.GetConnection();
+		var result = config.GetConnection();
 
 		// Assert
-		var ex = Assert.Throws<DefaultDbConnectionUndefinedException>(action);
-		Assert.Equal("Default database connection is not defined.", ex.Message);
+		result.AssertFailure("You must specify the name of the default database connection.");
 	}
 
 	[Fact]
-	public void No_Connections_Throws_NoDbConnectionsException()
+	public void No_Connections_Returns_Fail()
 	{
 		// Arrange
 		var config = new DbConfig { Default = Rnd.Str };
 
 		// Act
-		var action = void () => config.GetConnection();
+		var result = config.GetConnection(Rnd.Str);
 
 		// Assert
-		var ex = Assert.Throws<NoDbConnectionsException>(action);
-		Assert.Equal("At least one database connection must be defined.", ex.Message);
+		result.AssertFailure("At least one database connection must be defined.");
 	}
 
 	[Fact]
@@ -40,15 +36,13 @@ public class GetConnection_Tests
 	{
 		// Arrange
 		var name = Rnd.Str;
-		var config = new DbConfig { Default = name };
-		config.Connections.Add(Rnd.Str, new DbConnectionConfig());
+		var config = new DbConfig { Default = Rnd.Str, Connections = { { Rnd.Str, new DbConnectionConfig() } } };
 
 		// Act
-		var action = void () => config.GetConnection();
+		var result = config.GetConnection(name);
 
 		// Assert
-		var ex = Assert.Throws<NamedDbConnectionNotFoundException>(action);
-		Assert.Equal(string.Format(CultureInfo.InvariantCulture, NamedDbConnectionNotFoundException.Format, name), ex.Message);
+		result.AssertFailure("A connection named '{Name}' could not be found.", name);
 	}
 
 	[Fact]

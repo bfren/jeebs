@@ -6,21 +6,21 @@ using Microsoft.AspNetCore.Razor.TagHelpers;
 namespace Jeebs.Mvc.TagHelpers;
 
 /// <summary>
-/// Typekit TagHelper
+/// Typekit TagHelper.
 /// </summary>
 [HtmlTargetElement("typekit", TagStructure = TagStructure.WithoutEndTag)]
 public sealed class TypekitTagHelper : TagHelper
 {
 	/// <summary>
-	/// Typekit Library reference
+	/// Typekit Library reference.
 	/// </summary>
 	public string Library { get; set; } = string.Empty;
 
 	/// <summary>
-	/// Process the tag helper
+	/// Process the tag helper.
 	/// </summary>
-	/// <param name="context">TagHelperContext object</param>
-	/// <param name="output">TagHelperOutput object</param>
+	/// <param name="context">TagHelperContext object.</param>
+	/// <param name="output">TagHelperOutput object.</param>
 	public override void Process(TagHelperContext context, TagHelperOutput output)
 	{
 		// Check library

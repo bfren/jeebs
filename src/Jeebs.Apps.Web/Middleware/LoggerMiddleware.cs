@@ -12,25 +12,25 @@ using Serilog.Events;
 namespace Jeebs.Apps.Web.Middleware;
 
 /// <summary>
-/// Logger Middleware
+/// Logger Middleware.
 /// </summary>
 public sealed class LoggerMiddleware : IMiddleware
 {
 	/// <summary>
-	/// ILogger
+	/// ILogger.
 	/// </summary>
 	private readonly ILogger logger = Log.ForContext<LoggerMiddleware>();
 
 	/// <summary>
-	/// Log message template
+	/// Log message template.
 	/// </summary>
 	private const string MessageTemplate = "HTTP {RequestMethod} {RequestPath} responded {StatusCode} in {Elapsed:0.0000}s";
 
 	/// <summary>
-	/// Invoke Middleware
+	/// Invoke Middleware.
 	/// </summary>
-	/// <param name="context">HttpContext</param>
-	/// <param name="next">Next Middleware</param>
+	/// <param name="context">HttpContext.</param>
+	/// <param name="next">Next Middleware.</param>
 	public async Task InvokeAsync(HttpContext context, RequestDelegate next)
 	{
 		// Start stopwatch
@@ -39,7 +39,7 @@ public sealed class LoggerMiddleware : IMiddleware
 		try
 		{
 			// Call the rest of the pipeline
-			await next(context).ConfigureAwait(false);
+			await next(context);
 			stopwatch.Stop();
 
 			// If the status is HTTP 200 (success), return
@@ -76,9 +76,9 @@ public sealed class LoggerMiddleware : IMiddleware
 	}
 
 	/// <summary>
-	/// Get Request Path
+	/// Get Request Path.
 	/// </summary>
-	/// <param name="context">HttpContext</param>
+	/// <param name="context">HttpContext.</param>
 	private static string GetPath(HttpContext context) =>
 		context.Features.Get<IHttpRequestFeature>()?.RawTarget ?? context.Request.Path.ToString();
 }

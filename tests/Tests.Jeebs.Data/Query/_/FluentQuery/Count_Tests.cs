@@ -25,11 +25,9 @@ public class Count_Tests : FluentQuery_Tests
 	public async Task Calls_Db_QuerySingleAsync__With_Correct_Values()
 	{
 		// Arrange
-		var (query, v) = Setup();
 		var sql = Rnd.Str;
 		var param = Substitute.For<IQueryParametersDictionary>();
-		v.Client.GetCountQuery(default!)
-			.ReturnsForAnyArgs((sql, param));
+		var (query, v) = Setup(sql, param);
 
 		// Act
 		_ = await query.CountAsync();

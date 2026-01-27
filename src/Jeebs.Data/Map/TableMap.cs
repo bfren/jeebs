@@ -5,7 +5,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using Jeebs.Data.Attributes;
-using Jeebs.Messages;
 
 namespace Jeebs.Data.Map;
 
@@ -29,11 +28,11 @@ public sealed record class TableMap : ITableMap
 	public IColumn? VersionColumn { get; internal set; }
 
 	/// <summary>
-	/// Create object
+	/// Create object.
 	/// </summary>
-	/// <param name="table">Table</param>
-	/// <param name="columns">Mapped Columns</param>
-	/// <param name="idColumn">Id Column</param>
+	/// <param name="table">Table.</param>
+	/// <param name="columns">Mapped Columns.</param>
+	/// <param name="idColumn">Id Column.</param>
 	public TableMap(ITable table, IColumnList columns, IColumn idColumn) =>
 		(Table, Columns, IdColumn) = (table, columns, idColumn);
 
@@ -46,38 +45,23 @@ public sealed record class TableMap : ITableMap
 		Columns.Select(mc => mc.ColAlias).Where(a => includeIdAlias || a != IdColumn.ColAlias);
 
 	/// <inheritdoc/>
-	public Maybe<(List<string> names, List<string> aliases)> GetWriteableColumnNamesAndAliases() =>
-		F.Some(
+	public Result<(List<string> names, List<string> aliases)> GetWriteableColumnNamesAndAliases() =>
+		R.Try(
 			() => from c in Columns
 				  where c.PropertyInfo.GetCustomAttribute<IdAttribute>() is null
 				  && c.PropertyInfo.GetCustomAttribute<ComputedAttribute>() is null
 				  && c.PropertyInfo.GetCustomAttribute<ReadonlyAttribute>() is null
-				  select c,
-			F.DefaultHandler
+				  select c
 		)
-		.Bind(
-			x => x.Any() switch
-			{
-				true =>
-					F.Some(x),
-
-				false =>
-					F.None<IEnumerable<IColumn>, M.NoWriteableColumnsFoundMsg>()
-			}
+		.ContinueIf(x => x.Any(),
+			_ => R.Fail("No writeable columns found.")
+				.Ctx(nameof(TableMap), nameof(GetWriteableColumnNamesAndAliases))
 		)
 		.Map(
-			x => (x.Select(w => w.ColName).ToList(), x.Select(w => w.ColAlias).ToList()),
-			F.DefaultHandler
+			x => (x.Select(w => w.ColName).ToList(), x.Select(w => w.ColAlias).ToList())
 		);
 
 	/// <inheritdoc cref="Name"/>
 	public override string ToString() =>
 		Name.GetFullName(s => s);
-
-	/// <summary>Messages</summary>
-	public static class M
-	{
-		/// <summary>No writeable columns found (i.e. they are all marked as Id / Ignore / Computed)</summary>
-		public sealed record class NoWriteableColumnsFoundMsg : Msg;
-	}
 }

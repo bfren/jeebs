@@ -5,12 +5,11 @@ using System;
 using Jeebs.Logging;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Serilog;
 
 namespace Jeebs.Apps;
 
 /// <summary>
-/// Uses .NET 6 hosting model, with default options
+/// Uses .NET 6 hosting model, with default options.
 /// </summary>
 public static class Host
 {
@@ -30,7 +29,7 @@ public static class Host
 		Create<T>(args).app.Run();
 
 	/// <summary>
-	/// Build an <see cref="IHost"/> with default Jeebs configuration and then run it
+	/// Build an <see cref="IHost"/> with default Jeebs configuration and then run it.
 	/// </summary>
 	/// <inheritdoc cref="CreateBuilder{T}(string[], Action{HostBuilderContext, IServiceCollection})"/>
 	internal static void Run<T>(string[] args, Action<HostBuilderContext, IServiceCollection> configureServices)
@@ -55,7 +54,7 @@ public static class Host
 		Create<T>(args, (_, _) => { });
 
 	/// <summary>
-	/// Build an <see cref="IHost"/> with default Jeebs configuration
+	/// Build an <see cref="IHost"/> with default Jeebs configuration.
 	/// </summary>
 	/// <inheritdoc cref="CreateBuilder{T}(string[], Action{HostBuilderContext, IServiceCollection})"/>
 	internal static (IHost app, ILog<T> log) Create<T>(string[] args, Action<HostBuilderContext, IServiceCollection> configureServices)
@@ -93,7 +92,7 @@ public static class Host
 		CreateBuilder<T>(args, (_, _) => { });
 
 	/// <summary>
-	/// Create an <see cref="IHostBuilder"/> with default Jeebs configuration
+	/// Create an <see cref="IHostBuilder"/> with default Jeebs configuration.
 	/// </summary>
 	/// <remarks>
 	///   - Default configuration is loaded using <see cref="Microsoft.Extensions.Hosting.Host.CreateDefaultBuilder(string[])"/><br/>
@@ -102,9 +101,9 @@ public static class Host
 	///   - Default services are registered with the DI container<br/>
 	///   - Logging is enabled using Serilog
 	/// </remarks>
-	/// <typeparam name="T">App type</typeparam>
-	/// <param name="args">Command-line arguments</param>
-	/// <param name="configureServices">Add additional services</param>
+	/// <typeparam name="T">App type.</typeparam>
+	/// <param name="args">Command-line arguments.</param>
+	/// <param name="configureServices">Add additional services.</param>
 	internal static IHostBuilder CreateBuilder<T>(string[] args, Action<HostBuilderContext, IServiceCollection> configureServices)
 		where T : App, new()
 	{
@@ -112,13 +111,8 @@ public static class Host
 		var app = new T();
 
 		// Create and configure host
-		return Microsoft.Extensions.Hosting.Host
-			.CreateDefaultBuilder(args)
-			.ConfigureHostConfiguration(app.ConfigureHost)
-			.ConfigureAppConfiguration(app.ConfigureApp)
-			.ConfigureServices(app.ConfigureServices)
-			.ConfigureServices(configureServices)
-			.UseSerilog(app.ConfigureSerilog);
+		var builder = Microsoft.Extensions.Hosting.Host.CreateDefaultBuilder(args);
+		return builder.ConfigureHostBuilder(app, configureServices);
 	}
 
 	#endregion Create Builder

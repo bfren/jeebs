@@ -4,7 +4,7 @@
 namespace Jeebs.Data.Testing.Exceptions;
 
 /// <summary>
-/// See <see cref="Query.FluentQueryHelper.AssertPropertyExpression{TEntity, TValue}(string, object?)"/>
+/// See <see cref="Query.FluentQueryHelper.AssertPropertyExpression{TEntity, TValue}(string, object?)"/>.
 /// </summary>
 public sealed class PropertyExpressionException : FluentQueryHelperException
 {

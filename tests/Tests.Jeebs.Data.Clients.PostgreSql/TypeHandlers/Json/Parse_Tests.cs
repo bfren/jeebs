@@ -2,6 +2,7 @@
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using System.Text.Json;
+using Wrap.Exceptions;
 
 namespace Jeebs.Data.Clients.PostgreSql.TypeHandlers.Json_Tests;
 
@@ -34,7 +35,8 @@ public class Parse_Tests
 		var action = void () => handler.Parse(input);
 
 		// Assert
-		Assert.Throws<JsonException>(action);
+		var ex = Assert.Throws<FailureException>(action);
+		Assert.IsType<JsonException>(ex.InnerException);
 	}
 
 	[Fact]

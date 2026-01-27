@@ -2,11 +2,9 @@
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using System.Data;
-using Jeebs.Collections;
+using Jeebs.Functions;
 using Jeebs.WordPress.Entities;
-using Jeebs.WordPress.Entities.StrongIds;
-using static Jeebs.WordPress.Functions.QueryAttachmentsF.M;
-using static StrongId.Testing.Generator;
+using Jeebs.WordPress.Entities.Ids;
 
 namespace Jeebs.WordPress.Functions.QueryAttachmentsF_Tests;
 
@@ -22,7 +20,7 @@ public class ExecuteAsync_Tests : Query_Tests
 		var result = await QueryAttachmentsF.ExecuteAsync<PostAttachment>(db, w, _ => throw new Exception());
 
 		// Assert
-		result.AssertNone().AssertType<ErrorGettingQueryAttachmentsOptionsMsg>();
+		_ = result.AssertFailure("Error getting query attachments options.");
 	}
 
 	[Fact]
@@ -30,7 +28,7 @@ public class ExecuteAsync_Tests : Query_Tests
 	{
 		// Arrange
 		var (db, w, v) = Setup();
-		var fileIds = ImmutableList.Create(ULongId<WpPostId>(), ULongId<WpPostId>());
+		var fileIds = ListF.Create(IdGen.ULongId<WpPostId>(), IdGen.ULongId<WpPostId>());
 
 		// Act
 		await QueryAttachmentsF.ExecuteAsync<PostAttachment>(db, w, opt => (opt with { Ids = fileIds }));

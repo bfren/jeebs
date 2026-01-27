@@ -7,47 +7,47 @@ using System.Text;
 namespace Jeebs.Functions;
 
 /// <summary>
-/// PHP serialisation functions
+/// PHP serialisation functions.
 /// </summary>
 public static partial class PhpF
 {
 	/// <summary>
-	/// Array type
+	/// Array type.
 	/// </summary>
 	public static readonly char ArrayChar = 'a';
 
 	/// <summary>
-	/// Boolean type
+	/// Boolean type.
 	/// </summary>
 	public static readonly char BooleanChar = 'b';
 
 	/// <summary>
-	/// Double type
+	/// Double type.
 	/// </summary>
 	public static readonly char DoubleChar = 'd';
 
 	/// <summary>
-	/// Integer type
+	/// Integer type.
 	/// </summary>
 	public static readonly char IntegerChar = 'i';
 
 	/// <summary>
-	/// String type
+	/// String type.
 	/// </summary>
 	public static readonly char StringChar = 's';
 
 	/// <summary>
-	/// Null type
+	/// Null type.
 	/// </summary>
 	public static readonly char NullChar = 'N';
 
 	/// <summary>
-	/// UTF8Encoding
+	/// UTF8Encoding.
 	/// </summary>
 	private static readonly Encoding UTF8 = new UTF8Encoding();
 
 	/// <summary>
-	/// Alias for use in deserialising associative arrays
+	/// Alias for use in deserialising associative arrays.
 	/// </summary>
-	public sealed class AssocArray : Dictionary<object, object> { }
+	public sealed class AssociativeArray : Dictionary<object, object> { }
 }

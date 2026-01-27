@@ -2,7 +2,7 @@
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using System;
-using Jeebs.Messages;
+using Wrap.Logging;
 
 namespace Jeebs.Logging;
 
@@ -13,57 +13,60 @@ public abstract class Log : ILog
 	public abstract ILog<T> ForContext<T>();
 
 	/// <inheritdoc/>
-	public void Msg<T>(T? message)
-		where T : IMsg =>
-		Msg(message, message switch
-		{
-			Msg msg =>
-				msg.Level,
-
-			_ =>
-				Messages.Msg.DefaultLevel
-		});
+	public void Failure(FailureValue value) =>
+		Failure(value, value.Level);
 
 	/// <inheritdoc/>
-	public void Msg<T>(T? message, LogLevel level)
-		where T : IMsg
+	public void Failure(FailureValue value, LogLevel level)
 	{
-		// Get message text and arguments
-		var (text, args) = message switch
+		// Add context to message
+		var text = value.Context switch
 		{
-			Msg msg =>
-				(
-					msg.FormatWithType,
-					msg.ArgsWithType
-				),
+			string context =>
+				$"{context} | " + value.Message,
 
 			_ =>
-				(
-					message?.ToString() ?? typeof(T).ToString(),
-					Array.Empty<object>()
-				),
+				value.Message
 		};
 
 		// Switch different levels
 		switch (level)
 		{
+			case LogLevel.Verbose when value.Exception is not null:
+				Vrb(value.Exception, text, value.Args);
+				break;
 			case LogLevel.Verbose:
-				Vrb(text, args);
+				Vrb(text, value.Args);
+				break;
+			case LogLevel.Debug when value.Exception is not null:
+				Dbg(value.Exception, text, value.Args);
 				break;
 			case LogLevel.Debug:
-				Dbg(text, args);
+				Dbg(text, value.Args);
+				break;
+			case LogLevel.Information when value.Exception is not null:
+				Inf(value.Exception, text, value.Args);
 				break;
 			case LogLevel.Information:
-				Inf(text, args);
+				Inf(text, value.Args);
+				break;
+			case LogLevel.Warning when value.Exception is not null:
+				Wrn(value.Exception, text, value.Args);
 				break;
 			case LogLevel.Warning:
-				Wrn(text, args);
+				Wrn(text, value.Args);
+				break;
+			case LogLevel.Error when value.Exception is not null:
+				Err(value.Exception, text, value.Args);
 				break;
 			case LogLevel.Error:
-				Err(text, args);
+				Err(text, value.Args);
+				break;
+			case LogLevel.Fatal when value.Exception is not null:
+				Ftl(value.Exception, text, value.Args);
 				break;
 			case LogLevel.Fatal:
-				Ftl(text, args);
+				Ftl(text, value.Args);
 				break;
 			case LogLevel.Unknown:
 			default:
@@ -73,16 +76,16 @@ public abstract class Log : ILog
 	}
 
 	/// <inheritdoc/>
-	public void Msgs(params IMsg[] messages)
+	public void Failures(params FailureValue[] values)
 	{
-		if (messages.Length == 0)
+		if (values.Length == 0)
 		{
 			return;
 		}
 
-		foreach (var m in messages)
+		foreach (var f in values)
 		{
-			Msg(m);
+			Failure(f);
 		}
 	}
 
@@ -94,28 +97,40 @@ public abstract class Log : ILog
 		IsEnabled((LogLevel)level);
 
 	/// <inheritdoc/>
-	public abstract void Vrb(string message, params object[] args);
+	public abstract void Vrb(string message, params object?[] args);
 
 	/// <inheritdoc/>
-	public abstract void Dbg(string message, params object[] args);
+	public abstract void Vrb(Exception ex, string message, params object?[] args);
 
 	/// <inheritdoc/>
-	public abstract void Inf(string message, params object[] args);
+	public abstract void Dbg(string message, params object?[] args);
 
 	/// <inheritdoc/>
-	public abstract void Wrn(string message, params object[] args);
+	public abstract void Dbg(Exception ex, string message, params object?[] args);
 
 	/// <inheritdoc/>
-	public abstract void Err(string message, params object[] args);
+	public abstract void Inf(string message, params object?[] args);
 
 	/// <inheritdoc/>
-	public abstract void Err(Exception ex, string message, params object[] args);
+	public abstract void Inf(Exception ex, string message, params object?[] args);
 
 	/// <inheritdoc/>
-	public abstract void Ftl(string message, params object[] args);
+	public abstract void Wrn(string message, params object?[] args);
 
 	/// <inheritdoc/>
-	public abstract void Ftl(Exception ex, string message, params object[] args);
+	public abstract void Wrn(Exception ex, string message, params object?[] args);
+
+	/// <inheritdoc/>
+	public abstract void Err(string message, params object?[] args);
+
+	/// <inheritdoc/>
+	public abstract void Err(Exception ex, string message, params object?[] args);
+
+	/// <inheritdoc/>
+	public abstract void Ftl(string message, params object?[] args);
+
+	/// <inheritdoc/>
+	public abstract void Ftl(Exception ex, string message, params object?[] args);
 
 	/// <inheritdoc/>
 	public abstract void Dispose();

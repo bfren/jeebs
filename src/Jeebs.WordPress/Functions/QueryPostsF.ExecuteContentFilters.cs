@@ -10,13 +10,13 @@ namespace Jeebs.WordPress.Functions;
 public static partial class QueryPostsF
 {
 	/// <summary>
-	/// Apply content filters to each post
+	/// Apply content filters to each post.
 	/// </summary>
-	/// <typeparam name="TList">List type</typeparam>
-	/// <typeparam name="TModel">Post Model type</typeparam>
-	/// <param name="posts">Posts</param>
-	/// <param name="content">Content Property for <typeparamref name="TModel"/></param>
-	/// <param name="filters">Content Filters</param>
+	/// <typeparam name="TList">List type.</typeparam>
+	/// <typeparam name="TModel">Post Model type.</typeparam>
+	/// <param name="posts">Posts.</param>
+	/// <param name="content">Content Property for <typeparamref name="TModel"/>.</param>
+	/// <param name="filters">Content Filters.</param>
 	internal static TList ExecuteContentFilters<TList, TModel>(TList posts, Content<TModel> content, IContentFilter[] filters)
 		where TList : IEnumerable<TModel>
 	{
@@ -30,16 +30,17 @@ public static partial class QueryPostsF
 		foreach (var post in posts)
 		{
 			// Get post content
-			var postContent = content.Get(post);
-
-			// Apply filters
-			foreach (var filter in filters)
+			if (content.Get(post).Unsafe().TrySome(out var postContent))
 			{
-				postContent = filter.Execute(postContent);
-			}
+				// Apply filters
+				foreach (var filter in filters)
+				{
+					postContent = filter.Execute(postContent);
+				}
 
-			// Set filtered content
-			content.Set(post, postContent);
+				// Set filtered content
+				content.Set(post, postContent);
+			}
 		}
 
 		return posts;

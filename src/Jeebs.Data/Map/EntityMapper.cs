@@ -6,8 +6,6 @@ using System.Collections.Concurrent;
 using Jeebs.Data.Attributes;
 using Jeebs.Data.Exceptions;
 using Jeebs.Data.Map.Functions;
-using Jeebs.Messages;
-using StrongId;
 
 namespace Jeebs.Data.Map;
 
@@ -17,25 +15,25 @@ internal sealed class EntityMapper : IEntityMapper, IDisposable
 	#region Static
 
 	/// <summary>
-	/// Default (global) instance
+	/// Default (global) instance.
 	/// </summary>
 	internal static IEntityMapper Instance =>
 		LazyInstance.Value;
 
 	/// <summary>
-	/// Lazily create a <see cref="EntityMapper"/>
+	/// Lazily create a <see cref="EntityMapper"/>.
 	/// </summary>
 	private static Lazy<IEntityMapper> LazyInstance { get; } = new(() => new EntityMapper(), true);
 
 	#endregion Static
 
 	/// <summary>
-	/// Mapped entities
+	/// Mapped entities.
 	/// </summary>
 	private readonly ConcurrentDictionary<Type, TableMap> mappedEntities = new();
 
 	/// <summary>
-	/// Only allow internal creation
+	/// Only allow internal creation.
 	/// </summary>
 	internal EntityMapper() { }
 
@@ -52,35 +50,28 @@ internal sealed class EntityMapper : IEntityMapper, IDisposable
 				throw new InvalidTableMapException(errors);
 			}
 
-			// Get mapped columns
-			var columns = MapF.GetColumns<TTable, TEntity>(table).Unwrap(
-				reason => throw new UnableToGetColumnsException(reason)
-			);
-
-			// Get ID column by attribute (to allow ID to be overridden)
-			var idColumn = MapF.GetColumnWithAttribute<TTable, IdAttribute>(columns).Unwrap(
-				_ => MapF.GetIdColumn<TTable>(columns).Unwrap(
-					reason => throw new UnableToFindIdColumnException(reason)
-				)
-			);
-
-			// Create Table Map
-			var map = new TableMap(table, columns, idColumn);
+			// Create table map
+			var colResult = MapF.GetColumns<TTable, TEntity>(table);
+			var mapResult = from col in colResult
+							from id in MapF.GetIdColumn<TTable>(col)
+							select new TableMap(table, col, id);
 
 			// Get Version property
 			if (typeof(TEntity).Implements<IWithVersion>())
 			{
-				map.VersionColumn = MapF.GetColumnWithAttribute<TTable, VersionAttribute>(columns).Unwrap(
-					reason => throw new UnableToFindVersionColumnException(reason)
-				);
+				var mapWithVersion = from col in colResult
+									 from map in mapResult
+									 from version in MapF.GetColumnWithAttribute<TTable, VersionAttribute>(col)
+									 select map with { VersionColumn = version };
+				return mapWithVersion.Unwrap(f => throw new InvalidTableMapException([f]));
 			}
 
-			// Return map
-			return map;
+			// Return map without Version property
+			return mapResult.Unwrap(f => throw new InvalidTableMapException([f]));
 		});
 
 	/// <inheritdoc/>
-	public Maybe<ITableMap> GetTableMapFor<TEntity>()
+	public Result<ITableMap> GetTableMapFor<TEntity>()
 		where TEntity : IWithId
 	{
 		if (mappedEntities.TryGetValue(typeof(TEntity), out var map))
@@ -88,13 +79,14 @@ internal sealed class EntityMapper : IEntityMapper, IDisposable
 			return map;
 		}
 
-		return F.None<ITableMap, M.TryingToGetUnmappedEntityMsg<TEntity>>();
+		return R.Fail("Trying to get table map for an umapped entity ('{Entity}').", typeof(TEntity).Name)
+			.Ctx(nameof(EntityMapper), nameof(GetTableMapFor));
 	}
 
 	#region Dispose
 
 	/// <summary>
-	/// Set to true if the object has been disposed
+	/// Set to true if the object has been disposed.
 	/// </summary>
 	private bool disposed;
 
@@ -114,12 +106,4 @@ internal sealed class EntityMapper : IEntityMapper, IDisposable
 	}
 
 	#endregion Dispose
-
-	/// <summary>Messages</summary>
-	public static class M
-	{
-		/// <summary>The entity being requested has not been mapped yet</summary>
-		/// <typeparam name="TEntity">Entity type</typeparam>
-		public sealed record class TryingToGetUnmappedEntityMsg<TEntity> : Msg;
-	}
 }

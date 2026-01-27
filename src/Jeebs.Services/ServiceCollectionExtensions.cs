@@ -11,14 +11,14 @@ using Microsoft.Extensions.DependencyInjection;
 namespace Jeebs.Services;
 
 /// <summary>
-/// <see cref="IServiceCollection"/> Extensions - AddDrivers
+/// <see cref="IServiceCollection"/> Extensions - AddDrivers.
 /// </summary>
 public static class ServiceCollectionExtensions
 {
 	/// <summary>
-	/// Add <see cref="IDriver{TConfig}"/> and <see cref="IDriverArgs{TConfig}"/> implementations to the <see cref="IServiceCollection"/>
+	/// Add <see cref="IDriver{TConfig}"/> and <see cref="IDriverArgs{TConfig}"/> implementations to the <see cref="IServiceCollection"/>.
 	/// </summary>
-	/// <param name="this">IServiceCollection</param>
+	/// <param name="this">IServiceCollection.</param>
 	public static IServiceCollection AddDrivers(this IServiceCollection @this)
 	{
 		// Get drivers and add them to the service collection

@@ -6,17 +6,17 @@ using System;
 namespace Jeebs.Data.Map;
 
 /// <summary>
-/// Database object name and optional schema
+/// Database object name and optional schema.
 /// </summary>
 public interface IDbName
 {
 	/// <summary>
-	/// [Optional] Object Schema
+	/// [Optional] Object Schema.
 	/// </summary>
 	string? Schema { get; }
 
 	/// <summary>
-	/// Object Name
+	/// Object Name.
 	/// </summary>
 	string Name { get; }
 
@@ -24,14 +24,14 @@ public interface IDbName
 	/// Escape and return object <see cref="Schema"/> and <see cref="Name"/> separated by '.',
 	/// or simply the <see cref="Name"/> if <see cref="Schema"/> is null
 	/// </summary>
-	/// <param name="escape">Escape function</param>
+	/// <param name="escape">Escape function.</param>
 	string GetFullName(Func<string, string> escape);
 
 	/// <summary>
 	/// Escape and return object <see cref="Schema"/> and <see cref="Name"/> separated by '.',
 	/// or simply the <see cref="Name"/> if <see cref="Schema"/> is null
 	/// </summary>
-	/// <param name="escape">Escape function</param>
-	/// <param name="schemaSeparator">Schema separator</param>
+	/// <param name="escape">Escape function.</param>
+	/// <param name="schemaSeparator">Schema separator.</param>
 	string GetFullName(Func<string, string> escape, char schemaSeparator);
 }

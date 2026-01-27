@@ -1,9 +1,6 @@
 // Jeebs Unit Tests
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
-using MaybeF;
-using static Jeebs.Data.Query.FluentQuery.M;
-
 namespace Jeebs.Data.Query.FluentQuery_Tests;
 
 public class Where_Tests0 : FluentQuery_Tests
@@ -13,7 +10,7 @@ public class Where_Tests0 : FluentQuery_Tests
 	{
 		// Arrange
 		var (query, _) = Setup();
-		query.Errors.Add(Substitute.For<IMsg>());
+		query.Errors.Add(FailGen.Create().Value);
 
 		// Act
 		var result = query.Where(Rnd.Str, Rnd.Guid);
@@ -28,20 +25,20 @@ public class Where_Tests0 : FluentQuery_Tests
 	[InlineData(null)]
 	[InlineData("")]
 	[InlineData("  ")]
-	public void Clause_Null_Or_Whitespace__Adds_Error__Returns_Original_Query(string clause)
+	public void Clause_Null_Or_Whitespace__Adds_Error__Returns_Original_Query(string? clause)
 	{
 		// Arrange
 		var (query, _) = Setup();
 
 		// Act
-		var result = query.Where(clause, Rnd.Lng);
+		var result = query.Where(clause!, Rnd.Lng);
 
 		// Assert
 		var fluent = Assert.IsType<FluentQuery<TestEntity, TestId>>(result);
 		Assert.Empty(fluent.Parts.Where);
 		Assert.Same(query, fluent);
 		var single = Assert.Single(fluent.Errors);
-		single.AssertType<TryingToAddEmptyClauseToWhereMsg>();
+		Assert.Equal("Trying to add empty clause to WHERE.", single.Message);
 	}
 
 	[Theory]
@@ -51,20 +48,20 @@ public class Where_Tests0 : FluentQuery_Tests
 	[InlineData(42L)]
 	[InlineData('n')]
 	[InlineData("invalid")]
-	public void Unable_To_Add_Parameters__Adds_Error__Returns_Original_Query(object param)
+	public void Unable_To_Add_Parameters__Adds_Error__Returns_Original_Query(object? param)
 	{
 		// Arrange
 		var (query, _) = Setup();
 
 		// Act
-		var result = query.Where(Rnd.Str, param);
+		var result = query.Where(Rnd.Str, param!);
 
 		// Assert
 		var fluent = Assert.IsType<FluentQuery<TestEntity, TestId>>(result);
 		Assert.Empty(fluent.Parts.Where);
 		Assert.Same(query, fluent);
 		var single = Assert.Single(fluent.Errors);
-		single.AssertType<UnableToAddParametersToWhereMsg>();
+		Assert.Equal("Unable to add parameters to WHERE.", single.Message);
 	}
 
 	[Fact]

@@ -1,8 +1,6 @@
 // Jeebs Unit Tests
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
-using static Jeebs.Data.Map.EntityMapper.M;
-
 namespace Jeebs.Data.Map.EntityMapper_Tests;
 
 public class GetTableMapFor_Tests
@@ -17,7 +15,7 @@ public class GetTableMapFor_Tests
 		var result = mapper.GetTableMapFor<Foo>();
 
 		// Assert
-		result.AssertNone().AssertType<TryingToGetUnmappedEntityMsg<Foo>>();
+		_ = result.AssertFailure("Trying to get table map for an umapped entity ('{Entity}').", nameof(Foo));
 	}
 
 	[Fact]
@@ -31,7 +29,7 @@ public class GetTableMapFor_Tests
 		var result = mapper.GetTableMapFor<Foo>();
 
 		// Assert
-		var some = result.AssertSome();
-		Assert.Same(map, some);
+		var ok = result.AssertOk();
+		Assert.Same(map, ok);
 	}
 }

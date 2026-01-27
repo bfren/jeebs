@@ -3,7 +3,6 @@
 
 using Jeebs.Data;
 using Jeebs.Data.Map;
-using StrongId;
 
 namespace Jeebs.WordPress.Query.PartsBuilder_Tests;
 
@@ -31,7 +30,7 @@ public abstract class PartsBuilder_Tests
 	);
 }
 
-public sealed record class TestId : ULongId;
+public sealed record class TestId : ULongId<TestId>;
 
 public class TestPartsBuilder : PartsBuilder<TestId>
 {

@@ -19,7 +19,7 @@ public class Constructor_Tests
 
 	[Theory]
 	[InlineData(null)]
-	public void Create_Empty_List_From_Null_Strings(List<string> input)
+	public void Create_Empty_List_From_Null_Strings(List<string>? input)
 	{
 		// Arrange
 

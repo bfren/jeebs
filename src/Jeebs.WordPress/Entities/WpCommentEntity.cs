@@ -7,82 +7,82 @@ using Jeebs.WordPress.Enums;
 namespace Jeebs.WordPress.Entities;
 
 /// <summary>
-/// Comment entity
+/// Comment entity.
 /// </summary>
 public abstract record class WpCommentEntity : WpCommentEntityWithId
 {
 	/// <summary>
-	/// PostId
+	/// PostId.
 	/// </summary>
-	public StrongIds.WpPostId PostId { get; init; } = new();
+	public Ids.WpPostId PostId { get; init; } = new();
 
 	/// <summary>
-	/// AuthorName
+	/// AuthorName.
 	/// </summary>
 	public string AuthorName { get; init; } = string.Empty;
 
 	/// <summary>
-	/// AuthorEmail
+	/// AuthorEmail.
 	/// </summary>
 	public string AuthorEmail { get; init; } = string.Empty;
 
 	/// <summary>
-	/// AuthorUrl
+	/// AuthorUrl.
 	/// </summary>
 	public string AuthorUrl { get; init; } = string.Empty;
 
 	/// <summary>
-	/// AuthorIp
+	/// AuthorIp.
 	/// </summary>
 	public string AuthorIp { get; init; } = string.Empty;
 
 	/// <summary>
-	/// PublishedOn
+	/// PublishedOn.
 	/// </summary>
 	public DateTime PublishedOn { get; init; }
 
 	/// <summary>
-	/// PublishedOnGmt
+	/// PublishedOnGmt.
 	/// </summary>
 	public DateTime PublishedOnGmt { get; init; }
 
 	/// <summary>
-	/// Content
+	/// Content.
 	/// </summary>
 	public string Content { get; init; } = string.Empty;
 
 	/// <summary>
-	/// Karma
+	/// Karma.
 	/// </summary>
 	public long Karma { get; init; }
 
 	/// <summary>
-	/// IsApproved
+	/// IsApproved.
 	/// </summary>
 	public bool IsApproved { get; init; }
 
 	/// <summary>
-	/// AuthorUserAgent
+	/// AuthorUserAgent.
 	/// </summary>
 	public string AuthorUserAgent { get; init; } = string.Empty;
 
 	/// <summary>
-	/// Type
+	/// Type.
 	/// </summary>
 	public CommentType Type { get; init; } = CommentType.Blank;
 
 	/// <summary>
-	/// ParentId
+	/// ParentId.
 	/// </summary>
-	public StrongIds.WpCommentId ParentId { get; init; } = new();
+	public Ids.WpCommentId ParentId { get; init; } = new();
 
 	/// <summary>
-	/// AuthorId
+	/// AuthorId.
 	/// </summary>
-	public StrongIds.WpUserId AuthorId { get; init; } = new();
+	public Ids.WpUserId AuthorId { get; init; } = new();
 
 	/// <summary>
-	/// AuthorIsSubscribed
+	/// AuthorIsSubscribed.
 	/// </summary>
 	public bool AuthorIsSubscribed { get; init; }
 }

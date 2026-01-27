@@ -19,9 +19,9 @@ public sealed record class DateRange : IRange<DateTime>
 		Finish.Subtract(Start).Days + 1;
 
 	/// <summary>
-	/// Create range object from a single date
+	/// Create range object from a single date.
 	/// </summary>
-	/// <param name="startAndEnd">Range start and end</param>
+	/// <param name="startAndEnd">Range start and end.</param>
 	public DateRange(DateTime startAndEnd) =>
 		(Start, Finish) = (startAndEnd.StartOfDay(), startAndEnd.EndOfDay());
 
@@ -29,8 +29,8 @@ public sealed record class DateRange : IRange<DateTime>
 	/// Create range object, making sure start is before end (!)
 	/// Start and end are inclusive
 	/// </summary>
-	/// <param name="start">Range start</param>
-	/// <param name="end">Range end</param>
+	/// <param name="start">Range start.</param>
+	/// <param name="end">Range end.</param>
 	public DateRange(DateTime start, DateTime end)
 	{
 		if (start < end)
@@ -59,16 +59,16 @@ public sealed record class DateRange : IRange<DateTime>
 	#region Static Members
 
 	/// <summary>
-	/// Open-started Date Range object ending at end date
+	/// Open-started Date Range object ending at end date.
 	/// </summary>
-	/// <param name="end">End date</param>
+	/// <param name="end">End date.</param>
 	public static DateRange UpTo(DateTime end) =>
 		new(DateTime.MinValue, end);
 
 	/// <summary>
-	/// Open-ended Date Range beginning at start date
+	/// Open-ended Date Range beginning at start date.
 	/// </summary>
-	/// <param name="start">Start date</param>
+	/// <param name="start">Start date.</param>
 	public static DateRange From(DateTime start) =>
 		new(start, DateTime.MaxValue);
 

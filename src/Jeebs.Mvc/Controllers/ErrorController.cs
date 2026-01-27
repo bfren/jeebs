@@ -3,41 +3,34 @@
 
 using System.Threading.Tasks;
 using Jeebs.Logging;
-using Jeebs.Messages;
+using Jeebs.Mvc.Extensions;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Jeebs.Mvc.Controllers;
 
 /// <summary>
-/// Error Controller
+/// Error Controller.
 /// </summary>
-public abstract class ErrorController : Controller
+public abstract class ErrorController : MvcController
 {
 	/// <summary>
-	/// Create object
+	/// Create object.
 	/// </summary>
-	/// <param name="log">ILog</param>
+	/// <param name="log">ILog.</param>
 	protected ErrorController(ILog log) : base(log) { }
 
 	/// <summary>
-	/// Default error view
+	/// Default error view.
 	/// </summary>
 	public async Task<IActionResult> Index() =>
-		await Handle(StatusCodes.Status500InternalServerError).ConfigureAwait(false);
+		await Handle(StatusCodes.Status500InternalServerError);
 
 	/// <summary>
-	/// Handle an error with the specified code
+	/// Handle an error with the specified code.
 	/// </summary>
-	/// <param name="code">Http Status Code</param>
+	/// <param name="code">Http Status Code.</param>
 	[Route("/Error/{code:int}")]
 	public async Task<IActionResult> Handle(int code) =>
-		await this.ExecuteErrorAsync(new M.UnknownErrorMsg(), code).ConfigureAwait(false);
-
-	/// <summary>Messages</summary>
-	public static class M
-	{
-		/// <summary>An unknown error has occured</summary>
-		public sealed record class UnknownErrorMsg : Msg;
-	}
+		await this.ExecuteErrorAsync(new("Unknown error."), code);
 }

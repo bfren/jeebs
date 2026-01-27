@@ -1,4 +1,4 @@
-﻿// Jeebs Unit Tests
+// Jeebs Unit Tests
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 namespace Jeebs.Collections.ImmutableList_Tests;
@@ -17,7 +17,7 @@ public class AsEnumerable_Tests
 		var result = list.AsEnumerable();
 
 		// Assert
-		Assert.IsAssignableFrom<IEnumerable<int>>(result);
+		Assert.IsType<IEnumerable<int>>(result, exactMatch: false);
 		Assert.Collection(result,
 			x => Assert.Equal(i0, x),
 			x => Assert.Equal(i1, x)

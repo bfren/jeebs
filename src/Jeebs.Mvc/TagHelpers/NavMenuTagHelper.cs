@@ -3,7 +3,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Globalization;
 using System.Text.Encodings.Web;
 using Jeebs.Mvc.Models;
 using Microsoft.AspNetCore.Mvc.Razor.TagHelpers;
@@ -14,13 +13,13 @@ using Microsoft.AspNetCore.Razor.TagHelpers;
 namespace Jeebs.Mvc.TagHelpers;
 
 /// <summary>
-/// Nav Menu TagHelper
+/// Nav Menu TagHelper.
 /// </summary>
 /// <remarks>
 /// Create object
 /// </remarks>
-/// <param name="urlHelperFactory">IUrlHelperFactory object</param>
-/// <param name="htmlEncoder">HtmlEncoder</param>
+/// <param name="urlHelperFactory">IUrlHelperFactory object.</param>
+/// <param name="htmlEncoder">HtmlEncoder.</param>
 [HtmlTargetElement("nav-menu", TagStructure = TagStructure.WithoutEndTag)]
 public sealed class NavMenuTagHelper(
 	IUrlHelperFactory urlHelperFactory,
@@ -28,55 +27,55 @@ public sealed class NavMenuTagHelper(
 ) : UrlResolutionTagHelper(urlHelperFactory, htmlEncoder)
 {
 	/// <summary>
-	/// Menu
+	/// Menu.
 	/// </summary>
 	public Menu? Menu { get; set; }
 
 	/// <summary>
-	/// Default: ul
+	/// Default: ul.
 	/// </summary>
 	public string WrapperElement { get; set; } = "ul";
 
 	/// <summary>
-	/// Default: nav nav-pills flex-column
+	/// Default: nav nav-pills flex-column.
 	/// </summary>
 	public string WrapperClass { get; set; } = "nav nav-pills flex-column";
 
 	/// <summary>
-	/// Default: li
+	/// Default: li.
 	/// </summary>
 	public string ItemElement { get; set; } = "li";
 
 	/// <summary>
-	/// Default: nav-item
+	/// Default: nav-item.
 	/// </summary>
 	public string ItemClass { get; set; } = "nav-item";
 
 	/// <summary>
-	/// Default: nav-link
+	/// Default: nav-link.
 	/// </summary>
 	public string LinkClass { get; set; } = "nav-link";
 
 	/// <summary>
-	/// Default: active
+	/// Default: active.
 	/// </summary>
 	public string LinkActiveClass { get; set; } = "active";
 
 	/// <summary>
-	/// Default: false
+	/// Default: false.
 	/// </summary>
 	public bool IncludeChildren { get; set; }
 
 	/// <summary>
-	/// Default: nav-child
+	/// Default: nav-child.
 	/// </summary>
 	public string ChildMenuWrapperClass { get; set; } = "nav-child";
 
 	/// <summary>
-	/// Process TagHelper
+	/// Process TagHelper.
 	/// </summary>
-	/// <param name="context">TagHelperContext</param>
-	/// <param name="output">TagHelperOutput</param>
+	/// <param name="context">TagHelperContext.</param>
+	/// <param name="output">TagHelperOutput.</param>
 	public override void Process(TagHelperContext context, TagHelperOutput output)
 	{
 		// Return if no menu or items to output
@@ -87,8 +86,8 @@ public sealed class NavMenuTagHelper(
 		}
 
 		// Setup objects
-		var currentController = ViewContext.ControllerName().ToLower(CultureInfo.InvariantCulture);
-		var currentAction = ViewContext.ActionName().ToLower(CultureInfo.InvariantCulture);
+		var currentController = ViewContext.ControllerName().ToLower(F.DefaultCulture);
+		var currentAction = ViewContext.ActionName().ToLower(F.DefaultCulture);
 		var urlHelper = UrlHelperFactory.GetUrlHelper(ViewContext);
 
 		// Build the menu

@@ -12,13 +12,7 @@
     <PackageVersion Include="Dapper" Version="2.1.66" />
     <PackageVersion Include="MaybeF" Version="10.0.0" />
     <PackageVersion Include="MaybeF.Testing" Version="10.0.0" />
-    <PackageVersion Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="10.0.2" />
-    <PackageVersion Include="Microsoft.AspNetCore.DataProtection" Version="9.0.0" />
-    <PackageVersion Include="Microsoft.AspNetCore.DataProtection.Extensions" Version="9.0.0" />
-    <PackageVersion Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="10.0.2" />
     <PackageVersion Include="Microsoft.Data.SqlClient" Version="6.1.4" />
-    <PackageVersion Include="Microsoft.EntityFrameworkCore" Version="10.0.2" />
-    <PackageVersion Include="Microsoft.EntityFrameworkCore.Relational" Version="10.0.2" />
     <PackageVersion Include="Microsoft.Extensions.Caching.Memory" Version="10.0.2" />
     <PackageVersion Include="Microsoft.Extensions.Configuration" Version="10.0.2" />
     <PackageVersion Include="Microsoft.Extensions.Configuration.Abstractions" Version="10.0.2" />
@@ -31,15 +25,13 @@
     <PackageVersion Include="Microsoft.Extensions.Logging.Abstractions" Version="10.0.2" />
     <PackageVersion Include="Microsoft.Extensions.Options.ConfigurationExtensions" Version="10.0.2" />
     <PackageVersion Include="Microsoft.NET.Test.Sdk" Version="18.0.1" />
-    <PackageVersion Include="MySql.Data" Version="9.5.0" />
-    <PackageVersion Include="MySql.EntityFrameworkCore" Version="9.0.9" />
     <PackageVersion Include="MySqlConnector" Version="2.5.0" />
     <PackageVersion Include="MySqlConnector.Logging.Serilog" Version="2.0.0" />
     <PackageVersion Include="Newtonsoft.Json.Schema" Version="4.0.1" />
     <PackageVersion Include="Npgsql" Version="10.0.1" />
     <PackageVersion Include="NSubstitute" Version="5.3.0" />
     <PackageVersion Include="NSubstitute.Analyzers.CSharp" Version="1.0.17" />
-    <PackageVersion Include="Rnd" Version="10.0.3" />
+    <PackageVersion Include="Rnd" Version="10.1.2" />
     <PackageVersion Include="Serilog" Version="4.3.0" />
     <PackageVersion Include="Serilog.Extensions.Hosting" Version="10.0.0" />
     <PackageVersion Include="Serilog.Sinks.Async" Version="2.1.0" />
@@ -47,19 +39,18 @@
     <PackageVersion Include="Serilog.Sinks.File" Version="7.0.0" />
     <PackageVersion Include="Serilog.Sinks.Seq" Version="9.0.0" />
     <PackageVersion Include="Serilog.Sinks.Slack" Version="2.2.3" />
-    <PackageVersion Include="Simple.Migrations" Version="0.9.21" />
     <PackageVersion Include="SkiaSharp" Version="3.119.1" />
     <PackageVersion Include="Sodium.Core" Version="1.4.0" />
-    <PackageVersion Include="StrongId" Version="8.5.9" />
-    <PackageVersion Include="StrongId.Dapper" Version="8.5.9" />
-    <PackageVersion Include="StrongId.Mvc" Version="8.5.9" />
-    <PackageVersion Include="StrongId.Testing" Version="8.5.9" />
     <PackageVersion Include="System.Collections.Immutable" Version="10.0.2" />
     <PackageVersion Include="System.Data.SQLite.Core" Version="1.0.119" />
     <PackageVersion Include="System.IdentityModel.Tokens.Jwt" Version="8.15.0" />
     <PackageVersion Include="System.Text.Json" Version="10.0.2" />
-    <PackageVersion Include="xunit" Version="2.9.3" />
-    <PackageVersion Include="xunit.assert" Version="2.9.3" />
+    <PackageVersion Include="Wrap" Version="1.0.0" />
+    <PackageVersion Include="Wrap.Id.Dapper" Version="1.0.0" />
+    <PackageVersion Include="Wrap.Id.Mvc" Version="1.0.0" />
+    <PackageVersion Include="Wrap.Testing" Version="1.0.0" />
     <PackageVersion Include="xunit.runner.visualstudio" Version="3.1.5" />
+    <PackageVersion Include="xunit.v3" Version="3.2.2" />
+    <PackageVersion Include="xunit.v3.assert" Version="3.2.2" />
   </ItemGroup>
 </Project>

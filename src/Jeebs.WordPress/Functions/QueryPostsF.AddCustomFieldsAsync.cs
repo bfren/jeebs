@@ -5,36 +5,35 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Jeebs.Data;
-using Jeebs.WordPress.Entities.StrongIds;
-using StrongId;
+using Jeebs.WordPress.Entities.Ids;
 
 namespace Jeebs.WordPress.Functions;
 
 public static partial class QueryPostsF
 {
 	/// <summary>
-	/// Add custom fields to posts
+	/// Add custom fields to posts.
 	/// </summary>
-	/// <typeparam name="TList">List type</typeparam>
-	/// <typeparam name="TModel">Model type</typeparam>
-	/// <param name="db">IWpDb</param>
-	/// <param name="w">IUnitOfWork</param>
-	/// <param name="posts">Posts</param>
-	internal static Task<Maybe<TList>> AddCustomFieldsAsync<TList, TModel>(IWpDb db, IUnitOfWork w, TList posts)
+	/// <typeparam name="TList">List type.</typeparam>
+	/// <typeparam name="TModel">Model type.</typeparam>
+	/// <param name="db">IWpDb.</param>
+	/// <param name="w">IUnitOfWork.</param>
+	/// <param name="posts">Posts.</param>
+	internal static Task<Result<TList>> AddCustomFieldsAsync<TList, TModel>(IWpDb db, IUnitOfWork w, TList posts)
 		where TList : IEnumerable<TModel>
-		where TModel : IWithId<WpPostId>
+		where TModel : IWithId<WpPostId, ulong>
 	{
 		// If there are no posts, do nothing
 		if (!posts.Any())
 		{
-			return F.Some(posts).AsTask();
+			return R.Wrap(posts).AsTask();
 		}
 
 		// Only proceed if there are custom fields, and a meta property for this model
 		var fields = GetCustomFields<TModel>();
 		if (fields.Count == 0)
 		{
-			return F.Some(posts).AsTask();
+			return R.Wrap(posts).AsTask();
 		}
 
 		// Get terms and add them to the posts

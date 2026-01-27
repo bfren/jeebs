@@ -10,9 +10,9 @@ namespace Jeebs.Data;
 public abstract partial class DbClient : IDbClient
 {
 	/// <summary>
-	/// Get columns and parameter names for <see cref="GetCreateQuery(IDbName, IColumnList)"/>
+	/// Get columns and parameter names for <see cref="GetCreateQuery(IDbName, IColumnList)"/>.
 	/// </summary>
-	/// <param name="columns">IColumnList</param>
+	/// <param name="columns">IColumnList.</param>
 	protected virtual (List<string> col, List<string> par) GetColumnsForCreateQuery(IColumnList columns)
 	{
 		var col = new List<string>();
@@ -32,9 +32,9 @@ public abstract partial class DbClient : IDbClient
 	}
 
 	/// <summary>
-	/// Get columns for <see cref="GetRetrieveQuery(IDbName, IColumnList, IColumn, object)"/>
+	/// Get columns for <see cref="GetRetrieveQuery(IDbName, IColumnList, IColumn, object)"/>.
 	/// </summary>
-	/// <param name="columns">ColumnList</param>
+	/// <param name="columns">ColumnList.</param>
 	protected virtual List<string> GetColumnsForRetrieveQuery(IColumnList columns)
 	{
 		var col = new List<string>();
@@ -47,9 +47,9 @@ public abstract partial class DbClient : IDbClient
 	}
 
 	/// <summary>
-	/// Get columns for <see cref="GetUpdateQuery(IDbName, IColumnList, IColumn, object, IColumn?)"/>
+	/// Get columns for <see cref="GetUpdateQuery(IDbName, IColumnList, IColumn, object, IColumn?)"/>.
 	/// </summary>
-	/// <param name="columns">ColumnList</param>
+	/// <param name="columns">ColumnList.</param>
 	protected virtual List<string> GetSetListForUpdateQuery(IColumnList columns)
 	{
 		var col = new List<string>();
@@ -70,8 +70,8 @@ public abstract partial class DbClient : IDbClient
 	/// Add version to column list for <see cref="GetUpdateQuery(IDbName, IColumnList, IColumn, object, IColumn?)"/>,
 	/// if <paramref name="versionColumn"/> is not null
 	/// </summary>
-	/// <param name="setList">List of Set commands</param>
-	/// <param name="versionColumn">[Optional] Version column</param>
+	/// <param name="setList">List of Set commands.</param>
+	/// <param name="versionColumn">[Optional] Version column.</param>
 	protected virtual void AddVersionToSetList(List<string> setList, IColumn? versionColumn)
 	{
 		if (versionColumn is not null)
@@ -84,8 +84,8 @@ public abstract partial class DbClient : IDbClient
 	/// Add version to where string for <see cref="GetUpdateQuery(IDbName, IColumnList, IColumn, object, IColumn?)"/>
 	/// and <see cref="GetDeleteQuery(IDbName, IColumn, object, IColumn?)"/>
 	/// </summary>
-	/// <param name="sql">SQL query StringBuilder</param>
-	/// <param name="versionColumn">[Optional] Version column</param>
+	/// <param name="sql">SQL query StringBuilder.</param>
+	/// <param name="versionColumn">[Optional] Version column.</param>
 	protected virtual string AddVersionToWhere(string sql, IColumn? versionColumn)
 	{
 		if (versionColumn is not null)

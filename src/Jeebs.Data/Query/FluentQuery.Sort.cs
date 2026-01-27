@@ -19,16 +19,16 @@ public sealed partial record class FluentQuery<TEntity, TId>
 			return this;
 		}
 
-		return QueryF.GetColumnFromAlias(Table, columnAlias).Switch(
-			some: x => Update(parts => parts with { Sort = parts.Sort.WithItem((x, order)) }),
-			none: r => { Errors.Add(r); return this; }
+		return QueryF.GetColumnFromAlias(Table, columnAlias).Match(
+			ok: x => Update(parts => parts with { Sort = parts.Sort.WithItem((x, order)) }),
+			fail: f => { Errors.Add(f); return this; }
 	   );
 	}
 
 	/// <inheritdoc/>
 	public IFluentQuery<TEntity, TId> Sort<TValue>(Expression<Func<TEntity, TValue>> aliasSelector, SortOrder order) =>
 		aliasSelector.GetPropertyInfo()
-			.Switch(
+			.Match(
 				some: x => Sort(x.Name, order),
 				none: this
 			);

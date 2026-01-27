@@ -2,22 +2,20 @@
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using Jeebs.Data.Map;
-using StrongId;
 
 namespace Jeebs.Data.Query.QueryPartsBuilder_Tests;
 
 public abstract class QueryPartsBuilder_Tests<TBuilder, TId>
 	where TBuilder : QueryPartsBuilder<TId>
-	where TId : class, IStrongId, new()
+	where TId : class, IUnion, new()
 {
 	protected abstract TBuilder GetConfiguredBuilder(IExtract extract);
 
 	public (TBuilder builder, Vars v) Setup()
 	{
 		var extract = Substitute.For<IExtract>();
-
+		extract.From<Arg.AnyType>(Arg.Any<ITable[]>()).Returns(new ColumnList());
 		var builder = GetConfiguredBuilder(extract);
-
 		var parts = new QueryParts(builder.Table);
 
 		return (builder, new(extract, parts));

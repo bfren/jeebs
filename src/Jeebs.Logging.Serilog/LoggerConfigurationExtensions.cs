@@ -3,30 +3,28 @@
 
 using System;
 using System.Collections.Generic;
-using System.Globalization;
 using System.Linq;
 using Jeebs.Config;
 using Jeebs.Config.Services;
-using Jeebs.Extensions;
 using Jeebs.Functions;
 using Jeebs.Logging.Serilog.Exceptions;
 using Jeebs.Logging.Serilog.Functions;
 using Serilog;
 using Serilog.Events;
+using Wrap.Logging;
 
 namespace Jeebs.Logging.Serilog;
 
 /// <summary>
-/// LoggerConfiguration extension methods
+/// LoggerConfiguration extension methods.
 /// </summary>
 public static class LoggerConfigurationExtensions
 {
 	/// <summary>
-	/// Load Serilog configuration from JeebsConfig object
+	/// Load Serilog configuration from JeebsConfig object.
 	/// </summary>
-	/// <param name="this">LoggerConfiguration</param>
-	/// <param name="jeebs">JeebsConfig</param>
-	/// <exception cref="LoadFromJeebsConfigException"></exception>
+	/// <param name="this">Serilog configuration object.</param>
+	/// <param name="jeebs">JeebsConfig.</param>
 	public static void LoadFromJeebsConfig(this LoggerConfiguration @this, JeebsConfig jeebs)
 	{
 		// Set the application name
@@ -55,9 +53,10 @@ public static class LoggerConfigurationExtensions
 	/// Returns <paramref name="testMinimum"/> if it is not null and greater than <paramref name="overallMinimum"/> -
 	/// otherwise returns <paramref name="overallMinimum"/>
 	/// </summary>
-	/// <param name="testMinimum"></param>
-	/// <param name="overallMinimum"></param>
+	/// <param name="testMinimum">Potential minimum log level.</param>
+	/// <param name="overallMinimum">System minimum log level.</param>
 	/// <exception cref="LoadFromJeebsConfigException"></exception>
+	/// <returns>The greater of two minimum log levels.</returns>
 	internal static LogEventLevel GetMinimum(LogLevel? testMinimum, LogLevel overallMinimum)
 	{
 		var min = testMinimum switch
@@ -71,14 +70,14 @@ public static class LoggerConfigurationExtensions
 
 		return LevelF
 			.ConvertToSerilogLevel(min)
-			.Unwrap(r => throw new LoadFromJeebsConfigException(r));
+			.Unwrap(v => throw new LoadFromJeebsConfigException(v));
 	}
 
 	/// <summary>
-	/// Configure all enabled <see cref="ILoggingProvider"/> services
+	/// Configure all enabled <see cref="ILoggingProvider"/> services.
 	/// </summary>
-	/// <param name="serilog"></param>
-	/// <param name="jeebs"></param>
+	/// <param name="serilog">Seilog configuration object.</param>
+	/// <param name="jeebs">JeebsConfig.</param>
 	internal static void ConfigureProviders(ref LoggerConfiguration serilog, JeebsConfig jeebs)
 	{
 		// Get enabled providers
@@ -87,7 +86,7 @@ public static class LoggerConfigurationExtensions
 		// If no providers are enabled, add basic console logging and return
 		if (enabledProviders.Count == 0)
 		{
-			_ = serilog.WriteTo.Console(formatProvider: CultureInfo.InvariantCulture);
+			ConsoleLoggingProvider.AddDefaultConsoleConfig(serilog);
 			return;
 		}
 
@@ -102,27 +101,42 @@ public static class LoggerConfigurationExtensions
 		});
 
 		// Configure enabled providers
+		var atLeastOneEnabled = false;
 		foreach (var (providerInfo, providerConfig) in enabledProviders)
 		{
-			// Get service definition
-			var (serviceType, serviceName) = ServicesConfig.SplitDefinition(providerInfo);
-
 			// Get hook minimum - default minimum will override this if it's higher
 			var providerMinimum = GetMinimum(providerConfig.Minimum, jeebs.Logging.Minimum);
 
-			// Configure provider
-			if (providers.TryGetValue(serviceType, out var provider))
+			// Get service definition
+			var service = from d in ServicesConfig.SplitDefinition(providerInfo)
+						  from p in providers.GetValueOrNone(d.type)
+						  select (p, d.name);
+
+			if (service is Some<(ILoggingProvider provider, string name)> s)
 			{
-				provider.Configure(serilog, jeebs, serviceName, providerMinimum);
+				// Configure the provider and keep track of whether at least one is successfully configured
+				var configure = s.Value.provider.Configure(serilog, jeebs, s.Value.name, providerMinimum);
+				atLeastOneEnabled = atLeastOneEnabled || configure.IsTrue();
+
+				// Output any errors to the console
+				_ = configure.IfFailed(
+					f => Console.WriteLine(f.Message.FormatWith(f.Args))
+				);
 			}
+		}
+
+		// If nothing is configured, add default console config
+		if (!atLeastOneEnabled)
+		{
+			ConsoleLoggingProvider.AddDefaultConsoleConfig(serilog);
 		}
 	}
 
 	/// <summary>
-	/// Enable all <see cref="ILoggingConnector"/> services
+	/// Enable all <see cref="ILoggingConnector"/> services.
 	/// </summary>
-	/// <param name="serilog"></param>
-	/// <param name="jeebs"></param>
+	/// <param name="serilog">Seilog configuration object.</param>
+	/// <param name="jeebs">JeebsConfig.</param>
 	internal static void EnableConnectors(LoggerConfiguration serilog, JeebsConfig jeebs)
 	{
 		// Get all connectors

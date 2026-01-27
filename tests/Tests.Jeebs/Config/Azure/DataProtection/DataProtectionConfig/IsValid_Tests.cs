@@ -18,15 +18,15 @@ public class IsValid_Tests
 	[InlineData("cs", "container", "blob", null)]
 	[InlineData("cs", "container", "blob", "")]
 	[InlineData("cs", "container", "blob", " ")]
-	public void Returns_False(string cs, string container, string blob, string key)
+	public void Returns_False(string? cs, string? container, string? blob, string? key)
 	{
 		// Arrange
 		var config = new DataProtectionConfig
 		{
-			StorageAccessKeyConnectionString = cs,
-			ContainerName = container,
-			BlobName = blob,
-			KeyUri = key
+			StorageAccessKeyConnectionString = cs!,
+			ContainerName = container!,
+			BlobName = blob!,
+			KeyUri = key!
 		};
 
 		// Act

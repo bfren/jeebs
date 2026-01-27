@@ -37,7 +37,7 @@ public class GetColumnsForCreateQuery_Tests
 
 		var column = new Column(new DbName(Rnd.Str), name, propertyInfo);
 
-		var list = new ColumnList(new[] { column });
+		var list = new ColumnList([column]);
 
 		// Act
 		client.GetColumnsForCreateQueryTest(list);

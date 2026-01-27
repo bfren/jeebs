@@ -2,9 +2,7 @@
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using System.Collections;
-using MaybeF;
-using StrongId;
-using static Jeebs.Functions.JsonF.M;
+using Wrap.Ids;
 
 namespace Jeebs.Functions.JsonF_Tests;
 
@@ -15,7 +13,7 @@ public class Deserialise_Tests
 	[InlineData("")]
 	[InlineData(" ")]
 	[InlineData("\n")]
-	public void Null_Or_Whitespace_Returns_None(string input)
+	public void Null_Or_Whitespace_Returns_Fail(string? input)
 	{
 		// Arrange
 
@@ -23,11 +21,11 @@ public class Deserialise_Tests
 		var result = JsonF.Deserialise<Test>(input);
 
 		// Assert
-		result.AssertNone().AssertType<DeserialisingNullOrEmptyStringMsg>();
+		result.AssertFailure("Cannot deserialise a null or empty string.");
 	}
 
 	[Fact]
-	public void InvalidJson_Returns_None()
+	public void InvalidJson_Returns_Fail()
 	{
 		// Arrange
 		var input = Rnd.Str;
@@ -36,7 +34,8 @@ public class Deserialise_Tests
 		var result = JsonF.Deserialise<Test>(input);
 
 		// Assert
-		result.AssertNone().AssertType<DeserialiseExceptionMsg>();
+		var fail = result.AssertFailure();
+		Assert.NotNull(fail.Exception);
 	}
 
 	[Fact]
@@ -59,7 +58,7 @@ public class Deserialise_Tests
 			"}";
 		var expected = new Test
 		{
-			Id = new(v0),
+			Id = TestId.Wrap(v0),
 			Str = v1,
 			Num = v2,
 			DT = new(v3.Year, v3.Month, v3.Day, v3.Hour, v3.Minute, v3.Second, v3.Kind),
@@ -67,7 +66,7 @@ public class Deserialise_Tests
 		};
 
 		// Act
-		var result = JsonF.Deserialise<Test>(input).Unwrap(() => new Test());
+		var result = JsonF.Deserialise<Test>(input).Unwrap(_ => new Test());
 
 		// Assert
 		Assert.Equal(expected, result, new TestComparer());
@@ -88,12 +87,7 @@ public class Deserialise_Tests
 		public string? Empty { get; set; }
 	}
 
-	public sealed record class TestId : LongId
-	{
-		public TestId() { }
-
-		public TestId(long value) : base(value) { }
-	}
+	public sealed record class TestId : LongId<TestId>;
 
 	public sealed class TestComparer : IEqualityComparer<Test>, IEqualityComparer
 	{

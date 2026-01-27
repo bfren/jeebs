@@ -11,8 +11,11 @@ using Microsoft.Extensions.Hosting;
 namespace Jeebs.Apps.Web;
 
 /// <summary>
-/// Razor Pages Web Application - see <see cref="MvcApp"/>
+/// Razor Pages Web Application - see <see cref="MvcApp"/>.
 /// </summary>
+/// <remarks>
+/// Create Razor application.
+/// </remarks>
 public class RazorApp : MvcApp
 {
 	#region Run
@@ -50,14 +53,14 @@ public class RazorApp : MvcApp
 	#endregion Create
 
 	/// <summary>
-	/// Create Razor application with HSTS enabled
+	/// Create Razor application with HSTS enabled.
 	/// </summary>
 	public RazorApp() : this(true) { }
 
 	/// <summary>
-	/// Create Razor application
+	/// Create Razor application.
 	/// </summary>
-	/// <param name="useHsts">HSTS should only be disabled if the application is in development mode, or behind a reverse proxy</param>
+	/// <param name="useHsts">HSTS should only be disabled if the application is in development mode, or behind a reverse proxy.</param>
 	public RazorApp(bool useHsts) : base(useHsts) { }
 
 	/// <inheritdoc/>
@@ -65,14 +68,13 @@ public class RazorApp : MvcApp
 		_ = services
 			.AddRazorPages(opt => ConfigureServicesRazorPagesOptions(ctx, opt))
 			.AddMvcOptions(opt => ConfigureServicesMvcOptions(ctx, opt))
-			.AddRazorRuntimeCompilation(opt => ConfigureServicesRuntimeCompilation(ctx, opt))
 			.AddJsonOptions(opt => ConfigureServicesEndpointsJson(ctx, opt));
 
 	/// <summary>
-	/// Override to configure Razor Pages options
+	/// Override to configure Razor Pages options.
 	/// </summary>
-	/// <param name="ctx">HostBuilderContext</param>
-	/// <param name="opt">RazorPagesOptions</param>
+	/// <param name="ctx">HostBuilderContext.</param>
+	/// <param name="opt">RazorPagesOptions.</param>
 	public virtual void ConfigureServicesRazorPagesOptions(HostBuilderContext ctx, RazorPagesOptions opt) { }
 
 	/// <inheritdoc/>

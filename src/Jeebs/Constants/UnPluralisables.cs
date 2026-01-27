@@ -1,4 +1,4 @@
-﻿// Jeebs Rapid Application Development
+// Jeebs Rapid Application Development
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using System.Collections.Generic;
@@ -6,16 +6,15 @@ using System.Collections.Generic;
 namespace Jeebs.Constants;
 
 /// <summary>
-/// Unpluralisable words
+/// Unpluralisable words.
 /// </summary>
 public static class UnPluralisables
 {
 	/// <summary>
-	/// Return all unpluralisable words
+	/// Return all unpluralisable words.
 	/// </summary>
 	public static List<string> All =>
-		new()
-		{
+		[
 			"aircraft",
 			"deer",
 			"equipment",
@@ -28,5 +27,5 @@ public static class UnPluralisables
 			"species",
 			"swine",
 			"trout",
-		};
+		];
 }

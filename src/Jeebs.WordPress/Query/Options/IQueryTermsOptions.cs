@@ -2,22 +2,22 @@
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using Jeebs.Data.Query;
-using Jeebs.WordPress.Entities.StrongIds;
+using Jeebs.WordPress.Entities.Ids;
 
 namespace Jeebs.WordPress.Query.Options;
 
 /// <summary>
-/// Query Terms Options
+/// Query Terms Options.
 /// </summary>
 public interface IQueryTermsOptions : IQueryOptions<WpTermId>
 {
 	/// <summary>
-	/// Search taxonomy type
+	/// Search taxonomy type.
 	/// </summary>
 	Enums.Taxonomy? Taxonomy { get; init; }
 
 	/// <summary>
-	/// Search taxonomy term
+	/// Search taxonomy term.
 	/// </summary>
 	string? Slug { get; init; }
 

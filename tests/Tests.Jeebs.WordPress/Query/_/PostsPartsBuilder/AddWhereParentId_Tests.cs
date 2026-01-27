@@ -4,9 +4,8 @@
 using Jeebs.Data;
 using Jeebs.Data.Enums;
 using Jeebs.Data.Query.QueryPartsBuilder_Tests;
-using Jeebs.WordPress.Entities.StrongIds;
+using Jeebs.WordPress.Entities.Ids;
 using static Jeebs.WordPress.Query.PostsPartsBuilder_Tests.Setup;
-using static StrongId.Testing.Generator;
 
 namespace Jeebs.WordPress.Query.PostsPartsBuilder_Tests;
 
@@ -28,8 +27,8 @@ public class AddWhereParentId_Tests : QueryPartsBuilder_Tests<PostsPartsBuilder,
 		var result = builder.AddWhereParentId(v.Parts, id);
 
 		// Assert
-		var some = result.AssertSome();
-		Assert.Same(v.Parts, some);
+		var ok = result.AssertOk();
+		Assert.Same(v.Parts, ok);
 	}
 
 	[Fact]
@@ -37,10 +36,10 @@ public class AddWhereParentId_Tests : QueryPartsBuilder_Tests<PostsPartsBuilder,
 	{
 		// Arrange
 		var (builder, v) = Setup();
-		var parentId = ULongId<WpPostId>();
+		var parentId = IdGen.ULongId<WpPostId>();
 
 		// Act
-		var result = builder.AddWhereParentId(v.Parts, parentId);
+		var result = builder.AddWhereParentId(v.Parts, parentId).Unsafe().Unwrap();
 
 		// Assert
 		AssertWhere(v.Parts, result, Post.ParentId, Compare.Equal, parentId.Value);

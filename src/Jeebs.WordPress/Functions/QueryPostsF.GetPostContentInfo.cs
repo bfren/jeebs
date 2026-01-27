@@ -9,11 +9,11 @@ namespace Jeebs.WordPress.Functions;
 public static partial class QueryPostsF
 {
 	/// <summary>
-	/// Get <see cref="PropertyInfo{TObject, TProperty}"/> object for <typeparamref name="TModel"/> content property
+	/// Get <see cref="PropertyInfo{TObject, TProperty}"/> object for <typeparamref name="TModel"/> content property.
 	/// </summary>
-	/// <typeparam name="TModel">Model type</typeparam>
-	internal static Maybe<Content<TModel>> GetPostContentInfo<TModel>() =>
-		GetPostContent<TModel>().Map(x => new Content<TModel>(x), F.DefaultHandler);
+	/// <typeparam name="TModel">Model type.</typeparam>
+	internal static Result<Content<TModel>> GetPostContentInfo<TModel>() =>
+		GetPostContent<TModel>().Map(x => new Content<TModel>(x));
 
 	internal sealed class Content<TModel> : PropertyInfo<TModel, string>
 	{

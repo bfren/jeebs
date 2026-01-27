@@ -6,7 +6,7 @@ using System.Text.Json.Serialization;
 namespace Jeebs.Services.Drivers.Webhook.Slack.Models;
 
 /// <summary>
-/// Slack message block
+/// Slack message block.
 /// </summary>
 [JsonDerivedType(typeof(SlackDivider))]
 [JsonDerivedType(typeof(SlackHeader))]
@@ -14,15 +14,15 @@ namespace Jeebs.Services.Drivers.Webhook.Slack.Models;
 public abstract record class SlackBlock
 {
 	/// <summary>
-	/// Block type (e.g. 'section' or 'divider')
+	/// Block type (e.g. 'section' or 'divider').
 	/// </summary>
 	[JsonPropertyName("type")]
 	public string Type { get; private init; }
 
 	/// <summary>
-	/// Create object
+	/// Create object.
 	/// </summary>
-	/// <param name="type">Block type</param>
+	/// <param name="type">Block type.</param>
 	protected SlackBlock(string type) =>
 		Type = type;
 }

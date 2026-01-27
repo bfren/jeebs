@@ -1,9 +1,0 @@
-<Project Sdk="Microsoft.NET.Sdk">
-  <ItemGroup>
-    <PackageReference Include="Simple.Migrations" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Jeebs.Auth.Data\Jeebs.Auth.Data.csproj" />
-    <ProjectReference Include="..\Jeebs.Data.Clients.MySql\Jeebs.Data.Clients.MySql.csproj" />
-  </ItemGroup>
-</Project>

@@ -7,14 +7,14 @@ using Jeebs.WordPress.Enums;
 namespace Jeebs.WordPress.TypeHandlers;
 
 /// <summary>
-/// Comment TypeHandler
+/// Comment TypeHandler.
 /// </summary>
 public sealed class CommentTypeTypeHandler : EnumeratedTypeHandler<CommentType>
 {
 	/// <summary>
-	/// Parse the CommentType value
+	/// Parse the CommentType value.
 	/// </summary>
-	/// <param name="value">Database table value</param>
+	/// <param name="value">Database table value.</param>
 	public override CommentType Parse(object value) =>
 		Parse(value, CommentType.Parse, CommentType.Blank);
 }

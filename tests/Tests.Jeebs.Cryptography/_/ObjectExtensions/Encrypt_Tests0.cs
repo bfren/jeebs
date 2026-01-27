@@ -1,7 +1,6 @@
-﻿// Jeebs Unit Tests
+// Jeebs Unit Tests
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
-using Jeebs.Cryptography.Functions;
 using Jeebs.Functions;
 
 namespace Jeebs.Cryptography.ObjectExtensions_Tests;
@@ -11,48 +10,46 @@ public partial class Encrypt_Tests
 	private readonly string defaultInputString = "String to encrypt.";
 	private readonly Foo defaultInputObject = new() { Bar = "Test string." };
 
-	[Theory]
-	[InlineData(null)]
-	public void Null_Input_Byte_Key_Returns_Empty(string input)
+	[Fact]
+	public void Null_Input_Byte_Key_Returns_Empty()
 	{
 		// Arrange
-		var key = CryptoF.GenerateKey().UnsafeUnwrap();
+		var key = Rnd.ByteF.Get(32);
 
 		// Act
-		var result = input.Encrypt(key);
+		var result = ObjectExtensions.Encrypt<string>(null!, key);
 
 		// Assert
-		var some = result.AssertSome();
-		Assert.Equal(JsonF.Empty, some);
+		result.AssertOk(JsonF.Empty);
 	}
 
 	[Fact]
 	public void String_Input_Byte_Key_Returns_Encrypted_Json()
 	{
 		// Arrange
-		var key = CryptoF.GenerateKey().UnsafeUnwrap();
+		var key = Rnd.ByteF.Get(32);
 
 		// Act
 		var result = defaultInputString.Encrypt(key);
 
 		// Assert
-		var some = result.AssertSome();
-		Assert.NotEqual(defaultInputString, some);
+		var ok = result.AssertOk();
+		Assert.NotEqual(defaultInputString, ok);
 	}
 
 	[Fact]
 	public void Object_Input_Byte_Key_Returns_Encrypted_Json()
 	{
 		// Arrange
-		var key = CryptoF.GenerateKey().UnsafeUnwrap();
+		var key = Rnd.ByteF.Get(32);
 		var json = JsonF.Serialise(defaultInputObject);
 
 		// Act
 		var result = defaultInputObject.Encrypt(key);
 
 		// Assert
-		var some = result.AssertSome();
-		Assert.NotEqual(json, some);
+		var ok = result.AssertOk();
+		Assert.NotEqual(json, ok);
 	}
 
 	public class Foo

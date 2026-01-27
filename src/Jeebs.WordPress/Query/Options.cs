@@ -2,19 +2,19 @@
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using Jeebs.Data.Query;
-using StrongId;
+using Wrap.Ids;
 
 namespace Jeebs.WordPress.Query;
 
 /// <summary>
-/// WordPress Query Options
+/// WordPress Query Options.
 /// </summary>
-/// <typeparam name="TId">Entity ID type</typeparam>
+/// <typeparam name="TId">Entity ID type.</typeparam>
 public abstract record class Options<TId> : QueryOptions<TId>
-	where TId : ULongId, new()
+	where TId : ULongId<TId>, new()
 {
 	/// <summary>
-	/// IWpDbSchema shorthand
+	/// IWpDbSchema shorthand.
 	/// </summary>
 	protected IWpDbSchema T { get; private init; }
 
@@ -22,10 +22,10 @@ public abstract record class Options<TId> : QueryOptions<TId>
 		T;
 
 	/// <summary>
-	/// Inject dependencies
+	/// Inject dependencies.
 	/// </summary>
-	/// <param name="schema">IWpDbSchema</param>
-	/// <param name="builder">IQueryPartsBuilder</param>
+	/// <param name="schema">IWpDbSchema.</param>
+	/// <param name="builder">IQueryPartsBuilder.</param>
 	protected Options(IWpDbSchema schema, IQueryPartsBuilder<TId> builder) : base(builder) =>
 		T = schema;
 }

@@ -1,38 +1,36 @@
 // Jeebs Rapid Application Development
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
-using StrongId;
-
 namespace Jeebs.WordPress.Entities;
 
 /// <summary>
-/// Attachment entity
+/// Attachment entity.
 /// </summary>
-public interface IPostAttachment : IWithId<StrongIds.WpPostId>
+public interface IPostAttachment : IWithId<Ids.WpPostId, ulong>
 {
 	/// <summary>
-	/// Attachment description
+	/// Attachment description.
 	/// </summary>
 	string Description { get; init; }
 
 	/// <summary>
-	/// MetaDictionary
+	/// MetaDictionary.
 	/// </summary>
 	MetaDictionary Meta { get; init; }
 
 	/// <summary>
-	/// UrlPath
+	/// UrlPath.
 	/// </summary>
 	string UrlPath { get; init; }
 
 	/// <summary>
-	/// Additional information about the file (encoded as JSON)
+	/// Additional information about the file (encoded as JSON).
 	/// </summary>
 	string Info { get; init; }
 
 	/// <summary>
-	/// Get the filesystem path to this attachment
+	/// Get the filesystem path to this attachment.
 	/// </summary>
-	/// <param name="wpUploadsPath">Filesystem path to wp-uploads directory</param>
+	/// <param name="wpUploadsPath">Filesystem path to wp-uploads directory.</param>
 	string GetFilePath(string wpUploadsPath);
 }

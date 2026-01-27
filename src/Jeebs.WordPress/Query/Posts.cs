@@ -6,9 +6,8 @@ using System.Threading.Tasks;
 using Jeebs.Collections;
 using Jeebs.Data;
 using Jeebs.WordPress.ContentFilters;
-using Jeebs.WordPress.Entities.StrongIds;
+using Jeebs.WordPress.Entities.Ids;
 using Jeebs.WordPress.Functions;
-using StrongId;
 
 namespace Jeebs.WordPress.Query;
 
@@ -16,23 +15,23 @@ namespace Jeebs.WordPress.Query;
 public sealed class Posts : IQueryPosts
 {
 	/// <inheritdoc/>
-	public Task<Maybe<IEnumerable<T>>> ExecuteAsync<T>(
+	public Task<Result<IEnumerable<T>>> ExecuteAsync<T>(
 		IWpDb db,
 		IUnitOfWork w,
 		GetPostsOptions opt,
 		params IContentFilter[] filters
 	)
-		where T : IWithId<WpPostId> =>
+		where T : IWithId<WpPostId, ulong> =>
 		QueryPostsF.ExecuteAsync<T>(db, w, opt, filters);
 
 	/// <inheritdoc/>
-	public Task<Maybe<IPagedList<T>>> ExecuteAsync<T>(
+	public Task<Result<IPagedList<T>>> ExecuteAsync<T>(
 		IWpDb db,
 		IUnitOfWork w,
 		ulong page,
 		GetPostsOptions opt,
 		params IContentFilter[] filters
 	)
-		where T : IWithId<WpPostId> =>
+		where T : IWithId<WpPostId, ulong> =>
 		QueryPostsF.ExecuteAsync<T>(db, w, page, opt, filters);
 }

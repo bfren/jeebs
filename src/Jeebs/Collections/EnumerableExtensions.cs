@@ -9,17 +9,18 @@ using D = Jeebs.Collections.Defaults.PagingValues;
 namespace Jeebs.Collections;
 
 /// <summary>
-/// IEnumerable Extensions - Filter
+/// Extension methods for <see cref="IEnumerable{T}"/> objects.
 /// </summary>
 public static class EnumerableExtensions
 {
 	/// <summary>
-	/// Filter out null items (and empty / whitespace strings) from a list
+	/// Filter out null items (and empty / whitespace strings) from a list.
 	/// </summary>
-	/// <typeparam name="T">Input value type</typeparam>
-	/// <typeparam name="TReturn">Output value type</typeparam>
-	/// <param name="this">List</param>
-	/// <param name="map">Mapping function</param>
+	/// <typeparam name="T">Input value type.</typeparam>
+	/// <typeparam name="TReturn">Output value type.</typeparam>
+	/// <param name="this">List.</param>
+	/// <param name="map">Mapping function.</param>
+	/// <returns>Original list with null and empty items removed.</returns>
 	public static IEnumerable<TReturn> Filter<T, TReturn>(this IEnumerable<T> @this, Func<T, TReturn?> map)
 		where TReturn : class
 	{
@@ -43,12 +44,13 @@ public static class EnumerableExtensions
 	}
 
 	/// <summary>
-	/// Filter out null items from a list
+	/// Filter out null items from a list.
 	/// </summary>
-	/// <typeparam name="T">Input value type</typeparam>
-	/// <typeparam name="TReturn">Output value type</typeparam>
-	/// <param name="this">List</param>
-	/// <param name="map">Mapping function</param>
+	/// <typeparam name="T">Input value type.</typeparam>
+	/// <typeparam name="TReturn">Output value type.</typeparam>
+	/// <param name="this">List.</param>
+	/// <param name="map">Mapping function.</param>
+	/// <returns>Original list with null items removed.</returns>
 	public static IEnumerable<TReturn> Filter<T, TReturn>(this IEnumerable<T> @this, Func<T, TReturn?> map)
 		where TReturn : struct
 	{
@@ -62,30 +64,34 @@ public static class EnumerableExtensions
 	}
 
 	/// <summary>
-	/// Convert a collection to an immutable list
+	/// Convert a collection to an immutable list.
 	/// </summary>
-	/// <typeparam name="T">Item type</typeparam>
-	/// <param name="this">Collection</param>
+	/// <typeparam name="T">Item type.</typeparam>
+	/// <param name="this">Collection.</param>
+	/// <returns>Immutable List.</returns>
 	public static IImmutableList<T> ToImmutableList<T>(this IEnumerable<T> @this) =>
 		new ImmutableList<T>(@this);
 
 	/// <summary>
-	/// Convert a collection to a paged list using <see cref="D.ItemsPer"/> and <see cref="D.PagesPer"/>
+	/// Convert a collection to a paged list using <see cref="D.ItemsPer"/> and <see cref="D.PagesPer"/>,
+	/// using default paging values.
 	/// </summary>
-	/// <typeparam name="T">Item type</typeparam>
-	/// <param name="this">Collection</param>
-	/// <param name="page">Current page</param>
+	/// <typeparam name="T">Item type.</typeparam>
+	/// <param name="this">Collection.</param>
+	/// <param name="page">Current page.</param>
+	/// <returns>Paged List containing items on page <paramref name="page"/>.</returns>
 	public static IPagedList<T> ToPagedList<T>(this IEnumerable<T> @this, ulong page) =>
 		ToPagedList(@this, page, D.ItemsPer, D.PagesPer);
 
 	/// <summary>
-	/// Convert a collection to a paged list
+	/// Convert a collection to a paged list.
 	/// </summary>
-	/// <typeparam name="T">Item type</typeparam>
-	/// <param name="this">Collection</param>
-	/// <param name="page">Current page</param>
-	/// <param name="itemsPer">Items per page</param>
-	/// <param name="pagesPer">Pages per screen</param>
+	/// <typeparam name="T">Item type.</typeparam>
+	/// <param name="this">Collection.</param>
+	/// <param name="page">Current page.</param>
+	/// <param name="itemsPer">Items per page.</param>
+	/// <param name="pagesPer">Pages per screen.</param>
+	/// <returns>Paged List containing items on page <paramref name="page"/>.</returns>
 	public static IPagedList<T> ToPagedList<T>(
 		this IEnumerable<T> @this,
 		ulong page,

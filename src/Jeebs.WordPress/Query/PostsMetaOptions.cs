@@ -9,30 +9,30 @@ namespace Jeebs.WordPress.Query;
 public sealed record class PostsMetaOptions : Options.PostsMetaOptions
 {
 	/// <summary>
-	/// Internal creation only
+	/// Internal creation only.
 	/// </summary>
-	/// <param name="schema">IWpDbSchema</param>
+	/// <param name="schema">IWpDbSchema.</param>
 	internal PostsMetaOptions(IWpDbSchema schema) : this(schema, new PostsMetaPartsBuilder(schema)) { }
 
 	/// <summary>
-	/// Allow Builder to be injected
+	/// Allow Builder to be injected.
 	/// </summary>
-	/// <param name="schema">IWpDbSchema</param>
-	/// <param name="builder">IQueryPostsMetaPartsBuilder</param>
+	/// <param name="schema">IWpDbSchema.</param>
+	/// <param name="builder">IQueryPostsMetaPartsBuilder.</param>
 	internal PostsMetaOptions(IWpDbSchema schema, IQueryPostsMetaPartsBuilder builder) : base(schema, builder) =>
 		Maximum = null;
 
 	/// <inheritdoc/>
-	protected override Maybe<QueryParts> Build(Maybe<QueryParts> parts) =>
+	protected override Result<QueryParts> Build(Result<QueryParts> parts) =>
 		base.Build(
 			parts
 		)
-		.SwitchIf(
+		.If(
 			_ => PostId?.Value > 0 || PostIds.Count > 0,
-			ifTrue: x => Builder.AddWherePostId(x, PostId, PostIds)
+			x => Builder.AddWherePostId(x, PostId, PostIds)
 		)
-		.SwitchIf(
-			_ => string.IsNullOrEmpty(Key),
-			ifFalse: x => Builder.AddWhereKey(x, Key)
+		.If(
+			_ => !string.IsNullOrEmpty(Key),
+			x => Builder.AddWhereKey(x, Key)
 		);
 }

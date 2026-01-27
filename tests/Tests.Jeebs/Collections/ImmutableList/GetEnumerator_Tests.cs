@@ -1,5 +1,7 @@
-﻿// Jeebs Unit Tests
+// Jeebs Unit Tests
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
+
+using Jeebs.Functions;
 
 namespace Jeebs.Collections.ImmutableList_Tests;
 
@@ -11,12 +13,12 @@ public class GetEnumerator_Tests
 		// Arrange
 		var i0 = Rnd.Guid;
 		var i1 = Rnd.Guid;
-		var list = ImmutableList.Create([i0, i1]);
+		var list = ListF.Create([i0, i1]);
 
 		// Act
 		var result = list.GetEnumerator();
 
 		// Assert
-		Assert.IsAssignableFrom<IEnumerator<Guid>>(result);
+		Assert.IsType<IEnumerator<Guid>>(result, exactMatch: false);
 	}
 }

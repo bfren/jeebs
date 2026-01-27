@@ -4,45 +4,44 @@
 using System;
 using System.Collections.Generic;
 using System.Data;
-using System.Globalization;
 using System.Linq;
 
 namespace Jeebs.WordPress.TypeHandlers;
 
 /// <summary>
-/// Boolean TypeHandler
+/// Boolean TypeHandler.
 /// </summary>
 public sealed class BooleanTypeHandler : Dapper.SqlMapper.TypeHandler<bool>
 {
 	private static readonly string[] YesValues = ["1", "y", "yes"];
 
 	/// <summary>
-	/// Columns where value is 1 / 0
+	/// Columns where value is 1 / 0.
 	/// </summary>
 	private readonly List<string> oneZero = new() { { "comment_approved" } };
 
 	/// <summary>
-	/// Columns where value is yes / no
+	/// Columns where value is yes / no.
 	/// </summary>
 	private readonly List<string> yesNo = new() { { "autoload" } };
 
 	/// <summary>
-	/// Columns where value is Y / N
+	/// Columns where value is Y / N.
 	/// </summary>
 	private readonly List<string> yN = new() { { "comment_subscribe" }, { "link_visible" } };
 
 	/// <summary>
-	/// Parse the various options of boolean values in WordPress database
+	/// Parse the various options of boolean values in WordPress database.
 	/// </summary>
-	/// <param name="value">Database value</param>
+	/// <param name="value">Database value.</param>
 	public override bool Parse(object value) =>
-		YesValues.Contains(value?.ToString()?.ToLower(CultureInfo.InvariantCulture));
+		YesValues.Contains(value?.ToString()?.ToLower(F.DefaultCulture));
 
 	/// <summary>
-	/// Set the value based on the column name
+	/// Set the value based on the column name.
 	/// </summary>
-	/// <param name="parameter">IDbDataParameter object</param>
-	/// <param name="value">True / False</param>
+	/// <param name="parameter">IDbDataParameter object.</param>
+	/// <param name="value">True / False.</param>
 	/// <exception cref="InvalidOperationException"></exception>
 	public override void SetValue(IDbDataParameter parameter, bool value)
 	{

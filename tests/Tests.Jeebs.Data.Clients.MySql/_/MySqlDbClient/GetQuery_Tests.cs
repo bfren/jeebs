@@ -5,6 +5,7 @@ using Jeebs.Collections;
 using Jeebs.Data.Enums;
 using Jeebs.Data.Map;
 using Jeebs.Data.Query;
+using Jeebs.Functions;
 
 namespace Jeebs.Data.Clients.MySql.MySqlDbClient_Tests;
 
@@ -26,7 +27,7 @@ public class GetQuery_Tests
 		var c1Alias = Rnd.Str;
 		var c1 = new Column(table, c1Name, Helpers.CreateInfoFromAlias(c1Alias));
 
-		var list = new ColumnList(new[] { c0, c1 });
+		var list = new ColumnList([c0, c1]);
 
 		var p0Column = new Column(table, Rnd.Str, Helpers.CreateInfoFromAlias());
 		var p0Operator = Compare.Like;
@@ -36,11 +37,11 @@ public class GetQuery_Tests
 		var p1Operator = Compare.MoreThanOrEqual;
 		var p1Value = Rnd.Int;
 
-		var predicates = ImmutableList.Create(new (IColumn, Compare, object)[]
-		{
+		var predicates = ListF.Create<(IColumn, Compare, dynamic)>(
+		[
 			( p0Column, p0Operator, p0Value ),
 			( p1Column, p1Operator, p1Value )
-		});
+		]);
 
 		var client = new MySqlDbClient();
 
@@ -52,7 +53,7 @@ public class GetQuery_Tests
 			$" AND `{p1Column.ColName}` >= @P1;";
 
 		// Act
-		var (query, param) = client.GetQueryTest(table, list, predicates);
+		var (query, param) = client.GetQueryTest(table, list, predicates).Unsafe().Unwrap();
 
 		// Assert
 		Assert.Equal(expected, query);
@@ -78,7 +79,7 @@ public class GetQuery_Tests
 		var parts = new QueryParts(v.Table);
 
 		// Act
-		var (query, _) = client.GetQuery(parts);
+		var (query, _) = client.GetQuery(parts).Unsafe().Unwrap();
 
 		// Assert
 		Assert.Contains($"`{v.Schema}.{v.Name}`", query);
@@ -93,7 +94,7 @@ public class GetQuery_Tests
 		var expected = $"SELECT COUNT(*) FROM `{v.Schema}.{v.Name}`;";
 
 		// Act
-		var (query, _) = client.GetQuery(parts);
+		var (query, _) = client.GetQuery(parts).Unsafe().Unwrap();
 
 		// Assert
 		Assert.Equal(expected, query);
@@ -108,7 +109,7 @@ public class GetQuery_Tests
 		var expected = $"SELECT * FROM `{v.Schema}.{v.Name}`;";
 
 		// Act
-		var (query, _) = client.GetQuery(parts);
+		var (query, _) = client.GetQuery(parts).Unsafe().Unwrap();
 
 		// Assert
 		Assert.Equal(expected, query);
@@ -128,7 +129,7 @@ public class GetQuery_Tests
 		var c1 = new Column(v.Table, c1Name, Helpers.CreateInfoFromAlias(c1Alias));
 		var parts = new QueryParts(v.Table)
 		{
-			SelectColumns = new ColumnList(new[] { c0, c1 })
+			SelectColumns = new ColumnList([c0, c1])
 		};
 		var expected = "SELECT" +
 			$" `{v.Schema}.{v.Name}`.`{c0Name}` AS '{c0Alias}'," +
@@ -136,13 +137,13 @@ public class GetQuery_Tests
 			$" FROM `{v.Schema}.{v.Name}`;";
 
 		// Act
-		var (query, _) = client.GetQuery(parts);
+		var (query, _) = client.GetQuery(parts).Unsafe().Unwrap();
 
 		// Assert
 		Assert.Equal(expected, query);
 	}
 
-	private static void Test_Joins(Func<QueryParts, ImmutableList<(IColumn, IColumn)>, QueryParts> setJoin, string joinType)
+	private static void Test_Joins(Func<QueryParts, IImmutableList<(IColumn, IColumn)>, QueryParts> setJoin, string joinType)
 	{
 		// Arrange
 		var (client, v) = MySqlDbClient_Setup.Get();
@@ -152,13 +153,13 @@ public class GetQuery_Tests
 
 		var to0Table = new DbName(Rnd.Str, Rnd.Str);
 		var to0Name = Rnd.Str;
-		var to0 = new Column(to0Table, to0Name, Helpers.CreateInfoFromAlias());
+		IColumn to0 = new Column(to0Table, to0Name, Helpers.CreateInfoFromAlias());
 
 		var to1Table = new DbName(Rnd.Str, Rnd.Str);
 		var to1Name = Rnd.Str;
-		var to1 = new Column(to1Table, to1Name, Helpers.CreateInfoFromAlias());
+		IColumn to1 = new Column(to1Table, to1Name, Helpers.CreateInfoFromAlias());
 
-		var join = ImmutableList.Create(new (IColumn, IColumn)[] { (from, to0), (to0, to1) });
+		var join = ListF.Create([(from, to0), (to0, to1)]);
 
 		var parts = setJoin(new(v.Table), join);
 
@@ -170,7 +171,7 @@ public class GetQuery_Tests
 			$" ON `{to0Table.Schema}.{to0Table.Name}`.`{to0Name}` = `{to1Table.Schema}.{to1Table.Name}`.`{to1Name}`;";
 
 		// Act
-		var (query, _) = client.GetQuery(parts);
+		var (query, _) = client.GetQuery(parts).Unsafe().Unwrap();
 
 		// Assert
 		Assert.Equal(expected, query);
@@ -208,11 +209,11 @@ public class GetQuery_Tests
 		var c1Name = Rnd.Str;
 		var c1 = new Column(c1Table, c1Name, Helpers.CreateInfoFromAlias());
 
-		var where = ImmutableList.Create(new (IColumn, Compare, object)[]
-		{
+		var where = ListF.Create<(IColumn, Compare, dynamic)>(
+		[
 			(c0, Compare.Like, Rnd.Str),
 			(c1, Compare.MoreThanOrEqual, Rnd.Int)
-		});
+		]);
 
 		var parts = new QueryParts(v.Table) { Where = where };
 
@@ -222,7 +223,7 @@ public class GetQuery_Tests
 			$" AND `{c1Table.Schema}.{c1Table.Name}`.`{c1Name}` >= @P1;";
 
 		// Act
-		var (query, _) = client.GetQuery(parts);
+		var (query, _) = client.GetQuery(parts).Unsafe().Unwrap();
 
 		// Assert
 		Assert.Equal(expected, query);
@@ -239,29 +240,29 @@ public class GetQuery_Tests
 		var p0 = Rnd.Str;
 		var p1 = Rnd.Str;
 		var p2 = Rnd.Str;
-		var parametersToAdd0 = new QueryParametersDictionary
+		IQueryParametersDictionary parametersToAdd0 = new QueryParametersDictionary
 		{
 			{ nameof(p0), p0 },
 			{ nameof(p1), p1 }
 		};
-		var parametersToAdd1 = new QueryParametersDictionary
+		IQueryParametersDictionary parametersToAdd1 = new QueryParametersDictionary
 		{
 			{ nameof(p2), p2 }
 		};
 
 		var parts = new QueryParts(v.Table)
 		{
-			WhereCustom = ImmutableList.Create(new (string, IQueryParametersDictionary)[]
-			{
+			WhereCustom = ListF.Create(
+			[
 				(w0, parametersToAdd0),
 				(w1, parametersToAdd1)
-			})
+			])
 		};
 
 		var expected = $"SELECT * FROM `{v.Schema}.{v.Name}` WHERE ({w0}) AND ({w1});";
 
 		// Act
-		var (query, param) = client.GetQuery(parts);
+		var (query, param) = client.GetQuery(parts).Unsafe().Unwrap();
 
 		// Assert
 		Assert.Equal(expected, query);
@@ -300,16 +301,16 @@ public class GetQuery_Tests
 		var c1Value = Rnd.Int;
 		var c1 = new Column(c1Table, c1Name, Helpers.CreateInfoFromAlias());
 
-		var where = ImmutableList.Create(new (IColumn, Compare, object)[]
-		{
+		var where = ListF.Create<(IColumn, Compare, dynamic)>(
+		[
 			(c0, Compare.Like, c0Value),
 			(c1, Compare.MoreThanOrEqual, c1Value)
-		});
+		]);
 
 		var parts = new QueryParts(v.Table) { Where = where };
 
 		// Act
-		var (_, param) = client.GetQuery(parts);
+		var (_, param) = client.GetQuery(parts).Unsafe().Unwrap();
 
 		// Assert
 		Assert.Collection(param,
@@ -339,7 +340,7 @@ public class GetQuery_Tests
 		var expected = $"SELECT * FROM `{v.Schema}.{v.Name}` ORDER BY RAND();";
 
 		// Act
-		var (query, _) = client.GetQuery(parts);
+		var (query, _) = client.GetQuery(parts).Unsafe().Unwrap();
 
 		// Assert
 		Assert.Equal(expected, query);
@@ -353,19 +354,19 @@ public class GetQuery_Tests
 
 		var sort0Table = new DbName(Rnd.Str, Rnd.Str);
 		var sort0Name = Rnd.Str;
-		var sort0 = new Column(sort0Table, sort0Name, Helpers.CreateInfoFromAlias());
+		IColumn sort0 = new Column(sort0Table, sort0Name, Helpers.CreateInfoFromAlias());
 
 		var sort1Table = new DbName(Rnd.Str, Rnd.Str);
 		var sort1Name = Rnd.Str;
-		var sort1 = new Column(sort1Table, sort1Name, Helpers.CreateInfoFromAlias());
+		IColumn sort1 = new Column(sort1Table, sort1Name, Helpers.CreateInfoFromAlias());
 
 		var parts = new QueryParts(v.Table)
 		{
-			Sort = ImmutableList.Create(new (IColumn, SortOrder)[]
-			{
+			Sort = ListF.Create(
+			[
 				(sort0, SortOrder.Ascending),
 				(sort1, SortOrder.Descending)
-			})
+			])
 		};
 
 		var expected = "SELECT" +
@@ -374,7 +375,7 @@ public class GetQuery_Tests
 			$" `{sort1Table.Schema}.{sort1Table.Name}`.`{sort1Name}` DESC;";
 
 		// Act
-		var (query, _) = client.GetQuery(parts);
+		var (query, _) = client.GetQuery(parts).Unsafe().Unwrap();
 
 		// Assert
 		Assert.Equal(expected, query);
@@ -390,7 +391,7 @@ public class GetQuery_Tests
 		var expected = $"SELECT * FROM `{v.Schema}.{v.Name}` LIMIT {max};";
 
 		// Act
-		var (query, _) = client.GetQuery(parts);
+		var (query, _) = client.GetQuery(parts).Unsafe().Unwrap();
 
 		// Assert
 		Assert.Equal(expected, query);
@@ -407,7 +408,7 @@ public class GetQuery_Tests
 		var expected = $"SELECT * FROM `{v.Schema}.{v.Name}` LIMIT {skip}, {max};";
 
 		// Act
-		var (query, _) = client.GetQuery(parts);
+		var (query, _) = client.GetQuery(parts).Unsafe().Unwrap();
 
 		// Assert
 		Assert.Equal(expected, query);

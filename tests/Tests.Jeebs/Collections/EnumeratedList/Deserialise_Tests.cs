@@ -1,4 +1,4 @@
-﻿// Jeebs Unit Tests
+// Jeebs Unit Tests
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 namespace Jeebs.Collections.EnumeratedList_Tests;
@@ -9,7 +9,7 @@ public class Deserialise_Tests
 	[InlineData(null)]
 	[InlineData("")]
 	[InlineData(" ")]
-	public void Null_Or_Empty_Returns_Empty_List(string input)
+	public void Null_Or_Empty_Returns_Empty_List(string? input)
 	{
 		// Arrange
 

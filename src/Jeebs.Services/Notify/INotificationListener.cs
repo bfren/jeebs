@@ -4,7 +4,7 @@
 namespace Jeebs.Services.Notify;
 
 /// <summary>
-/// Used to make a service listen for notifications
+/// Used to make a service listen for notifications.
 /// </summary>
 public interface INotificationListener
 {
@@ -14,6 +14,6 @@ public interface INotificationListener
 	/// <inheritdoc cref="INotifier.Send(string, NotificationLevel)"/>
 	void Send(string message, NotificationLevel level);
 
-	/// <inheritdoc cref="INotifier.Send(IMsg)"/>
-	public void Send(IMsg msg);
+	/// <inheritdoc cref="INotifier.Send(FailureValue)"/>
+	void Send(FailureValue failure);
 }

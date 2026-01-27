@@ -14,9 +14,9 @@ public class GetColumns_Tests
 		var result = MapF.GetColumns<FooTableWithIgnored, Foo>(new());
 
 		// Assert
-		var some = result.AssertSome();
-		Assert.DoesNotContain(some, x => x.ColAlias == nameof(FooTableWithIgnored.Id));
-		Assert.DoesNotContain(some, x => x.ColAlias == nameof(FooTableWithIgnored.Bar0));
+		var ok = result.AssertOk();
+		Assert.DoesNotContain(ok, x => x.ColAlias == nameof(FooTableWithIgnored.Id));
+		Assert.DoesNotContain(ok, x => x.ColAlias == nameof(FooTableWithIgnored.Bar0));
 	}
 
 	[Fact]
@@ -28,8 +28,8 @@ public class GetColumns_Tests
 		var result = MapF.GetColumns<FooTableWithIgnored, Foo>(new());
 
 		// Assert
-		var some = result.AssertSome();
-		Assert.Collection(some,
+		var ok = result.AssertOk();
+		Assert.Collection(ok,
 			x => Assert.Equal(nameof(FooTableWithIgnored.FooId), x.ColAlias),
 			x => Assert.Equal(nameof(FooTableWithIgnored.Bar1), x.ColAlias)
 		);

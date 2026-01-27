@@ -3,7 +3,6 @@
 
 using Jeebs.Data;
 using Jeebs.WordPress.Query;
-using static Jeebs.WordPress.CustomFields.AttachmentCustomField.M;
 using Attachment = Jeebs.WordPress.CustomFields.AttachmentCustomField.Attachment;
 
 namespace Jeebs.WordPress.CustomFields.AttachmentCustomField_Tests;
@@ -24,9 +23,9 @@ public class HydrateAsync_Tests
 		var result = await field.HydrateAsync(db, unitOfWork, meta, true);
 
 		// Assert
-		var none = result.AssertNone().AssertType<MetaKeyNotFoundMsg>();
-		Assert.Equal(typeof(TestCustomField), none.Type);
-		Assert.Equal(key, none.Value);
+		_ = result.AssertFailure("Meta Key '{Key}' not found for Custom Field '{Type}'.",
+			key, nameof(TestCustomField)
+		);
 	}
 
 	[Fact]
@@ -69,8 +68,9 @@ public class HydrateAsync_Tests
 		var result = await field.HydrateAsync(db, unitOfWork, meta, true);
 
 		// Assert
-		var none = result.AssertNone().AssertType<MultipleAttachmentsFoundMsg>();
-		Assert.Equal(value.ToString(), none.Value);
+		_ = result.AssertFailure("Unable to get single '{ValueStr}': Cannot get single value from a list with multiple values.",
+			value.ToString()
+		);
 	}
 
 	[Fact]
@@ -130,8 +130,5 @@ public class HydrateAsync_Tests
 		Assert.Contains(info, field.ValueObj.Info);
 	}
 
-	public class TestCustomField : AttachmentCustomField
-	{
-		public TestCustomField(IQueryPosts queryPosts, string key) : base(queryPosts, key) { }
-	}
+	public class TestCustomField(IQueryPosts queryPosts, string key) : AttachmentCustomField(queryPosts, key);
 }

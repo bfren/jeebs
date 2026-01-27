@@ -4,22 +4,22 @@
 namespace Jeebs.WordPress.Entities;
 
 /// <summary>
-/// PostMeta entity
+/// PostMeta entity.
 /// </summary>
 public abstract record class WpPostMetaEntity : WpPostMetaEntityWithId
 {
 	/// <summary>
-	/// PostId
+	/// PostId.
 	/// </summary>
-	public StrongIds.WpPostId PostId { get; init; } = new();
+	public Ids.WpPostId PostId { get; init; } = new();
 
 	/// <summary>
-	/// Key
+	/// Key.
 	/// </summary>
 	public string? Key { get; init; }
 
 	/// <summary>
-	/// Value
+	/// Value.
 	/// </summary>
 	public string? Value { get; init; }
 }

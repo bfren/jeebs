@@ -2,11 +2,8 @@
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using Jeebs.WordPress.ContentFilters;
-using Jeebs.WordPress.Entities.StrongIds;
+using Jeebs.WordPress.Entities.Ids;
 using NSubstitute.ExceptionExtensions;
-using StrongId;
-using static Jeebs.WordPress.Functions.QueryPostsF.M;
-using static StrongId.Testing.Generator;
 
 namespace Jeebs.WordPress.Functions.QueryPostsF_Tests;
 
@@ -23,39 +20,40 @@ public class ApplyContentFilters_Tests
 		var result = QueryPostsF.ApplyContentFilters<IEnumerable<Model>, Model>(posts, filters);
 
 		// Assert
-		var some = result.AssertSome();
-		Assert.Same(posts, some);
+		var ok = result.AssertOk();
+		Assert.Equal(posts, ok);
 	}
 
 	[Fact]
 	public void No_Filters_Does_Nothing()
 	{
 		// Arrange
-		var posts = new[] { new Model(ULongId<WpPostId>(), Rnd.Str) };
+		var posts = new[] { new Model(Rnd.ULng, Rnd.Str) };
 		var filters = Array.Empty<IContentFilter>();
 
 		// Act
 		var result = QueryPostsF.ApplyContentFilters<IEnumerable<Model>, Model>(posts, filters);
 
 		// Assert
-		var some = result.AssertSome();
-		Assert.Same(posts, some);
+		var ok = result.AssertOk();
+		Assert.Equal(posts, ok);
 	}
 
 	[Fact]
 	public void Catches_Exception_In_ContentFilter_Returns_None_With_ApplyContentFiltersExceptionMsg()
 	{
 		// Arrange
-		var posts = new[] { new Model(ULongId<WpPostId>(), Rnd.Str) };
+		var posts = new[] { new Model(Rnd.ULng, Rnd.Str) };
 		var filter = Substitute.For<IContentFilter>();
-		filter.Execute(Arg.Any<string>()).Throws(new Exception());
+		var ex = new Exception();
+		filter.Execute(Arg.Any<string>()).Throws(ex);
 		var filters = new[] { filter };
 
 		// Act
 		var result = QueryPostsF.ApplyContentFilters<IEnumerable<Model>, Model>(posts, filters);
 
 		// Assert
-		result.AssertNone().AssertType<ApplyContentFiltersExceptionMsg<Model>>();
+		_ = result.AssertFailure(ex);
 	}
 
 	[Fact]
@@ -63,9 +61,9 @@ public class ApplyContentFilters_Tests
 	{
 		// Arrange
 		var c0 = Rnd.Str;
-		var p0 = new Model(ULongId<WpPostId>(), c0);
+		var p0 = new Model(Rnd.ULng, c0);
 		var c1 = Rnd.Str;
-		var p1 = new Model(ULongId<WpPostId>(), c1);
+		var p1 = new Model(Rnd.ULng, c1);
 		var posts = new[] { p0, p1 };
 
 		var f0 = Substitute.For<IContentFilter>();
@@ -86,5 +84,11 @@ public class ApplyContentFilters_Tests
 		f1.Received(1).Execute(c1);
 	}
 
-	public sealed record class Model(WpPostId Id, string Content) : IWithId<WpPostId>;
+	public sealed record class Model : WithId<WpPostId, ulong>
+	{
+		public string Content { get; init; }
+
+		public Model(ulong value, string content) : base(value) =>
+			Content = content;
+	}
 }

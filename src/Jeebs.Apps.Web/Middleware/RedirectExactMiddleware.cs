@@ -10,7 +10,7 @@ using Serilog;
 namespace Jeebs.Apps.Web.Middleware;
 
 /// <summary>
-/// Redirect Exact Middleware
+/// Redirect Exact Middleware.
 /// </summary>
 public sealed class RedirectExactMiddleware : IMiddleware
 {
@@ -19,17 +19,17 @@ public sealed class RedirectExactMiddleware : IMiddleware
 	private readonly ILogger logger = Log.ForContext<RedirectExactMiddleware>();
 
 	/// <summary>
-	/// Construct object
+	/// Construct object.
 	/// </summary>
-	/// <param name="config">JeebsConfig</param>
+	/// <param name="config">JeebsConfig.</param>
 	public RedirectExactMiddleware(IOptions<RedirectionsConfig> config) =>
 		this.config = config.Value;
 
 	/// <summary>
-	/// Invoke middleware and perform any redirections
+	/// Invoke middleware and perform any redirections.
 	/// </summary>
-	/// <param name="context">HttpContext</param>
-	/// <param name="next">Next Middleware</param>
+	/// <param name="context">HttpContext.</param>
+	/// <param name="next">Next Middleware.</param>
 	public async Task InvokeAsync(HttpContext context, RequestDelegate next)
 	{
 		// Get current path and query
@@ -70,7 +70,7 @@ public sealed class RedirectExactMiddleware : IMiddleware
 		else
 		{
 			// No redirections match so move on to the next delegate
-			await next(context).ConfigureAwait(false);
+			await next(context);
 		}
 	}
 }

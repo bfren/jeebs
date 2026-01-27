@@ -1,15 +1,15 @@
 // Jeebs Rapid Application Development
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
-using System.Globalization;
 using Jeebs.Config;
+using Jeebs.Config.Services.Console;
 using Serilog;
 using Serilog.Events;
 
 namespace Jeebs.Logging.Serilog;
 
 /// <summary>
-/// Configure logging to console
+/// Configure logging to console.
 /// </summary>
 public sealed class ConsoleLoggingProvider : ILoggingProvider
 {
@@ -18,19 +18,30 @@ public sealed class ConsoleLoggingProvider : ILoggingProvider
 		"console";
 
 	/// <inheritdoc/>
-	public void Configure(LoggerConfiguration logger, JeebsConfig jeebs, string name, LogEventLevel minimum)
-	{
-		var config = jeebs.Services.GetServiceConfig(c => c.Console, name);
+	public Result<bool> Configure(LoggerConfiguration logger, JeebsConfig jeebs, string name, LogEventLevel minimum) =>
+		jeebs.Services.GetServiceConfig(
+			c => c.Console, name
+		)
+		.IfOk(
+			c => AddConsoleConfig(logger, c, jeebs.App.Name)
+		)
+		.Map(
+			_ => true
+		);
 
-		if (config.AddPrefix)
+	internal static void AddDefaultConsoleConfig(LoggerConfiguration logger) =>
+		AddConsoleConfig(logger, new() { AddPrefix = false });
+
+	internal static void AddConsoleConfig(LoggerConfiguration logger, ConsoleConfig config, string? name = null)
+	{
+		if (config.AddPrefix && !string.IsNullOrWhiteSpace(name))
 		{
-			SerilogLogger.ConsoleMessagePrefix = jeebs.App.FullName;
+			SerilogLogger.ConsoleMessagePrefix = name;
 		}
 
 		_ = logger.WriteTo.Console(
-			restrictedToMinimumLevel: minimum,
-			outputTemplate: config.Template ?? "[{Timestamp:HH:mm:ss} {Level:u3}] {Message:lj} | {SourceContext}{NewLine}{Exception}",
-			formatProvider: CultureInfo.InvariantCulture
+			outputTemplate: config.Template,
+			formatProvider: F.DefaultCulture
 		);
 	}
 }

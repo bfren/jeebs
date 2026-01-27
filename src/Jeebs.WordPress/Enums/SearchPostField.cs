@@ -6,38 +6,38 @@ using System;
 namespace Jeebs.WordPress.Enums;
 
 /// <summary>
-/// Search Post Fields
+/// Search Post Fields.
 /// </summary>
 [Flags]
 public enum SearchPostField
 {
 	/// <summary>
-	/// Search nothing
+	/// Search nothing.
 	/// </summary>
 	None = 0,
 
 	/// <summary>
-	/// Search Title field
+	/// Search Title field.
 	/// </summary>
 	Title = 1,
 
 	/// <summary>
-	/// Search Slug field
+	/// Search Slug field.
 	/// </summary>
 	Slug = 1 << 1,
 
 	/// <summary>
-	/// Search Content field
+	/// Search Content field.
 	/// </summary>
 	Content = 1 << 2,
 
 	/// <summary>
-	/// Search Excerpt field
+	/// Search Excerpt field.
 	/// </summary>
 	Excerpt = 1 << 3,
 
 	/// <summary>
-	/// Search All fields
+	/// Search All fields.
 	/// </summary>
 	All = Title | Slug | Content | Excerpt
 }

@@ -2,7 +2,6 @@
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using System;
-using System.Globalization;
 using System.Linq;
 using System.Text.RegularExpressions;
 using Jeebs.Functions;
@@ -11,14 +10,14 @@ using RndF;
 namespace Jeebs.WordPress.ContentFilters.Blocks;
 
 /// <summary>
-/// Parse YouTube blocks
+/// Parse YouTube blocks.
 /// </summary>
 internal static partial class YouTube
 {
 	/// <summary>
-	/// Parse embedded YouTube videos
+	/// Parse embedded YouTube videos.
 	/// </summary>
-	/// <param name="content">Post content</param>
+	/// <param name="content">Post content.</param>
 	internal static string Parse(string content)
 	{
 		// Get YouTube info
@@ -36,7 +35,7 @@ internal static partial class YouTube
 		{
 			// Info is encoded as JSON so deserialise it first
 			var info = match.Groups[2].Value;
-			_ = JsonF.Deserialise<YouTubeParsed>(info).IfSome(youTube =>
+			_ = JsonF.Deserialise<YouTubeParsed>(info).IfOk(youTube =>
 			{
 				// Get URI
 				var uri = new Uri(youTube.Url);
@@ -46,7 +45,7 @@ internal static partial class YouTube
 				{
 					content = content.Replace(
 						match.Value,
-						string.Format(CultureInfo.InvariantCulture, format, Rnd.StringF.Get(10), videoId, uri)
+						string.Format(F.DefaultCulture, format, Rnd.StringF.Get(10), videoId, uri)
 					);
 				}
 			});
@@ -60,7 +59,7 @@ internal static partial class YouTube
 	/// Get the Video ID based on whether the long or short format has been used
 	/// Regex comes from https://stackoverflow.com/a/27728417/8199362
 	/// </summary>
-	/// <param name="uri">URI</param>
+	/// <param name="uri">URI.</param>
 	internal static string? GetVideoId(Uri uri)
 	{
 		var regex = VideoRegex();
@@ -75,9 +74,9 @@ internal static partial class YouTube
 	}
 
 	/// <summary>
-	/// Used to parse YouTube JSON
+	/// Used to parse YouTube JSON.
 	/// </summary>
-	/// <param name="Url">YouTube URL</param>
+	/// <param name="Url">YouTube URL.</param>
 	private sealed record class YouTubeParsed(string Url);
 
 	[GeneratedRegex("<!-- wp:(core-embed/youtube|embed) ({.*?}) -->(.*?)<!-- /wp:(core-embed/youtube|embed) -->", RegexOptions.Singleline)]

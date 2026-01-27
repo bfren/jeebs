@@ -1,4 +1,4 @@
-﻿// Jeebs Rapid Application Development
+// Jeebs Rapid Application Development
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using System;
@@ -6,23 +6,23 @@ using System;
 namespace Jx.Services.Webhook;
 
 /// <summary>
-/// Unknown MessageLevel
+/// Unknown MessageLevel.
 /// </summary>
 public class UnknownMessageLevelException : Exception
 {
 	/// <summary>
-	/// Create exception
+	/// Create exception.
 	/// </summary>
 	public UnknownMessageLevelException() { }
 
 	/// <summary>
-	/// Create exception
+	/// Create exception.
 	/// </summary>
 	/// <param name="message"></param>
 	public UnknownMessageLevelException(string message) : base(message) { }
 
 	/// <summary>
-	/// Create exception
+	/// Create exception.
 	/// </summary>
 	/// <param name="message"></param>
 	/// <param name="inner"></param>

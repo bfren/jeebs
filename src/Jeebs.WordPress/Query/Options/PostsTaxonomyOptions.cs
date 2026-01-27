@@ -2,7 +2,7 @@
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using Jeebs.Collections;
-using Jeebs.WordPress.Entities.StrongIds;
+using Jeebs.WordPress.Entities.Ids;
 using Jeebs.WordPress.Enums;
 
 namespace Jeebs.WordPress.Query.Options;
@@ -11,7 +11,7 @@ namespace Jeebs.WordPress.Query.Options;
 public abstract record class PostsTaxonomyOptions : Options<WpTermId>, IQueryPostsTaxonomyOptions
 {
 	/// <summary>
-	/// IQueryPostsTaxonomyPartsBuilder
+	/// IQueryPostsTaxonomyPartsBuilder.
 	/// </summary>
 	protected new IQueryPostsTaxonomyPartsBuilder Builder =>
 		(IQueryPostsTaxonomyPartsBuilder)base.Builder;
@@ -28,10 +28,10 @@ public abstract record class PostsTaxonomyOptions : Options<WpTermId>, IQueryPos
 	public TaxonomySort SortBy { get; init; }
 
 	/// <summary>
-	/// Allow Builder to be injected
+	/// Allow Builder to be injected.
 	/// </summary>
-	/// <param name="schema">IWpDbSchema</param>
-	/// <param name="builder">IQueryPostsTaxonomyPartsBuilder</param>
+	/// <param name="schema">IWpDbSchema.</param>
+	/// <param name="builder">IQueryPostsTaxonomyPartsBuilder.</param>
 	protected PostsTaxonomyOptions(IWpDbSchema schema, IQueryPostsTaxonomyPartsBuilder builder) : base(schema, builder) =>
 		Maximum = null;
 }

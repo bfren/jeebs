@@ -3,13 +3,12 @@
 
 using System.Data;
 using AppConsolePg;
-using Jeebs.Auth.Data;
+using Jeebs;
 using Jeebs.Data.Clients.PostgreSql.Parameters;
 using Jeebs.Data.Clients.PostgreSql.TypeHandlers;
-using Jeebs.Extensions;
-using MaybeF;
 using Microsoft.Extensions.DependencyInjection;
 using RndF;
+using Wrap.Extensions;
 
 var (app, log) = Jeebs.Apps.Host.Create<App>(args);
 
@@ -19,8 +18,6 @@ log.Inf("= PostgreSQL Console Test =");
 // Get services
 var db = app.Services.GetRequiredService<Db>();
 var repo = app.Services.GetRequiredService<Repository>();
-var authDb = app.Services.GetRequiredService<IAuthDb>();
-var auth = app.Services.GetRequiredService<IAuthDataProvider>();
 Console.WriteLine();
 
 // Create schema
@@ -31,8 +28,7 @@ await db
 		$"CREATE SCHEMA IF NOT EXISTS {schema};",
 		null,
 		CommandType.Text
-	)
-	.ConfigureAwait(false);
+	);
 Console.WriteLine();
 
 // Create table
@@ -48,8 +44,7 @@ await db
 		");",
 		null,
 		CommandType.Text
-	)
-	.ConfigureAwait(false);
+	);
 Console.WriteLine();
 
 // Insert into the table
@@ -61,23 +56,21 @@ await db
 		$"INSERT INTO {table} (foo, bar) VALUES (@foo, @bar);", new { foo, bar }, CommandType.Text
 	)
 	.AuditAsync(
-		none: r => log.Msg(r)
-	)
-	.ConfigureAwait(false);
+		fail: log.Failure
+	);
 Console.WriteLine();
 
 // Get data from the table
 log.Dbg("== Retrieving data ==");
 var id = 0;
 await db
-	.QuerySingleAsync<ParamTest>(
+	.QuerySingleAsync<TestObj>(
 		$"SELECT * FROM {table} WHERE foo = @foo AND bar = @bar;", new { foo, bar }, CommandType.Text
 	)
 	.AuditAsync(
-		some: x => { if (x.Foo == foo) { log.Dbg("Succeeded: {@Test}.", x); id = x.Id; } else { log.Err("Failed."); } },
-		none: r => log.Msg(r)
-	)
-	.ConfigureAwait(false);
+		ok: x => { if (x.Foo == foo) { log.Dbg("Succeeded: {@Test}.", x); id = x.Id; } else { log.Err("Failed."); } },
+		fail: log.Failure
+	);
 Console.WriteLine();
 
 // Update data
@@ -88,19 +81,17 @@ await db
 		$"UPDATE {table} SET foo = @newFoo WHERE id = @id;", new { newFoo, id }, CommandType.Text
 	)
 	.AuditAsync(
-		none: r => log.Msg(r)
-	)
-	.ConfigureAwait(false);
+		fail: log.Failure
+	);
 
 await db
-	.QuerySingleAsync<ParamTest>(
+	.QuerySingleAsync<TestObj>(
 		$"SELECT * FROM {table} WHERE id = @id;", new { id }, CommandType.Text
 	)
 	.AuditAsync(
-		some: x => { if (x.Foo == newFoo) { log.Dbg("Succeeded: {@Test}.", x); } else { log.Err("Failed."); } },
-		none: r => log.Msg(r)
-	)
-	.ConfigureAwait(false);
+		ok: x => { if (x.Foo == newFoo) { log.Dbg("Succeeded: {@Test}.", x); } else { log.Err("Failed."); } },
+		fail: log.Failure
+	);
 Console.WriteLine();
 
 // Delete data
@@ -110,10 +101,9 @@ await db
 		$"DELETE FROM {table} WHERE id = @id;", new { id }, CommandType.Text
 	)
 	.AuditAsync(
-		some: x => { if (x) { log.Dbg("Succeeded."); } else { log.Err("Failed."); } },
-		none: r => log.Msg(r)
-	)
-	.ConfigureAwait(false);
+		ok: x => { if (x) { log.Dbg("Succeeded."); } else { log.Err("Failed."); } },
+		fail: log.Failure
+	);
 Console.WriteLine();
 
 // Drop table
@@ -121,8 +111,7 @@ log.Dbg("== Dropping table == ");
 await db
 	.ExecuteAsync(
 		$"DROP TABLE {table};", null, CommandType.Text
-	)
-	.ConfigureAwait(false);
+	);
 Console.WriteLine();
 
 // Create table
@@ -137,15 +126,14 @@ await db
 		");",
 		null,
 		CommandType.Text
-	)
-	.ConfigureAwait(false);
+	);
 Console.WriteLine();
 
 // Insert values using Jsonb
 log.Dbg("== Inserting values as Jsonb ==");
-var v0 = new ParamTest(7, Rnd.Str, Rnd.Str);
-var v1 = new ParamTest(18, Rnd.Str, Rnd.Str);
-var v2 = new ParamTest(93, Rnd.Str, Rnd.Str);
+var v0 = new TestObj(7, Rnd.Str, Rnd.Str);
+var v1 = new TestObj(18, Rnd.Str, Rnd.Str);
+var v2 = new TestObj(93, Rnd.Str, Rnd.Str);
 using (var w = await db.StartWorkAsync())
 {
 	foreach (var v in new[] { v0, v1, v2 })
@@ -155,9 +143,8 @@ using (var w = await db.StartWorkAsync())
 				$"INSERT INTO {jsonTable} (json_value) VALUES (@value);", new { value = Jsonb.Create(v) }, CommandType.Text, w.Transaction
 			)
 			.AuditAsync(
-				none: r => log.Msg(r)
-			)
-			.ConfigureAwait(false);
+				fail: log.Failure
+			);
 	}
 }
 Console.WriteLine();
@@ -165,48 +152,49 @@ Console.WriteLine();
 log.Dbg("== Checking Jsonb insert has worked ==");
 await db
 	.QuerySingleAsync<int>(
-		$"SELECT json_value -> '{nameof(ParamTest.Id).ToCamelCase()}' FROM {jsonTable} WHERE json_value ->> '{nameof(ParamTest.Foo).ToCamelCase()}' = @foo;", new { foo = v1.Foo }, CommandType.Text
+		$"SELECT json_value -> '{nameof(TestObj.Id).ToCamelCase()}' FROM {jsonTable} WHERE json_value ->> '{nameof(TestObj.Foo).ToCamelCase()}' = @foo;", new { foo = v1.Foo }, CommandType.Text
 	)
 	.AuditAsync(
-		some: x => { if (x == 18) { log.Dbg("Succeeded: {@Test}.", x); } else { log.Err("Failed."); } },
-		none: r => log.Msg(r)
-	)
-	.ConfigureAwait(false);
-Console.WriteLine();
-
-// Select values using Mapping
-log.Dbg("== Selecting values using mapping ==");
-Dapper.SqlMapper.AddTypeHandler(new JsonbTypeHandler<ParamTest>()); // add here so doesn't interfere with earlier tests
-
-await db
-	.QuerySingleAsync<EntityTest>(
-		$"SELECT * FROM {jsonTable} WHERE json_value ->> '{nameof(ParamTest.Foo).ToCamelCase()}' = @foo;", new { foo = v1.Foo }, CommandType.Text
-	)
-	.AuditAsync(
-		some: x => { if (x.Value.Id == 18) { log.Dbg("Succeeded: {@Test}.", x); } else { log.Err("Failed."); } },
-		none: r => log.Msg(r)
-	)
-	.ConfigureAwait(false);
+		ok: x => { if (x == 18) { log.Dbg("Succeeded: {@Test}.", x); } else { log.Err("Failed."); } },
+		fail: log.Failure
+	);
 Console.WriteLine();
 
 // Insert values using repository
 log.Dbg("== Inserting values using repository ==");
-var v3 = new ParamTest(8, Rnd.Str, Rnd.Str);
-var v4 = new ParamTest(19, Rnd.Str, Rnd.Str);
-var v5 = new ParamTest(94, Rnd.Str, Rnd.Str);
+Dapper.SqlMapper.AddTypeHandler(new JsonbTypeHandler<TestObj>()); // add here so doesn't interfere with earlier tests
+var v3 = new TestObj(8, Rnd.Str, Rnd.Str);
+var v4 = new TestObj(19, Rnd.Str, Rnd.Str);
+var v5 = new TestObj(94, Rnd.Str, Rnd.Str);
+var repoIds = new List<TestId>();
 using (var w = await db.StartWorkAsync())
 {
 	foreach (var v in new[] { v3, v4, v5 })
 	{
 		await repo
 			.CreateAsync(
-				new() { Id = new(), Value = v }, w.Transaction
+				new() { Value = v }, w.Transaction
 			)
 			.AuditAsync(
-				some: x => log.Dbg("New ID: {Id}", x.Value),
-				none: r => log.Msg(r)
-			)
-			.ConfigureAwait(false);
+				ok: x => { log.Dbg("New ID: {Id}", x.Value); repoIds.Add(x); },
+				fail: log.Failure
+			);
+	}
+}
+Console.WriteLine();
+
+// Retrieving values using repository
+log.Dbg("== Retrieving values using repository ==");
+using (var w = await db.StartWorkAsync())
+{
+	foreach (var x in repoIds)
+	{
+		await repo
+			.RetrieveAsync<TestEntity>(x)
+			.AuditAsync(
+				ok: x => log.Dbg("Found entity with ID: {Id} and Value: {@Value}", x.Id.Value, x.Value),
+				fail: log.Failure
+			);
 	}
 }
 Console.WriteLine();
@@ -216,46 +204,45 @@ log.Dbg("== Dropping table == ");
 await db
 	.ExecuteAsync(
 		$"DROP TABLE {jsonTable};", null, CommandType.Text
-	)
-	.ConfigureAwait(false);
+	);
 Console.WriteLine();
 
-// Migrate auth tablse
-log.Dbg("== Migrate Auth ==");
-authDb.MigrateToLatest();
+//// Migrate auth tablse
+//log.Dbg("== Migrate Auth ==");
+//authDb.MigrateToLatest();
 
-// Insert user
-log.Dbg("== Insert User ==");
-var email = Rnd.Str;
-var userId = await auth.User
-	.CreateAsync(email, Rnd.Str)
-	.AuditAsync(
-		some: x => log.Dbg("New User ID: {UserId}", x.Value),
-		none: r => log.Msg(r)
-	)
-	.UnwrapAsync(x => x.Value(() => throw new Exception("Unable to get User ID.")));
+//// Insert user
+//log.Dbg("== Insert User ==");
+//var email = Rnd.Str;
+//var userId = await auth.User
+//	.CreateAsync(email, Rnd.Str)
+//	.AuditAsync(
+//		ok: x => log.Dbg("New User ID: {UserId}", x.Value),
+//		fail: f => log.Failure(f)
+//	)
+//	.UnwrapAsync(x => x.Value(() => throw new Exception("Unable to get User ID.")));
 
-// Update user last sign in
-log.Dbg("== Update sign in ==");
-await auth.User
-	.UpdateLastSignInAsync(userId)
-	.AuditAsync(
-		some: x => { if (x) { log.Dbg("Last sign in updated"); } else { log.Err("Unable to update last sign in"); } },
-		none: r => log.Msg(r)
-	);
+//// Update user last sign in
+//log.Dbg("== Update sign in ==");
+//await auth.User
+//	.UpdateLastSignInAsync(userId)
+//	.AuditAsync(
+//		ok: x => { if (x) { log.Dbg("Last sign in updated"); } else { log.Err("Unable to update last sign in"); } },
+//		fail: f => log.Failure(f)
+//	);
 
-// Don't insert duplicate user
-log.Dbg("== Don't insert duplicate user ==");
-await auth.User
-	.CreateAsync(email, Rnd.Str)
-	.AuditAsync(
-		some: _ => log.Err("Should not have inserted duplicate user!"),
-		none: r => log.Msg(r)
-	);
+//// Don't insert duplicate user
+//log.Dbg("== Don't insert duplicate user ==");
+//await auth.User
+//	.CreateAsync(email, Rnd.Str)
+//	.AuditAsync(
+//		ok: _ => log.Err("Should not have inserted duplicate user!"),
+//		fail: f => log.Failure(f)
+//	);
 
-// Clean up users
-log.Dbg("== Cleaning up user entities ==");
-await authDb.ExecuteAsync("TRUNCATE TABLE auth.user;", null, CommandType.Text);
+//// Clean up users
+//log.Dbg("== Cleaning up user entities ==");
+//await authDb.ExecuteAsync("TRUNCATE TABLE auth.user;", null, CommandType.Text);
 
 // Done
 log.Dbg("Done.");

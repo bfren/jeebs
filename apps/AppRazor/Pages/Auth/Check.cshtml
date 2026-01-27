@@ -1,8 +1,0 @@
-@page
-@model AppRazor.Pages.Auth.CheckModel
-
-<h4>Claims</h4>
-@foreach (var item in User.Claims)
-{
-	<p>@item.Subject - @item.Type - @item.Value</p>
-}

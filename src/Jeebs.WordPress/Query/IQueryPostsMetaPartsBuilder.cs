@@ -3,7 +3,7 @@
 
 using Jeebs.Collections;
 using Jeebs.Data.Query;
-using Jeebs.WordPress.Entities.StrongIds;
+using Jeebs.WordPress.Entities.Ids;
 
 namespace Jeebs.WordPress.Query;
 
@@ -11,17 +11,17 @@ namespace Jeebs.WordPress.Query;
 public interface IQueryPostsMetaPartsBuilder : IQueryPartsBuilder<WpPostMetaId>
 {
 	/// <summary>
-	/// Add Where Post ID
+	/// Add Where Post ID.
 	/// </summary>
-	/// <param name="parts">QueryParts</param>
-	/// <param name="postId">Post ID</param>
-	/// <param name="postIds">Post IDs</param>
-	Maybe<QueryParts> AddWherePostId(QueryParts parts, WpPostId? postId, IImmutableList<WpPostId> postIds);
+	/// <param name="parts">QueryParts.</param>
+	/// <param name="postId">Post ID.</param>
+	/// <param name="postIds">Post IDs.</param>
+	Result<QueryParts> AddWherePostId(QueryParts parts, WpPostId? postId, IImmutableList<WpPostId> postIds);
 
 	/// <summary>
-	/// Add Where Post Status
+	/// Add Where Post Status.
 	/// </summary>
-	/// <param name="parts">QueryParts</param>
-	/// <param name="key">Meta Key</param>
-	Maybe<QueryParts> AddWhereKey(QueryParts parts, string? key);
+	/// <param name="parts">QueryParts.</param>
+	/// <param name="key">Meta Key.</param>
+	Result<QueryParts> AddWhereKey(QueryParts parts, string? key);
 }

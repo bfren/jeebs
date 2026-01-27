@@ -6,9 +6,6 @@ using Jeebs.Services.Drawing.Geometry;
 
 namespace Jeebs.Services.Drawing.Functions;
 
-/// <summary>
-/// Image functions
-/// </summary>
 public static partial class ImageF
 {
 	/// <summary>
@@ -23,10 +20,10 @@ public static partial class ImageF
 	/// http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 	/// </para>		///
 	/// </summary>
-	/// <param name="imgWidth">Original image width</param>
-	/// <param name="imgHeight">Original image height</param>
-	/// <param name="maskWidth">Mask width</param>
-	/// <param name="maskHeight">Mask height</param>
+	/// <param name="imgWidth">Original image width.</param>
+	/// <param name="imgHeight">Original image height.</param>
+	/// <param name="maskWidth">Mask width.</param>
+	/// <param name="maskHeight">Mask height.</param>
 	public static Rectangle CalculateMask(double imgWidth, double imgHeight, double maskWidth, double maskHeight)
 	{
 		// Calculation variables

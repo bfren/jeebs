@@ -3,8 +3,6 @@
 
 using Jeebs.Data.Map;
 using Jeebs.Logging;
-using MaybeF;
-using StrongId;
 
 namespace Jeebs.Data.Query.FluentQuery_Tests;
 
@@ -15,10 +13,10 @@ public class Constructor_Tests
 	{
 		// Arrange
 		var db = Substitute.For<IDb>();
-		var reason = Substitute.For<IMsg>();
+		var reason = FailGen.Create();
 		var mapper = Substitute.For<IEntityMapper>();
 		mapper.GetTableMapFor<TestEntity>()
-			.Returns(F.None<ITableMap>(reason));
+			.Returns(reason);
 		var log = Substitute.For<ILog>();
 
 		// Act
@@ -26,7 +24,7 @@ public class Constructor_Tests
 
 		// Assert
 		var single = Assert.Single(result.Errors);
-		Assert.Same(reason, single);
+		Assert.Equal(reason.Value, single);
 	}
 
 	[Fact]
@@ -34,10 +32,10 @@ public class Constructor_Tests
 	{
 		// Arrange
 		var db = Substitute.For<IDb>();
-		var reason = Substitute.For<IMsg>();
+		var reason = FailGen.Create();
 		var mapper = Substitute.For<IEntityMapper>();
 		mapper.GetTableMapFor<TestEntity>()
-			.Returns(F.None<ITableMap>(reason));
+			.Returns(reason);
 		var log = Substitute.For<ILog>();
 
 		// Act
@@ -58,7 +56,7 @@ public class Constructor_Tests
 			.Returns(table);
 		var mapper = Substitute.For<IEntityMapper>();
 		mapper.GetTableMapFor<TestEntity>()
-			.Returns(F.Some(map));
+			.Returns(R.Wrap(map));
 		var log = Substitute.For<ILog>();
 
 		// Act
@@ -69,7 +67,7 @@ public class Constructor_Tests
 		Assert.Same(table, result.Parts.From);
 	}
 
-	public sealed record class TestId : GuidId;
+	public sealed record class TestId : GuidId<TestId>;
 
-	public sealed record class TestEntity(TestId Id) : IWithId<TestId>;
+	public sealed record class TestEntity : WithId<TestId, Guid>;
 }

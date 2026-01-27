@@ -4,10 +4,6 @@
 namespace Jeebs.Logging.Serilog.Functions;
 
 /// <summary>
-/// Log Level functions
+/// Log Level functions.
 /// </summary>
-public static partial class LevelF
-{
-	/// <summary>Messages</summary>
-	public static partial class M { }
-}
+public static partial class LevelF { }

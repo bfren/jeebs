@@ -6,37 +6,37 @@ using Microsoft.Extensions.Options;
 namespace Jeebs.Config.Web.Auth;
 
 /// <summary>
-/// Jeebs Authentication and Authorisation Configuraiton
+/// Jeebs Authentication and Authorisation configuration.
 /// </summary>
 public sealed record class AuthConfig : IOptions<AuthConfig>
 {
 	/// <summary>
-	/// Path to this configuration section
+	/// Path to this configuration section.
 	/// </summary>
 	public static readonly string Key = WebConfig.Key + ":auth";
 
 	/// <summary>
-	/// Whether or not auth is enabled
+	/// Whether or not auth is enabled.
 	/// </summary>
 	public bool Enabled { get; init; }
 
 	/// <summary>
-	/// Authentication scheme
+	/// Authentication scheme.
 	/// </summary>
 	public AuthScheme? Scheme { get; init; }
 
 	/// <summary>
-	/// Path to the login page
+	/// Path to the login page.
 	/// </summary>
 	public string? LoginPath { get; init; }
 
 	/// <summary>
-	/// Path to the access denied page
+	/// Path to the access denied page.
 	/// </summary>
 	public string? AccessDeniedPath { get; init; }
 
 	/// <summary>
-	/// JwtConfig
+	/// JwtConfig.
 	/// </summary>
 	public Jwt.JwtConfig Jwt { get; init; } = new();
 

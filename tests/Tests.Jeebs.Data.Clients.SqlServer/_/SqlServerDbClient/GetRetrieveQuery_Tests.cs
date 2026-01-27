@@ -30,7 +30,7 @@ public class GetRetrieveQuery_Tests
 		c2Property.Name.Returns(c2Alias);
 		var c2 = new Column(table, c2Name, c2Property);
 
-		var list = new ColumnList(new[] { c0, c1 });
+		var list = new ColumnList([c0, c1]);
 		var client = new SqlServerDbClient();
 
 		var id = Rnd.Lng;

@@ -8,7 +8,6 @@ using System.Linq.Expressions;
 using Jeebs.Data.Enums;
 using Jeebs.Data.Query.Functions;
 using Jeebs.Reflection;
-using StrongId;
 
 namespace Jeebs.Data.Query;
 
@@ -26,7 +25,7 @@ public sealed partial record class FluentQuery<TEntity, TId>
 		// Check clause
 		if (string.IsNullOrWhiteSpace(clause))
 		{
-			Errors.Add(new M.TryingToAddEmptyClauseToWhereMsg());
+			Errors.Add(new("Trying to add empty clause to WHERE."));
 			return this;
 		}
 
@@ -34,7 +33,7 @@ public sealed partial record class FluentQuery<TEntity, TId>
 		var param = new QueryParametersDictionary();
 		if (!param.TryAdd(parameters))
 		{
-			Errors.Add(new M.UnableToAddParametersToWhereMsg());
+			Errors.Add(new("Unable to add parameters to WHERE."));
 			return this;
 		}
 
@@ -55,14 +54,14 @@ public sealed partial record class FluentQuery<TEntity, TId>
 		}
 
 		// Get column and add to QueryParts
-		return QueryF.GetColumnFromAlias(Table, columnAlias).Switch(
-			some: x => Update(parts => parts with
+		return QueryF.GetColumnFromAlias(Table, columnAlias).Match(
+			ok: x => Update(parts => parts with
 			{
 				Where = parts.Where.WithItem((x, compare, value ?? DBNull.Value))
 			}),
-			none: r =>
+			fail: f =>
 			{
-				Errors.Add(r);
+				Errors.Add(f);
 				return this;
 			}
 		);
@@ -71,7 +70,7 @@ public sealed partial record class FluentQuery<TEntity, TId>
 	/// <inheritdoc/>
 	public IFluentQuery<TEntity, TId> Where<TValue>(Expression<Func<TEntity, TValue>> aliasSelector, Compare compare, TValue value) =>
 		aliasSelector.GetPropertyInfo()
-			.Switch(
+			.Match(
 				some: x => Where(x.Name, compare, value),
 				none: this
 			);
@@ -104,7 +103,7 @@ public sealed partial record class FluentQuery<TEntity, TId>
 	/// <inheritdoc/>
 	public IFluentQuery<TEntity, TId> WhereIn<TValue>(Expression<Func<TEntity, TValue>> aliasSelector, IEnumerable<TValue> values) =>
 		aliasSelector.GetPropertyInfo()
-			.Switch(
+			.Match(
 				some: x => WhereIn(x.Name, values),
 				none: this
 			);
@@ -123,7 +122,7 @@ public sealed partial record class FluentQuery<TEntity, TId>
 	/// <inheritdoc/>
 	public IFluentQuery<TEntity, TId> WhereNotIn<TValue>(Expression<Func<TEntity, TValue>> aliasSelector, IEnumerable<TValue> values) =>
 		aliasSelector.GetPropertyInfo()
-			.Switch(
+			.Match(
 				some: x => WhereNotIn(x.Name, values),
 				none: this
 			);

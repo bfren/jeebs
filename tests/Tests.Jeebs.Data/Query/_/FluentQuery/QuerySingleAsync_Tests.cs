@@ -2,9 +2,6 @@
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using System.Data;
-using Jeebs.Messages;
-using MaybeF;
-using static Jeebs.Data.Query.FluentQuery.M;
 
 namespace Jeebs.Data.Query.FluentQuery_Tests;
 
@@ -21,7 +18,7 @@ public class QuerySingleAsync_Tests : FluentQuery_Tests
 		});
 
 		// Act
-		await withWhere.QuerySingleAsync<int>();
+		await withWhere.QuerySingleAsync<long>();
 
 		// Assert
 		Assert.IsType<FluentQuery<TestEntity, TestId>>(withWhere);
@@ -33,20 +30,16 @@ public class QuerySingleAsync_Tests : FluentQuery_Tests
 	{
 		// Arrange
 		var (query, _) = Setup();
-		var m0 = Substitute.For<IMsg>();
-		var m1 = Substitute.For<IMsg>();
+		var m0 = FailGen.Create().Value;
+		var m1 = FailGen.Create().Value;
 		query.Errors.Add(m0);
 		query.Errors.Add(m1);
 
 		// Act
-		var result = await query.QuerySingleAsync<int>();
+		var result = await query.QuerySingleAsync<long>();
 
 		// Assert
-		var none = result.AssertNone().AssertType<ListMsg>();
-		Assert.Collection(none.Args!,
-			x => Assert.Same(m0, x),
-			x => Assert.Same(m1, x)
-		);
+		_ = result.AssertFailure("Query errors.", query.Errors);
 	}
 
 	[Fact]
@@ -56,10 +49,10 @@ public class QuerySingleAsync_Tests : FluentQuery_Tests
 		var (query, _) = Setup();
 
 		// Act
-		var result = await query.QuerySingleAsync<int>();
+		var result = await query.QuerySingleAsync<long>();
 
 		// Assert
-		result.AssertNone().AssertType<NoPredicatesMsg>();
+		_ = result.AssertFailure("No predicates defined for WHERE clause.");
 	}
 
 	[Fact]
@@ -74,8 +67,8 @@ public class QuerySingleAsync_Tests : FluentQuery_Tests
 		});
 
 		// Act
-		await withWhere.QuerySingleAsync<int>();
-		await withWhere.QuerySingleAsync<int>(v.Transaction);
+		await withWhere.QuerySingleAsync<long>();
+		await withWhere.QuerySingleAsync<long>(v.Transaction);
 
 		// Assert
 		var fluent = Assert.IsType<FluentQuery<TestEntity, TestId>>(withWhere);
@@ -96,11 +89,11 @@ public class QuerySingleAsync_Tests : FluentQuery_Tests
 		});
 
 		// Act
-		await withWhere.QuerySingleAsync<int>();
-		await withWhere.QuerySingleAsync<int>(v.Transaction);
+		await withWhere.QuerySingleAsync<long>();
+		await withWhere.QuerySingleAsync<long>(v.Transaction);
 
 		// Assert
 		Assert.IsType<FluentQuery<TestEntity, TestId>>(withWhere);
-		await v.Db.Received(2).QueryAsync<int>(sql, param, CommandType.Text, v.Transaction);
+		await v.Db.Received(2).QueryAsync<long>(sql, param, CommandType.Text, v.Transaction);
 	}
 }

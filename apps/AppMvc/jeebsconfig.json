@@ -20,26 +20,23 @@
 				"Microsoft.Hosting.Lifetime": "Information"
 			},
 			"providers": {
-				"console": {
+				"console.local": {
 					"enabled": true
 				},
-				"seq.server04": {
+				"seq.live": {
 					"enabled": true
 				}
 			}
 		},
     "services": {
+      "console": {
+        "local": {}
+      },
       "seq": {
-        "server04": {
+        "live": {
           "server": "",
           "apiKey": ""
         }
-      }
-    },
-    "web": {
-      "auth": {
-        "enabled": true,
-        "scheme": "cookies"
       }
     }
   }

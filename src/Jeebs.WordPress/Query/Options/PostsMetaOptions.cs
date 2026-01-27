@@ -2,7 +2,7 @@
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using Jeebs.Collections;
-using Jeebs.WordPress.Entities.StrongIds;
+using Jeebs.WordPress.Entities.Ids;
 
 namespace Jeebs.WordPress.Query.Options;
 
@@ -10,7 +10,7 @@ namespace Jeebs.WordPress.Query.Options;
 public abstract record class PostsMetaOptions : Options<WpPostMetaId>, IQueryPostsMetaOptions
 {
 	/// <summary>
-	/// IQueryPostsMetaPartsBuilder
+	/// IQueryPostsMetaPartsBuilder.
 	/// </summary>
 	protected new IQueryPostsMetaPartsBuilder Builder =>
 		(IQueryPostsMetaPartsBuilder)base.Builder;
@@ -26,10 +26,10 @@ public abstract record class PostsMetaOptions : Options<WpPostMetaId>, IQueryPos
 	public string? Key { get; init; }
 
 	/// <summary>
-	/// Allow Builder to be injected
+	/// Allow Builder to be injected.
 	/// </summary>
-	/// <param name="schema">IWpDbSchema</param>
-	/// <param name="builder">IQueryPostsMetaPartsBuilder</param>
+	/// <param name="schema">IWpDbSchema.</param>
+	/// <param name="builder">IQueryPostsMetaPartsBuilder.</param>
 	protected PostsMetaOptions(IWpDbSchema schema, IQueryPostsMetaPartsBuilder builder) : base(schema, builder) =>
 		Maximum = null;
 }

@@ -2,7 +2,6 @@
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using System.Data;
-using static MaybeF.F.EnumerableF.M;
 
 namespace Jeebs.Data.Query.FluentQuery_Tests;
 
@@ -13,12 +12,13 @@ public class ExecuteAsync_Tests : FluentQuery_Tests
 	{
 		// Arrange
 		var (query, _) = Setup();
+		var alias = Rnd.Str;
 
 		// Act
-		var result = await query.ExecuteAsync<int>(Rnd.Str);
+		var result = await query.ExecuteAsync<int>(alias);
 
 		// Assert
-		result.AssertNone().AssertType<NoMatchingItemsMsg>();
+		_ = result.AssertFailure("Column with alias '{Alias}' not found in table '{Table}'.", alias, nameof(TestTable));
 	}
 
 	[Fact]
@@ -57,8 +57,8 @@ public class ExecuteAsync_Tests : FluentQuery_Tests
 		});
 
 		// Act
-		await withWhere.ExecuteAsync<string>(nameof(TestEntity.Foo));
-		await withWhere.ExecuteAsync(x => x.Foo);
+		var r0 = await withWhere.ExecuteAsync<string>(nameof(TestEntity.Foo));
+		var r1 = await withWhere.ExecuteAsync(x => x.Foo);
 
 		// Assert
 		v.Db.Client.Received(2).GetQuery(Arg.Is<IQueryParts>(x => x.Maximum == 1));

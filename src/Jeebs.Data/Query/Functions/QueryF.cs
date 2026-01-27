@@ -4,10 +4,6 @@
 namespace Jeebs.Data.Query.Functions;
 
 /// <summary>
-/// Query Functions
+/// Query Functions.
 /// </summary>
-public static partial class QueryF
-{
-	/// <summary>Messages</summary>
-	public static partial class M { }
-}
+public static partial class QueryF { }

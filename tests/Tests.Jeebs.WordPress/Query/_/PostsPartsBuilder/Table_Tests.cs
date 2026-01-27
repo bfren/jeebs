@@ -1,9 +1,9 @@
-﻿// Jeebs Unit Tests
+// Jeebs Unit Tests
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using Jeebs.Data;
 using Jeebs.Data.Query.QueryPartsBuilder_Tests;
-using Jeebs.WordPress.Entities.StrongIds;
+using Jeebs.WordPress.Entities.Ids;
 using Jeebs.WordPress.Tables;
 using static Jeebs.WordPress.Query.PostsPartsBuilder_Tests.Setup;
 

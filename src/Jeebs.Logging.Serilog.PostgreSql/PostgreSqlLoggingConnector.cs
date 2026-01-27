@@ -9,7 +9,7 @@ using Serilog;
 namespace Jeebs.Logging.Serilog.PostgreSql;
 
 /// <summary>
-/// Connects Npgsql log to Serilog
+/// Connects Npgsql log to Serilog.
 /// </summary>
 public sealed class PostgreSqlLoggingConnector : ILoggingConnector
 {

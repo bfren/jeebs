@@ -4,9 +4,6 @@
 using System.Collections;
 using Jeebs.Data.Enums;
 using Jeebs.Data.Map;
-using StrongId;
-using static Jeebs.Data.Query.Functions.QueryF.M;
-using static StrongId.Testing.Generator;
 
 namespace Jeebs.Data.Query.Functions.QueryF_Tests;
 
@@ -17,11 +14,11 @@ public class ConvertPredicatesToColumns_Tests
 	{
 		// Arrange
 		var table = new DbName(Rnd.Str);
-		var columns = new ColumnList(new[]
-		{
+		var columns = new ColumnList(
+		[
 			new Column(table, nameof(TestEntity.Id), typeof(TestEntity).GetProperty(nameof(TestEntity.Id))!),
 			new Column(table, nameof(TestEntity.Foo), typeof(TestEntity).GetProperty(nameof(TestEntity.Foo))!)
-		});
+		]);
 		var predicates = new (string column, Compare cmp, dynamic value)[]
 		{
 			(nameof(TestEntity.Id), Compare.Equal, Rnd.Lng),
@@ -29,7 +26,7 @@ public class ConvertPredicatesToColumns_Tests
 		};
 
 		// Act
-		var result = QueryF.ConvertPredicatesToColumns(columns, predicates).UnsafeUnwrap();
+		var result = QueryF.ConvertPredicatesToColumns(columns, predicates).Unsafe().Unwrap();
 
 		// Assert
 		Assert.DoesNotContain(result, x => x.column.ColName == nameof(TestEntity.Bar));
@@ -40,21 +37,21 @@ public class ConvertPredicatesToColumns_Tests
 	{
 		// Arrange
 		var table = new DbName(Rnd.Str);
-		var columns = new ColumnList(new[]
-		{
+		var columns = new ColumnList(
+		[
 			new Column(table, nameof(TestEntity.Foo), typeof(TestEntity).GetProperty(nameof(TestEntity.Foo))!)
-		});
+		]);
 		var predicates = new (string column, Compare cmp, dynamic value)[]
 		{
 			(nameof(TestEntity.Foo), Compare.Equal, Rnd.Int)
 		};
 
 		// Act
-		var result = QueryF.ConvertPredicatesToColumns(columns, predicates).UnsafeUnwrap();
+		var result = QueryF.ConvertPredicatesToColumns(columns, predicates).Unsafe().Unwrap();
 
 		// Assert
-		var single = Assert.Single(result);
-		Assert.Equal(nameof(TestEntity.Foo), single.column.ColName);
+		var (column, _, _) = Assert.Single(result);
+		Assert.Equal(nameof(TestEntity.Foo), column.ColName);
 	}
 
 	[Theory]
@@ -71,22 +68,21 @@ public class ConvertPredicatesToColumns_Tests
 	{
 		// Arrange
 		var table = new DbName(Rnd.Str);
-		var columns = new ColumnList(new[]
-		{
+		var columns = new ColumnList(
+		[
 			new Column(table, nameof(TestEntity.Id), typeof(TestEntity).GetProperty(nameof(TestEntity.Id))!)
-		});
+		]);
 		var predicates = new (string column, Compare cmp, dynamic value)[]
 		{
 			(nameof(TestEntity.Id), input, Substitute.For<IList>()) // use list type so IN operator doesn't throw exception
 		};
 
 		// Act
-		var result = QueryF.ConvertPredicatesToColumns(columns, predicates).UnsafeUnwrap();
+		var result = QueryF.ConvertPredicatesToColumns(columns, predicates).Unsafe().Unwrap();
 
 		// Assert
-		var x = // Assert
-Assert.Single(result);
-		Assert.Equal(input, x.cmp);
+		var (_, cmp, _) = Assert.Single(result);
+		Assert.Equal(input, cmp);
 	}
 
 	[Theory]
@@ -101,10 +97,10 @@ Assert.Single(result);
 	{
 		// Arrange
 		var table = new DbName(Rnd.Str);
-		var columns = new ColumnList(new[]
-		{
+		var columns = new ColumnList(
+		[
 			new Column(table, nameof(TestEntity.Foo), typeof(TestEntity).GetProperty(nameof(TestEntity.Foo))!)
-		});
+		]);
 		var value = Rnd.Str;
 		var predicates = new (string column, Compare cmp, dynamic value)[]
 		{
@@ -112,11 +108,10 @@ Assert.Single(result);
 		};
 
 		// Act
-		var result = QueryF.ConvertPredicatesToColumns(columns, predicates).UnsafeUnwrap();
+		var result = QueryF.ConvertPredicatesToColumns(columns, predicates).Unsafe().Unwrap();
 
 		// Assert
-		var x = // Assert
-Assert.Single(result);
+		var x = Assert.Single(result);
 		Assert.Same(value, x.value);
 	}
 
@@ -132,33 +127,32 @@ Assert.Single(result);
 	{
 		// Arrange
 		var table = new DbName(Rnd.Str);
-		var columns = new ColumnList(new[]
-		{
+		var columns = new ColumnList(
+		[
 			new Column(table, nameof(TestEntity.Foo), typeof(TestEntity).GetProperty(nameof(TestEntity.Foo))!)
-		});
-		var id = LongId<TestId>();
+		]);
+		var id = IdGen.LongId<TestId>();
 		var predicates = new (string column, Compare cmp, dynamic value)[]
 		{
 			(nameof(TestEntity.Foo), input, id)
 		};
 
 		// Act
-		var result = QueryF.ConvertPredicatesToColumns(columns, predicates).UnsafeUnwrap();
+		var result = QueryF.ConvertPredicatesToColumns(columns, predicates).Unsafe().Unwrap();
 
 		// Assert
-		var x = // Assert
-Assert.Single(result);
-		Assert.Equal(id.Value, x.value);
+		var (_, _, value) = Assert.Single(result);
+		Assert.Equal(id.Value, value);
 	}
 
 	private static void Test_In_With_Enumerable(Func<int, int, int, dynamic> getValue)
 	{
 		// Arrange
 		var table = new DbName(Rnd.Str);
-		var columns = new ColumnList(new[]
-		{
+		var columns = new ColumnList(
+		[
 			new Column(table, nameof(TestEntity.Foo), typeof(TestEntity).GetProperty(nameof(TestEntity.Foo))!)
-		});
+		]);
 
 		var v0 = Rnd.Int;
 		var v1 = Rnd.Int;
@@ -170,11 +164,10 @@ Assert.Single(result);
 		};
 
 		// Act
-		var result = QueryF.ConvertPredicatesToColumns(columns, predicates).UnsafeUnwrap();
+		var result = QueryF.ConvertPredicatesToColumns(columns, predicates).Unsafe().Unwrap();
 
 		// Assert
-		var x = // Assert
-Assert.Single(result);
+		var x = Assert.Single(result);
 		Assert.Same(value, x.value);
 	}
 
@@ -201,10 +194,10 @@ Assert.Single(result);
 	{
 		// Arrange
 		var table = new DbName(Rnd.Str);
-		var columns = new ColumnList(new[]
-		{
+		var columns = new ColumnList(
+		[
 			new Column(table, nameof(TestEntity.Foo), typeof(TestEntity).GetProperty(nameof(TestEntity.Foo))!)
-		});
+		]);
 		var value = Rnd.Str;
 		var predicates = new (string column, Compare cmp, dynamic value)[]
 		{
@@ -215,10 +208,10 @@ Assert.Single(result);
 		var result = QueryF.ConvertPredicatesToColumns(columns, predicates);
 
 		// Assert
-		result.AssertNone().AssertType<InOperatorRequiresValueToBeAListMsg>();
+		_ = result.AssertFailure("IN operator requires value to be a list.");
 	}
 
-	public sealed record class TestId : LongId;
+	public sealed record class TestId : LongId<TestId>;
 
-	public sealed record class TestEntity(TestId Id, string Foo, int Bar) : IWithId<TestId>;
+	public sealed record class TestEntity(string Foo, int Bar) : WithId<TestId, long>;
 }

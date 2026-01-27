@@ -1,30 +1,27 @@
 // Jeebs Rapid Application Development
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
-using System;
 using System.Linq;
 using System.Reflection;
 using Jeebs.Data.Attributes;
-using Jeebs.Messages;
-using StrongId;
 
 namespace Jeebs.Data.Map.Functions;
 
 /// <summary>
-/// Mapping Functions
+/// Mapping Functions.
 /// </summary>
 public static partial class MapF
 {
 	/// <summary>
-	/// Get all columns as <see cref="Column"/> objects
+	/// Get all columns as <see cref="Column"/> objects.
 	/// </summary>
-	/// <typeparam name="TTable">Table type</typeparam>
-	/// <typeparam name="TEntity">Entity type</typeparam>
-	/// <param name="table">Table object</param>
-	public static Maybe<ColumnList> GetColumns<TTable, TEntity>(TTable table)
+	/// <typeparam name="TTable">Table type.</typeparam>
+	/// <typeparam name="TEntity">Entity type.</typeparam>
+	/// <param name="table">Table object.</param>
+	public static Result<ColumnList> GetColumns<TTable, TEntity>(TTable table)
 		where TTable : ITable
 		where TEntity : IWithId =>
-		F.Some(
+		R.Try(
 			() => from tableProperty in typeof(TTable).GetProperties()
 				  join entityProperty in typeof(TEntity).GetProperties() on tableProperty.Name equals entityProperty.Name
 				  let column = tableProperty.GetValue(table)?.ToString()
@@ -35,18 +32,11 @@ public static partial class MapF
 					  colName: column,
 					  propertyInfo: tableProperty
 				  ),
-			e => new M.ErrorGettingColumnsMsg<TEntity>(e)
+			e => R.Fail(e).Msg("Error getting columns from table '{Table}'.", table)
+				.Ctx(nameof(MapF), nameof(GetColumns)
+			)
 		)
 		.Map(
-			x => new ColumnList(x),
-			F.DefaultHandler
+			x => new ColumnList(x)
 		);
-
-	public static partial class M
-	{
-		/// <summary>Messages</summary>
-		/// <typeparam name="TEntity">Entity type</typeparam>
-		/// <param name="Value">Exception object</param>
-		public sealed record class ErrorGettingColumnsMsg<TEntity>(Exception Value) : ExceptionMsg;
-	}
 }

@@ -3,8 +3,6 @@
 
 using System.Data;
 using Jeebs.Data.Query;
-using NSubstitute.ExceptionExtensions;
-using static Jeebs.Data.DbQuery.M;
 
 namespace Jeebs.Data.DbQuery_Tests;
 
@@ -56,33 +54,33 @@ public class QueryAsync_Tests
 		var (parts, _) = DbQuery_Setup.GetParts();
 		var (_, client, _, query) = DbQuery_Setup.Get();
 		var transaction = Substitute.For<IDbTransaction>();
-		client.GetQuery(parts).Throws<Exception>();
+		client.GetQuery(parts).Returns(FailGen.Create());
 
 		// Act
 		var r0 = await query.QueryAsync<int>(parts);
 		var r1 = await query.QueryAsync<int>(parts, transaction);
 
 		// Assert
-		r0.AssertNone().AssertType<ErrorGettingQueryFromPartsExceptionMsg>();
-		r1.AssertNone().AssertType<ErrorGettingQueryFromPartsExceptionMsg>();
+		_ = r0.AssertFailure();
+		_ = r1.AssertFailure();
 	}
 
 	[Fact]
-	public async Task WithParts_And_Page_GetCountQuery_Exception_Returns_None_With_ErrorGettingQueryFromPartsExceptionMsg()
+	public async Task WithParts_And_Page_GetCountQuery_Fails_Returns_None_With_ErrorGettingQueryFromPartsExceptionMsg()
 	{
 		// Arrange
 		var (parts, _) = DbQuery_Setup.GetParts();
 		var (_, client, _, query) = DbQuery_Setup.Get();
 		var transaction = Substitute.For<IDbTransaction>();
-		client.GetCountQuery(parts).Throws<Exception>();
+		client.GetCountQuery(parts).Returns(FailGen.Create());
 
 		// Act
 		var r0 = await query.QueryAsync<int>(Rnd.ULng, parts);
 		var r1 = await query.QueryAsync<int>(Rnd.ULng, parts, transaction);
 
 		// Assert
-		r0.AssertNone().AssertType<ErrorGettingCountQueryFromPartsExceptionMsg>();
-		r1.AssertNone().AssertType<ErrorGettingCountQueryFromPartsExceptionMsg>();
+		_ = r0.AssertFailure();
+		_ = r1.AssertFailure();
 	}
 
 	[Fact]
@@ -92,15 +90,15 @@ public class QueryAsync_Tests
 		var (parts, _) = DbQuery_Setup.GetParts();
 		var (_, client, _, query) = DbQuery_Setup.Get();
 		var transaction = Substitute.For<IDbTransaction>();
-		client.GetQuery(Arg.Any<IQueryParts>()).ThrowsForAnyArgs<Exception>();
+		client.GetQuery(Arg.Any<IQueryParts>()).Returns(FailGen.Create());
 
 		// Act
 		var r0 = await query.QueryAsync<int>(Rnd.ULng, parts);
 		var r1 = await query.QueryAsync<int>(Rnd.ULng, parts, transaction);
 
 		// Assert
-		r0.AssertNone().AssertType<ErrorGettingQueryFromPartsExceptionMsg>();
-		r1.AssertNone().AssertType<ErrorGettingQueryFromPartsExceptionMsg>();
+		_ = r0.AssertFailure();
+		_ = r1.AssertFailure();
 	}
 
 	[Fact]

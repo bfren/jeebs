@@ -7,28 +7,28 @@ using Jeebs.Services.Notify;
 namespace Jeebs.Services.Webhook;
 
 /// <summary>
-/// Webhook Driver
+/// Webhook Driver.
 /// </summary>
-/// <typeparam name="TConfig">Service configuration</typeparam>
-/// <typeparam name="TMessage">Message type</typeparam>
+/// <typeparam name="TConfig">Service configuration.</typeparam>
+/// <typeparam name="TMessage">Message type.</typeparam>
 public interface IWebhookDriver<in TConfig, in TMessage>
 	where TConfig : IServiceConfig
 	where TMessage : notnull
 {
-	/// <inheritdoc cref="INotifier.Send(IMsg)"/>
-	void Send(IMsg msg);
+	/// <inheritdoc cref="INotifier.Send(FailureValue)"/>
+	void Send(FailureValue failure);
 
 	/// <inheritdoc cref="INotifier.Send(string, NotificationLevel)"/>
 	void Send(string message, NotificationLevel level);
 
 	/// <summary>
-	/// Send a message
+	/// Send a message.
 	/// </summary>
 	/// <param name="message"></param>
 	void Send(IWebhookMessage message);
 
 	/// <summary>
-	/// Send a message
+	/// Send a message.
 	/// </summary>
 	/// <param name="message"></param>
 	void Send(TMessage message);

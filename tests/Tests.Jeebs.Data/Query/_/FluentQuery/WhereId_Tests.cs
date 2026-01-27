@@ -1,8 +1,6 @@
 // Jeebs Unit Tests
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
-using static StrongId.Testing.Generator;
-
 namespace Jeebs.Data.Query.FluentQuery_Tests;
 
 public class WhereId_Tests : FluentQuery_Tests
@@ -31,7 +29,7 @@ public class WhereId_Tests : FluentQuery_Tests
 	{
 		// Arrange
 		var (query, v) = Setup();
-		var id = LongId<TestId>();
+		var id = IdGen.LongId<TestId>();
 
 		// Act
 		var result = query.WhereId(id);
@@ -51,8 +49,8 @@ public class WhereId_Tests : FluentQuery_Tests
 	{
 		// Arrange
 		var (query, v) = Setup();
-		var i0 = LongId<TestId>();
-		var i1 = LongId<TestId>();
+		var i0 = IdGen.LongId<TestId>();
+		var i1 = IdGen.LongId<TestId>();
 
 		// Act
 		var result = query.WhereId(i0, i1);

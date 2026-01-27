@@ -9,14 +9,14 @@ namespace Jeebs.WordPress.ContentFilters;
 public abstract class ContentFilter : IContentFilter
 {
 	/// <summary>
-	/// Content filter function
+	/// Content filter function.
 	/// </summary>
 	private readonly Func<string, string> filter;
 
 	/// <summary>
-	/// Setup object
+	/// Setup object.
 	/// </summary>
-	/// <param name="filter">Content filter function</param>
+	/// <param name="filter">Content filter function.</param>
 	protected ContentFilter(Func<string, string> filter) =>
 		this.filter = filter;
 

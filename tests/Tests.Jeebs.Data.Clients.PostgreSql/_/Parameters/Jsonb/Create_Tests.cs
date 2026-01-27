@@ -1,4 +1,4 @@
-﻿// Jeebs Unit Tests
+// Jeebs Unit Tests
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using Jeebs.Functions;
@@ -40,7 +40,7 @@ public class Create_Tests
 	{
 		// Arrange
 		var value = new Test(Rnd.Str, Rnd.Int);
-		var json = JsonF.Serialise(value).UnsafeUnwrap();
+		var json = JsonF.Serialise(value).Unsafe().Unwrap();
 
 		// Act
 		var result = Jsonb.Create(value);

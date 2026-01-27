@@ -4,24 +4,23 @@
 using Jeebs.Collections;
 using Jeebs.Data.Enums;
 using Jeebs.Data.Map;
-using StrongId;
 
 namespace Jeebs.Data.Query;
 
 /// <summary>
-/// An alternative method to <see cref="IQueryParts"/> for building a database query
+/// An alternative method to <see cref="IQueryParts"/> for building a database query.
 /// </summary>
-/// <typeparam name="TId">Entity ID type</typeparam>
+/// <typeparam name="TId">Entity ID type.</typeparam>
 public interface IQueryOptions<TId>
-	where TId : class, IStrongId, new()
+	where TId : class, IUnion, new()
 {
 	/// <summary>
-	/// Query Id
+	/// Query Id.
 	/// </summary>
 	TId? Id { get; init; }
 
 	/// <summary>
-	/// Query IDs
+	/// Query IDs.
 	/// </summary>
 	IImmutableList<TId> Ids { get; init; }
 
@@ -38,8 +37,8 @@ public interface IQueryOptions<TId>
 	ulong Skip { get; init; }
 
 	/// <summary>
-	/// Convert the query options to <see cref="IQueryParts"/> for use in a database query
+	/// Convert the query options to <see cref="IQueryParts"/> for use in a database query.
 	/// </summary>
-	/// <typeparam name="TModel">Model type to use for selecting columns</typeparam>
-	Maybe<IQueryParts> ToParts<TModel>();
+	/// <typeparam name="TModel">Model type to use for selecting columns.</typeparam>
+	Result<IQueryParts> ToParts<TModel>();
 }

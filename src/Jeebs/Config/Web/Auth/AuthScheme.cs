@@ -4,17 +4,17 @@
 namespace Jeebs.Config.Web.Auth;
 
 /// <summary>
-/// Supported authentication schemes
+/// Supported authentication schemes.
 /// </summary>
 public enum AuthScheme
 {
 	/// <summary>
-	/// Cookies authentication
+	/// Cookies authentication.
 	/// </summary>
 	Cookies = 1 << 0,
 
 	/// <summary>
-	/// JWT authentication
+	/// JWT authentication.
 	/// </summary>
 	Jwt = 1 << 1
 }

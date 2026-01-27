@@ -13,11 +13,11 @@ public class QuerySingleAsync_Tests
 		// Arrange
 		var (db, _) = Db_Setup.Get();
 		var query = Rnd.Str;
-		var parameters = Rnd.Guid.ToString();
+		var param = Rnd.Guid.ToString();
 		const CommandType type = CommandType.Text;
 
 		// Act
-		await db.QuerySingleAsync<int>(query, parameters, type);
+		await db.QuerySingleAsync<int>(query, param, type);
 
 		// Assert
 		await db.Received().StartWorkAsync();
@@ -29,13 +29,17 @@ public class QuerySingleAsync_Tests
 		// Arrange
 		var (db, v) = Db_Setup.Get();
 		var query = Rnd.Str;
-		var parameters = Rnd.Guid.ToString();
+		var param = Rnd.Guid.ToString();
+
 		const CommandType type = CommandType.TableDirect;
 
 		// Act
-		await db.QuerySingleAsync<int>(query, parameters, type, v.Transaction);
+		await db.QuerySingleAsync<int>(query, param, type, v.Transaction);
 
 		// Assert
-		v.Log.Received().Vrb("Query Type: {Type} | Return: {Return} | {Query} | Parameters: {Parameters}", type, typeof(int), query, parameters);
+		v.Log.Received().Vrb(
+			"Query Type: {Type} | Return: {Return} | {Query} | Parameters: {Param}",
+			type, typeof(int), query, param
+		);
 	}
 }

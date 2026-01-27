@@ -6,6 +6,6 @@ using Jeebs.Collections;
 namespace Jeebs.Data.Map;
 
 /// <summary>
-/// List of <seealso cref="IColumn"/> objects
+/// List of <seealso cref="IColumn"/> objects.
 /// </summary>
 public interface IColumnList : IImmutableList<IColumn> { }

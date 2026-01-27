@@ -3,28 +3,27 @@
 
 using System.Threading.Tasks;
 using Jeebs.Cqrs.Internals;
-using Jeebs.Cqrs.Messages;
 
 namespace Jeebs.Cqrs;
 
 /// <summary>
-/// CQRS command handler
+/// CQRS command handler.
 /// </summary>
-/// <typeparam name="TCommand">Command type</typeparam>
-public abstract class CommandHandler<TCommand> : ICommandHandler
-	where TCommand : Command
+/// <typeparam name="T">Command type.</typeparam>
+public abstract class CommandHandler<T> : ICommandHandler
+	where T : Command
 {
 	/// <inheritdoc cref="ICommandHandler.HandleAsync(Command)"/>
-	public abstract Task<Maybe<bool>> HandleAsync(TCommand command);
+	public abstract Task<Result<bool>> HandleAsync(T command);
 
 	/// <inheritdoc/>
-	Task<Maybe<bool>> ICommandHandler.HandleAsync(Command command) =>
+	Task<Result<bool>> ICommandHandler.HandleAsync(Command command) =>
 		command switch
 		{
-			TCommand x =>
+			T x =>
 				HandleAsync(x),
 
 			_ =>
-				F.None<bool>(new IncorrectCommandTypeMsg(typeof(TCommand), command.GetType())).AsTask()
+				R.Fail("Incorrect command type.").Ctx(GetType().Name, nameof(HandleAsync)).AsTask<bool>()
 		};
 }

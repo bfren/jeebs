@@ -2,7 +2,6 @@
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using Jeebs.Logging;
-using StrongId;
 
 namespace Jeebs.Data.Repository_Tests;
 
@@ -23,12 +22,9 @@ public class Constructor_Tests
 		Assert.Same(log, result.LogTest);
 	}
 
-	public sealed record class TestId : LongId;
+	public sealed record class TestId : LongId<TestId>;
 
-	public sealed record class TestEntity(TestId Id) : IWithId<TestId>;
+	public sealed record class TestEntity : WithId<TestId, long>;
 
-	public sealed class TestRepo : Repository<TestEntity, TestId>
-	{
-		public TestRepo(IDb db, ILog<TestRepo> log) : base(db, log) { }
-	}
+	public sealed class TestRepo(IDb db, ILog<TestRepo> log) : Repository<TestEntity, TestId>(db, log);
 }

@@ -4,22 +4,22 @@
 namespace Jeebs.WordPress.Entities;
 
 /// <summary>
-/// TermMeta entity
+/// TermMeta entity.
 /// </summary>
 public abstract record class WpTermMetaEntity : WpTermMetaEntityWithId
 {
 	/// <summary>
-	/// TermId
+	/// TermId.
 	/// </summary>
-	public StrongIds.WpTermId TermId { get; init; } = new();
+	public Ids.WpTermId TermId { get; init; } = new();
 
 	/// <summary>
-	/// Key
+	/// Key.
 	/// </summary>
 	public string? Key { get; init; }
 
 	/// <summary>
-	/// Value
+	/// Value.
 	/// </summary>
 	public string? Value { get; init; }
 }

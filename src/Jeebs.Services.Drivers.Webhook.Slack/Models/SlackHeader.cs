@@ -6,20 +6,20 @@ using System.Text.Json.Serialization;
 namespace Jeebs.Services.Drivers.Webhook.Slack.Models;
 
 /// <summary>
-/// Slack message block - header
+/// Slack message block - header.
 /// </summary>
 public sealed record class SlackHeader : SlackBlock
 {
 	/// <summary>
-	/// Header text
+	/// Header text.
 	/// </summary>
 	[JsonPropertyName("text")]
 	public SlackContent Text { get; init; }
 
 	/// <summary>
-	/// Create object
+	/// Create object.
 	/// </summary>
-	/// <param name="text">Header text</param>
+	/// <param name="text">Header text.</param>
 	public SlackHeader(SlackContent text) : base("header") =>
 		Text = text;
 }

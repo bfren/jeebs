@@ -4,10 +4,6 @@
 namespace Jeebs.WordPress.Functions;
 
 /// <summary>
-/// Query Attached Files Functions
+/// Query Attached Files Functions.
 /// </summary>
-public static partial class QueryAttachmentsF
-{
-	/// <summary>Messages</summary>
-	public static partial class M { }
-}
+public static partial class QueryAttachmentsF { }

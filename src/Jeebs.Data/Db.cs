@@ -8,7 +8,6 @@ using System.Threading.Tasks;
 using Dapper;
 using Jeebs.Config.Db;
 using Jeebs.Logging;
-using Jeebs.Messages;
 using Microsoft.Extensions.Options;
 
 namespace Jeebs.Data;
@@ -22,10 +21,8 @@ public abstract class Db : IDb
 	/// <inheritdoc/>
 	public DbConnectionConfig Config { get; private init; }
 
-	/// <summary>
-	/// ILog (should be given a context of the implementing class)
-	/// </summary>
-	protected ILog Log { get; private init; }
+	/// <inheritdoc/>
+	public ILog Log { get; private init; }
 
 	internal ILog LogTest =>
 		Log;
@@ -77,159 +74,156 @@ public abstract class Db : IDb
 	}
 
 	/// <summary>
-	/// Inject database client and configuration
+	/// Inject database client and configuration.
 	/// </summary>
-	/// <param name="client">Database client</param>
-	/// <param name="config">Database configuration</param>
-	/// <param name="log">ILog (should be given a context of the implementing class)</param>
-	/// <param name="name">Connection name</param>
+	/// <param name="client">Database client.</param>
+	/// <param name="config">Database configuration.</param>
+	/// <param name="log">ILog (should be given a context of the implementing class).</param>
+	/// <param name="name">Connection name.</param>
 	protected Db(IDbClient client, IOptions<DbConfig> config, ILog log, string name) :
-		this(client, config.Value.GetConnection(name), log)
+		this(client, config.Value.GetConnection(name).Unwrap(), log)
 	{ }
 
 	/// <summary>
-	/// Inject database client and configuration
+	/// Inject database client and configuration.
 	/// </summary>
-	/// <param name="client">Database client</param>
-	/// <param name="config">Database configuration</param>
-	/// <param name="log">ILog (should be given a context of the implementing class)</param>
+	/// <param name="client">Database client.</param>
+	/// <param name="config">Database configuration.</param>
+	/// <param name="log">ILog (should be given a context of the implementing class).</param>
 	protected Db(IDbClient client, DbConnectionConfig config, ILog log) =>
 		(Client, Config, Log) = (client, config, log);
 
 	/// <summary>
-	/// Use Verbose log by default - override to send elsewhere (or to disable entirely)
+	/// Use Verbose log by default - override to send elsewhere (or to disable entirely).
 	/// </summary>
-	protected virtual Action<string, object[]> WriteToLog =>
+	protected virtual Action<string, object?[]> WriteToLog =>
 		Log.Vrb;
 
 	/// <summary>
-	/// Write query to the log
+	/// Write query to the log.
 	/// </summary>
-	/// <typeparam name="TReturn">Query return type</typeparam>
-	/// <param name="input">Input values</param>
+	/// <typeparam name="TReturn">Query return type.</typeparam>
+	/// <param name="input">Input values.</param>
 	private void LogQuery<TReturn>((string query, object? parameters, CommandType type) input)
 	{
 		var (query, parameters, type) = input;
 
 		// Always log query type, return type, and query
 		var message = "Query Type: {Type} | Return: {Return} | {Query}";
-		var args = new object[] { type, typeof(TReturn), query };
+		object?[] args = [type, typeof(TReturn), query];
 
 		// Log with or without parameters
 		if (parameters is null)
 		{
-			WriteToLog(message, args);
+			WriteToLog(message, [.. args]);
 		}
 		else if (parameters.ToString() is string param)
 		{
-			message += " | Parameters: {Parameters}";
-			WriteToLog(message, args.ExtendWith(param));
+			message += " | Parameters: {Param}";
+			WriteToLog(message, [.. args, param]);
 		}
 	}
 
 	#region Querying
 
 	/// <inheritdoc/>
-	public async Task<Maybe<IEnumerable<T>>> QueryAsync<T>(string query, object? param, CommandType type)
+	public async Task<Result<IEnumerable<T>>> QueryAsync<T>(string query, object? param, CommandType type)
 	{
 		using var w = await StartWorkAsync();
-		return await QueryAsync<T>(query, param, type, w.Transaction).ConfigureAwait(false);
+		return await QueryAsync<T>(query, param, type, w.Transaction);
 	}
 
 	/// <inheritdoc/>
-	public Task<Maybe<IEnumerable<T>>> QueryAsync<T>(string query, object? param, CommandType type, IDbTransaction transaction) =>
-		F.Some(
+	public Task<Result<IEnumerable<T>>> QueryAsync<T>(string query, object? param, CommandType type, IDbTransaction transaction) =>
+		R.Wrap(
 			(query, parameters: param ?? new object(), type)
 		)
 		.Audit(
-			some: LogQuery<T>
+			ok: LogQuery<T>
 		)
 		.MapAsync(
-			x => transaction.Connection!.QueryAsync<T>(x.query, x.parameters, transaction, commandType: x.type),
-			e => new M.QueryExceptionMsg(e)
+			x => transaction.Connection!.QueryAsync<T>(x.query, x.parameters, transaction, commandType: x.type)
 		);
 
 	/// <inheritdoc/>
-	public async Task<Maybe<T>> QuerySingleAsync<T>(string query, object? param, CommandType type)
+	public async Task<Result<T>> QuerySingleAsync<T>(string query, object? param, CommandType type)
 	{
 		using var w = await StartWorkAsync();
-		return await QuerySingleAsync<T>(query, param, type, w.Transaction).ConfigureAwait(false);
+		return await QuerySingleAsync<T>(query, param, type, w.Transaction);
 	}
 
 	/// <inheritdoc/>
-	public Task<Maybe<T>> QuerySingleAsync<T>(string query, object? param, CommandType type, IDbTransaction transaction) =>
-		F.Some(
+	public Task<Result<T>> QuerySingleAsync<T>(string query, object? param, CommandType type, IDbTransaction transaction) =>
+		R.Wrap(
 			(query, parameters: param ?? new object(), type)
 		)
 		.Audit(
-			some: LogQuery<T>
+			ok: LogQuery<T>
 		)
 		.MapAsync(
-			x => transaction.Connection!.QuerySingleOrDefaultAsync<T>(x.query, x.parameters, transaction, commandType: x.type),
-			e => new M.QuerySingleExceptionMsg(e)
+			x => transaction.Connection!.QuerySingleOrDefaultAsync<T>(x.query, x.parameters, transaction, commandType: x.type)
 		)
 		.BindAsync(
 			x => x switch
 			{
 				T =>
-					F.Some(x),
+					R.Wrap(x),
 
 				_ =>
-					F.None<T>(new M.QuerySingleItemNotFoundMsg((query, param)))
+					R.Fail("Item not found or multiple items returned.", query, param)
+						.Ctx(nameof(Db), nameof(QuerySingleAsync))
 			}
 		);
 
 	/// <inheritdoc/>
-	public async Task<Maybe<bool>> ExecuteAsync(string query, object? param, CommandType type)
+	public async Task<Result<bool>> ExecuteAsync(string query, object? param, CommandType type)
 	{
 		using var w = await StartWorkAsync();
-		return await ExecuteAsync(query, param, type, w.Transaction).ConfigureAwait(false);
+		return await ExecuteAsync(query, param, type, w.Transaction);
 	}
 
 	/// <inheritdoc/>
-	public Task<Maybe<bool>> ExecuteAsync(string query, object? param, CommandType type, IDbTransaction transaction) =>
-		F.Some(
+	public Task<Result<bool>> ExecuteAsync(string query, object? param, CommandType type, IDbTransaction transaction) =>
+		R.Wrap(
 			(query, parameters: param ?? new object(), type)
 		)
 		.Audit(
-			some: LogQuery<bool>
+			ok: LogQuery<bool>
 		)
 		.MapAsync(
-			x => transaction.Connection!.ExecuteAsync(x.query, x.parameters, transaction, commandType: x.type),
-			e => new M.ExecuteExceptionMsg(e)
+			x => transaction.Connection!.ExecuteAsync(x.query, x.parameters, transaction, commandType: x.type)
 		)
 		.MapAsync(
-			x => x > 0,
-			F.DefaultHandler
+			x => x > 0
 		);
 
 	/// <inheritdoc/>
-	public async Task<Maybe<T>> ExecuteAsync<T>(string query, object? param, CommandType type)
+	public async Task<Result<T>> ExecuteAsync<T>(string query, object? param, CommandType type)
 	{
 		using var w = await StartWorkAsync();
-		return await ExecuteAsync<T>(query, param, type, w.Transaction).ConfigureAwait(false);
+		return await ExecuteAsync<T>(query, param, type, w.Transaction);
 	}
 
 	/// <inheritdoc/>
-	public Task<Maybe<T>> ExecuteAsync<T>(string query, object? param, CommandType type, IDbTransaction transaction) =>
-		F.Some(
+	public Task<Result<T>> ExecuteAsync<T>(string query, object? param, CommandType type, IDbTransaction transaction) =>
+		R.Wrap(
 			(query, parameters: param ?? new object(), type)
 		)
 		.Audit(
-			some: LogQuery<T>
+			ok: LogQuery<T>
 		)
 		.MapAsync(
-			x => transaction.Connection!.ExecuteScalarAsync<T>(x.query, x.parameters, transaction, commandType: x.type),
-			e => new M.ExecuteScalarExceptionMsg(e)
+			x => transaction.Connection!.ExecuteScalarAsync<T>(x.query, x.parameters, transaction, commandType: x.type)
 		)
 		.BindAsync(
 			x => x switch
 			{
 				T =>
-					F.Some(x),
+					R.Wrap(x),
 
 				_ =>
-					F.None<T, M.ExecuteScalarNullMsg>()
+					R.Fail("Execution returned null value.", query, param)
+						.Ctx(nameof(Db), nameof(ExecuteAsync))
 			}
 		);
 
@@ -241,40 +235,4 @@ public abstract class Db : IDb
 		WriteToLog(message, args);
 
 	#endregion Testing
-
-	/// <summary>Messages</summary>
-	public static class M
-	{
-		/// <summary>Error running QueryAsync</summary>
-		/// <param name="Value">Exception object</param>
-		public sealed record class QueryExceptionMsg(Exception Value) : ExceptionMsg;
-
-		/// <summary>Error running QuerySingleAsync</summary>
-		/// <param name="Value">Exception object</param>
-		public sealed record class QuerySingleExceptionMsg(Exception Value) : ExceptionMsg;
-
-		/// <summary>Null value returned by QuerySingleAsync</summary>
-		public sealed record class QuerySingleNullMsg() : IMsg;
-
-		/// <summary>The query returned no items, or more than one</summary>
-		/// <param name="Value">Query parameters</param>
-		public sealed record class QuerySingleItemNotFoundMsg((string sql, object? parameters) Value)
-			: NotFoundMsg<(string sql, object? parameters)>
-		{
-			/// <inheritdoc/>
-			public override string Name =>
-				"Query";
-		}
-
-		/// <summary>Error running ExecuteAsync</summary>
-		/// <param name="Value">Exception object</param>
-		public sealed record class ExecuteExceptionMsg(Exception Value) : ExceptionMsg;
-
-		/// <summary>Error running ExecuteScalarAsync</summary>
-		/// <param name="Value">Exception object</param>
-		public sealed record class ExecuteScalarExceptionMsg(Exception Value) : ExceptionMsg;
-
-		/// <summary>Null value returned by ExecuteScalarAsync</summary>
-		public sealed record class ExecuteScalarNullMsg() : IMsg;
-	}
 }

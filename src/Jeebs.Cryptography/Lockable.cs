@@ -1,69 +1,47 @@
 // Jeebs Rapid Application Development
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
-using Jeebs.Messages;
+using Jeebs.Cryptography.Functions;
 
 namespace Jeebs.Cryptography;
 
 /// <summary>
-/// Contains contents that can been encrypted
+/// Contains contents that can been encrypted.
 /// </summary>
-/// <typeparam name="T">Value type</typeparam>
-public sealed class Lockable<T> : Lockable
+/// <typeparam name="T">Value type.</typeparam>
+/// <param name="contents">Contents.</param>
+public sealed class Lockable<T>(T contents) : Lockable
 {
 	/// <summary>
-	/// Contents
+	/// Lockable contents.
 	/// </summary>
-	public T Contents { get; private init; }
+	public T Contents { get; private init; } =
+		contents;
 
 	/// <summary>
-	/// Create object
+	/// Lock this object.
 	/// </summary>
-	/// <param name="contents">Contents</param>
-	public Lockable(T contents) =>
-		Contents = contents;
+	/// <param name="key">Encryption key - must be <see cref="Lockable.KeyLength"/> bytes.</param>
+	/// <returns>Locked box.</returns>
+	public Result<Locked<T>> Lock(byte[] key) =>
+		CryptoF.Lock(Contents, key);
 
 	/// <summary>
-	/// Lock object
+	/// Lock this object.
 	/// </summary>
-	/// <param name="key">Encryption key - must be <see cref="Lockable.KeyLength"/> bytes</param>
-	public Maybe<Locked<T>> Lock(byte[] key) =>
-		key.Length switch
-		{
-			int l when l == KeyLength =>
-				new Locked<T>(Contents, key),
-
-			_ =>
-				F.None<Locked<T>, M.InvalidKeyLengthMsg>()
-		};
-
-	/// <summary>
-	/// Lock object
-	/// </summary>
-	/// <param name="key">Encryption key</param>
-	public Locked<T> Lock(string key) =>
-		new(Contents, key);
+	/// <param name="key">Encryption key.</param>
+	/// <returns>Locked box.</returns>
+	public Result<Locked<T>> Lock(string key) =>
+		CryptoF.Lock(Contents, key);
 }
 
 /// <summary>
-/// Holds constants and Messages for <see cref="Lockable{T}"/>
+/// Holds constants for <see cref="Lockable{T}"/>.
 /// </summary>
 public abstract class Lockable
 {
 	/// <summary>
-	/// Length of encryption key (if it's a byte array)
+	/// Length of encryption key (if it's a byte array).
 	/// </summary>
 	public static readonly int KeyLength = 32;
-
-	/// <summary>
-	/// Create object
-	/// </summary>
-	protected Lockable() { }
-
-	/// <summary>Messages</summary>
-	public static class M
-	{
-		/// <summary>Encryption key is not the correct length to lock the box</summary>
-		public sealed record class InvalidKeyLengthMsg : Msg;
-	}
 }

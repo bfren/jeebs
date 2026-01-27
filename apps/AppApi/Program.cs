@@ -3,8 +3,8 @@
 
 using AppApi;
 using Jeebs.Cqrs;
-using MaybeF;
 using Microsoft.AspNetCore.Mvc;
+using Wrap.Extensions;
 
 var (app, log) = Jeebs.Apps.Web.ApiApp.CreateMinimal(args,
 	(_, services) => services.AddCqrs()
@@ -21,13 +21,12 @@ static async Task<IResult> HandleSayHello(
 )
 {
 	var text = await query
-		.DispatchAsync(
+		.SendAsync(
 			new SayHelloQuery(name)
 		)
 		.UnwrapAsync(
-			x => x.Value(ifNone: "Nothing to say.")
-		)
-		.ConfigureAwait(false);
+			ifFailed: _ => "Nothing to say."
+		);
 
 	return Results.Text(text);
 }

@@ -10,9 +10,9 @@ namespace Jeebs.WordPress.Functions;
 public static partial class QueryPostsF
 {
 	/// <summary>
-	/// Get Term Lists for specified model
+	/// Get Term Lists for specified model.
 	/// </summary>
-	/// <typeparam name="TModel">Model type</typeparam>
+	/// <typeparam name="TModel">Model type.</typeparam>
 	internal static List<PropertyInfo> GetTermLists<TModel>()
 	{
 		// Get term list properties for model type

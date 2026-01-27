@@ -2,8 +2,6 @@
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using Jeebs.Data.Map;
-using static Jeebs.Data.Query.Functions.QueryF.M;
-using static MaybeF.F.EnumerableF.M;
 
 namespace Jeebs.Data.Query.Functions.QueryF_Tests;
 
@@ -14,14 +12,21 @@ public class GetColumnFromAlias_Tests
 	{
 		// Arrange
 		var table = new TestTable();
+		var alias = Rnd.Str;
 
 		// Act
-		var r0 = QueryF.GetColumnFromAlias(table, Rnd.Str);
-		var r1 = QueryF.GetColumnFromAlias<TestTable>(Rnd.Str);
+		var r0 = QueryF.GetColumnFromAlias(table, alias);
+		var r1 = QueryF.GetColumnFromAlias<TestTable>(alias);
 
 		// Assert
-		r0.AssertNone().AssertType<NoMatchingItemsMsg>();
-		r1.AssertNone().AssertType<NoMatchingItemsMsg>();
+		_ = r0.AssertFailure(
+			"Column with alias '{Alias}' not found in table '{Table}'.",
+			alias, nameof(TestTable)
+		);
+		_ = r1.AssertFailure(
+			"Column with alias '{Alias}' not found in table '{Table}'.",
+			alias, nameof(TestTable)
+		);
 	}
 
 	[Fact]
@@ -36,12 +41,14 @@ public class GetColumnFromAlias_Tests
 		var r1 = QueryF.GetColumnFromAlias<TestTable>(alias);
 
 		// Assert
-		var n0 = r0.AssertNone().AssertType<UnableToGetColumnFromAliasMsg>();
-		Assert.Equal(table, n0.Table);
-		Assert.Equal(alias, n0.ColumnAlias);
-		var n1 = r1.AssertNone().AssertType<UnableToGetColumnFromAliasMsg>();
-		Assert.Equal(table, n1.Table);
-		Assert.Equal(alias, n1.ColumnAlias);
+		_ = r0.AssertFailure(
+			"Column with alias '{Alias}' has null or empty name in table '{Table}'.",
+			alias, nameof(TestTable)
+		);
+		_ = r1.AssertFailure(
+			"Column with alias '{Alias}' has null or empty name in table '{Table}'.",
+			alias, nameof(TestTable)
+		);
 	}
 
 	[Fact]
@@ -57,14 +64,14 @@ public class GetColumnFromAlias_Tests
 		var r1 = QueryF.GetColumnFromAlias<TestTable>(alias);
 
 		// Assert
-		var s0 = r0.AssertSome();
-		Assert.Equal(table.GetName(), s0.TblName);
-		Assert.Equal(alias, s0.ColAlias);
-		Assert.Equal(value, s0.ColName);
-		var s1 = r1.AssertSome();
-		Assert.Equal(table.GetName(), s1.TblName);
-		Assert.Equal(alias, s1.ColAlias);
-		Assert.Equal(value, s1.ColName);
+		var ok0 = r0.AssertOk();
+		Assert.Equal(table.GetName(), ok0.TblName);
+		Assert.Equal(alias, ok0.ColAlias);
+		Assert.Equal(value, ok0.ColName);
+		var ok1 = r1.AssertOk();
+		Assert.Equal(table.GetName(), ok1.TblName);
+		Assert.Equal(alias, ok1.ColAlias);
+		Assert.Equal(value, ok1.ColName);
 	}
 
 	public sealed record class TestTable : Table

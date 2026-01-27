@@ -4,13 +4,13 @@
 namespace Jeebs.Collections;
 
 /// <summary>
-/// List that supports paging operations
+/// List that supports paging operations.
 /// </summary>
-/// <typeparam name="T">Type of objects in the list</typeparam>
+/// <typeparam name="T">Type of objects in the list.</typeparam>
 public interface IPagedList<T> : IImmutableList<T>
 {
 	/// <summary>
-	/// IPagingValues used to create this list
+	/// IPagingValues used to create this list.
 	/// </summary>
 	IPagingValues Values { get; }
 }

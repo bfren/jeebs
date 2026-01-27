@@ -7,17 +7,18 @@ using System.Collections.Generic;
 using Jeebs.Collections;
 using Jeebs.Data.Enums;
 using Jeebs.Data.Map;
+using Jeebs.Functions;
 
 namespace Jeebs.Data.Query.Functions;
 
 public static partial class QueryF
 {
 	/// <summary>
-	/// Turn list of predicates into WHERE clauses with associated parameters
+	/// Turn list of predicates into WHERE clauses with associated parameters.
 	/// </summary>
-	/// <param name="client">IDbClient</param>
-	/// <param name="predicates">List of predicates</param>
-	/// <param name="includeTableName">If true, column names will be namespaced with the table name (necessary in JOIN queries)</param>
+	/// <param name="client">IDbClient.</param>
+	/// <param name="predicates">List of predicates.</param>
+	/// <param name="includeTableName">If true, column names will be namespaced with the table name (necessary in JOIN queries).</param>
 	public static (IImmutableList<string> where, IQueryParametersDictionary param) GetWhereAndParameters(
 		IDbClient client,
 		IImmutableList<(IColumn column, Compare compare, dynamic value)> predicates,
@@ -92,6 +93,6 @@ public static partial class QueryF
 		}
 
 		// Return
-		return (ImmutableList.Create(items: where), param);
+		return (ListF.Create(items: where), param);
 	}
 }

@@ -4,27 +4,27 @@
 namespace Jeebs.Mvc.Enums;
 
 /// <summary>
-/// Alert Types
+/// Alert Types.
 /// </summary>
 public enum AlertType
 {
 	/// <summary>
-	/// Info
+	/// Info.
 	/// </summary>
 	Info = 1 << 0,
 
 	/// <summary>
-	/// Success
+	/// Success.
 	/// </summary>
 	Success = 1 << 1,
 
 	/// <summary>
-	/// Warning
+	/// Warning.
 	/// </summary>
 	Warning = 1 << 2,
 
 	/// <summary>
-	/// Error
+	/// Error.
 	/// </summary>
 	Error = 1 << 3
 }

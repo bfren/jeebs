@@ -4,10 +4,6 @@
 namespace Jeebs.Functions;
 
 /// <summary>
-/// DateTime functions
+/// DateTime functions.
 /// </summary>
-public static partial class DateTimeF
-{
-	/// <summary>Messages</summary>
-	public static partial class M { }
-}
+public static partial class DateTimeF { }

@@ -1,4 +1,4 @@
-﻿// Jeebs Unit Tests
+// Jeebs Unit Tests
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 namespace Jeebs.Cryptography.StringExtensions_Tests;
@@ -9,16 +9,15 @@ public sealed class Hash_Tests
 	[InlineData(null)]
 	[InlineData("")]
 	[InlineData(" ")]
-	public void Hash_String_NullOrEmpty_Returns_Some_Empty(string input)
+	public void Hash_String_NullOrEmpty_Returns_Fail(string? input)
 	{
 		// Arrange
 
 		// Act
-		var result = input.Hash();
+		var result = StringExtensions.Hash(input!);
 
 		// Assert
-		var some = result.AssertSome();
-		Assert.Equal(string.Empty, some);
+		result.AssertFailure("Cannot hash a null or empty string.");
 	}
 
 	[Theory]
@@ -33,7 +32,6 @@ public sealed class Hash_Tests
 		var result = input.Hash(length);
 
 		// Assert
-		var some = result.AssertSome();
-		Assert.Equal(expected, some);
+		result.AssertOk(expected);
 	}
 }

@@ -3,14 +3,12 @@
 
 using Jeebs.Data.Enums;
 using Jeebs.Data.Map;
-using StrongId;
-using static Jeebs.Reflection.LinqExpressionExtensions.M;
 
 namespace Jeebs.Data.Query.QueryPartsBuilder_Tests;
 
 public abstract class AddWhere_Tests<TBuilder, TId> : QueryPartsBuilder_Tests<TBuilder, TId>
 	where TBuilder : QueryPartsBuilder<TId>
-	where TId : class, IStrongId, new()
+	where TId : class, IUnion, new()
 {
 	public abstract void Test00_Column_Exists_Adds_Where();
 
@@ -26,8 +24,8 @@ public abstract class AddWhere_Tests<TBuilder, TId> : QueryPartsBuilder_Tests<TB
 		var result = builder.AddWhere<TestTable>(v.Parts, new(Rnd.Str, bar), c => c.Bar, cmp, val);
 
 		// Assert
-		var some = result.AssertSome();
-		var (column, compare, value) = Assert.Single(some.Where);
+		var ok = result.AssertOk();
+		var (column, compare, value) = Assert.Single(ok.Where);
 		Assert.Equal(bar, column.ColName);
 		Assert.Equal(cmp, compare);
 		Assert.Equal(val, value);
@@ -46,7 +44,7 @@ public abstract class AddWhere_Tests<TBuilder, TId> : QueryPartsBuilder_Tests<TB
 		var result = builder.AddWhere<TestTable>(v.Parts, new(Rnd.Str, Rnd.Str), _ => Rnd.Str, cmp, val);
 
 		// Assert
-		result.AssertNone().AssertType<PropertyDoesNotExistOnTypeMsg<TestTable>>();
+		_ = result.AssertFailure("Unable to get column from expression for table '{Table}'.", nameof(TestTable));
 	}
 
 	public sealed record class TestTable(string Foo, string Bar) : Table(Rnd.Str);

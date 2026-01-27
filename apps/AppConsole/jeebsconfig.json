@@ -4,30 +4,30 @@
       "name": "Console",
       "suite": "Jeebs"
     },
-		"logging": {
-			"minimum": "Debug",
-			"overrides": {
-				"Microsoft": "Warning",
-				"Microsoft.Hosting.Lifetime": "Information"
-			},
-			"providers": {
-				"console": {
-					"enabled": true
-				},
-				"seq.server04": {
-					"enabled": true
-				}
-			}
-		},
-    "services": {
-      "seq": {
-        "server04": {
-          "server": "",
-          "apiKey": ""
+    "logging": {
+      "minimum": "Debug",
+      "overrides": {
+        "Microsoft": "Warning",
+        "Microsoft.Hosting.Lifetime": "Information",
+        "System.Net.Http": "Warning"
+      },
+      "providers": {
+        "console.local": {
+          "enabled": true
         },
-        "wrong": {
-          "server": "",
-          "apiKey": ""
+        "seq.live": {
+          "enabled": true
+        }
+      }
+    },
+    "services": {
+      "console": {
+        "local": {}
+      },
+      "seq": {
+        "live": {
+          "apiKey": "",
+          "server": ""
         }
       },
       "slack": {

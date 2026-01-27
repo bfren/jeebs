@@ -1,4 +1,4 @@
-﻿// Jeebs Rapid Application Development
+// Jeebs Rapid Application Development
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using System;
@@ -6,52 +6,52 @@ using System;
 namespace Jeebs.WordPress.Entities;
 
 /// <summary>
-/// User entity
+/// User entity.
 /// </summary>
 public abstract record class WpUserEntity : WpUserEntityWithId
 {
 	/// <summary>
-	/// Username
+	/// Username.
 	/// </summary>
 	public string Username { get; init; } = string.Empty;
 
 	/// <summary>
-	/// Password
+	/// Password.
 	/// </summary>
 	public string Password { get; init; } = string.Empty;
 
 	/// <summary>
-	/// Slug
+	/// Slug.
 	/// </summary>
 	public string Slug { get; init; } = string.Empty;
 
 	/// <summary>
-	/// Email
+	/// Email.
 	/// </summary>
 	public string Email { get; init; } = string.Empty;
 
 	/// <summary>
-	/// Url
+	/// Url.
 	/// </summary>
 	public string Url { get; init; } = string.Empty;
 
 	/// <summary>
-	/// RegisteredOn
+	/// RegisteredOn.
 	/// </summary>
 	public DateTime RegisteredOn { get; init; }
 
 	/// <summary>
-	/// ActivationKey
+	/// ActivationKey.
 	/// </summary>
 	public string ActivationKey { get; init; } = string.Empty;
 
 	/// <summary>
-	/// Status
+	/// Status.
 	/// </summary>
 	public uint Status { get; init; }
 
 	/// <summary>
-	/// DisplayName
+	/// DisplayName.
 	/// </summary>
 	public string DisplayName { get; init; } = string.Empty;
 }

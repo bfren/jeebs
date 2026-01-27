@@ -6,17 +6,16 @@ using Jeebs.Logging;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Serilog;
 
 namespace Jeebs.Apps.Web;
 
 /// <summary>
-/// Create a new <see cref="WebApplication"/> with default Jeebs configuration
+/// Create a new <see cref="WebApplication"/> with default Jeebs configuration.
 /// </summary>
 internal static class WebAppBuilder
 {
 	/// <summary>
-	/// Build a <see cref="WebApplication"/> with default configuration and then run it
+	/// Build a <see cref="WebApplication"/> with default configuration and then run it.
 	/// </summary>
 	/// <inheritdoc cref="Create{T}(string[], Action{HostBuilderContext, IServiceCollection})"/>
 	internal static void Run<T>(string[] args, Action<HostBuilderContext, IServiceCollection> configureServices)
@@ -35,9 +34,9 @@ internal static class WebAppBuilder
 	///   - <see cref="WebApplication"/> is configured
 	///   - <see cref="App.Ready(IServiceProvider, ILog)"/> is run
 	/// </remarks>
-	/// <typeparam name="T">App type</typeparam>
-	/// <param name="args">Command-line arguments</param>
-	/// <param name="configureServices">Add additional services</param>
+	/// <typeparam name="T">App type.</typeparam>
+	/// <param name="args">Command-line arguments.</param>
+	/// <param name="configureServices">Add additional services.</param>
 	internal static (WebApplication app, ILog<T> log) Create<T>(string[] args, Action<HostBuilderContext, IServiceCollection> configureServices)
 		where T : WebApp, new()
 	{
@@ -46,14 +45,7 @@ internal static class WebAppBuilder
 		var builder = WebApplication.CreateBuilder(args);
 
 		// Configure and build host
-#pragma warning disable ASP0013 // Suggest switching from using Configure methods to WebApplicationBuilder.Configuration
-		_ = builder.Host
-			.ConfigureHostConfiguration(app.ConfigureHost)
-			.ConfigureAppConfiguration(app.ConfigureApp)
-			.ConfigureServices(app.ConfigureServices)
-			.ConfigureServices(configureServices)
-			.UseSerilog(app.ConfigureSerilog);
-#pragma warning restore ASP0013 // Suggest switching from using Configure methods to WebApplicationBuilder.Configuration
+		_ = builder.Host.ConfigureHostBuilder(app, configureServices);
 
 		var webApplication = builder.Build();
 

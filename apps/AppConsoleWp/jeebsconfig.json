@@ -5,9 +5,9 @@
       "suite": "Jeebs"
     },
     "db": {
-      "default": "server04",
+      "default": "arwen",
       "connections": {
-        "server04": {
+        "arwen": {
           "connectionString": ""
         }
       }
@@ -19,17 +19,20 @@
 				"Microsoft.Hosting.Lifetime": "Information"
 			},
 			"providers": {
-				"console": {
+				"console.local": {
 					"enabled": true
 				},
-				"seq.server04": {
+				"seq.live": {
 					"enabled": true
 				}
 			}
 		},
     "services": {
+      "console": {
+        "local": {}
+      },
       "seq": {
-        "server04": {
+        "live": {
           "server": "",
           "apiKey": ""
         }

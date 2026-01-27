@@ -14,86 +14,84 @@ namespace Jeebs.Data.Map;
 public sealed record class Column : IColumn
 {
 	/// <summary>
-	/// Table name
+	/// Table name.
 	/// </summary>
 	public IDbName TblName { get; init; }
 
 	/// <summary>
-	/// Column name
+	/// Column name.
 	/// </summary>
 	public string ColName { get; init; }
 
 	/// <summary>
-	/// Column alias
+	/// Column alias.
 	/// </summary>
 	public string ColAlias =>
 		PropertyInfo.Name;
 
 	/// <summary>
-	/// Table property PropertyInfo
+	/// Table property PropertyInfo.
 	/// </summary>
 	public PropertyInfo PropertyInfo { get; init; }
 
 	/// <summary>
-	/// Create object
+	/// Create object.
 	/// </summary>
-	/// <param name="tblName">Table name</param>
-	/// <param name="colName">Column Name</param>
-	/// <param name="propertyInfo">Entity property PropertyInfo</param>
+	/// <param name="tblName">Table name.</param>
+	/// <param name="colName">Column Name.</param>
+	/// <param name="propertyInfo">Entity property PropertyInfo.</param>
 	public Column(IDbName tblName, string colName, PropertyInfo propertyInfo) =>
 		(TblName, ColName, PropertyInfo) = (tblName, colName, propertyInfo);
 
 	/// <summary>
-	/// Create from another column
+	/// Create from another column.
 	/// </summary>
 	/// <param name="column"></param>
 	public Column(IColumn column) : this(column.TblName, column.ColName, column.PropertyInfo) { }
 
 	/// <summary>
-	/// Create object using table
+	/// Create object using table.
 	/// </summary>
-	/// <param name="table">Table</param>
-	/// <param name="colName">Column Name</param>
-	/// <param name="propertyInfo">Entity property PropertyInfo</param>
+	/// <param name="table">Table.</param>
+	/// <param name="colName">Column Name.</param>
+	/// <param name="propertyInfo">Entity property PropertyInfo.</param>
 	public Column(ITable table, string colName, PropertyInfo propertyInfo) : this(table.GetName(), colName, propertyInfo) { }
 
 	/// <summary>
-	/// Return column name
+	/// Return column name.
 	/// </summary>
 	public override string ToString() =>
 		ColName;
 
 	/// <summary>
-	/// Create a column from a table object and expression
+	/// Create a column from a table object and expression.
 	/// </summary>
-	/// <typeparam name="T">Table type</typeparam>
-	/// <param name="table">Table</param>
-	/// <param name="column">Column selector</param>
+	/// <typeparam name="T">Table type.</typeparam>
+	/// <param name="table">Table.</param>
+	/// <param name="column">Column selector.</param>
 	public static Maybe<Column> From<T>(T table, Expression<Func<T, string>> column)
 		where T : ITable =>
-		column.GetPropertyInfo()
-			.Map(
-				x => new Column(table, x.Get(table), x.Info),
-				F.DefaultHandler
-			);
+		from c in column.GetPropertyInfo()
+		from t in c.Get(table)
+		select new Column(table.GetName(), t, c.Info);
 
 	/// <summary>
-	/// Column Alias Comparer
+	/// Column Alias Comparer.
 	/// </summary>
 	public sealed class AliasComparer : IEqualityComparer<IColumn>, IEqualityComparer
 	{
 		/// <summary>
-		/// Returns true if the two aliases are identical
+		/// Returns true if the two aliases are identical.
 		/// </summary>
-		/// <param name="x">IColumn 1</param>
-		/// <param name="y">IColumn 2</param>
+		/// <param name="x">IColumn 1.</param>
+		/// <param name="y">IColumn 2.</param>
 		public bool Equals(IColumn? x, IColumn? y) =>
 			x?.ColAlias == y?.ColAlias;
 
 		/// <summary>
-		/// Return object's hash code
+		/// Return object's hash code.
 		/// </summary>
-		/// <param name="obj">IColumn</param>
+		/// <param name="obj">IColumn.</param>
 		public int GetHashCode(IColumn obj) =>
 			obj.ColAlias.GetHashCode();
 

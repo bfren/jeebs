@@ -16,8 +16,11 @@ using Microsoft.Extensions.Hosting;
 namespace Jeebs.Apps.Web;
 
 /// <summary>
-/// Web Application - see <see cref="App"/>
+/// Web Application - see <see cref="App"/>.
 /// </summary>
+/// <remarks>
+/// Create web application.
+/// </remarks>
 public class WebApp : App
 {
 	#region Run
@@ -55,19 +58,19 @@ public class WebApp : App
 	#endregion Create
 
 	/// <summary>
-	/// Whether or not to use HSTS
+	/// Whether or not to use HSTS.
 	/// </summary>
 	private readonly bool useHsts;
 
 	/// <summary>
-	/// Create web application with HSTS enabled
+	/// Create web application with HSTS enabled.
 	/// </summary>
 	public WebApp() : this(true) { }
 
 	/// <summary>
-	/// Create web application
+	/// Create web application.
 	/// </summary>
-	/// <param name="useHsts">HSTS should only be disabled if the application is in development mode, or behind a reverse proxy</param>
+	/// <param name="useHsts">HSTS should only be disabled if the application is in development mode, or behind a reverse proxy.</param>
 	public WebApp(bool useHsts) =>
 		this.useHsts = useHsts;
 
@@ -95,9 +98,9 @@ public class WebApp : App
 	}
 
 	/// <summary>
-	/// Configure a WebApplication
+	/// Configure a WebApplication.
 	/// </summary>
-	/// <param name="app">WebApplication</param>
+	/// <param name="app">WebApplication.</param>
 	public virtual void Configure(WebApplication app)
 	{
 		// Shorthands
@@ -134,10 +137,10 @@ public class WebApp : App
 	}
 
 	/// <summary>
-	/// Override to configure site verification
+	/// Override to configure site verification.
 	/// </summary>
-	/// <param name="app">WebApplication</param>
-	/// <param name="config">IConfiguration</param>
+	/// <param name="app">WebApplication.</param>
+	/// <param name="config">IConfiguration.</param>
 	protected virtual void ConfigureSiteVerification(WebApplication app, IConfiguration config)
 	{
 		if (
@@ -150,16 +153,16 @@ public class WebApp : App
 	}
 
 	/// <summary>
-	/// Override to configure production exception handling
+	/// Override to configure production exception handling.
 	/// </summary>
-	/// <param name="app">WebApplication</param>
+	/// <param name="app">WebApplication.</param>
 	protected virtual void ConfigureProductionExceptionHandling(WebApplication app) =>
 		_ = app.UseExceptionHandler("/Error");
 
 	/// <summary>
-	/// Override to configure security headers
+	/// Override to configure security headers.
 	/// </summary>
-	/// <param name="app">WebApplication</param>
+	/// <param name="app">WebApplication.</param>
 	protected virtual void ConfigureSecurityHeaders(WebApplication app)
 	{
 		if (useHsts) // check for Development Environment happens in Configure()
@@ -169,13 +172,13 @@ public class WebApp : App
 	}
 
 	/// <summary>
-	/// Override to configure authentication and authorisation - it is only called if Auth is enabled
+	/// Override to configure authentication and authorisation - it is only called if Auth is enabled.
 	/// </summary>
 	/// <remarks>
 	/// Calls to app.UseAuthentication() should come *before* app.UseAuthorization()
 	/// </remarks>
-	/// <param name="app">WebApplication</param>
-	/// <param name="config">IConfiguration</param>
+	/// <param name="app">WebApplication.</param>
+	/// <param name="config">IConfiguration.</param>
 	protected virtual void ConfigureAuth(WebApplication app, IConfiguration config) =>
 		_ = app.UseAuthorization();
 }

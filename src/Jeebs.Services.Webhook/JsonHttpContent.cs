@@ -8,20 +8,20 @@ using Jeebs.Functions;
 namespace Jeebs.Services.Webhook;
 
 /// <summary>
-/// JSON-encoded HTTP content
+/// JSON-encoded HTTP content.
 /// </summary>
 public sealed class JsonHttpContent : StringContent
 {
 	/// <summary>
-	/// Encode object as JSON and set media type to 'application/json'
+	/// Encode object as JSON and set media type to 'application/json'.
 	/// </summary>
-	/// <param name="obj">Content to be encoded</param>
+	/// <param name="obj">Content to be encoded.</param>
 	public JsonHttpContent(object obj) : this(obj, "application/json") { }
 
 	/// <summary>
-	/// Encode object as JSON
+	/// Encode object as JSON.
 	/// </summary>
-	/// <param name="obj">Content to be encoded</param>
-	/// <param name="type">Content-type</param>
-	public JsonHttpContent(object obj, string type) : base(JsonF.Serialise(obj).Unwrap(string.Empty), Encoding.UTF8, type) { }
+	/// <param name="obj">Content to be encoded.</param>
+	/// <param name="type">Content-type.</param>
+	public JsonHttpContent(object obj, string type) : base(JsonF.Serialise(obj).Unwrap(), Encoding.UTF8, type) { }
 }

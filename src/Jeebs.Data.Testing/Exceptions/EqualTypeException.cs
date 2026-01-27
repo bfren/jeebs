@@ -4,7 +4,7 @@
 namespace Jeebs.Data.Testing.Exceptions;
 
 /// <summary>
-/// See <see cref="Query.FluentQueryHelper.AssertEqualType{T}(T, object?)"/>
+/// See <see cref="Query.FluentQueryHelper.AssertEqualType{T}(T, object?)"/>.
 /// </summary>
 public sealed class EqualTypeException : FluentQueryHelperException
 {

@@ -4,7 +4,7 @@
 namespace Jeebs.Cqrs;
 
 /// <summary>
-/// CQRS query
+/// CQRS query.
 /// </summary>
-/// <typeparam name="TResult">Result value type</typeparam>
-public abstract record class Query<TResult>;
+/// <typeparam name="T">Result value type.</typeparam>
+public abstract record class Query<T>;

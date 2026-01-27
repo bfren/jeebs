@@ -6,40 +6,39 @@ using System.Threading.Tasks;
 using Jeebs.Collections;
 using Jeebs.Data;
 using Jeebs.WordPress.ContentFilters;
-using Jeebs.WordPress.Entities.StrongIds;
-using StrongId;
+using Jeebs.WordPress.Entities.Ids;
 
 namespace Jeebs.WordPress.Query;
 
 /// <summary>
-/// Query Posts - to enable testing of static functions
+/// Query Posts - to enable testing of static functions.
 /// </summary>
 public interface IQueryPosts
 {
 	/// <inheritdoc cref="ExecuteAsync{T}(IWpDb, IUnitOfWork, ulong, GetPostsOptions, IContentFilter[])"/>
-	Task<Maybe<IEnumerable<T>>> ExecuteAsync<T>(
+	Task<Result<IEnumerable<T>>> ExecuteAsync<T>(
 		IWpDb db,
 		IUnitOfWork w,
 		GetPostsOptions opt,
 		params IContentFilter[] filters
 	)
-		where T : IWithId<WpPostId>;
+		where T : IWithId<WpPostId, ulong>;
 
 	/// <summary>
-	/// Run a query and return multiple items with paging
+	/// Run a query and return multiple items with paging.
 	/// </summary>
-	/// <typeparam name="T">Return value type</typeparam>
-	/// <param name="db">IWpDb</param>
-	/// <param name="w">IUnitOfWork</param>
-	/// <param name="page">Page number</param>
-	/// <param name="opt">Function to return query options</param>
-	/// <param name="filters">Optional content filters to apply</param>
-	Task<Maybe<IPagedList<T>>> ExecuteAsync<T>(
+	/// <typeparam name="T">Return value type.</typeparam>
+	/// <param name="db">IWpDb.</param>
+	/// <param name="w">IUnitOfWork.</param>
+	/// <param name="page">Page number.</param>
+	/// <param name="opt">Function to return query options.</param>
+	/// <param name="filters">Optional content filters to apply.</param>
+	Task<Result<IPagedList<T>>> ExecuteAsync<T>(
 		IWpDb db,
 		IUnitOfWork w,
 		ulong page,
 		GetPostsOptions opt,
 		params IContentFilter[] filters
 	)
-		where T : IWithId<WpPostId>;
+		where T : IWithId<WpPostId, ulong>;
 }

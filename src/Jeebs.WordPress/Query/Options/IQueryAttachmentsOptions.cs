@@ -2,17 +2,17 @@
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using Jeebs.Collections;
-using Jeebs.WordPress.Entities.StrongIds;
+using Jeebs.WordPress.Entities.Ids;
 
 namespace Jeebs.WordPress.Query.Options;
 
 /// <summary>
-/// Query Attachments Options
+/// Query Attachments Options.
 /// </summary>
 public interface IQueryAttachmentsOptions
 {
 	/// <summary>
-	/// Attachment IDs
+	/// Attachment IDs.
 	/// </summary>
 	IImmutableList<WpPostId> Ids { get; init; }
 }

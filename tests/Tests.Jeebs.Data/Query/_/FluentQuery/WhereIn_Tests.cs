@@ -15,7 +15,7 @@ public class WhereIn_Tests : FluentQuery_Tests
 
 		// Act
 		var r0 = query.WhereIn(nameof(TestEntity.Foo), Array.Empty<string?>());
-		var r1 = query.WhereIn(x => x.Foo, Array.Empty<string?>());
+		var r1 = query.WhereIn(x => x.Foo, []);
 
 		// Assert
 		var f0 = Assert.IsType<FluentQuery<TestEntity, TestId>>(r0);
@@ -35,8 +35,8 @@ public class WhereIn_Tests : FluentQuery_Tests
 		var v1 = Rnd.Str;
 
 		// Act
-		var r0 = query.WhereIn(nameof(TestEntity.Foo), new[] { v0, v1 });
-		var r1 = query.WhereIn(x => x.Foo, new[] { v0, v1 });
+		var r0 = query.WhereIn(nameof(TestEntity.Foo), [v0, v1]);
+		var r1 = query.WhereIn(x => x.Foo, [v0, v1]);
 
 		// Assert
 		var f0 = Assert.IsType<FluentQuery<TestEntity, TestId>>(r0);

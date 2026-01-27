@@ -6,7 +6,4 @@ using Jeebs.Logging;
 
 namespace AppConsolePg;
 
-internal sealed class Repository : Repository<EntityTest, EntityTestId>
-{
-	public Repository(IDb db, ILog<Repository> log) : base(db, log) { }
-}
+internal sealed class Repository(IDb db, ILog<Repository> log) : Repository<TestEntity, TestId>(db, log);

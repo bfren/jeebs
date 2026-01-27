@@ -5,7 +5,7 @@ using System;
 using Jeebs.Collections;
 using Jeebs.Data.Enums;
 using Jeebs.WordPress.CustomFields;
-using Jeebs.WordPress.Entities.StrongIds;
+using Jeebs.WordPress.Entities.Ids;
 using Jeebs.WordPress.Enums;
 
 namespace Jeebs.WordPress.Query.Options;
@@ -14,7 +14,7 @@ namespace Jeebs.WordPress.Query.Options;
 public abstract record class PostsOptions : Options<WpPostId>, IQueryPostsOptions
 {
 	/// <summary>
-	/// IQueryPostsPartsBuilder
+	/// IQueryPostsPartsBuilder.
 	/// </summary>
 	protected new IQueryPostsPartsBuilder Builder =>
 		(IQueryPostsPartsBuilder)base.Builder;
@@ -52,9 +52,9 @@ public abstract record class PostsOptions : Options<WpPostId>, IQueryPostsOption
 		new ImmutableList<(ICustomField field, Compare cmp, object value)>();
 
 	/// <summary>
-	/// Allow Builder to be injected
+	/// Allow Builder to be injected.
 	/// </summary>
-	/// <param name="schema">IWpDbSchema</param>
-	/// <param name="builder">IQueryPostsPartsBuilder</param>
+	/// <param name="schema">IWpDbSchema.</param>
+	/// <param name="builder">IQueryPostsPartsBuilder.</param>
 	protected PostsOptions(IWpDbSchema schema, IQueryPostsPartsBuilder builder) : base(schema, builder) { }
 }

@@ -4,22 +4,22 @@
 namespace Jeebs.WordPress.Entities;
 
 /// <summary>
-/// CommentMeta entity
+/// CommentMeta entity.
 /// </summary>
 public abstract record class WpCommentMetaEntity : WpCommentMetaEntityWithId
 {
 	/// <summary>
-	/// CommentId
+	/// CommentId.
 	/// </summary>
-	public StrongIds.WpCommentId CommentId { get; init; } = new();
+	public Ids.WpCommentId CommentId { get; init; } = new();
 
 	/// <summary>
-	/// Key
+	/// Key.
 	/// </summary>
 	public string? Key { get; init; }
 
 	/// <summary>
-	/// Value
+	/// Value.
 	/// </summary>
 	public string? Value { get; init; }
 }

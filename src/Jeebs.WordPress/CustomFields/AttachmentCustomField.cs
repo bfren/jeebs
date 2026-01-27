@@ -4,21 +4,20 @@
 using System;
 using System.Threading.Tasks;
 using Jeebs.Data;
-using Jeebs.Messages;
 using Jeebs.WordPress.Entities;
-using Jeebs.WordPress.Entities.StrongIds;
+using Jeebs.WordPress.Entities.Ids;
 using Jeebs.WordPress.Enums;
 using Jeebs.WordPress.Query;
 
 namespace Jeebs.WordPress.CustomFields;
 
 /// <summary>
-/// Post Attachment Custom Field
+/// Post Attachment Custom Field.
 /// </summary>
 public abstract class AttachmentCustomField : CustomField<AttachmentCustomField.Attachment>
 {
 	/// <summary>
-	/// IQueryPosts
+	/// IQueryPosts.
 	/// </summary>
 	protected IQueryPosts QueryPosts { get; private init; }
 
@@ -26,15 +25,15 @@ public abstract class AttachmentCustomField : CustomField<AttachmentCustomField.
 	protected AttachmentCustomField(string key) : this(new Posts(), key) { }
 
 	/// <summary>
-	/// Create object from posts
+	/// Create object from posts.
 	/// </summary>
-	/// <param name="queryPosts">IQueryPosts</param>
-	/// <param name="key">Meta key (for post_meta table)</param>
+	/// <param name="queryPosts">IQueryPosts.</param>
+	/// <param name="key">Meta key (for post_meta table).</param>
 	protected AttachmentCustomField(IQueryPosts queryPosts, string key) : base(key, new Attachment()) =>
 		QueryPosts = queryPosts;
 
 	/// <inheritdoc/>
-	public override Task<Maybe<bool>> HydrateAsync(IWpDb db, IUnitOfWork w, MetaDictionary meta, bool isRequired)
+	public override Task<Result<bool>> HydrateAsync(IWpDb db, IUnitOfWork w, MetaDictionary meta, bool isRequired)
 	{
 		// First, get the Attachment Post ID from the meta dictionary
 		// If meta doesn't contain the key and this is a required field, return failure
@@ -47,15 +46,17 @@ public abstract class AttachmentCustomField : CustomField<AttachmentCustomField.
 		{
 			if (isRequired)
 			{
-				return F.None<bool>(new M.MetaKeyNotFoundMsg(GetType(), Key)).AsTask();
+				return R.Fail("Meta Key '{Key}' not found for Custom Field '{Type}'.", Key, GetType().Name)
+					.Ctx(GetType().Name, nameof(HydrateAsync))
+					.AsTask<bool>();
 			}
 
-			return F.False.AsTask();
+			return R.False.AsTask();
 		}
 
 		// If we're here we have an Attachment Post ID, so get it and hydrate the custom field
 		return
-			F.Some(
+			R.Wrap(
 				ValueStr
 			)
 			.Bind(
@@ -70,10 +71,10 @@ public abstract class AttachmentCustomField : CustomField<AttachmentCustomField.
 					Maximum = 1
 				})
 			)
-			.UnwrapAsync(
-				x => x.SingleValue<Attachment>(
-					tooMany: () => new M.MultipleAttachmentsFoundMsg(ValueStr)
-				)
+			.GetSingleAsync(
+				x => x.Value<Attachment>(),
+				(msg, args) => R.Fail("Unable to get single '{ValueStr}': " + msg, [ValueStr, .. args])
+					.Ctx(GetType().Name, nameof(HydrateAsync))
 			)
 			.MapAsync(
 				x =>
@@ -91,20 +92,20 @@ public abstract class AttachmentCustomField : CustomField<AttachmentCustomField.
 					}
 
 					return true;
-				},
-				F.DefaultHandler
+				}
 			);
 	}
 
 	/// <summary>
-	/// Parse the Attachment Post ID
+	/// Parse the Attachment Post ID.
 	/// </summary>
-	/// <param name="type">AttachmentCustomField type</param>
-	/// <param name="value">Post ID value</param>
-	internal static Maybe<WpPostId> ParseAttachmentPostId(Type type, string value) =>
-		F.ParseUInt64(value).Switch(
-			some: x => F.Some(new WpPostId { Value = x }),
-			none: _ => F.None<WpPostId>(new M.ValueIsInvalidPostIdMsg(type, value))
+	/// <param name="type">AttachmentCustomField type.</param>
+	/// <param name="value">Post ID value.</param>
+	internal static Result<WpPostId> ParseAttachmentPostId(Type type, string value) =>
+		M.ParseUInt64(value).Match(
+			some: x => R.Wrap(new WpPostId { Value = x }),
+			none: () => R.Fail("'{Value}' is not a valid Post ID.", value)
+				.Ctx(type.Name, nameof(ParseAttachmentPostId))
 		);
 
 	/// <inheritdoc/>
@@ -115,25 +116,7 @@ public abstract class AttachmentCustomField : CustomField<AttachmentCustomField.
 		GetValueAsString();
 
 	/// <summary>
-	/// Attachment file
+	/// Attachment file.
 	/// </summary>
 	public sealed record class Attachment : PostAttachment { }
-
-	/// <summary>Messages</summary>
-	public static class M
-	{
-		/// <summary>Meta key not found in MetaDictionary</summary>
-		/// <param name="Type">Custom Field type</param>
-		/// <param name="Value">Meta Key</param>
-		public sealed record class MetaKeyNotFoundMsg(Type Type, string Value) : WithValueMsg<string>;
-
-		/// <summary>Multiple matching attachments were found (should always be 1)</summary>
-		/// <param name="Value">Attachment (Post) ID</param>
-		public sealed record class MultipleAttachmentsFoundMsg(string Value) : WithValueMsg<string>;
-
-		/// <summary>The value in the meta dictionary is not a valid ID</summary>
-		/// <param name="Type">Custom Field type</param>
-		/// <param name="Value">Meta Key</param>
-		public sealed record class ValueIsInvalidPostIdMsg(Type Type, string Value) : WithValueMsg<string>;
-	}
 }

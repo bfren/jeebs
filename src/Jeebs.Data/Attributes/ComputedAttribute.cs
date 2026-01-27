@@ -6,7 +6,7 @@ using System;
 namespace Jeebs.Data.Attributes;
 
 /// <summary>
-/// Mark property as Computed
+/// Mark property as Computed.
 /// </summary>
 [AttributeUsage(AttributeTargets.Property | AttributeTargets.Parameter, Inherited = true, AllowMultiple = false)]
 public sealed class ComputedAttribute : Attribute { }

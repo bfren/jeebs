@@ -1,16 +1,15 @@
 // Jeebs Unit Tests
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
-using Jeebs.Collections;
 using Jeebs.Data.Enums;
 using Jeebs.Data.Map;
-using StrongId;
+using Jeebs.Functions;
 
 namespace Jeebs.Data.Query.QueryPartsBuilder_Tests;
 
 public abstract class AddSort_Tests<TBuilder, TId> : QueryPartsBuilder_Tests<TBuilder, TId>
 	where TBuilder : QueryPartsBuilder<TId>
-	where TId : class, IStrongId, new()
+	where TId : class, IUnion, new()
 {
 	public abstract void Test00_SortRandom_True_Returns_New_Parts_With_SortRandom_True();
 
@@ -20,12 +19,12 @@ public abstract class AddSort_Tests<TBuilder, TId> : QueryPartsBuilder_Tests<TBu
 		var (builder, v) = Setup();
 
 		// Act
-		var result = builder.AddSort(v.Parts, true, ImmutableList.Empty<(IColumn, SortOrder)>());
+		var result = builder.AddSort(v.Parts, true, ListF.Empty<(IColumn, SortOrder)>());
 
 		// Assert
-		var some = result.AssertSome();
-		Assert.NotSame(v.Parts, some);
-		Assert.True(some.SortRandom);
+		var ok = result.AssertOk();
+		Assert.NotSame(v.Parts, ok);
+		Assert.True(ok.SortRandom);
 	}
 
 	public abstract void Test01_SortRandom_False_With_Sort_Returns_New_Parts_With_Sort();
@@ -37,16 +36,16 @@ public abstract class AddSort_Tests<TBuilder, TId> : QueryPartsBuilder_Tests<TBu
 		var o0 = SortOrder.Ascending;
 		var c1 = Substitute.For<IColumn>();
 		var o1 = SortOrder.Descending;
-		var sort = ImmutableList.Create((c0, o0), (c1, o1));
+		var sort = ListF.Create((c0, o0), (c1, o1));
 		var (builder, v) = Setup();
 
 		// Act
 		var result = builder.AddSort(v.Parts, false, sort);
 
 		// Assert
-		var some = result.AssertSome();
-		Assert.NotSame(v.Parts, some);
-		Assert.Collection(some.Sort,
+		var ok = result.AssertOk();
+		Assert.NotSame(v.Parts, ok);
+		Assert.Collection(ok.Sort,
 			x =>
 			{
 				Assert.Same(c0, x.column);
@@ -68,10 +67,10 @@ public abstract class AddSort_Tests<TBuilder, TId> : QueryPartsBuilder_Tests<TBu
 		var (builder, v) = Setup();
 
 		// Act
-		var result = builder.AddSort(v.Parts, false, ImmutableList.Empty<(IColumn, SortOrder)>());
+		var result = builder.AddSort(v.Parts, false, ListF.Empty<(IColumn, SortOrder)>());
 
 		// Assert
-		var some = result.AssertSome();
-		Assert.Same(v.Parts, some);
+		var ok = result.AssertOk();
+		Assert.Same(v.Parts, ok);
 	}
 }

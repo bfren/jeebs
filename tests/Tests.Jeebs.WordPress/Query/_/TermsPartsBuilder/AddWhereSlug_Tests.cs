@@ -4,7 +4,7 @@
 using Jeebs.Data;
 using Jeebs.Data.Enums;
 using Jeebs.Data.Query.QueryPartsBuilder_Tests;
-using Jeebs.WordPress.Entities.StrongIds;
+using Jeebs.WordPress.Entities.Ids;
 using static Jeebs.WordPress.Query.TermsPartsBuilder_Tests.Setup;
 
 namespace Jeebs.WordPress.Query.TermsPartsBuilder_Tests;
@@ -24,8 +24,8 @@ public class AddWhereSlug_Tests : QueryPartsBuilder_Tests<TermsPartsBuilder, WpT
 		var result = builder.AddWhereSlug(v.Parts, null);
 
 		// Assert
-		var some = result.AssertSome();
-		Assert.Same(v.Parts, some);
+		var ok = result.AssertOk();
+		Assert.Same(v.Parts, ok);
 	}
 
 	[Fact]
@@ -39,9 +39,9 @@ public class AddWhereSlug_Tests : QueryPartsBuilder_Tests<TermsPartsBuilder, WpT
 		var result = builder.AddWhereSlug(v.Parts, slug);
 
 		// Assert
-		var some = result.AssertSome();
-		Assert.NotSame(v.Parts, some);
-		var (column, compare, value) = Assert.Single(some.Where);
+		var ok = result.AssertOk();
+		Assert.NotSame(v.Parts, ok);
+		var (column, compare, value) = Assert.Single(ok.Where);
 		Assert.Equal(builder.TTest.Terms.GetName(), column.TblName);
 		Assert.Equal(builder.TTest.Terms.Slug, column.ColName);
 		Assert.Equal(Compare.Equal, compare);

@@ -2,7 +2,6 @@
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using Jeebs.Data;
-using static Jeebs.WordPress.CustomFields.TextCustomField.M;
 
 namespace Jeebs.WordPress.CustomFields.TextCustomField_Tests;
 
@@ -43,9 +42,9 @@ public class HydrateAsync_Tests
 		var result = await field.HydrateAsync(db, unitOfWork, meta, true);
 
 		// Assert
-		var none = result.AssertNone().AssertType<MetaKeyNotFoundMsg>();
-		Assert.Equal(typeof(Test), none.Type);
-		Assert.Equal(key, none.Value);
+		_ = result.AssertFailure("Meta Key '{Key}' not found for Custom Field '{Type}'.",
+			key, nameof(Test)
+		);
 	}
 
 	[Fact]
@@ -65,8 +64,5 @@ public class HydrateAsync_Tests
 		Assert.Equal(string.Empty, field.ValueObj);
 	}
 
-	public class Test : TextCustomField
-	{
-		public Test(string key) : base(key) { }
-	}
+	public class Test(string key) : TextCustomField(key);
 }

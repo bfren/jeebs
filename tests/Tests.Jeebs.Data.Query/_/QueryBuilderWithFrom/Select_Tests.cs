@@ -1,4 +1,4 @@
-﻿// Jeebs Unit Tests
+// Jeebs Unit Tests
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using Jeebs.Data.Enums;
@@ -20,8 +20,8 @@ public class Select_Tests
 		var result = builder.Select<TestModel>();
 
 		// Assert
-		var some = result.AssertSome();
-		Assert.Collection(some.SelectColumns,
+		var ok = result.AssertOk();
+		Assert.Collection(ok.SelectColumns,
 			x =>
 			{
 				Assert.Equal(nameof(TestTable0), x.TblName.Name);

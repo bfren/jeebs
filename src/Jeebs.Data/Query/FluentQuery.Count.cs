@@ -11,18 +11,17 @@ public sealed partial record class FluentQuery<TEntity, TId>
 	#region Count
 
 	/// <inheritdoc/>
-	public async Task<Maybe<long>> CountAsync()
+	public async Task<Result<long>> CountAsync()
 	{
 		using var w = await Db.StartWorkAsync();
-		return await CountAsync(w.Transaction).ConfigureAwait(false);
+		return await CountAsync(w.Transaction);
 	}
 
 	/// <inheritdoc/>
-	public Task<Maybe<long>> CountAsync(IDbTransaction transaction)
-	{
-		var (query, param) = Db.Client.GetCountQuery(Parts);
-		return Db.QuerySingleAsync<long>(query, param, CommandType.Text, transaction);
-	}
+	public Task<Result<long>> CountAsync(IDbTransaction transaction) =>
+		from q in Db.Client.GetCountQuery(Parts)
+		from r in Db.QuerySingleAsync<long>(q.query, q.param, CommandType.Text, transaction)
+		select r;
 
 	#endregion Count
 }

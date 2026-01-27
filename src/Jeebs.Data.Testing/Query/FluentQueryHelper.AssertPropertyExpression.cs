@@ -14,17 +14,17 @@ public static partial class FluentQueryHelper
 	/// Assert that <paramref name="actual"/> is an <see cref="Expression{TDelegate}"/> that resolves
 	/// to a property with name <paramref name="expected"/> <see cref="Func{TEntity, TValue}"/>
 	/// </summary>
-	/// <typeparam name="TEntity">Entity Type</typeparam>
-	/// <typeparam name="TValue">Value Type</typeparam>
-	/// <param name="expected">Expected property name</param>
-	/// <param name="actual">Actual property (will be cast to <see cref="Expression{TDelegate}"/>)</param>
+	/// <typeparam name="TEntity">Entity Type.</typeparam>
+	/// <typeparam name="TValue">Value Type.</typeparam>
+	/// <param name="expected">Expected property name.</param>
+	/// <param name="actual">Actual property (will be cast to <see cref="Expression{TDelegate}"/>).</param>
 	/// <exception cref="PropertyExpressionException"></exception>
 	internal static void AssertPropertyExpression<TEntity, TValue>(string expected, object? actual)
 	{
 		try
 		{
 			var actualName = Assert.IsAssignableFrom<Expression<Func<TEntity, TValue>>>(actual)
-				.GetPropertyInfo().UnsafeUnwrap().Name;
+				.GetPropertyInfo().Unsafe().Unwrap().Name;
 
 			try
 			{

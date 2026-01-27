@@ -2,101 +2,123 @@
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using System;
+using Wrap.Logging;
 
 namespace Jeebs.Logging;
 
 /// <summary>
-/// Enables agnostic logging operations
+/// Enables agnostic logging operations.
 /// </summary>
-/// <typeparam name="TContext">Log context</typeparam>
+/// <typeparam name="TContext">Log context.</typeparam>
 public interface ILog<out TContext> : ILog { }
 
 /// <summary>
-/// Enables agnostic logging operations
+/// Enables agnostic logging operations.
 /// </summary>
 public interface ILog
 {
 	/// <summary>
-	/// Return a new log instance for a different context
+	/// Return a new log instance for a different context.
 	/// </summary>
-	/// <typeparam name="T">Log context</typeparam>
+	/// <typeparam name="T">Log context.</typeparam>
 	ILog<T> ForContext<T>();
 
 	/// <summary>
-	/// Whether or not the log will write for the specified Level
+	/// Whether or not the log will write for the specified <paramref name="level"/>.
 	/// </summary>
-	/// <param name="level">LogLevel</param>
+	/// <param name="level">LogLevel.</param>
+	/// <returns>Whether or not logging is enabled for the specified <paramref name="level"/>.</returns>
 	bool IsEnabled(LogLevel level);
 
 	/// <summary>
-	/// Whether or not the log will write for the specified Level
+	/// Whether or not the log will write for the specified <paramref name="level"/>.
 	/// </summary>
-	/// <param name="level">LogLevel</param>
+	/// <param name="level">LogLevel.</param>
+	/// <returns>Whether or not logging is enabled for the specified <paramref name="level"/>.</returns>
 	bool IsEnabled(Microsoft.Extensions.Logging.LogLevel level);
 
 	/// <summary>
-	/// Log an <see cref="IMsg"/> using the <see cref="LogLevel"/> it defines,
-	/// or <see cref="Messages.Msg.DefaultLevel"/>
+	/// Log a <see cref="FailureValue"/> using the <see cref="LogLevel"/> it defines.
 	/// </summary>
-	/// <typeparam name="T">Message type</typeparam>
-	/// <param name="message">Message to log</param>
-	void Msg<T>(T? message)
-		where T : IMsg;
+	/// <param name="value">Failure to log.</param>
+	void Failure(FailureValue value);
 
 	/// <summary>
-	/// Log an <see cref="IMsg"/> using the specified <paramref name="level"/>
+	/// Log a <see cref="FailureValue"/> using the specified <paramref name="level"/>.
 	/// </summary>
-	/// <typeparam name="T">Message type</typeparam>
-	/// <param name="message">Message to log</param>
-	/// <param name="level">Log level</param>
-	void Msg<T>(T? message, LogLevel level)
-		where T : IMsg;
+	/// <param name="value">Failure to log.</param>
+	/// <param name="level">Log level.</param>
+	void Failure(FailureValue value, LogLevel level);
 
 	/// <summary>
-	/// Log a list of <see cref="IMsg"/>
+	/// Log an array of <see cref="FailureValue"/> values.
 	/// </summary>
-	/// <param name="messages">Messages to log</param>
-	void Msgs(params IMsg[] messages);
+	/// <param name="values">Failures to log.</param>
+	void Failures(params FailureValue[] values);
 
 	/// <inheritdoc cref="LogLevel.Verbose"/>
-	/// <param name="message">Message</param>
-	/// <param name="args">Arguments (if message supports string.Format())</param>
-	void Vrb(string message, params object[] args);
+	/// <param name="message">Message.</param>
+	/// <param name="args">Arguments (if message supports string.Format()).</param>
+	void Vrb(string message, params object?[] args);
+
+	/// <inheritdoc cref="LogLevel.Verbose"/>
+	/// <param name="ex">Exception.</param>
+	/// <param name="message">Message.</param>
+	/// <param name="args">Arguments (if message supports string.Format()).</param>
+	void Vrb(Exception ex, string message, params object?[] args);
 
 	/// <inheritdoc cref="LogLevel.Debug"/>
-	/// <param name="message">Message</param>
-	/// <param name="args">Arguments (if message supports string.Format())</param>
-	void Dbg(string message, params object[] args);
+	/// <param name="message">Message.</param>
+	/// <param name="args">Arguments (if message supports string.Format()).</param>
+	void Dbg(string message, params object?[] args);
+
+	/// <inheritdoc cref="LogLevel.Debug"/>
+	/// <param name="ex">Exception.</param>
+	/// <param name="message">Message.</param>
+	/// <param name="args">Arguments (if message supports string.Format()).</param>
+	void Dbg(Exception ex, string message, params object?[] args);
 
 	/// <inheritdoc cref="LogLevel.Information"/>
-	/// <param name="message">Message</param>
-	/// <param name="args">Arguments (if message supports string.Format())</param>
-	void Inf(string message, params object[] args);
+	/// <param name="message">Message.</param>
+	/// <param name="args">Arguments (if message supports string.Format()).</param>
+	void Inf(string message, params object?[] args);
+
+	/// <inheritdoc cref="LogLevel.Information"/>
+	/// <param name="ex">Exception.</param>
+	/// <param name="message">Message.</param>
+	/// <param name="args">Arguments (if message supports string.Format()).</param>
+	void Inf(Exception ex, string message, params object?[] args);
 
 	/// <inheritdoc cref="LogLevel.Warning"/>
-	/// <param name="message">Message</param>
-	/// <param name="args">Arguments (if message supports string.Format())</param>
-	void Wrn(string message, params object[] args);
+	/// <param name="message">Message.</param>
+	/// <param name="args">Arguments (if message supports string.Format()).</param>
+	void Wrn(string message, params object?[] args);
+
+	/// <inheritdoc cref="LogLevel.Warning"/>
+	/// <param name="ex">Exception.</param>
+	/// <param name="message">Message.</param>
+	/// <param name="args">Arguments (if message supports string.Format()).</param>
+	void Wrn(Exception ex, string message, params object?[] args);
 
 	/// <inheritdoc cref="LogLevel.Error"/>
-	/// <param name="message">Message</param>
-	/// <param name="args">Arguments (if message supports string.Format())</param>
-	void Err(string message, params object[] args);
+	/// <param name="message">Message.</param>
+	/// <param name="args">Arguments (if message supports string.Format()).</param>
+	void Err(string message, params object?[] args);
 
 	/// <inheritdoc cref="LogLevel.Error"/>
-	/// <param name="ex">Exception</param>
-	/// <param name="message">Message</param>
-	/// <param name="args">Arguments (if message supports string.Format())</param>
-	void Err(Exception ex, string message, params object[] args);
+	/// <param name="ex">Exception.</param>
+	/// <param name="message">Message.</param>
+	/// <param name="args">Arguments (if message supports string.Format()).</param>
+	void Err(Exception ex, string message, params object?[] args);
 
 	/// <inheritdoc cref="LogLevel.Fatal"/>
-	/// <param name="message">Message</param>
-	/// <param name="args">Arguments (if message supports string.Format())</param>
-	void Ftl(string message, params object[] args);
+	/// <param name="message">Message.</param>
+	/// <param name="args">Arguments (if message supports string.Format()).</param>
+	void Ftl(string message, params object?[] args);
 
 	/// <inheritdoc cref="LogLevel.Fatal"/>
-	/// <param name="ex">Exception</param>
-	/// <param name="message">Message</param>
-	/// <param name="args">Arguments (if message supports string.Format())</param>
-	void Ftl(Exception ex, string message, params object[] args);
+	/// <param name="ex">Exception.</param>
+	/// <param name="message">Message.</param>
+	/// <param name="args">Arguments (if message supports string.Format()).</param>
+	void Ftl(Exception ex, string message, params object?[] args);
 }

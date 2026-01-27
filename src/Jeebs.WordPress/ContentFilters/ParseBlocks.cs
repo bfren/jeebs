@@ -6,7 +6,7 @@ using System;
 namespace Jeebs.WordPress.ContentFilters;
 
 /// <summary>
-/// Parse Blocks
+/// Parse Blocks.
 /// </summary>
 public sealed class ParseBlocks : ContentFilter
 {
@@ -14,7 +14,7 @@ public sealed class ParseBlocks : ContentFilter
 	private ParseBlocks(Func<string, string> filter) : base(filter) { }
 
 	/// <summary>
-	/// Create filter
+	/// Create filter.
 	/// </summary>
 	public static ContentFilter Create() =>
 		new ParseBlocks(content =>

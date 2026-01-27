@@ -2,7 +2,6 @@
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using Jeebs.Data.Map;
-using static Jeebs.Reflection.LinqExpressionExtensions.M;
 
 namespace Jeebs.Data.Query.Functions.QueryF_Tests;
 
@@ -18,8 +17,8 @@ public class GetColumnFromExpression_Tests
 		var r1 = QueryF.GetColumnFromExpression(new BrokenTable(), t => t.Bar);
 
 		// Assert
-		r0.AssertNone().AssertType<PropertyDoesNotExistOnTypeMsg<BrokenTable>>();
-		r1.AssertNone().AssertType<PropertyDoesNotExistOnTypeMsg<BrokenTable>>();
+		r0.AssertFailure("Unable to get column from expression for table '{Table}'.", nameof(BrokenTable));
+		r1.AssertFailure("Unable to get column from expression for table '{Table}'.", nameof(BrokenTable));
 	}
 
 	[Fact]
@@ -34,14 +33,14 @@ public class GetColumnFromExpression_Tests
 		var r1 = QueryF.GetColumnFromExpression<TestTable>(t => t.Foo);
 
 		// Assert
-		var s0 = r0.AssertSome();
-		Assert.Equal(tableName, s0.TblName.Name);
-		Assert.Equal(table.Foo, s0.ColName);
-		Assert.Equal(nameof(table.Foo), s0.ColAlias);
-		var s1 = r1.AssertSome();
-		Assert.Equal("TestTable", s1.TblName.Name);
-		Assert.Equal(table.Foo, s1.ColName);
-		Assert.Equal(nameof(table.Foo), s1.ColAlias);
+		var ok0 = r0.AssertOk();
+		Assert.Equal(tableName, ok0.TblName.Name);
+		Assert.Equal(table.Foo, ok0.ColName);
+		Assert.Equal(nameof(table.Foo), ok0.ColAlias);
+		var ok1 = r1.AssertOk();
+		Assert.Equal("TestTable", ok1.TblName.Name);
+		Assert.Equal(table.Foo, ok1.ColName);
+		Assert.Equal(nameof(table.Foo), ok1.ColAlias);
 	}
 
 	public record class BrokenTable : TestTable

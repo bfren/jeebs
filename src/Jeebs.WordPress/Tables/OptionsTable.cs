@@ -7,38 +7,38 @@ using Jeebs.Data.Map;
 namespace Jeebs.WordPress.Tables;
 
 /// <summary>
-/// Option Table
+/// Option Table.
 /// </summary>
 public sealed record class OptionsTable : Table
 {
 	/// <summary>
-	/// OptionId
+	/// OptionId.
 	/// </summary>
 	[Id]
 	public string Id =>
 		"option_id";
 
 	/// <summary>
-	/// Key
+	/// Key.
 	/// </summary>
 	public string Key =>
 		"option_name";
 
 	/// <summary>
-	/// Value
+	/// Value.
 	/// </summary>
 	public string Value =>
 		"option_value";
 
 	/// <summary>
-	/// IsAutoloaded
+	/// IsAutoloaded.
 	/// </summary>
 	public string IsAutoloaded =>
 		"autoload";
 
 	/// <summary>
-	/// Create object
+	/// Create object.
 	/// </summary>
-	/// <param name="prefix">Table prefix</param>
+	/// <param name="prefix">Table prefix.</param>
 	public OptionsTable(string prefix) : base($"{prefix}options") { }
 }

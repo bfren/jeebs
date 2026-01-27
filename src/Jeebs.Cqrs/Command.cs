@@ -4,6 +4,6 @@
 namespace Jeebs.Cqrs;
 
 /// <summary>
-/// CQRS command
+/// CQRS command.
 /// </summary>
 public abstract record class Command;

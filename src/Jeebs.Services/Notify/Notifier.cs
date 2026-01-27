@@ -11,7 +11,7 @@ public sealed class Notifier : INotifier
 	private readonly IEnumerable<INotificationListener> listeners;
 
 	/// <summary>
-	/// Create using the specified listeners
+	/// Create using the specified listeners.
 	/// </summary>
 	/// <param name="listeners"></param>
 	public Notifier(IEnumerable<INotificationListener> listeners) =>
@@ -31,11 +31,11 @@ public sealed class Notifier : INotifier
 	}
 
 	/// <inheritdoc/>
-	public void Send(IMsg msg)
+	public void Send(FailureValue failure)
 	{
 		foreach (var listener in listeners)
 		{
-			listener.Send(msg);
+			listener.Send(failure);
 		}
 	}
 }

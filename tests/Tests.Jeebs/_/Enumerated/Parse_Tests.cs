@@ -1,14 +1,12 @@
 // Jeebs Unit Tests
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
-using MaybeF;
-
 namespace Jeebs.Enumerated_Tests;
 
 public class Parse_Tests
 {
 	[Fact]
-	public void ValidString_Returns_Some()
+	public void ValidString_Returns_Ok()
 	{
 		// Arrange
 		var input = EnumeratedTest.Test1.ToString();
@@ -17,12 +15,11 @@ public class Parse_Tests
 		var result = EnumeratedTest.Parse(input);
 
 		// Assert
-		var some = result.AssertSome();
-		Assert.Equal(EnumeratedTest.Test1, some);
+		result.AssertOk(EnumeratedTest.Test1);
 	}
 
 	[Fact]
-	public void InvalidString_Returns_None()
+	public void InvalidString_Returns_Fail()
 	{
 		// Arrange
 		var input = Rnd.Str;
@@ -31,7 +28,7 @@ public class Parse_Tests
 		var result = EnumeratedTest.Parse(input);
 
 		// Assert
-		result.AssertNone();
+		result.AssertFailure();
 	}
 }
 
@@ -42,7 +39,7 @@ public record class EnumeratedTest : Enumerated
 	public static readonly EnumeratedTest Test1 = new("test1");
 	public static readonly EnumeratedTest Test2 = new("test2");
 
-	public static Maybe<EnumeratedTest> Parse(string value)
+	public static Result<EnumeratedTest> Parse(string value)
 	{
 		return Parse(value, [Test1, Test2]);
 	}

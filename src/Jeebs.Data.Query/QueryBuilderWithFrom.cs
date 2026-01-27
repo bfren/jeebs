@@ -16,38 +16,38 @@ namespace Jeebs.Data.Query;
 public sealed record class QueryBuilderWithFrom : IQueryBuilderWithFrom
 {
 	/// <summary>
-	/// Query Parts
+	/// Query Parts.
 	/// </summary>
 	internal QueryParts Parts { get; private init; }
 
 	/// <summary>
-	/// List of tables added to this query
+	/// List of tables added to this query.
 	/// </summary>
 	internal List<ITable> Tables { get; private init; }
 
 	/// <summary>
-	/// Create using the specified table
+	/// Create using the specified table.
 	/// </summary>
-	/// <param name="from">'From' table</param>
+	/// <param name="from">'From' table.</param>
 	internal QueryBuilderWithFrom(ITable from)
 	{
 		Parts = new QueryParts(from);
-		Tables = new(new[] { from });
+		Tables = new([from]);
 	}
 
 	/// <summary>
-	/// Select matching columns based on the specified model
+	/// Select matching columns based on the specified model.
 	/// </summary>
-	/// <typeparam name="TModel">Model type</typeparam>
-	internal Maybe<IQueryParts> Select<TModel>() =>
-		from cols in Extract<TModel>.From(Tables.ToArray())
+	/// <typeparam name="TModel">Model type.</typeparam>
+	internal Result<IQueryParts> Select<TModel>() =>
+		from cols in Extract<TModel>.From([.. Tables])
 		select (IQueryParts)(Parts with { SelectColumns = cols });
 
 	/// <summary>
-	/// Verify that a table has been added to the list of tables
+	/// Verify that a table has been added to the list of tables.
 	/// </summary>
-	/// <typeparam name="TTable">Table type</typeparam>
-	/// <typeparam name="TException">Exception type to throw if the table has not been added</typeparam>
+	/// <typeparam name="TTable">Table type.</typeparam>
+	/// <typeparam name="TException">Exception type to throw if the table has not been added.</typeparam>
 	internal void CheckTable<TTable, TException>()
 		where TTable : ITable, new()
 		where TException : QueryBuilderException<TTable>, new()
@@ -61,9 +61,9 @@ public sealed record class QueryBuilderWithFrom : IQueryBuilderWithFrom
 	}
 
 	/// <summary>
-	/// Add a table to the list of tables, if it has not already been added
+	/// Add a table to the list of tables, if it has not already been added.
 	/// </summary>
-	/// <typeparam name="TTable">Table type</typeparam>
+	/// <typeparam name="TTable">Table type.</typeparam>
 	internal void AddTable<TTable>()
 		where TTable : ITable, new()
 	{

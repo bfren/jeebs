@@ -2,10 +2,7 @@
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using System.Data;
-using Jeebs.WordPress.Entities.StrongIds;
-using MaybeF.Extensions;
-using static Jeebs.WordPress.Functions.QueryAttachmentsF.M;
-using static StrongId.Testing.Generator;
+using Jeebs.WordPress.Entities.Ids;
 using Attachment = Jeebs.WordPress.Functions.QueryAttachmentsF.Attachment;
 
 namespace Jeebs.WordPress.Functions.QueryAttachmentsF_Tests;
@@ -17,16 +14,17 @@ public class GetFilePathAsync_Tests : Query_Tests
 	{
 		// Arrange
 		var (db, w, _) = Setup();
-		var empty = new List<Attachment>().AsEnumerable().Some();
+		var empty = new List<Attachment>().AsEnumerable().WrapResult();
 		db.QueryAsync<Attachment>(Arg.Any<string>(), Arg.Any<object?>(), CommandType.Text, Arg.Any<IDbTransaction>()).Returns(empty);
-		var fileId = ULongId<WpPostId>();
+		var fileId = IdGen.ULongId<WpPostId>();
 
 		// Act
 		var result = await QueryAttachmentsF.GetFilePathAsync(db, w, fileId);
 
 		// Assert
-		var none = result.AssertNone().AssertType<AttachmentNotFoundMsg>();
-		Assert.Equal(fileId.Value, none.FileId);
+		_ = result.AssertFailure("Unable to get attachment for File {Id}: Cannot get single value from an empty list.",
+			fileId.Value
+		);
 	}
 
 	[Fact]
@@ -34,16 +32,17 @@ public class GetFilePathAsync_Tests : Query_Tests
 	{
 		// Arrange
 		var (db, w, _) = Setup();
-		var list = new[] { new Attachment(), new Attachment() }.AsEnumerable().Some();
+		var list = new[] { new Attachment(), new Attachment() }.AsEnumerable().WrapResult();
 		db.QueryAsync<Attachment>(Arg.Any<string>(), Arg.Any<object?>(), CommandType.Text, Arg.Any<IDbTransaction>()).Returns(list);
-		var fileId = ULongId<WpPostId>();
+		var fileId = IdGen.ULongId<WpPostId>();
 
 		// Act
 		var result = await QueryAttachmentsF.GetFilePathAsync(db, w, fileId);
 
 		// Assert
-		var none = result.AssertNone().AssertType<MultipleAttachmentsFoundMsg>();
-		Assert.Equal(fileId.Value, none.FileId);
+		_ = result.AssertFailure("Unable to get attachment for File {Id}: Cannot get single value from a list with multiple values.",
+			fileId.Value
+		);
 	}
 
 	[Fact]
@@ -52,14 +51,14 @@ public class GetFilePathAsync_Tests : Query_Tests
 		// Arrange
 		var (db, w, v) = Setup();
 		var urlPath = Rnd.Str;
-		var single = new[] { new Attachment { UrlPath = urlPath } }.AsEnumerable().Some();
+		var single = new[] { new Attachment { UrlPath = urlPath } }.AsEnumerable().WrapResult();
 		db.QueryAsync<Attachment>(Arg.Any<string>(), Arg.Any<object?>(), CommandType.Text, Arg.Any<IDbTransaction>()).Returns(single);
 
 		// Act
-		var result = await QueryAttachmentsF.GetFilePathAsync(db, w, ULongId<WpPostId>());
+		var result = await QueryAttachmentsF.GetFilePathAsync(db, w, IdGen.ULongId<WpPostId>());
 
 		// Assert
-		var some = result.AssertSome();
-		Assert.Equal($"{v.UploadsPath}/{urlPath}", some);
+		var ok = result.AssertOk();
+		Assert.Equal($"{v.UploadsPath}/{urlPath}", ok);
 	}
 }

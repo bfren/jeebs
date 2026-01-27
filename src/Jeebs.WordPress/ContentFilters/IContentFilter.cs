@@ -4,13 +4,13 @@
 namespace Jeebs.WordPress.ContentFilters;
 
 /// <summary>
-/// Content filter
+/// Content filter.
 /// </summary>
 public interface IContentFilter
 {
 	/// <summary>
-	/// Execute filter
+	/// Execute filter.
 	/// </summary>
-	/// <param name="content">Original content</param>
+	/// <param name="content">Original content.</param>
 	string Execute(string content);
 }

@@ -1,7 +1,0 @@
-<Project Sdk="Microsoft.NET.Sdk">
-  <ItemGroup>
-    <ProjectReference Include="..\Jeebs.Auth.Totp\Jeebs.Auth.Totp.csproj" />
-    <ProjectReference Include="..\Jeebs.Cryptography\Jeebs.Cryptography.csproj" />
-    <ProjectReference Include="..\Jeebs.Data.Query\Jeebs.Data.Query.csproj" />
-  </ItemGroup>
-</Project>

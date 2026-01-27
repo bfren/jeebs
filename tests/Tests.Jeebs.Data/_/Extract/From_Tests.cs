@@ -3,14 +3,13 @@
 
 using Jeebs.Data.Attributes;
 using Jeebs.Data.Map;
-using static Jeebs.Data.Extract.M;
 
 namespace Jeebs.Data.Extract_Tests;
 
 public class From_Tests
 {
 	[Fact]
-	public void No_Tables_Returns_Some_With_Empty_List()
+	public void No_Tables_Returns_Ok_With_Empty_List()
 	{
 		// Arrange
 
@@ -18,12 +17,12 @@ public class From_Tests
 		var result = Extract<Foo>.From();
 
 		// Assert
-		var some = result.AssertSome();
-		Assert.Empty(some);
+		var ok = result.AssertOk();
+		Assert.Empty(ok);
 	}
 
 	[Fact]
-	public void No_Matching_Columns_Returns_None_With_NoColumnsExtractedFromTableMsg()
+	public void No_Matching_Columns_Returns_Fail_With_NoColumnsExtractedFromTableMsg()
 	{
 		// Arrange
 		var table = new FooTable();
@@ -32,7 +31,7 @@ public class From_Tests
 		var result = Extract<FooNone>.From(table);
 
 		// Assert
-		result.AssertNone().AssertType<NoColumnsExtractedFromTableMsg>();
+		_ = result.AssertFailure("No columns were extracted from the tables.");
 	}
 
 	[Fact]
@@ -47,8 +46,8 @@ public class From_Tests
 		var result = Extract<FooCombined>.From(t0, t1, t2);
 
 		// Assert
-		var some = result.AssertSome();
-		Assert.Collection(some,
+		var ok = result.AssertOk();
+		Assert.Collection(ok,
 			x => Assert.Equal((t0.GetName(), t0.FooId), (x.TblName, x.ColName)),
 			x => Assert.Equal(t0.Bar0, x.ColName),
 			x => Assert.Equal(t1.Bar2, x.ColName)

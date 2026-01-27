@@ -7,14 +7,14 @@ using Jeebs.WordPress.Enums;
 namespace Jeebs.WordPress.TypeHandlers;
 
 /// <summary>
-/// PostType TypeHandler
+/// PostType TypeHandler.
 /// </summary>
 public sealed class PostTypeTypeHandler : EnumeratedTypeHandler<PostType>
 {
 	/// <summary>
-	/// Parse the PostType value
+	/// Parse the PostType value.
 	/// </summary>
-	/// <param name="value">Database table value</param>
+	/// <param name="value">Database table value.</param>
 	public override PostType Parse(object value) =>
 		Parse(value, PostType.Parse, PostType.Post);
 }

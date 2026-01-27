@@ -5,7 +5,6 @@ using Jeebs.Data;
 using Jeebs.Data.Enums;
 using Jeebs.Data.Query;
 using Jeebs.WordPress.Tables;
-using MaybeF;
 
 namespace Jeebs.WordPress.Query.PostsPartsBuilder_Tests;
 
@@ -31,16 +30,16 @@ public static class Setup
 		Assert.Equal(value, single.value);
 	}
 
-	public static IEnumerable<object[]> GetCompareValues()
-	{
-		yield return new object[] { Compare.Equal };
-		yield return new object[] { Compare.NotEqual };
-		yield return new object[] { Compare.Like };
-		yield return new object[] { Compare.LessThan };
-		yield return new object[] { Compare.LessThanOrEqual };
-		yield return new object[] { Compare.MoreThan };
-		yield return new object[] { Compare.MoreThanOrEqual };
-		yield return new object[] { Compare.In };
-		yield return new object[] { Compare.NotIn };
-	}
+	public static TheoryData<Compare> GetCompareValues() =>
+		[
+			Compare.Equal,
+			Compare.NotEqual,
+			Compare.Like,
+			Compare.LessThan,
+			Compare.LessThanOrEqual,
+			Compare.MoreThan,
+			Compare.MoreThanOrEqual,
+			Compare.In,
+			Compare.NotIn
+		];
 }

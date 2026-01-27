@@ -3,27 +3,26 @@
 
 using System.Linq;
 using Jeebs.Collections;
-using Jeebs.Extensions;
-using Jeebs.Messages;
 using Jeebs.WordPress.Entities;
-using Jeebs.WordPress.Entities.StrongIds;
+using Jeebs.WordPress.Entities.Ids;
 
 namespace Jeebs.WordPress.Functions;
 
 public static partial class QueryAttachmentsF
 {
 	/// <summary>
-	/// Build custom query to return file attachments with URL from meta values
+	/// Build custom query to return file attachments with URL from meta values.
 	/// </summary>
-	/// <param name="schema">IWpDbSchema</param>
-	/// <param name="fileIds">Attachment IDs</param>
-	/// <param name="virtualUploadsUrl">Virtual Uploads URL for building URLs</param>
-	internal static Maybe<string> GetQuery(IWpDbSchema schema, IImmutableList<WpPostId> fileIds, string virtualUploadsUrl)
+	/// <param name="schema">IWpDbSchema.</param>
+	/// <param name="fileIds">Attachment IDs.</param>
+	/// <param name="virtualUploadsUrl">Virtual Uploads URL for building URLs.</param>
+	internal static Result<string> GetQuery(IWpDbSchema schema, IImmutableList<WpPostId> fileIds, string virtualUploadsUrl)
 	{
 		// Check for empty list
 		if (fileIds.Count == 0)
 		{
-			return F.None<string, M.NoFileIdsMsg>();
+			return R.Fail("No File IDs were provided.")
+				.Ctx(nameof(QueryAttachmentsF), nameof(GetQuery));
 		}
 
 		// Build query
@@ -40,11 +39,5 @@ public static partial class QueryAttachmentsF
 			$"WHERE `p`.`{schema.Posts.Id}` IN ({string.Join(',', fileIds.Select(x => x.Value))}) " +
 				$"AND `pm`.`{schema.PostsMeta.Key}` = '{Constants.Attachment}';"
 		;
-	}
-
-	public static partial class M
-	{
-		/// <summary>No File IDs have been passed to <see cref="GetQuery(IWpDbSchema, IImmutableList{WpPostId}, string)"/></summary>
-		public sealed record class NoFileIdsMsg : Msg;
 	}
 }

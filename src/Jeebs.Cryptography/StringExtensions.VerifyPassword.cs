@@ -8,10 +8,10 @@ namespace Jeebs.Cryptography;
 public static partial class StringExtensions
 {
 	/// <summary>
-	/// Verify a password hashed using argon2id
+	/// Verify a password hashed using argon2id.
 	/// </summary>
-	/// <param name="this">Password hash</param>
-	/// <param name="password">Password to verify</param>
+	/// <param name="this">Password hash.</param>
+	/// <param name="password">Password to verify.</param>
 	public static bool VerifyPassword(this string @this, string password)
 	{
 		if (string.IsNullOrWhiteSpace(@this))

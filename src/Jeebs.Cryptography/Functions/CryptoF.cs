@@ -4,10 +4,6 @@
 namespace Jeebs.Cryptography.Functions;
 
 /// <summary>
-/// Cryptography functions
+/// Cryptography functions.
 /// </summary>
-public static partial class CryptoF
-{
-	/// <summary>Messages</summary>
-	public static partial class M { }
-}
+public static partial class CryptoF { }

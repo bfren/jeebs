@@ -15,14 +15,14 @@ public static partial class QueryF
 	private const bool EnablePropertiesCache = true;
 
 	/// <summary>
-	/// Properties of models that have not been marked with <see cref="IgnoreAttribute"/>
+	/// Properties of models that have not been marked with <see cref="IgnoreAttribute"/>.
 	/// </summary>
 	private static ConcurrentDictionary<Type, IEnumerable<PropertyInfo>> PropertiesCache { get; } = new();
 
 	/// <summary>
-	/// Get all properties from a model not marked with <see cref="IgnoreAttribute"/>
+	/// Get all properties from a model not marked with <see cref="IgnoreAttribute"/>.
 	/// </summary>
-	/// <typeparam name="TModel">Model type</typeparam>
+	/// <typeparam name="TModel">Model type.</typeparam>
 	public static IEnumerable<PropertyInfo> GetModelProperties<TModel>()
 	{
 		return EnablePropertiesCache switch

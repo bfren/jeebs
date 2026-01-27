@@ -17,7 +17,7 @@ public sealed class UnitOfWork : IUnitOfWork
 	private bool pending = true;
 
 	/// <summary>
-	/// DbConnection object to allow access to async methods
+	/// DbConnection object to allow access to async methods.
 	/// </summary>
 	private readonly DbConnection connection;
 
@@ -25,7 +25,7 @@ public sealed class UnitOfWork : IUnitOfWork
 		connection;
 
 	/// <summary>
-	/// DbTransaction object to allow access to async methods
+	/// DbTransaction object to allow access to async methods.
 	/// </summary>
 	private readonly DbTransaction transaction;
 
@@ -33,11 +33,11 @@ public sealed class UnitOfWork : IUnitOfWork
 		transaction;
 
 	/// <summary>
-	/// Create object
+	/// Create object.
 	/// </summary>
-	/// <param name="connection">Database Connection wrapper</param>
-	/// <param name="transaction">Database Transaction wrapper</param>
-	/// <param name="log">ILog</param>
+	/// <param name="connection">Database Connection wrapper.</param>
+	/// <param name="transaction">Database Transaction wrapper.</param>
+	/// <param name="log">ILog.</param>
 	public UnitOfWork(DbConnection connection, DbTransaction transaction, ILog log) =>
 		(this.connection, this.transaction, this.log) = (connection, transaction, log);
 
@@ -139,19 +139,33 @@ public sealed class UnitOfWork : IUnitOfWork
 	public void Dispose()
 	{
 		Commit();
-		transaction.Dispose();
-		connection.Close();
-		connection.Dispose();
+
+		Dispose(true);
+		GC.SuppressFinalize(this);
 	}
 
 	/// <summary>
-	/// Commits transaction, then disposes <see cref="transaction"/> and <see cref="connection"/> objects
+	/// Commits transaction, then disposes <see cref="transaction"/> and <see cref="connection"/> objects.
 	/// </summary>
 	public async ValueTask DisposeAsync()
 	{
 		await CommitAsync();
+
 		await transaction.DisposeAsync();
-		await connection.CloseAsync();
 		await connection.DisposeAsync();
+
+		Dispose(false);
+		GC.SuppressFinalize(this);
+	}
+
+	private void Dispose(bool disposing)
+	{
+		if (!disposing)
+		{
+			return;
+		}
+
+		transaction.Dispose();
+		connection.Dispose();
 	}
 }

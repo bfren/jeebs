@@ -4,6 +4,6 @@
 namespace Jeebs.Cryptography;
 
 /// <summary>
-/// <see cref="string"/> Extensions
+/// Extension methods for <see cref="string"/> objects.
 /// </summary>
 public static partial class StringExtensions { }

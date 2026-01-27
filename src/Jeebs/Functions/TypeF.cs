@@ -9,17 +9,18 @@ using System.Reflection;
 namespace Jeebs.Functions;
 
 /// <summary>
-/// Type functions
+/// Type functions.
 /// </summary>
 public static partial class TypeF
 {
 	/// <summary>
-	/// Return list of all loaded assembly names -
-	/// excludes Microsoft.* and System.* assemblies
-	/// See https://dotnetcoretutorials.com/2020/07/03/getting-assemblies-is-harder-than-you-think-in-c/
+	/// Return list of all loaded assembly names - excludes Microsoft.* and System.* assemblies.
 	/// </summary>
-	internal static Lazy<List<AssemblyName>> AllAssemblyNames { get; } = new(
-		() =>
+	/// <remarks>
+	/// See https://dotnetcoretutorials.com/2020/07/03/getting-assemblies-is-harder-than-you-think-in-c/.
+	/// </remarks>
+	internal static Lazy<List<AssemblyName>> AllAssemblyNames { get; } =
+		new(() =>
 		{
 			var files = Directory.GetFiles(AppDomain.CurrentDomain.BaseDirectory, "*.dll");
 			var names = new List<AssemblyName>();
@@ -28,7 +29,7 @@ public static partial class TypeF
 				try
 				{
 					var name = AssemblyName.GetAssemblyName(file);
-					var startsWith = bool (string ns) =>
+					bool startsWith(string ns) =>
 						name.FullName.StartsWith(ns, StringComparison.InvariantCultureIgnoreCase);
 
 					if (!startsWith("Microsoft.") && !startsWith("System."))
@@ -43,16 +44,13 @@ public static partial class TypeF
 			}
 
 			return names;
-		},
-		true
-	);
+		}, true);
 
 	/// <summary>
-	/// Return list of all public class types in all loaded assemblies -
-	/// excludes Microsoft.* and System.* types
+	/// Return list of all public class types in all loaded assemblies - excludes Microsoft.* and System.* types.
 	/// </summary>
-	public static Lazy<IEnumerable<Type>> AllTypes { get; } = new(
-		() =>
+	public static Lazy<IEnumerable<Type>> AllTypes { get; } =
+		new(() =>
 		{
 			var types = new List<Type>();
 			foreach (var name in AllAssemblyNames.Value)
@@ -69,7 +67,5 @@ public static partial class TypeF
 			}
 
 			return types;
-		},
-		true
-	);
+		}, true);
 }

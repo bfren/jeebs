@@ -12,7 +12,7 @@ using Microsoft.Extensions.Hosting;
 namespace Jeebs.Apps.Web;
 
 /// <summary>
-/// API Application - see <see cref="MvcApp"/>
+/// API Application - see <see cref="MvcApp"/>.
 /// </summary>
 public class ApiApp : MvcApp
 {
@@ -67,14 +67,14 @@ public class ApiApp : MvcApp
 	#endregion Create
 
 	/// <summary>
-	/// Create API application with HSTS enabled
+	/// Create API application with HSTS enabled.
 	/// </summary>
 	public ApiApp() : this(true) { }
 
 	/// <summary>
-	/// Create API application
+	/// Create API application.
 	/// </summary>
-	/// <param name="useHsts">HSTS should only be disabled if the application is in development mode, or behind a reverse proxy</param>
+	/// <param name="useHsts">HSTS should only be disabled if the application is in development mode, or behind a reverse proxy.</param>
 	public ApiApp(bool useHsts) : base(useHsts) { }
 
 	#region ConfigureServices

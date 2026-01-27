@@ -2,7 +2,6 @@
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using Jeebs.Data.Map.Functions;
-using static Jeebs.Data.Map.TableMap.M;
 
 namespace Jeebs.Data.Map.TableMap_Tests;
 
@@ -13,14 +12,14 @@ public class GetWriteableColumnNamesAndAliases_Tests
 	{
 		// Arrange
 		var table = new FooUnwriteableTable();
-		var columns = MapF.GetColumns<FooUnwriteableTable, FooUnwriteable>(table).UnsafeUnwrap();
+		var columns = MapF.GetColumns<FooUnwriteableTable, FooUnwriteable>(table).Unsafe().Unwrap();
 		var map = new TableMap(table, columns, GetColumnNames_Tests.Get().column);
 
 		// Act
 		var result = map.GetWriteableColumnNamesAndAliases();
 
 		// Assert
-		result.AssertNone().AssertType<NoWriteableColumnsFoundMsg>();
+		_ = result.AssertFailure("No writeable columns found.");
 	}
 
 	[Fact]
@@ -28,14 +27,14 @@ public class GetWriteableColumnNamesAndAliases_Tests
 	{
 		// Arrange
 		var table = new FooTable();
-		var columns = MapF.GetColumns<FooTable, Foo>(table).UnsafeUnwrap();
+		var columns = MapF.GetColumns<FooTable, Foo>(table).Unsafe().Unwrap();
 		var map = new TableMap(table, columns, GetColumnNames_Tests.Get().column);
 
 		// Act
 		var result = map.GetWriteableColumnNamesAndAliases();
 
 		// Assert
-		var (names, aliases) = result.AssertSome();
+		var (names, aliases) = result.AssertOk();
 		Assert.Collection(names,
 			x => Assert.Equal(table.Bar0, x),
 			x => Assert.Equal(table.Bar1, x)

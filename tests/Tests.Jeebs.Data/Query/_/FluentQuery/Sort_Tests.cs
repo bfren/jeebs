@@ -2,8 +2,6 @@
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using Jeebs.Data.Enums;
-using MaybeF;
-using static MaybeF.F.EnumerableF.M;
 
 namespace Jeebs.Data.Query.FluentQuery_Tests;
 
@@ -14,7 +12,7 @@ public class Sort_Tests : FluentQuery_Tests
 	{
 		// Arrange
 		var (query, v) = Setup();
-		query.Errors.Add(Substitute.For<IMsg>());
+		query.Errors.Add(FailGen.Create().Value);
 
 		// Act
 		var r0 = query.Sort(nameof(TestEntity.Foo), SortOrder.Ascending);
@@ -71,7 +69,7 @@ public class Sort_Tests : FluentQuery_Tests
 		// Assert
 		var fluent = Assert.IsType<FluentQuery<TestEntity, TestId>>(result);
 		var single = Assert.Single(fluent.Errors);
-		single.AssertType<NoMatchingItemsMsg>();
+		Assert.Equal("Column with alias '{Alias}' not found in table '{Table}'.", single.Message);
 		Assert.Same(query, fluent);
 	}
 }

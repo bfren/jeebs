@@ -1,24 +1,23 @@
-﻿// Jeebs Unit Tests
+// Jeebs Unit Tests
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
-
-using Jeebs.Extensions;
 
 namespace Jeebs.StringExtensions_Tests;
 
 public class StartWith_Tests
 {
 	[Theory]
-	[InlineData(null)]
 	[InlineData("")]
 	public void NullOrEmpty_ReturnsOriginal(string input)
 	{
 		// Arrange
 
 		// Act
-		var result = input.StartWith(default);
+		var r0 = input.StartWith(Rnd.Char);
+		var r1 = input.StartWith(Rnd.Str);
 
 		// Assert
-		Assert.Equal(input, result);
+		Assert.Equal(input, r0);
+		Assert.Equal(input, r1);
 	}
 
 	[Theory]

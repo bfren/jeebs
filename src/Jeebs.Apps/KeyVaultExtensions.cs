@@ -7,12 +7,12 @@ using Jeebs.Config.Azure.KeyVault;
 namespace Jeebs.Apps;
 
 /// <summary>
-/// <see cref="KeyVaultConfig"/> extensions
+/// <see cref="KeyVaultConfig"/> extensions.
 /// </summary>
 public static class KeyVaultExtensions
 {
 	/// <summary>
-	/// Create a <see cref="ClientSecretCredential"/> from a <see cref="KeyVaultConfig"/> object
+	/// Create a <see cref="ClientSecretCredential"/> from a <see cref="KeyVaultConfig"/> object.
 	/// </summary>
 	/// <param name="this"></param>
 	public static ClientSecretCredential GetCredential(this KeyVaultConfig @this) =>

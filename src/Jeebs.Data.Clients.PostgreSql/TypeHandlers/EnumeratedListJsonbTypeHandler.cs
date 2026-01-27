@@ -6,16 +6,16 @@ using Jeebs.Collections;
 namespace Jeebs.Data.Clients.PostgreSql.TypeHandlers;
 
 /// <summary>
-/// EnumeratedList TypeHandler
+/// EnumeratedList TypeHandler.
 /// </summary>
-/// <typeparam name="T">Enumerated type</typeparam>
+/// <typeparam name="T">Enumerated type.</typeparam>
 public sealed class EnumeratedListJsonbTypeHandler<T> : JsonbTypeHandler<EnumeratedList<T>>
 	where T : Enumerated
 {
 	/// <summary>
-	/// Parse from list of string values and convert
+	/// Parse from list of string values and convert.
 	/// </summary>
-	/// <param name="value">Database value</param>
+	/// <param name="value">Database value.</param>
 	public override EnumeratedList<T> Parse(object value) =>
 		value switch
 		{

@@ -2,7 +2,6 @@
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using Jeebs.Cqrs.Internals;
-using Jeebs.Cqrs.Messages;
 
 namespace Jeebs.Cqrs.QueryHandler_Tests;
 
@@ -33,9 +32,7 @@ public class HandleAsync_Tests
 		var result = await ((IQueryHandler<string>)handler).HandleAsync(query);
 
 		// Assert
-		var none = result.AssertNone().AssertType<IncorrectQueryTypeMsg>();
-		Assert.Equal(typeof(Query), none.ExpectedType);
-		Assert.Equal(typeof(IncorrectQuery), none.ActualType);
+		_ = result.AssertFailure("Incorrect query type.");
 	}
 
 	[Fact]

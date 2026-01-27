@@ -13,7 +13,7 @@ namespace Jeebs.Data.Clients.Sqlite;
 public partial class SqliteDbClient : DbClient
 {
 	/// <inheritdoc/>
-	protected override (string query, IQueryParametersDictionary param) GetQuery(
+	protected override Result<(string query, IQueryParametersDictionary param)> GetQuery(
 		IDbName table,
 		IColumnList columns,
 		IImmutableList<(IColumn column, Compare cmp, dynamic value)> predicates
@@ -33,7 +33,7 @@ public partial class SqliteDbClient : DbClient
 	}
 
 	/// <inheritdoc/>
-	public override (string query, IQueryParametersDictionary param) GetQuery(IQueryParts parts)
+	public override Result<(string query, IQueryParametersDictionary param)> GetQuery(IQueryParts parts)
 	{
 		// Start query
 		var select = parts.SelectCount switch

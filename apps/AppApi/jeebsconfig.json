@@ -4,20 +4,31 @@
 			"name": "API",
 			"suite": "Jeebs"
 		},
-		"logging": {
-			"minimum": "Debug",
-			"overrides": {
-				"Microsoft": "Warning",
-				"Microsoft.Hosting.Lifetime": "Information"
-			},
-			"providers": {
-				"console": {
-					"enabled": true
-				},
-				"seq.server04": {
-					"enabled": true
-				}
-			}
-		}
+    "logging": {
+      "minimum": "Debug",
+      "overrides": {
+        "Microsoft": "Warning",
+        "Microsoft.Hosting.Lifetime": "Information"
+      },
+      "providers": {
+        "console.local": {
+          "enabled": true
+        },
+        "seq.live": {
+          "enabled": false
+        }
+      }
+    },
+    "services": {
+      "console": {
+        "local": {}
+      },
+      "seq": {
+        "live": {
+          "apiKey": "",
+          "server": ""
+        }
+      }
+    }
 	}
 }

@@ -11,31 +11,31 @@ using NpgsqlTypes;
 namespace Jeebs.Data.Clients.PostgreSql.TypeHandlers;
 
 /// <summary>
-/// Jsonb Type Handler to map JSON as jsonb so it is queryable
+/// Jsonb Type Handler to map JSON as jsonb so it is queryable.
 /// </summary>
-/// <typeparam name="T">Value type</typeparam>
+/// <typeparam name="T">Value type.</typeparam>
 public class JsonbTypeHandler<T> : Dapper.SqlMapper.TypeHandler<T>
 {
 	/// <summary>
-	/// Parse value as JSON into object of type <typeparamref name="T"/>
+	/// Parse value as JSON into object of type <typeparamref name="T"/>.
 	/// </summary>
-	/// <param name="value">Database value</param>
+	/// <param name="value">Database value.</param>
 	/// <exception cref="JsonException">When deserialisation fails</exception>
 	public override T Parse(object value) =>
 		value switch
 		{
-			string json =>
-				JsonF.Deserialise<T>(json).Unwrap(() => throw new JsonException($"Unable to deserialise JSON for {typeof(T)}: {value}.")),
+			string json when !string.IsNullOrWhiteSpace(json) =>
+				JsonF.Deserialise<T>(json).Unwrap(),
 
 			_ =>
 				throw new JsonException($"Invalid JSON: {value}.")
 		};
 
 	/// <summary>
-	/// Serialise value and set column type as <see cref="NpgsqlDbType.Jsonb"/>
+	/// Serialise value and set column type as <see cref="NpgsqlDbType.Jsonb"/>.
 	/// </summary>
-	/// <param name="parameter">IDbDataParameter</param>
-	/// <param name="value">Value object</param>
+	/// <param name="parameter">IDbDataParameter.</param>
+	/// <param name="value">Value object.</param>
 	public override void SetValue(IDbDataParameter parameter, T? value)
 	{
 		if (parameter is NpgsqlParameter npgsqlParameter)
@@ -46,7 +46,7 @@ public class JsonbTypeHandler<T> : Dapper.SqlMapper.TypeHandler<T>
 		parameter.Value = value switch
 		{
 			T x =>
-				JsonF.Serialise(x).Unwrap(JsonF.Empty),
+				JsonF.Serialise(x).Unwrap(_ => JsonF.Empty),
 
 			_ =>
 				DBNull.Value

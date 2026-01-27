@@ -1,9 +1,8 @@
 // Jeebs Unit Tests
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
-using Jeebs.Collections;
-using Jeebs.WordPress.Entities.StrongIds;
-using static Jeebs.WordPress.Functions.QueryAttachmentsF.M;
+using Jeebs.Functions;
+using Jeebs.WordPress.Entities.Ids;
 
 namespace Jeebs.WordPress.Functions.QueryAttachmentsF_Tests;
 
@@ -14,13 +13,13 @@ public class GetQuery_Tests
 	{
 		// Arrange
 		var schema = Substitute.For<IWpDbSchema>();
-		var fileIds = ImmutableList.Empty<WpPostId>();
+		var fileIds = ListF.Empty<WpPostId>();
 
 		// Act
 		var result = QueryAttachmentsF.GetQuery(schema, fileIds, Rnd.Str);
 
 		// Assert
-		result.AssertNone().AssertType<NoFileIdsMsg>();
+		_ = result.AssertFailure("No File IDs were provided.");
 	}
 
 	[Fact]
@@ -31,7 +30,7 @@ public class GetQuery_Tests
 		var schema = new WpDbSchema(prefix);
 		var i0 = Rnd.ULng;
 		var i1 = Rnd.ULng;
-		var fileIds = ImmutableList.Create<WpPostId>(new() { Value = i0 }, new() { Value = i1 });
+		var fileIds = ListF.Create<WpPostId>(new() { Value = i0 }, new() { Value = i1 });
 		var virtualUploadsUrl = Rnd.Str;
 		var expected =
 			"SELECT " +
@@ -51,7 +50,7 @@ public class GetQuery_Tests
 		var result = QueryAttachmentsF.GetQuery(schema, fileIds, virtualUploadsUrl);
 
 		// Assert
-		var some = result.AssertSome();
-		Assert.Equal(expected, some);
+		var ok = result.AssertOk();
+		Assert.Equal(expected, ok);
 	}
 }

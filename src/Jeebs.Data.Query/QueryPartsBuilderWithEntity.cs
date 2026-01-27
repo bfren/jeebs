@@ -3,31 +3,29 @@
 
 using System;
 using Jeebs.Data.Map;
-using Jeebs.Messages;
-using StrongId;
 
 namespace Jeebs.Data.Query;
 
 /// <summary>
-/// Builds a <see cref="QueryParts"/> object from various options
+/// Builds a <see cref="QueryParts"/> object from various options.
 /// </summary>
-/// <typeparam name="TEntity">Entity type</typeparam>
-/// <typeparam name="TId">Entity ID type</typeparam>
-public abstract class QueryPartsBuilderWithEntity<TEntity, TId> : QueryPartsBuilder<TId>
-	where TEntity : IWithId<TId>
-	where TId : class, IStrongId, new()
+/// <typeparam name="TEntity">Entity type.</typeparam>
+/// <typeparam name="TId">Entity ID type.</typeparam>
+/// <remarks>
+/// Inject mapper.
+/// </remarks>
+/// <param name="mapper">IEntityMapper.</param>
+public abstract class QueryPartsBuilderWithEntity<TEntity, TId>(IEntityMapper mapper) : QueryPartsBuilder<TId>
+	where TEntity : IWithId
+	where TId : class, IUnion, new()
 {
-	private readonly IEntityMapper mapper;
+	private readonly IEntityMapper mapper = mapper;
 
 	/// <summary>
-	/// Get table map for <typeparamref name="TEntity"/>
+	/// Get table map for <typeparamref name="TEntity"/>.
 	/// </summary>
 	public virtual Lazy<ITableMap> Map =>
-		new(() =>
-			mapper.GetTableMapFor<TEntity>().Unwrap(r =>
-				throw Msg.CreateException(r)
-			)
-		);
+		new(() => mapper.GetTableMapFor<TEntity>().Unwrap());
 
 	/// <inheritdoc/>
 	public override ITable Table =>
@@ -38,14 +36,7 @@ public abstract class QueryPartsBuilderWithEntity<TEntity, TId> : QueryPartsBuil
 		Map.Value.IdColumn;
 
 	/// <summary>
-	/// Create with default mapper
+	/// Create with default mapper.
 	/// </summary>
 	protected QueryPartsBuilderWithEntity() : this(EntityMapper.Instance) { }
-
-	/// <summary>
-	/// Inject mapper
-	/// </summary>
-	/// <param name="mapper">IMapper</param>
-	protected QueryPartsBuilderWithEntity(IEntityMapper mapper) =>
-		this.mapper = mapper;
 }

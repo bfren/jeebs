@@ -1,4 +1,4 @@
-﻿// Jeebs Unit Tests
+// Jeebs Unit Tests
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 namespace Jeebs.Data.TypeHandlers.Guid_Tests;
@@ -9,13 +9,13 @@ public class Parse_Tests
 	[InlineData(null)]
 	[InlineData("")]
 	[InlineData(" ")]
-	public void Null_Or_Empty_Returns_Empty(object input)
+	public void Null_Or_Empty_Returns_Empty(object? input)
 	{
 		// Arrange
 		var handler = new GuidTypeHandler();
 
 		// Act
-		var result = handler.Parse(input);
+		var result = handler.Parse(input!);
 
 		// Assert
 		Assert.Equal(Guid.Empty, result);

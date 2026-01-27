@@ -5,9 +5,9 @@ using Jeebs.Collections;
 using Jeebs.Data;
 using Jeebs.Data.Enums;
 using Jeebs.Data.Query.QueryPartsBuilder_Tests;
-using Jeebs.WordPress.Entities.StrongIds;
+using Jeebs.Functions;
+using Jeebs.WordPress.Entities.Ids;
 using static Jeebs.WordPress.Query.PostsTaxonomyPartsBuilder_Tests.Setup;
-using static StrongId.Testing.Generator;
 
 namespace Jeebs.WordPress.Query.PostsTaxonomyPartsBuilder_Tests;
 
@@ -26,8 +26,8 @@ public class AddWherePostIds_Tests : QueryPartsBuilder_Tests<PostsTaxonomyPartsB
 		var result = builder.AddWherePostIds(v.Parts, Substitute.For<IImmutableList<WpPostId>>());
 
 		// Assert
-		var some = result.AssertSome();
-		Assert.Same(v.Parts, some);
+		var ok = result.AssertOk();
+		Assert.Same(v.Parts, ok);
 	}
 
 	[Fact]
@@ -35,18 +35,18 @@ public class AddWherePostIds_Tests : QueryPartsBuilder_Tests<PostsTaxonomyPartsB
 	{
 		// Arrange
 		var (builder, v) = Setup();
-		var id0 = ULongId<WpPostId>();
-		var id1 = ULongId<WpPostId>();
-		var postIds = ImmutableList.Create(id0, id1);
+		var id0 = IdGen.ULongId<WpPostId>();
+		var id1 = IdGen.ULongId<WpPostId>();
+		var postIds = ListF.Create(id0, id1);
 		var postIdValues = postIds.Select(p => p.Value);
 
 		// Act
 		var result = builder.AddWherePostIds(v.Parts, postIds);
 
 		// Assert
-		var some = result.AssertSome();
-		Assert.NotSame(v.Parts, some);
-		var (column, compare, value) = Assert.Single(some.Where);
+		var ok = result.AssertOk();
+		Assert.NotSame(v.Parts, ok);
+		var (column, compare, value) = Assert.Single(ok.Where);
 		Assert.Equal(builder.TTest.TermRelationships.GetName(), column.TblName);
 		Assert.Equal(builder.TTest.TermRelationships.PostId, column.ColName);
 		Assert.Equal(Compare.In, compare);

@@ -7,14 +7,14 @@ using System.Data;
 namespace Jeebs.Data.TypeHandlers;
 
 /// <summary>
-/// Guid TypeHandler
+/// Guid TypeHandler.
 /// </summary>
 public sealed class GuidTypeHandler : Dapper.SqlMapper.TypeHandler<Guid>
 {
 	/// <summary>
-	/// Parse Guid
+	/// Parse Guid.
 	/// </summary>
-	/// <param name="value">Guid value</param>
+	/// <param name="value">Guid value.</param>
 	public override Guid Parse(object value) =>
 		value?.ToString() switch
 		{
@@ -26,10 +26,10 @@ public sealed class GuidTypeHandler : Dapper.SqlMapper.TypeHandler<Guid>
 		};
 
 	/// <summary>
-	/// Set Guid value
+	/// Set Guid value.
 	/// </summary>
-	/// <param name="parameter">IDbDataParameter</param>
-	/// <param name="value">Guid value</param>
+	/// <param name="parameter">IDbDataParameter.</param>
+	/// <param name="value">Guid value.</param>
 	public override void SetValue(IDbDataParameter parameter, Guid value) =>
 		parameter.Value = value;
 }

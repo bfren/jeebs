@@ -11,9 +11,9 @@ namespace Jeebs.WordPress.Functions;
 public static partial class QueryPostsF
 {
 	/// <summary>
-	/// Get Custom Fields for specified model
+	/// Get Custom Fields for specified model.
 	/// </summary>
-	/// <typeparam name="TModel">Model type</typeparam>
+	/// <typeparam name="TModel">Model type.</typeparam>
 	internal static List<PropertyInfo> GetCustomFields<TModel>()
 	{
 		// Get custom field properties for model type

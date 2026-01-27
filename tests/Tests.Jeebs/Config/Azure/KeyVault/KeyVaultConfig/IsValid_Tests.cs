@@ -18,15 +18,15 @@ public class IsValid_Tests
 	[InlineData("name", "tenant", "id", null)]
 	[InlineData("name", "tenant", "id", "")]
 	[InlineData("name", "tenant", "id", " ")]
-	public void Returns_False(string name, string tenantId, string clientId, string clientSecret)
+	public void Returns_False(string? name, string? tenantId, string? clientId, string? clientSecret)
 	{
 		// Arrange
 		var config = new KeyVaultConfig
 		{
-			Name = name,
-			TenantId = tenantId,
-			ClientId = clientId,
-			ClientSecret = clientSecret
+			Name = name!,
+			TenantId = tenantId!,
+			ClientId = clientId!,
+			ClientSecret = clientSecret!
 		};
 
 		// Act

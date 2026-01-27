@@ -12,24 +12,24 @@ using Microsoft.Extensions.Options;
 namespace Jeebs.Services;
 
 /// <summary>
-/// Webhook Driver arguments
+/// Webhook Driver arguments.
 /// </summary>
-/// <typeparam name="TConfig">Service configuration type</typeparam>
+/// <typeparam name="TConfig">Service configuration type.</typeparam>
 public abstract class WebhookDriverArgs<TConfig> : DriverArgs<TConfig>
 	where TConfig : IServiceConfig
 {
 	/// <summary>
-	/// IHttpClientFactory
+	/// IHttpClientFactory.
 	/// </summary>
 	public IHttpClientFactory Factory { get; }
 
 	/// <summary>
-	/// Create object
+	/// Create object.
 	/// </summary>
 	/// <param name="factory"></param>
-	/// <param name="log">ILog</param>
-	/// <param name="jeebsConfig">JeebsConfig</param>
-	/// <param name="serviceConfigs">Function to return all service configurations for this type</param>
+	/// <param name="log">ILog.</param>
+	/// <param name="jeebsConfig">JeebsConfig.</param>
+	/// <param name="serviceConfigs">Function to return all service configurations for this type.</param>
 	protected WebhookDriverArgs(
 		IHttpClientFactory factory,
 		ILog log,

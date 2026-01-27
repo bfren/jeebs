@@ -7,31 +7,19 @@ using System.Collections.Generic;
 namespace Jeebs.Data.Exceptions;
 
 /// <summary>
-/// See <see cref="Map.EntityMapper.Map{TEntity, TTable}(TTable)"/>
+/// See <see cref="Map.EntityMapper.Map{TEntity, TTable}(TTable)"/>.
 /// </summary>
 public sealed class InvalidTableMapException : Exception
 {
 	/// <summary>
-	/// Create exception
+	/// List of errors showing why table map is invalid.
 	/// </summary>
-	public InvalidTableMapException() { }
+	public List<FailureValue> Errors { get; init; }
 
 	/// <summary>
-	/// Create exception
+	/// Create exception.
 	/// </summary>
-	/// <param name="errors">List of errors</param>
-	public InvalidTableMapException(List<string> errors) : base(string.Join("\n", errors)) { }
-
-	/// <summary>
-	/// Create exception
-	/// </summary>
-	/// <param name="message">Message</param>
-	public InvalidTableMapException(string message) : base(message) { }
-
-	/// <summary>
-	/// Create exception
-	/// </summary>
-	/// <param name="message">Message</param>
-	/// <param name="inner">Exception</param>
-	public InvalidTableMapException(string message, Exception inner) : base(message, inner) { }
+	/// <param name="errors">List of errors.</param>
+	public InvalidTableMapException(List<FailureValue> errors) =>
+		Errors = errors;
 }

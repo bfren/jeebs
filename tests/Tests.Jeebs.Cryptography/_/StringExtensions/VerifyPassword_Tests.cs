@@ -11,13 +11,14 @@ public sealed class VerifyPassword_Tests
 	[Theory]
 	[InlineData(null)]
 	[InlineData("")]
-	public void VerifyPassword_NullOrEmpty_ThrowsArgumentNullException(string input)
+	[InlineData(" ")]
+	public void VerifyPassword_NullOrEmpty_ThrowsArgumentNullException(string? input)
 	{
 		// Arrange
 		var pwd = password;
 
 		// Act
-		var result = input.VerifyPassword(pwd);
+		var result = StringExtensions.VerifyPassword(input!, pwd);
 
 		// Assert
 		Assert.False(result);

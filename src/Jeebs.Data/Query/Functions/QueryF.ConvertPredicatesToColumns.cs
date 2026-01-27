@@ -7,18 +7,18 @@ using System.Linq;
 using Jeebs.Collections;
 using Jeebs.Data.Enums;
 using Jeebs.Data.Map;
-using Jeebs.Messages;
+using Jeebs.Functions;
 
 namespace Jeebs.Data.Query.Functions;
 
 public static partial class QueryF
 {
 	/// <summary>
-	/// Convert LINQ expression property selectors to column names
+	/// Convert LINQ expression property selectors to column names.
 	/// </summary>
-	/// <param name="columns">Mapped entity columns</param>
-	/// <param name="predicates">Predicates (matched using AND)</param>
-	public static Maybe<IImmutableList<(IColumn column, Compare cmp, dynamic value)>> ConvertPredicatesToColumns(
+	/// <param name="columns">Mapped entity columns.</param>
+	/// <param name="predicates">Predicates (matched using AND).</param>
+	public static Result<IImmutableList<(IColumn column, Compare cmp, dynamic value)>> ConvertPredicatesToColumns(
 		IColumnList columns,
 		(string alias, Compare cmp, dynamic value)[] predicates
 	)
@@ -44,7 +44,8 @@ public static partial class QueryF
 				&& (item.value is not IEnumerable || item.value is string) // string implements IEnumerable but is not valid for IN
 			)
 			{
-				return F.None<IImmutableList<(IColumn, Compare, dynamic)>, M.InOperatorRequiresValueToBeAListMsg>();
+				return R.Fail("IN operator requires value to be a list.")
+					.Ctx(nameof(QueryF), nameof(ConvertPredicatesToColumns));
 			}
 
 			// Get parameter value (to support StrongId)
@@ -54,12 +55,6 @@ public static partial class QueryF
 			list.Add((column, item.cmp, value));
 		}
 
-		return ImmutableList.Create(items: list);
-	}
-
-	public static partial class M
-	{
-		/// <summary>IN predicate means value is 'in' an array of values so the value must be a list</summary>
-		public sealed record class InOperatorRequiresValueToBeAListMsg : Msg;
+		return ListF.Create(items: list);
 	}
 }

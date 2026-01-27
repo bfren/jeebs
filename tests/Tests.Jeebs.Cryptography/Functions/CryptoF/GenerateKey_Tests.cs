@@ -1,4 +1,4 @@
-﻿// Jeebs Unit Tests
+// Jeebs Unit Tests
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 namespace Jeebs.Cryptography.Functions.CryptoF_Tests;
@@ -15,9 +15,9 @@ public sealed class GenerateKey_Tests
 		var r1 = CryptoF.GenerateKey();
 
 		// Assert
-		var s0 = r0.AssertSome();
-		var s1 = r1.AssertSome();
-		Assert.NotEqual(s0, s1);
+		var ok0 = r0.AssertOk();
+		var ok1 = r1.AssertOk();
+		Assert.NotEqual(ok0, ok1);
 	}
 
 	[Fact]
@@ -29,7 +29,7 @@ public sealed class GenerateKey_Tests
 		var result = CryptoF.GenerateKey();
 
 		// Assert
-		var some = result.AssertSome();
-		Assert.Equal(32, some.Length);
+		var ok = result.AssertOk();
+		Assert.Equal(32, ok.Length);
 	}
 }

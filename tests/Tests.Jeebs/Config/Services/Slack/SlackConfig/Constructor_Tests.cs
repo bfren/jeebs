@@ -1,4 +1,4 @@
-﻿// Jeebs Unit Tests
+// Jeebs Unit Tests
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 namespace Jeebs.Config.Services.Slack.SlackConfig_Tests;
@@ -14,7 +14,7 @@ public class Constructor_Tests
 		// Act
 
 		// Assert
-		Assert.IsAssignableFrom<IServiceConfig>(config);
+		Assert.IsType<IServiceConfig>(config, exactMatch: false);
 	}
 
 	[Fact]
@@ -26,6 +26,6 @@ public class Constructor_Tests
 		// Act
 
 		// Assert
-		Assert.IsAssignableFrom<IWebhookServiceConfig>(config);
+		Assert.IsType<IWebhookServiceConfig>(config, exactMatch: false);
 	}
 }

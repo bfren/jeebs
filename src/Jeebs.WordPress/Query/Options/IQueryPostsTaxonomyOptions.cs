@@ -3,23 +3,23 @@
 
 using Jeebs.Collections;
 using Jeebs.Data.Query;
-using Jeebs.WordPress.Entities.StrongIds;
+using Jeebs.WordPress.Entities.Ids;
 using Jeebs.WordPress.Enums;
 
 namespace Jeebs.WordPress.Query.Options;
 
 /// <summary>
-/// Query Posts Taxonomy Options
+/// Query Posts Taxonomy Options.
 /// </summary>
 public interface IQueryPostsTaxonomyOptions : IQueryOptions<WpTermId>
 {
 	/// <summary>
-	/// The taxonomies to get
+	/// The taxonomies to get.
 	/// </summary>
 	IImmutableList<Taxonomy> Taxonomies { get; init; }
 
 	/// <summary>
-	/// Get taxonomies for specific Posts
+	/// Get taxonomies for specific Posts.
 	/// </summary>
 	IImmutableList<WpPostId> PostIds { get; init; }
 

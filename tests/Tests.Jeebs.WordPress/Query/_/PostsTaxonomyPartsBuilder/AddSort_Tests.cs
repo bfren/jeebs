@@ -6,7 +6,7 @@ using Jeebs.Data;
 using Jeebs.Data.Enums;
 using Jeebs.Data.Map;
 using Jeebs.Data.Query.QueryPartsBuilder_Tests;
-using Jeebs.WordPress.Entities.StrongIds;
+using Jeebs.WordPress.Entities.Ids;
 using Jeebs.WordPress.Enums;
 using Jeebs.WordPress.Tables;
 using static Jeebs.WordPress.Query.PostsTaxonomyPartsBuilder_Tests.Setup;
@@ -29,9 +29,9 @@ public class AddSort_Tests : AddSort_Tests<PostsTaxonomyPartsBuilder, WpTermId>
 		var result = builder.AddSort(v.Parts, false, Substitute.For<IImmutableList<(IColumn, SortOrder)>>(), sortBy);
 
 		// Assert
-		var some = result.AssertSome();
-		Assert.NotSame(v.Parts, some);
-		var (column, order) = Assert.Single(some.Sort);
+		var ok = result.AssertOk();
+		Assert.NotSame(v.Parts, ok);
+		var (column, order) = Assert.Single(ok.Sort);
 		Assert.Equal(builder.TTest.Terms.GetName(), column.TblName);
 		Assert.Equal(builder.TTest.Terms.Title, column.ColName);
 		Assert.Equal(nameof(TermsTable.Title), column.ColAlias);
@@ -49,9 +49,9 @@ public class AddSort_Tests : AddSort_Tests<PostsTaxonomyPartsBuilder, WpTermId>
 		var result = builder.AddSort(v.Parts, false, Substitute.For<IImmutableList<(IColumn, SortOrder)>>(), sortBy);
 
 		// Assert
-		var some = result.AssertSome();
-		Assert.NotSame(v.Parts, some);
-		Assert.Collection(some.Sort,
+		var ok = result.AssertOk();
+		Assert.NotSame(v.Parts, ok);
+		Assert.Collection(ok.Sort,
 			x =>
 			{
 				Assert.Equal(builder.TTest.TermTaxonomies.GetName(), x.column.TblName);

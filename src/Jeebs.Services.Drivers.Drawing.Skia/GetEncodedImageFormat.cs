@@ -7,14 +7,14 @@ using SkiaSharp;
 namespace Jeebs.Services.Drivers.Drawing.Skia;
 
 /// <summary>
-/// <see cref="ImageFormat"/> extensions
+/// <see cref="ImageFormat"/> extensions.
 /// </summary>
 public static class ImageFormatExtensions
 {
 	/// <summary>
-	/// Return the <see cref="SKEncodedImageFormat"/> equivalent of an <see cref="ImageFormat"/>
+	/// Return the <see cref="SKEncodedImageFormat"/> equivalent of an <see cref="ImageFormat"/>.
 	/// </summary>
-	/// <param name="this">ImageFormat</param>
+	/// <param name="this">ImageFormat.</param>
 	/// <exception cref="UnsupportedImageFormatException"></exception>
 	public static SKEncodedImageFormat GetEncodedImageFormat(this ImageFormat @this) =>
 		@this switch

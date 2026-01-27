@@ -1,9 +1,7 @@
-﻿[*.cs]
+[*.cs]
 
 # Add file header
 file_header_template = Jeebs Unit Tests\nCopyright (c) bfren - licensed under https://mit.bfren.dev/2013
-
-insert_final_newline = true
 
 # CA1000: Do not declare static members on generic types
 dotnet_diagnostic.CA1000.severity = none
@@ -41,6 +39,9 @@ dotnet_diagnostic.IDE0053.severity = none
 # IDE0058: Expression value is never used
 dotnet_diagnostic.IDE0058.severity = none
 
+# IDE1006: Naming Styles
+dotnet_diagnostic.IDE1006.severity = none
+
 # RCS1021: Convert lambda expression body to expression-body.
 dotnet_diagnostic.RCS1021.severity = none
 
@@ -61,3 +62,9 @@ dotnet_diagnostic.RCS1158.severity = none
 
 # RCS1197: Optimize StringBuilder.Append/AppendLine call.
 dotnet_diagnostic.RCS1197.severity = none
+
+# xUnit1044: Avoid using TheoryData type arguments that are not serializable
+dotnet_diagnostic.xUnit1044.severity = none
+
+# xUnit1045: Avoid using TheoryData type arguments that might not be serializable
+dotnet_diagnostic.xUnit1045.severity = none

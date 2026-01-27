@@ -7,10 +7,10 @@ using Jeebs.Collections;
 namespace Jeebs.Calendar.Models;
 
 /// <summary>
-/// Event Calendar
+/// Event Calendar.
 /// </summary>
-/// <param name="Events">List of events</param>
-/// <param name="LastModified">Last modified date - for cache purposes</param>
+/// <param name="Events">List of events.</param>
+/// <param name="LastModified">Last modified date - for cache purposes.</param>
 public sealed record class CalendarModel(
 	IImmutableList<EventModel> Events,
 	DateTime LastModified

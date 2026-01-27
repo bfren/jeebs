@@ -2,30 +2,30 @@
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using Jeebs.Data.Map;
-using StrongId;
 
 namespace Jeebs.Data;
 
 public abstract partial class DbClient : IDbClient
 {
 	/// <inheritdoc/>
-	public Maybe<string> GetCreateQuery<TEntity>()
+	public Result<string> GetCreateQuery<TEntity>()
 		where TEntity : IWithId =>
-		Entities.GetTableMapFor<TEntity>().Map(
-			x => GetCreateQuery(x.Name, x.Columns),
-			e => new M.ErrorGettingCrudCreateQueryExceptionMsg(e)
-		);
+		Entities
+			.GetTableMapFor<TEntity>()
+			.Map(
+				x => GetCreateQuery(x.Name, x.Columns)
+			);
 
 	/// <inheritdoc cref="GetCreateQuery{TEntity}"/>
-	/// <param name="table">Table name</param>
-	/// <param name="columns">List of mapped columns</param>
+	/// <param name="table">Table name.</param>
+	/// <param name="columns">List of mapped columns.</param>
 	protected abstract string GetCreateQuery(
 		IDbName table,
 		IColumnList columns
 	);
 
 	/// <inheritdoc/>
-	public Maybe<string> GetRetrieveQuery<TEntity, TModel>(object id)
+	public Result<string> GetRetrieveQuery<TEntity, TModel>(object id)
 		where TEntity : IWithId =>
 		(
 			from map in Entities.GetTableMapFor<TEntity>()
@@ -33,15 +33,14 @@ public abstract partial class DbClient : IDbClient
 			select (map, columns)
 		)
 		.Map(
-			x => GetRetrieveQuery(x.map.Name, x.columns, x.map.IdColumn, id),
-			e => new M.ErrorGettingCrudRetrieveQueryExceptionMsg(e)
+			x => GetRetrieveQuery(x.map.Name, x.columns, x.map.IdColumn, id)
 		);
 
 	/// <inheritdoc cref="GetRetrieveQuery{TEntity, TModel}(object)"/>
-	/// <param name="table">Table name</param>
-	/// <param name="columns">List of columns to select</param>
-	/// <param name="idColumn">ID column for predicate</param>
-	/// <param name="id">Entity ID</param>
+	/// <param name="table">Table name.</param>
+	/// <param name="columns">List of columns to select.</param>
+	/// <param name="idColumn">ID column for predicate.</param>
+	/// <param name="id">Entity ID.</param>
 	protected abstract string GetRetrieveQuery(
 		IDbName table,
 		IColumnList columns,
@@ -50,7 +49,7 @@ public abstract partial class DbClient : IDbClient
 	);
 
 	/// <inheritdoc/>
-	public Maybe<string> GetUpdateQuery<TEntity, TModel>(object id)
+	public Result<string> GetUpdateQuery<TEntity, TModel>(object id)
 		where TEntity : IWithId =>
 		(
 			from map in Entities.GetTableMapFor<TEntity>()
@@ -65,8 +64,7 @@ public abstract partial class DbClient : IDbClient
 
 				true =>
 					GetUpdateQuery(x.map.Name, x.columns, x.map.IdColumn, id, x.map.VersionColumn),
-			},
-			e => new M.ErrorGettingCrudUpdateQueryExceptionMsg(e)
+			}
 		);
 
 	/// <inheritdoc cref="GetUpdateQuery(IDbName, IColumnList, IColumn, object, IColumn)"/>
@@ -78,11 +76,11 @@ public abstract partial class DbClient : IDbClient
 	);
 
 	/// <inheritdoc cref="GetUpdateQuery{TEntity, TModel}"/>
-	/// <param name="table">Table name</param>
-	/// <param name="columns">List of columns to update</param>
-	/// <param name="idColumn">ID column for predicate</param>
-	/// <param name="id">Entity ID</param>
-	/// <param name="versionColumn">Version column for predicate</param>
+	/// <param name="table">Table name.</param>
+	/// <param name="columns">List of columns to update.</param>
+	/// <param name="idColumn">ID column for predicate.</param>
+	/// <param name="id">Entity ID.</param>
+	/// <param name="versionColumn">Version column for predicate.</param>
 	protected abstract string GetUpdateQuery(
 		IDbName table,
 		IColumnList columns,
@@ -92,7 +90,7 @@ public abstract partial class DbClient : IDbClient
 	);
 
 	/// <inheritdoc/>
-	public Maybe<string> GetDeleteQuery<TEntity>(object id)
+	public Result<string> GetDeleteQuery<TEntity>(object id)
 		where TEntity : IWithId =>
 		Entities.GetTableMapFor<TEntity>().Map(
 			x => typeof(TEntity).Implements<IWithVersion>() switch
@@ -102,9 +100,7 @@ public abstract partial class DbClient : IDbClient
 
 				true =>
 					GetDeleteQuery(x.Name, x.IdColumn, id, x.VersionColumn),
-
-			},
-			e => new M.ErrorGettingCrudDeleteQueryExceptionMsg(e)
+			}
 		);
 
 	/// <inheritdoc cref="GetDeleteQuery(IDbName, IColumn, object, IColumn?)"/>
@@ -115,10 +111,10 @@ public abstract partial class DbClient : IDbClient
 	);
 
 	/// <inheritdoc cref="GetDeleteQuery{TEntity}"/>
-	/// <param name="table">Table name</param>
-	/// <param name="idColumn">ID column for predicate</param>
-	/// <param name="id">Entity ID</param>
-	/// <param name="versionColumn">Version column for predicate</param>
+	/// <param name="table">Table name.</param>
+	/// <param name="idColumn">ID column for predicate.</param>
+	/// <param name="id">Entity ID.</param>
+	/// <param name="versionColumn">Version column for predicate.</param>
 	protected abstract string GetDeleteQuery(
 		IDbName table,
 		IColumn idColumn,

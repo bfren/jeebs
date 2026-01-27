@@ -1,7 +1,6 @@
 // Jeebs Unit Tests
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
-using System.Globalization;
 using Jeebs.Config.Services;
 
 namespace Jeebs.Config.ServicesConfig_Tests;
@@ -13,16 +12,15 @@ public class SplitDefinition_Tests
 	[InlineData("")]
 	[InlineData(" ")]
 	[InlineData("one.two.three")]
-	public void Invalid_Definitition_Throws_InvalidServiceDefinitionException(string definition)
+	public void Invalid_Definitition_Returns_None(string? definition)
 	{
 		// Arrange
 
 		// Act
-		var action = void () => ServicesConfig.SplitDefinition(definition);
+		var result = ServicesConfig.SplitDefinition(definition);
 
 		// Assert
-		var ex = Assert.Throws<InvalidServiceDefinitionException>(action);
-		Assert.Equal(string.Format(CultureInfo.InvariantCulture, InvalidServiceDefinitionException.Format, definition), ex.Message);
+		result.AssertNone();
 	}
 
 	[Fact]
@@ -35,8 +33,8 @@ public class SplitDefinition_Tests
 		var d1 = $"{type}";
 
 		// Act
-		var (t0, n0) = ServicesConfig.SplitDefinition(d0);
-		var (t1, n1) = ServicesConfig.SplitDefinition(d1);
+		var (t0, n0) = ServicesConfig.SplitDefinition(d0).Unsafe().Unwrap();
+		var (t1, n1) = ServicesConfig.SplitDefinition(d1).Unsafe().Unwrap();
 
 		// Assert
 		Assert.Equal(type, t0);

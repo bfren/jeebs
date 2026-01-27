@@ -1,26 +1,23 @@
-﻿// Jeebs Unit Tests
+// Jeebs Unit Tests
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 namespace Jeebs.WordPress.ContentFilters.Blocks.YouTube_Tests;
 
 public class Parse_Tests
 {
-	public static IEnumerable<object[]> Parses_YouTube_Id_Data()
-	{
-		yield return new object[]
-		{
-			"<!-- wp:embed {\"url\":\"https://www.youtube.com/watch?v=5k9mk7esVUw\",\"type\":\"video\",\"providerNameSlug\":\"youtube\",\"responsive\":true,\"className\":\"wp-embed-aspect-16-9 wp-has-aspect-ratio\"} --><!-- /wp:embed -->",
-			"5k9mk7esVUw",
-			"https://www.youtube.com/watch?v=5k9mk7esVUw"
-		};
-
-		yield return new object[]
-		{
-			"<!-- wp:core-embed/youtube {\"url\":\"https://youtu.be/R5OzX-f9ATY\",\"type\":\"video\",\"providerNameSlug\":\"youtube\",\"responsive\":true,\"className\":\"wp-embed-aspect-16-9 wp-has-aspect-ratio\"} --><!-- /wp:core-embed/youtube -->",
-			"R5OzX-f9ATY",
-			"https://youtu.be/R5OzX-f9ATY"
-		};
-	}
+	public static TheoryData<string, string, string> Parses_YouTube_Id_Data() =>
+		[
+			(
+				"<!-- wp:embed {\"url\":\"https://www.youtube.com/watch?v=5k9mk7esVUw\",\"type\":\"video\",\"providerNameSlug\":\"youtube\",\"responsive\":true,\"className\":\"wp-embed-aspect-16-9 wp-has-aspect-ratio\"} --><!-- /wp:embed -->",
+				"5k9mk7esVUw",
+				"https://www.youtube.com/watch?v=5k9mk7esVUw"
+			),
+			(
+				"<!-- wp:core-embed/youtube {\"url\":\"https://youtu.be/R5OzX-f9ATY\",\"type\":\"video\",\"providerNameSlug\":\"youtube\",\"responsive\":true,\"className\":\"wp-embed-aspect-16-9 wp-has-aspect-ratio\"} --><!-- /wp:core-embed/youtube -->",
+				"R5OzX-f9ATY",
+				"https://youtu.be/R5OzX-f9ATY"
+			)
+		];
 
 	[Theory]
 	[MemberData(nameof(Parses_YouTube_Id_Data))]

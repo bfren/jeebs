@@ -1,14 +1,11 @@
-﻿// Jeebs Unit Tests
+// Jeebs Unit Tests
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
-
-using Jeebs.Extensions;
 
 namespace Jeebs.StringExtensions_Tests;
 
 public class ReplaceAll_Tests
 {
 	[Theory]
-	[InlineData(null)]
 	[InlineData("")]
 	public void NullOrEmpty_ReturnsOriginal(string input)
 	{
@@ -24,12 +21,12 @@ public class ReplaceAll_Tests
 	[Theory]
 	[InlineData("Ben Green", new[] { "e", "n" }, null, "B Gr")]
 	[InlineData("Ben Green", new[] { "e", "n" }, "-", "B-- Gr---")]
-	public void String_ReturnsValueWithStringsReplaced(string input, string[] replace, string with, string expected)
+	public void String_ReturnsValueWithStringsReplaced(string input, string[] replace, string? with, string expected)
 	{
 		// Arrange
 
 		// Act
-		var result = input.ReplaceAll(replace, with);
+		var result = input.ReplaceAll(replace, with!);
 
 		// Assert
 		Assert.Equal(expected, result);

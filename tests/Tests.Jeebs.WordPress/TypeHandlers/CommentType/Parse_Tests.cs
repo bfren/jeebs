@@ -1,4 +1,4 @@
-﻿// Jeebs Unit Tests
+// Jeebs Unit Tests
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using Jeebs.WordPress.Enums;
@@ -22,15 +22,14 @@ public class Parse_Tests
 		Assert.Same(expected, result);
 	}
 
-	[Theory]
-	[InlineData(null)]
-	public void Null_Value_Returns_Blank_CommentType(object input)
+	[Fact]
+	public void Null_Value_Returns_Blank_CommentType()
 	{
 		// Arrange
 		var handler = new CommentTypeTypeHandler();
 
 		// Act
-		var result = handler.Parse(input);
+		var result = handler.Parse(null!);
 
 		// Assert
 		Assert.Same(CommentType.Blank, result);

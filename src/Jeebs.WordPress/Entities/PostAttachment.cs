@@ -1,13 +1,12 @@
 // Jeebs Rapid Application Development
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
-using Jeebs.Extensions;
 using Jeebs.Functions;
 
 namespace Jeebs.WordPress.Entities;
 
 /// <summary>
-/// Post Attachment
+/// Post Attachment.
 /// </summary>
 public abstract record class PostAttachment : WpPostEntity, IPostAttachment
 {
@@ -32,20 +31,15 @@ public abstract record class PostAttachment : WpPostEntity, IPostAttachment
 	{
 		get =>
 			JsonF.Serialise(
-				PhpF.Deserialise(info)
+				PhpF.Deserialise(field)
 			)
 			.Unwrap(
-				JsonF.Empty
+				_ => JsonF.Empty
 			);
 
 		init =>
-			info = value;
-	}
-
-	/// <summary>
-	/// PHP serialised info
-	/// </summary>
-	private string info = string.Empty;
+			field = value;
+	} = string.Empty;
 
 	/// <inheritdoc/>
 	public string GetFilePath(string wpUploadsPath) =>

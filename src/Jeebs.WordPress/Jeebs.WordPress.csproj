@@ -1,9 +1,11 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <ItemGroup>
     <PackageReference Include="Microsoft.Extensions.Options.ConfigurationExtensions" />
+    <PackageReference Include="Rnd" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Jeebs.Auth.Data.Clients.MySql\Jeebs.Auth.Data.Clients.MySql.csproj" />
+    <ProjectReference Include="..\Jeebs.Data.Clients.MySql\Jeebs.Data.Clients.MySql.csproj" />
+    <ProjectReference Include="..\Jeebs.Data.Query\Jeebs.Data.Query.csproj" />
     <ProjectReference Include="..\Jeebs.Data\Jeebs.Data.csproj" />
     <ProjectReference Include="..\Jeebs\Jeebs.csproj" />
   </ItemGroup>

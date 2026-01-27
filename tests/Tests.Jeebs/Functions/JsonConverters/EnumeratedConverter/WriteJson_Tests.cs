@@ -1,4 +1,4 @@
-﻿// Jeebs Unit Tests
+// Jeebs Unit Tests
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 namespace Jeebs.Functions.JsonConverters.EnumeratedConverter_Tests;
@@ -21,7 +21,7 @@ public class WriteJson_Tests
 
 	[Theory]
 	[InlineData(null)]
-	public void Serialise_Null_Returns_Empty_Json(Enumerated input)
+	public void Serialise_Null_Returns_Empty_Json(Enumerated? input)
 	{
 		// Arrange
 

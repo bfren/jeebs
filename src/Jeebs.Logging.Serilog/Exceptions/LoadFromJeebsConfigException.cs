@@ -6,29 +6,29 @@ using System;
 namespace Jeebs.Logging.Serilog.Exceptions;
 
 /// <summary>
-/// See <see cref="LoggerConfigurationExtensions.LoadFromJeebsConfig(global::Serilog.LoggerConfiguration, Config.JeebsConfig)"/>
+/// See <see cref="LoggerConfigurationExtensions.LoadFromJeebsConfig(global::Serilog.LoggerConfiguration, Config.JeebsConfig)"/>.
 /// </summary>
 public class LoadFromJeebsConfigException : Exception
 {
 	/// <summary>
-	/// Create
+	/// Create.
 	/// </summary>
 	public LoadFromJeebsConfigException() { }
 
 	/// <summary>
-	/// Create with reason message
+	/// Create with FailureValue.
 	/// </summary>
-	/// <param name="reason"></param>
-	public LoadFromJeebsConfigException(IMsg reason) : this(reason.ToString() ?? string.Empty) { }
+	/// <param name="fail"></param>
+	public LoadFromJeebsConfigException(FailureValue fail) : this(fail.ToString()) { }
 
 	/// <summary>
-	/// Create with message
+	/// Create with message.
 	/// </summary>
 	/// <param name="message"></param>
 	public LoadFromJeebsConfigException(string message) : base(message) { }
 
 	/// <summary>
-	/// Create with message and inner exception
+	/// Create with message and inner exception.
 	/// </summary>
 	/// <param name="message"></param>
 	/// <param name="inner"></param>

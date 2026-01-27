@@ -6,21 +6,20 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using Jeebs.Data.Attributes;
-using StrongId;
 
 namespace Jeebs.Data.Map.Functions;
 
 /// <summary>
-/// Mapping Functions
+/// Mapping Functions.
 /// </summary>
 public static partial class MapF
 {
 	/// <summary>
-	/// Validate that the properties on the entity and the columns on the table match
+	/// Validate that the properties on the entity and the columns on the table match.
 	/// </summary>
-	/// <typeparam name="TTable">Table type</typeparam>
-	/// <typeparam name="TEntity">Entity type</typeparam>
-	public static (bool valid, List<string> errors) ValidateTable<TTable, TEntity>()
+	/// <typeparam name="TTable">Table type.</typeparam>
+	/// <typeparam name="TEntity">Entity type.</typeparam>
+	public static (bool valid, List<FailureValue> errors) ValidateTable<TTable, TEntity>()
 		where TTable : ITable
 		where TEntity : IWithId
 	{
@@ -39,7 +38,7 @@ public static partial class MapF
 		var entityPropertyNames = getPropertyNames(entityType);
 
 		// Compare the table columns with the entity properties
-		var errors = new List<string>();
+		var errors = new List<FailureValue>();
 
 		// Check for missing table columns
 		var missingTableFields = entityPropertyNames.Except(tablePropertyNames);
@@ -47,7 +46,10 @@ public static partial class MapF
 		{
 			foreach (var field in missingTableFields)
 			{
-				errors.Add($"The definition of table '{tableType.FullName}' is missing field '{field}'.");
+				errors.Add(new(
+					"The definition of table '{Table}' is missing field '{Field}'.",
+					tableType.Name, field
+				));
 			}
 		}
 
@@ -57,7 +59,10 @@ public static partial class MapF
 		{
 			foreach (var property in missingEntityProperties)
 			{
-				errors.Add($"The definition of entity '{entityType.FullName}' is missing property '{property}'.");
+				errors.Add(new(
+					"The definition of entity '{Entity}' is missing property '{Property}'.",
+					entityType.Name, property
+				));
 			}
 		}
 

@@ -1,10 +1,10 @@
-﻿// Jeebs Unit Tests
+// Jeebs Unit Tests
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using Jeebs.Data;
 using Jeebs.Data.Enums;
 using Jeebs.Data.Query.QueryPartsBuilder_Tests;
-using Jeebs.WordPress.Entities.StrongIds;
+using Jeebs.WordPress.Entities.Ids;
 using Jeebs.WordPress.Enums;
 using static Jeebs.WordPress.Query.PostsPartsBuilder_Tests.Setup;
 
@@ -23,7 +23,7 @@ public class AddWhereStatus_Tests : QueryPartsBuilder_Tests<PostsPartsBuilder, W
 		var status = new PostStatus(Rnd.Str);
 
 		// Act
-		var result = builder.AddWhereStatus(v.Parts, status);
+		var result = builder.AddWhereStatus(v.Parts, status).Unsafe().Unwrap();
 
 		// Assert
 		AssertWhere(v.Parts, result, Post.Status, Compare.Equal, status);

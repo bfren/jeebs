@@ -12,16 +12,16 @@ public sealed record class PagedList<T> : ImmutableList<T>, IPagedList<T>
 	public IPagingValues Values { get; init; }
 
 	/// <summary>
-	/// Create an empty PagedList
+	/// Create an empty PagedList.
 	/// </summary>
 	public PagedList() =>
 		Values = new PagingValues();
 
 	/// <summary>
-	/// Create PagedList from a collection of items
+	/// Create PagedList from a collection of items.
 	/// </summary>
-	/// <param name="values">PagingValues</param>
-	/// <param name="collection">Collection</param>
+	/// <param name="values">PagingValues.</param>
+	/// <param name="collection">Collection.</param>
 	public PagedList(IPagingValues values, IEnumerable<T> collection) : base(collection) =>
 		Values = values;
 }

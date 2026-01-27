@@ -1,4 +1,4 @@
-﻿// Jeebs Rapid Application Development
+// Jeebs Rapid Application Development
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using System.Collections.Generic;
@@ -11,22 +11,22 @@ using Microsoft.AspNetCore.Razor.TagHelpers;
 namespace Jeebs.Mvc.TagHelpers;
 
 /// <summary>
-/// Alert TagHelper
+/// Alert TagHelper.
 /// </summary>
 [HtmlTargetElement("alerts", TagStructure = TagStructure.WithoutEndTag)]
 public sealed class AlertsTagHelper : TagHelper
 {
 	/// <summary>
-	/// ViewContext object
+	/// ViewContext object.
 	/// </summary>
 	[ViewContext]
 	public ViewContext? ViewContext { get; set; }
 
 	/// <summary>
-	/// Output any alert messages
+	/// Output any alert messages.
 	/// </summary>
-	/// <param name="context">TagHelperContext</param>
-	/// <param name="output">TagHelperOutput</param>
+	/// <param name="context">TagHelperContext.</param>
+	/// <param name="output">TagHelperOutput.</param>
 	public override Task ProcessAsync(TagHelperContext context, TagHelperOutput output)
 	{
 		// If there are alerts, display them

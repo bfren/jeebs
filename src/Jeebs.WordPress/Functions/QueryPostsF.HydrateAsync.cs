@@ -6,24 +6,23 @@ using System.Reflection;
 using System.Threading.Tasks;
 using Jeebs.Data;
 using Jeebs.WordPress.CustomFields;
-using Jeebs.WordPress.Entities.StrongIds;
-using StrongId;
+using Jeebs.WordPress.Entities.Ids;
 
 namespace Jeebs.WordPress.Functions;
 
 public static partial class QueryPostsF
 {
 	/// <summary>
-	/// Hydrate the custom fields for the list of posts
+	/// Hydrate the custom fields for the list of posts.
 	/// </summary>
-	/// <typeparam name="TList">List type</typeparam>
-	/// <typeparam name="TModel">Model type</typeparam>
-	/// <param name="db">IWpDb</param>
-	/// <param name="w">IUnitOfWork</param>
-	/// <param name="posts">Posts</param>
-	/// <param name="meta">Meta property</param>
-	/// <param name="fields">Custom Fields</param>
-	internal static async Task<Maybe<TList>> HydrateAsync<TList, TModel>(
+	/// <typeparam name="TList">List type.</typeparam>
+	/// <typeparam name="TModel">Model type.</typeparam>
+	/// <param name="db">IWpDb.</param>
+	/// <param name="w">IUnitOfWork.</param>
+	/// <param name="posts">Posts.</param>
+	/// <param name="meta">Meta property.</param>
+	/// <param name="fields">Custom Fields.</param>
+	internal static async Task<Result<TList>> HydrateAsync<TList, TModel>(
 		IWpDb db,
 		IUnitOfWork w,
 		TList posts,
@@ -31,36 +30,37 @@ public static partial class QueryPostsF
 		List<PropertyInfo> fields
 	)
 		where TList : IEnumerable<TModel>
-		where TModel : IWithId<WpPostId>
+		where TModel : IWithId<WpPostId, ulong>
 	{
 		// Hydrate all custom fields for all posts
 		foreach (var post in posts)
 		{
 			// Get meta
-			var metaDict = meta.Get(post);
-
-			// Add each custom field
-			foreach (var info in fields)
+			if (meta.Get(post).Unsafe().TrySome(out var metaDict))
 			{
-				// Whether or not the field is required
-				var required = info.GetValue(post) is not null;
-
-				// Get custom field
-				if (GetCustomField(post, info) is ICustomField customField)
+				// Add each custom field
+				foreach (var info in fields)
 				{
-					// Hydrate the field
-					var result = await customField.HydrateAsync(db, w, metaDict, required).ConfigureAwait(false);
+					// Whether or not the field is required
+					var required = info.GetValue(post) is not null;
 
-					// If it failed and it's required, return None
-					if (result.IsNone(out var reason) && required)
+					// Get custom field
+					if (GetCustomField(post, info) is ICustomField customField)
 					{
-						return F.None<TList>(reason);
-					}
+						// Hydrate the field
+						var result = await customField.HydrateAsync(db, w, metaDict, required);
 
-					// Set the value
-					if (result.IsSome(out var set) && set)
-					{
-						info.SetValue(post, customField);
+						// If it failed and it's required, return Fail
+						if (result.Unsafe().TryFailure(out var failure) && required)
+						{
+							return R.Fail(failure);
+						}
+
+						// Set the value
+						if (result.Unsafe().TryOk(out var set) && set)
+						{
+							info.SetValue(post, customField);
+						}
 					}
 				}
 			}

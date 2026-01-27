@@ -2,9 +2,6 @@
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using System.Data;
-using Jeebs.Messages;
-using MaybeF;
-using static Jeebs.Data.Query.FluentQuery.M;
 
 namespace Jeebs.Data.Query.FluentQuery_Tests;
 
@@ -15,8 +12,8 @@ public class QueryAsync_Tests : FluentQuery_Tests
 	{
 		// Arrange
 		var (query, _) = Setup();
-		var m0 = Substitute.For<IMsg>();
-		var m1 = Substitute.For<IMsg>();
+		var m0 = FailGen.Create().Value;
+		var m1 = FailGen.Create().Value;
 		query.Errors.Add(m0);
 		query.Errors.Add(m1);
 
@@ -24,24 +21,20 @@ public class QueryAsync_Tests : FluentQuery_Tests
 		var result = await query.QueryAsync<int>();
 
 		// Assert
-		var none = result.AssertNone().AssertType<ListMsg>();
-		Assert.Collection(none.Args!,
-			x => Assert.Same(m0, x),
-			x => Assert.Same(m1, x)
-		);
+		_ = result.AssertFailure("Query errors.", query.Errors);
 	}
 
 	[Fact]
-	public async Task No_Predicates__Returns_None_With_NoPredicatesMsg()
+	public async Task No_Predicates__Returns_Fail()
 	{
 		// Arrange
 		var (query, _) = Setup();
 
 		// Act
-		var result = await query.QueryAsync<int>();
+		var result = await query.QueryAsync<string>();
 
 		// Assert
-		result.AssertNone().AssertType<NoPredicatesMsg>();
+		_ = result.AssertFailure("No predicates defined for WHERE clause.");
 	}
 
 	[Fact]
@@ -55,8 +48,8 @@ public class QueryAsync_Tests : FluentQuery_Tests
 		});
 
 		// Act
-		await withWhere.QueryAsync<int>();
-		await withWhere.QueryAsync<int>(v.Transaction);
+		await withWhere.QueryAsync<string>();
+		await withWhere.QueryAsync<string>(v.Transaction);
 
 		// Assert
 		var fluent = Assert.IsType<FluentQuery<TestEntity, TestId>>(withWhere);
@@ -76,11 +69,11 @@ public class QueryAsync_Tests : FluentQuery_Tests
 		});
 
 		// Act
-		await withWhere.QueryAsync<int>();
-		await withWhere.QueryAsync<int>(v.Transaction);
+		await withWhere.QueryAsync<string>();
+		await withWhere.QueryAsync<string>(v.Transaction);
 
 		// Assert
 		Assert.IsType<FluentQuery<TestEntity, TestId>>(withWhere);
-		await v.Db.Received(2).QueryAsync<int>(sql, param, CommandType.Text, v.Transaction);
+		await v.Db.Received(2).QueryAsync<string>(sql, param, CommandType.Text, v.Transaction);
 	}
 }
