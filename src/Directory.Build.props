@@ -55,7 +55,7 @@
 
   <!-- Read Version File -->
   <PropertyGroup Label="Version">
-    <JeebsVersion>$([System.IO.File]::ReadAllText('$(VersionPath)'))</JeebsVersion>
+    <JeebsVersion>$([System.IO.File]::ReadAllText('$(VersionPath)').Trim())</JeebsVersion>
   </PropertyGroup>
 
   <!-- Package Configuration -->
