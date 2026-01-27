@@ -199,12 +199,22 @@ public class MvcApp(bool useHsts) : WebApp(useHsts)
 	/// <summary>
 	/// Override to configure MVC options.
 	/// </summary>
-	/// <param name="ctx"></param>
+	/// <param name="ctx">HostBuilderContext.</param>
 	/// <param name="opt">MvcOptions.</param>
 	protected virtual void ConfigureServicesMvcOptions(HostBuilderContext ctx, MvcOptions opt)
 	{
-		opt.CacheProfiles.Add(CacheProfiles.None, new() { NoStore = true });
-		opt.CacheProfiles.Add(CacheProfiles.Default, new() { Duration = 600, VaryByQueryKeys = VaryByQueryKeys });
+		opt.CacheProfiles.Add(CacheProfiles.None, new()
+		{
+			Location = ResponseCacheLocation.None,
+			NoStore = true
+		});
+
+		opt.CacheProfiles.Add(CacheProfiles.Default, new()
+		{
+			Location = ResponseCacheLocation.Client,
+			Duration = 600,
+			VaryByQueryKeys = VaryByQueryKeys
+		});
 	}
 
 	/// <summary>
