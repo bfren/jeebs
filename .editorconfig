@@ -454,6 +454,7 @@ dotnet_naming_rule.parameters_rule.severity             = warning
 [*]
 
 end_of_line = crlf
+insert_final_newline = true
 
 [*.{cs,csx,cake,vb,vbx}]
 

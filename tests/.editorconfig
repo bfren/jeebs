@@ -3,8 +3,6 @@
 # Add file header
 file_header_template = Jeebs Unit Tests\nCopyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
-insert_final_newline = true
-
 # CA1000: Do not declare static members on generic types
 dotnet_diagnostic.CA1000.severity = none
 
