@@ -17,7 +17,7 @@ public class JsonTypeHandler<T> : Dapper.SqlMapper.StringTypeHandler<T>
 	/// </summary>
 	/// <param name="xml">T value.</param>
 	protected override string Format(T xml) =>
-		JsonF.Serialise(xml).Discard().Unwrap(() => JsonF.Empty);
+		JsonF.Serialise(xml).Unwrap(_ => JsonF.Empty);
 
 	/// <summary>
 	/// Deserialise JSON string.

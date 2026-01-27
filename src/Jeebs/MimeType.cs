@@ -155,6 +155,6 @@ public sealed record class MimeType : Enumerated
 		}
 
 		// Parse and return value
-		return Parse(mimeType, All.ToArray()).Discard().Unwrap(() => Blank);
+		return Parse(mimeType, All.ToArray()).Unwrap(_ => Blank);
 	}
 }
