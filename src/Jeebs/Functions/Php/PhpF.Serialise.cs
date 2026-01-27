@@ -2,7 +2,6 @@
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using System.Collections;
-using System.Globalization;
 using System.Text;
 
 namespace Jeebs.Functions;
@@ -46,7 +45,7 @@ public static partial class PhpF
 			IDictionary x =>
 				appendDictionary(x),
 
-			{ } x =>
+			{ } =>
 				sb,
 
 			_ =>
