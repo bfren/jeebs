@@ -1,7 +1,6 @@
 // Jeebs Rapid Application Development
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
-using Jeebs.Functions;
 using Microsoft.Extensions.Options;
 
 namespace Jeebs.Config.Web.Verification;
@@ -19,22 +18,29 @@ public sealed record class VerificationConfig : IOptions<VerificationConfig>
 	/// <summary>
 	/// Google Site Verification page.
 	/// </summary>
-	public string Google
+	public string? Google
 	{
 		get =>
-			StringF.Format("google{0}.html", googleCode, string.Empty);
+			google switch
+			{
+				string =>
+					string.Format(F.DefaultCulture, "google{0}.html", google),
+
+				_ =>
+					null
+			};
 
 		init =>
-			googleCode = value;
+			google = value;
 	}
 
-	private readonly string? googleCode;
+	private string? google;
 
 	/// <summary>
 	/// True if there are any verification configurations.
 	/// </summary>
 	public bool Any =>
-		Google is not null;
+		!string.IsNullOrWhiteSpace(google);
 
 	/// <inheritdoc/>
 	VerificationConfig IOptions<VerificationConfig>.Value =>

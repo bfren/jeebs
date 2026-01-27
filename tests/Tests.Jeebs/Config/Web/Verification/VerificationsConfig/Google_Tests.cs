@@ -6,7 +6,7 @@ namespace Jeebs.Config.Web.Verification.VerificationsConfig_Tests;
 public class Google_Tests
 {
 	[Fact]
-	public void Code_Not_Set_Returns_Empty_string()
+	public void Code_Not_Set_Returns_Null()
 	{
 		// Arrange
 		var config = new VerificationConfig();
@@ -15,7 +15,7 @@ public class Google_Tests
 		var result = config.Google;
 
 		// Assert
-		Assert.Equal(string.Empty, result);
+		Assert.Null(result);
 	}
 
 	[Fact]
