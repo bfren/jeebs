@@ -16,5 +16,5 @@ public static class DateTimeExtensions
 	/// </summary>
 	/// <param name="this">DateTime object.</param>
 	public static string ToMySqlString(this DateTime @this) =>
-		@this.ToString("yyyy-MM-dd HH:mm:ss", CultureInfo.InvariantCulture);
+		@this.ToString("yyyy-MM-dd HH:mm:ss", F.DefaultCulture);
 }

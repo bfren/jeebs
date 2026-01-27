@@ -40,7 +40,7 @@ public static partial class EnumF
 			where TTo : struct, Enum
 		{
 			// Convert to long so we can get the value of the receiving enum
-			var fromLong = System.Convert.ChangeType(from, typeof(long), CultureInfo.InvariantCulture);
+			var fromLong = System.Convert.ChangeType(from, typeof(long), F.DefaultCulture);
 
 			// Convert to receiving Enum - if fromLong is not defined in TTo, Enum.ToObject() will return
 			// fromLong, rather than the Enum value, so we also need to check the parsed object exists in

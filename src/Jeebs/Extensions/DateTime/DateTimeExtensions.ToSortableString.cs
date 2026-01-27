@@ -14,5 +14,5 @@ public static partial class DateTimeExtensions
 	/// <param name="this">DateTime object.</param>
 	/// <returns>Sortable DateTime string.</returns>
 	public static string ToSortableString(this DateTime @this) =>
-		@this.ToUniversalTime().ToString("yyyy-MM-dd HH:mm:ss.ffff", CultureInfo.InvariantCulture);
+		@this.ToUniversalTime().ToString("yyyy-MM-dd HH:mm:ss.ffff", F.DefaultCulture);
 }

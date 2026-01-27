@@ -38,7 +38,7 @@ internal static partial class Gallery
 			_ = JsonF.Deserialise<GalleryParsed>(info).IfOk(gallery =>
 				content = content.Replace(
 					match.Value,
-					string.Format(CultureInfo.InvariantCulture, format, Rnd.StringF.Get(10), string.Join(",", gallery.Ids), gallery.Columns)
+					string.Format(F.DefaultCulture, format, Rnd.StringF.Get(10), string.Join(",", gallery.Ids), gallery.Columns)
 				)
 			);
 		}

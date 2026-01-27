@@ -2,7 +2,6 @@
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using System;
-using System.Globalization;
 using System.Linq;
 
 namespace Jeebs;
@@ -71,7 +70,7 @@ public readonly partial struct DateTimeInt : IEquatable<DateTimeInt>, IParsable<
 	/// </summary>
 	/// <param name="value">DateTime string value - format yyyymmddHHMM.</param>
 	public DateTimeInt(string? value) =>
-		(Year, Month, Day, Hour, Minute) = Parse(value, CultureInfo.InvariantCulture);
+		(Year, Month, Day, Hour, Minute) = Parse(value, F.DefaultCulture);
 
 	/// <summary>
 	/// Construct object from long - will be converted to a 12-digit string with leading zeroes.
@@ -89,7 +88,7 @@ public readonly partial struct DateTimeInt : IEquatable<DateTimeInt>, IParsable<
 			throw new ArgumentException("Too large - cannot be later than the year 9999", nameof(value));
 		}
 
-		(Year, Month, Day, Hour, Minute) = Parse(value.ToString(FormatString, CultureInfo.InvariantCulture), CultureInfo.InvariantCulture);
+		(Year, Month, Day, Hour, Minute) = Parse(value.ToString(FormatString, F.DefaultCulture), F.DefaultCulture);
 	}
 
 	/// <summary>
@@ -117,7 +116,7 @@ public readonly partial struct DateTimeInt : IEquatable<DateTimeInt>, IParsable<
 				$"{Year:0000}{Month:00}{Day:00}{Hour:00}{Minute:00}",
 
 			false =>
-				0.ToString(FormatString, CultureInfo.InvariantCulture)
+				0.ToString(FormatString, F.DefaultCulture)
 		};
 
 	/// <summary>
@@ -128,7 +127,7 @@ public readonly partial struct DateTimeInt : IEquatable<DateTimeInt>, IParsable<
 		IsValidDateTime().Valid switch
 		{
 			true =>
-				long.Parse(ToString(), CultureInfo.InvariantCulture),
+				long.Parse(ToString(), F.DefaultCulture),
 
 			false =>
 				0

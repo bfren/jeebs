@@ -36,7 +36,7 @@ public sealed class BooleanTypeHandler : Dapper.SqlMapper.TypeHandler<bool>
 	/// </summary>
 	/// <param name="value">Database value.</param>
 	public override bool Parse(object value) =>
-		YesValues.Contains(value?.ToString()?.ToLower(CultureInfo.InvariantCulture));
+		YesValues.Contains(value?.ToString()?.ToLower(F.DefaultCulture));
 
 	/// <summary>
 	/// Set the value based on the column name.

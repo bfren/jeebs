@@ -150,7 +150,7 @@ public class VCalendar(CalendarModel calendar, string tzid) : CalendarBase(calen
 	/// <param name="withTime">If true will include the time.</param>
 	/// <returns>DateTime string.</returns>
 	internal static string Format(DateTime dt, bool withTime = true) =>
-		dt.ToString(withTime ? @"yyyyMMdd\THHmmss" : "yyyyMMdd", CultureInfo.InvariantCulture);
+		dt.ToString(withTime ? @"yyyyMMdd\THHmmss" : "yyyyMMdd", F.DefaultCulture);
 
 	/// <summary>
 	/// Get Timezone information.

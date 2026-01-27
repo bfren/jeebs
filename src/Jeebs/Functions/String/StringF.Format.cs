@@ -24,7 +24,7 @@ public static partial class StringF
 		obj switch
 		{
 			T x =>
-				string.Format(CultureInfo.InvariantCulture, formatString, x),
+				string.Format(F.DefaultCulture, formatString, x),
 
 			_ =>
 				ifNull ?? formatString
@@ -98,7 +98,7 @@ public static partial class StringF
 				+ new string('}', endGroup.Captures.Count);
 		});
 
-		return string.Format(CultureInfo.InvariantCulture, rewrittenFormat, [.. values]);
+		return string.Format(F.DefaultCulture, rewrittenFormat, [.. values]);
 	}
 
 	[GeneratedRegex("(?<start>\\{)+(?<template>[\\w\\.\\[\\]@]+)(?<format>:[^}]+)?(?<end>\\})+", RegexOptions.IgnoreCase | RegexOptions.CultureInvariant)]

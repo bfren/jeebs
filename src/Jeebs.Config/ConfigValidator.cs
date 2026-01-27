@@ -46,7 +46,7 @@ public static class ConfigValidator
 		if (!config.IsValid(schema, out IList<string> errors))
 		{
 			var sb = new StringBuilder();
-			_ = sb.AppendLine(CultureInfo.InvariantCulture, $"Invalid Jeebs configuration file: {path}.");
+			_ = sb.AppendLine(F.DefaultCulture, $"Invalid Jeebs configuration file: {path}.");
 			foreach (var item in errors)
 			{
 				_ = sb.AppendLine(item);

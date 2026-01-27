@@ -55,17 +55,17 @@ public static partial class PhpF
 
 		// Append a value to the StringBuilder
 		StringBuilder append<TValue>(char type, TValue value) =>
-			sb.Append(CultureInfo.InvariantCulture, $"{type}:{value};");
+			sb.Append(F.DefaultCulture, $"{type}:{value};");
 
 		// Append a string to the StringBuilder
 		StringBuilder appendString(string str) =>
-			sb.Append(CultureInfo.InvariantCulture, $"{StringChar}:{UTF8.GetByteCount(str)}:\"{str}\";");
+			sb.Append(F.DefaultCulture, $"{StringChar}:{UTF8.GetByteCount(str)}:\"{str}\";");
 
 		// Append a Hashtable to the StringBuilder
 		// Enables arrays of different key / value pairs
 		StringBuilder appendHashtable(Hashtable hashtable)
 		{
-			_ = sb.Append(CultureInfo.InvariantCulture, $"{ArrayChar}:{hashtable.Count}:{{");
+			_ = sb.Append(F.DefaultCulture, $"{ArrayChar}:{hashtable.Count}:{{");
 			foreach (DictionaryEntry item in hashtable)
 			{
 				_ = Serialise(item.Key, sb);

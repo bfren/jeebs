@@ -17,7 +17,7 @@ public static partial class BooleanF
 	public static Maybe<bool> Parse<T>(T value)
 	{
 		// Convert to string
-		var val = value?.ToString()?.ToLower(CultureInfo.InvariantCulture);
+		var val = value?.ToString()?.ToLower(F.DefaultCulture);
 		if (val is null)
 		{
 			return M.None;

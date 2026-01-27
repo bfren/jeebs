@@ -20,7 +20,7 @@ public static partial class StringExtensions
 			// Handle the first letter in the string.
 			if (array.Length >= 1 && char.IsLower(array[0]))
 			{
-				array[0] = char.ToUpper(array[0], CultureInfo.InvariantCulture);
+				array[0] = char.ToUpper(array[0], F.DefaultCulture);
 			}
 
 			// Scan through the letters, checking for spaces.
@@ -29,7 +29,7 @@ public static partial class StringExtensions
 			{
 				if (array[i - 1] == ' ' && char.IsLower(array[i]))
 				{
-					array[i] = char.ToUpper(array[i], CultureInfo.InvariantCulture);
+					array[i] = char.ToUpper(array[i], F.DefaultCulture);
 				}
 			}
 

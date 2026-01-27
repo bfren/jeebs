@@ -55,7 +55,7 @@ public sealed record class SlackMessage
 		{
 			// Build notification image URL
 			var url = string.Format(
-				CultureInfo.InvariantCulture,
+				F.DefaultCulture,
 				"https://bfren.dev/img/notifications/{0}",
 				level.ToString().ToLowerInvariant()
 			);

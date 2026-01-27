@@ -14,5 +14,5 @@ public static partial class DateTimeExtensions
 	/// <param name="this">DateTime object.</param>
 	/// <returns>Standard DateTime string.</returns>
 	public static string ToStandardString(this DateTime @this) =>
-		@this.ToString("HH:mm dd/MM/yyyy", CultureInfo.InvariantCulture);
+		@this.ToString("HH:mm dd/MM/yyyy", F.DefaultCulture);
 }

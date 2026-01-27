@@ -25,7 +25,7 @@ public static partial class StringExtensions
 			var encoded = new StringBuilder();
 			foreach (var b in a)
 			{
-				_ = encoded.AppendFormat(CultureInfo.InvariantCulture, "&#{0};", b);
+				_ = encoded.AppendFormat(F.DefaultCulture, "&#{0};", b);
 			}
 
 			return encoded.ToString();

@@ -42,7 +42,7 @@ public sealed class ConsoleLoggingProvider : ILoggingProvider
 
 		_ = logger.WriteTo.Console(
 			outputTemplate: config.Template,
-			formatProvider: CultureInfo.InvariantCulture
+			formatProvider: F.DefaultCulture
 		);
 	}
 }

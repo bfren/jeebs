@@ -109,7 +109,7 @@ public static partial class PhpF
 			var colon0 = str.IndexOf(':', pointer) + 1;
 			var colon1 = str.IndexOf(':', colon0);
 			var num = str[colon0..colon1]; // the number of items in the array
-			var len = int.Parse(num, CultureInfo.InvariantCulture);
+			var len = int.Parse(num, F.DefaultCulture);
 			pointer += 4 + num.Length;
 
 			// Get each key and value, and add them to a hashtable

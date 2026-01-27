@@ -46,7 +46,7 @@ internal static partial class YouTube
 				{
 					content = content.Replace(
 						match.Value,
-						string.Format(CultureInfo.InvariantCulture, format, Rnd.StringF.Get(10), videoId, uri)
+						string.Format(F.DefaultCulture, format, Rnd.StringF.Get(10), videoId, uri)
 					);
 				}
 			});

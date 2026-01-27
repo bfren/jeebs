@@ -87,8 +87,8 @@ public sealed class NavMenuTagHelper(
 		}
 
 		// Setup objects
-		var currentController = ViewContext.ControllerName().ToLower(CultureInfo.InvariantCulture);
-		var currentAction = ViewContext.ActionName().ToLower(CultureInfo.InvariantCulture);
+		var currentController = ViewContext.ControllerName().ToLower(F.DefaultCulture);
+		var currentAction = ViewContext.ActionName().ToLower(F.DefaultCulture);
 		var urlHelper = UrlHelperFactory.GetUrlHelper(ViewContext);
 
 		// Build the menu

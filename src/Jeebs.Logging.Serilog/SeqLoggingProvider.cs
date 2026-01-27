@@ -28,7 +28,7 @@ public sealed class SeqLoggingProvider : ILoggingProvider
 					serverUrl: c.Server,
 					apiKey: c.ApiKey,
 					restrictedToMinimumLevel: minimum,
-					formatProvider: CultureInfo.InvariantCulture
+					formatProvider: F.DefaultCulture
 				)
 			)
 		)

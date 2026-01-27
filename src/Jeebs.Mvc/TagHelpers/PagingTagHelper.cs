@@ -102,7 +102,7 @@ public sealed class PagingTagHelper : TagHelper
 			if (i == Values.LowerPage && i > 1)
 			{
 				AddLink(i - 1, "<");
-				AddLink(i, i.ToString(CultureInfo.InvariantCulture));
+				AddLink(i, i.ToString(F.DefaultCulture));
 				continue;
 			}
 
@@ -116,7 +116,7 @@ public sealed class PagingTagHelper : TagHelper
 			// The OR condition is in case we ever want to display the current page link differently
 			if (i == Values.Page || i <= Values.Pages)
 			{
-				AddLink(i, i.ToString(CultureInfo.InvariantCulture));
+				AddLink(i, i.ToString(F.DefaultCulture));
 			}
 		}
 
@@ -136,7 +136,7 @@ public sealed class PagingTagHelper : TagHelper
 			var css = page == Values.Page ? LinkOnClass : "";
 
 			// Build link - we can't use TagBuilder as it encodes the URL which is already encoded
-			var a = $"<{LinkHtmlTag} class=\"{css}\"><a href=\"{string.Format(CultureInfo.InvariantCulture, href, page)}\">{text}</a></{LinkHtmlTag}>";
+			var a = $"<{LinkHtmlTag} class=\"{css}\"><a href=\"{string.Format(F.DefaultCulture, href, page)}\">{text}</a></{LinkHtmlTag}>";
 
 			// Add to the wrapper
 			_ = output.Content.AppendHtml(a);

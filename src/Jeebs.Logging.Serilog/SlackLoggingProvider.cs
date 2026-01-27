@@ -28,7 +28,7 @@ public sealed class SlackLoggingProvider : ILoggingProvider
 				a => a.Slack(
 					webhookUrl: c.Webhook,
 					restrictedToMinimumLevel: minimum,
-					formatProvider: CultureInfo.InvariantCulture
+					formatProvider: F.DefaultCulture
 				)
 			)
 		)

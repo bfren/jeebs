@@ -74,7 +74,7 @@ public sealed class PostsPartsBuilder : PartsBuilder<WpPostId>, IQueryPostsParts
 		// Search title
 		if ((fields & SearchPostField.Title) != 0)
 		{
-			_ = clause.Append(CultureInfo.InvariantCulture, $"{__(T.Posts, p => p.Title)} {comparison} @{nameof(search)}");
+			_ = clause.Append(F.DefaultCulture, $"{__(T.Posts, p => p.Title)} {comparison} @{nameof(search)}");
 		}
 
 		// Search slug
@@ -85,7 +85,7 @@ public sealed class PostsPartsBuilder : PartsBuilder<WpPostId>, IQueryPostsParts
 				_ = clause.Append(" OR ");
 			}
 
-			_ = clause.Append(CultureInfo.InvariantCulture, $"{__(T.Posts, p => p.Slug)} {comparison} @{nameof(search)}");
+			_ = clause.Append(F.DefaultCulture, $"{__(T.Posts, p => p.Slug)} {comparison} @{nameof(search)}");
 		}
 
 		// Search content
@@ -96,7 +96,7 @@ public sealed class PostsPartsBuilder : PartsBuilder<WpPostId>, IQueryPostsParts
 				_ = clause.Append(" OR ");
 			}
 
-			_ = clause.Append(CultureInfo.InvariantCulture, $"{__(T.Posts, p => p.Content)} {comparison} @{nameof(search)}");
+			_ = clause.Append(F.DefaultCulture, $"{__(T.Posts, p => p.Content)} {comparison} @{nameof(search)}");
 		}
 
 		// Search excerpt
@@ -107,7 +107,7 @@ public sealed class PostsPartsBuilder : PartsBuilder<WpPostId>, IQueryPostsParts
 				_ = clause.Append(" OR ");
 			}
 
-			_ = clause.Append(CultureInfo.InvariantCulture, $"{__(T.Posts, p => p.Excerpt)} {comparison} @{nameof(search)}");
+			_ = clause.Append(F.DefaultCulture, $"{__(T.Posts, p => p.Excerpt)} {comparison} @{nameof(search)}");
 		}
 
 		// Return
@@ -225,7 +225,7 @@ public sealed class PostsPartsBuilder : PartsBuilder<WpPostId>, IQueryPostsParts
 			_ = subQuery.Append(')');
 
 			// Add to sub-query, matching the number of terms
-			_ = taxonomyWhere.Append(CultureInfo.InvariantCulture, $"({subQuery}) = {taxonomy.Ids.Count}");
+			_ = taxonomyWhere.Append(F.DefaultCulture, $"({subQuery}) = {taxonomy.Ids.Count}");
 
 			// Increase taxonomy name index
 			taxonomyNameIndex++;
@@ -288,7 +288,7 @@ public sealed class PostsPartsBuilder : PartsBuilder<WpPostId>, IQueryPostsParts
 			);
 
 			// Add sub query to where
-			_ = customFieldWhere.Append(CultureInfo.InvariantCulture, $"({subQuery}) = 1");
+			_ = customFieldWhere.Append(F.DefaultCulture, $"({subQuery}) = 1");
 
 			// Increase custom field index
 			customFieldIndex++;

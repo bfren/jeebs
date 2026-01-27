@@ -37,7 +37,7 @@ public class SerilogLogger : Log
 		ConsoleMessagePrefix switch
 		{
 			string app =>
-				string.Format(CultureInfo.InvariantCulture, "{0} | {1}", app, message),
+				string.Format(F.DefaultCulture, "{0} | {1}", app, message),
 
 			_ =>
 				message
