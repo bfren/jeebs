@@ -12,7 +12,7 @@ public static partial class ResultExtensions
 		LogBool(@this, usingLog, "Done.", "Failed.");
 
 	/// <summary>
-	/// Log a boolean result - or the reason if <see cref="Fail"/>.
+	/// Log a boolean result - or the failure value if <see cref="Failure"/>.
 	/// </summary>
 	/// <param name="this">Result object.</param>
 	/// <param name="usingLog">Log implementation.</param>

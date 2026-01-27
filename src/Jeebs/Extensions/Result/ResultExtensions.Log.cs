@@ -12,7 +12,7 @@ public static partial class ResultExtensions
 		Log(@this, usingLog, "Done: {Value}.");
 
 	/// <summary>
-	/// Log a result - or the reason if <see cref="Fail"/>.
+	/// Log a result - or the reason if <see cref="Failure"/>.
 	/// </summary>
 	/// <typeparam name="T">Ok value type.</typeparam>
 	/// <param name="this">Result object.</param>
