@@ -65,7 +65,6 @@ public class RazorApp : MvcApp
 		_ = services
 			.AddRazorPages(opt => ConfigureServicesRazorPagesOptions(ctx, opt))
 			.AddMvcOptions(opt => ConfigureServicesMvcOptions(ctx, opt))
-			.AddRazorRuntimeCompilation(opt => ConfigureServicesRuntimeCompilation(ctx, opt))
 			.AddJsonOptions(opt => ConfigureServicesEndpointsJson(ctx, opt));
 
 	/// <summary>

@@ -14,7 +14,6 @@ using Jeebs.Functions;
 using Jeebs.Logging;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation;
 using Microsoft.AspNetCore.ResponseCompression;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -195,7 +194,6 @@ public class MvcApp(bool useHsts) : WebApp(useHsts)
 	protected virtual void ConfigureServicesEndpoints(HostBuilderContext ctx, IServiceCollection services) =>
 		_ = services
 			.AddControllersWithViews(opt => ConfigureServicesMvcOptions(ctx, opt))
-			.AddRazorRuntimeCompilation(opt => ConfigureServicesRuntimeCompilation(ctx, opt))
 			.AddJsonOptions(opt => ConfigureServicesEndpointsJson(ctx, opt));
 
 	/// <summary>
@@ -208,13 +206,6 @@ public class MvcApp(bool useHsts) : WebApp(useHsts)
 		opt.CacheProfiles.Add(CacheProfiles.None, new() { NoStore = true });
 		opt.CacheProfiles.Add(CacheProfiles.Default, new() { Duration = 600, VaryByQueryKeys = VaryByQueryKeys });
 	}
-
-	/// <summary>
-	/// Override to configure Razor Runtime Compilation
-	/// </summary>
-	/// <param name="ctx">HostBuilderContext</param>
-	/// <param name="opt">MvcRazorRuntimeCompilationOptions</param>
-	protected virtual void ConfigureServicesRuntimeCompilation(HostBuilderContext ctx, MvcRazorRuntimeCompilationOptions opt) { }
 
 	/// <summary>
 	/// Override to configure endpoints JSON
