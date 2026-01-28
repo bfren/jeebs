@@ -41,9 +41,9 @@ public class AssertMethodName_Tests
 			.Returns(method);
 
 		// Act
-		var action = () => FluentQueryHelper.AssertMethodName(call, Rnd.Str);
+		var result = Record.Exception(() => FluentQueryHelper.AssertMethodName(call, Rnd.Str));
 
 		// Assert
-		Assert.Throws<MethodNameException>(action);
+		Assert.IsType<MethodNameException>(result);
 	}
 }

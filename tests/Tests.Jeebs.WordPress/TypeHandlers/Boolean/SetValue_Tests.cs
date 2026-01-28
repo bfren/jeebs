@@ -48,9 +48,9 @@ public class SetValue_Tests
 		parameter.SourceColumn.Returns(column);
 
 		// Act
-		var action = void () => handler.SetValue(parameter, input);
+		var result = Record.Exception(() => handler.SetValue(parameter, input));
 
 		// Assert
-		Assert.Throws<InvalidOperationException>(action);
+		Assert.IsType<InvalidOperationException>(result);
 	}
 }

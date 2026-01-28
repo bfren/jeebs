@@ -44,12 +44,13 @@ public class AssertExecute_Tests : Setup
 		// Arrange
 		var fluent = Create();
 		await fluent.CountAsync();
-
-		// Act
 		var action = (ICall c) => FluentQueryHelper.AssertExecute<TestEntity, TestId>(c, x => x.Id, true);
 
+		// Act
+		var result = Record.Exception(() => fluent.AssertCalls(action));
+
 		// Assert
-		Assert.Throws<MethodNameException>(() => fluent.AssertCalls(action));
+		Assert.IsType<MethodNameException>(result);
 	}
 
 	[Fact]
@@ -58,12 +59,13 @@ public class AssertExecute_Tests : Setup
 		// Arrange
 		var fluent = Create();
 		await fluent.ExecuteAsync(x => x.Id);
-
-		// Act
 		var action = (ICall c) => FluentQueryHelper.AssertExecute<TestEntity, string>(c, nameof(TestEntity.Id), false);
 
+		// Act
+		var result = Record.Exception(() => fluent.AssertCalls(action));
+
 		// Assert
-		Assert.Throws<GenericArgumentException>(() => fluent.AssertCalls(action));
+		Assert.IsType<GenericArgumentException>(result);
 	}
 
 	[Fact]
@@ -72,11 +74,12 @@ public class AssertExecute_Tests : Setup
 		// Arrange
 		var fluent = Create();
 		await fluent.ExecuteAsync<TestId>(nameof(TestEntity.Id));
-
-		// Act
 		var action = (ICall c) => FluentQueryHelper.AssertExecute<TestEntity, TestId>(c, x => x.Id, false);
 
+		// Act
+		var result = Record.Exception(() => fluent.AssertCalls(action));
+
 		// Assert
-		Assert.Throws<PropertyExpressionException>(() => fluent.AssertCalls(action));
+		Assert.IsType<PropertyExpressionException>(result);
 	}
 }

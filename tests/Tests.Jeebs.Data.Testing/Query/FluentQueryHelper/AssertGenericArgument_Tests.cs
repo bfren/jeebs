@@ -41,10 +41,10 @@ public class AssertGenericArgument_Tests
 			.Returns(method);
 
 		// Act
-		var action = () => FluentQueryHelper.AssertGenericArgument<Guid>(call);
+		var result = Record.Exception(() => FluentQueryHelper.AssertGenericArgument<Guid>(call));
 
 		// Assert
-		var ex = Assert.Throws<GenericArgumentException>(action);
+		var ex = Assert.IsType<GenericArgumentException>(result);
 		Assert.Contains($"Expected type '{typeof(Guid)}' but found '{typeof(string)}'.", ex.Message);
 	}
 
@@ -54,16 +54,16 @@ public class AssertGenericArgument_Tests
 		// Arrange
 		var method = Substitute.ForPartsOf<MethodInfo>();
 		method.Configure().GetGenericArguments()
-			.Returns(Array.Empty<Type>());
+			.Returns([]);
 		var call = Substitute.For<ICall>();
 		call.GetMethodInfo()
 			.Returns(method);
 
 		// Act
-		var action = () => FluentQueryHelper.AssertGenericArgument<string>(call);
+		var result = Record.Exception(() => FluentQueryHelper.AssertGenericArgument<string>(call));
 
 		// Assert
-		var ex = Assert.Throws<GenericArgumentException>(action);
+		var ex = Assert.IsType<GenericArgumentException>(result);
 		Assert.Equal("Expected one generic argument but found none.", ex.Message);
 	}
 
@@ -74,16 +74,16 @@ public class AssertGenericArgument_Tests
 		var method = Substitute.ForPartsOf<MethodInfo>();
 		var args = Rnd.NumberF.GetInt32(2, 10);
 		method.Configure().GetGenericArguments()
-			.Returns(Enumerable.Repeat(typeof(string), args).ToArray());
+			.Returns([.. Enumerable.Repeat(typeof(string), args)]);
 		var call = Substitute.For<ICall>();
 		call.GetMethodInfo()
 			.Returns(method);
 
 		// Act
-		var action = () => FluentQueryHelper.AssertGenericArgument<string>(call);
+		var result = Record.Exception(() => FluentQueryHelper.AssertGenericArgument<string>(call));
 
 		// Assert
-		var ex = Assert.Throws<GenericArgumentException>(action);
+		var ex = Assert.IsType<GenericArgumentException>(result);
 		Assert.Equal($"Expected one generic argument but found {args}.", ex.Message);
 	}
 }

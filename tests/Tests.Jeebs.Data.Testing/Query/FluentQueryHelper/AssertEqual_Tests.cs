@@ -28,10 +28,10 @@ public class AssertEqual_Tests
 		var v1 = Rnd.Str;
 
 		// Act
-		var action = () => FluentQueryHelper.AssertEqual(v0, v1);
+		var result = Record.Exception(() => FluentQueryHelper.AssertEqual(v0, v1));
 
 		// Assert
-		var ex = Assert.Throws<EqualTypeException>(action);
+		var ex = Assert.IsType<EqualTypeException>(result);
 		Assert.Equal($"Expected '{v0}' but value was '{v1}'.", ex.Message);
 	}
 }

@@ -28,10 +28,10 @@ public class AssertPropertyExpression_Tests
 		// Arrange
 
 		// Act
-		var action = () => FluentQueryHelper.AssertPropertyExpression<Test, string>(Rnd.Str, Rnd.Str);
+		var result = Record.Exception(() => FluentQueryHelper.AssertPropertyExpression<Test, string>(Rnd.Str, Rnd.Str));
 
 		// Assert
-		var ex = Assert.Throws<PropertyExpressionException>(action);
+		var ex = Assert.IsType<PropertyExpressionException>(result);
 		Assert.Equal($"Expected a property expression but received '{typeof(string)}'.", ex.Message);
 	}
 
@@ -43,10 +43,10 @@ public class AssertPropertyExpression_Tests
 		Expression<Func<Test, string>> actual = x => x.Foo;
 
 		// Act
-		var action = () => FluentQueryHelper.AssertPropertyExpression<Test, string>(expected, actual);
+		var result = Record.Exception(() => FluentQueryHelper.AssertPropertyExpression<Test, string>(expected, actual));
 
 		// Assert
-		var ex = Assert.Throws<PropertyExpressionException>(action);
+		var ex = Assert.IsType<PropertyExpressionException>(result);
 		Assert.Equal($"Expected property with name '{expected}' but received '{nameof(Test.Foo)}'.", ex.Message);
 	}
 

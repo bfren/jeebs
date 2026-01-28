@@ -31,10 +31,10 @@ public class AssertEqualJson_Tests
 		var v1 = new { v1 = value };
 
 		// Act
-		var action = () => FluentQueryHelper.AssertEqualJson(v0, v1);
+		var result = Record.Exception(() => FluentQueryHelper.AssertEqualJson(v0, v1));
 
 		// Assert
-		var ex = Assert.Throws<EqualJsonException>(action);
+		var ex = Assert.IsType<EqualJsonException>(result);
 		Assert.Equal($"Expected '{v0}' but value was '{v1}'.", ex.Message);
 	}
 
@@ -46,10 +46,10 @@ public class AssertEqualJson_Tests
 		var v1 = new { v1 = Rnd.Str };
 
 		// Act
-		var action = () => FluentQueryHelper.AssertEqualJson(v0, v1);
+		var result = Record.Exception(() => FluentQueryHelper.AssertEqualJson(v0, v1));
 
 		// Assert
-		var ex = Assert.Throws<EqualJsonException>(action);
+		var ex = Assert.IsType<EqualJsonException>(result);
 		Assert.Equal($"Expected '{v0}' but value was '{v1}'.", ex.Message);
 	}
 }
