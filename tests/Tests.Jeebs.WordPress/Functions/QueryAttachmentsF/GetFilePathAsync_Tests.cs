@@ -14,7 +14,7 @@ public class GetFilePathAsync_Tests : Query_Tests
 	{
 		// Arrange
 		var (db, w, _) = Setup();
-		var empty = new List<Attachment>().AsEnumerable().WrapResult();
+		var empty = new List<Attachment>().AsEnumerable().Wrap().AsResult();
 		db.QueryAsync<Attachment>(Arg.Any<string>(), Arg.Any<object?>(), CommandType.Text, Arg.Any<IDbTransaction>()).Returns(empty);
 		var fileId = IdGen.ULongId<WpPostId>();
 
@@ -32,7 +32,7 @@ public class GetFilePathAsync_Tests : Query_Tests
 	{
 		// Arrange
 		var (db, w, _) = Setup();
-		var list = new[] { new Attachment(), new Attachment() }.AsEnumerable().WrapResult();
+		var list = new[] { new Attachment(), new Attachment() }.AsEnumerable().Wrap().AsResult();
 		db.QueryAsync<Attachment>(Arg.Any<string>(), Arg.Any<object?>(), CommandType.Text, Arg.Any<IDbTransaction>()).Returns(list);
 		var fileId = IdGen.ULongId<WpPostId>();
 
@@ -51,7 +51,7 @@ public class GetFilePathAsync_Tests : Query_Tests
 		// Arrange
 		var (db, w, v) = Setup();
 		var urlPath = Rnd.Str;
-		var single = new[] { new Attachment { UrlPath = urlPath } }.AsEnumerable().WrapResult();
+		var single = new[] { new Attachment { UrlPath = urlPath } }.AsEnumerable().Wrap().AsResult();
 		db.QueryAsync<Attachment>(Arg.Any<string>(), Arg.Any<object?>(), CommandType.Text, Arg.Any<IDbTransaction>()).Returns(single);
 
 		// Act
