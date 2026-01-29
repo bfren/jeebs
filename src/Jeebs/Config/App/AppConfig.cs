@@ -2,7 +2,6 @@
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using System;
-using Jeebs.Functions;
 using Microsoft.Extensions.Options;
 
 namespace Jeebs.Config.App;
@@ -32,7 +31,7 @@ public sealed record class AppConfig : IOptions<AppConfig>
 	/// otherwise simply <see cref="Name"/>.
 	/// </summary>
 	public string FullName =>
-		StringF.Format("{0}/", Suite, string.Empty) + Name;
+		F.Format("{0}/", Suite, string.Empty) + Name;
 
 	/// <summary>
 	/// Application Version.
