@@ -62,7 +62,7 @@ public class AssertWhere_Tests : Setup
 	{
 		// Arrange
 		var fluent = Create();
-		fluent.Maximum(Rnd.ULng);
+		fluent.Maximum(Rnd.UInt64);
 		var a0 = (ICall c) => FluentQueryHelper.AssertWhere<TestEntity, string>(c, x => x.Foo, Compare.Equal, Rnd.Str);
 		var a1 = (ICall c) => FluentQueryHelper.AssertWhere(c, Rnd.Str, Rnd.Str);
 

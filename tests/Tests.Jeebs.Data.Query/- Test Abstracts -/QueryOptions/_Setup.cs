@@ -20,8 +20,8 @@ public abstract class QueryOptions_Tests<TOptions, TBuilder, TId>
 	{
 		var parts = new QueryParts(table)
 		{
-			Maximum = Rnd.ULng,
-			Skip = Rnd.ULng
+			Maximum = Rnd.UInt64,
+			Skip = Rnd.UInt64
 		};
 
 		var builder = Substitute.For<TBuilder>();

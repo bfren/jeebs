@@ -12,7 +12,7 @@ public abstract class Id_Tests<TEntity, TId>
 	protected void Test00(Func<ulong, TEntity> create)
 	{
 		// Arrange
-		var value = Rnd.ULng;
+		var value = Rnd.UInt64;
 		var entity = create(value);
 
 		// Act

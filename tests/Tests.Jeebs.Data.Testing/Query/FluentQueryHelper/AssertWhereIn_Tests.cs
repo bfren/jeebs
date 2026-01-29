@@ -28,7 +28,7 @@ public class AssertWhereIn_Tests : Setup
 	{
 		// Arrange
 		var fluent = Create();
-		fluent.Maximum(Rnd.ULng);
+		fluent.Maximum(Rnd.UInt64);
 		var action = (ICall c) => FluentQueryHelper.AssertWhereIn<TestEntity, long>(c, x => x.Bar, [Rnd.Lng, Rnd.Lng]);
 
 		// Act
