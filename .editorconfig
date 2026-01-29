@@ -477,6 +477,9 @@ dotnet_style_require_accessibility_modifiers = for_non_interface_members
 # 'using' directive preferences
 csharp_using_directive_placement = outside_namespace:warning
 
+# CS8625: Cannot convert null literal to non-nullable reference type.
+dotnet_diagnostic.CS8625.severity = error
+
 
 ##########################################
 # Disable various diagnostics
