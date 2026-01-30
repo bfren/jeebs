@@ -3,71 +3,41 @@
 
 using System.Data;
 using System.Threading.Tasks;
-using Jeebs.Data.Common.Query;
+using Jeebs.Data.Common.FluentQuery;
 using Jeebs.Logging;
 
 namespace Jeebs.Data.Common;
 
 /// <inheritdoc cref="IRepository{TEntity, TId}"/>
-public abstract class Repository<TEntity, TId> : IRepository<TEntity, TId>
+public abstract class Repository<TEntity, TId> : Repository<FluentQuery<TEntity, TId>, TEntity, TId>, IRepository<FluentQuery<TEntity, TId>, TEntity, TId>
 	where TEntity : IWithId
 	where TId : class, IUnion, new()
 {
 	/// <summary>
 	/// IDb.
 	/// </summary>
-	protected IDb Db { get; private init; }
-
-	internal IDb DbTest =>
-		Db;
-
-	/// <summary>
-	/// ILog (should be given a context of the implementing class).
-	/// </summary>
-	protected ILog<IRepository<TEntity, TId>> Log { get; private init; }
-
-	internal ILog LogTest =>
-		Log;
+	protected new IDb Db { get; private init; }
 
 	/// <summary>
 	/// Inject database and log objects.
 	/// </summary>
 	/// <param name="db">IDb.</param>
 	/// <param name="log">ILog (should be given a context of the implementing class).</param>
-	protected Repository(IDb db, ILog<IRepository<TEntity, TId>> log) =>
-		(Db, Log) = (db, log);
-
-	/// <summary>
-	/// Use Debug log by default - override to send elsewhere (or to disable entirely).
-	/// </summary>
-	/// <param name="message">Log message.</param>
-	/// <param name="args">Log message arguments.</param>
-	internal virtual void WriteToLog(string message, object[] args) =>
-		Log.Vrb(message, args);
-
-	/// <summary>
-	/// Log an operation.
-	/// </summary>
-	/// <param name="operation">Operation (method) name.</param>
-	protected void LogFunc(string operation) =>
-		WriteToLog("{Operation} {Entity}",
-		[
-			operation.Replace("Async", string.Empty),
-			typeof(TEntity).Name.Replace("Entity", string.Empty)
-		]);
+	protected Repository(IDb db, ILog<IRepository<FluentQuery<TEntity, TId>, TEntity, TId>> log) : base(db, log) =>
+		Db = db;
 
 	#region Fluent Queries
 
 	/// <inheritdoc/>
-	public virtual IFluentQuery<TEntity, TId> StartFluentQuery() =>
-		new FluentQuery<TEntity, TId>(Db, Db.Client.Entities, Log);
+	public override FluentQuery<TEntity, TId> StartFluentQuery() =>
+		new(Db, Db.Client.Entities, Log);
 
 	#endregion Fluent Queries
 
 	#region CRUD Queries
 
 	/// <inheritdoc/>
-	public virtual async Task<Result<TId>> CreateAsync(TEntity entity)
+	public override async Task<Result<TId>> CreateAsync(TEntity entity)
 	{
 		using var w = await Db.StartWorkAsync();
 		return await CreateAsync(entity, w.Transaction);
@@ -84,7 +54,7 @@ public abstract class Repository<TEntity, TId> : IRepository<TEntity, TId>
 		);
 
 	/// <inheritdoc/>
-	public virtual async Task<Result<TModel>> RetrieveAsync<TModel>(TId id)
+	public override async Task<Result<TModel>> RetrieveAsync<TModel>(TId id)
 	{
 		using var w = await Db.StartWorkAsync();
 		return await RetrieveAsync<TModel>(id, w.Transaction);
@@ -101,8 +71,7 @@ public abstract class Repository<TEntity, TId> : IRepository<TEntity, TId>
 		);
 
 	/// <inheritdoc/>
-	public virtual async Task<Result<bool>> UpdateAsync<TModel>(TModel model)
-		where TModel : IWithId
+	public override async Task<Result<bool>> UpdateAsync<TModel>(TModel model)
 	{
 		using var w = await Db.StartWorkAsync();
 		return await UpdateAsync(model, w.Transaction);
@@ -120,8 +89,7 @@ public abstract class Repository<TEntity, TId> : IRepository<TEntity, TId>
 		);
 
 	/// <inheritdoc/>
-	public virtual async Task<Result<bool>> DeleteAsync<TModel>(TModel model)
-		where TModel : IWithId
+	public override async Task<Result<bool>> DeleteAsync<TModel>(TModel model)
 	{
 		using var w = await Db.StartWorkAsync();
 		return await DeleteAsync(model, w.Transaction);
@@ -139,11 +107,4 @@ public abstract class Repository<TEntity, TId> : IRepository<TEntity, TId>
 		);
 
 	#endregion CRUD Queries
-
-	#region Testing
-
-	internal void WriteToLogTest(string message, object[] args) =>
-		WriteToLog(message, args);
-
-	#endregion Testing
 }

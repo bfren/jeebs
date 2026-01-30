@@ -4,7 +4,7 @@
 using System.Collections.Generic;
 using Jeebs.Data.Map;
 
-namespace Jeebs.Data.Common.Query;
+namespace Jeebs.Data.Common.FluentQuery;
 
 public static partial class QueryF
 {

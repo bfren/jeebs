@@ -8,27 +8,27 @@ using Jeebs.Reflection;
 
 namespace Jeebs.Data.FluentQuery;
 
-public abstract partial record class FluentQuery<TEntity, TId>
+public abstract partial record class FluentQuery<TFluentQuery, TEntity, TId>
 {
 	/// <inheritdoc/>
-	public IFluentQuery<TEntity, TId> Sort(string columnAlias, SortOrder order)
+	public TFluentQuery Sort(string columnAlias, SortOrder order)
 	{
 		if (Errors.Count > 0)
 		{
-			return this;
+			return Unchanged();
 		}
 
 		return DataF.GetColumnFromAlias(Table, columnAlias).Match(
 			ok: x => Update(parts => parts with { Sort = parts.Sort.WithItem((x, order)) }),
-			fail: f => { Errors.Add(f); return this; }
+			fail: f => { Errors.Add(f); return Unchanged(); }
 	   );
 	}
 
 	/// <inheritdoc/>
-	public IFluentQuery<TEntity, TId> Sort<TValue>(Expression<Func<TEntity, TValue>> aliasSelector, SortOrder order) =>
+	public TFluentQuery Sort<TValue>(Expression<Func<TEntity, TValue>> aliasSelector, SortOrder order) =>
 		aliasSelector.GetPropertyInfo()
 			.Match(
 				some: x => Sort(x.Name, order),
-				none: () => this
+				none: Unchanged
 			);
 }

@@ -3,27 +3,27 @@
 
 namespace Jeebs.Data.FluentQuery;
 
-public abstract partial record class FluentQuery<TEntity, TId>
+public abstract partial record class FluentQuery<TFluentQuery, TEntity, TId>
 {
 	/// <inheritdoc/>
-	public IFluentQuery<TEntity, TId> Maximum(ulong number) =>
+	public TFluentQuery Maximum(ulong number) =>
 		number switch
 		{
 			> 0 =>
 				Update(parts => parts with { Maximum = number }),
 
 			_ =>
-				this
+				Unchanged()
 		};
 
 	/// <inheritdoc/>
-	public IFluentQuery<TEntity, TId> Skip(ulong number) =>
+	public TFluentQuery Skip(ulong number) =>
 		number switch
 		{
 			> 0 =>
 				Update(parts => parts with { Skip = number }),
 
 			_ =>
-				this
+				Unchanged()
 		};
 }

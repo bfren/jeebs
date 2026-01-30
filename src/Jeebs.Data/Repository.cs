@@ -2,14 +2,16 @@
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using System.Threading.Tasks;
+using Jeebs.Data.FluentQuery;
 using Jeebs.Logging;
 
 namespace Jeebs.Data;
 
 /// <inheritdoc cref="IRepository{TEntity, TId}"/>
-public abstract class Repository<TEntity, TId> : IRepository<TEntity, TId>
+public abstract class Repository<TFluentQuery, TEntity, TId> : IRepository<TFluentQuery, TEntity, TId>
 	where TEntity : IWithId
 	where TId : class, IUnion, new()
+	where TFluentQuery : IFluentQuery<TFluentQuery, TEntity, TId>
 {
 	/// <summary>
 	/// IDb.
@@ -22,7 +24,7 @@ public abstract class Repository<TEntity, TId> : IRepository<TEntity, TId>
 	/// <summary>
 	/// ILog (should be given a context of the implementing class).
 	/// </summary>
-	protected ILog<IRepository<TEntity, TId>> Log { get; private init; }
+	protected ILog<IRepository<TFluentQuery, TEntity, TId>> Log { get; private init; }
 
 	internal ILog LogTest =>
 		Log;
@@ -32,8 +34,11 @@ public abstract class Repository<TEntity, TId> : IRepository<TEntity, TId>
 	/// </summary>
 	/// <param name="db">IDb.</param>
 	/// <param name="log">ILog (should be given a context of the implementing class).</param>
-	protected Repository(IDb db, ILog<IRepository<TEntity, TId>> log) =>
+	protected Repository(IDb db, ILog<IRepository<TFluentQuery, TEntity, TId>> log) =>
 		(Db, Log) = (db, log);
+
+	/// <inheritdoc/>
+	public abstract TFluentQuery StartFluentQuery();
 
 	/// <summary>
 	/// Use Debug log by default - override to send elsewhere (or to disable entirely).

@@ -10,7 +10,7 @@ using Jeebs.Data.Map;
 using Jeebs.Data.QueryBuilder;
 using Jeebs.Functions;
 
-namespace Jeebs.Data.Common.Query;
+namespace Jeebs.Data.Common.FluentQuery;
 
 public static partial class QueryF
 {

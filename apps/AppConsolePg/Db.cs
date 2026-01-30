@@ -2,13 +2,14 @@
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using Jeebs.Config.Db;
-using Jeebs.Data;
+using Jeebs.Data.Common;
+using Jeebs.Data.Map;
 using Jeebs.Logging;
 using Microsoft.Extensions.Options;
 
 namespace AppConsolePg;
 
-internal sealed class Db : Jeebs.Data.Db
+internal sealed class Db : Jeebs.Data.Common.Db
 {
 	public JsonTable Json { get; init; }
 

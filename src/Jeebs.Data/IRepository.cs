@@ -2,6 +2,7 @@
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using System.Threading.Tasks;
+using Jeebs.Data.FluentQuery;
 
 namespace Jeebs.Data;
 
@@ -10,10 +11,20 @@ namespace Jeebs.Data;
 /// </summary>
 /// <typeparam name="TEntity">Entity type.</typeparam>
 /// <typeparam name="TId">StrongId type.</typeparam>
-public interface IRepository<TEntity, TId>
+public interface IRepository<TFluentQuery, TEntity, TId>
 	where TEntity : IWithId
 	where TId : class, IUnion, new()
+	where TFluentQuery : IFluentQuery<TFluentQuery, TEntity, TId>
 {
+	#region Fluent Queries
+
+	/// <summary>
+	/// Start a new fluent query.
+	/// </summary>
+	TFluentQuery StartFluentQuery();
+
+	#endregion Fluent Queries
+
 	/// <summary>
 	/// Create an entity.
 	/// </summary>

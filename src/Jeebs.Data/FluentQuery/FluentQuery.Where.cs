@@ -11,22 +11,22 @@ using Jeebs.Reflection;
 
 namespace Jeebs.Data.FluentQuery;
 
-public abstract partial record class FluentQuery<TEntity, TId>
+public abstract partial record class FluentQuery<TFluentQuery, TEntity, TId>
 {
 	/// <inheritdoc/>
-	public IFluentQuery<TEntity, TId> Where(string clause, object parameters)
+	public TFluentQuery Where(string clause, object parameters)
 	{
 		// If there are errors, return
 		if (Errors.Count > 0)
 		{
-			return this;
+			return Unchanged();
 		}
 
 		// Check clause
 		if (string.IsNullOrWhiteSpace(clause))
 		{
 			Errors.Add(new("Trying to add empty clause to WHERE."));
-			return this;
+			return Unchanged();
 		}
 
 		// Get parameters
@@ -34,7 +34,7 @@ public abstract partial record class FluentQuery<TEntity, TId>
 		if (!param.TryAdd(parameters))
 		{
 			Errors.Add(new("Unable to add parameters to WHERE."));
-			return this;
+			return Unchanged();
 		}
 
 		// Add clause and return
@@ -45,12 +45,12 @@ public abstract partial record class FluentQuery<TEntity, TId>
 	}
 
 	/// <inheritdoc/>
-	public IFluentQuery<TEntity, TId> Where(string columnAlias, Compare compare, dynamic? value)
+	public TFluentQuery Where(string columnAlias, Compare compare, dynamic? value)
 	{
 		// If there are errors, return
 		if (Errors.Count > 0)
 		{
-			return this;
+			return Unchanged();
 		}
 
 		// Get column and add to QueryParts
@@ -62,21 +62,21 @@ public abstract partial record class FluentQuery<TEntity, TId>
 			fail: f =>
 			{
 				Errors.Add(f);
-				return this;
+				return Unchanged();
 			}
 		);
 	}
 
 	/// <inheritdoc/>
-	public IFluentQuery<TEntity, TId> Where<TValue>(Expression<Func<TEntity, TValue>> aliasSelector, Compare compare, TValue value) =>
+	public TFluentQuery Where<TValue>(Expression<Func<TEntity, TValue>> aliasSelector, Compare compare, TValue value) =>
 		aliasSelector.GetPropertyInfo()
 			.Match(
 				some: x => Where(x.Name, compare, value),
-				none: () => this
+				none: Unchanged
 			);
 
 	/// <inheritdoc/>
-	public IFluentQuery<TEntity, TId> WhereId(params TId[] ids) =>
+	public TFluentQuery WhereId(params TId[] ids) =>
 		ids.Length switch
 		{
 			> 1 =>
@@ -86,44 +86,44 @@ public abstract partial record class FluentQuery<TEntity, TId>
 				Where(nameof(IWithId.Id), Compare.Equal, ids[0].Value),
 
 			_ =>
-				this
+				Unchanged()
 		};
 
 	/// <inheritdoc/>
-	public IFluentQuery<TEntity, TId> WhereIn<TValue>(string columnAlias, IEnumerable<TValue> values) =>
+	public TFluentQuery WhereIn<TValue>(string columnAlias, IEnumerable<TValue> values) =>
 		values.Any() switch
 		{
 			true =>
 				Where(columnAlias, Compare.In, values),
 
 			false =>
-				this
+				Unchanged()
 		};
 
 	/// <inheritdoc/>
-	public IFluentQuery<TEntity, TId> WhereIn<TValue>(Expression<Func<TEntity, TValue>> aliasSelector, IEnumerable<TValue> values) =>
+	public TFluentQuery WhereIn<TValue>(Expression<Func<TEntity, TValue>> aliasSelector, IEnumerable<TValue> values) =>
 		aliasSelector.GetPropertyInfo()
 			.Match(
 				some: x => WhereIn(x.Name, values),
-				none: () => this
+				none: Unchanged
 			);
 
 	/// <inheritdoc/>
-	public IFluentQuery<TEntity, TId> WhereNotIn<TValue>(string columnAlias, IEnumerable<TValue> values) =>
+	public TFluentQuery WhereNotIn<TValue>(string columnAlias, IEnumerable<TValue> values) =>
 		values.Any() switch
 		{
 			true =>
 				Where(columnAlias, Compare.NotIn, values),
 
 			false =>
-				this
+				Unchanged()
 		};
 
 	/// <inheritdoc/>
-	public IFluentQuery<TEntity, TId> WhereNotIn<TValue>(Expression<Func<TEntity, TValue>> aliasSelector, IEnumerable<TValue> values) =>
+	public TFluentQuery WhereNotIn<TValue>(Expression<Func<TEntity, TValue>> aliasSelector, IEnumerable<TValue> values) =>
 		aliasSelector.GetPropertyInfo()
 			.Match(
 				some: x => WhereNotIn(x.Name, values),
-				none: () => this
+				none: Unchanged
 			);
 }

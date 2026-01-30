@@ -6,7 +6,7 @@ using Jeebs.Data.Map;
 using Jeebs.Data.QueryBuilder;
 using Jeebs.Logging;
 
-namespace Jeebs.Data.Common.Query.FluentQuery_Tests;
+namespace Jeebs.Data.Common.FluentQuery.FluentQuery_Tests;
 
 public abstract class FluentQuery_Tests
 {

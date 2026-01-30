@@ -3,7 +3,7 @@
 
 using Jeebs.Data.Enums;
 
-namespace Jeebs.Data.Common.Query.FluentQuery_Tests;
+namespace Jeebs.Data.Common.FluentQuery.FluentQuery_Tests;
 
 public class Sort_Tests : FluentQuery_Tests
 {

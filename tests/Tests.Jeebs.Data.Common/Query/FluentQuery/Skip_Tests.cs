@@ -1,7 +1,7 @@
 // Jeebs Unit Tests
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
-namespace Jeebs.Data.Common.Query.FluentQuery_Tests;
+namespace Jeebs.Data.Common.FluentQuery.FluentQuery_Tests;
 
 public class Skip_Tests : FluentQuery_Tests
 {

@@ -10,12 +10,10 @@ using Jeebs.Logging;
 namespace Jeebs.Data.FluentQuery;
 
 /// <inheritdoc cref="IFluentQuery{TEntity, TId}"/>
-public abstract record class FluentQuery { }
-
-/// <inheritdoc cref="IFluentQuery{TEntity, TId}"/>
-public abstract partial record class FluentQuery<TEntity, TId> : FluentQuery, IFluentQuery<TEntity, TId>
+public abstract partial record class FluentQuery<TFluentQuery, TEntity, TId> : IFluentQuery<TFluentQuery, TEntity, TId>
 	where TEntity : IWithId
 	where TId : class, IUnion, new()
+	where TFluentQuery : FluentQuery<TFluentQuery, TEntity, TId>
 {
 	/// <summary>
 	/// Database object.
@@ -60,10 +58,13 @@ public abstract partial record class FluentQuery<TEntity, TId> : FluentQuery, IF
 		Parts = new QueryParts(Table);
 	}
 
+	internal TFluentQuery Unchanged() =>
+		(TFluentQuery)this;
+
 	/// <summary>
 	/// Update <see cref="Parts"/> with a new value.
 	/// </summary>
 	/// <param name="with">Function to perform the update.</param>
-	internal IFluentQuery<TEntity, TId> Update(Func<QueryParts, QueryParts> with) =>
-		this with { Parts = with(new(Parts)) };
+	internal TFluentQuery Update(Func<QueryParts, QueryParts> with) =>
+		(TFluentQuery)this with { Parts = with(new(Parts)) };
 }

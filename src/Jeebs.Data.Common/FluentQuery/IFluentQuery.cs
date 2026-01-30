@@ -7,16 +7,17 @@ using System.Data;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 
-namespace Jeebs.Data.Common.Query;
+namespace Jeebs.Data.Common.FluentQuery;
 
 /// <summary>
 /// Build a database query using fluent syntax.
 /// </summary>
 /// <typeparam name="TEntity">Entity type.</typeparam>
 /// <typeparam name="TId">StrongId type.</typeparam>
-public interface IFluentQuery<TEntity, TId> : Data.FluentQuery.IFluentQuery<TEntity, TId>
+public interface IFluentQuery<TFluentQuery, TEntity, TId> : Data.FluentQuery.IFluentQuery<TFluentQuery, TEntity, TId>
 	where TEntity : IWithId
 	where TId : class, IUnion, new()
+	where TFluentQuery : IFluentQuery<TFluentQuery, TEntity, TId>
 {
 	/// <summary>
 	/// Return the number of rows matching the query.

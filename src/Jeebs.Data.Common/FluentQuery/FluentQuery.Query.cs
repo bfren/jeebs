@@ -6,12 +6,12 @@ using System.Data;
 using System.Threading.Tasks;
 using Jeebs.Data.QueryBuilder;
 
-namespace Jeebs.Data.Common.Query;
+namespace Jeebs.Data.Common.FluentQuery;
 
 public sealed partial record class FluentQuery<TEntity, TId>
 {
 	/// <inheritdoc/>
-	public async Task<Result<IEnumerable<TModel>>> QueryAsync<TModel>()
+	public override async Task<Result<IEnumerable<TModel>>> QueryAsync<TModel>()
 	{
 		using var w = await Db.StartWorkAsync();
 		return await QueryAsync<TModel>(w.Transaction);
@@ -54,7 +54,7 @@ public sealed partial record class FluentQuery<TEntity, TId>
 	}
 
 	/// <inheritdoc/>
-	public async Task<Result<TModel>> QuerySingleAsync<TModel>()
+	public override async Task<Result<TModel>> QuerySingleAsync<TModel>()
 	{
 		using var w = await Db.StartWorkAsync();
 		return await QuerySingleAsync<TModel>(w.Transaction);

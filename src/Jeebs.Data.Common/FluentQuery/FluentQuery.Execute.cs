@@ -8,12 +8,12 @@ using System.Threading.Tasks;
 using Jeebs.Data.Map;
 using Jeebs.Reflection;
 
-namespace Jeebs.Data.Common.Query;
+namespace Jeebs.Data.Common.FluentQuery;
 
 public sealed partial record class FluentQuery<TEntity, TId>
 {
 	/// <inheritdoc/>
-	public async Task<Result<TValue>> ExecuteAsync<TValue>(string columnAlias)
+	public override async Task<Result<TValue>> ExecuteAsync<TValue>(string columnAlias)
 	{
 		using var w = await Db.StartWorkAsync();
 		return await ExecuteAsync<TValue>(columnAlias, w.Transaction);
@@ -31,7 +31,7 @@ public sealed partial record class FluentQuery<TEntity, TId>
 			);
 
 	/// <inheritdoc/>
-	public async Task<Result<TValue>> ExecuteAsync<TValue>(Expression<Func<TEntity, TValue>> aliasSelector)
+	public override async Task<Result<TValue>> ExecuteAsync<TValue>(Expression<Func<TEntity, TValue>> aliasSelector)
 	{
 		using var w = await Db.StartWorkAsync();
 		return await ExecuteAsync(aliasSelector, w.Transaction);

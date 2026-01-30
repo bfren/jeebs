@@ -3,7 +3,7 @@
 
 using System.Data;
 using System.Threading.Tasks;
-using Jeebs.Data.Common.Query;
+using Jeebs.Data.Common.FluentQuery;
 
 namespace Jeebs.Data.Common;
 
@@ -12,21 +12,10 @@ namespace Jeebs.Data.Common;
 /// </summary>
 /// <typeparam name="TEntity">Entity type.</typeparam>
 /// <typeparam name="TId">StrongId type.</typeparam>
-public interface IRepository<TEntity, TId> : Data.IRepository<TEntity, TId>
+public interface IRepository<TEntity, TId> : IRepository<FluentQuery<TEntity, TId>, TEntity, TId>
 	where TEntity : IWithId
 	where TId : class, IUnion, new()
 {
-	#region Fluent Queries
-
-	/// <summary>
-	/// Start a new fluent query.
-	/// </summary>
-	IFluentQuery<TEntity, TId> StartFluentQuery();
-
-	#endregion Fluent Queries
-
-	#region CRUD Queries
-
 	/// <summary>
 	/// Create an entity.
 	/// </summary>
@@ -59,6 +48,4 @@ public interface IRepository<TEntity, TId> : Data.IRepository<TEntity, TId>
 	/// <param name="transaction">Database transaction.</param>
 	Task<Result<bool>> DeleteAsync<TModel>(TModel model, IDbTransaction transaction)
 		where TModel : IWithId;
-
-	#endregion CRUD Queries
 }

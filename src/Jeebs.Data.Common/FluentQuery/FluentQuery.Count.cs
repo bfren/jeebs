@@ -4,14 +4,14 @@
 using System.Data;
 using System.Threading.Tasks;
 
-namespace Jeebs.Data.Common.Query;
+namespace Jeebs.Data.Common.FluentQuery;
 
 public sealed partial record class FluentQuery<TEntity, TId>
 {
 	#region Count
 
 	/// <inheritdoc/>
-	public async Task<Result<long>> CountAsync()
+	public override async Task<Result<long>> CountAsync()
 	{
 		using var w = await Db.StartWorkAsync();
 		return await CountAsync(w.Transaction);

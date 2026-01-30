@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Jeebs.Data.FluentQuery;
 
-public partial record class FluentQuery<TEntity, TId>
+public partial record class FluentQuery<TFluentQuery, TEntity, TId>
 {
 	/// <inheritdoc/>
 	public abstract Task<Result<TValue>> ExecuteAsync<TValue>(string columnAlias);

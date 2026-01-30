@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace Jeebs.Data.FluentQuery;
 
-public abstract partial record class FluentQuery<TEntity, TId>
+public abstract partial record class FluentQuery<TFluentQuery, TEntity, TId>
 {
 	#region Count
 
