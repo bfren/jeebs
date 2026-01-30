@@ -2,8 +2,6 @@
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using System.Linq;
-using Jeebs.Data.Map;
-using Jeebs.Data.Query.Functions;
 
 namespace Jeebs.Data;
 
@@ -39,7 +37,7 @@ public static class Extract<TModel>
 		return
 			R.Try(
 				() => from table in tables
-					  from column in QueryF.GetColumnsFromTable<TModel>(table)
+					  from column in DataF.GetColumnsFromTable<TModel>(table)
 					  select column,
 				e => R.Fail(e).Msg("Error getting columns from table.").Ctx(nameof(Extract), nameof(From))
 			)
