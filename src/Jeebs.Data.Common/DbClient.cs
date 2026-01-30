@@ -7,13 +7,8 @@ using Jeebs.Data.Map;
 namespace Jeebs.Data.Common;
 
 /// <inheritdoc cref="IDbClient"/>
-public abstract partial class DbClient : IDbClient
+public abstract partial class DbClient : Data.DbClient, IDbClient
 {
-	/// <summary>
-	/// IEntityMapper.
-	/// </summary>
-	public IEntityMapper Entities { get; private init; }
-
 	/// <summary>
 	/// IDbTypeMapper.
 	/// </summary>
@@ -35,8 +30,8 @@ public abstract partial class DbClient : IDbClient
 	/// </summary>
 	/// <param name="entities"></param>
 	/// <param name="types"></param>
-	protected DbClient(IEntityMapper entities, IDbTypeMapper types) =>
-		(Entities, Types) = (entities, types);
+	protected DbClient(IEntityMapper entities, IDbTypeMapper types) : base(entities) =>
+		Types = types;
 
 	/// <inheritdoc/>
 	public abstract DbConnection GetConnection(string connectionString);

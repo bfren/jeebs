@@ -29,6 +29,6 @@ public static partial class QueryTermsF
 			x => x.ToParts<TModel>()
 		)
 		.BindAsync(
-			x => db.Query.QueryAsync<TModel>(x, w.Transaction)
+			x => db.QueryAsync<TModel>(x, w.Transaction)
 		);
 }

@@ -27,7 +27,7 @@ public static partial class QueryPostsF
 			db, opt
 		)
 		.BindAsync(
-			x => db.Query.QueryAsync<TModel>(x, w.Transaction)
+			x => db.QueryAsync<TModel>(x, w.Transaction)
 		)
 		.BindAsync(
 			x => x.Count() switch
@@ -61,7 +61,7 @@ public static partial class QueryPostsF
 			db, opt
 		)
 		.BindAsync(
-			x => db.Query.QueryAsync<TModel>(page, x, w.Transaction)
+			x => db.QueryAsync<TModel>(page, x, w.Transaction)
 		)
 		.BindAsync(
 			x => x switch
