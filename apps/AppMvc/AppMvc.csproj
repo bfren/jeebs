@@ -4,7 +4,6 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\src\Jeebs.Apps.Web\Jeebs.Apps.Web.csproj" />
-    <ProjectReference Include="..\..\src\Jeebs.Data.Query\Jeebs.Data.Query.csproj" />
     <ProjectReference Include="..\..\src\Jeebs.Mvc\Jeebs.Mvc.csproj" />
     <ProjectReference Include="..\..\src\Jeebs.Services.Drivers.Drawing.Skia\Jeebs.Services.Drivers.Drawing.Skia.csproj" />
   </ItemGroup>

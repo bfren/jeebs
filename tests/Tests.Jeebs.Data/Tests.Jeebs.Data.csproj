@@ -7,6 +7,6 @@
     <ProjectReference Include="..\Tests.Jeebs\Tests.Jeebs.csproj" />
   </ItemGroup>
   <ItemGroup>
-    <Using Include="Wrap.Ids"/>
+    <Using Include="Wrap.Ids" />
   </ItemGroup>
 </Project>
