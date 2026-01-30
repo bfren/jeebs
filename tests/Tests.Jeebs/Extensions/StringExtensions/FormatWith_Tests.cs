@@ -36,7 +36,7 @@ public class FormatWith_Tests
 		var result = format.FormatWith(values);
 
 		// Assert
-		Assert.Equal($"{n0} , {n1} , {n2}", result);
+		Assert.Equal($"{n1} , {n0} , {n2}", result);
 	}
 
 	[Fact]

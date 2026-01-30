@@ -30,6 +30,6 @@ public sealed partial record class FluentQuery<TEntity, TId>
 		aliasSelector.GetPropertyInfo()
 			.Match(
 				some: x => Sort(x.Name, order),
-				none: this
+				none: () => this
 			);
 }

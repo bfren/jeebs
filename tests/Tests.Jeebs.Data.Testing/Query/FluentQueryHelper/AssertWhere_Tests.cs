@@ -62,15 +62,17 @@ public class AssertWhere_Tests : Setup
 	{
 		// Arrange
 		var fluent = Create();
-		fluent.Maximum(Rnd.ULng);
-
-		// Act
+		fluent.Maximum(Rnd.UInt64);
 		var a0 = (ICall c) => FluentQueryHelper.AssertWhere<TestEntity, string>(c, x => x.Foo, Compare.Equal, Rnd.Str);
 		var a1 = (ICall c) => FluentQueryHelper.AssertWhere(c, Rnd.Str, Rnd.Str);
 
+		// Act
+		var r0 = Record.Exception(() => fluent.AssertCalls(a0));
+		var r1 = Record.Exception(() => fluent.AssertCalls(a1));
+
 		// Assert
-		Assert.Throws<MethodNameException>(() => fluent.AssertCalls(a0));
-		Assert.Throws<MethodNameException>(() => fluent.AssertCalls(a1));
+		Assert.IsType<MethodNameException>(r0);
+		Assert.IsType<MethodNameException>(r1);
 	}
 
 	[Fact]
@@ -81,12 +83,13 @@ public class AssertWhere_Tests : Setup
 		var compare = Compare.Like;
 		var value = Rnd.Str;
 		fluent.Where(x => x.Foo, compare, value);
-
-		// Act
 		var action = (ICall c) => FluentQueryHelper.AssertWhere<TestEntity, long>(c, nameof(TestEntity.Foo), compare, Rnd.Lng);
 
+		// Act
+		var result = Record.Exception(() => fluent.AssertCalls(action));
+
 		// Assert
-		Assert.Throws<GenericArgumentException>(() => fluent.AssertCalls(action));
+		Assert.IsType<GenericArgumentException>(result);
 	}
 
 	[Fact]
@@ -97,12 +100,13 @@ public class AssertWhere_Tests : Setup
 		var compare = Compare.Like;
 		var value = Rnd.Str;
 		fluent.Where(nameof(TestEntity.Foo), compare, value);
-
-		// Act
 		var action = (ICall c) => FluentQueryHelper.AssertWhere<TestEntity, string>(c, x => x.Foo, compare, value);
 
+		// Act
+		var result = Record.Exception(() => fluent.AssertCalls(action));
+
 		// Assert
-		Assert.Throws<GenericArgumentException>(() => fluent.AssertCalls(action));
+		Assert.IsType<GenericArgumentException>(result);
 	}
 
 	[Fact]
@@ -113,12 +117,13 @@ public class AssertWhere_Tests : Setup
 		var c0 = Compare.Is;
 		var c1 = Compare.IsNot;
 		fluent.Where(x => x.Foo, c0, Rnd.Str);
-
-		// Act
 		var action = (ICall c) => FluentQueryHelper.AssertWhere<TestEntity, string>(c, x => x.Foo, c1, Rnd.Str);
 
+		// Act
+		var result = Record.Exception(() => fluent.AssertCalls(action));
+
 		// Assert
-		Assert.Throws<EqualTypeException>(() => fluent.AssertCalls(action));
+		Assert.IsType<EqualTypeException>(result);
 	}
 
 	[Fact]
@@ -130,12 +135,13 @@ public class AssertWhere_Tests : Setup
 		var v1 = Rnd.Lng;
 		var compare = Compare.LessThanOrEqual;
 		fluent.Where(x => x.Bar, compare, v0);
-
-		// Act
 		var action = (ICall c) => FluentQueryHelper.AssertWhere<TestEntity, long>(c, x => x.Bar, compare, v1);
 
+		// Act
+		var result = Record.Exception(() => fluent.AssertCalls(action));
+
 		// Assert
-		Assert.Throws<EqualTypeException>(() => fluent.AssertCalls(action));
+		Assert.IsType<EqualTypeException>(result);
 	}
 
 	[Fact]
@@ -145,12 +151,13 @@ public class AssertWhere_Tests : Setup
 		var fluent = Create();
 		var parameters = new { value = Rnd.Guid };
 		fluent.Where(Rnd.Str, parameters);
-
-		// Act
 		var action = (ICall c) => FluentQueryHelper.AssertWhere(c, Rnd.Str, parameters);
 
+		// Act
+		var result = Record.Exception(() => fluent.AssertCalls(action));
+
 		// Assert
-		Assert.Throws<EqualTypeException>(() => fluent.AssertCalls(action));
+		Assert.IsType<EqualTypeException>(result);
 	}
 
 	[Fact]
@@ -160,11 +167,12 @@ public class AssertWhere_Tests : Setup
 		var fluent = Create();
 		var clause = Rnd.Str;
 		fluent.Where(clause, Rnd.Lng);
-
-		// Act
 		var action = (ICall c) => FluentQueryHelper.AssertWhere(c, clause, Rnd.Lng);
 
+		// Act
+		var result = Record.Exception(() => fluent.AssertCalls(action));
+
 		// Assert
-		Assert.Throws<EqualJsonException>(() => fluent.AssertCalls(action));
+		Assert.IsType<EqualJsonException>(result);
 	}
 }

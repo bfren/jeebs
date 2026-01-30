@@ -32,10 +32,10 @@ public class Map_Tests
 		var field = nameof(Foo.Bar0);
 
 		// Act
-		var action = void () => mapper.Map<Foo, FooTableWithoutBar0>(new());
+		var result = Record.Exception(() => mapper.Map<Foo, FooTableWithoutBar0>(new()));
 
 		// Assert
-		var ex = Assert.Throws<InvalidTableMapException>(action);
+		var ex = Assert.IsType<InvalidTableMapException>(result);
 		Assert.Single(ex.Errors).AssertMessage(
 			"The definition of table '{Table}' is missing field '{Field}'.",
 			table, field
@@ -51,10 +51,10 @@ public class Map_Tests
 		var property = nameof(FooTableWithBar2.Bar2);
 
 		// Act
-		var action = void () => mapper.Map<Foo, FooTableWithBar2>(new());
+		var result = Record.Exception(() => mapper.Map<Foo, FooTableWithBar2>(new()));
 
 		// Assert
-		var ex = Assert.Throws<InvalidTableMapException>(action);
+		var ex = Assert.IsType<InvalidTableMapException>(result);
 		Assert.Single(ex.Errors).AssertMessage(
 			"The definition of entity '{Entity}' is missing property '{Property}'.",
 			entity, property
@@ -69,10 +69,10 @@ public class Map_Tests
 		var name = nameof(FooTableWithoutIdAttribute);
 
 		// Act
-		var action = void () => mapper.Map<Foo, FooTableWithoutIdAttribute>(new());
+		var result = Record.Exception(() => mapper.Map<Foo, FooTableWithoutIdAttribute>(new()));
 
 		// Assert
-		var ex = Assert.Throws<InvalidTableMapException>(action);
+		var ex = Assert.IsType<InvalidTableMapException>(result);
 		Assert.Single(ex.Errors).AssertMessage("Unable to get Id column from table '{Name}': Cannot get single value from an empty list.", name);
 	}
 
@@ -84,10 +84,10 @@ public class Map_Tests
 		var name = nameof(FooTableWithMultipleIdAttributes);
 
 		// Act
-		var action = void () => svc.Map<Foo, FooTableWithMultipleIdAttributes>(new());
+		var result = Record.Exception(() => svc.Map<Foo, FooTableWithMultipleIdAttributes>(new()));
 
 		// Assert
-		var ex = Assert.Throws<InvalidTableMapException>(action);
+		var ex = Assert.IsType<InvalidTableMapException>(result);
 		Assert.Single(ex.Errors).AssertMessage(
 			"Unable to get Id column from table '{Name}': Cannot get single value from a list with multiple values.",
 			name
@@ -103,10 +103,10 @@ public class Map_Tests
 		var table = nameof(FooTableWithoutVersionAttribute);
 
 		// Act
-		var action = void () => mapper.Map<FooWithVersion, FooTableWithoutVersionAttribute>(new());
+		var result = Record.Exception(() => mapper.Map<FooWithVersion, FooTableWithoutVersionAttribute>(new()));
 
 		// Assert
-		var ex = Assert.Throws<InvalidTableMapException>(action);
+		var ex = Assert.IsType<InvalidTableMapException>(result);
 		Assert.Single(ex.Errors).AssertMessage(
 			"Unable to get single column with attribute '{Attribute}' from table '{Table}': Cannot get single value from an empty list.",
 			attribute, table
@@ -122,10 +122,10 @@ public class Map_Tests
 		var table = nameof(FooTableWithMultipleVersionAttributes);
 
 		// Act
-		var action = void () => svc.Map<FooWithVersion, FooTableWithMultipleVersionAttributes>(new());
+		var result = Record.Exception(() => svc.Map<FooWithVersion, FooTableWithMultipleVersionAttributes>(new()));
 
 		// Assert
-		var ex = Assert.Throws<InvalidTableMapException>(action);
+		var ex = Assert.IsType<InvalidTableMapException>(result);
 		Assert.Single(ex.Errors).AssertMessage(
 			"Unable to get single column with attribute '{Attribute}' from table '{Table}': Cannot get single value from a list with multiple values.",
 			attribute, table

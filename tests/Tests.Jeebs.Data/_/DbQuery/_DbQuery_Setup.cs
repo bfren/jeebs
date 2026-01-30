@@ -33,7 +33,7 @@ public static class DbQuery_Setup
 		db.QueryAsync<int>(text, param, CommandType.Text, Arg.Any<IDbTransaction>()).Returns(R.Wrap(results));
 		db.QuerySingleAsync<int>(text, param, CommandType.Text, Arg.Any<IDbTransaction>()).Returns(R.Wrap(Rnd.Int));
 		db.ExecuteAsync(text, param, CommandType.Text, Arg.Any<IDbTransaction>()).Returns(R.True);
-		db.ExecuteAsync<ulong>(text, param, CommandType.Text, Arg.Any<IDbTransaction>()).Returns(R.Wrap(Rnd.ULng));
+		db.ExecuteAsync<ulong>(text, param, CommandType.Text, Arg.Any<IDbTransaction>()).Returns(R.Wrap(Rnd.UInt64));
 
 		var log = Substitute.For<ILog>();
 		var query = Substitute.ForPartsOf<DbQuery<IDb>>(db, log);

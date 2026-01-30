@@ -10,7 +10,7 @@ public class Skip_Tests : FluentQuery_Tests
 	{
 		// Arrange
 		var (query, _) = Setup();
-		var value = Rnd.ULng;
+		var value = Rnd.UInt64;
 
 		// Act
 		var result = query.Skip(value);

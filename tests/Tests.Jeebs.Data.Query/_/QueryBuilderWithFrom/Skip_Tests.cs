@@ -13,7 +13,7 @@ public class Skip_Tests
 		// Arrange
 		var table = Substitute.For<ITable>();
 		var builder = new QueryBuilderWithFrom(table);
-		var value = Rnd.ULng;
+		var value = Rnd.UInt64;
 
 		// Act
 		var result = builder.Skip(value);

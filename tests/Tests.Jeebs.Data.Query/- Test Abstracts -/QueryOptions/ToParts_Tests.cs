@@ -19,8 +19,8 @@ public abstract class ToParts_Tests<TOptions, TBuilder, TId> : QueryOptions_Test
 	{
 		// Arrange
 		var (options, builder) = Setup();
-		var max = Rnd.ULng;
-		var skip = Rnd.ULng;
+		var max = Rnd.UInt64;
+		var skip = Rnd.UInt64;
 		var opt = options with
 		{
 			Maximum = max,

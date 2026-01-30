@@ -28,13 +28,14 @@ public class AssertWhereNotIn_Tests : Setup
 	{
 		// Arrange
 		var fluent = Create();
-		fluent.Maximum(Rnd.ULng);
-
-		// Act
+		fluent.Maximum(Rnd.UInt64);
 		var action = (ICall c) => FluentQueryHelper.AssertWhereNotIn<TestEntity, long>(c, x => x.Bar, [Rnd.Lng, Rnd.Lng]);
 
+		// Act
+		var result = Record.Exception(() => fluent.AssertCalls(action));
+
 		// Assert
-		Assert.Throws<MethodNameException>(() => fluent.AssertCalls(action));
+		Assert.IsType<MethodNameException>(result);
 	}
 
 	[Fact]
@@ -44,12 +45,13 @@ public class AssertWhereNotIn_Tests : Setup
 		var fluent = Create();
 		var values = new[] { Rnd.Str, Rnd.Str };
 		fluent.WhereNotIn(x => x.Foo, values);
-
-		// Act
 		var action = (ICall c) => FluentQueryHelper.AssertWhereNotIn<TestEntity, long>(c, x => x.Bar, [Rnd.Lng, Rnd.Lng]);
 
+		// Act
+		var result = Record.Exception(() => fluent.AssertCalls(action));
+
 		// Assert
-		Assert.Throws<GenericArgumentException>(() => fluent.AssertCalls(action));
+		Assert.IsType<GenericArgumentException>(result);
 	}
 
 	[Fact]
@@ -59,11 +61,12 @@ public class AssertWhereNotIn_Tests : Setup
 		var fluent = Create();
 		var values = new[] { Rnd.Str, Rnd.Str };
 		fluent.WhereNotIn(x => x.Foo, values);
-
-		// Act
 		var action = (ICall c) => FluentQueryHelper.AssertWhereNotIn<TestEntity, string>(c, x => x.Foo, [Rnd.Str, Rnd.Str]);
 
+		// Act
+		var result = Record.Exception(() => fluent.AssertCalls(action));
+
 		// Assert
-		Assert.Throws<EqualTypeException>(() => fluent.AssertCalls(action));
+		Assert.IsType<EqualTypeException>(result);
 	}
 }

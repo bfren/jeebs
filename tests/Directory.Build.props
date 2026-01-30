@@ -16,8 +16,9 @@
     <Using Include="Xunit" />
   </ItemGroup>
   <ItemGroup>
-    <Using Include="Wrap.Testing.IdGenerator" Alias="IdGen" />
     <Using Include="Wrap.Testing.FailureGenerator" Alias="FailGen" />
+    <Using Include="Wrap.Testing.IdGenerator" Alias="IdGen" />
+    <Using Include="Wrap.Testing.NoneGenerator" Alias="NoneGen" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="coverlet.collector">

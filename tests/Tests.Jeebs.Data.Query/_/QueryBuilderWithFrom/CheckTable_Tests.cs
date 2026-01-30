@@ -16,10 +16,10 @@ public class CheckTable_Tests
 		var builder = new QueryBuilderWithFrom(table);
 
 		// Act
-		var action = void () => builder.CheckTable<TestTable, TestException<TestTable>>();
+		var result = Record.Exception(() => builder.CheckTable<TestTable, TestException<TestTable>>());
 
 		// Assert
-		Assert.Throws<TestException<TestTable>>(action);
+		Assert.IsType<TestException<TestTable>>(result);
 	}
 
 	[Fact]

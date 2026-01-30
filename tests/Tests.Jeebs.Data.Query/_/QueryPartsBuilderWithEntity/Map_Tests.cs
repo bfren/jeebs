@@ -1,7 +1,6 @@
 // Jeebs Unit Tests
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
-using Jeebs.Data.Map;
 using Wrap.Exceptions;
 
 namespace Jeebs.Data.Query.QueryPartsBuilderWithEntity_Tests;
@@ -29,9 +28,9 @@ public class Map_Tests : QueryPartsBuilderWithEntity_Tests
 		v.Mapper.GetTableMapFor<TestEntity>().Returns(FailGen.Create());
 
 		// Act
-		var action = ITableMap () => builder.Map.Value;
+		var result = Record.Exception(() => builder.Map.Value);
 
 		// Assert
-		Assert.Throws<FailureException>(action);
+		Assert.IsType<FailureException>(result);
 	}
 }

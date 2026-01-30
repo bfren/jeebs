@@ -16,10 +16,10 @@ public class AssertCollection_Tests : Setup
 		var inspectors = Enumerable.Repeat((string _) => { }, Rnd.Int).ToArray();
 
 		// Act
-		var action = () => FluentQueryHelper.AssertCollection(collection, inspectors);
+		var result = Record.Exception(() => FluentQueryHelper.AssertCollection(collection, inspectors));
 
 		// Assert
-		Assert.Throws<CollectionException>(action);
+		Assert.IsType<CollectionException>(result);
 	}
 
 	[Fact]
@@ -30,10 +30,10 @@ public class AssertCollection_Tests : Setup
 		var inspectors = new Action<long>[] { _ => throw new EqualTypeException() };
 
 		// Act
-		var action = () => FluentQueryHelper.AssertCollection(collection, inspectors);
+		var result = Record.Exception(() => FluentQueryHelper.AssertCollection(collection, inspectors));
 
 		// Assert
-		Assert.Throws<EqualTypeException>(action);
+		Assert.IsType<EqualTypeException>(result);
 	}
 
 	[Fact]
@@ -44,9 +44,9 @@ public class AssertCollection_Tests : Setup
 		var inspectors = new Action<long>[] { _ => throw new InvalidOperationException() };
 
 		// Act
-		var action = () => FluentQueryHelper.AssertCollection(collection, inspectors);
+		var result = Record.Exception(() => FluentQueryHelper.AssertCollection(collection, inspectors));
 
 		// Assert
-		Assert.Throws<CollectionException>(action);
+		Assert.IsType<CollectionException>(result);
 	}
 }

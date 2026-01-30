@@ -38,8 +38,8 @@ public class Constructor_Tests
 			WhereCustom = Substitute.For<IImmutableList<(string, IQueryParametersDictionary)>>(),
 			Sort = Substitute.For<IImmutableList<(IColumn, SortOrder)>>(),
 			SortRandom = Rnd.Flip,
-			Maximum = Rnd.ULng,
-			Skip = Rnd.ULng
+			Maximum = Rnd.UInt64,
+			Skip = Rnd.UInt64
 		};
 
 		// Act

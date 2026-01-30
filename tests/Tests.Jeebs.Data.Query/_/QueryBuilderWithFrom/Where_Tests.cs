@@ -17,10 +17,10 @@ public class Where_Tests
 		var builder = new QueryBuilderWithFrom(table);
 
 		// Act
-		var action = void () => builder.Where<TestTable>(t => t.Foo, Compare.Equal, Rnd.Str);
+		var result = Record.Exception(() => builder.Where<TestTable>(t => t.Foo, Compare.Equal, Rnd.Str));
 
 		// Assert
-		Assert.Throws<WhereTableNotAddedException<TestTable>>(action);
+		Assert.IsType<WhereTableNotAddedException<TestTable>>(result);
 	}
 
 	[Fact]

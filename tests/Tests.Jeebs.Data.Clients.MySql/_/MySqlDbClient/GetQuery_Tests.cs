@@ -386,7 +386,7 @@ public class GetQuery_Tests
 	{
 		// Arrange
 		var (client, v) = MySqlDbClient_Setup.Get();
-		var max = Rnd.ULng;
+		var max = Rnd.UInt64;
 		var parts = new QueryParts(v.Table) { Maximum = max };
 		var expected = $"SELECT * FROM `{v.Schema}.{v.Name}` LIMIT {max};";
 
@@ -402,8 +402,8 @@ public class GetQuery_Tests
 	{
 		// Arrange
 		var (client, v) = MySqlDbClient_Setup.Get();
-		var skip = Rnd.ULng;
-		var max = Rnd.ULng;
+		var skip = Rnd.UInt64;
+		var max = Rnd.UInt64;
 		var parts = new QueryParts(v.Table) { Skip = skip, Maximum = max };
 		var expected = $"SELECT * FROM `{v.Schema}.{v.Name}` LIMIT {skip}, {max};";
 

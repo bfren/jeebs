@@ -32,7 +32,7 @@ public class AssertSort_Tests : Setup
 	{
 		// Arrange
 		var fluent = Create();
-		fluent.Skip(Rnd.ULng);
+		fluent.Skip(Rnd.UInt64);
 
 		// Act
 		var action = (ICall c) => FluentQueryHelper.AssertSort<TestEntity, TestId>(c, x => x.Id, input);

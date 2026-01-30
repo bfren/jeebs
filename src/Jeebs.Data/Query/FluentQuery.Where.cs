@@ -72,7 +72,7 @@ public sealed partial record class FluentQuery<TEntity, TId>
 		aliasSelector.GetPropertyInfo()
 			.Match(
 				some: x => Where(x.Name, compare, value),
-				none: this
+				none: () => this
 			);
 
 	/// <inheritdoc/>
@@ -105,7 +105,7 @@ public sealed partial record class FluentQuery<TEntity, TId>
 		aliasSelector.GetPropertyInfo()
 			.Match(
 				some: x => WhereIn(x.Name, values),
-				none: this
+				none: () => this
 			);
 
 	/// <inheritdoc/>
@@ -124,6 +124,6 @@ public sealed partial record class FluentQuery<TEntity, TId>
 		aliasSelector.GetPropertyInfo()
 			.Match(
 				some: x => WhereNotIn(x.Name, values),
-				none: this
+				none: () => this
 			);
 }

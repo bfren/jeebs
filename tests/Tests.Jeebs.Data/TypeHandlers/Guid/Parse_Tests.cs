@@ -31,10 +31,10 @@ public class Parse_Tests
 		var handler = new GuidTypeHandler();
 
 		// Act
-		var action = void () => handler.Parse(input);
+		var result = Record.Exception(() => handler.Parse(input));
 
 		// Assert
-		Assert.Throws<FormatException>(action);
+		Assert.IsType<FormatException>(result);
 	}
 
 	[Fact]

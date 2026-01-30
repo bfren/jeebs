@@ -12,7 +12,7 @@ public class GetPreviousAndNext_Tests
 		var list = new List<ulong>();
 
 		// Act
-		var (r0, r1) = QueryPostsF.GetPreviousAndNext(Rnd.ULng, list);
+		var (r0, r1) = QueryPostsF.GetPreviousAndNext(Rnd.UInt64, list);
 
 		// Assert
 		Assert.Null(r0);
@@ -23,10 +23,10 @@ public class GetPreviousAndNext_Tests
 	public void Single_Item_Returns_None_With_ListContainsSingleItemMsg()
 	{
 		// Arrange
-		var list = new List<ulong> { Rnd.ULng };
+		var list = new List<ulong> { Rnd.UInt64 };
 
 		// Act
-		var (r0, r1) = QueryPostsF.GetPreviousAndNext(Rnd.ULng, list);
+		var (r0, r1) = QueryPostsF.GetPreviousAndNext(Rnd.UInt64, list);
 
 		// Assert
 		Assert.Null(r0);
@@ -38,7 +38,7 @@ public class GetPreviousAndNext_Tests
 	{
 		// Arrange
 		var value = 10001U;
-		var list = new List<ulong> { Rnd.ULng, Rnd.ULng, Rnd.ULng };
+		var list = new List<ulong> { Rnd.UInt64, Rnd.UInt64, Rnd.UInt64 };
 
 		// Act
 		var (r0, r1) = QueryPostsF.GetPreviousAndNext(value, list);
@@ -52,9 +52,9 @@ public class GetPreviousAndNext_Tests
 	public void First_Item_Returns_None_And_Next_Item()
 	{
 		// Arrange
-		var value = Rnd.ULng;
-		var next = Rnd.ULng;
-		var list = new List<ulong> { value, next, Rnd.ULng, Rnd.ULng };
+		var value = Rnd.UInt64;
+		var next = Rnd.UInt64;
+		var list = new List<ulong> { value, next, Rnd.UInt64, Rnd.UInt64 };
 
 		// Act
 		var (r0, r1) = QueryPostsF.GetPreviousAndNext(value, list);
@@ -69,9 +69,9 @@ public class GetPreviousAndNext_Tests
 	public void Last_Item_Returns_Previous_Item_And_None()
 	{
 		// Arrange
-		var value = Rnd.ULng;
-		var prev = Rnd.ULng;
-		var list = new List<ulong> { Rnd.ULng, Rnd.ULng, prev, value };
+		var value = Rnd.UInt64;
+		var prev = Rnd.UInt64;
+		var list = new List<ulong> { Rnd.UInt64, Rnd.UInt64, prev, value };
 
 		// Act
 		var (r0, r1) = QueryPostsF.GetPreviousAndNext(value, list);
@@ -86,10 +86,10 @@ public class GetPreviousAndNext_Tests
 	public void Returns_Previous_And_Next_Items()
 	{
 		// Arrange
-		var value = Rnd.ULng;
-		var prev = Rnd.ULng;
-		var next = Rnd.ULng;
-		var list = new List<ulong> { Rnd.ULng, Rnd.ULng, prev, value, next, Rnd.ULng, Rnd.ULng };
+		var value = Rnd.UInt64;
+		var prev = Rnd.UInt64;
+		var next = Rnd.UInt64;
+		var list = new List<ulong> { Rnd.UInt64, Rnd.UInt64, prev, value, next, Rnd.UInt64, Rnd.UInt64 };
 
 		// Act
 		var (r0, r1) = QueryPostsF.GetPreviousAndNext(value, list);

@@ -22,8 +22,8 @@ public static class Setup
 		);
 		builder.ReturnsForAll(R.Wrap(new QueryParts(table)
 		{
-			Maximum = Rnd.ULng,
-			Skip = Rnd.ULng
+			Maximum = Rnd.UInt64,
+			Skip = Rnd.UInt64
 		}));
 
 		return (new(builder), builder);
