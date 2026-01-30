@@ -5,9 +5,7 @@ using System;
 using System.Linq.Expressions;
 using Jeebs.Data;
 using Jeebs.Data.Clients.MySql;
-using Jeebs.Data.Map;
 using Jeebs.Data.Query;
-using Jeebs.Data.Query.Functions;
 using Wrap.Ids;
 
 namespace Jeebs.WordPress.Query;
@@ -82,7 +80,7 @@ public abstract class PartsBuilder<TId> : QueryPartsBuilder<TId>
 #pragma warning restore CA1707 // Identifiers should not contain underscores
 #pragma warning restore IDE1006 // Naming Styles
 			where TTable : ITable =>
-		QueryF.GetColumnFromExpression(table, selector).Match(
+		DataF.GetColumnFromExpression(table, selector).Match(
 			ok: Client.EscapeWithTable,
 			fail: R.ThrowFailure<string>
 		);

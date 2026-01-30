@@ -5,8 +5,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Jeebs.Data.Clients.MySql\Jeebs.Data.Clients.MySql.csproj" />
-    <ProjectReference Include="..\Jeebs.Data.Query\Jeebs.Data.Query.csproj" />
-    <ProjectReference Include="..\Jeebs.Data\Jeebs.Data.csproj" />
+    <ProjectReference Include="..\Jeebs.Data.Common\Jeebs.Data.Common.csproj" />
     <ProjectReference Include="..\Jeebs\Jeebs.csproj" />
   </ItemGroup>
 </Project>
