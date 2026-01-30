@@ -2,6 +2,7 @@
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using System.Reflection;
+using Jeebs.Data.Map;
 
 namespace Jeebs.Data.Clients.SqlServer.SqlServerDbClient_Tests;
 
@@ -13,7 +14,7 @@ public class GetRetrieveQuery_Tests
 		// Arrange
 		var schema = Rnd.Str;
 		var name = Rnd.Str;
-		var table = new DbName(schema, name);
+		var table = new TableName(schema, name);
 
 		var c0Name = Rnd.Str;
 		var c0Alias = Rnd.Str;

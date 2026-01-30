@@ -1,6 +1,7 @@
 // Jeebs Unit Tests
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
+using Jeebs.Data.Map;
 using Jeebs.Data.Query.Exceptions;
 
 namespace Jeebs.Data.Query.QueryBuilderWithFrom_Tests;
@@ -15,7 +16,7 @@ public class CheckTable_Tests
 		var builder = new QueryBuilderWithFrom(table);
 
 		// Act
-		var result = Record.Exception(() => builder.CheckTable<TestTable, TestException<TestTable>>());
+		var result = Record.Exception(builder.CheckTable<TestTable, TestException<TestTable>>);
 
 		// Assert
 		Assert.IsType<TestException<TestTable>>(result);

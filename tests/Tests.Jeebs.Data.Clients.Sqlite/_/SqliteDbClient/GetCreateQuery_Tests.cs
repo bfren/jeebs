@@ -2,6 +2,7 @@
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using System.Reflection;
+using Jeebs.Data.Map;
 using NSubstitute.Extensions;
 
 namespace Jeebs.Data.Clients.Sqlite.SqliteDbClient_Tests;
@@ -14,20 +15,20 @@ public class GetCreateQuery_Tests
 		// Arrange
 		var schema = Rnd.Str;
 		var name = Rnd.Str;
-		var table = new DbName(schema, name);
+		var table = new TableName(schema, name);
 
 		var c0Name = Rnd.Str;
 		var c0Alias = Rnd.Str;
 		var c0Property = Substitute.ForPartsOf<PropertyInfo>();
 		c0Property.Name.Returns(c0Alias);
-		c0Property.Configure().CustomAttributes.Returns(Array.Empty<CustomAttributeData>());
+		c0Property.Configure().CustomAttributes.Returns([]);
 		var c0 = new Column(table, c0Name, c0Property);
 
 		var c1Name = Rnd.Str;
 		var c1Alias = Rnd.Str;
 		var c1Property = Substitute.ForPartsOf<PropertyInfo>();
 		c1Property.Name.Returns(c1Alias);
-		c1Property.Configure().CustomAttributes.Returns(Array.Empty<CustomAttributeData>());
+		c1Property.Configure().CustomAttributes.Returns([]);
 		var c1 = new Column(table, c1Name, c1Property);
 
 		var list = new ColumnList([c0, c1]);

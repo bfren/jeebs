@@ -6,6 +6,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Jeebs.Collections;
 using Jeebs.Data.Enums;
+using Jeebs.Data.Map;
 using Jeebs.Data.Query;
 using Jeebs.Functions;
 

@@ -2,6 +2,7 @@
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using System.Collections.Generic;
+using Jeebs.Data.Map;
 
 namespace Jeebs.Data.Common.Query;
 

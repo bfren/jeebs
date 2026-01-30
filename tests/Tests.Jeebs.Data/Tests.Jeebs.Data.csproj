@@ -9,4 +9,7 @@
   <ItemGroup>
     <Using Include="Wrap.Ids" />
   </ItemGroup>
+  <ItemGroup>
+    <Folder Include="_\" />
+  </ItemGroup>
 </Project>

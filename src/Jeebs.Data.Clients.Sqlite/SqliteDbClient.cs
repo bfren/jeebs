@@ -4,24 +4,24 @@
 using System.Collections.Generic;
 using System.Data.Common;
 using System.Data.SQLite;
-using Jeebs.Data.Common;
 using Jeebs.Data.Enums;
+using Jeebs.Data.Map;
 
 namespace Jeebs.Data.Clients.Sqlite;
 
 /// <inheritdoc cref="IDbClient"/>
-public partial class SqliteDbClient : DbClient
+public partial class SqliteDbClient : Common.DbClient
 {
 	/// <inheritdoc/>
 	public override DbConnection GetConnection(string connectionString) =>
 		new SQLiteConnection(connectionString);
 
 	/// <inheritdoc/>
-	public override string Escape(IDbName table) =>
+	public override string Escape(ITableName table) =>
 		Escape(table.GetFullName(s => s));
 
 	/// <inheritdoc/>
-	public override string Escape(IDbName table, string column) =>
+	public override string Escape(ITableName table, string column) =>
 		Escape(table) + "." + Escape(column);
 
 	/// <inheritdoc/>

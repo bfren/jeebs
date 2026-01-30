@@ -2,6 +2,7 @@
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using Jeebs.Data.Enums;
+using Jeebs.Data.Map;
 using Jeebs.Data.Query.Exceptions;
 
 namespace Jeebs.Data.Query.QueryBuilderWithFrom_Tests;

@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using Jeebs.Data.Map;
 using Jeebs.Data.Query;
 using Jeebs.Logging;
 

@@ -3,6 +3,7 @@
 
 using Jeebs.Collections;
 using Jeebs.Data.Enums;
+using Jeebs.Data.Map;
 
 namespace Jeebs.Data.Query.QueryParts_Tests;
 

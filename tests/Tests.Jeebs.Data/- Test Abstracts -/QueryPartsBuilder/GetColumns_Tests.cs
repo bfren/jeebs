@@ -1,6 +1,8 @@
 // Jeebs Unit Tests
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
+using Jeebs.Data.Map;
+
 namespace Jeebs.Data.Query.QueryPartsBuilder_Tests;
 
 public abstract class GetColumns_Tests<TBuilder, TId> : QueryPartsBuilder_Tests<TBuilder, TId>

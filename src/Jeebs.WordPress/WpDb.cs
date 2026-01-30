@@ -4,10 +4,10 @@
 using System.Threading;
 using Jeebs.Config.Db;
 using Jeebs.Config.WordPress;
-using Jeebs.Data;
 using Jeebs.Data.Clients.MySql;
 using Jeebs.Data.Common;
 using Jeebs.Data.Common.TypeHandlers;
+using Jeebs.Data.Map;
 using Jeebs.Logging;
 using Jeebs.WordPress.Entities;
 using Jeebs.WordPress.Entities.Ids;

@@ -2,6 +2,7 @@
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using Jeebs.Data.Enums;
+using Jeebs.Data.Map;
 using Jeebs.Functions;
 
 namespace Jeebs.Data.Common.Query.FluentQueryF_Tests;
@@ -36,7 +37,7 @@ public class GetWhereAndParameters_Tests
 	{
 		// Arrange
 		var columnName = Rnd.Str;
-		var tableName = new DbName(Rnd.Str);
+		var tableName = new TableName(Rnd.Str);
 		var column = Substitute.For<IColumn>();
 		column.ColName.Returns(columnName);
 		column.TblName.Returns(tableName);
@@ -283,7 +284,7 @@ Assert.Single(where);
 		public override string Escape(IColumn column, bool withAlias) =>
 			$"--{column.ColName}--";
 
-		public override string Escape(IDbName table, string column) =>
+		public override string Escape(ITableName table, string column) =>
 			$"--{table}|{column}--";
 
 		public override string GetParamRef(string paramName) =>

@@ -7,6 +7,7 @@ using System.Linq.Expressions;
 using System.Reflection;
 using Jeebs.Collections;
 using Jeebs.Data.Enums;
+using Jeebs.Data.Map;
 using Jeebs.Data.Query.Exceptions;
 
 namespace Jeebs.Data.Query;
@@ -20,8 +21,8 @@ public abstract class QueryPartsBuilder
 	/// <typeparam name="T"></typeparam>
 	/// <param name="table"></param>
 	/// <exception cref="UnableToGetIdColumnFromTableException"></exception>
-	protected PropertyInfo GetIdColumn<T>(T table) where
-		T : ITable =>
+	protected PropertyInfo GetIdColumn<T>(T table)
+		where T : ITable =>
 		table.GetType().GetProperty(nameof(IWithId.Id)) ?? throw new UnableToGetIdColumnFromTableException();
 }
 

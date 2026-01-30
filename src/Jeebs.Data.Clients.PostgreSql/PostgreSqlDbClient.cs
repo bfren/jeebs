@@ -3,14 +3,14 @@
 
 using System.Collections.Generic;
 using System.Data.Common;
-using Jeebs.Data.Common;
 using Jeebs.Data.Enums;
+using Jeebs.Data.Map;
 using Npgsql;
 
 namespace Jeebs.Data.Clients.PostgreSql;
 
 /// <inheritdoc cref="IDbClient"/>
-public partial class PostgreSqlDbClient : DbClient
+public partial class PostgreSqlDbClient : Common.DbClient
 {
 	/// <summary>
 	/// Use PostgreSQL type mapper.
@@ -22,11 +22,11 @@ public partial class PostgreSqlDbClient : DbClient
 		new NpgsqlConnection(connectionString);
 
 	/// <inheritdoc/>
-	public override string Escape(IDbName table) =>
+	public override string Escape(ITableName table) =>
 		table.GetFullName(s => s);
 
 	/// <inheritdoc/>
-	public override string Escape(IDbName table, string column) =>
+	public override string Escape(ITableName table, string column) =>
 		Escape(table) + "." + column;
 
 	/// <inheritdoc/>

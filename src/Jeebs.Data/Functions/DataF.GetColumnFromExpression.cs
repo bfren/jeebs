@@ -3,6 +3,7 @@
 
 using System;
 using System.Linq.Expressions;
+using Jeebs.Data.Map;
 using Jeebs.Reflection;
 
 namespace Jeebs.Data;

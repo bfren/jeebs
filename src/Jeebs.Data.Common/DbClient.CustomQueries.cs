@@ -3,6 +3,7 @@
 
 using Jeebs.Collections;
 using Jeebs.Data.Enums;
+using Jeebs.Data.Map;
 using Jeebs.Data.Query;
 
 namespace Jeebs.Data.Common;
@@ -16,7 +17,7 @@ public abstract partial class DbClient : IDbClient
 	/// <param name="columns">List of columns to select.</param>
 	/// <param name="predicates">Predicates (matched using AND).</param>
 	protected abstract Result<(string query, IQueryParametersDictionary param)> GetQuery(
-		IDbName table,
+		ITableName table,
 		IColumnList columns,
 		IImmutableList<(IColumn column, Compare cmp, object value)> predicates
 	);
@@ -42,7 +43,7 @@ public abstract partial class DbClient : IDbClient
 	#region Testing
 
 	internal Result<(string query, IQueryParametersDictionary param)> GetQueryTest(
-		IDbName table,
+		ITableName table,
 		IColumnList columns,
 		IImmutableList<(IColumn column, Compare cmp, object value)> predicates
 	) =>

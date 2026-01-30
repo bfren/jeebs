@@ -3,18 +3,18 @@
 
 using System.Collections.Generic;
 using Jeebs.Collections;
-using Jeebs.Data.Common;
 using Jeebs.Data.Common.Query;
 using Jeebs.Data.Enums;
+using Jeebs.Data.Map;
 using Jeebs.Data.Query;
 
 namespace Jeebs.Data.Clients.Sqlite;
 
-public partial class SqliteDbClient : DbClient
+public partial class SqliteDbClient
 {
 	/// <inheritdoc/>
 	protected override Result<(string query, IQueryParametersDictionary param)> GetQuery(
-		IDbName table,
+		ITableName table,
 		IColumnList columns,
 		IImmutableList<(IColumn column, Compare cmp, dynamic value)> predicates
 	)

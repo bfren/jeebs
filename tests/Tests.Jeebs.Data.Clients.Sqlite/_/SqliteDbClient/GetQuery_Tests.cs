@@ -3,6 +3,7 @@
 
 using Jeebs.Collections;
 using Jeebs.Data.Enums;
+using Jeebs.Data.Map;
 using Jeebs.Data.Query;
 using Jeebs.Functions;
 
@@ -16,7 +17,7 @@ public class GetQuery_Tests
 		// Arrange
 		var schema = Rnd.Str;
 		var name = Rnd.Str;
-		var table = new DbName(schema, name);
+		var table = new TableName(schema, name);
 
 		var c0Name = Rnd.Str;
 		var c0Alias = Rnd.Str;
@@ -150,11 +151,11 @@ public class GetQuery_Tests
 		var fromName = Rnd.Str;
 		var from = new Column(v.Table, fromName, Helpers.CreateInfoFromAlias());
 
-		var to0Table = new DbName(Rnd.Str, Rnd.Str);
+		var to0Table = new TableName(Rnd.Str, Rnd.Str);
 		var to0Name = Rnd.Str;
 		IColumn to0 = new Column(to0Table, to0Name, Helpers.CreateInfoFromAlias());
 
-		var to1Table = new DbName(Rnd.Str, Rnd.Str);
+		var to1Table = new TableName(Rnd.Str, Rnd.Str);
 		var to1Name = Rnd.Str;
 		IColumn to1 = new Column(to1Table, to1Name, Helpers.CreateInfoFromAlias());
 
@@ -200,11 +201,11 @@ public class GetQuery_Tests
 		// Arrange
 		var (client, v) = SqliteDbClient_Setup.Get();
 
-		var c0Table = new DbName(Rnd.Str, Rnd.Str);
+		var c0Table = new TableName(Rnd.Str, Rnd.Str);
 		var c0Name = Rnd.Str;
 		var c0 = new Column(c0Table, c0Name, Helpers.CreateInfoFromAlias());
 
-		var c1Table = new DbName(Rnd.Str, Rnd.Str);
+		var c1Table = new TableName(Rnd.Str, Rnd.Str);
 		var c1Name = Rnd.Str;
 		var c1 = new Column(c1Table, c1Name, Helpers.CreateInfoFromAlias());
 
@@ -290,12 +291,12 @@ public class GetQuery_Tests
 		// Arrange
 		var (client, v) = SqliteDbClient_Setup.Get();
 
-		var c0Table = new DbName(Rnd.Str);
+		var c0Table = new TableName(Rnd.Str);
 		var c0Name = Rnd.Str;
 		var c0Value = Rnd.Str;
 		var c0 = new Column(c0Table, c0Name, Helpers.CreateInfoFromAlias());
 
-		var c1Table = new DbName(Rnd.Str);
+		var c1Table = new TableName(Rnd.Str);
 		var c1Name = Rnd.Str;
 		var c1Value = Rnd.Int;
 		var c1 = new Column(c1Table, c1Name, Helpers.CreateInfoFromAlias());
@@ -351,11 +352,11 @@ public class GetQuery_Tests
 		// Arrange
 		var (client, v) = SqliteDbClient_Setup.Get();
 
-		var sort0Table = new DbName(Rnd.Str, Rnd.Str);
+		var sort0Table = new TableName(Rnd.Str, Rnd.Str);
 		var sort0Name = Rnd.Str;
 		IColumn sort0 = new Column(sort0Table, sort0Name, Helpers.CreateInfoFromAlias());
 
-		var sort1Table = new DbName(Rnd.Str, Rnd.Str);
+		var sort1Table = new TableName(Rnd.Str, Rnd.Str);
 		var sort1Name = Rnd.Str;
 		IColumn sort1 = new Column(sort1Table, sort1Name, Helpers.CreateInfoFromAlias());
 

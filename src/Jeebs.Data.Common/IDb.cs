@@ -4,30 +4,18 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Threading.Tasks;
-using Jeebs.Config.Db;
-using Jeebs.Logging;
 
 namespace Jeebs.Data.Common;
 
 /// <summary>
 /// Enables agnostic interaction with a database.
 /// </summary>
-public interface IDb
+public interface IDb : Data.IDb
 {
 	/// <summary>
 	/// Database Client.
 	/// </summary>
-	IDbClient Client { get; }
-
-	/// <summary>
-	/// Configuration for this database connection.
-	/// </summary>
-	DbConnectionConfig Config { get; }
-
-	/// <summary>
-	/// ILog (should be given a context of the implementing class).
-	/// </summary>
-	ILog Log { get; }
+	new IDbClient Client { get; }
 
 	/// <summary>
 	/// Start a new Unit of Work.

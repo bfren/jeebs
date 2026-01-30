@@ -3,6 +3,7 @@
 
 using System.Collections;
 using Jeebs.Data.Enums;
+using Jeebs.Data.Map;
 
 namespace Jeebs.Data.DataF_Tests;
 
@@ -12,7 +13,7 @@ public class ConvertPredicatesToColumns_Tests
 	public void Ignores_Predicate_Property_Not_In_Column_List()
 	{
 		// Arrange
-		var table = new DbName(Rnd.Str);
+		var table = new TableName(Rnd.Str);
 		var columns = new ColumnList(
 		[
 			new Column(table, nameof(TestEntity.Id), typeof(TestEntity).GetProperty(nameof(TestEntity.Id))!),
@@ -35,7 +36,7 @@ public class ConvertPredicatesToColumns_Tests
 	public void Converts_Property_To_Name_String_As_Column()
 	{
 		// Arrange
-		var table = new DbName(Rnd.Str);
+		var table = new TableName(Rnd.Str);
 		var columns = new ColumnList(
 		[
 			new Column(table, nameof(TestEntity.Foo), typeof(TestEntity).GetProperty(nameof(TestEntity.Foo))!)
@@ -66,7 +67,7 @@ public class ConvertPredicatesToColumns_Tests
 	public void Keeps_Original_SearchOperator(Compare input)
 	{
 		// Arrange
-		var table = new DbName(Rnd.Str);
+		var table = new TableName(Rnd.Str);
 		var columns = new ColumnList(
 		[
 			new Column(table, nameof(TestEntity.Id), typeof(TestEntity).GetProperty(nameof(TestEntity.Id))!)
@@ -95,7 +96,7 @@ public class ConvertPredicatesToColumns_Tests
 	public void Operator_Not_In_Keeps_Original_Value(Compare input)
 	{
 		// Arrange
-		var table = new DbName(Rnd.Str);
+		var table = new TableName(Rnd.Str);
 		var columns = new ColumnList(
 		[
 			new Column(table, nameof(TestEntity.Foo), typeof(TestEntity).GetProperty(nameof(TestEntity.Foo))!)
@@ -125,7 +126,7 @@ public class ConvertPredicatesToColumns_Tests
 	public void Operator_Not_In_Gets_StrongId_Value(Compare input)
 	{
 		// Arrange
-		var table = new DbName(Rnd.Str);
+		var table = new TableName(Rnd.Str);
 		var columns = new ColumnList(
 		[
 			new Column(table, nameof(TestEntity.Foo), typeof(TestEntity).GetProperty(nameof(TestEntity.Foo))!)
@@ -147,7 +148,7 @@ public class ConvertPredicatesToColumns_Tests
 	private static void Test_In_With_Enumerable(Func<int, int, int, dynamic> getValue)
 	{
 		// Arrange
-		var table = new DbName(Rnd.Str);
+		var table = new TableName(Rnd.Str);
 		var columns = new ColumnList(
 		[
 			new Column(table, nameof(TestEntity.Foo), typeof(TestEntity).GetProperty(nameof(TestEntity.Foo))!)
@@ -192,7 +193,7 @@ public class ConvertPredicatesToColumns_Tests
 	public void If_SearchOperator_In_And_Value_Not_IEnumerable_Returns_None_With_InOperatorRequiresValueToBeAListMsg()
 	{
 		// Arrange
-		var table = new DbName(Rnd.Str);
+		var table = new TableName(Rnd.Str);
 		var columns = new ColumnList(
 		[
 			new Column(table, nameof(TestEntity.Foo), typeof(TestEntity).GetProperty(nameof(TestEntity.Foo))!)

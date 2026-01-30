@@ -1,8 +1,8 @@
 // Jeebs Unit Tests
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
-using Jeebs.Data;
 using Jeebs.Data.Common;
+using Jeebs.Data.Map;
 
 namespace Jeebs.WordPress.Query.PartsBuilder_Tests;
 

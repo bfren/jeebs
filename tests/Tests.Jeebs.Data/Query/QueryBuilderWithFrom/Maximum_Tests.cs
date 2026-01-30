@@ -1,6 +1,8 @@
 // Jeebs Unit Tests
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
+using Jeebs.Data.Map;
+
 namespace Jeebs.Data.Query.QueryBuilderWithFrom_Tests;
 
 public class Maximum_Tests

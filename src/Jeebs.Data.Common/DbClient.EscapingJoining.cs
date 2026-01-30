@@ -3,6 +3,7 @@
 
 using System.Collections.Generic;
 using Jeebs.Data.Enums;
+using Jeebs.Data.Map;
 
 namespace Jeebs.Data.Common;
 
@@ -13,10 +14,10 @@ public abstract partial class DbClient : IDbClient
 		Escape(table.GetName());
 
 	/// <inheritdoc/>
-	public abstract string Escape(IDbName table);
+	public abstract string Escape(ITableName table);
 
 	/// <inheritdoc/>
-	public abstract string Escape(IDbName table, string column);
+	public abstract string Escape(ITableName table, string column);
 
 	/// <inheritdoc/>
 	public virtual string Escape(IColumn column) =>

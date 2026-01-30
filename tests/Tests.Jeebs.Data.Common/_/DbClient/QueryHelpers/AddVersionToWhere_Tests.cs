@@ -1,6 +1,8 @@
 // Jeebs Unit Tests
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
+using Jeebs.Data.Map;
+
 namespace Jeebs.Data.Common.DbClient_Tests;
 
 public class AddVersionToWhere_Tests
@@ -29,7 +31,7 @@ public class AddVersionToWhere_Tests
 
 		var name = Rnd.Str;
 		var alias = Rnd.Str;
-		var version = new Column(new DbName(Rnd.Str), name, Helpers.CreateInfoFromAlias(alias));
+		var version = new Column(new TableName(Rnd.Str), name, Helpers.CreateInfoFromAlias(alias));
 		var expected = $"--{name}-- = ##{alias}##";
 
 		var sql = string.Empty;
@@ -51,7 +53,7 @@ public class AddVersionToWhere_Tests
 
 		var name = Rnd.Str;
 		var alias = Rnd.Str;
-		var version = new Column(new DbName(Rnd.Str), name, Helpers.CreateInfoFromAlias(alias));
+		var version = new Column(new TableName(Rnd.Str), name, Helpers.CreateInfoFromAlias(alias));
 
 		var query = Rnd.Str;
 		var sql = query;

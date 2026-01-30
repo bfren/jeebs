@@ -18,6 +18,9 @@ public abstract class Db : IDb
 	/// <inheritdoc/>
 	public IDbClient Client { get; private init; }
 
+	Data.IDbClient Data.IDb.Client =>
+		Client;
+
 	/// <inheritdoc/>
 	public DbConnectionConfig Config { get; private init; }
 
@@ -127,6 +130,10 @@ public abstract class Db : IDb
 	#region Querying
 
 	/// <inheritdoc/>
+	public Task<Result<IEnumerable<T>>> QueryAsync<T>(string query, object? param) =>
+		QueryAsync<T>(query, param, CommandType.Text);
+
+	/// <inheritdoc/>
 	public async Task<Result<IEnumerable<T>>> QueryAsync<T>(string query, object? param, CommandType type)
 	{
 		using var w = await StartWorkAsync();
@@ -144,6 +151,10 @@ public abstract class Db : IDb
 		.MapAsync(
 			x => transaction.Connection!.QueryAsync<T>(x.query, x.parameters, transaction, commandType: x.type)
 		);
+
+	/// <inheritdoc/>
+	public Task<Result<T>> QuerySingleAsync<T>(string query, object? param) =>
+		QuerySingleAsync<T>(query, param, CommandType.Text);
 
 	/// <inheritdoc/>
 	public async Task<Result<T>> QuerySingleAsync<T>(string query, object? param, CommandType type)
@@ -176,6 +187,10 @@ public abstract class Db : IDb
 		);
 
 	/// <inheritdoc/>
+	public Task<Result<bool>> ExecuteAsync(string query, object? param) =>
+		ExecuteAsync(query, param, CommandType.Text);
+
+	/// <inheritdoc/>
 	public async Task<Result<bool>> ExecuteAsync(string query, object? param, CommandType type)
 	{
 		using var w = await StartWorkAsync();
@@ -196,6 +211,10 @@ public abstract class Db : IDb
 		.MapAsync(
 			x => x > 0
 		);
+
+	/// <inheritdoc/>
+	public Task<Result<T>> ExecuteAsync<T>(string query, object? param) =>
+		ExecuteAsync<T>(query, param, CommandType.Text);
 
 	/// <inheritdoc/>
 	public async Task<Result<T>> ExecuteAsync<T>(string query, object? param, CommandType type)

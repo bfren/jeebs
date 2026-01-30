@@ -12,7 +12,7 @@ namespace Jeebs.Data.Common;
 /// </summary>
 /// <typeparam name="TEntity">Entity type.</typeparam>
 /// <typeparam name="TId">StrongId type.</typeparam>
-public interface IRepository<TEntity, TId>
+public interface IRepository<TEntity, TId> : Data.IRepository<TEntity, TId>
 	where TEntity : IWithId
 	where TId : class, IUnion, new()
 {
@@ -27,18 +27,12 @@ public interface IRepository<TEntity, TId>
 
 	#region CRUD Queries
 
-	/// <inheritdoc cref="CreateAsync(TEntity, IDbTransaction)"/>
-	Task<Result<TId>> CreateAsync(TEntity entity);
-
 	/// <summary>
 	/// Create an entity.
 	/// </summary>
 	/// <param name="entity">Entity to create.</param>
 	/// <param name="transaction">Database transaction.</param>
 	Task<Result<TId>> CreateAsync(TEntity entity, IDbTransaction transaction);
-
-	/// <inheritdoc cref="RetrieveAsync{TModel}(TId, IDbTransaction)"/>
-	Task<Result<TModel>> RetrieveAsync<TModel>(TId id);
 
 	/// <summary>
 	/// Retrieve an entity.
@@ -48,10 +42,6 @@ public interface IRepository<TEntity, TId>
 	/// <param name="transaction">Database transaction.</param>
 	Task<Result<TModel>> RetrieveAsync<TModel>(TId id, IDbTransaction transaction);
 
-	/// <inheritdoc cref="UpdateAsync{TModel}(TModel, IDbTransaction)"/>
-	Task<Result<bool>> UpdateAsync<TModel>(TModel model)
-		where TModel : IWithId;
-
 	/// <summary>
 	/// Update an entity with the values in <paramref name="model"/>.
 	/// </summary>
@@ -59,10 +49,6 @@ public interface IRepository<TEntity, TId>
 	/// <param name="model">Model with updated values.</param>
 	/// <param name="transaction">Database transaction.</param>
 	Task<Result<bool>> UpdateAsync<TModel>(TModel model, IDbTransaction transaction)
-		where TModel : IWithId;
-
-	/// <inheritdoc cref="DeleteAsync{TModel}(TModel, IDbTransaction)"/>
-	Task<Result<bool>> DeleteAsync<TModel>(TModel model)
 		where TModel : IWithId;
 
 	/// <summary>

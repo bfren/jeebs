@@ -1,6 +1,8 @@
 // Jeebs Unit Tests
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
+using Jeebs.Data.Map;
+
 namespace Jeebs.Data.Query.QueryPartsBuilder_Tests;
 
 public abstract class AddInnerJoin_Tests<TBuilder, TId> : QueryPartsBuilder_Tests<TBuilder, TId>
@@ -14,11 +16,11 @@ public abstract class AddInnerJoin_Tests<TBuilder, TId> : QueryPartsBuilder_Test
 		// Arrange
 		var (builder, v) = Setup();
 
-		var t0Name = new DbName(Rnd.Str);
+		var t0Name = new TableName(Rnd.Str);
 		var t0Column = Rnd.Str;
 		var t0 = new TestTable0(t0Name, t0Column);
 
-		var t1Name = new DbName(Rnd.Str);
+		var t1Name = new TableName(Rnd.Str);
 		var t1Column = Rnd.Str;
 		var t1 = new TestTable1(t1Name, t1Column);
 

@@ -2,6 +2,7 @@
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using System.Reflection;
+using Jeebs.Data.Map;
 
 namespace Jeebs.Data.Common.DbClient_Tests;
 
@@ -34,7 +35,7 @@ public class GetColumnsForCreateQuery_Tests
 		var propertyInfo = Substitute.For<PropertyInfo>();
 		propertyInfo.Name.Returns(alias);
 
-		var column = new Column(new DbName(Rnd.Str), name, propertyInfo);
+		var column = new Column(new TableName(Rnd.Str), name, propertyInfo);
 
 		var list = new ColumnList([column]);
 
