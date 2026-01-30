@@ -2,7 +2,6 @@
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using System.Reflection;
-using Jeebs.Data.Map;
 using NSubstitute.Extensions;
 
 namespace Jeebs.Data.Clients.PostgreSql.PostgreSqlDbClient_Tests;

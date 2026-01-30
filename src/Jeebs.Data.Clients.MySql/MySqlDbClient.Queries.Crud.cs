@@ -1,8 +1,6 @@
 // Jeebs Rapid Application Development
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
-using Jeebs.Data.Map;
-
 namespace Jeebs.Data.Clients.MySql;
 
 public partial class MySqlDbClient : DbClient
