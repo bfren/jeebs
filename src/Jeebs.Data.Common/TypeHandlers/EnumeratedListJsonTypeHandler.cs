@@ -3,7 +3,7 @@
 
 using Jeebs.Collections;
 
-namespace Jeebs.Data.TypeHandlers;
+namespace Jeebs.Data.Common.TypeHandlers;
 
 /// <summary>
 /// EnumeratedList TypeHandler.

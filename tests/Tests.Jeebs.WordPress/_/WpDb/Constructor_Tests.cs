@@ -5,6 +5,7 @@ using System.Data.Common;
 using Jeebs.Config.Db;
 using Jeebs.Config.WordPress;
 using Jeebs.Data;
+using Jeebs.Data.Common;
 using Jeebs.Logging;
 using Jeebs.WordPress.Entities;
 using Jeebs.WordPress.Tables;

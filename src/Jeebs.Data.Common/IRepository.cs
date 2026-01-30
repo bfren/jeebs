@@ -3,9 +3,9 @@
 
 using System.Data;
 using System.Threading.Tasks;
-using Jeebs.Data.Query;
+using Jeebs.Data.Common.Query;
 
-namespace Jeebs.Data;
+namespace Jeebs.Data.Common;
 
 /// <summary>
 /// Repository for an entity type, including CRUD and custom queries.

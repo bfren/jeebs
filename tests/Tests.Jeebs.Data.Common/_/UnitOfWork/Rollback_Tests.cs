@@ -4,7 +4,7 @@
 using System.Data.Common;
 using Jeebs.Logging;
 
-namespace Jeebs.Data.UnitOfWork_Tests;
+namespace Jeebs.Data.Common.UnitOfWork_Tests;
 
 public class Rollback_Tests
 {

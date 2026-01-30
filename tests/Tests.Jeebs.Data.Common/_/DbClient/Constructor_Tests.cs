@@ -1,7 +1,7 @@
 // Jeebs Unit Tests
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
-namespace Jeebs.Data.DbClient_Tests;
+namespace Jeebs.Data.Common.DbClient_Tests;
 
 public class Constructor_Tests
 {

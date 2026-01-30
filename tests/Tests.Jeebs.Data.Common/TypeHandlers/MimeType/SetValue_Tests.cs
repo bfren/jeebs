@@ -4,7 +4,7 @@
 using System.Data;
 using Base = Jeebs.MimeType_Tests.Parse_Tests;
 
-namespace Jeebs.Data.TypeHandlers.MimeTypeTypeHandler_Tests;
+namespace Jeebs.Data.Common.TypeHandlers.MimeTypeTypeHandler_Tests;
 
 public class SetValue_Tests
 {

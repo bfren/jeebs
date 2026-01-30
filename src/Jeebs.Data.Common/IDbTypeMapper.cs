@@ -4,7 +4,7 @@
 using System;
 using Dapper;
 
-namespace Jeebs.Data;
+namespace Jeebs.Data.Common;
 
 /// <summary>
 /// Add custom type maps.

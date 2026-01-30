@@ -1,7 +1,7 @@
 // Jeebs Rapid Application Development
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
-namespace Jeebs.Data.Query;
+namespace Jeebs.Data.Common.Query;
 
 public sealed partial record class FluentQuery<TEntity, TId>
 {

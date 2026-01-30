@@ -4,6 +4,7 @@
 using System.Collections.Generic;
 using System.Data.Common;
 using System.Data.SQLite;
+using Jeebs.Data.Common;
 using Jeebs.Data.Enums;
 
 namespace Jeebs.Data.Clients.Sqlite;

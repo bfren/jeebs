@@ -6,8 +6,9 @@ using System.Collections.Generic;
 using System.Data;
 using System.Threading.Tasks;
 using Jeebs.Collections;
+using Jeebs.Data.Query;
 
-namespace Jeebs.Data.Query;
+namespace Jeebs.Data.Common.Query;
 
 /// <summary>
 /// IDbQuery extensions for using <see cref="IQueryBuilder"/>.

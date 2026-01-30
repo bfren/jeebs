@@ -6,7 +6,7 @@ using System.Data.Common;
 using Jeebs.Data.Enums;
 using Jeebs.Data.Query;
 
-namespace Jeebs.Data;
+namespace Jeebs.Data.Common;
 
 /// <summary>
 /// Database client.

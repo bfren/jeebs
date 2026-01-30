@@ -1,7 +1,7 @@
 // Jeebs Unit Tests
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
-namespace Jeebs.Data.Repository_Tests;
+namespace Jeebs.Data.Common.Repository_Tests;
 
 public class DeleteAsync_Tests
 {

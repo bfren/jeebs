@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using Dapper;
 using Jeebs.Cryptography;
 using Jeebs.Data.Clients.PostgreSql.TypeHandlers;
+using Jeebs.Data.Common;
 using Npgsql;
 
 namespace Jeebs.Data.Clients.PostgreSql;

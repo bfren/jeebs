@@ -3,7 +3,7 @@
 
 using System.Reflection;
 
-namespace Jeebs.Data.DbClient_Tests;
+namespace Jeebs.Data.Common.DbClient_Tests;
 
 public class GetColumnsForRetrieveQuery_Tests
 {

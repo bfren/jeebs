@@ -5,7 +5,7 @@ using System.Data;
 using Jeebs.Config.Db;
 using Jeebs.Logging;
 
-namespace Jeebs.Data.DbClient_Tests;
+namespace Jeebs.Data.Common.DbClient_Tests;
 
 public static class DbClient_Setup
 {

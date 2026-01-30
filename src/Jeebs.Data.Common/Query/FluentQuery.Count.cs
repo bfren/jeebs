@@ -4,7 +4,7 @@
 using System.Data;
 using System.Threading.Tasks;
 
-namespace Jeebs.Data.Query;
+namespace Jeebs.Data.Common.Query;
 
 public sealed partial record class FluentQuery<TEntity, TId>
 {

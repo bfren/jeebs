@@ -4,7 +4,7 @@
 using System.Data;
 using Dapper;
 
-namespace Jeebs.Data.DbTypeMapper_Tests;
+namespace Jeebs.Data.Common.DbTypeMapper_Tests;
 
 public class AddGenericTypeHandlers_Tests
 {

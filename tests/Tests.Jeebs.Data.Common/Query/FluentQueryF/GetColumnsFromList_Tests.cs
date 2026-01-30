@@ -1,7 +1,7 @@
 // Jeebs Unit Tests
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
-namespace Jeebs.Data.Query.FluentQueryF_Tests;
+namespace Jeebs.Data.Common.Query.FluentQueryF_Tests;
 
 public class GetColumnsFromList_Tests
 {

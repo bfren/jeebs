@@ -1,6 +1,8 @@
 // Jeebs Rapid Application Development
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
+using Jeebs.Data.Common;
+
 namespace Jeebs.Data.Clients.SqlServer;
 
 public partial class SqlServerDbClient : DbClient

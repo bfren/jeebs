@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using Jeebs.Config.Db;
 using Jeebs.Logging;
 
-namespace Jeebs.Data;
+namespace Jeebs.Data.Common;
 
 /// <summary>
 /// Enables agnostic interaction with a database.

@@ -3,7 +3,7 @@
 
 using System.Collections.Generic;
 
-namespace Jeebs.Data.Query;
+namespace Jeebs.Data.Common.Query;
 
 public static partial class QueryF
 {

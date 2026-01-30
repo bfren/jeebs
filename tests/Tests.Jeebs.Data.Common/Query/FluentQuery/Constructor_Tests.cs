@@ -3,7 +3,7 @@
 
 using Jeebs.Logging;
 
-namespace Jeebs.Data.Query.FluentQuery_Tests;
+namespace Jeebs.Data.Common.Query.FluentQuery_Tests;
 
 public class Constructor_Tests
 {

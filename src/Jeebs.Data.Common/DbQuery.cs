@@ -12,7 +12,7 @@ using Jeebs.Logging;
 using Wrap.Exceptions;
 using Defaults = Jeebs.Collections.Defaults.PagingValues;
 
-namespace Jeebs.Data;
+namespace Jeebs.Data.Common;
 
 /// <inheritdoc cref="IDbQuery"/>
 public abstract class DbQuery<TDb> : IDbQuery

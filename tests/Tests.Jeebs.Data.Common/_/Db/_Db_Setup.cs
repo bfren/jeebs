@@ -8,7 +8,7 @@ using Jeebs.Functions;
 using Jeebs.Logging;
 using NSubstitute.Extensions;
 
-namespace Jeebs.Data.Db_Tests;
+namespace Jeebs.Data.Common.Db_Tests;
 
 public static class Db_Setup
 {

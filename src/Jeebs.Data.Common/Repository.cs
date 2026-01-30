@@ -3,10 +3,10 @@
 
 using System.Data;
 using System.Threading.Tasks;
-using Jeebs.Data.Query;
+using Jeebs.Data.Common.Query;
 using Jeebs.Logging;
 
-namespace Jeebs.Data;
+namespace Jeebs.Data.Common;
 
 /// <inheritdoc cref="IRepository{TEntity, TId}"/>
 public abstract class Repository<TEntity, TId> : IRepository<TEntity, TId>

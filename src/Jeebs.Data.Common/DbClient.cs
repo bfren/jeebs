@@ -3,7 +3,7 @@
 
 using System.Data.Common;
 
-namespace Jeebs.Data;
+namespace Jeebs.Data.Common;
 
 /// <inheritdoc cref="IDbClient"/>
 public abstract partial class DbClient : IDbClient

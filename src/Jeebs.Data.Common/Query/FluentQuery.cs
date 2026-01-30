@@ -3,9 +3,10 @@
 
 using System;
 using System.Collections.Generic;
+using Jeebs.Data.Query;
 using Jeebs.Logging;
 
-namespace Jeebs.Data.Query;
+namespace Jeebs.Data.Common.Query;
 
 /// <inheritdoc cref="IFluentQuery{TEntity, TId}"/>
 public abstract record class FluentQuery { }

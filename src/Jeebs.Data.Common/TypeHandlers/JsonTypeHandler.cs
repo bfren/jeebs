@@ -4,7 +4,7 @@
 using System.Text.Json;
 using Jeebs.Functions;
 
-namespace Jeebs.Data.TypeHandlers;
+namespace Jeebs.Data.Common.TypeHandlers;
 
 /// <summary>
 /// JSON TypeHandler.

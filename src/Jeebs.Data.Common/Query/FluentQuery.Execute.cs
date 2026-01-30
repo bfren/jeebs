@@ -7,7 +7,7 @@ using System.Linq.Expressions;
 using System.Threading.Tasks;
 using Jeebs.Reflection;
 
-namespace Jeebs.Data.Query;
+namespace Jeebs.Data.Common.Query;
 
 public sealed partial record class FluentQuery<TEntity, TId>
 {

@@ -4,7 +4,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Jeebs.Data;
+using Jeebs.Data.Common;
 using Jeebs.WordPress.Entities.Ids;
 
 namespace Jeebs.WordPress.Functions;

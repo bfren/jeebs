@@ -2,9 +2,10 @@
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using System.Data;
+using Jeebs.Data.Query;
 using Jeebs.Logging;
 
-namespace Jeebs.Data.Query.FluentQuery_Tests;
+namespace Jeebs.Data.Common.Query.FluentQuery_Tests;
 
 public abstract class FluentQuery_Tests
 {

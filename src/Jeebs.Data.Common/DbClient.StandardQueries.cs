@@ -1,7 +1,7 @@
 // Jeebs Rapid Application Development
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
-namespace Jeebs.Data;
+namespace Jeebs.Data.Common;
 
 public abstract partial class DbClient : IDbClient
 {

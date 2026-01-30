@@ -3,6 +3,8 @@
 
 using System.Collections.Generic;
 using Jeebs.Collections;
+using Jeebs.Data.Common;
+using Jeebs.Data.Common.Query;
 using Jeebs.Data.Enums;
 using Jeebs.Data.Query;
 

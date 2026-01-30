@@ -3,7 +3,7 @@
 
 using System.Data;
 
-namespace Jeebs.Data.TypeHandlers.Json_Tests;
+namespace Jeebs.Data.Common.TypeHandlers.Json_Tests;
 
 public class Format_Tests
 {

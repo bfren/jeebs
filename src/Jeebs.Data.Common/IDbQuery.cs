@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using Jeebs.Collections;
 using Jeebs.Data.Query;
 
-namespace Jeebs.Data;
+namespace Jeebs.Data.Common;
 
 /// <summary>
 /// General database query functionality.

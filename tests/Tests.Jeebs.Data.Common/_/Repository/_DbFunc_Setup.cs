@@ -5,7 +5,7 @@ using Jeebs.Data.Enums;
 using Jeebs.Data.Query;
 using Jeebs.Logging;
 
-namespace Jeebs.Data.Repository_Tests;
+namespace Jeebs.Data.Common.Repository_Tests;
 
 public static class Repository_Setup
 {

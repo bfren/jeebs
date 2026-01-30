@@ -7,7 +7,7 @@ using System.Data.Common;
 using System.Threading.Tasks;
 using Jeebs.Logging;
 
-namespace Jeebs.Data;
+namespace Jeebs.Data.Common;
 
 /// <inheritdoc cref="IUnitOfWork"/>
 public sealed class UnitOfWork : IUnitOfWork

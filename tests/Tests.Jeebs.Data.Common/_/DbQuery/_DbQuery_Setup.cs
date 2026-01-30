@@ -5,7 +5,7 @@ using System.Data;
 using Jeebs.Data.Query;
 using Jeebs.Logging;
 
-namespace Jeebs.Data.DbQuery_Tests;
+namespace Jeebs.Data.Common.DbQuery_Tests;
 
 public static class DbQuery_Setup
 {

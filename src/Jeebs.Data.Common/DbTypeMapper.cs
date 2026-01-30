@@ -5,13 +5,13 @@ using System;
 using System.Collections.Generic;
 using Dapper;
 using Jeebs.Cryptography;
-using Jeebs.Data.TypeHandlers;
+using Jeebs.Data.Common.TypeHandlers;
 using Jeebs.Functions;
 using Wrap.Dapper;
 using Wrap.Ids;
-using static Jeebs.Data.IDbTypeMapper;
+using static Jeebs.Data.Common.IDbTypeMapper;
 
-namespace Jeebs.Data;
+namespace Jeebs.Data.Common;
 
 /// <summary>
 /// Default DbType mapper.

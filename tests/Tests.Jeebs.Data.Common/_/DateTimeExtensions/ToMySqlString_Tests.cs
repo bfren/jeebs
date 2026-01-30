@@ -1,7 +1,7 @@
 // Jeebs Unit Tests
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
-namespace Jeebs.Data.DateTimeExtensions_Tests;
+namespace Jeebs.Data.Common.DateTimeExtensions_Tests;
 
 public class ToMySqlString_Tests
 {

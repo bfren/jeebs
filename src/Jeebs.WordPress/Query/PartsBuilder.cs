@@ -5,6 +5,7 @@ using System;
 using System.Linq.Expressions;
 using Jeebs.Data;
 using Jeebs.Data.Clients.MySql;
+using Jeebs.Data.Common;
 using Jeebs.Data.Query;
 using Wrap.Ids;
 

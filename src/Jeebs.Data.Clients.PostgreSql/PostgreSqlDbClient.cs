@@ -3,6 +3,7 @@
 
 using System.Collections.Generic;
 using System.Data.Common;
+using Jeebs.Data.Common;
 using Jeebs.Data.Enums;
 using Npgsql;
 

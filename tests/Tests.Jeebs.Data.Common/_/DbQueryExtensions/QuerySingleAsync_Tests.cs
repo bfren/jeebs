@@ -2,8 +2,9 @@
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using System.Data;
+using Jeebs.Data.Query;
 
-namespace Jeebs.Data.Query.DbQueryExtensions_Tests;
+namespace Jeebs.Data.Common.Query.DbQueryExtensions_Tests;
 
 public class QuerySingleAsync_Tests
 {

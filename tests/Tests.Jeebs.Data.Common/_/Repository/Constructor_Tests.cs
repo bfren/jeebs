@@ -3,7 +3,7 @@
 
 using Jeebs.Logging;
 
-namespace Jeebs.Data.Repository_Tests;
+namespace Jeebs.Data.Common.Repository_Tests;
 
 public class Constructor_Tests
 {

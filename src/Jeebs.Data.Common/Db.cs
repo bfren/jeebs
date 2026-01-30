@@ -10,7 +10,7 @@ using Jeebs.Config.Db;
 using Jeebs.Logging;
 using Microsoft.Extensions.Options;
 
-namespace Jeebs.Data;
+namespace Jeebs.Data.Common;
 
 /// <inheritdoc cref="IDb"/>
 public abstract class Db : IDb

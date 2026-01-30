@@ -4,7 +4,7 @@
 using System.Collections.Generic;
 using Jeebs.Data.Enums;
 
-namespace Jeebs.Data;
+namespace Jeebs.Data.Common;
 
 public abstract partial class DbClient : IDbClient
 {

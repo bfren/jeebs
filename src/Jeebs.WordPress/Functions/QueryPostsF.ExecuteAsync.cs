@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Jeebs.Collections;
-using Jeebs.Data;
+using Jeebs.Data.Common;
 using Jeebs.WordPress.ContentFilters;
 using Jeebs.WordPress.Entities.Ids;
 using Jeebs.WordPress.Query;

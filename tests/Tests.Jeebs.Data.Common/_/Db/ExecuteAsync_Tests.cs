@@ -3,7 +3,7 @@
 
 using System.Data;
 
-namespace Jeebs.Data.Db_Tests;
+namespace Jeebs.Data.Common.Db_Tests;
 
 public class ExecuteAsync_Tests
 {

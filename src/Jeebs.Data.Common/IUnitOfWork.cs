@@ -5,7 +5,7 @@ using System;
 using System.Data;
 using System.Threading.Tasks;
 
-namespace Jeebs.Data;
+namespace Jeebs.Data.Common;
 
 /// <summary>
 /// Database unit of work.

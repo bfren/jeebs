@@ -6,9 +6,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using Jeebs.Data.Enums;
+using Jeebs.Data.Query;
 using Jeebs.Reflection;
 
-namespace Jeebs.Data.Query;
+namespace Jeebs.Data.Common.Query;
 
 public sealed partial record class FluentQuery<TEntity, TId>
 {

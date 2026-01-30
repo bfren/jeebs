@@ -8,7 +8,7 @@ using System.Linq.Expressions;
 using System.Threading.Tasks;
 using Jeebs.Data.Enums;
 
-namespace Jeebs.Data.Query;
+namespace Jeebs.Data.Common.Query;
 
 /// <summary>
 /// Build a database query using fluent syntax.

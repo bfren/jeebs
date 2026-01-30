@@ -4,7 +4,7 @@
 using Jeebs.Collections;
 using Jeebs.Functions;
 
-namespace Jeebs.Data.TypeHandlers;
+namespace Jeebs.Data.Common.TypeHandlers;
 
 /// <summary>
 /// ImmutableList JsonTypeHandler.

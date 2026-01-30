@@ -4,7 +4,7 @@
 using System;
 using System.Data;
 
-namespace Jeebs.Data.TypeHandlers;
+namespace Jeebs.Data.Common.TypeHandlers;
 
 /// <summary>
 /// Enumerated TypeHandler.

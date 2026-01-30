@@ -5,7 +5,7 @@ using Jeebs.Collections;
 using Jeebs.Data.Enums;
 using Jeebs.Data.Query;
 
-namespace Jeebs.Data;
+namespace Jeebs.Data.Common;
 
 public abstract partial class DbClient : IDbClient
 {
