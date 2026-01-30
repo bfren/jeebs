@@ -1,0 +1,75 @@
+// Jeebs Unit Tests
+// Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
+
+using Jeebs.Data.Enums;
+using Jeebs.Functions;
+
+namespace Jeebs.Data.Query.QueryPartsBuilder_Tests;
+
+public abstract class AddSort_Tests<TBuilder, TId> : QueryPartsBuilder_Tests<TBuilder, TId>
+	where TBuilder : QueryPartsBuilder<TId>
+	where TId : class, IUnion, new()
+{
+	public abstract void Test00_SortRandom_True_Returns_New_Parts_With_SortRandom_True();
+
+	protected void Test00()
+	{
+		// Arrange
+		var (builder, v) = Setup();
+
+		// Act
+		var result = builder.AddSort(v.Parts, true, ListF.Empty<(IColumn, SortOrder)>());
+
+		// Assert
+		var ok = result.AssertOk();
+		Assert.NotSame(v.Parts, ok);
+		Assert.True(ok.SortRandom);
+	}
+
+	public abstract void Test01_SortRandom_False_With_Sort_Returns_New_Parts_With_Sort();
+
+	protected void Test01()
+	{
+		// Arrange
+		var c0 = Substitute.For<IColumn>();
+		var o0 = SortOrder.Ascending;
+		var c1 = Substitute.For<IColumn>();
+		var o1 = SortOrder.Descending;
+		var sort = ListF.Create((c0, o0), (c1, o1));
+		var (builder, v) = Setup();
+
+		// Act
+		var result = builder.AddSort(v.Parts, false, sort);
+
+		// Assert
+		var ok = result.AssertOk();
+		Assert.NotSame(v.Parts, ok);
+		Assert.Collection(ok.Sort,
+			x =>
+			{
+				Assert.Same(c0, x.column);
+				Assert.Equal(o0, x.order);
+			},
+			x =>
+			{
+				Assert.Same(c1, x.column);
+				Assert.Equal(o1, x.order);
+			}
+		);
+	}
+
+	public abstract void Test02_SortRandom_False_And_Sort_Empty_Returns_Original_Parts();
+
+	protected void Test02()
+	{
+		// Arrange
+		var (builder, v) = Setup();
+
+		// Act
+		var result = builder.AddSort(v.Parts, false, ListF.Empty<(IColumn, SortOrder)>());
+
+		// Assert
+		var ok = result.AssertOk();
+		Assert.Same(v.Parts, ok);
+	}
+}
