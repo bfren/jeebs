@@ -1,8 +1,6 @@
 // Jeebs Rapid Application Development
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
-using Jeebs.Functions;
-
 namespace Jeebs;
 
 public static partial class StringExtensions
