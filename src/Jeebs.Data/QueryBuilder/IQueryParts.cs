@@ -5,7 +5,7 @@ using Jeebs.Collections;
 using Jeebs.Data.Enums;
 using Jeebs.Data.Map;
 
-namespace Jeebs.Data.Query;
+namespace Jeebs.Data.QueryBuilder;
 
 /// <summary>
 /// Contains all the parts necessary to build a query.

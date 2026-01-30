@@ -1,7 +1,7 @@
 // Jeebs Unit Tests
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
-using Jeebs.Data.Query;
+using Jeebs.Data.QueryBuilder;
 using NSubstitute.ExceptionExtensions;
 
 namespace Jeebs.Data.DataF_Tests;

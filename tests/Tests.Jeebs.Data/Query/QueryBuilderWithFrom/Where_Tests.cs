@@ -3,9 +3,9 @@
 
 using Jeebs.Data.Enums;
 using Jeebs.Data.Map;
-using Jeebs.Data.Query.Exceptions;
+using Jeebs.Data.QueryBuilder.Exceptions;
 
-namespace Jeebs.Data.Query.QueryBuilderWithFrom_Tests;
+namespace Jeebs.Data.QueryBuilder.QueryBuilderWithFrom_Tests;
 
 public class Where_Tests
 {

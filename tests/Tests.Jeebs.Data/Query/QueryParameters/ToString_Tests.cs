@@ -1,7 +1,7 @@
 // Jeebs Unit Tests
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
-namespace Jeebs.Data.Query.QueryParameters_Tests;
+namespace Jeebs.Data.QueryBuilder.QueryParameters_Tests;
 
 public class ToString_Tests
 {

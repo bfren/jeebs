@@ -3,7 +3,7 @@
 
 using System;
 
-namespace Jeebs.Data.Query.Exceptions;
+namespace Jeebs.Data.QueryBuilder.Exceptions;
 
 /// <summary>
 /// Thrown when an entity is not mapped - see <see cref="QueryPartsBuilderWithEntity{TEntity, TId}.Map"/>

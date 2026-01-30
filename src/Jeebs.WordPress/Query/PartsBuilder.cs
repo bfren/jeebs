@@ -6,7 +6,7 @@ using System.Linq.Expressions;
 using Jeebs.Data.Clients.MySql;
 using Jeebs.Data.Common;
 using Jeebs.Data.Map;
-using Jeebs.Data.Query;
+using Jeebs.Data.QueryBuilder;
 using Wrap.Ids;
 
 namespace Jeebs.WordPress.Query;

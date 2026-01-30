@@ -2,7 +2,7 @@
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using Jeebs.Data.Enums;
-using Jeebs.Data.Query;
+using Jeebs.Data.QueryBuilder;
 using Jeebs.Logging;
 
 namespace Jeebs.Data.Common.Repository_Tests;

@@ -2,7 +2,7 @@
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using System;
-using Jeebs.Data.Query;
+using Jeebs.Data.QueryBuilder;
 
 namespace Jeebs.Data;
 
@@ -15,7 +15,7 @@ public static partial class DataF
 	/// <param name="builder">Query builder.</param>
 	public static Result<IQueryParts> BuildQuery<TModel>(Func<IQueryBuilder, IQueryBuilderWithFrom> builder) =>
 		R.Wrap(
-			new QueryBuilder()
+			new QueryBuilder.QueryBuilder()
 		)
 		.Map(
 			x => (QueryBuilderWithFrom)builder(x),

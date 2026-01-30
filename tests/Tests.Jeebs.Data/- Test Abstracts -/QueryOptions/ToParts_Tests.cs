@@ -6,7 +6,7 @@ using Jeebs.Data.Enums;
 using Jeebs.Data.Map;
 using Jeebs.Functions;
 
-namespace Jeebs.Data.Query.QueryOptions_Tests;
+namespace Jeebs.Data.QueryBuilder.QueryOptions_Tests;
 
 public abstract class ToParts_Tests<TOptions, TBuilder, TId> : QueryOptions_Tests<TOptions, TBuilder, TId>
 	where TOptions : QueryOptions<TId>

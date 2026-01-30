@@ -4,7 +4,7 @@
 using Jeebs.Data.Enums;
 using Jeebs.Data.Map;
 
-namespace Jeebs.Data.Query.QueryBuilderWithFrom_Tests;
+namespace Jeebs.Data.QueryBuilder.QueryBuilderWithFrom_Tests;
 
 public class Select_Tests
 {

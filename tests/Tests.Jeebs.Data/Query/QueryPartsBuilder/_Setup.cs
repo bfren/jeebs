@@ -3,7 +3,7 @@
 
 using Jeebs.Data.Map;
 
-namespace Jeebs.Data.Query.QueryPartsBuilder_Tests;
+namespace Jeebs.Data.QueryBuilder.QueryPartsBuilder_Tests;
 
 public abstract class Setup
 {

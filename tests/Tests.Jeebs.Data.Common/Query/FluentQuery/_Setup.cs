@@ -3,7 +3,7 @@
 
 using System.Data;
 using Jeebs.Data.Map;
-using Jeebs.Data.Query;
+using Jeebs.Data.QueryBuilder;
 using Jeebs.Logging;
 
 namespace Jeebs.Data.Common.Query.FluentQuery_Tests;

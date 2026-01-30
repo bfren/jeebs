@@ -4,7 +4,7 @@
 using System;
 using Jeebs.Data.Map;
 
-namespace Jeebs.Data.Query.Exceptions;
+namespace Jeebs.Data.QueryBuilder.Exceptions;
 
 /// <summary>
 /// Thrown when something goes wrong while building a query.

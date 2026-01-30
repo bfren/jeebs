@@ -7,7 +7,7 @@ using System.Data;
 using System.Threading.Tasks;
 using Dapper;
 using Jeebs.Collections;
-using Jeebs.Data.Query;
+using Jeebs.Data.QueryBuilder;
 using Defaults = Jeebs.Collections.Defaults.PagingValues;
 
 namespace Jeebs.Data.Common;

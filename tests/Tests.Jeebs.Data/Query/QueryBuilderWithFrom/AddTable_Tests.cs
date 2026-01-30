@@ -3,7 +3,7 @@
 
 using Jeebs.Data.Map;
 
-namespace Jeebs.Data.Query.QueryBuilderWithFrom_Tests;
+namespace Jeebs.Data.QueryBuilder.QueryBuilderWithFrom_Tests;
 
 public class AddTable_Tests
 {

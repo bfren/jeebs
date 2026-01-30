@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using Jeebs.Data.Enums;
-using Jeebs.Data.Query;
+using Jeebs.Data.QueryBuilder;
 using Jeebs.Reflection;
 
 namespace Jeebs.Data.Common.Query;

@@ -6,7 +6,7 @@ using System.Linq.Expressions;
 using Jeebs.Data.Enums;
 using Jeebs.Data.Map;
 
-namespace Jeebs.Data.Query;
+namespace Jeebs.Data.QueryBuilder;
 
 /// <summary>
 /// Once <see cref="IQueryBuilder"/> has defined the table, more query options can be built.

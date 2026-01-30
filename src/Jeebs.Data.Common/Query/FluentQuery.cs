@@ -4,7 +4,7 @@
 using System;
 using System.Collections.Generic;
 using Jeebs.Data.Map;
-using Jeebs.Data.Query;
+using Jeebs.Data.QueryBuilder;
 using Jeebs.Logging;
 
 namespace Jeebs.Data.Common.Query;

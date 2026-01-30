@@ -2,9 +2,9 @@
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using Jeebs.Data.Map;
-using static Jeebs.Data.Query.QueryPartsBuilder_Tests.Setup;
+using static Jeebs.Data.QueryBuilder.QueryPartsBuilder_Tests.Setup;
 
-namespace Jeebs.Data.Query.QueryPartsBuilder_Tests;
+namespace Jeebs.Data.QueryBuilder.QueryPartsBuilder_Tests;
 
 public class AddWhere_Tests : AddWhere_Tests<TestBuilder, TestId>
 {

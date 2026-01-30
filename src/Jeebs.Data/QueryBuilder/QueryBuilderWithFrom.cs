@@ -7,9 +7,9 @@ using System.Linq;
 using System.Linq.Expressions;
 using Jeebs.Data.Enums;
 using Jeebs.Data.Map;
-using Jeebs.Data.Query.Exceptions;
+using Jeebs.Data.QueryBuilder.Exceptions;
 
-namespace Jeebs.Data.Query;
+namespace Jeebs.Data.QueryBuilder;
 
 /// <inheritdoc cref="IQueryBuilderWithFrom"/>
 public sealed record class QueryBuilderWithFrom : IQueryBuilderWithFrom

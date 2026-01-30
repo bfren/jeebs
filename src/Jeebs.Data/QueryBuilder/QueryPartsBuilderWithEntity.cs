@@ -4,7 +4,7 @@
 using System;
 using Jeebs.Data.Map;
 
-namespace Jeebs.Data.Query;
+namespace Jeebs.Data.QueryBuilder;
 
 /// <summary>
 /// Builds a <see cref="QueryParts"/> object from various options.

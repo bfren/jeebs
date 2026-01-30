@@ -2,9 +2,9 @@
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using Jeebs.Data.Map;
-using Jeebs.Data.Query.Exceptions;
+using Jeebs.Data.QueryBuilder.Exceptions;
 
-namespace Jeebs.Data.Query.QueryBuilderWithFrom_Tests;
+namespace Jeebs.Data.QueryBuilder.QueryBuilderWithFrom_Tests;
 
 public class CheckTable_Tests
 {

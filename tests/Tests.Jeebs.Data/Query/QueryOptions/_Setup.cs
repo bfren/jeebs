@@ -4,7 +4,7 @@
 using Jeebs.Data.Map;
 using NSubstitute.Extensions;
 
-namespace Jeebs.Data.Query.QueryOptions_Tests;
+namespace Jeebs.Data.QueryBuilder.QueryOptions_Tests;
 
 public static class Setup
 {

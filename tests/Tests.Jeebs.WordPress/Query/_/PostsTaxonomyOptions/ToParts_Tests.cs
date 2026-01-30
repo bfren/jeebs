@@ -5,7 +5,7 @@ using System.Linq.Expressions;
 using Jeebs.Collections;
 using Jeebs.Data.Enums;
 using Jeebs.Data.Map;
-using Jeebs.Data.Query.QueryOptions_Tests;
+using Jeebs.Data.QueryBuilder.QueryOptions_Tests;
 using Jeebs.Functions;
 using Jeebs.WordPress.Entities.Ids;
 using Jeebs.WordPress.Enums;

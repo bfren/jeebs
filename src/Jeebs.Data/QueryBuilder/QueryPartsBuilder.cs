@@ -8,9 +8,9 @@ using System.Reflection;
 using Jeebs.Collections;
 using Jeebs.Data.Enums;
 using Jeebs.Data.Map;
-using Jeebs.Data.Query.Exceptions;
+using Jeebs.Data.QueryBuilder.Exceptions;
 
-namespace Jeebs.Data.Query;
+namespace Jeebs.Data.QueryBuilder;
 
 /// <inheritdoc cref="QueryPartsBuilder{TId}"/>
 public abstract class QueryPartsBuilder
