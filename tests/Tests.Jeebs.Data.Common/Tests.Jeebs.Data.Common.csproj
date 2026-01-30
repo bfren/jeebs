@@ -1,0 +1,12 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <RootNamespace>Jeebs.Data</RootNamespace>
+  </PropertyGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\Jeebs.Data.Common\Jeebs.Data.Common.csproj" />
+    <ProjectReference Include="..\Tests.Jeebs\Tests.Jeebs.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <Using Include="Wrap.Ids" />
+  </ItemGroup>
+</Project>
