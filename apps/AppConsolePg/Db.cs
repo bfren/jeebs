@@ -25,6 +25,6 @@ internal sealed class Db : Jeebs.Data.Common.Db
 		Map<JsonEntity>.To(Json);
 		Map<TestObj>.To(Test);
 
-		client.Types.AddIdTypeHandlers();
+		client.TypeMapper.AddIdTypeHandlers();
 	}
 }

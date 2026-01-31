@@ -4,6 +4,7 @@
     <PackageReference Include="Npgsql" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Jeebs.Data.Adapters.Dapper\Jeebs.Data.Adapters.Dapper.csproj" />
     <ProjectReference Include="..\Jeebs.Data.Common\Jeebs.Data.Common.csproj" />
   </ItemGroup>
 </Project>

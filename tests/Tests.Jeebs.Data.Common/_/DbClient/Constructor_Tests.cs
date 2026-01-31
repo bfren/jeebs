@@ -12,13 +12,13 @@ public class Constructor_Tests
 	{
 		// Arrange
 		var entities = Substitute.For<IEntityMapper>();
-		var types = Substitute.For<IDbTypeMapper>();
+		var types = Substitute.For<ITypeMapper>();
 
 		// Act
 		var result = Substitute.ForPartsOf<DbClient>(entities, types);
 
 		// Assert
-		Assert.Same(entities, result.Entities);
-		Assert.Same(types, result.Types);
+		Assert.Same(entities, result.EntityMapper);
+		Assert.Same(types, result.TypeMapper);
 	}
 }

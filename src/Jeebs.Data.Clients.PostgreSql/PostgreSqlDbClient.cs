@@ -3,6 +3,7 @@
 
 using System.Collections.Generic;
 using System.Data.Common;
+using Jeebs.Data.Adapters.Dapper;
 using Jeebs.Data.Enums;
 using Jeebs.Data.Map;
 using Npgsql;
@@ -13,9 +14,15 @@ namespace Jeebs.Data.Clients.PostgreSql;
 public partial class PostgreSqlDbClient : Common.DbClient
 {
 	/// <summary>
-	/// Use PostgreSQL type mapper.
+	/// Create default instance using DapperAdapter.
 	/// </summary>
-	public PostgreSqlDbClient() : base(new PostgreSqlDbTypeMapper()) { }
+	public PostgreSqlDbClient() : base(new DapperAdapter(new PostgreSqlDbTypeMapper())) { }
+
+	/// <summary>
+	/// For testing - inject IAdapter.
+	/// </summary>
+	/// <param name="adapter">IAdapter.</param>
+	internal PostgreSqlDbClient(IAdapter adapter) : base(adapter) { }
 
 	/// <inheritdoc/>
 	public override DbConnection GetConnection(string connectionString) =>

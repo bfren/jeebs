@@ -16,7 +16,7 @@ public interface IDbClient
 	/// <summary>
 	/// Entity / table mapper.
 	/// </summary>
-	IEntityMapper Entities { get; }
+	IEntityMapper EntityMapper { get; }
 
 	#region Escaping and Joining
 

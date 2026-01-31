@@ -1,7 +1,9 @@
 // Jeebs Rapid Application Development
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
+using System;
 using System.Data.Common;
+using System.Threading;
 using Jeebs.Data.Map;
 
 namespace Jeebs.Data.Common;
@@ -9,30 +11,36 @@ namespace Jeebs.Data.Common;
 /// <inheritdoc cref="IDbClient"/>
 public abstract partial class DbClient : Data.DbClient, IDbClient
 {
-	/// <summary>
-	/// IDbTypeMapper.
-	/// </summary>
-	public IDbTypeMapper Types { get; private init; }
+	protected static readonly Lock X = new();
 
 	/// <summary>
-	/// Create using default instances.
+	/// Executes queries and maps to result types.
 	/// </summary>
-	protected DbClient() : this(EntityMapper.Instance, DbTypeMapper.Instance) { }
+	public IAdapter Adapter { get; init; }
 
 	/// <summary>
 	/// Inject dependencies.
 	/// </summary>
-	/// <param name="types"></param>
-	protected DbClient(IDbTypeMapper types) : this(EntityMapper.Instance, types) { }
+	/// <param name="adapter">IAdapter.</param>
+	protected DbClient(IAdapter adapter) : this(adapter, Map.EntityMapper.Instance) { }
 
 	/// <summary>
 	/// Inject dependencies.
 	/// </summary>
-	/// <param name="entities"></param>
-	/// <param name="types"></param>
-	protected DbClient(IEntityMapper entities, IDbTypeMapper types) : base(entities) =>
-		Types = types;
+	/// <param name="adapter">IAdapter.</param>
+	/// <param name="entityMapper">IEntityMapper.</param>
+	protected DbClient(IAdapter adapter, IEntityMapper entityMapper) : base(entityMapper) =>
+		Adapter = adapter;
 
 	/// <inheritdoc/>
 	public abstract DbConnection GetConnection(string connectionString);
+
+	/// <inheritdoc/>
+	public virtual void TypeMap(Action<ITypeMapper> mapper)
+	{
+		lock (X)
+		{
+			mapper(Adapter.Mapper);
+		}
+	}
 }

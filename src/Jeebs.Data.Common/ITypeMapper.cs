@@ -2,26 +2,18 @@
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using System;
-using Dapper;
 
 namespace Jeebs.Data.Common;
 
 /// <summary>
 /// Add custom type maps.
 /// </summary>
-public interface IDbTypeMapper
+public interface ITypeMapper
 {
 	/// <summary>
 	/// Reset type handlers.
 	/// </summary>
 	void ResetTypeHandlers();
-
-	/// <summary>
-	/// Add a type handler.
-	/// </summary>
-	/// <typeparam name="T">Type to handle.</typeparam>
-	/// <param name="typeHandler">Type handler.</param>
-	void AddTypeHandler<T>(SqlMapper.TypeHandler<T> typeHandler);
 
 	/// <summary>
 	/// Persist an <see cref="Collections.EnumeratedList{T}"/> to the database by encoding it as JSON.
@@ -36,12 +28,9 @@ public interface IDbTypeMapper
 	void AddGuidTypeHandler();
 
 	/// <summary>
-	/// Persist list types to the database by encoding as JSON:<br/>
-	///  - <see cref="Collections.ImmutableList{T}"/><br/>
-	///  - <see cref="System.Collections.Generic.List{T}"/>
+	/// Persist <see cref="Id{TId, TValue}"/> properties to the database.
 	/// </summary>
-	/// <typeparam name="T"></typeparam>
-	void AddListTypeHandlers<T>();
+	void AddIdTypeHandlers();
 
 	/// <summary>
 	/// Persist a type to the database by encoding it as JSON.
@@ -50,9 +39,12 @@ public interface IDbTypeMapper
 	void AddJsonTypeHandler<T>();
 
 	/// <summary>
-	/// Persist <see cref="Id{TId, TValue}"/> properties to the database.
+	/// Persist list types to the database by encoding as JSON:<br/>
+	///  - <see cref="Collections.ImmutableList{T}"/><br/>
+	///  - <see cref="System.Collections.Generic.List{T}"/>
 	/// </summary>
-	void AddIdTypeHandlers();
+	/// <typeparam name="T"></typeparam>
+	void AddListTypeHandlers<T>();
 
 	/// <summary>
 	/// Persist <see cref="Cryptography.Locked{T}"/> properties to the database.
@@ -65,14 +57,7 @@ public interface IDbTypeMapper
 	/// <typeparam name="T">Base (abstract or interface) type to map.</typeparam>
 	/// <param name="handlerType">Handler type (with generic argument).</param>
 	/// <param name="addTypeHandler">Function to add a type handler.</param>
-	void AddGenericTypeHandlers<T>(Type handlerType, AddGenericTypeHandler addTypeHandler);
-
-	/// <summary>
-	/// For testing - used to register a type handler.
-	/// </summary>
-	/// <param name="type">Base (abstract or interface) type to map.</param>
-	/// <param name="handler">Handler type (with generic argument).</param>
-	delegate void AddGenericTypeHandler(Type type, SqlMapper.ITypeHandler handler);
+	void AddGenericTypeHandlers<T>(Type handlerType);
 
 	/// <summary>
 	/// Whether or not the specified type has a custom type handler registered.

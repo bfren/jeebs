@@ -28,7 +28,7 @@ public abstract partial class DbClient : IDbClient
 		(string, Compare, dynamic)[] predicates
 	)
 		where TEntity : IWithId =>
-		from map in Entities.GetTableMapFor<TEntity>()
+		from map in EntityMapper.GetTableMapFor<TEntity>()
 		from sel in Extract<TModel>.From(map.Table)
 		from whr in DataF.ConvertPredicatesToColumns(map.Columns, predicates)
 		from qry in GetQuery(map.Name, sel, whr)

@@ -15,6 +15,6 @@ public class Constructor_Tests : DbClient_Setup
 		var result = Substitute.ForPartsOf<DbClient>(v.Entities);
 
 		// Assert
-		Assert.Same(v.Entities, result.Entities);
+		Assert.Same(v.Entities, result.EntityMapper);
 	}
 }

@@ -11,16 +11,16 @@ public abstract partial class DbClient : IDbClient
 	/// <summary>
 	/// IEntityMapper.
 	/// </summary>
-	public IEntityMapper Entities { get; private init; }
+	public IEntityMapper EntityMapper { get; private init; }
 
 	/// <summary>
 	/// Create using default instances.
 	/// </summary>
-	protected DbClient() : this(EntityMapper.Instance) { }
+	protected DbClient() : this(Map.EntityMapper.Instance) { }
 
 	/// <summary>
 	/// Create using default instances.
 	/// </summary>
 	protected DbClient(IEntityMapper entities) =>
-		Entities = entities;
+		EntityMapper = entities;
 }

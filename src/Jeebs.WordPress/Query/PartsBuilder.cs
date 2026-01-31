@@ -3,11 +3,11 @@
 
 using System;
 using System.Linq.Expressions;
-using Jeebs.Data.Clients.MySql;
 using Jeebs.Data.Common;
 using Jeebs.Data.Functions;
 using Jeebs.Data.Map;
 using Jeebs.Data.Query;
+using Jeebs.WordPress.Functions;
 using Wrap.Ids;
 
 namespace Jeebs.WordPress.Query;
@@ -46,7 +46,7 @@ public abstract class PartsBuilder<TId> : QueryPartsBuilder<TId>
 	/// </summary>
 	/// <param name="extract">IExtract.</param>
 	/// <param name="schema">IWpDbSchema.</param>
-	protected PartsBuilder(IExtract extract, IWpDbSchema schema) : this(extract, new MySqlDbClient(), schema) { }
+	protected PartsBuilder(IExtract extract, IWpDbSchema schema) : this(extract, DbF.CreateClient(), schema) { }
 
 	/// <summary>
 	/// Create object.

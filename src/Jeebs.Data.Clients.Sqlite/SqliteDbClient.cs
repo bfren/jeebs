@@ -13,6 +13,9 @@ namespace Jeebs.Data.Clients.Sqlite;
 public partial class SqliteDbClient : Common.DbClient
 {
 	/// <inheritdoc/>
+	public SqliteDbClient(IAdapter adapter) : base(adapter) { }
+
+	/// <inheritdoc/>
 	public override DbConnection GetConnection(string connectionString) =>
 		new SQLiteConnection(connectionString);
 

@@ -13,6 +13,9 @@ namespace Jeebs.Data.Clients.SqlServer;
 public partial class SqlServerDbClient : Common.DbClient
 {
 	/// <inheritdoc/>
+	public SqlServerDbClient(IAdapter adapter) : base(adapter) { }
+
+	/// <inheritdoc/>
 	public override DbConnection GetConnection(string connectionString) =>
 		new SqlConnection(connectionString);
 

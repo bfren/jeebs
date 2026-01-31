@@ -10,7 +10,7 @@ public abstract partial class DbClient : IDbClient
 	/// <inheritdoc/>
 	public Result<string> GetCreateQuery<TEntity>()
 		where TEntity : IWithId =>
-		Entities
+		EntityMapper
 			.GetTableMapFor<TEntity>()
 			.Map(
 				x => GetCreateQuery(x.Name, x.Columns)
@@ -28,7 +28,7 @@ public abstract partial class DbClient : IDbClient
 	public Result<string> GetRetrieveQuery<TEntity, TModel>(object id)
 		where TEntity : IWithId =>
 		(
-			from map in Entities.GetTableMapFor<TEntity>()
+			from map in EntityMapper.GetTableMapFor<TEntity>()
 			from columns in Extract<TModel>.From(map.Table)
 			select (map, columns)
 		)
@@ -52,7 +52,7 @@ public abstract partial class DbClient : IDbClient
 	public Result<string> GetUpdateQuery<TEntity, TModel>(object id)
 		where TEntity : IWithId =>
 		(
-			from map in Entities.GetTableMapFor<TEntity>()
+			from map in EntityMapper.GetTableMapFor<TEntity>()
 			from columns in Extract<TModel>.From(map.Table)
 			select (map, columns)
 		)
@@ -92,7 +92,7 @@ public abstract partial class DbClient : IDbClient
 	/// <inheritdoc/>
 	public Result<string> GetDeleteQuery<TEntity>(object id)
 		where TEntity : IWithId =>
-		Entities.GetTableMapFor<TEntity>().Map(
+		EntityMapper.GetTableMapFor<TEntity>().Map(
 			x => typeof(TEntity).Implements<IWithVersion>() switch
 			{
 				false =>

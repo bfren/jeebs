@@ -4,8 +4,8 @@
 using System.Collections.Generic;
 using Dapper;
 using Jeebs.Cryptography;
+using Jeebs.Data.Adapters.Dapper;
 using Jeebs.Data.Clients.PostgreSql.TypeHandlers;
-using Jeebs.Data.Common;
 using Npgsql;
 
 namespace Jeebs.Data.Clients.PostgreSql;
@@ -13,7 +13,7 @@ namespace Jeebs.Data.Clients.PostgreSql;
 /// <summary>
 /// PostgreSQL database type mapping.
 /// </summary>
-public sealed class PostgreSqlDbTypeMapper : DbTypeMapper
+public sealed class PostgreSqlDbTypeMapper : DapperTypeMapper
 {
 	/// <summary>
 	/// Initializes a new instance of the <see cref="PostgreSqlDbTypeMapper"/> class.
@@ -27,21 +27,21 @@ public sealed class PostgreSqlDbTypeMapper : DbTypeMapper
 
 	/// <inheritdoc/>
 	public override void AddEnumeratedListTypeHandler<T>() =>
-		AddTypeHandler(new EnumeratedListJsonbTypeHandler<T>());
+		SqlMapper.AddTypeHandler(new EnumeratedListJsonbTypeHandler<T>());
 
 	/// <inheritdoc/>
 	public override void AddJsonTypeHandler<T>() =>
-		AddTypeHandler(new JsonbTypeHandler<T>());
+		SqlMapper.AddTypeHandler(new JsonbTypeHandler<T>());
 
 	/// <inheritdoc/>
 	public override void AddListTypeHandlers<T>()
 	{
 		AddJsonTypeHandler<T[]>();
 		AddJsonTypeHandler<List<T>>();
-		AddTypeHandler(new ImmutableListJsonbTypeHandler<T>());
+		SqlMapper.AddTypeHandler(new ImmutableListJsonbTypeHandler<T>());
 	}
 
 	/// <inheritdoc/>
 	public override void AddLockedTypeHandlers() =>
-		AddGenericTypeHandlers<Locked>(typeof(JsonbTypeHandler<>), SqlMapper.AddTypeHandler);
+		AddGenericTypeHandlers<Locked>(typeof(JsonbTypeHandler<>));
 }

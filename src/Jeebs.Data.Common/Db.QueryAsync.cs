@@ -5,7 +5,6 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Threading.Tasks;
-using Dapper;
 using Jeebs.Collections;
 using Jeebs.Data.Functions;
 using Jeebs.Data.Query;
@@ -36,8 +35,8 @@ public abstract partial class Db
 		.Audit(
 			ok: LogQuery<T>
 		)
-		.MapAsync(
-			x => transaction.Connection!.QueryAsync<T>(x.query, x.parameters, transaction, commandType: x.type)
+		.BindAsync(
+			x => Client.Adapter.QueryAsync<T>(transaction, x.query, x.parameters, x.type)
 		);
 
 	#endregion

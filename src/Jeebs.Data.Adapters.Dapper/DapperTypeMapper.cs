@@ -43,29 +43,25 @@ public class DapperTypeMapper : ITypeMapper
 		SqlMapper.ResetTypeHandlers();
 
 	/// <inheritdoc/>
-	public virtual void AddTypeHandler<T>(SqlMapper.TypeHandler<T> typeHandler) =>
-		SqlMapper.AddTypeHandler(typeHandler);
-
-	/// <inheritdoc/>
 	public virtual void AddEnumeratedListTypeHandler<T>()
 		where T : Enumerated =>
-		AddTypeHandler(new EnumeratedListJsonTypeHandler<T>());
+		SqlMapper.AddTypeHandler(new EnumeratedListJsonTypeHandler<T>());
 
 	/// <inheritdoc/>
 	public virtual void AddGuidTypeHandler() =>
-		AddTypeHandler(new GuidTypeHandler());
+		SqlMapper.AddTypeHandler(new GuidTypeHandler());
 
 	/// <inheritdoc/>
 	public virtual void AddListTypeHandlers<T>()
 	{
-		AddTypeHandler(new JsonTypeHandler<T[]>());
-		AddTypeHandler(new JsonTypeHandler<List<T>>());
-		AddTypeHandler(new ImmutableListJsonTypeHandler<T>());
+		SqlMapper.AddTypeHandler(new JsonTypeHandler<T[]>());
+		SqlMapper.AddTypeHandler(new JsonTypeHandler<List<T>>());
+		SqlMapper.AddTypeHandler(new ImmutableListJsonTypeHandler<T>());
 	}
 
 	/// <inheritdoc/>
 	public virtual void AddJsonTypeHandler<T>() =>
-		AddTypeHandler(new JsonTypeHandler<T>());
+		SqlMapper.AddTypeHandler(new JsonTypeHandler<T>());
 
 	/// <inheritdoc/>
 	public virtual void AddIdTypeHandlers()

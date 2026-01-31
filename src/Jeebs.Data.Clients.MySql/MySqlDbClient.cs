@@ -13,6 +13,9 @@ namespace Jeebs.Data.Clients.MySql;
 public partial class MySqlDbClient : Common.DbClient
 {
 	/// <inheritdoc/>
+	public MySqlDbClient(IAdapter adapter) : base(adapter) { }
+
+	/// <inheritdoc/>
 	public override DbConnection GetConnection(string connectionString) =>
 		new MySqlConnection(connectionString);
 

@@ -37,7 +37,7 @@ public abstract class Repository<TEntity, TId> : IRepository<TEntity, TId>
 
 	/// <inheritdoc/>
 	public virtual IFluentQuery<TEntity, TId> StartFluentQuery() =>
-		new FluentQuery<TEntity, TId>(Db, Db.Client.Entities, Log.ForContext<FluentQuery<TEntity, TId>>());
+		new FluentQuery<TEntity, TId>(Db, Db.Client.EntityMapper, Log.ForContext<FluentQuery<TEntity, TId>>());
 
 	/// <summary>
 	/// Use Debug log by default - override to send elsewhere (or to disable entirely).

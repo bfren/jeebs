@@ -11,8 +11,21 @@ namespace Jeebs.Data.Adapters.Dapper;
 
 public sealed class DapperAdapter : IAdapter
 {
-	public ITypeMapper Mapper { get; init; } =
-		DapperTypeMapper.Instance;
+	/// <inheritdoc/>
+	public ITypeMapper Mapper { get; init; }
+
+	/// <summary>
+	/// Return a default instance of the adapter.
+	/// </summary>
+	public static DapperAdapter DefaultInstance =>
+		new(DapperTypeMapper.Instance);
+
+	/// <summary>
+	/// Inject dependencies.
+	/// </summary>
+	/// <param name="mapper">ITypeMapper.</param>
+	public DapperAdapter(ITypeMapper mapper) =>
+		Mapper = mapper;
 
 	/// <inheritdoc/>
 	public Task<Result<int>> ExecuteAsync(IDbTransaction transaction, string query, object? param, CommandType type) =>

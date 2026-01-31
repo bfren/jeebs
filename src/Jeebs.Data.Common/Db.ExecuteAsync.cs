@@ -3,7 +3,6 @@
 
 using System.Data;
 using System.Threading.Tasks;
-using Dapper;
 
 namespace Jeebs.Data.Common;
 
@@ -30,8 +29,8 @@ public abstract partial class Db
 		.Audit(
 			ok: LogQuery<bool>
 		)
-		.MapAsync(
-			x => transaction.Connection!.ExecuteAsync(x.query, x.parameters, transaction, commandType: x.type)
+		.BindAsync(
+			x => Client.Adapter.ExecuteAsync(transaction, x.query, x.parameters, x.type)
 		)
 		.MapAsync(
 			x => x > 0
@@ -60,8 +59,8 @@ public abstract partial class Db
 		.Audit(
 			ok: LogQuery<T>
 		)
-		.MapAsync(
-			x => transaction.Connection!.ExecuteScalarAsync<T>(x.query, x.parameters, transaction, commandType: x.type)
+		.BindAsync(
+			x => Client.Adapter.ExecuteAsync<T>(transaction, x.query, x.parameters, x.type)
 		)
 		.BindAsync(
 			x => x switch
