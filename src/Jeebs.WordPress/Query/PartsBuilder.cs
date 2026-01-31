@@ -5,6 +5,7 @@ using System;
 using System.Linq.Expressions;
 using Jeebs.Data.Clients.MySql;
 using Jeebs.Data.Common;
+using Jeebs.Data.Functions;
 using Jeebs.Data.Map;
 using Jeebs.Data.Query;
 using Wrap.Ids;
@@ -75,13 +76,11 @@ public abstract class PartsBuilder<TId> : QueryPartsBuilder<TId>
 	/// <typeparam name="TTable">Table type.</typeparam>
 	/// <param name="table">Table object.</param>
 	/// <param name="selector">Column selector.</param>
-#pragma warning disable IDE1006 // Naming Styles
 #pragma warning disable CA1707 // Identifiers should not contain underscores
 	protected string __<TTable>(TTable table, Expression<Func<TTable, string>> selector)
 #pragma warning restore CA1707 // Identifiers should not contain underscores
-#pragma warning restore IDE1006 // Naming Styles
 			where TTable : ITable =>
-		Data.DataF.GetColumnFromExpression(table, selector).Match(
+		DataF.GetColumnFromExpression(table, selector).Match(
 			ok: Client.EscapeWithTable,
 			fail: R.ThrowFailure<string>
 		);

@@ -4,7 +4,7 @@
 using Jeebs.Data.Query;
 using NSubstitute.ExceptionExtensions;
 
-namespace Jeebs.Data.DataF_Tests;
+namespace Jeebs.Data.Functions.DataF_Tests;
 
 public class BuildQuery_Tests
 {

@@ -3,7 +3,7 @@
 
 using Jeebs.Data.Map;
 
-namespace Jeebs.Data.DataF_Tests;
+namespace Jeebs.Data.Functions.DataF_Tests;
 
 public class GetColumnFromExpression_Tests
 {

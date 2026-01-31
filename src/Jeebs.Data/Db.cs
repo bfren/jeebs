@@ -7,6 +7,7 @@ using System.Linq.Expressions;
 using System.Threading.Tasks;
 using Jeebs.Collections;
 using Jeebs.Config.Db;
+using Jeebs.Data.Functions;
 using Jeebs.Data.Map;
 using Jeebs.Data.Query;
 using Jeebs.Logging;

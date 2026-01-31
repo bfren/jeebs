@@ -5,6 +5,7 @@ using System;
 using System.Collections.Concurrent;
 using Jeebs.Data.Attributes;
 using Jeebs.Data.Exceptions;
+using Jeebs.Data.Functions;
 
 namespace Jeebs.Data.Map;
 

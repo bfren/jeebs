@@ -1,7 +1,7 @@
 // Jeebs Rapid Application Development
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
-namespace Jeebs.Data.Common.FluentQuery;
+namespace Jeebs.Data.Common.Functions;
 
 /// <summary>
 /// Functions for <see cref="Repository.IFluentQuery{TEntity, TId}"/> implementations.

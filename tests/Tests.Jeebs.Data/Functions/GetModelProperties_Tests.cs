@@ -3,7 +3,7 @@
 
 using Jeebs.Data.Attributes;
 
-namespace Jeebs.Data.DataF_Tests;
+namespace Jeebs.Data.Functions.DataF_Tests;
 
 public class GetModelProperties_Tests
 {

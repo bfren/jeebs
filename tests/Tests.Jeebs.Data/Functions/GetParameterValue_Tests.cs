@@ -1,7 +1,7 @@
 // Jeebs Unit Tests
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
-namespace Jeebs.Data.DataF_Tests;
+namespace Jeebs.Data.Functions.DataF_Tests;
 
 public class GetParameterValue_Tests
 {

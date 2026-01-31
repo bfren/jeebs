@@ -6,11 +6,12 @@ using System.Collections;
 using System.Collections.Generic;
 using Jeebs.Collections;
 using Jeebs.Data.Enums;
+using Jeebs.Data.Functions;
 using Jeebs.Data.Map;
 using Jeebs.Data.Query;
 using Jeebs.Functions;
 
-namespace Jeebs.Data.Common.FluentQuery;
+namespace Jeebs.Data.Common.Functions;
 
 public static partial class QueryF
 {

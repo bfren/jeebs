@@ -8,7 +8,7 @@ using System.Linq;
 using System.Reflection;
 using Jeebs.Data.Attributes;
 
-namespace Jeebs.Data;
+namespace Jeebs.Data.Functions;
 
 public static partial class DataF
 {

@@ -4,7 +4,7 @@
 using System;
 using Jeebs.Data.Query;
 
-namespace Jeebs.Data;
+namespace Jeebs.Data.Functions;
 
 public static partial class DataF
 {
@@ -15,7 +15,7 @@ public static partial class DataF
 	/// <param name="builder">Query builder.</param>
 	public static Result<IQueryParts> BuildQuery<TModel>(Func<IQueryBuilder, IQueryBuilderWithFrom> builder) =>
 		R.Wrap(
-			new Query.QueryBuilder()
+			new QueryBuilder()
 		)
 		.Map(
 			x => (QueryBuilderWithFrom)builder(x),

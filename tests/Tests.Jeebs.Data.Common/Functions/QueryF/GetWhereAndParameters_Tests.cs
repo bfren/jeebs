@@ -5,7 +5,7 @@ using Jeebs.Data.Enums;
 using Jeebs.Data.Map;
 using Jeebs.Functions;
 
-namespace Jeebs.Data.Common.FluentQuery.FluentQueryF_Tests;
+namespace Jeebs.Data.Common.Functions.QueryF_Tests;
 
 public class GetWhereAndParameters_Tests
 {

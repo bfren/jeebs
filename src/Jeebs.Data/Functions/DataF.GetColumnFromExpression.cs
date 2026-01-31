@@ -6,7 +6,7 @@ using System.Linq.Expressions;
 using Jeebs.Data.Map;
 using Jeebs.Reflection;
 
-namespace Jeebs.Data;
+namespace Jeebs.Data.Functions;
 
 public static partial class DataF
 {

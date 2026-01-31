@@ -5,6 +5,7 @@ using System;
 using System.Data;
 using System.Threading.Tasks;
 using Dapper;
+using Jeebs.Data.Functions;
 using Jeebs.Data.Query;
 
 namespace Jeebs.Data.Common;

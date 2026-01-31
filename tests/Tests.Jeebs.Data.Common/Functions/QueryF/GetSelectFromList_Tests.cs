@@ -3,7 +3,7 @@
 
 using Jeebs.Data.Map;
 
-namespace Jeebs.Data.Common.FluentQuery.FluentQueryF_Tests;
+namespace Jeebs.Data.Common.Functions.QueryF_Tests;
 
 public class GetSelectFromList_Tests
 {

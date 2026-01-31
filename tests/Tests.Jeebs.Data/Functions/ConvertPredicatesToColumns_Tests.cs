@@ -5,7 +5,7 @@ using System.Collections;
 using Jeebs.Data.Enums;
 using Jeebs.Data.Map;
 
-namespace Jeebs.Data.DataF_Tests;
+namespace Jeebs.Data.Functions.DataF_Tests;
 
 public class ConvertPredicatesToColumns_Tests
 {

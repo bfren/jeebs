@@ -9,7 +9,7 @@ using Jeebs.Data.Enums;
 using Jeebs.Data.Map;
 using Jeebs.Functions;
 
-namespace Jeebs.Data;
+namespace Jeebs.Data.Functions;
 
 public static partial class DataF
 {

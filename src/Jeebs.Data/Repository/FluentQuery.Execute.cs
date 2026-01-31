@@ -4,6 +4,7 @@
 using System;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
+using Jeebs.Data.Functions;
 using Jeebs.Data.Map;
 using Jeebs.Reflection;
 

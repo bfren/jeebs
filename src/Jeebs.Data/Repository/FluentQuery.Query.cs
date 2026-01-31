@@ -3,6 +3,7 @@
 
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Jeebs.Data.Functions;
 using Jeebs.Data.Query;
 
 namespace Jeebs.Data.Repository;

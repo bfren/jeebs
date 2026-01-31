@@ -7,6 +7,7 @@ using System.Linq.Expressions;
 using System.Reflection;
 using Jeebs.Collections;
 using Jeebs.Data.Enums;
+using Jeebs.Data.Functions;
 using Jeebs.Data.Map;
 using Jeebs.Data.Query.Exceptions;
 
