@@ -39,7 +39,7 @@ public class Serialise_Tests
 		};
 		var expected =
 			"{" +
-			$"\"id\":\"{v0}\"," +
+			$"\"id\":{v0}," +
 			$"\"str\":\"{v1}\"," +
 			$"\"num\":{v2}," +
 			$"\"dt\":\"{v3:s}\"," +
