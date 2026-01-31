@@ -1,9 +1,7 @@
 // Jeebs Unit Tests
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
-using System.Data;
-
-namespace Jeebs.Data.Common.Repository_Tests;
+namespace Jeebs.Data.Repository.Repository_Tests;
 
 public class DeleteAsync_Tests : Repository_Setup
 {
@@ -16,11 +14,10 @@ public class DeleteAsync_Tests : Repository_Setup
 		var model = new FooModel { Id = FooId.Wrap(value) };
 
 		// Act
-		_ = await repo.DeleteAsync(model);
-		_ = await repo.DeleteAsync(model, v.Transaction);
+		await repo.DeleteAsync(model);
 
 		// Assert
-		v.Client.Received(2).GetDeleteQuery<Foo>(value);
+		v.Client.Received().GetDeleteQuery<Foo>(value);
 	}
 
 	[Fact]
@@ -32,10 +29,9 @@ public class DeleteAsync_Tests : Repository_Setup
 
 		// Act
 		_ = await repo.DeleteAsync(model);
-		_ = await repo.DeleteAsync(model, v.Transaction);
 
 		// Assert
-		await v.Db.Received(2).ExecuteAsync(Arg.Any<string>(), model, CommandType.Text, v.Transaction);
+		await v.Db.Received(1).ExecuteAsync(Arg.Any<string>(), model);
 	}
 
 	[Fact]
@@ -47,10 +43,9 @@ public class DeleteAsync_Tests : Repository_Setup
 		var model = new FooModel { Id = FooId.Wrap(value) };
 
 		// Act
-		_ = await repo.DeleteAsync(model);
-		_ = await repo.DeleteAsync(model, v.Transaction);
+		await repo.DeleteAsync(model);
 
 		// Assert
-		v.Log.ReceivedWithAnyArgs(2).Vrb(Arg.Any<string>(), Arg.Any<object[]>());
+		v.Log.ReceivedWithAnyArgs().Vrb(Arg.Any<string>(), Arg.Any<object[]>());
 	}
 }

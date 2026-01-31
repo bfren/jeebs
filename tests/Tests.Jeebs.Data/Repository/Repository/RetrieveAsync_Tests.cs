@@ -1,9 +1,7 @@
 // Jeebs Unit Tests
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
-using System.Data;
-
-namespace Jeebs.Data.Common.Repository_Tests;
+namespace Jeebs.Data.Repository.Repository_Tests;
 
 public class RetrieveAsync_Tests : Repository_Setup
 {
@@ -16,10 +14,9 @@ public class RetrieveAsync_Tests : Repository_Setup
 
 		// Act
 		await repo.RetrieveAsync<FooModel>(FooId.Wrap(value));
-		await repo.RetrieveAsync<FooModel>(FooId.Wrap(value), v.Transaction);
 
 		// Assert
-		v.Client.Received(2).GetRetrieveQuery<Foo, FooModel>(value);
+		v.Client.Received().GetRetrieveQuery<Foo, FooModel>(value);
 	}
 
 	[Fact]
@@ -31,10 +28,9 @@ public class RetrieveAsync_Tests : Repository_Setup
 
 		// Act
 		await repo.RetrieveAsync<FooModel>(value);
-		await repo.RetrieveAsync<FooModel>(value, v.Transaction);
 
 		// Assert
-		await v.Db.Received(2).QuerySingleAsync<FooModel>(Arg.Any<string>(), Arg.Any<object?>(), CommandType.Text, v.Transaction);
+		await v.Db.Received().QuerySingleAsync<FooModel>(Arg.Any<string>(), Arg.Any<object?>());
 	}
 
 	[Fact]
@@ -45,10 +41,9 @@ public class RetrieveAsync_Tests : Repository_Setup
 		var value = Rnd.Lng;
 
 		// Act
-		_ = await repo.RetrieveAsync<FooModel>(FooId.Wrap(value));
-		_ = await repo.RetrieveAsync<FooModel>(FooId.Wrap(value), v.Transaction);
+		await repo.RetrieveAsync<FooModel>(FooId.Wrap(value));
 
 		// Assert
-		v.Log.ReceivedWithAnyArgs(2).Vrb(Arg.Any<string>(), Arg.Any<object[]>());
+		v.Log.ReceivedWithAnyArgs().Vrb(Arg.Any<string>(), Arg.Any<object[]>());
 	}
 }

@@ -2,14 +2,14 @@
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using Jeebs.Data.Enums;
-using Jeebs.Data.QueryBuilder;
+using Jeebs.Data.Query;
 using Jeebs.Logging;
 
-namespace Jeebs.Data.Common.Repository_Tests;
+namespace Jeebs.Data.Repository.Repository_Tests;
 
-public static class Repository_Setup
+public abstract class Repository_Setup
 {
-	public static (IDbClient client, ILog log, Repository<Foo, FooId> repo) Get()
+	protected (Repository<Foo, FooId> repo, Vars v) Setup()
 	{
 		var client = Substitute.For<IDbClient>();
 		client
@@ -27,8 +27,14 @@ public static class Repository_Setup
 
 		var repo = Substitute.ForPartsOf<Repository<Foo, FooId>>(db, log);
 
-		return (client, log, repo);
+		return (repo, new(db, client, log));
 	}
+
+	public sealed record class Vars(
+		IDb Db,
+		IDbClient Client,
+		ILog Log
+	);
 
 	public sealed record class Foo : WithId<FooId, long>;
 
