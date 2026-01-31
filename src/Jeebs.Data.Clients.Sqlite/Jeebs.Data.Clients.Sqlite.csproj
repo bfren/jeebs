@@ -1,6 +1,6 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <ItemGroup>
-    <PackageReference Include="System.Data.SQLite.Core" PrivateAssets="All" />
+    <PackageReference Include="System.Data.SQLite.Core" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Jeebs.Data.Common\Jeebs.Data.Common.csproj" />

@@ -1,6 +1,6 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <ItemGroup>
-    <PackageReference Include="MySqlConnector" PrivateAssets="All" />
+    <PackageReference Include="MySqlConnector" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Jeebs.Data.Common\Jeebs.Data.Common.csproj" />

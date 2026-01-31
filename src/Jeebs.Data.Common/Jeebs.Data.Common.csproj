@@ -4,8 +4,8 @@
     <ProjectReference Include="..\Jeebs.Data\Jeebs.Data.csproj" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="Dapper" PrivateAssets="All" />
-    <PackageReference Include="Wrap.Id.Dapper" PrivateAssets="All" />
+    <PackageReference Include="Dapper" />
+    <PackageReference Include="Wrap.Id.Dapper" />
   </ItemGroup>
   <ItemGroup Label="Test Internals">
     <AssemblyAttribute Include="System.Runtime.CompilerServices.InternalsVisibleToAttribute">

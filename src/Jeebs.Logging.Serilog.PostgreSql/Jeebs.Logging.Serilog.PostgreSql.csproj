@@ -1,9 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <ItemGroup>
     <PackageReference Include="Microsoft.Extensions.Logging" />
-    <PackageReference Include="Npgsql" PrivateAssets="All" />
-    <PackageReference Include="Serilog" PrivateAssets="All" />
-    <PackageReference Include="Serilog.Extensions.Hosting" PrivateAssets="All" />
+    <PackageReference Include="Npgsql" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Jeebs.Logging.Serilog\Jeebs.Logging.Serilog.csproj" />

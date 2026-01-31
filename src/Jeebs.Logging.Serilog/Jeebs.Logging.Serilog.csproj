@@ -1,12 +1,12 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <ItemGroup>
-    <PackageReference Include="Serilog" PrivateAssets="All" />
-    <PackageReference Include="Serilog.Extensions.Hosting" PrivateAssets="All" />
-    <PackageReference Include="Serilog.Sinks.Async" PrivateAssets="All" />
-    <PackageReference Include="Serilog.Sinks.Console" PrivateAssets="All" />
-    <PackageReference Include="Serilog.Sinks.File" PrivateAssets="All" />
-    <PackageReference Include="Serilog.Sinks.Seq" PrivateAssets="All" />
-    <PackageReference Include="Serilog.Sinks.Slack" PrivateAssets="All" />
+    <PackageReference Include="Serilog" />
+    <PackageReference Include="Serilog.Extensions.Hosting" />
+    <PackageReference Include="Serilog.Sinks.Async" />
+    <PackageReference Include="Serilog.Sinks.Console" />
+    <PackageReference Include="Serilog.Sinks.File" />
+    <PackageReference Include="Serilog.Sinks.Seq" />
+    <PackageReference Include="Serilog.Sinks.Slack" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Jeebs\Jeebs.csproj" />

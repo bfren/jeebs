@@ -1,6 +1,6 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <ItemGroup>
-    <PackageReference Include="SkiaSharp" PrivateAssets="All" />
+    <PackageReference Include="SkiaSharp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Jeebs.Services.Drawing\Jeebs.Services.Drawing.csproj" />
