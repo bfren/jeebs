@@ -3,7 +3,6 @@
 
 using System.Linq.Expressions;
 using Jeebs.Data.Enums;
-using Jeebs.Data.Query;
 using Jeebs.Reflection;
 using NSubstitute.Core;
 
