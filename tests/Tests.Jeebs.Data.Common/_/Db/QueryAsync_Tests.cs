@@ -33,11 +33,12 @@ public class QueryAsync_Tests : Db_Setup
 		const CommandType type = CommandType.Text;
 
 		// Act
+		await db.QueryAsync<int>(query, param);
 		await db.QueryAsync<int>(query, param, type, v.Transaction);
 
 		// Assert
-		v.Log.Received().Vrb(
-			"Query Type: {Type} |Returns: {Return} | {Query} | Parameters: {Param}",
+		v.Log.Received(2).Vrb(
+			"Query Type: {Type} | Returns: {Return} | {Query} | Parameters: {Param}",
 			type, typeof(int), query, param
 		);
 	}
