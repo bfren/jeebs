@@ -1,12 +1,11 @@
 // Jeebs Unit Tests
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
-using System.Data;
 using Jeebs.Data.Map;
-using Jeebs.Data.QueryBuilder;
+using Jeebs.Data.Query;
 using Jeebs.Logging;
 
-namespace Jeebs.Data.Common.FluentQuery.FluentQuery_Tests;
+namespace Jeebs.Data.Repository.FluentQuery_Tests;
 
 public abstract class FluentQuery_Tests
 {
@@ -21,18 +20,11 @@ public abstract class FluentQuery_Tests
 		client.GetQuery(default!).ReturnsForAnyArgs((notNullQuery, notNullParam));
 		client.GetCountQuery(default!).ReturnsForAnyArgs((notNullQuery, notNullParam));
 
-		var transaction = Substitute.For<IDbTransaction>();
-
-		var unitOfWork = Substitute.For<IUnitOfWork>();
-		unitOfWork.Transaction.Returns(transaction);
-
 		var db = Substitute.For<IDb>();
 		db.Client.Returns(client);
-		db.StartWork().Returns(unitOfWork);
-		db.StartWorkAsync().Returns(unitOfWork);
-		db.QueryAsync<long>(notNullQuery, notNullParam, CommandType.Text, Arg.Any<IDbTransaction>()).Returns(new[] { Rnd.Lng });
-		db.QueryAsync<string>(notNullQuery, notNullParam, CommandType.Text, Arg.Any<IDbTransaction>()).Returns(new[] { Rnd.Str });
-		db.QuerySingleAsync<long>(notNullQuery, notNullParam, CommandType.Text, Arg.Any<IDbTransaction>()).Returns(Rnd.Lng);
+		db.QueryAsync<long>(notNullQuery, notNullParam).Returns(new[] { Rnd.Lng });
+		db.QueryAsync<string>(notNullQuery, notNullParam).Returns(new[] { Rnd.Str });
+		db.QuerySingleAsync<long>(notNullQuery, notNullParam).Returns(Rnd.Lng);
 
 		var log = Substitute.For<ILog>();
 
@@ -44,7 +36,7 @@ public abstract class FluentQuery_Tests
 		var mapper = Substitute.For<IEntityMapper>();
 		mapper.GetTableMapFor<TestEntity>().Returns(R.Wrap(map));
 
-		return (new(db, mapper, log), new(client, db, log, mapper, table, map, transaction));
+		return (new(db, mapper, log), new(client, db, log, mapper, table, map));
 	}
 
 	public sealed record class Vars(
@@ -53,8 +45,7 @@ public abstract class FluentQuery_Tests
 		ILog Log,
 		IEntityMapper Mapper,
 		TestTable Table,
-		ITableMap TableMap,
-		IDbTransaction Transaction
+		ITableMap TableMap
 	);
 
 	public sealed record class TestId : LongId<TestId>;

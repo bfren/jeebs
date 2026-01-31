@@ -5,7 +5,7 @@ using Jeebs.Collections;
 using Jeebs.Data.Enums;
 using Jeebs.Data.Map;
 
-namespace Jeebs.Data.QueryBuilder.QueryParts_Tests;
+namespace Jeebs.Data.Query.QueryParts_Tests;
 
 public class Constructor_Tests
 {

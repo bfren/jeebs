@@ -4,7 +4,7 @@
 using Jeebs.Data.Map;
 using NSubstitute.Extensions;
 
-namespace Jeebs.Data.QueryBuilder.QueryOptions_Tests;
+namespace Jeebs.Data.Query.QueryOptions_Tests;
 
 public abstract class QueryOptions_Tests<TOptions, TBuilder, TId>
 	where TOptions : QueryOptions<TId>

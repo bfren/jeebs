@@ -1,7 +1,6 @@
 // Jeebs Unit Tests
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
-using System.Data;
 using Jeebs.Data.Testing.Exceptions;
 using NSubstitute.Core;
 
@@ -28,8 +27,7 @@ public class AssertExecute_Tests : Setup
 	{
 		// Arrange
 		var fluent = Create();
-		var transaction = Substitute.For<IDbTransaction>();
-		await fluent.ExecuteAsync(x => x.Id, transaction);
+		await fluent.ExecuteAsync(x => x.Id);
 
 		// Act
 		var action = (ICall c) => FluentQueryHelper.AssertExecute<TestEntity, TestId>(c, x => x.Id, true);

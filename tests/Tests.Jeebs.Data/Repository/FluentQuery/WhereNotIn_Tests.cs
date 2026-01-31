@@ -3,9 +3,9 @@
 
 using Jeebs.Data.Enums;
 
-namespace Jeebs.Data.Common.FluentQuery.FluentQuery_Tests;
+namespace Jeebs.Data.Repository.FluentQuery_Tests;
 
-public class WhereIn_Tests : FluentQuery_Tests
+public class WhereNotIn_Tests : FluentQuery_Tests
 {
 	[Fact]
 	public void No_Values__Does_Not_Add_Predicate__Returns_Original_Query()
@@ -14,8 +14,8 @@ public class WhereIn_Tests : FluentQuery_Tests
 		var (query, v) = Setup();
 
 		// Act
-		var r0 = query.WhereIn(nameof(TestEntity.Foo), Array.Empty<string?>());
-		var r1 = query.WhereIn(x => x.Foo, []);
+		var r0 = query.WhereNotIn(nameof(TestEntity.Foo), Array.Empty<string?>());
+		var r1 = query.WhereNotIn(x => x.Foo, []);
 
 		// Assert
 		var f0 = Assert.IsType<FluentQuery<TestEntity, TestId>>(r0);
@@ -35,8 +35,8 @@ public class WhereIn_Tests : FluentQuery_Tests
 		var v1 = Rnd.Str;
 
 		// Act
-		var r0 = query.WhereIn(nameof(TestEntity.Foo), [v0, v1]);
-		var r1 = query.WhereIn(x => x.Foo, [v0, v1]);
+		var r0 = query.WhereNotIn(nameof(TestEntity.Foo), [v0, v1]);
+		var r1 = query.WhereNotIn(x => x.Foo, [v0, v1]);
 
 		// Assert
 		var f0 = Assert.IsType<FluentQuery<TestEntity, TestId>>(r0);
@@ -44,7 +44,7 @@ public class WhereIn_Tests : FluentQuery_Tests
 		Assert.Equal(v.Table.GetName(), column0.TblName);
 		Assert.Equal(v.Table.Foo, column0.ColName);
 		Assert.Equal(nameof(TestEntity.Foo), column0.ColAlias);
-		Assert.Equal(Compare.In, compare0);
+		Assert.Equal(Compare.NotIn, compare0);
 		Assert.Collection((IEnumerable<string>)value0!,
 			y => Assert.Equal(v0, y),
 			y => Assert.Equal(v1, y)
@@ -54,7 +54,7 @@ public class WhereIn_Tests : FluentQuery_Tests
 		Assert.Equal(v.Table.GetName(), column1.TblName);
 		Assert.Equal(v.Table.Foo, column1.ColName);
 		Assert.Equal(nameof(TestEntity.Foo), column1.ColAlias);
-		Assert.Equal(Compare.In, compare1);
+		Assert.Equal(Compare.NotIn, compare1);
 		Assert.Collection((IEnumerable<string>)value1!,
 			y => Assert.Equal(v0, y),
 			y => Assert.Equal(v1, y)

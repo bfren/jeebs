@@ -1,10 +1,9 @@
 // Jeebs Unit Tests
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
-using System.Data;
-using Jeebs.Data.QueryBuilder;
+using Jeebs.Data.Query;
 
-namespace Jeebs.Data.Common.FluentQuery.FluentQuery_Tests;
+namespace Jeebs.Data.Repository.FluentQuery_Tests;
 
 public class ExecuteAsync_Tests : FluentQuery_Tests
 {
@@ -12,7 +11,7 @@ public class ExecuteAsync_Tests : FluentQuery_Tests
 	public async Task Column_Does_Not_Exist__Returns_None_With_NoMatchingItemsMsg()
 	{
 		// Arrange
-		var (query, _) = Setup();
+		var (query, v) = Setup();
 		var alias = Rnd.Str;
 
 		// Act
@@ -82,6 +81,6 @@ public class ExecuteAsync_Tests : FluentQuery_Tests
 		await withWhere.ExecuteAsync(x => x.Foo);
 
 		// Assert
-		await v.Db.Received(2).QueryAsync<string>(sql, param, CommandType.Text, v.Transaction);
+		await v.Db.Received(2).QueryAsync<string>(sql, param);
 	}
 }

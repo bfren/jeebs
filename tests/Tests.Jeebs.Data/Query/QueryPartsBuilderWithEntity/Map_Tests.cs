@@ -3,7 +3,7 @@
 
 using Wrap.Exceptions;
 
-namespace Jeebs.Data.QueryBuilder.QueryPartsBuilderWithEntity_Tests;
+namespace Jeebs.Data.Query.QueryPartsBuilderWithEntity_Tests;
 
 public class Map_Tests : QueryPartsBuilderWithEntity_Tests
 {

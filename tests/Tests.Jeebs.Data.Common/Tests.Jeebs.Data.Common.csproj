@@ -1,6 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <RootNamespace>Jeebs.Data</RootNamespace>
+    <RootNamespace>Jeebs.Data.Common</RootNamespace>
   </PropertyGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\src\Jeebs.Data.Common\Jeebs.Data.Common.csproj" />

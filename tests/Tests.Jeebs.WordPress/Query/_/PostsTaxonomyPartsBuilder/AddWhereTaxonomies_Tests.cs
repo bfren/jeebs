@@ -4,7 +4,7 @@
 using Jeebs.Collections;
 using Jeebs.Data.Enums;
 using Jeebs.Data.Map;
-using Jeebs.Data.QueryBuilder.QueryPartsBuilder_Tests;
+using Jeebs.Data.Query.QueryPartsBuilder_Tests;
 using Jeebs.Functions;
 using Jeebs.WordPress.Entities.Ids;
 using Jeebs.WordPress.Enums;

@@ -1,9 +1,9 @@
 // Jeebs Unit Tests
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
-using static Jeebs.Data.QueryBuilder.QueryOptions_Tests.Setup;
+using static Jeebs.Data.Query.QueryOptions_Tests.Setup;
 
-namespace Jeebs.Data.QueryBuilder.QueryOptions_Tests;
+namespace Jeebs.Data.Query.QueryOptions_Tests;
 
 public class ToParts_Tests : ToParts_Tests<TestOptions, ITestBuilder, TestId>
 {

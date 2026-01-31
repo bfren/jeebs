@@ -1,14 +1,14 @@
 // Jeebs Unit Tests
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
-using Jeebs.Data.Common.FluentQuery;
+using Jeebs.Data.Repository;
 using Wrap.Ids;
 
 namespace Jeebs.Data.Testing.Query.FluentQueryHelper_Tests;
 
 public abstract class Setup
 {
-	public static IFluentQuery<FluentQuery<TestEntity, TestId>, TestEntity, TestId> Create() =>
+	public static IFluentQuery<TestEntity, TestId> Create() =>
 		FluentQueryHelper.CreateSubstitute<TestEntity, TestId>();
 
 	public sealed record class TestId : LongId<TestId>;

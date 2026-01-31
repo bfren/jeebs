@@ -4,7 +4,7 @@
 using Jeebs.Data.Map;
 using Jeebs.Logging;
 
-namespace Jeebs.Data.Common.FluentQuery.FluentQuery_Tests;
+namespace Jeebs.Data.Repository.FluentQuery_Tests;
 
 public class Constructor_Tests
 {

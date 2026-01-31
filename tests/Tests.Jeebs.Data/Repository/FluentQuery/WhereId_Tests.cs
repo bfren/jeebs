@@ -1,7 +1,7 @@
 // Jeebs Unit Tests
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
-namespace Jeebs.Data.Common.FluentQuery.FluentQuery_Tests;
+namespace Jeebs.Data.Repository.FluentQuery_Tests;
 
 public class WhereId_Tests : FluentQuery_Tests
 {
@@ -9,7 +9,7 @@ public class WhereId_Tests : FluentQuery_Tests
 	public void No_Values__Does_Not_Add_Predicate__Returns_Original_Query()
 	{
 		// Arrange
-		var (query, _) = Setup();
+		var (query, v) = Setup();
 
 		// Act
 		var r0 = query.WhereId();

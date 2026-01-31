@@ -3,7 +3,7 @@
 
 using Jeebs.Data.Enums;
 using Jeebs.Data.Map;
-using Jeebs.Data.QueryBuilder.QueryPartsBuilder_Tests;
+using Jeebs.Data.Query.QueryPartsBuilder_Tests;
 using Jeebs.WordPress.Entities.Ids;
 using static Jeebs.WordPress.Query.TermsPartsBuilder_Tests.Setup;
 

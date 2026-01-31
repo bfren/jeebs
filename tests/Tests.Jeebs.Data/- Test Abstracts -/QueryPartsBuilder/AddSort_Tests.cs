@@ -5,7 +5,7 @@ using Jeebs.Data.Enums;
 using Jeebs.Data.Map;
 using Jeebs.Functions;
 
-namespace Jeebs.Data.QueryBuilder.QueryPartsBuilder_Tests;
+namespace Jeebs.Data.Query.QueryPartsBuilder_Tests;
 
 public abstract class AddSort_Tests<TBuilder, TId> : QueryPartsBuilder_Tests<TBuilder, TId>
 	where TBuilder : QueryPartsBuilder<TId>

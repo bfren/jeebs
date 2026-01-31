@@ -3,7 +3,7 @@
 
 using Jeebs.Data.Map;
 
-namespace Jeebs.Data.QueryBuilder.QueryPartsBuilder_Tests;
+namespace Jeebs.Data.Query.QueryPartsBuilder_Tests;
 
 public abstract class Create_Tests<TBuilder, TId, TModel> : QueryPartsBuilder_Tests<TBuilder, TId>
 	where TBuilder : QueryPartsBuilder<TId>

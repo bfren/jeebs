@@ -3,7 +3,7 @@
 
 using Jeebs.Collections;
 using Jeebs.Data.Enums;
-using Jeebs.Data.QueryBuilder.QueryOptions_Tests;
+using Jeebs.Data.Query.QueryOptions_Tests;
 using Jeebs.Functions;
 using Jeebs.WordPress.CustomFields;
 using Jeebs.WordPress.Entities.Ids;

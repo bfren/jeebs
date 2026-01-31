@@ -1,10 +1,9 @@
 // Jeebs Unit Tests
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
-using System.Data;
-using Jeebs.Data.QueryBuilder;
+using Jeebs.Data.Query;
 
-namespace Jeebs.Data.Common.FluentQuery.FluentQuery_Tests;
+namespace Jeebs.Data.Repository.FluentQuery_Tests;
 
 public class QueryAsync_Tests : FluentQuery_Tests
 {
@@ -12,7 +11,7 @@ public class QueryAsync_Tests : FluentQuery_Tests
 	public async Task Query_Errors__Returns_None_With_ListMsg()
 	{
 		// Arrange
-		var (query, _) = Setup();
+		var (query, v) = Setup();
 		var m0 = FailGen.Create().Value;
 		var m1 = FailGen.Create().Value;
 		query.Errors.Add(m0);
@@ -29,7 +28,7 @@ public class QueryAsync_Tests : FluentQuery_Tests
 	public async Task No_Predicates__Returns_Fail()
 	{
 		// Arrange
-		var (query, _) = Setup();
+		var (query, v) = Setup();
 
 		// Act
 		var result = await query.QueryAsync<string>();
@@ -49,12 +48,11 @@ public class QueryAsync_Tests : FluentQuery_Tests
 		});
 
 		// Act
-		await withWhere.QueryAsync<string>();
-		await withWhere.QueryAsync<string>(v.Transaction);
+		_ = await withWhere.QueryAsync<string>();
 
 		// Assert
 		var fluent = Assert.IsType<FluentQuery<TestEntity, TestId>>(withWhere);
-		v.Client.Received(2).GetQuery(fluent.Parts);
+		v.Client.Received(1).GetQuery(fluent.Parts);
 	}
 
 	[Fact]
@@ -70,11 +68,10 @@ public class QueryAsync_Tests : FluentQuery_Tests
 		});
 
 		// Act
-		await withWhere.QueryAsync<string>();
-		await withWhere.QueryAsync<string>(v.Transaction);
+		_ = await withWhere.QueryAsync<string>();
 
 		// Assert
 		Assert.IsType<FluentQuery<TestEntity, TestId>>(withWhere);
-		await v.Db.Received(2).QueryAsync<string>(sql, param, CommandType.Text, v.Transaction);
+		await v.Db.Received(1).QueryAsync<string>(sql, param);
 	}
 }

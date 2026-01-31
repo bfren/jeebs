@@ -4,9 +4,9 @@
 using Jeebs.Collections;
 using Jeebs.Data.Enums;
 using Jeebs.Data.Map;
-using Jeebs.Data.QueryBuilder.Exceptions;
+using Jeebs.Data.Query.Exceptions;
 
-namespace Jeebs.Data.QueryBuilder.QueryBuilderWithFrom_Tests;
+namespace Jeebs.Data.Query.QueryBuilderWithFrom_Tests;
 
 public class Join_Tests
 {
