@@ -32,6 +32,6 @@ public static partial class TypeF
 					&& !t.IsInterface
 					select t;
 
-		return types.Distinct().ToList();
+		return [.. types.Distinct()];
 	}
 }

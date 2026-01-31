@@ -26,6 +26,6 @@ public static partial class QueryPostsF
 			return [];
 		}
 
-		return taxonomies.ToList();
+		return [.. taxonomies];
 	}
 }

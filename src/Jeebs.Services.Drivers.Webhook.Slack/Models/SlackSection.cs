@@ -58,5 +58,5 @@ public sealed record class SlackSection : SlackBlock
 	/// </summary>
 	/// <param name="fields">Fields.</param>
 	public SlackSection(params SlackContent[] fields) : this() =>
-		Fields = fields.ToList();
+		Fields = [.. fields];
 }

@@ -27,6 +27,6 @@ public static partial class QueryPostsF
 			return [];
 		}
 
-		return customFields.ToList();
+		return [.. customFields];
 	}
 }
