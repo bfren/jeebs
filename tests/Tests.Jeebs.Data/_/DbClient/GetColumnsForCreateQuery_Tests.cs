@@ -4,15 +4,15 @@
 using System.Reflection;
 using Jeebs.Data.Map;
 
-namespace Jeebs.Data.Common.DbClient_Tests;
+namespace Jeebs.Data.DbClient_Tests;
 
-public class GetColumnsForCreateQuery_Tests
+public class GetColumnsForCreateQuery_Tests : DbClient_Setup
 {
 	[Fact]
 	public void No_Mapped_Columns_Returns_Empty_Lists()
 	{
 		// Arrange
-		var client = Substitute.ForPartsOf<DbClient>();
+		var (client, _) = Setup();
 		var list = new ColumnList();
 
 		// Act
@@ -27,7 +27,7 @@ public class GetColumnsForCreateQuery_Tests
 	public void Returns_Escaped_Column_Names_And_Parameter_Refs()
 	{
 		// Arrange
-		var client = Substitute.ForPartsOf<DbClient>();
+		var (client, _) = Setup();
 
 		var name = Rnd.Str;
 
