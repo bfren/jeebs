@@ -1,6 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <ItemGroup>
-    <PackageReference Include="Npgsql" />
+    <PackageReference Include="Dapper" PrivateAssets="All" />
+    <PackageReference Include="Npgsql" PrivateAssets="All" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Jeebs.Data.Common\Jeebs.Data.Common.csproj" />

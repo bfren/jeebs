@@ -1,7 +1,10 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <RootNamespace>Jeebs.WordPress</RootNamespace>
   </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="Dapper" />
+  </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\src\Jeebs.WordPress\Jeebs.WordPress.csproj" />
     <ProjectReference Include="..\Tests.Jeebs.Data\Tests.Jeebs.Data.csproj" />
