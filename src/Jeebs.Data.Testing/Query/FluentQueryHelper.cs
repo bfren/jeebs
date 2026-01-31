@@ -1,7 +1,7 @@
 // Jeebs Rapid Application Development
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
-using Jeebs.Data.Common.FluentQuery;
+using Jeebs.Data.Repository;
 using Wrap.Ids;
 
 namespace Jeebs.Data.Testing.Query;
@@ -18,5 +18,5 @@ public static partial class FluentQueryHelper
 	private sealed record class FakeEntity : WithId<FakeId, long>;
 
 	/// <summary>Used to get strongly-typed method names</summary>
-	private interface IFake : IFluentQuery<FluentQuery<FakeEntity, FakeId>, FakeEntity, FakeId> { }
+	private interface IFake : IFluentQuery<FakeEntity, FakeId> { }
 }

@@ -1,7 +1,7 @@
 // Jeebs Rapid Application Development
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
-using Jeebs.Data.Common.FluentQuery;
+using Jeebs.Data.Repository;
 using NSubstitute.Core;
 using Xunit.Sdk;
 
@@ -20,7 +20,7 @@ public static class FluentQueryExtensions
 	/// <param name="this">Fluent Query object.</param>
 	/// <param name="inspectors">Call inspectors.</param>
 	/// <exception cref="CollectionException"></exception>
-	public static void AssertCalls<TEntity, TId>(this IFluentQuery<FluentQuery<TEntity, TId>, TEntity, TId> @this, params Action<ICall>[] inspectors)
+	public static void AssertCalls<TEntity, TId>(this IFluentQuery<TEntity, TId> @this, params Action<ICall>[] inspectors)
 		where TEntity : IWithId
 		where TId : class, IUnion, new() =>
 		FluentQueryHelper.AssertCollection([.. @this.ReceivedCalls()], inspectors);
