@@ -7,7 +7,7 @@ using Jeebs.Collections;
 using Jeebs.Data.Enums;
 using Jeebs.Data.Map;
 
-namespace Jeebs.Data.QueryBuilder;
+namespace Jeebs.Data.Query;
 
 /// <summary>
 /// Build an <see cref="QueryParts"/> object

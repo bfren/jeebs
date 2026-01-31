@@ -7,17 +7,16 @@ using System.Linq.Expressions;
 using System.Threading.Tasks;
 using Jeebs.Data.Enums;
 
-namespace Jeebs.Data.FluentQuery;
+namespace Jeebs.Data.Repository;
 
 /// <summary>
 /// Build a database query using fluent syntax.
 /// </summary>
 /// <typeparam name="TEntity">Entity type.</typeparam>
 /// <typeparam name="TId">StrongId type.</typeparam>
-public interface IFluentQuery<TFluentQuery, TEntity, TId>
+public interface IFluentQuery<TEntity, TId>
 	where TEntity : IWithId
 	where TId : class, IUnion, new()
-	where TFluentQuery : IFluentQuery<TFluentQuery, TEntity, TId>
 {
 	#region Where
 
@@ -27,7 +26,7 @@ public interface IFluentQuery<TFluentQuery, TEntity, TId>
 	/// <param name="columnAlias">Column alias.</param>
 	/// <param name="compare">Comparison operator.</param>
 	/// <param name="value">Column value.</param>
-	TFluentQuery Where(string columnAlias, Compare compare, dynamic? value);
+	IFluentQuery<TEntity, TId> Where(string columnAlias, Compare compare, dynamic? value);
 
 	/// <summary>
 	/// Add a WHERE predicate (multiple predicates will be added using AND).
@@ -36,13 +35,13 @@ public interface IFluentQuery<TFluentQuery, TEntity, TId>
 	/// <param name="aliasSelector">Column alias selector.</param>
 	/// <param name="compare">Comparison operator.</param>
 	/// <param name="value">Column value.</param>
-	TFluentQuery Where<TValue>(Expression<Func<TEntity, TValue>> aliasSelector, Compare compare, TValue value);
+	IFluentQuery<TEntity, TId> Where<TValue>(Expression<Func<TEntity, TValue>> aliasSelector, Compare compare, TValue value);
 
 	/// <summary>
 	/// Add a WHERE predicate for the ID column (multiple predicates will be added using AND).
 	/// </summary>
 	/// <param name="ids">ID(s) to be searched for.</param>
-	TFluentQuery WhereId(params TId[] ids);
+	IFluentQuery<TEntity, TId> WhereId(params TId[] ids);
 
 	/// <summary>
 	/// Add a WHERE IN predicate (multiple predicates will be added using AND).
@@ -50,10 +49,10 @@ public interface IFluentQuery<TFluentQuery, TEntity, TId>
 	/// <typeparam name="TValue">Column value type.</typeparam>
 	/// <param name="columnAlias">Column alias.</param>
 	/// <param name="values">Array of column values.</param>
-	TFluentQuery WhereIn<TValue>(string columnAlias, IEnumerable<TValue> values);
+	IFluentQuery<TEntity, TId> WhereIn<TValue>(string columnAlias, IEnumerable<TValue> values);
 
 	/// <inheritdoc cref="WhereIn{TValue}(string, IEnumerable{TValue})"/>
-	TFluentQuery WhereIn<TValue>(Expression<Func<TEntity, TValue>> aliasSelector, IEnumerable<TValue> values);
+	IFluentQuery<TEntity, TId> WhereIn<TValue>(Expression<Func<TEntity, TValue>> aliasSelector, IEnumerable<TValue> values);
 
 	/// <summary>
 	/// Add a WHERE NOT IN predicate (multiple predicates will be added using AND).
@@ -61,17 +60,17 @@ public interface IFluentQuery<TFluentQuery, TEntity, TId>
 	/// <typeparam name="TValue">Column value type.</typeparam>
 	/// <param name="columnAlias">Column alias.</param>
 	/// <param name="values">Array of column values.</param>
-	TFluentQuery WhereNotIn<TValue>(string columnAlias, IEnumerable<TValue> values);
+	IFluentQuery<TEntity, TId> WhereNotIn<TValue>(string columnAlias, IEnumerable<TValue> values);
 
 	/// <inheritdoc cref="WhereNotIn{TValue}(Expression{Func{TEntity, TValue}}, IEnumerable{TValue})"/>
-	TFluentQuery WhereNotIn<TValue>(Expression<Func<TEntity, TValue>> aliasSelector, IEnumerable<TValue> values);
+	IFluentQuery<TEntity, TId> WhereNotIn<TValue>(Expression<Func<TEntity, TValue>> aliasSelector, IEnumerable<TValue> values);
 
 	/// <summary>
 	/// Add a custom where clause with parameters.
 	/// </summary>
 	/// <param name="clause">Custom clause.</param>
 	/// <param name="parameters">Parameters for custom clause.</param>
-	TFluentQuery Where(string clause, object parameters);
+	IFluentQuery<TEntity, TId> Where(string clause, object parameters);
 
 	#endregion Where
 
@@ -82,10 +81,10 @@ public interface IFluentQuery<TFluentQuery, TEntity, TId>
 	/// </summary>
 	/// <param name="columnAlias">Column alias.</param>
 	/// <param name="order">Sort order.</param>
-	TFluentQuery Sort(string columnAlias, SortOrder order);
+	IFluentQuery<TEntity, TId> Sort(string columnAlias, SortOrder order);
 
 	/// <inheritdoc cref="Sort(string, SortOrder)"/>
-	TFluentQuery Sort<TValue>(Expression<Func<TEntity, TValue>> aliasSelector, SortOrder order);
+	IFluentQuery<TEntity, TId> Sort<TValue>(Expression<Func<TEntity, TValue>> aliasSelector, SortOrder order);
 
 	#endregion Sort
 
@@ -95,13 +94,13 @@ public interface IFluentQuery<TFluentQuery, TEntity, TId>
 	/// The maximum number of records to return.
 	/// </summary>
 	/// <param name="number"></param>
-	TFluentQuery Maximum(ulong number);
+	IFluentQuery<TEntity, TId> Maximum(ulong number);
 
 	/// <summary>
 	/// The number of records to skip.
 	/// </summary>
 	/// <param name="number"></param>
-	TFluentQuery Skip(ulong number);
+	IFluentQuery<TEntity, TId> Skip(ulong number);
 
 	#endregion Limit
 

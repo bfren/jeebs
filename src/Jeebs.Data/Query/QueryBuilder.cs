@@ -3,7 +3,7 @@
 
 using Jeebs.Data.Map;
 
-namespace Jeebs.Data.QueryBuilder;
+namespace Jeebs.Data.Query;
 
 /// <inheritdoc cref="IQueryBuilder"/>
 public sealed record class QueryBuilder : IQueryBuilder

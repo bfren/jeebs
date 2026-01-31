@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Jeebs.Collections;
 using Jeebs.Config.Db;
-using Jeebs.Data.QueryBuilder;
+using Jeebs.Data.Query;
 using Jeebs.Logging;
 
 namespace Jeebs.Data;

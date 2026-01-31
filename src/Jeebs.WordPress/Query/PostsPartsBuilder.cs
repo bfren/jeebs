@@ -9,7 +9,7 @@ using Jeebs.Data.Clients.MySql;
 using Jeebs.Data.Common;
 using Jeebs.Data.Enums;
 using Jeebs.Data.Map;
-using Jeebs.Data.QueryBuilder;
+using Jeebs.Data.Query;
 using Jeebs.WordPress.CustomFields;
 using Jeebs.WordPress.Entities.Ids;
 using Jeebs.WordPress.Enums;

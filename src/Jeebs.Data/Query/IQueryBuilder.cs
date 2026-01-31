@@ -3,7 +3,7 @@
 
 using Jeebs.Data.Map;
 
-namespace Jeebs.Data.QueryBuilder;
+namespace Jeebs.Data.Query;
 
 /// <summary>
 /// Fluently build a database query.

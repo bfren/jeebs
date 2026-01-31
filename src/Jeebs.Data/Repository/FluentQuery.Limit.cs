@@ -1,12 +1,12 @@
 // Jeebs Rapid Application Development
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
-namespace Jeebs.Data.FluentQuery;
+namespace Jeebs.Data.Repository;
 
-public abstract partial record class FluentQuery<TFluentQuery, TEntity, TId>
+public sealed partial record class FluentQuery<TEntity, TId>
 {
 	/// <inheritdoc/>
-	public TFluentQuery Maximum(ulong number) =>
+	public IFluentQuery<TEntity, TId> Maximum(ulong number) =>
 		number switch
 		{
 			> 0 =>
@@ -17,7 +17,7 @@ public abstract partial record class FluentQuery<TFluentQuery, TEntity, TId>
 		};
 
 	/// <inheritdoc/>
-	public TFluentQuery Skip(ulong number) =>
+	public IFluentQuery<TEntity, TId> Skip(ulong number) =>
 		number switch
 		{
 			> 0 =>

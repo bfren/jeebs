@@ -6,7 +6,7 @@ using System.Linq.Expressions;
 using Jeebs.Data.Enums;
 using Jeebs.Data.Map;
 
-namespace Jeebs.Data.QueryBuilder;
+namespace Jeebs.Data.Query;
 
 /// <summary>
 /// Once <see cref="IQueryBuilder"/> has defined the table, more query options can be built.
@@ -37,7 +37,7 @@ public interface IQueryBuilderWithFrom
 	/// <param name="cmp">Search operator.</param>
 	/// <param name="value">Search value.</param>
 	IQueryBuilderWithFrom Where<TTable>(Expression<Func<TTable, string>> column, Compare cmp, object value)
-		where TTable : ITable, new();
+		where TTable : ITable;
 
 	/// <summary>
 	/// Sort by column in Ascending order.
@@ -45,7 +45,7 @@ public interface IQueryBuilderWithFrom
 	/// <typeparam name="TTable">Table type.</typeparam>
 	/// <param name="column">Table column.</param>
 	IQueryBuilderWithFrom SortBy<TTable>(Expression<Func<TTable, string>> column)
-		where TTable : ITable, new();
+		where TTable : ITable;
 
 	/// <summary>
 	/// Sort by column in Descending order.
@@ -53,7 +53,7 @@ public interface IQueryBuilderWithFrom
 	/// <typeparam name="TTable">Table type.</typeparam>
 	/// <param name="column">Table column.</param>
 	IQueryBuilderWithFrom SortByDescending<TTable>(Expression<Func<TTable, string>> column)
-		where TTable : ITable, new();
+		where TTable : ITable;
 
 	/// <summary>
 	/// Add a limit to the number of results returned by this query.

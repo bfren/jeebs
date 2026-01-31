@@ -8,7 +8,7 @@ using System.Text.Json;
 using Jeebs.Functions;
 using Jeebs.Reflection;
 
-namespace Jeebs.Data.QueryBuilder;
+namespace Jeebs.Data.Query;
 
 /// <inheritdoc cref="IQueryParametersDictionary"/>
 public sealed class QueryParametersDictionary : Dictionary<string, object>, IQueryParametersDictionary

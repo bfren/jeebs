@@ -4,7 +4,7 @@
 using System;
 using Jeebs.Data.Map;
 
-namespace Jeebs.Data.QueryBuilder.Exceptions;
+namespace Jeebs.Data.Query.Exceptions;
 
 /// <inheritdoc cref="QueryBuilderException{TTable}"/>
 public class SortByTableNotAddedException<TTable> : QueryBuilderException<TTable>

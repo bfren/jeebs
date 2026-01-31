@@ -7,9 +7,9 @@ using System.Linq;
 using System.Linq.Expressions;
 using Jeebs.Data.Enums;
 using Jeebs.Data.Map;
-using Jeebs.Data.QueryBuilder.Exceptions;
+using Jeebs.Data.Query.Exceptions;
 
-namespace Jeebs.Data.QueryBuilder;
+namespace Jeebs.Data.Query;
 
 /// <inheritdoc cref="IQueryBuilderWithFrom"/>
 public sealed record class QueryBuilderWithFrom : IQueryBuilderWithFrom
@@ -47,13 +47,17 @@ public sealed record class QueryBuilderWithFrom : IQueryBuilderWithFrom
 	/// </summary>
 	/// <typeparam name="TTable">Table type.</typeparam>
 	/// <typeparam name="TException">Exception type to throw if the table has not been added.</typeparam>
-	internal void CheckTable<TTable, TException>()
-		where TTable : ITable, new()
+	internal TTable CheckTable<TTable, TException>()
+		where TTable : ITable
 		where TException : QueryBuilderException<TTable>, new()
 	{
-		if (Tables.Any(t => t is TTable))
+		var query = from t in Tables
+					where t is TTable
+					select (TTable)t;
+
+		foreach (var table in query.SingleOrNone())
 		{
-			return;
+			return table;
 		}
 
 		throw new TException();
@@ -83,7 +87,7 @@ public sealed record class QueryBuilderWithFrom : IQueryBuilderWithFrom
 		where TTo : ITable, new()
 	{
 		// Check 'from' table is already added
-		CheckTable<TFrom, JoinFromTableNotAddedException<TFrom>>();
+		_ = CheckTable<TFrom, JoinFromTableNotAddedException<TFrom>>();
 
 		// Add 'to' table to query
 		AddTable<TTo>();
@@ -129,51 +133,51 @@ public sealed record class QueryBuilderWithFrom : IQueryBuilderWithFrom
 
 	/// <inheritdoc/>
 	public IQueryBuilderWithFrom Where<TTable>(Expression<Func<TTable, string>> column, Compare cmp, object value)
-		where TTable : ITable, new()
+		where TTable : ITable
 	{
 		// Check table
-		CheckTable<TTable, WhereTableNotAddedException<TTable>>();
+		var table = CheckTable<TTable, WhereTableNotAddedException<TTable>>();
 
 		// Add predicate
 		return this with
 		{
 			Parts = Parts with
 			{
-				Where = Parts.Where.WithItem((DataF.GetColumnFromExpression(column).Unwrap(), cmp, value))
+				Where = Parts.Where.WithItem((DataF.GetColumnFromExpression(table, column).Unwrap(), cmp, value))
 			}
 		};
 	}
 
 	/// <inheritdoc/>
 	public IQueryBuilderWithFrom SortBy<TTable>(Expression<Func<TTable, string>> column)
-		where TTable : ITable, new()
+		where TTable : ITable
 	{
 		// Check table
-		CheckTable<TTable, SortByTableNotAddedException<TTable>>();
+		var table = CheckTable<TTable, SortByTableNotAddedException<TTable>>();
 
 		// Add sort column
 		return this with
 		{
 			Parts = Parts with
 			{
-				Sort = Parts.Sort.WithItem((DataF.GetColumnFromExpression(column).Unwrap(), SortOrder.Ascending))
+				Sort = Parts.Sort.WithItem((DataF.GetColumnFromExpression(table, column).Unwrap(), SortOrder.Ascending))
 			}
 		};
 	}
 
 	/// <inheritdoc/>
 	public IQueryBuilderWithFrom SortByDescending<TTable>(Expression<Func<TTable, string>> column)
-		where TTable : ITable, new()
+		where TTable : ITable
 	{
 		// Check table
-		CheckTable<TTable, SortByTableNotAddedException<TTable>>();
+		var table = CheckTable<TTable, SortByTableNotAddedException<TTable>>();
 
 		// Add sort column
 		return this with
 		{
 			Parts = Parts with
 			{
-				Sort = Parts.Sort.WithItem((DataF.GetColumnFromExpression(column).Unwrap(), SortOrder.Descending))
+				Sort = Parts.Sort.WithItem((DataF.GetColumnFromExpression(table, column).Unwrap(), SortOrder.Descending))
 			}
 		};
 	}

@@ -4,16 +4,15 @@
 using System;
 using System.Collections.Generic;
 using Jeebs.Data.Map;
-using Jeebs.Data.QueryBuilder;
+using Jeebs.Data.Query;
 using Jeebs.Logging;
 
-namespace Jeebs.Data.FluentQuery;
+namespace Jeebs.Data.Repository;
 
 /// <inheritdoc cref="IFluentQuery{TEntity, TId}"/>
-public abstract partial record class FluentQuery<TFluentQuery, TEntity, TId> : IFluentQuery<TFluentQuery, TEntity, TId>
+public sealed partial record class FluentQuery<TEntity, TId> : IFluentQuery<TEntity, TId>
 	where TEntity : IWithId
 	where TId : class, IUnion, new()
-	where TFluentQuery : FluentQuery<TFluentQuery, TEntity, TId>
 {
 	/// <summary>
 	/// Database object.
@@ -58,13 +57,18 @@ public abstract partial record class FluentQuery<TFluentQuery, TEntity, TId> : I
 		Parts = new QueryParts(Table);
 	}
 
-	internal TFluentQuery Unchanged() =>
-		(TFluentQuery)this;
+	/// <summary>
+	/// Return unchanged query.
+	/// </summary>
+	/// <returns>Original query.</returns>
+	internal IFluentQuery<TEntity, TId> Unchanged() =>
+		this;
 
 	/// <summary>
 	/// Update <see cref="Parts"/> with a new value.
 	/// </summary>
 	/// <param name="with">Function to perform the update.</param>
-	internal TFluentQuery Update(Func<QueryParts, QueryParts> with) =>
-		(TFluentQuery)this with { Parts = with(new(Parts)) };
+	/// <returns>Updated query.</returns>
+	internal IFluentQuery<TEntity, TId> Update(Func<QueryParts, QueryParts> with) =>
+		this with { Parts = with(new(Parts)) };
 }

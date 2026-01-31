@@ -6,7 +6,7 @@ using Jeebs.Collections;
 using Jeebs.Data.Common.FluentQuery;
 using Jeebs.Data.Enums;
 using Jeebs.Data.Map;
-using Jeebs.Data.QueryBuilder;
+using Jeebs.Data.Query;
 
 namespace Jeebs.Data.Clients.PostgreSql;
 

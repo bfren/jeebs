@@ -1,7 +1,7 @@
 // Jeebs Rapid Application Development
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
-using Jeebs.Data.QueryBuilder;
+using Jeebs.Data.Query;
 
 namespace Jeebs.WordPress.Query;
 

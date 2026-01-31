@@ -2,26 +2,25 @@
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using System.Threading.Tasks;
-using Jeebs.Data.FluentQuery;
 
-namespace Jeebs.Data;
+namespace Jeebs.Data.Repository;
 
 /// <summary>
 /// Repository for an entity type, including CRUD and custom queries.
 /// </summary>
 /// <typeparam name="TEntity">Entity type.</typeparam>
 /// <typeparam name="TId">StrongId type.</typeparam>
-public interface IRepository<TFluentQuery, TEntity, TId>
+public partial interface IRepository<TEntity, TId>
 	where TEntity : IWithId
 	where TId : class, IUnion, new()
-	where TFluentQuery : IFluentQuery<TFluentQuery, TEntity, TId>
 {
+
 	#region Fluent Queries
 
 	/// <summary>
 	/// Start a new fluent query.
 	/// </summary>
-	TFluentQuery StartFluentQuery();
+	IFluentQuery<TEntity, TId> StartFluentQuery();
 
 	#endregion Fluent Queries
 

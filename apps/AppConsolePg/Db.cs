@@ -13,12 +13,17 @@ internal sealed class Db : Jeebs.Data.Common.Db
 {
 	public JsonTable Json { get; init; }
 
+	public TestTable Test { get; init; }
+
 	public Db(IDbClient client, IOptions<DbConfig> config, ILog<Db> log) :
 		base(client, config.Value.GetConnection("arwen").Unwrap(), log)
 	{
-		Json = new("console");
+		var schema = "console";
+		Json = new(schema);
+		Test = new(schema);
 
-		Map<TestEntity>.To(Json);
+		Map<JsonEntity>.To(Json);
+		Map<TestObj>.To(Test);
 
 		client.Types.AddIdTypeHandlers();
 	}

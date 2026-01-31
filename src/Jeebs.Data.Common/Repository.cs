@@ -3,13 +3,13 @@
 
 using System.Data;
 using System.Threading.Tasks;
-using Jeebs.Data.Common.FluentQuery;
 using Jeebs.Logging;
+using Base = Jeebs.Data.Repository;
 
 namespace Jeebs.Data.Common;
 
 /// <inheritdoc cref="IRepository{TEntity, TId}"/>
-public abstract class Repository<TEntity, TId> : Repository<FluentQuery<TEntity, TId>, TEntity, TId>, IRepository<FluentQuery<TEntity, TId>, TEntity, TId>
+public abstract class Repository<TEntity, TId> : Base.Repository<TEntity, TId>, IRepository<TEntity, TId>
 	where TEntity : IWithId
 	where TId : class, IUnion, new()
 {
@@ -23,16 +23,8 @@ public abstract class Repository<TEntity, TId> : Repository<FluentQuery<TEntity,
 	/// </summary>
 	/// <param name="db">IDb.</param>
 	/// <param name="log">ILog (should be given a context of the implementing class).</param>
-	protected Repository(IDb db, ILog<IRepository<FluentQuery<TEntity, TId>, TEntity, TId>> log) : base(db, log) =>
+	protected Repository(IDb db, ILog<IRepository<TEntity, TId>> log) : base(db, log) =>
 		Db = db;
-
-	#region Fluent Queries
-
-	/// <inheritdoc/>
-	public override FluentQuery<TEntity, TId> StartFluentQuery() =>
-		new(Db, Db.Client.Entities, Log);
-
-	#endregion Fluent Queries
 
 	#region CRUD Queries
 

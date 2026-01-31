@@ -4,7 +4,7 @@
 using System;
 using Jeebs.Data.Map;
 
-namespace Jeebs.Data.QueryBuilder.Exceptions;
+namespace Jeebs.Data.Query.Exceptions;
 
 /// <summary>
 /// See <see cref="QueryPartsBuilder.GetIdColumn{T}(T)"/>

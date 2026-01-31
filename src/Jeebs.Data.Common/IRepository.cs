@@ -3,7 +3,7 @@
 
 using System.Data;
 using System.Threading.Tasks;
-using Jeebs.Data.Common.FluentQuery;
+using Base = Jeebs.Data.Repository;
 
 namespace Jeebs.Data.Common;
 
@@ -12,7 +12,7 @@ namespace Jeebs.Data.Common;
 /// </summary>
 /// <typeparam name="TEntity">Entity type.</typeparam>
 /// <typeparam name="TId">StrongId type.</typeparam>
-public interface IRepository<TEntity, TId> : IRepository<FluentQuery<TEntity, TId>, TEntity, TId>
+public interface IRepository<TEntity, TId> : Base.IRepository<TEntity, TId>
 	where TEntity : IWithId
 	where TId : class, IUnion, new()
 {

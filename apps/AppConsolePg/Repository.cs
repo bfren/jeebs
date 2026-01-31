@@ -6,4 +6,4 @@ using Jeebs.Logging;
 
 namespace AppConsolePg;
 
-internal sealed class Repository(IDb db, ILog<Repository> log) : Repository<TestEntity, TestId>(db, log);
+internal sealed class JsonRepository(IDb db, ILog<JsonRepository> log) : Repository<JsonEntity, TestId>(db, log);

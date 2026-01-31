@@ -6,6 +6,24 @@ using Jeebs.Data.Map;
 
 namespace AppConsolePg;
 
+public sealed record class TestTable : Table
+{
+	public TestTable(string schema) : base(schema, "test") { }
+
+	[Id]
+	public string Id =>
+		"id";
+
+	public string Foo =>
+		"foo";
+
+	public string Bar =>
+		"bar";
+
+	public string Fred =>
+		"freddie";
+}
+
 public sealed record class JsonTable : Table
 {
 	public JsonTable(string schema) : base(schema, "test_json") { }
