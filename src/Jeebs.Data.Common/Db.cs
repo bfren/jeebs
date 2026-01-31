@@ -18,6 +18,26 @@ public abstract partial class Db : Data.Db, IDb
 	Data.IDbClient Data.IDb.Client =>
 		Client;
 
+	/// <summary>
+	/// Inject database client and configuration.
+	/// </summary>
+	/// <param name="client">Database client.</param>
+	/// <param name="config">Database configuration.</param>
+	/// <param name="log">ILog (should be given a context of the implementing class).</param>
+	/// <param name="name">Connection name.</param>
+	protected Db(IDbClient client, IOptions<DbConfig> config, ILog log, string name) :
+		this(client, config.Value.GetConnection(name).Unwrap(), log)
+	{ }
+
+	/// <summary>
+	/// Inject database client and configuration.
+	/// </summary>
+	/// <param name="client">Database client.</param>
+	/// <param name="config">Database configuration.</param>
+	/// <param name="log">ILog (should be given a context of the implementing class).</param>
+	protected Db(IDbClient client, DbConnectionConfig config, ILog log) : base(client, config, log) =>
+		Client = client;
+
 	/// <inheritdoc/>
 	public virtual IUnitOfWork StartWork()
 	{
@@ -65,22 +85,27 @@ public abstract partial class Db : Data.Db, IDb
 	}
 
 	/// <summary>
-	/// Inject database client and configuration.
+	/// Write query to the log.
 	/// </summary>
-	/// <param name="client">Database client.</param>
-	/// <param name="config">Database configuration.</param>
-	/// <param name="log">ILog (should be given a context of the implementing class).</param>
-	/// <param name="name">Connection name.</param>
-	protected Db(IDbClient client, IOptions<DbConfig> config, ILog log, string name) :
-		this(client, config.Value.GetConnection(name).Unwrap(), log)
-	{ }
+	/// <typeparam name="TReturn">Query return type.</typeparam>
+	/// <param name="input">Input values.</param>
+	protected virtual void LogQuery<TReturn>((string query, object? parameters, CommandType type) input)
+	{
+		var (query, parameters, type) = input;
 
-	/// <summary>
-	/// Inject database client and configuration.
-	/// </summary>
-	/// <param name="client">Database client.</param>
-	/// <param name="config">Database configuration.</param>
-	/// <param name="log">ILog (should be given a context of the implementing class).</param>
-	protected Db(IDbClient client, DbConnectionConfig config, ILog log) : base(client, config, log) =>
-		Client = client;
+		// Always log query type, return type, and query
+		var message = "Query Type: {Type} | Returns: {Return} | {Query}";
+		object?[] args = [type, typeof(TReturn), query];
+
+		// Log with or without parameters
+		if (parameters is null)
+		{
+			WriteToLog(message, [.. args]);
+		}
+		else if (parameters.ToString() is string param)
+		{
+			message += " | Parameters: {Param}";
+			WriteToLog(message, [.. args, param]);
+		}
+	}
 }

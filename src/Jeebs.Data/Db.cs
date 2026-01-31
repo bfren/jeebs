@@ -3,7 +3,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Data;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 using Jeebs.Collections;
@@ -62,13 +61,13 @@ public abstract class Db : IDb
 	/// </summary>
 	/// <typeparam name="TReturn">Query return type.</typeparam>
 	/// <param name="input">Input values.</param>
-	protected void LogQuery<TReturn>((string query, object? parameters, CommandType type) input)
+	protected virtual void LogQuery<TReturn>((string query, object? parameters) input)
 	{
-		var (query, parameters, type) = input;
+		var (query, parameters) = input;
 
 		// Always log query type, return type, and query
-		var message = "Query Type: {Type} | Return: {Return} | {Query}";
-		object?[] args = [type, typeof(TReturn), query];
+		var message = "Query Returns: {Return} | {Query}";
+		object?[] args = [typeof(TReturn), query];
 
 		// Log with or without parameters
 		if (parameters is null)
@@ -136,6 +135,9 @@ public abstract class Db : IDb
 
 	internal void WriteToLogTest(string message, object[] args) =>
 		WriteToLog(message, args);
+
+	internal void LogQueryTest<TReturn>((string query, object? parameters) input) =>
+		LogQuery<TReturn>(input);
 
 	#endregion Testing
 }

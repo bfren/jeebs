@@ -5,13 +5,13 @@ using System.Data;
 
 namespace Jeebs.Data.Common.Db_Tests;
 
-public class QuerySingleAsync_Tests
+public class QuerySingleAsync_Tests : Db_Setup
 {
 	[Fact]
 	public async Task Without_Transaction_Starts_UnitOfWork()
 	{
 		// Arrange
-		var (db, _) = Db_Setup.Get();
+		var (db, v) = Setup();
 		var query = Rnd.Str;
 		var param = Rnd.Guid.ToString();
 		const CommandType type = CommandType.Text;
@@ -27,10 +27,9 @@ public class QuerySingleAsync_Tests
 	public async Task Logs_Query_Info_To_Verbose()
 	{
 		// Arrange
-		var (db, v) = Db_Setup.Get();
+		var (db, v) = Setup();
 		var query = Rnd.Str;
 		var param = Rnd.Guid.ToString();
-
 		const CommandType type = CommandType.TableDirect;
 
 		// Act
@@ -38,7 +37,7 @@ public class QuerySingleAsync_Tests
 
 		// Assert
 		v.Log.Received().Vrb(
-			"Query Type: {Type} | Return: {Return} | {Query} | Parameters: {Param}",
+			"Query Type: {Type} |Returns: {Return} | {Query} | Parameters: {Param}",
 			type, typeof(int), query, param
 		);
 	}

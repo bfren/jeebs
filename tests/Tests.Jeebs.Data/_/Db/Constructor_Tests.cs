@@ -1,6 +1,8 @@
 // Jeebs Unit Tests
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
+using Jeebs.Data.Db_Tests;
+
 namespace Jeebs.Data.Common.Db_Tests;
 
 public class Constructor_Tests : Db_Setup

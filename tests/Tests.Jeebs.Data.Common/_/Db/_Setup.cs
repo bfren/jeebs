@@ -10,9 +10,9 @@ using NSubstitute.Extensions;
 
 namespace Jeebs.Data.Common.Db_Tests;
 
-public static class Db_Setup
+public abstract class Db_Setup
 {
-	public static (Db, Vars) Get()
+	public static (Db, Vars) Setup()
 	{
 		var connectionString = Rnd.Str;
 		var config = new DbConnectionConfig { ConnectionString = connectionString };
