@@ -18,7 +18,7 @@ public abstract partial class Db
 	/// <inheritdoc/>
 	public async Task<Result<bool>> ExecuteAsync(string query, object? param, CommandType type)
 	{
-		using var w = await StartWorkAsync();
+		await using var w = await StartWorkAsync();
 		return await ExecuteAsync(query, param, type, w.Transaction);
 	}
 
@@ -48,7 +48,7 @@ public abstract partial class Db
 	/// <inheritdoc/>
 	public async Task<Result<T>> ExecuteAsync<T>(string query, object? param, CommandType type)
 	{
-		using var w = await StartWorkAsync();
+		await using var w = await StartWorkAsync();
 		return await ExecuteAsync<T>(query, param, type, w.Transaction);
 	}
 
