@@ -9,12 +9,12 @@ namespace Jeebs.Data.Testing.Query;
 
 public static partial class FluentQueryHelper
 {
-	/// <inheritdoc cref="AssertExecute{TEntity, TValue}(ICall, string, bool)"/>
+	/// <inheritdoc cref="AssertExecute{TEntity, TValue}(ICall, string)"/>
 	public static void AssertExecute<TEntity, TValue>(ICall call, Expression<Func<TEntity, TValue>> expected) =>
 		AssertExecute<TEntity, TValue>(call, expected.GetPropertyInfo().Unsafe().Unwrap().Name);
 
 	/// <summary>
-	/// Validate a call to <see cref="IFluentQuery{TEntity, TId}.ExecuteAsync{TValue}(Expression{Func{TEntity, TValue}})"/>.
+	/// Validate a call to <see cref="Repository.IFluentQuery{TEntity, TId}.ExecuteAsync{TValue}(Expression{Func{TEntity, TValue}})"/>.
 	/// </summary>
 	/// <typeparam name="TEntity">Entity type.</typeparam>
 	/// <typeparam name="TValue">Column select value type.</typeparam>

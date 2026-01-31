@@ -4,6 +4,6 @@
 namespace Jeebs.Data.Common.FluentQuery;
 
 /// <summary>
-/// Functions for <see cref="IFluentQuery{TEntity, TId}"/> implementations.
+/// Functions for <see cref="Repository.IFluentQuery{TEntity, TId}"/> implementations.
 /// </summary>
 public static partial class QueryF { }

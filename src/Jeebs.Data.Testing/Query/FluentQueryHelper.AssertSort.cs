@@ -19,7 +19,7 @@ public static partial class FluentQueryHelper
 		AssertSort<TEntity, TValue>(call, expectedProperty.GetPropertyInfo().Unsafe().Unwrap().Name, expectedOrder);
 
 	/// <summary>
-	/// Validate a call to <see cref="IFluentQuery{TEntity, TId}.Sort{TValue}(Expression{Func{TEntity, TValue}}, SortOrder)"/>.
+	/// Validate a call to <see cref="Repository.IFluentQuery{TEntity, TId}.Sort{TValue}(Expression{Func{TEntity, TValue}}, SortOrder)"/>.
 	/// </summary>
 	/// <typeparam name="TEntity">Entity type.</typeparam>
 	/// <typeparam name="TValue">Column select value type.</typeparam>

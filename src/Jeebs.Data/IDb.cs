@@ -102,7 +102,6 @@ public interface IDb
 	/// <summary>
 	/// Execute a query.
 	/// </summary>
-	/// <typeparam name="T">Return value type.</typeparam>
 	/// <param name="query">Query text.</param>
 	/// <param name="param">Query parameters.</param>
 	/// <returns>Whether or not the query was successful.</returns>
@@ -111,8 +110,9 @@ public interface IDb
 	/// <summary>
 	/// Execute a query and return a value.
 	/// </summary>
+	/// <typeparam name="T">Return value type.</typeparam>
 	/// <param name="query">Query text.</param>
 	/// <param name="param">Query parameters.</param>
 	/// <returns>Query return value.</returns>
-	Task<Result<TReturn>> ExecuteAsync<TReturn>(string query, object? param);
+	Task<Result<T>> ExecuteAsync<T>(string query, object? param);
 }

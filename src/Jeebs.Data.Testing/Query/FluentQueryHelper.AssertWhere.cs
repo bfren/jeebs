@@ -25,7 +25,7 @@ public static partial class FluentQueryHelper
 		);
 
 	/// <summary>
-	/// Validate a call to <see cref="IFluentQuery{TEntity, TId}.Where{TValue}(Expression{Func{TEntity, TValue}}, Compare, TValue)"/>.
+	/// Validate a call to <see cref="Repository.IFluentQuery{TEntity, TId}.Where{TValue}(Expression{Func{TEntity, TValue}}, Compare, TValue)"/>.
 	/// </summary>
 	/// <typeparam name="TEntity">Entity type.</typeparam>
 	/// <typeparam name="TValue">Column select value type.</typeparam>
@@ -71,7 +71,7 @@ public static partial class FluentQueryHelper
 	}
 
 	/// <summary>
-	/// Validate a call to <see cref="IFluentQuery{TEntity, TId}.Where(string, object)"/>.
+	/// Validate a call to <see cref="Repository.IFluentQuery{TEntity, TId}.Where(string, object)"/>.
 	/// </summary>
 	/// <param name="call">Call.</param>
 	/// <param name="expectedClause">Expected clause.</param>
