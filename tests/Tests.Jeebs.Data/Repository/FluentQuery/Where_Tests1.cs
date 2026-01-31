@@ -97,7 +97,7 @@ public class Where_Tests1 : FluentQuery_Tests
 	public void Unable_To_Get_Column__Adds_Error__Returns_Original_Query()
 	{
 		// Arrange
-		var (query, v) = Setup();
+		var (query, _) = Setup();
 
 		// Act
 		var result = query.Where(Rnd.Str, Compare.LessThan, Rnd.Guid);

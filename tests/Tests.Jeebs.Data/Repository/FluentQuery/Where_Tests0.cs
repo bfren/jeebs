@@ -9,7 +9,7 @@ public class Where_Tests0 : FluentQuery_Tests
 	public void Query_Errors__Does_Not_Add_Clause__Returns_Original_Query()
 	{
 		// Arrange
-		var (query, v) = Setup();
+		var (query, _) = Setup();
 		query.Errors.Add(FailGen.Create().Value);
 
 		// Act
@@ -28,7 +28,7 @@ public class Where_Tests0 : FluentQuery_Tests
 	public void Clause_Null_Or_Whitespace__Adds_Error__Returns_Original_Query(string? clause)
 	{
 		// Arrange
-		var (query, v) = Setup();
+		var (query, _) = Setup();
 
 		// Act
 		var result = query.Where(clause!, Rnd.Lng);
@@ -51,7 +51,7 @@ public class Where_Tests0 : FluentQuery_Tests
 	public void Unable_To_Add_Parameters__Adds_Error__Returns_Original_Query(object? param)
 	{
 		// Arrange
-		var (query, v) = Setup();
+		var (query, _) = Setup();
 
 		// Act
 		var result = query.Where(Rnd.Str, param!);

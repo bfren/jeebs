@@ -9,7 +9,7 @@ public class WhereId_Tests : FluentQuery_Tests
 	public void No_Values__Does_Not_Add_Predicate__Returns_Original_Query()
 	{
 		// Arrange
-		var (query, v) = Setup();
+		var (query, _) = Setup();
 
 		// Act
 		var r0 = query.WhereId();

@@ -11,7 +11,7 @@ public class QueryAsync_Tests : FluentQuery_Tests
 	public async Task Query_Errors__Returns_None_With_ListMsg()
 	{
 		// Arrange
-		var (query, v) = Setup();
+		var (query, _) = Setup();
 		var m0 = FailGen.Create().Value;
 		var m1 = FailGen.Create().Value;
 		query.Errors.Add(m0);
@@ -28,7 +28,7 @@ public class QueryAsync_Tests : FluentQuery_Tests
 	public async Task No_Predicates__Returns_Fail()
 	{
 		// Arrange
-		var (query, v) = Setup();
+		var (query, _) = Setup();
 
 		// Act
 		var result = await query.QueryAsync<string>();

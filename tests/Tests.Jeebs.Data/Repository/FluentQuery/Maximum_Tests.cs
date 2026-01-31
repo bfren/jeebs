@@ -9,7 +9,7 @@ public class Maximum_Tests : FluentQuery_Tests
 	public void Value_Greater_Than_Zero__Updates_Maximum()
 	{
 		// Arrange
-		var (query, v) = Setup();
+		var (query, _) = Setup();
 		var value = Rnd.UInt64;
 
 		// Act
@@ -24,7 +24,7 @@ public class Maximum_Tests : FluentQuery_Tests
 	public void Value_Zero__Returns_Original_Query()
 	{
 		// Arrange
-		var (query, v) = Setup();
+		var (query, _) = Setup();
 
 		// Act
 		var result = query.Maximum(0);

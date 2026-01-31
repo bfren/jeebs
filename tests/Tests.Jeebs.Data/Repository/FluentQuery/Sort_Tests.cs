@@ -60,7 +60,7 @@ public class Sort_Tests : FluentQuery_Tests
 	public void Unable_To_Get_Column__Adds_Error__Returns_Original_Query(SortOrder order)
 	{
 		// Arrange
-		var (query, v) = Setup();
+		var (query, _) = Setup();
 		var column = Rnd.Str;
 
 		// Act
