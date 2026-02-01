@@ -3,7 +3,7 @@
 
 using System.Text.Json;
 
-namespace Jeebs.Data.Common.TypeHandlers.Json_Tests;
+namespace Jeebs.Data.Adapters.Dapper.TypeHandlers.Json_Tests;
 
 public class Parse_Tests
 {

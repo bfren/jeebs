@@ -3,7 +3,7 @@
 
 using System.Data;
 
-namespace Jeebs.Data.Common.TypeHandlers.Guid_Tests;
+namespace Jeebs.Data.Adapters.Dapper.TypeHandlers.Guid_Tests;
 
 public class SetValue_Tests
 {

@@ -1,7 +1,7 @@
 // Jeebs Unit Tests
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
-namespace Jeebs.Data.Common.TypeHandlers.ImmutableList_Tests;
+namespace Jeebs.Data.Adapters.Dapper.TypeHandlers.ImmutableList_Tests;
 
 public class Parse_Tests
 {

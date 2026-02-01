@@ -3,7 +3,7 @@
 
 using System.Data;
 
-namespace Jeebs.Data.Common.TypeHandlers.Enumerated_Tests;
+namespace Jeebs.Data.Adapters.Dapper.TypeHandlers.Enumerated_Tests;
 
 public class SetValue_Tests
 {
