@@ -1,6 +1,7 @@
 // Jeebs Rapid Application Development
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Threading.Tasks;
@@ -31,14 +32,14 @@ public sealed class DapperAdapter : IAdapter
 	public Task<Result<int>> ExecuteAsync(IDbTransaction transaction, string query, object? param, CommandType type) =>
 		R.TryAsync(
 			() => transaction.Connection!.ExecuteAsync(query, param, transaction, commandType: type),
-			ex => R.Fail(ex).Msg("Error executing query '{Query}' with parameters {@Param}.", query, param)
+			ex => Fail(nameof(ExecuteAsync), ex, query, param)
 		);
 
 	/// <inheritdoc/>
 	public Task<Result<T>> ExecuteAsync<T>(IDbTransaction transaction, string query, object? param, CommandType type) =>
 		R.TryAsync(
 			() => transaction.Connection!.ExecuteScalarAsync<T>(query, param, transaction, commandType: type),
-			ex => R.Fail(ex).Msg("Error executing query '{Query}' with parameters {@Param}.", query, param)
+			ex => Fail(nameof(ExecuteAsync), ex, query, param)
 		)
 		.BindAsync(
 			x => x switch
@@ -56,13 +57,18 @@ public sealed class DapperAdapter : IAdapter
 	public Task<Result<IEnumerable<T>>> QueryAsync<T>(IDbTransaction transaction, string query, object? param, CommandType type) =>
 		R.TryAsync(
 			() => transaction.Connection!.QueryAsync<T>(query, param, transaction, commandType: type),
-			ex => R.Fail(ex).Msg("Error executing query '{Query}' with parameters {@Param}.", query, param)
+			ex => Fail(nameof(QueryAsync), ex, query, param)
 		);
 
 	/// <inheritdoc/>
 	public Task<Result<T>> QuerySingleAsync<T>(IDbTransaction transaction, string query, object? param, CommandType type) =>
 		R.TryAsync(
 			() => transaction.Connection!.QuerySingleAsync<T>(query, param, transaction, commandType: type),
-			ex => R.Fail(ex).Msg("Error executing query '{Query}' with parameters {@Param}.", query, param)
+			ex => Fail(nameof(QuerySingleAsync), ex, query, param)
 		);
+
+	private static Failure Fail(string function, Exception exception, string query, object? param) =>
+		R.Fail(exception)
+			.Msg("Error executing query '{Query}' with parameters {@Param}.", query, param)
+			.Ctx(nameof(DapperAdapter), function);
 }
