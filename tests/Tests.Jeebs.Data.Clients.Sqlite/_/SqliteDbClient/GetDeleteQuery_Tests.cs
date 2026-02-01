@@ -6,23 +6,23 @@ using Jeebs.Data.Map;
 
 namespace Jeebs.Data.Clients.Sqlite.SqliteDbClient_Tests;
 
-public class GetDeleteQuery_Tests
+public class GetDeleteQuery_Tests : SqliteDbClient_Setup
 {
 	[Fact]
 	public void Returns_Valid_Delete_Query_Without_Version()
 	{
 		// Arrange
+		var (client, v) = Setup();
+
 		var schema = Rnd.Str;
 		var name = Rnd.Str;
-		var table = new DbName(schema, name);
+		var table = new TableName(schema, name);
 
 		var c0Name = Rnd.Str;
 		var c0Alias = Rnd.Str;
 		var c0Property = Substitute.ForPartsOf<PropertyInfo>();
 		c0Property.Name.Returns(c0Alias);
 		var c0 = new Column(table, c0Name, c0Property);
-
-		var client = new SqliteDbClient();
 
 		var id = Rnd.Lng;
 
@@ -39,9 +39,11 @@ public class GetDeleteQuery_Tests
 	public void Returns_Valid_Delete_Query_With_Version()
 	{
 		// Arrange
+		var (client, v) = Setup();
+
 		var schema = Rnd.Str;
 		var name = Rnd.Str;
-		var table = new DbName(schema, name);
+		var table = new TableName(schema, name);
 
 		var c0Name = Rnd.Str;
 		var c0Alias = Rnd.Str;
@@ -54,8 +56,6 @@ public class GetDeleteQuery_Tests
 		var c1Property = Substitute.ForPartsOf<PropertyInfo>();
 		c1Property.Name.Returns(c1Alias);
 		var c1 = new Column(table, c1Name, c1Property);
-
-		var client = new SqliteDbClient();
 
 		var id = Rnd.Lng;
 

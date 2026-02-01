@@ -3,6 +3,6 @@
     <PackageReference Include="System.Data.SQLite.Core" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Jeebs.Data\Jeebs.Data.csproj" />
+    <ProjectReference Include="..\Jeebs.Data.Common\Jeebs.Data.Common.csproj" />
   </ItemGroup>
 </Project>

@@ -1,7 +1,7 @@
 // Jeebs Unit Tests
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
-using Jeebs.Data;
+using Jeebs.Data.Common;
 using Jeebs.Data.Map;
 
 namespace Jeebs.WordPress.Query.PartsBuilder_Tests;
@@ -18,7 +18,7 @@ public abstract class PartsBuilder_Tests
 
 		var builder = new TestPartsBuilder(extract, client, schema);
 
-		var table = new TestTable(new DbName(Rnd.Str), Rnd.Str, Rnd.Str);
+		var table = new TestTable(new TableName(Rnd.Str), Rnd.Str, Rnd.Str);
 
 		return (builder, new(client, schema, table));
 	}
@@ -47,15 +47,15 @@ public class TestPartsBuilder : PartsBuilder<TestId>
 
 public sealed record class TestTable : ITable
 {
-	private readonly IDbName name;
+	private readonly ITableName name;
 
 	public string Id { get; init; }
 
 	public string Foo { get; init; }
 
-	public TestTable(IDbName name, string id, string foo) =>
+	public TestTable(ITableName name, string id, string foo) =>
 		(this.name, Id, Foo) = (name, id, foo);
 
-	public IDbName GetName() =>
+	public ITableName GetName() =>
 		name;
 }

@@ -13,7 +13,7 @@ public interface IColumn
 	/// <summary>
 	/// Table Name.
 	/// </summary>
-	IDbName TblName { get; }
+	ITableName TblName { get; }
 
 	/// <summary>
 	/// Column Name.

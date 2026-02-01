@@ -7,10 +7,10 @@
     <Using Include="Xunit" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="NSubstitute" />
-    <PackageReference Include="xunit.v3.assert" />
+    <PackageReference Include="NSubstitute" PrivateAssets="All" />
+    <PackageReference Include="xunit.v3.assert" PrivateAssets="All" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Jeebs.Data\Jeebs.Data.csproj" />
+    <ProjectReference Include="..\Jeebs.Data.Common\Jeebs.Data.Common.csproj" />
   </ItemGroup>
 </Project>

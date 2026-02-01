@@ -5,7 +5,7 @@ using System;
 using System.Collections.Concurrent;
 using Jeebs.Data.Attributes;
 using Jeebs.Data.Exceptions;
-using Jeebs.Data.Map.Functions;
+using Jeebs.Data.Functions;
 
 namespace Jeebs.Data.Map;
 
@@ -44,16 +44,16 @@ internal sealed class EntityMapper : IEntityMapper, IDisposable
 		mappedEntities.GetOrAdd(typeof(TEntity), _ =>
 		{
 			// Validate table
-			var (valid, errors) = MapF.ValidateTable<TTable, TEntity>();
+			var (valid, errors) = DataF.ValidateTable<TTable, TEntity>();
 			if (!valid)
 			{
 				throw new InvalidTableMapException(errors);
 			}
 
 			// Create table map
-			var colResult = MapF.GetColumns<TTable, TEntity>(table);
+			var colResult = DataF.GetColumns<TTable, TEntity>(table);
 			var mapResult = from col in colResult
-							from id in MapF.GetIdColumn<TTable>(col)
+							from id in DataF.GetIdColumn<TTable>(col)
 							select new TableMap(table, col, id);
 
 			// Get Version property
@@ -61,7 +61,7 @@ internal sealed class EntityMapper : IEntityMapper, IDisposable
 			{
 				var mapWithVersion = from col in colResult
 									 from map in mapResult
-									 from version in MapF.GetColumnWithAttribute<TTable, VersionAttribute>(col)
+									 from version in DataF.GetColumnWithAttribute<TTable, VersionAttribute>(col)
 									 select map with { VersionColumn = version };
 				return mapWithVersion.Unwrap(f => throw new InvalidTableMapException([f]));
 			}

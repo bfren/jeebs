@@ -4,7 +4,6 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Jeebs.Collections;
-using Jeebs.Data;
 using Jeebs.WordPress.ContentFilters;
 using Jeebs.WordPress.Entities;
 using Jeebs.WordPress.Entities.Ids;
@@ -14,7 +13,7 @@ namespace Jeebs.WordPress;
 /// <summary>
 /// WordPress Database queries.
 /// </summary>
-public interface IWpDbQuery : IDbQuery
+public interface IWpDbQuery
 {
 	/// <summary>
 	/// Get Attachments matching the specified options.

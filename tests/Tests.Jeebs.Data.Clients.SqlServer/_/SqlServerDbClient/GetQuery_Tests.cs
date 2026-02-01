@@ -9,15 +9,17 @@ using Jeebs.Functions;
 
 namespace Jeebs.Data.Clients.SqlServer.SqlServerDbClient_Tests;
 
-public class GetQuery_Tests
+public class GetQuery_Tests : SqlServerDbClient_Setup
 {
 	[Fact]
 	public void With_Predicates_Returns_Valid_Select_Query()
 	{
 		// Arrange
+		var (client, v) = Setup();
+
 		var schema = Rnd.Str;
 		var name = Rnd.Str;
-		var table = new DbName(schema, name);
+		var table = new TableName(schema, name);
 
 		var c0Name = Rnd.Str;
 		var c0Alias = Rnd.Str;
@@ -42,8 +44,6 @@ public class GetQuery_Tests
 			( p0Column, p0Operator, p0Value ),
 			( p1Column, p1Operator, p1Value )
 		]);
-
-		var client = new SqlServerDbClient();
 
 		var expected = "SELECT" +
 			$" [{c0Name}] AS [{c0Alias}]," +
@@ -75,7 +75,8 @@ public class GetQuery_Tests
 	public void With_Parts_Escapes_From_Table()
 	{
 		// Arrange
-		var (client, v) = SqlServerDbClient_Setup.Get();
+		var (client, v) = Setup();
+
 		var parts = new QueryParts(v.Table);
 
 		// Act
@@ -89,7 +90,8 @@ public class GetQuery_Tests
 	public void With_Parts_SelectCount_True_Selects_Count()
 	{
 		// Arrange
-		var (client, v) = SqlServerDbClient_Setup.Get();
+		var (client, v) = Setup();
+
 		var parts = new QueryParts(v.Table) with { SelectCount = true };
 		var expected = $"SELECT COUNT(*) FROM [{v.Schema}].[{v.Name}]";
 
@@ -104,7 +106,8 @@ public class GetQuery_Tests
 	public void With_Parts_Select_Empty_Selects_All()
 	{
 		// Arrange
-		var (client, v) = SqlServerDbClient_Setup.Get();
+		var (client, v) = Setup();
+
 		var parts = new QueryParts(v.Table);
 		var expected = $"SELECT * FROM [{v.Schema}].[{v.Name}]";
 
@@ -119,7 +122,7 @@ public class GetQuery_Tests
 	public void With_Parts_Select_List_Escapes_With_Alias_And_Joins_Columns()
 	{
 		// Arrange
-		var (client, v) = SqlServerDbClient_Setup.Get();
+		var (client, v) = Setup();
 
 		var c0Name = Rnd.Str;
 		var c0Alias = Rnd.Str;
@@ -143,19 +146,19 @@ public class GetQuery_Tests
 		Assert.Equal(expected, query);
 	}
 
-	private static void Test_Joins(Func<QueryParts, IImmutableList<(IColumn, IColumn)>, QueryParts> setJoin, string joinType)
+	private void Test_Joins(Func<QueryParts, IImmutableList<(IColumn, IColumn)>, QueryParts> setJoin, string joinType)
 	{
 		// Arrange
-		var (client, v) = SqlServerDbClient_Setup.Get();
+		var (client, v) = Setup();
 
 		var fromName = Rnd.Str;
 		var from = new Column(v.Table, fromName, Helpers.CreateInfoFromAlias());
 
-		var to0Table = new DbName(Rnd.Str, Rnd.Str);
+		var to0Table = new TableName(Rnd.Str, Rnd.Str);
 		var to0Name = Rnd.Str;
 		IColumn to0 = new Column(to0Table, to0Name, Helpers.CreateInfoFromAlias());
 
-		var to1Table = new DbName(Rnd.Str, Rnd.Str);
+		var to1Table = new TableName(Rnd.Str, Rnd.Str);
 		var to1Name = Rnd.Str;
 		IColumn to1 = new Column(to1Table, to1Name, Helpers.CreateInfoFromAlias());
 
@@ -199,13 +202,13 @@ public class GetQuery_Tests
 	public void With_Parts_Adds_Where_Columns_With_Table_Names()
 	{
 		// Arrange
-		var (client, v) = SqlServerDbClient_Setup.Get();
+		var (client, v) = Setup();
 
-		var c0Table = new DbName(Rnd.Str, Rnd.Str);
+		var c0Table = new TableName(Rnd.Str, Rnd.Str);
 		var c0Name = Rnd.Str;
 		var c0 = new Column(c0Table, c0Name, Helpers.CreateInfoFromAlias());
 
-		var c1Table = new DbName(Rnd.Str, Rnd.Str);
+		var c1Table = new TableName(Rnd.Str, Rnd.Str);
 		var c1Name = Rnd.Str;
 		var c1 = new Column(c1Table, c1Name, Helpers.CreateInfoFromAlias());
 
@@ -233,7 +236,7 @@ public class GetQuery_Tests
 	public void With_Parts_Adds_Custom_Where_Clause_And_Parameters()
 	{
 		// Arrange
-		var (client, v) = SqlServerDbClient_Setup.Get();
+		var (client, v) = Setup();
 
 		var w0 = Rnd.Str;
 		var w1 = Rnd.Str;
@@ -289,14 +292,14 @@ public class GetQuery_Tests
 	public void With_Parts_Sets_Parameters()
 	{
 		// Arrange
-		var (client, v) = SqlServerDbClient_Setup.Get();
+		var (client, v) = Setup();
 
-		var c0Table = new DbName(Rnd.Str);
+		var c0Table = new TableName(Rnd.Str);
 		var c0Name = Rnd.Str;
 		var c0Value = Rnd.Str;
 		var c0 = new Column(c0Table, c0Name, Helpers.CreateInfoFromAlias());
 
-		var c1Table = new DbName(Rnd.Str);
+		var c1Table = new TableName(Rnd.Str);
 		var c1Name = Rnd.Str;
 		var c1Value = Rnd.Int;
 		var c1 = new Column(c1Table, c1Name, Helpers.CreateInfoFromAlias());
@@ -331,7 +334,8 @@ public class GetQuery_Tests
 	public void With_Parts_Adds_Order_By_Random()
 	{
 		// Arrange
-		var (client, v) = SqlServerDbClient_Setup.Get();
+		var (client, v) = Setup();
+
 		var parts = new QueryParts(v.Table)
 		{
 			SortRandom = true
@@ -350,13 +354,13 @@ public class GetQuery_Tests
 	public void With_Parts_Adds_Order_By_With_Table_Name()
 	{
 		// Arrange
-		var (client, v) = SqlServerDbClient_Setup.Get();
+		var (client, v) = Setup();
 
-		var sort0Table = new DbName(Rnd.Str, Rnd.Str);
+		var sort0Table = new TableName(Rnd.Str, Rnd.Str);
 		var sort0Name = Rnd.Str;
 		IColumn sort0 = new Column(sort0Table, sort0Name, Helpers.CreateInfoFromAlias());
 
-		var sort1Table = new DbName(Rnd.Str, Rnd.Str);
+		var sort1Table = new TableName(Rnd.Str, Rnd.Str);
 		var sort1Name = Rnd.Str;
 		IColumn sort1 = new Column(sort1Table, sort1Name, Helpers.CreateInfoFromAlias());
 
@@ -385,7 +389,8 @@ public class GetQuery_Tests
 	public void With_Parts_Adds_Limit()
 	{
 		// Arrange
-		var (client, v) = SqlServerDbClient_Setup.Get();
+		var (client, v) = Setup();
+
 		var max = Rnd.UInt64;
 		var parts = new QueryParts(v.Table) { Maximum = max };
 		var expected = $"SELECT * FROM [{v.Schema}].[{v.Name}] OFFSET 0 ROWS FETCH NEXT {max} ROWS ONLY";
@@ -401,7 +406,8 @@ public class GetQuery_Tests
 	public void With_Parts_Adds_Limit_And_Offset()
 	{
 		// Arrange
-		var (client, v) = SqlServerDbClient_Setup.Get();
+		var (client, v) = Setup();
+
 		var skip = Rnd.UInt64;
 		var max = Rnd.UInt64;
 		var parts = new QueryParts(v.Table) { Skip = skip, Maximum = max };

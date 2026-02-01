@@ -3,7 +3,7 @@
 
 using System.Linq;
 using System.Threading.Tasks;
-using Jeebs.Data;
+using Jeebs.Data.Common;
 using Jeebs.WordPress.Entities;
 using Jeebs.WordPress.Entities.Ids;
 using Jeebs.WordPress.Query;

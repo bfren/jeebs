@@ -25,6 +25,9 @@
     <ProjectReference Include="..\..\src\Jeebs.Apps\Jeebs.Apps.csproj" />
     <ProjectReference Include="..\..\src\Jeebs.Services.Drivers.Webhook.Slack\Jeebs.Services.Drivers.Webhook.Slack.csproj" />
   </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Serilog" />
+  </ItemGroup>
   <ProjectExtensions>
     <VisualStudio>
       <UserProperties jeebsconfig_1json__JsonSchema="https://schemas.bfren.dev/jeebs/application/config.json" jeebsconfig-secrets_1json__JsonSchema="https://schemas.bfren.dev/jeebs/application/config.json" />

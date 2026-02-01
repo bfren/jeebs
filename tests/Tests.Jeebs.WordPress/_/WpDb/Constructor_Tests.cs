@@ -4,7 +4,6 @@
 using System.Data.Common;
 using Jeebs.Config.Db;
 using Jeebs.Config.WordPress;
-using Jeebs.Data;
 using Jeebs.Data.Map;
 using Jeebs.Logging;
 using Jeebs.WordPress.Entities;
@@ -19,7 +18,7 @@ public class Constructor_Tests
 	public void Maps_Entities_To_Correct_Tables()
 	{
 		// Arrange
-		var client = Substitute.For<IDbClient>();
+		var client = Substitute.For<Data.Common.IDbClient>();
 
 		var connection = Substitute.ForPartsOf<DbConnection>();
 		client.GetConnection(Arg.Any<string>()).Returns(connection);

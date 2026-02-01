@@ -3,9 +3,9 @@
 
 using Jeebs.Collections;
 using Jeebs.Data.Enums;
+using Jeebs.Data.Functions;
 using Jeebs.Data.Map;
 using Jeebs.Data.Query;
-using Jeebs.Data.Query.Functions;
 
 namespace Jeebs.Data;
 
@@ -18,7 +18,7 @@ public abstract partial class DbClient : IDbClient
 	/// <param name="columns">List of columns to select.</param>
 	/// <param name="predicates">Predicates (matched using AND).</param>
 	protected abstract Result<(string query, IQueryParametersDictionary param)> GetQuery(
-		IDbName table,
+		ITableName table,
 		IColumnList columns,
 		IImmutableList<(IColumn column, Compare cmp, object value)> predicates
 	);
@@ -28,9 +28,9 @@ public abstract partial class DbClient : IDbClient
 		(string, Compare, dynamic)[] predicates
 	)
 		where TEntity : IWithId =>
-		from map in Entities.GetTableMapFor<TEntity>()
+		from map in EntityMapper.GetTableMapFor<TEntity>()
 		from sel in Extract<TModel>.From(map.Table)
-		from whr in QueryF.ConvertPredicatesToColumns(map.Columns, predicates)
+		from whr in DataF.ConvertPredicatesToColumns(map.Columns, predicates)
 		from qry in GetQuery(map.Name, sel, whr)
 		select qry;
 
@@ -44,7 +44,7 @@ public abstract partial class DbClient : IDbClient
 	#region Testing
 
 	internal Result<(string query, IQueryParametersDictionary param)> GetQueryTest(
-		IDbName table,
+		ITableName table,
 		IColumnList columns,
 		IImmutableList<(IColumn column, Compare cmp, object value)> predicates
 	) =>

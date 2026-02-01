@@ -7,32 +7,33 @@ using NSubstitute.Extensions;
 
 namespace Jeebs.Data.Clients.MySql.MySqlDbClient_Tests;
 
-public class GetCreateQuery_Tests
+public class GetCreateQuery_Tests : MySqlDbClient_Setup
 {
 	[Fact]
 	public void Returns_Valid_Insert_Query()
 	{
 		// Arrange
+		var (client, v) = Setup();
+
 		var schema = Rnd.Str;
 		var name = Rnd.Str;
-		var table = new DbName(schema, name);
+		var table = new TableName(schema, name);
 
 		var c0Name = Rnd.Str;
 		var c0Alias = Rnd.Str;
 		var c0Property = Substitute.ForPartsOf<PropertyInfo>();
 		c0Property.Name.Returns(c0Alias);
-		c0Property.Configure().CustomAttributes.Returns(Array.Empty<CustomAttributeData>());
+		c0Property.Configure().CustomAttributes.Returns([]);
 		var c0 = new Column(table, c0Name, c0Property);
 
 		var c1Name = Rnd.Str;
 		var c1Alias = Rnd.Str;
 		var c1Property = Substitute.ForPartsOf<PropertyInfo>();
 		c1Property.Name.Returns(c1Alias);
-		c1Property.Configure().CustomAttributes.Returns(Array.Empty<CustomAttributeData>());
+		c1Property.Configure().CustomAttributes.Returns([]);
 		var c1 = new Column(table, c1Name, c1Property);
 
 		var list = new ColumnList([c0, c1]);
-		var client = new MySqlDbClient();
 
 		var expected = $"INSERT INTO `{schema}.{name}` (`{c0Name}`, `{c1Name}`) VALUES (@{c0Alias}, @{c1Alias}); " +
 			"SELECT LAST_INSERT_ID();";

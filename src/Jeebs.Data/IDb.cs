@@ -1,10 +1,12 @@
 // Jeebs Rapid Application Development
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
+using System;
 using System.Collections.Generic;
-using System.Data;
 using System.Threading.Tasks;
+using Jeebs.Collections;
 using Jeebs.Config.Db;
+using Jeebs.Data.Query;
 using Jeebs.Logging;
 
 namespace Jeebs.Data;
@@ -30,30 +32,47 @@ public interface IDb
 	ILog Log { get; }
 
 	/// <summary>
-	/// Start a new Unit of Work.
-	/// </summary>
-	IUnitOfWork StartWork();
-
-	/// <summary>
-	/// Start a new Unit of Work asynchronously.
-	/// </summary>
-	Task<IUnitOfWork> StartWorkAsync();
-
-	/// <inheritdoc cref="QueryAsync{T}(string, object?, CommandType, IDbTransaction)"/>
-	Task<Result<IEnumerable<T>>> QueryAsync<T>(string query, object? param, CommandType type);
-
-	/// <summary>
 	/// Run a query and return multiple items.
 	/// </summary>
 	/// <typeparam name="T">Return value type.</typeparam>
 	/// <param name="query">Query text.</param>
 	/// <param name="param">Query parameters.</param>
-	/// <param name="type">Command type.</param>
-	/// <param name="transaction">Database transaction.</param>
-	Task<Result<IEnumerable<T>>> QueryAsync<T>(string query, object? param, CommandType type, IDbTransaction transaction);
+	/// <returns>List of matching items.</returns>
+	Task<Result<IEnumerable<T>>> QueryAsync<T>(string query, object? param);
 
-	/// <inheritdoc cref="QuerySingleAsync{T}(string, object?, CommandType, IDbTransaction)"/>
-	Task<Result<T>> QuerySingleAsync<T>(string query, object? param, CommandType type);
+	/// <summary>
+	/// Build a query from <see cref="IQueryParts"/> and return multiple items.
+	/// </summary>
+	/// <typeparam name="T">Return value type.</typeparam>
+	/// <param name="parts">Query parts.</param>
+	/// <returns>List of matching items.</returns>
+	Task<Result<IEnumerable<T>>> QueryAsync<T>(IQueryParts parts);
+
+	/// <summary>
+	/// Build a query from <see cref="IQueryParts"/> and return paged items.
+	/// </summary>
+	/// <typeparam name="T">Return value type.</typeparam>
+	/// <param name="page">Page number.</param>
+	/// <param name="parts">Query parts.</param>
+	/// <returns>Paged list of matching items.</returns>
+	Task<Result<IPagedList<T>>> QueryAsync<T>(ulong page, IQueryParts parts);
+
+	/// <summary>
+	/// Build a query using <see cref="IQueryBuilder"/> and return multiple items.
+	/// </summary>
+	/// <typeparam name="T">Return model type.</typeparam>
+	/// <param name="builder">Query builder.</param>
+	/// <returns>List of matching items.</returns>
+	Task<Result<IEnumerable<T>>> QueryAsync<T>(Func<IQueryBuilder, IQueryBuilderWithFrom> builder);
+
+	/// <summary>
+	/// Build a query using <see cref="IQueryBuilder"/> and return paged items.
+	/// </summary>
+	/// <typeparam name="T">Return model type.</typeparam>
+	/// <param name="page">Page number.</param>
+	/// <param name="builder">Query builder.</param>
+	/// <returns>Paged list of matching items.</returns>
+	Task<Result<IPagedList<T>>> QueryAsync<T>(ulong page, Func<IQueryBuilder, IQueryBuilderWithFrom> builder);
 
 	/// <summary>
 	/// Run a query and return a single item.
@@ -61,32 +80,39 @@ public interface IDb
 	/// <typeparam name="T">Return value type.</typeparam>
 	/// <param name="query">Query text.</param>
 	/// <param name="param">Query parameters.</param>
-	/// <param name="type">Command type.</param>
-	/// <param name="transaction">Database transaction.</param>
-	Task<Result<T>> QuerySingleAsync<T>(string query, object? param, CommandType type, IDbTransaction transaction);
-
-	/// <inheritdoc cref="ExecuteAsync(string, object?, CommandType, IDbTransaction)"/>
-	Task<Result<bool>> ExecuteAsync(string query, object? param, CommandType type);
+	/// <returns>Single item.</returns>
+	Task<Result<T>> QuerySingleAsync<T>(string query, object? param);
 
 	/// <summary>
-	/// Execute a query and return a single value.
+	/// Build a query from <see cref="IQueryParts"/> and return a single item.
+	/// </summary>
+	/// <typeparam name="T">Return value type.</typeparam>
+	/// <param name="parts">Query parts.</param>
+	/// <returns>Single item.</returns>
+	Task<Result<T>> QuerySingleAsync<T>(IQueryParts parts);
+
+	/// <summary>
+	/// Build a query using <see cref="IQueryBuilder"/> and return a single item.
+	/// </summary>
+	/// <typeparam name="T">Return value type.</typeparam>
+	/// <param name="builder">Query builder.</param>
+	/// <returns>Single item.</returns>
+	Task<Result<T>> QuerySingleAsync<T>(Func<IQueryBuilder, IQueryBuilderWithFrom> builder);
+
+	/// <summary>
+	/// Execute a query.
 	/// </summary>
 	/// <param name="query">Query text.</param>
 	/// <param name="param">Query parameters.</param>
-	/// <param name="type">Command type.</param>
-	/// <param name="transaction">Database transaction.</param>
-	Task<Result<bool>> ExecuteAsync(string query, object? param, CommandType type, IDbTransaction transaction);
-
-	/// <inheritdoc cref="ExecuteAsync{TReturn}(string, object?, CommandType, IDbTransaction)"/>
-	Task<Result<TReturn>> ExecuteAsync<TReturn>(string query, object? param, CommandType type);
+	/// <returns>Whether or not the query was successful.</returns>
+	Task<Result<bool>> ExecuteAsync(string query, object? param);
 
 	/// <summary>
-	/// Execute a query and return a single scalar value.
+	/// Execute a query and return a value.
 	/// </summary>
-	/// <typeparam name="TReturn">Return value type.</typeparam>
+	/// <typeparam name="T">Return value type.</typeparam>
 	/// <param name="query">Query text.</param>
 	/// <param name="param">Query parameters.</param>
-	/// <param name="type">Command type.</param>
-	/// <param name="transaction">Database transaction.</param>
-	Task<Result<TReturn>> ExecuteAsync<TReturn>(string query, object? param, CommandType type, IDbTransaction transaction);
+	/// <returns>Query return value.</returns>
+	Task<Result<T>> ExecuteAsync<T>(string query, object? param);
 }

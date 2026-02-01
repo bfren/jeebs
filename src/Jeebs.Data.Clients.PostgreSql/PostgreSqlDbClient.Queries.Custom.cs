@@ -4,26 +4,26 @@
 using System.Collections.Generic;
 using Jeebs.Collections;
 using Jeebs.Data.Enums;
+using Jeebs.Data.Functions;
 using Jeebs.Data.Map;
 using Jeebs.Data.Query;
-using Jeebs.Data.Query.Functions;
 
 namespace Jeebs.Data.Clients.PostgreSql;
 
-public partial class PostgreSqlDbClient : DbClient
+public partial class PostgreSqlDbClient
 {
 	/// <inheritdoc/>
 	protected override Result<(string query, IQueryParametersDictionary param)> GetQuery(
-		IDbName table,
+		ITableName table,
 		IColumnList columns,
 		IImmutableList<(IColumn column, Compare cmp, dynamic value)> predicates
 	)
 	{
 		// Get columns
-		var col = QueryF.GetColumnsFromList(this, columns);
+		var col = DataF.GetColumnsFromList(this, columns);
 
 		// Add each predicate to the where and parameter lists
-		var (where, param) = QueryF.GetWhereAndParameters(this, predicates, false);
+		var (where, param) = DataF.GetWhereAndParameters(this, predicates, false);
 
 		// Return query and parameters
 		return (
@@ -45,7 +45,7 @@ public partial class PostgreSqlDbClient : DbClient
 				(parts.SelectColumns.Count > 0) switch
 				{
 					true =>
-						QueryF.GetSelectFromList(this, parts.SelectColumns),
+						DataF.GetSelectFromList(this, parts.SelectColumns),
 
 					false =>
 						"*"
@@ -82,7 +82,7 @@ public partial class PostgreSqlDbClient : DbClient
 			// Add simple WHERE
 			if (parts.Where.Count > 0)
 			{
-				var (whereSimple, param) = QueryF.GetWhereAndParameters(this, parts.Where, true);
+				var (whereSimple, param) = DataF.GetWhereAndParameters(this, parts.Where, true);
 				where.AddRange(whereSimple);
 				_ = parameters.Merge(param);
 			}

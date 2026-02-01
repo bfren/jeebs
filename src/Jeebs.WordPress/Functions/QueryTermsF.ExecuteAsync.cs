@@ -3,7 +3,7 @@
 
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Jeebs.Data;
+using Jeebs.Data.Common;
 using Jeebs.WordPress.Entities.Ids;
 using Jeebs.WordPress.Query;
 
@@ -29,6 +29,6 @@ public static partial class QueryTermsF
 			x => x.ToParts<TModel>()
 		)
 		.BindAsync(
-			x => db.Query.QueryAsync<TModel>(x, w.Transaction)
+			x => db.QueryAsync<TModel>(x, w.Transaction)
 		);
 }

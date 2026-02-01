@@ -5,11 +5,11 @@ using Jeebs.Data.Map;
 
 namespace Jeebs.Data.Clients.MySql;
 
-public partial class MySqlDbClient : DbClient
+public partial class MySqlDbClient
 {
 	/// <inheritdoc/>
 	protected override string GetCreateQuery(
-		IDbName table,
+		ITableName table,
 		IColumnList columns
 	)
 	{
@@ -26,7 +26,7 @@ public partial class MySqlDbClient : DbClient
 
 	/// <inheritdoc/>
 	protected override string GetRetrieveQuery(
-		IDbName table,
+		ITableName table,
 		IColumnList columns,
 		IColumn idColumn,
 		object id
@@ -45,7 +45,7 @@ public partial class MySqlDbClient : DbClient
 
 	/// <inheritdoc/>
 	protected override string GetUpdateQuery(
-		IDbName table,
+		ITableName table,
 		IColumnList columns,
 		IColumn idColumn,
 		object id
@@ -54,7 +54,7 @@ public partial class MySqlDbClient : DbClient
 
 	/// <inheritdoc/>
 	protected override string GetUpdateQuery(
-		IDbName table,
+		ITableName table,
 		IColumnList columns,
 		IColumn idColumn,
 		object id,
@@ -83,7 +83,7 @@ public partial class MySqlDbClient : DbClient
 
 	/// <inheritdoc/>
 	protected override string GetDeleteQuery(
-		IDbName table,
+		ITableName table,
 		IColumn idColumn,
 		object id
 	) =>
@@ -91,7 +91,7 @@ public partial class MySqlDbClient : DbClient
 
 	/// <inheritdoc/>
 	protected override string GetDeleteQuery(
-		IDbName table,
+		ITableName table,
 		IColumn idColumn,
 		object id,
 		IColumn? versionColumn

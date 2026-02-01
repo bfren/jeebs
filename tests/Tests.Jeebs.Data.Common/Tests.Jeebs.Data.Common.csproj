@@ -1,0 +1,15 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <RootNamespace>Jeebs.Data.Common</RootNamespace>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="Dapper" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\Jeebs.Data.Common\Jeebs.Data.Common.csproj" />
+    <ProjectReference Include="..\Tests.Jeebs\Tests.Jeebs.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <Using Include="Wrap.Ids" />
+  </ItemGroup>
+</Project>
