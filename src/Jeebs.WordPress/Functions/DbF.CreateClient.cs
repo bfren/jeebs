@@ -13,5 +13,5 @@ public static partial class DbF
 	/// </summary>
 	/// <returns>MySqlDbClient.</returns>
 	public static MySqlDbClient CreateClient() =>
-		new(new DapperAdapter());
+		new(DapperAdapter.DefaultInstance);
 }
