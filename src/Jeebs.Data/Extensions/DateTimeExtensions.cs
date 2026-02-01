@@ -3,7 +3,7 @@
 
 using System;
 
-namespace Jeebs.Data.Common;
+namespace Jeebs.Data;
 
 /// <summary>
 /// <see cref="DateTime"/> Extensions.
