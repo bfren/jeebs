@@ -1,7 +1,6 @@
 // Jeebs Unit Tests
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
-using System.Data;
 using Jeebs.Data.Testing.Exceptions;
 using NSubstitute.Core;
 
@@ -17,22 +16,7 @@ public class AssertExecute_Tests : Setup
 		await fluent.ExecuteAsync(x => x.Id);
 
 		// Act
-		var action = (ICall c) => FluentQueryHelper.AssertExecute<TestEntity, TestId>(c, x => x.Id, false);
-
-		// Assert
-		fluent.AssertCalls(action);
-	}
-
-	[Fact]
-	public async Task Asserts_ExecuteAsync__With_Transaction()
-	{
-		// Arrange
-		var fluent = Create();
-		var transaction = Substitute.For<IDbTransaction>();
-		await fluent.ExecuteAsync(x => x.Id, transaction);
-
-		// Act
-		var action = (ICall c) => FluentQueryHelper.AssertExecute<TestEntity, TestId>(c, x => x.Id, true);
+		var action = (ICall c) => FluentQueryHelper.AssertExecute<TestEntity, TestId>(c, x => x.Id);
 
 		// Assert
 		fluent.AssertCalls(action);
@@ -44,7 +28,7 @@ public class AssertExecute_Tests : Setup
 		// Arrange
 		var fluent = Create();
 		await fluent.CountAsync();
-		var action = (ICall c) => FluentQueryHelper.AssertExecute<TestEntity, TestId>(c, x => x.Id, true);
+		var action = (ICall c) => FluentQueryHelper.AssertExecute<TestEntity, TestId>(c, x => x.Id);
 
 		// Act
 		var result = Record.Exception(() => fluent.AssertCalls(action));
@@ -59,7 +43,7 @@ public class AssertExecute_Tests : Setup
 		// Arrange
 		var fluent = Create();
 		await fluent.ExecuteAsync(x => x.Id);
-		var action = (ICall c) => FluentQueryHelper.AssertExecute<TestEntity, string>(c, nameof(TestEntity.Id), false);
+		var action = (ICall c) => FluentQueryHelper.AssertExecute<TestEntity, string>(c, nameof(TestEntity.Id));
 
 		// Act
 		var result = Record.Exception(() => fluent.AssertCalls(action));
@@ -74,7 +58,7 @@ public class AssertExecute_Tests : Setup
 		// Arrange
 		var fluent = Create();
 		await fluent.ExecuteAsync<TestId>(nameof(TestEntity.Id));
-		var action = (ICall c) => FluentQueryHelper.AssertExecute<TestEntity, TestId>(c, x => x.Id, false);
+		var action = (ICall c) => FluentQueryHelper.AssertExecute<TestEntity, TestId>(c, x => x.Id);
 
 		// Act
 		var result = Record.Exception(() => fluent.AssertCalls(action));

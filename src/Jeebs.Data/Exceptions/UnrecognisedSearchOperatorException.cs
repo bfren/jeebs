@@ -4,7 +4,7 @@
 using System;
 using Jeebs.Data.Enums;
 
-namespace Jeebs.Data.Exceptions;
+namespace Jeebs.Data.Common.Exceptions;
 
 /// <summary>
 /// Thrown when an unrecognised <see cref="Compare"/> is found.

@@ -1,0 +1,34 @@
+// Jeebs Rapid Application Development
+// Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
+
+using System.Collections.Generic;
+using Jeebs.Data.Map;
+
+namespace Jeebs.Data.Functions;
+
+public static partial class DataF
+{
+	/// <summary>
+	/// Escape and join a list of columns for a select query.
+	/// </summary>
+	/// <param name="client">IDbClient.</param>
+	/// <param name="columns">IColumnList.</param>
+	public static string GetSelectFromList(IDbClient client, IColumnList columns)
+	{
+		// Do nothing if there are no columns
+		if (columns.Count == 0)
+		{
+			return string.Empty;
+		}
+
+		// Escape and add each column to the select list
+		var select = new List<string>();
+		foreach (var column in columns)
+		{
+			select.Add(client.EscapeWithTable(column, true));
+		}
+
+		// Join without wrapping
+		return client.JoinList(select, false);
+	}
+}

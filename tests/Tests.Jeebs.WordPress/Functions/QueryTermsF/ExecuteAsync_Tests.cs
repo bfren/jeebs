@@ -31,7 +31,7 @@ public class ExecuteAsync_Tests : Query_Tests
 		await QueryTermsF.ExecuteAsync<Test>(db, w, opt => opt);
 
 		// Assert
-		await db.Query.Received().QueryAsync<Test>(Arg.Any<IQueryParts>(), v.Transaction);
+		await db.Received().QueryAsync<Test>(Arg.Any<IQueryParts>(), v.Transaction);
 	}
 
 	public record class Test : WpTermEntity;

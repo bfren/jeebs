@@ -3,12 +3,16 @@
 
 using System;
 using System.Collections.Generic;
-using System.Data;
+using System.Linq.Expressions;
 using System.Threading.Tasks;
-using Dapper;
+using Jeebs.Collections;
 using Jeebs.Config.Db;
+using Jeebs.Data.Functions;
+using Jeebs.Data.Map;
+using Jeebs.Data.Query;
 using Jeebs.Logging;
 using Microsoft.Extensions.Options;
+using Wrap.Exceptions;
 
 namespace Jeebs.Data;
 
@@ -26,52 +30,6 @@ public abstract class Db : IDb
 
 	internal ILog LogTest =>
 		Log;
-
-	/// <inheritdoc/>
-	public virtual IUnitOfWork StartWork()
-	{
-		// Get a database connection
-		Log.Vrb("Getting database connection.");
-		var connection = Client.GetConnection(Config.ConnectionString);
-
-		// Open database connection
-		if (connection.State != ConnectionState.Open)
-		{
-			Log.Vrb("Connecting to the database.");
-			connection.Open();
-		}
-
-		// Begin a new transaction
-		Log.Vrb("Beginning a new transaction.");
-		var transaction = connection.BeginTransaction();
-
-		// Create Unit of Work
-		Log.Vrb("Starting new Unit of Work.");
-		return new UnitOfWork(connection, transaction, Log);
-	}
-
-	/// <inheritdoc/>
-	public virtual async Task<IUnitOfWork> StartWorkAsync()
-	{
-		// Connect to the database
-		Log.Vrb("Getting database connection.");
-		var connection = Client.GetConnection(Config.ConnectionString);
-
-		// Open database connection
-		if (connection.State != ConnectionState.Open)
-		{
-			Log.Vrb("Connecting to the database.");
-			await connection.OpenAsync();
-		}
-
-		// Begin a new transaction
-		Log.Vrb("Beginning a new transaction.");
-		var transaction = await connection.BeginTransactionAsync();
-
-		// Create Unit of Work
-		Log.Vrb("Starting new Unit of Work.");
-		return new UnitOfWork(connection, transaction, Log);
-	}
 
 	/// <summary>
 	/// Inject database client and configuration.
@@ -104,13 +62,13 @@ public abstract class Db : IDb
 	/// </summary>
 	/// <typeparam name="TReturn">Query return type.</typeparam>
 	/// <param name="input">Input values.</param>
-	private void LogQuery<TReturn>((string query, object? parameters, CommandType type) input)
+	protected virtual void LogQuery<TReturn>((string query, object? parameters) input)
 	{
-		var (query, parameters, type) = input;
+		var (query, parameters) = input;
 
 		// Always log query type, return type, and query
-		var message = "Query Type: {Type} | Return: {Return} | {Query}";
-		object?[] args = [type, typeof(TReturn), query];
+		var message = "Query Returns: {Return} | {Query}";
+		object?[] args = [typeof(TReturn), query];
 
 		// Log with or without parameters
 		if (parameters is null)
@@ -124,115 +82,63 @@ public abstract class Db : IDb
 		}
 	}
 
-	#region Querying
-
-	/// <inheritdoc/>
-	public async Task<Result<IEnumerable<T>>> QueryAsync<T>(string query, object? param, CommandType type)
-	{
-		using var w = await StartWorkAsync();
-		return await QueryAsync<T>(query, param, type, w.Transaction);
-	}
-
-	/// <inheritdoc/>
-	public Task<Result<IEnumerable<T>>> QueryAsync<T>(string query, object? param, CommandType type, IDbTransaction transaction) =>
-		R.Wrap(
-			(query, parameters: param ?? new object(), type)
+	/// <summary>
+	/// Shorthand for escaping a column with its table name and alias.
+	/// </summary>
+	/// <typeparam name="TTable">Table type.</typeparam>
+	/// <param name="table">Table object.</param>
+	/// <param name="column">Column selector.</param>
+#pragma warning disable CA1707 // Identifiers should not contain underscores
+	protected string __<TTable>(TTable table, Expression<Func<TTable, string>> column)
+#pragma warning restore CA1707 // Identifiers should not contain underscores
+		where TTable : ITable =>
+		DataF.GetColumnFromExpression(
+			table, column
 		)
-		.Audit(
-			ok: LogQuery<T>
+		.Map(
+			x => Client.Escape(x, true)
 		)
-		.MapAsync(
-			x => transaction.Connection!.QueryAsync<T>(x.query, x.parameters, transaction, commandType: x.type)
+		.Unwrap(
+			f => throw new InvalidOperationException($"Could not get column from expression: {column}.", new FailureException(f))
 		);
 
 	/// <inheritdoc/>
-	public async Task<Result<T>> QuerySingleAsync<T>(string query, object? param, CommandType type)
-	{
-		using var w = await StartWorkAsync();
-		return await QuerySingleAsync<T>(query, param, type, w.Transaction);
-	}
+	public abstract Task<Result<IEnumerable<T>>> QueryAsync<T>(string query, object? param);
 
 	/// <inheritdoc/>
-	public Task<Result<T>> QuerySingleAsync<T>(string query, object? param, CommandType type, IDbTransaction transaction) =>
-		R.Wrap(
-			(query, parameters: param ?? new object(), type)
-		)
-		.Audit(
-			ok: LogQuery<T>
-		)
-		.MapAsync(
-			x => transaction.Connection!.QuerySingleOrDefaultAsync<T>(x.query, x.parameters, transaction, commandType: x.type)
-		)
-		.BindAsync(
-			x => x switch
-			{
-				T =>
-					R.Wrap(x),
-
-				_ =>
-					R.Fail("Item not found or multiple items returned.", query, param)
-						.Ctx(nameof(Db), nameof(QuerySingleAsync))
-			}
-		);
+	public abstract Task<Result<IEnumerable<T>>> QueryAsync<T>(IQueryParts parts);
 
 	/// <inheritdoc/>
-	public async Task<Result<bool>> ExecuteAsync(string query, object? param, CommandType type)
-	{
-		using var w = await StartWorkAsync();
-		return await ExecuteAsync(query, param, type, w.Transaction);
-	}
+	public abstract Task<Result<IPagedList<T>>> QueryAsync<T>(ulong page, IQueryParts parts);
 
 	/// <inheritdoc/>
-	public Task<Result<bool>> ExecuteAsync(string query, object? param, CommandType type, IDbTransaction transaction) =>
-		R.Wrap(
-			(query, parameters: param ?? new object(), type)
-		)
-		.Audit(
-			ok: LogQuery<bool>
-		)
-		.MapAsync(
-			x => transaction.Connection!.ExecuteAsync(x.query, x.parameters, transaction, commandType: x.type)
-		)
-		.MapAsync(
-			x => x > 0
-		);
+	public abstract Task<Result<IEnumerable<T>>> QueryAsync<T>(Func<IQueryBuilder, IQueryBuilderWithFrom> builder);
 
 	/// <inheritdoc/>
-	public async Task<Result<T>> ExecuteAsync<T>(string query, object? param, CommandType type)
-	{
-		using var w = await StartWorkAsync();
-		return await ExecuteAsync<T>(query, param, type, w.Transaction);
-	}
+	public abstract Task<Result<IPagedList<T>>> QueryAsync<T>(ulong page, Func<IQueryBuilder, IQueryBuilderWithFrom> builder);
 
 	/// <inheritdoc/>
-	public Task<Result<T>> ExecuteAsync<T>(string query, object? param, CommandType type, IDbTransaction transaction) =>
-		R.Wrap(
-			(query, parameters: param ?? new object(), type)
-		)
-		.Audit(
-			ok: LogQuery<T>
-		)
-		.MapAsync(
-			x => transaction.Connection!.ExecuteScalarAsync<T>(x.query, x.parameters, transaction, commandType: x.type)
-		)
-		.BindAsync(
-			x => x switch
-			{
-				T =>
-					R.Wrap(x),
+	public abstract Task<Result<T>> QuerySingleAsync<T>(string query, object? param);
 
-				_ =>
-					R.Fail("Execution returned null value.", query, param)
-						.Ctx(nameof(Db), nameof(ExecuteAsync))
-			}
-		);
+	/// <inheritdoc/>
+	public abstract Task<Result<T>> QuerySingleAsync<T>(IQueryParts parts);
 
-	#endregion Querying
+	/// <inheritdoc/>
+	public abstract Task<Result<T>> QuerySingleAsync<T>(Func<IQueryBuilder, IQueryBuilderWithFrom> builder);
+
+	/// <inheritdoc/>
+	public abstract Task<Result<bool>> ExecuteAsync(string query, object? param);
+
+	/// <inheritdoc/>
+	public abstract Task<Result<TReturn>> ExecuteAsync<TReturn>(string query, object? param);
 
 	#region Testing
 
 	internal void WriteToLogTest(string message, object[] args) =>
 		WriteToLog(message, args);
+
+	internal void LogQueryTest<TReturn>((string query, object? parameters) input) =>
+		LogQuery<TReturn>(input);
 
 	#endregion Testing
 }

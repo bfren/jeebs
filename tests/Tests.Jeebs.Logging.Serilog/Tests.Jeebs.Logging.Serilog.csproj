@@ -2,4 +2,7 @@
   <ItemGroup>
     <ProjectReference Include="..\..\src\Jeebs.Logging.Serilog\Jeebs.Logging.Serilog.csproj" />
   </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Serilog" />
+  </ItemGroup>
 </Project>

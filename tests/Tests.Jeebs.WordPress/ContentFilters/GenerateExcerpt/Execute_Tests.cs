@@ -1,12 +1,18 @@
 // Jeebs Unit Tests
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
-using Jeebs.StringExtensions_Tests;
-
 namespace Jeebs.WordPress.ContentFilters.GenerateExcerpt_Tests;
 
 public class Execute_Tests
 {
+	public static TheoryData<string, string> String_Returns_Value_With_Html_Tags_Replaced_Data() =>
+		new()
+		{
+			{ "<p>Ben</p>", "Ben" },
+			{ "<p class=\"attr\">Ben</p>", "Ben" },
+			{ "<p class=\"attr\">Ben <strong>Green</strong></p>", "Ben Green" }
+		};
+
 	[Theory]
 	[InlineData("")]
 	[InlineData(" arg=\"one\"")]
@@ -73,7 +79,7 @@ public class Execute_Tests
 	}
 
 	[Theory]
-	[MemberData(nameof(ReplaceHtmlTags_Tests.String_Returns_Value_With_Html_Tags_Replaced_Data), MemberType = typeof(ReplaceHtmlTags_Tests))]
+	[MemberData(nameof(String_Returns_Value_With_Html_Tags_Replaced_Data))]
 	public void Removes_Html_Tags(string input, string expected)
 	{
 		// Arrange

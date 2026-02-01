@@ -2,7 +2,6 @@
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using System.Linq.Expressions;
-using Jeebs.Data.Query;
 using Jeebs.Reflection;
 using NSubstitute.Core;
 
@@ -23,7 +22,7 @@ public static partial class FluentQueryHelper
 		);
 
 	/// <summary>
-	/// Validate a call to <see cref="IFluentQuery{TEntity, TId}.WhereIn{TValue}(Expression{Func{TEntity, TValue}}, IEnumerable{TValue})"/>.
+	/// Validate a call to <see cref="Repository.IFluentQuery{TEntity, TId}.WhereIn{TValue}(Expression{Func{TEntity, TValue}}, IEnumerable{TValue})"/>.
 	/// </summary>
 	/// <typeparam name="TEntity">Entity type.</typeparam>
 	/// <typeparam name="TValue">Column select value type.</typeparam>

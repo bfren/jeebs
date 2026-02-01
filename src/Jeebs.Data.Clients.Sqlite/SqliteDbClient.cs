@@ -10,18 +10,21 @@ using Jeebs.Data.Map;
 namespace Jeebs.Data.Clients.Sqlite;
 
 /// <inheritdoc cref="IDbClient"/>
-public partial class SqliteDbClient : DbClient
+public partial class SqliteDbClient : Common.DbClient
 {
+	/// <inheritdoc/>
+	public SqliteDbClient(IAdapter adapter) : base(adapter) { }
+
 	/// <inheritdoc/>
 	public override DbConnection GetConnection(string connectionString) =>
 		new SQLiteConnection(connectionString);
 
 	/// <inheritdoc/>
-	public override string Escape(IDbName table) =>
+	public override string Escape(ITableName table) =>
 		Escape(table.GetFullName(s => s));
 
 	/// <inheritdoc/>
-	public override string Escape(IDbName table, string column) =>
+	public override string Escape(ITableName table, string column) =>
 		Escape(table) + "." + Escape(column);
 
 	/// <inheritdoc/>

@@ -2,7 +2,6 @@
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using System.Collections.Generic;
-using System.Data.Common;
 using Jeebs.Data.Enums;
 using Jeebs.Data.Map;
 using Jeebs.Data.Query;
@@ -17,18 +16,7 @@ public interface IDbClient
 	/// <summary>
 	/// Entity / table mapper.
 	/// </summary>
-	IEntityMapper Entities { get; }
-
-	/// <summary>
-	/// Type mapper.
-	/// </summary>
-	IDbTypeMapper Types { get; }
-
-	/// <summary>
-	/// Return an open database connection.
-	/// </summary>
-	/// <param name="connectionString">Database connection string.</param>
-	DbConnection GetConnection(string connectionString);
+	IEntityMapper EntityMapper { get; }
 
 	#region Escaping and Joining
 
@@ -42,14 +30,14 @@ public interface IDbClient
 	/// Escape a table name.
 	/// </summary>
 	/// <param name="table">ITableName.</param>
-	string Escape(IDbName table);
+	string Escape(ITableName table);
 
 	/// <summary>
 	/// Escape a column with its table.
 	/// </summary>
 	/// <param name="table">ITableName.</param>
 	/// <param name="column">Column name.</param>
-	string Escape(IDbName table, string column);
+	string Escape(ITableName table, string column);
 
 	/// <summary>
 	/// Escape a column without using an alias.

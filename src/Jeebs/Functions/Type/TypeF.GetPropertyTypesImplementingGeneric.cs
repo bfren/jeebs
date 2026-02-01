@@ -31,6 +31,6 @@ public static partial class TypeF
 					&& !p.PropertyType.IsGenericParameter
 					select p.PropertyType;
 
-		return types.Distinct().ToList();
+		return [.. types.Distinct()];
 	}
 }

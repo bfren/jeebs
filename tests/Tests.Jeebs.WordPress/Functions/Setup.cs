@@ -3,7 +3,7 @@
 
 using System.Data;
 using Jeebs.Config.WordPress;
-using Jeebs.Data;
+using Jeebs.Data.Common;
 
 namespace Jeebs.WordPress.Functions;
 

@@ -5,11 +5,11 @@ using Jeebs.Data.Map;
 
 namespace Jeebs.Data.Clients.SqlServer;
 
-public partial class SqlServerDbClient : DbClient
+public partial class SqlServerDbClient
 {
 	/// <inheritdoc/>
 	protected override string GetCreateQuery(
-		IDbName table,
+		ITableName table,
 		IColumnList columns
 	)
 	{
@@ -26,7 +26,7 @@ public partial class SqlServerDbClient : DbClient
 
 	/// <inheritdoc/>
 	protected override string GetRetrieveQuery(
-		IDbName table,
+		ITableName table,
 		IColumnList columns,
 		IColumn idColumn,
 		object id
@@ -45,7 +45,7 @@ public partial class SqlServerDbClient : DbClient
 
 	/// <inheritdoc/>
 	protected override string GetUpdateQuery(
-		IDbName table,
+		ITableName table,
 		IColumnList columns,
 		IColumn idColumn,
 		object id
@@ -54,7 +54,7 @@ public partial class SqlServerDbClient : DbClient
 
 	/// <inheritdoc/>
 	protected override string GetUpdateQuery(
-		IDbName table,
+		ITableName table,
 		IColumnList columns,
 		IColumn idColumn,
 		object id,
@@ -80,7 +80,7 @@ public partial class SqlServerDbClient : DbClient
 
 	/// <inheritdoc/>
 	protected override string GetDeleteQuery(
-		IDbName table,
+		ITableName table,
 		IColumn idColumn,
 		object id
 	) =>
@@ -88,7 +88,7 @@ public partial class SqlServerDbClient : DbClient
 
 	/// <inheritdoc/>
 	protected override string GetDeleteQuery(
-		IDbName table,
+		ITableName table,
 		IColumn idColumn,
 		object id,
 		IColumn? versionColumn

@@ -4,6 +4,6 @@
   </PropertyGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\src\Jeebs.Data.Clients.Sqlite\Jeebs.Data.Clients.Sqlite.csproj" />
-    <ProjectReference Include="..\Tests.Jeebs.Data\Tests.Jeebs.Data.csproj" />
+    <ProjectReference Include="..\Tests.Jeebs.Data.Common\Tests.Jeebs.Data.Common.csproj" />
   </ItemGroup>
 </Project>

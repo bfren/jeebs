@@ -1,15 +1,16 @@
 // Jeebs Rapid Application Development
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
-using System.Threading;
 using Jeebs.Config.Db;
 using Jeebs.Config.WordPress;
-using Jeebs.Data;
-using Jeebs.Data.Clients.MySql;
-using Jeebs.Data.TypeHandlers;
+using Jeebs.Data.Adapters.Dapper;
+using Jeebs.Data.Adapters.Dapper.TypeHandlers;
+using Jeebs.Data.Common;
+using Jeebs.Data.Map;
 using Jeebs.Logging;
 using Jeebs.WordPress.Entities;
 using Jeebs.WordPress.Entities.Ids;
+using Jeebs.WordPress.Functions;
 using Jeebs.WordPress.TypeHandlers;
 using Microsoft.Extensions.Options;
 
@@ -46,8 +47,6 @@ public sealed class WpDb<TC, TCm, TL, TO, TP, TPm, TT, TTm, TTr, TTt, TU, TUm> :
 	where TU : WpUserEntity
 	where TUm : WpUserMetaEntity
 {
-	private static readonly Lock X = new();
-
 	/// <inheritdoc/>
 	public WpConfig WpConfig { get; private init; }
 
@@ -58,8 +57,9 @@ public sealed class WpDb<TC, TCm, TL, TO, TP, TPm, TT, TTm, TTr, TTt, TU, TUm> :
 	public IWpDbSchema Schema { get; private init; }
 
 	/// <inheritdoc cref="WpDb{Tc, Tcm, Tl, To, Tp, Tpm, Tt, Ttm, Ttr, Ttt, Tu, Tum}.WpDb(IDbClient, IOptions{DbConfig}, IOptions{WpConfig}, ILog)"/>
-	public WpDb(IOptions<DbConfig> dbConfig, IOptions<WpConfig> wpConfig, ILog log)
-		: this(new MySqlDbClient(), dbConfig, wpConfig, log) { }
+	public WpDb(IOptions<DbConfig> dbConfig, IOptions<WpConfig> wpConfig, ILog log) :
+		this(DbF.CreateClient(), dbConfig, wpConfig, log)
+	{ }
 
 	/// <summary>
 	/// Create tables and map entity types.
@@ -68,8 +68,8 @@ public sealed class WpDb<TC, TCm, TL, TO, TP, TPm, TT, TTm, TTr, TTt, TU, TUm> :
 	/// <param name="dbConfig">Database configuration.</param>
 	/// <param name="wpConfig">WordPress configuration.</param>
 	/// <param name="log">ILog.</param>
-	internal WpDb(IDbClient client, IOptions<DbConfig> dbConfig, IOptions<WpConfig> wpConfig, ILog log)
-		: base(client, dbConfig, log, wpConfig.Value.Db)
+	internal WpDb(IDbClient client, IOptions<DbConfig> dbConfig, IOptions<WpConfig> wpConfig, ILog log) :
+		base(client, dbConfig, log, wpConfig.Value.Db)
 	{
 		// Log WordPress config
 		WpConfig = wpConfig.Value;
@@ -95,19 +95,19 @@ public sealed class WpDb<TC, TCm, TL, TO, TP, TPm, TT, TTm, TTr, TTt, TU, TUm> :
 		_ = Map<TU>.To(Schema.Users);
 		_ = Map<TUm>.To(Schema.UsersMeta);
 
-		lock (X)
+		// Add type handlers
+		client.TypeMap(m =>
 		{
-			// Add type handlers
-			if (!client.Types.HasTypeHandler<WpPostId>())
+			if (!m.HasTypeHandler<WpPostId>())
 			{
-				client.Types.ResetTypeHandlers();
-				client.Types.AddTypeHandler(new CommentTypeTypeHandler());
-				client.Types.AddTypeHandler(new MimeTypeTypeHandler());
-				client.Types.AddTypeHandler(new PostStatusTypeHandler());
-				client.Types.AddTypeHandler(new PostTypeTypeHandler());
-				client.Types.AddTypeHandler(new TaxonomyTypeHandler());
-				client.Types.AddIdTypeHandlers();
+				m.ResetTypeHandlers();
+				m.AddTypeHandler(new CommentTypeTypeHandler());
+				m.AddTypeHandler(new MimeTypeTypeHandler());
+				m.AddTypeHandler(new PostStatusTypeHandler());
+				m.AddTypeHandler(new PostTypeTypeHandler());
+				m.AddTypeHandler(new TaxonomyTypeHandler());
+				m.AddIdTypeHandlers();
 			}
-		}
+		});
 	}
 }

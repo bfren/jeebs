@@ -2,7 +2,7 @@
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using Jeebs.Collections;
-using Jeebs.Data;
+using Jeebs.Data.Map;
 using Jeebs.Data.Query.QueryPartsBuilder_Tests;
 using Jeebs.Functions;
 using Jeebs.WordPress.Entities.Ids;

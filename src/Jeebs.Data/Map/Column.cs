@@ -16,7 +16,7 @@ public sealed record class Column : IColumn
 	/// <summary>
 	/// Table name.
 	/// </summary>
-	public IDbName TblName { get; init; }
+	public ITableName TblName { get; init; }
 
 	/// <summary>
 	/// Column name.
@@ -40,7 +40,7 @@ public sealed record class Column : IColumn
 	/// <param name="tblName">Table name.</param>
 	/// <param name="colName">Column Name.</param>
 	/// <param name="propertyInfo">Entity property PropertyInfo.</param>
-	public Column(IDbName tblName, string colName, PropertyInfo propertyInfo) =>
+	public Column(ITableName tblName, string colName, PropertyInfo propertyInfo) =>
 		(TblName, ColName, PropertyInfo) = (tblName, colName, propertyInfo);
 
 	/// <summary>

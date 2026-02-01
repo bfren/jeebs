@@ -25,7 +25,7 @@ public class Constructor_Tests
 		var values = Substitute.For<IPagingValues>();
 
 		// Act
-		var result = new PagedList<int>(values, Array.Empty<int>());
+		var result = new PagedList<int>(values, []);
 
 		// Assert
 		Assert.Same(values, result.Values);

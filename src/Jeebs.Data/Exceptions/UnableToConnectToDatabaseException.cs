@@ -3,7 +3,7 @@
 
 using System;
 
-namespace Jeebs.Data.Exceptions;
+namespace Jeebs.Data.Common.Exceptions;
 
 /// <summary>
 /// Thrown by <see cref="Db(IDbClient, Config.Db.DbConnectionConfig, Logging.ILog)"/>.

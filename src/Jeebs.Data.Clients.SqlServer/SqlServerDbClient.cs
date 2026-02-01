@@ -10,18 +10,21 @@ using Microsoft.Data.SqlClient;
 namespace Jeebs.Data.Clients.SqlServer;
 
 /// <inheritdoc cref="IDbClient"/>
-public partial class SqlServerDbClient : DbClient
+public partial class SqlServerDbClient : Common.DbClient
 {
+	/// <inheritdoc/>
+	public SqlServerDbClient(IAdapter adapter) : base(adapter) { }
+
 	/// <inheritdoc/>
 	public override DbConnection GetConnection(string connectionString) =>
 		new SqlConnection(connectionString);
 
 	/// <inheritdoc/>
-	public override string Escape(IDbName table) =>
+	public override string Escape(ITableName table) =>
 		table.GetFullName(Escape);
 
 	/// <inheritdoc/>
-	public override string Escape(IDbName table, string column) =>
+	public override string Escape(ITableName table, string column) =>
 		Escape(table) + "." + Escape(column);
 
 	/// <inheritdoc/>

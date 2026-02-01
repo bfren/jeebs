@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <ItemGroup>
     <PackageReference Include="Rnd" PrivateAssets="All" />
-    <PackageReference Include="Sodium.Core" PrivateAssets="All" />
+    <PackageReference Include="Sodium.Core" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Jeebs\Jeebs.csproj" />

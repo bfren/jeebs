@@ -3,6 +3,6 @@
     <PackageReference Include="Microsoft.Data.SqlClient" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Jeebs.Data\Jeebs.Data.csproj" />
+    <ProjectReference Include="..\Jeebs.Data.Common\Jeebs.Data.Common.csproj" />
   </ItemGroup>
 </Project>

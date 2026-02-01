@@ -3,11 +3,10 @@
 
 using System.Linq;
 using Jeebs.Collections;
-using Jeebs.Data;
 using Jeebs.Data.Enums;
+using Jeebs.Data.Functions;
 using Jeebs.Data.Map;
 using Jeebs.Data.Query;
-using Jeebs.Data.Query.Functions;
 using Jeebs.WordPress.Entities.Ids;
 using Jeebs.WordPress.Enums;
 
@@ -83,8 +82,8 @@ public sealed class PostsTaxonomyPartsBuilder : PartsBuilder<WpTermId>, IQueryPo
 		}
 
 		// Add default sort
-		return from title in QueryF.GetColumnFromExpression(T.Terms, t => t.Title)
-			   from count in QueryF.GetColumnFromExpression(T.TermTaxonomies, tx => tx.Count)
+		return from title in DataF.GetColumnFromExpression(T.Terms, t => t.Title)
+			   from count in DataF.GetColumnFromExpression(T.TermTaxonomies, tx => tx.Count)
 			   let sortRange = sortBy switch
 			   {
 				   TaxonomySort.CountDescending =>

@@ -1,0 +1,40 @@
+// Jeebs Unit Tests
+// Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
+
+using System.Reflection;
+using Jeebs.Data.Map;
+
+namespace Jeebs.Data.DbClient_Tests;
+
+public class GetColumnsForRetrieveQuery_Tests : DbClient_Setup
+{
+	[Fact]
+	public void No_Columns_Returns_Empty_List()
+	{
+		// Arrange
+		var (client, _) = Setup();
+		var list = new ColumnList();
+
+		// Act
+		var col = client.GetColumnsForRetrieveQueryTest(list);
+
+		// Assert
+		Assert.Empty(col);
+	}
+
+	[Fact]
+	public void Returns_Escaped_Column_Names()
+	{
+		// Arrange
+		var (client, _) = Setup();
+		var info = Substitute.For<PropertyInfo>();
+		var column = new Column(new TableName(Rnd.Str), Rnd.Str, info);
+		var list = new ColumnList([column]);
+
+		// Act
+		client.GetColumnsForRetrieveQueryTest(list);
+
+		// Assert
+		client.Received().Escape(column, true);
+	}
+}

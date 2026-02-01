@@ -10,18 +10,21 @@ using MySqlConnector;
 namespace Jeebs.Data.Clients.MySql;
 
 /// <inheritdoc cref="IDbClient"/>
-public partial class MySqlDbClient : DbClient
+public partial class MySqlDbClient : Common.DbClient
 {
+	/// <inheritdoc/>
+	public MySqlDbClient(IAdapter adapter) : base(adapter) { }
+
 	/// <inheritdoc/>
 	public override DbConnection GetConnection(string connectionString) =>
 		new MySqlConnection(connectionString);
 
 	/// <inheritdoc/>
-	public override string Escape(IDbName table) =>
+	public override string Escape(ITableName table) =>
 		Escape(table.GetFullName(s => s));
 
 	/// <inheritdoc/>
-	public override string Escape(IDbName table, string column) =>
+	public override string Escape(ITableName table, string column) =>
 		Escape(table) + "." + Escape(column);
 
 	/// <inheritdoc/>
