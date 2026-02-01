@@ -24,7 +24,6 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="Dapper" />
     <PackageReference Include="Rnd" />
   </ItemGroup>
   <ItemGroup>
