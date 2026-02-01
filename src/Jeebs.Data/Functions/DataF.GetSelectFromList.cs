@@ -4,9 +4,9 @@
 using System.Collections.Generic;
 using Jeebs.Data.Map;
 
-namespace Jeebs.Data.Common.Functions;
+namespace Jeebs.Data.Functions;
 
-public static partial class QueryF
+public static partial class DataF
 {
 	/// <summary>
 	/// Escape and join a list of columns for a select query.

@@ -3,7 +3,7 @@
 
 using Jeebs.Data.Map;
 
-namespace Jeebs.Data.Common.Functions.QueryF_Tests;
+namespace Jeebs.Data.Functions.DataF_Tests;
 
 public class GetColumnsFromList_Tests
 {
@@ -15,7 +15,7 @@ public class GetColumnsFromList_Tests
 		var columns = new ColumnList();
 
 		// Act
-		var result = QueryF.GetColumnsFromList(client, columns);
+		var result = DataF.GetColumnsFromList(client, columns);
 
 		// Assert
 		Assert.Empty(result);
@@ -32,7 +32,7 @@ public class GetColumnsFromList_Tests
 		var columns = new ColumnList([c0, c1]);
 
 		// Act
-		var result = QueryF.GetColumnsFromList(client, columns);
+		var result = DataF.GetColumnsFromList(client, columns);
 
 		// Assert
 		client.Received(1).Escape(c0, true);

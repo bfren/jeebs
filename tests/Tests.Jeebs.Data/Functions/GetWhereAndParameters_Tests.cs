@@ -5,7 +5,7 @@ using Jeebs.Data.Enums;
 using Jeebs.Data.Map;
 using Jeebs.Functions;
 
-namespace Jeebs.Data.Common.Functions.QueryF_Tests;
+namespace Jeebs.Data.Functions.DataF_Tests;
 
 public class GetWhereAndParameters_Tests
 {
@@ -22,11 +22,10 @@ public class GetWhereAndParameters_Tests
 			(column, Compare.LessThan, (dynamic)Rnd.Int)
 		]);
 
-		var adapter = Substitute.For<IAdapter>();
-		var client = Substitute.ForPartsOf<TestClient>(adapter);
+		var client = Substitute.ForPartsOf<TestClient>();
 
 		// Act
-		var (where, param) = QueryF.GetWhereAndParameters(client, predicates, false);
+		var (where, param) = DataF.GetWhereAndParameters(client, predicates, false);
 
 		// Assert
 		var single = Assert.Single(where);
@@ -48,11 +47,10 @@ public class GetWhereAndParameters_Tests
 			(column, Compare.LessThan, (dynamic)Rnd.Int)
 		]);
 
-		var adapter = Substitute.For<IAdapter>();
-		var client = Substitute.ForPartsOf<TestClient>(adapter);
+		var client = Substitute.ForPartsOf<TestClient>();
 
 		// Act
-		var (where, param) = QueryF.GetWhereAndParameters(client, predicates, true);
+		var (where, param) = DataF.GetWhereAndParameters(client, predicates, true);
 
 		// Assert
 		var x = // Assert
@@ -81,11 +79,10 @@ Assert.Single(where);
 			(column, input, (dynamic)value)
 		]);
 
-		var adapter = Substitute.For<IAdapter>();
-		var client = Substitute.ForPartsOf<TestClient>(adapter);
+		var client = Substitute.ForPartsOf<TestClient>();
 
 		// Act
-		var (where, param) = QueryF.GetWhereAndParameters(client, predicates, false);
+		var (where, param) = DataF.GetWhereAndParameters(client, predicates, false);
 
 		// Assert
 		var x = Assert.Single(where);
@@ -116,11 +113,10 @@ Assert.Single(where);
 			(column, input, (dynamic)TestId.Wrap(value))
 		]);
 
-		var adapter = Substitute.For<IAdapter>();
-		var client = Substitute.ForPartsOf<TestClient>(adapter);
+		var client = Substitute.ForPartsOf<TestClient>();
 
 		// Act
-		var (where, param) = QueryF.GetWhereAndParameters(client, predicates, false);
+		var (where, param) = DataF.GetWhereAndParameters(client, predicates, false);
 
 		// Assert
 		var x = Assert.Single(where);
@@ -139,11 +135,10 @@ Assert.Single(where);
 			(column, cmp, (dynamic)Rnd.Int)
 		]);
 
-		var adapter = Substitute.For<IAdapter>();
-		var client = Substitute.ForPartsOf<TestClient>(adapter);
+		var client = Substitute.ForPartsOf<TestClient>();
 
 		// Act
-		var (where, param) = QueryF.GetWhereAndParameters(client, predicates, false);
+		var (where, param) = DataF.GetWhereAndParameters(client, predicates, false);
 
 		// Assert
 		Assert.Empty(where);
@@ -178,11 +173,10 @@ Assert.Single(where);
 			(column, cmp, value)
 		]);
 
-		var adapter = Substitute.For<IAdapter>();
-		var client = Substitute.ForPartsOf<TestClient>(adapter);
+		var client = Substitute.ForPartsOf<TestClient>();
 
 		// Act
-		var (where, param) = QueryF.GetWhereAndParameters(client, predicates, false);
+		var (where, param) = DataF.GetWhereAndParameters(client, predicates, false);
 
 		// Assert
 		var x = // Assert
@@ -279,7 +273,7 @@ Assert.Single(where);
 		Test_In_With_Enumerable(Compare.NotIn, (v0, v1, v2) => new[] { TestId.Wrap(v0), TestId.Wrap(v1), TestId.Wrap(v2) }.ToList());
 	}
 
-	public abstract class TestClient(IAdapter adapter) : DbClient(adapter)
+	public abstract class TestClient : DbClient
 	{
 		public override string GetOperator(Compare cmp) =>
 			"cmp";

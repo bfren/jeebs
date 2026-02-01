@@ -6,14 +6,13 @@ using System.Collections;
 using System.Collections.Generic;
 using Jeebs.Collections;
 using Jeebs.Data.Enums;
-using Jeebs.Data.Functions;
 using Jeebs.Data.Map;
 using Jeebs.Data.Query;
 using Jeebs.Functions;
 
-namespace Jeebs.Data.Common.Functions;
+namespace Jeebs.Data.Functions;
 
-public static partial class QueryF
+public static partial class DataF
 {
 	/// <summary>
 	/// Turn list of predicates into WHERE clauses with associated parameters.
