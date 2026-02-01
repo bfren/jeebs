@@ -20,9 +20,11 @@ public partial interface IRepository<TEntity, TId>
 	/// <summary>
 	/// Start a new fluent query.
 	/// </summary>
-	IFluentQuery<TEntity, TId> StartFluentQuery();
+	IFluentQuery<TEntity, TId> Fluent();
 
 	#endregion Fluent Queries
+
+	#region CRUD
 
 	/// <summary>
 	/// Create an entity.
@@ -52,4 +54,6 @@ public partial interface IRepository<TEntity, TId>
 	/// <param name="model">Model containing ID of entity to delete (and Version if required).</param>
 	Task<Result<bool>> DeleteAsync<TModel>(TModel model)
 		where TModel : IWithId;
+
+	#endregion
 }

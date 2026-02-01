@@ -36,7 +36,7 @@ public abstract class Repository<TEntity, TId> : IRepository<TEntity, TId>
 		(Db, Log) = (db, log);
 
 	/// <inheritdoc/>
-	public virtual IFluentQuery<TEntity, TId> StartFluentQuery() =>
+	public virtual IFluentQuery<TEntity, TId> Fluent() =>
 		new FluentQuery<TEntity, TId>(Db, Db.Client.EntityMapper, Log.ForContext<FluentQuery<TEntity, TId>>());
 
 	/// <summary>
@@ -57,6 +57,8 @@ public abstract class Repository<TEntity, TId> : IRepository<TEntity, TId>
 			operation.Replace("Async", string.Empty),
 			typeof(TEntity).Name.Replace("Entity", string.Empty)
 		]);
+
+	#region CRUD
 
 	/// <inheritdoc/>
 	public virtual Task<Result<TId>> CreateAsync(TEntity entity) =>
@@ -99,6 +101,8 @@ public abstract class Repository<TEntity, TId> : IRepository<TEntity, TId>
 		.BindAsync(
 			x => Db.ExecuteAsync(x, model)
 		);
+
+	#endregion
 
 	#region Testing
 

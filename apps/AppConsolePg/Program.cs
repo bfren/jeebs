@@ -228,7 +228,7 @@ using (var w = await db.StartWorkAsync())
 			);
 	}
 
-	await repo.StartFluentQuery()
+	await repo.Fluent()
 		.WhereIn(x => x.Id, repoIds)
 		.Sort(x => x.Id, SortOrder.Descending)
 		.QueryAsync<JsonEntity>()
