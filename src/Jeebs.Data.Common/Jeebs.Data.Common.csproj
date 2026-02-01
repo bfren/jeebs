@@ -3,8 +3,6 @@
     <ProjectReference Include="..\Jeebs.Cryptography\Jeebs.Cryptography.csproj" />
     <ProjectReference Include="..\Jeebs.Data\Jeebs.Data.csproj" />
   </ItemGroup>
-  <ItemGroup>
-  </ItemGroup>
   <ItemGroup Label="Test Internals">
     <AssemblyAttribute Include="System.Runtime.CompilerServices.InternalsVisibleToAttribute">
       <_Parameter1>Tests.Jeebs.Data.Clients.MySql</_Parameter1>

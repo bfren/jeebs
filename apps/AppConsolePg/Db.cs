@@ -16,7 +16,7 @@ internal sealed class Db : Jeebs.Data.Common.Db
 	public TestTable Test { get; init; }
 
 	public Db(IDbClient client, IOptions<DbConfig> config, ILog<Db> log) :
-		base(client, config.Value.GetConnection("arwen").Unwrap(), log)
+		base(client, config, log, "arwen")
 	{
 		var schema = "console";
 		Json = new(schema);
