@@ -6,12 +6,14 @@ using Jeebs.Data.Map;
 
 namespace Jeebs.Data.Clients.Sqlite.SqliteDbClient_Tests;
 
-public class GetRetrieveQuery_Tests
+public class GetRetrieveQuery_Tests : SqliteDbClient_Setup
 {
 	[Fact]
 	public void Returns_Valid_Select_Query()
 	{
 		// Arrange
+		var (client, v) = Setup();
+
 		var schema = Rnd.Str;
 		var name = Rnd.Str;
 		var table = new TableName(schema, name);
@@ -31,7 +33,6 @@ public class GetRetrieveQuery_Tests
 		var c2 = new Column(table, c2Name, c2Property);
 
 		var list = new ColumnList([c0, c1]);
-		var client = new SqliteDbClient();
 
 		var id = Rnd.Lng;
 

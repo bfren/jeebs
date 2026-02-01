@@ -5,16 +5,18 @@ using Jeebs.Data.Map;
 
 namespace Jeebs.Data.Clients.Sqlite.SqliteDbClient_Tests;
 
-public static class SqliteDbClient_Setup
+public abstract class SqliteDbClient_Setup
 {
-	public static (SqliteDbClient client, Vars v) Get()
+	public (SqliteDbClient client, Vars v) Setup()
 	{
 		var schema = Rnd.Str;
 		var name = Rnd.Str;
 		var tableName = new TableName(schema, name);
 		var table = Substitute.For<ITable>();
 		table.GetName().Returns(tableName);
-		var client = new SqliteDbClient();
+
+		var adapter = Substitute.For<IAdapter>();
+		var client = new SqliteDbClient(adapter);
 
 		return (client, new(table, schema, name));
 	}

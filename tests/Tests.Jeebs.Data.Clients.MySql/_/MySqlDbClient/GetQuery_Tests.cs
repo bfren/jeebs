@@ -9,12 +9,14 @@ using Jeebs.Functions;
 
 namespace Jeebs.Data.Clients.MySql.MySqlDbClient_Tests;
 
-public class GetQuery_Tests
+public class GetQuery_Tests : MySqlDbClient_Setup
 {
 	[Fact]
 	public void With_Predicates_Returns_Valid_Select_Query()
 	{
 		// Arrange
+		var (client, v) = Setup();
+
 		var schema = Rnd.Str;
 		var name = Rnd.Str;
 		var table = new TableName(schema, name);
@@ -42,8 +44,6 @@ public class GetQuery_Tests
 			( p0Column, p0Operator, p0Value ),
 			( p1Column, p1Operator, p1Value )
 		]);
-
-		var client = new MySqlDbClient();
 
 		var expected = "SELECT" +
 			$" `{c0Name}` AS '{c0Alias}'," +
@@ -75,7 +75,8 @@ public class GetQuery_Tests
 	public void With_Parts_Escapes_From_Table()
 	{
 		// Arrange
-		var (client, v) = MySqlDbClient_Setup.Get();
+		var (client, v) = Setup();
+
 		var parts = new QueryParts(v.Table);
 
 		// Act
@@ -89,7 +90,8 @@ public class GetQuery_Tests
 	public void With_Parts_SelectCount_True_Selects_Count()
 	{
 		// Arrange
-		var (client, v) = MySqlDbClient_Setup.Get();
+		var (client, v) = Setup();
+
 		var parts = new QueryParts(v.Table) with { SelectCount = true };
 		var expected = $"SELECT COUNT(*) FROM `{v.Schema}.{v.Name}`;";
 
@@ -104,7 +106,8 @@ public class GetQuery_Tests
 	public void With_Parts_Select_Empty_Selects_All()
 	{
 		// Arrange
-		var (client, v) = MySqlDbClient_Setup.Get();
+		var (client, v) = Setup();
+
 		var parts = new QueryParts(v.Table);
 		var expected = $"SELECT * FROM `{v.Schema}.{v.Name}`;";
 
@@ -119,7 +122,7 @@ public class GetQuery_Tests
 	public void With_Parts_Select_List_Escapes_With_Alias_And_Joins_Columns()
 	{
 		// Arrange
-		var (client, v) = MySqlDbClient_Setup.Get();
+		var (client, v) = Setup();
 
 		var c0Name = Rnd.Str;
 		var c0Alias = Rnd.Str;
@@ -143,10 +146,10 @@ public class GetQuery_Tests
 		Assert.Equal(expected, query);
 	}
 
-	private static void Test_Joins(Func<QueryParts, IImmutableList<(IColumn, IColumn)>, QueryParts> setJoin, string joinType)
+	private void Test_Joins(Func<QueryParts, IImmutableList<(IColumn, IColumn)>, QueryParts> setJoin, string joinType)
 	{
 		// Arrange
-		var (client, v) = MySqlDbClient_Setup.Get();
+		var (client, v) = Setup();
 
 		var fromName = Rnd.Str;
 		var from = new Column(v.Table, fromName, Helpers.CreateInfoFromAlias());
@@ -199,7 +202,7 @@ public class GetQuery_Tests
 	public void With_Parts_Adds_Where_Columns_With_Table_Names()
 	{
 		// Arrange
-		var (client, v) = MySqlDbClient_Setup.Get();
+		var (client, v) = Setup();
 
 		var c0Table = new TableName(Rnd.Str, Rnd.Str);
 		var c0Name = Rnd.Str;
@@ -233,7 +236,7 @@ public class GetQuery_Tests
 	public void With_Parts_Adds_Custom_Where_Clause_And_Parameters()
 	{
 		// Arrange
-		var (client, v) = MySqlDbClient_Setup.Get();
+		var (client, v) = Setup();
 
 		var w0 = Rnd.Str;
 		var w1 = Rnd.Str;
@@ -289,7 +292,7 @@ public class GetQuery_Tests
 	public void With_Parts_Sets_Parameters()
 	{
 		// Arrange
-		var (client, v) = MySqlDbClient_Setup.Get();
+		var (client, v) = Setup();
 
 		var c0Table = new TableName(Rnd.Str);
 		var c0Name = Rnd.Str;
@@ -331,7 +334,8 @@ public class GetQuery_Tests
 	public void With_Parts_Adds_Order_By_Random()
 	{
 		// Arrange
-		var (client, v) = MySqlDbClient_Setup.Get();
+		var (client, v) = Setup();
+
 		var parts = new QueryParts(v.Table)
 		{
 			SortRandom = true
@@ -350,7 +354,7 @@ public class GetQuery_Tests
 	public void With_Parts_Adds_Order_By_With_Table_Name()
 	{
 		// Arrange
-		var (client, v) = MySqlDbClient_Setup.Get();
+		var (client, v) = Setup();
 
 		var sort0Table = new TableName(Rnd.Str, Rnd.Str);
 		var sort0Name = Rnd.Str;
@@ -385,7 +389,8 @@ public class GetQuery_Tests
 	public void With_Parts_Adds_Limit()
 	{
 		// Arrange
-		var (client, v) = MySqlDbClient_Setup.Get();
+		var (client, v) = Setup();
+
 		var max = Rnd.UInt64;
 		var parts = new QueryParts(v.Table) { Maximum = max };
 		var expected = $"SELECT * FROM `{v.Schema}.{v.Name}` LIMIT {max};";
@@ -401,7 +406,8 @@ public class GetQuery_Tests
 	public void With_Parts_Adds_Limit_And_Offset()
 	{
 		// Arrange
-		var (client, v) = MySqlDbClient_Setup.Get();
+		var (client, v) = Setup();
+
 		var skip = Rnd.UInt64;
 		var max = Rnd.UInt64;
 		var parts = new QueryParts(v.Table) { Skip = skip, Maximum = max };

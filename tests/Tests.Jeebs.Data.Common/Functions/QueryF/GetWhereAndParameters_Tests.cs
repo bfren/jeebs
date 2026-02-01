@@ -22,7 +22,8 @@ public class GetWhereAndParameters_Tests
 			(column, Compare.LessThan, (dynamic)Rnd.Int)
 		]);
 
-		var client = Substitute.ForPartsOf<TestClient>();
+		var adapter = Substitute.For<IAdapter>();
+		var client = Substitute.ForPartsOf<TestClient>(adapter);
 
 		// Act
 		var (where, param) = QueryF.GetWhereAndParameters(client, predicates, false);
@@ -47,7 +48,8 @@ public class GetWhereAndParameters_Tests
 			(column, Compare.LessThan, (dynamic)Rnd.Int)
 		]);
 
-		var client = Substitute.ForPartsOf<TestClient>();
+		var adapter = Substitute.For<IAdapter>();
+		var client = Substitute.ForPartsOf<TestClient>(adapter);
 
 		// Act
 		var (where, param) = QueryF.GetWhereAndParameters(client, predicates, true);
@@ -79,7 +81,8 @@ Assert.Single(where);
 			(column, input, (dynamic)value)
 		]);
 
-		var client = Substitute.ForPartsOf<TestClient>();
+		var adapter = Substitute.For<IAdapter>();
+		var client = Substitute.ForPartsOf<TestClient>(adapter);
 
 		// Act
 		var (where, param) = QueryF.GetWhereAndParameters(client, predicates, false);
@@ -113,7 +116,8 @@ Assert.Single(where);
 			(column, input, (dynamic)TestId.Wrap(value))
 		]);
 
-		var client = Substitute.ForPartsOf<TestClient>();
+		var adapter = Substitute.For<IAdapter>();
+		var client = Substitute.ForPartsOf<TestClient>(adapter);
 
 		// Act
 		var (where, param) = QueryF.GetWhereAndParameters(client, predicates, false);
@@ -135,7 +139,8 @@ Assert.Single(where);
 			(column, cmp, (dynamic)Rnd.Int)
 		]);
 
-		var client = Substitute.ForPartsOf<TestClient>();
+		var adapter = Substitute.For<IAdapter>();
+		var client = Substitute.ForPartsOf<TestClient>(adapter);
 
 		// Act
 		var (where, param) = QueryF.GetWhereAndParameters(client, predicates, false);
@@ -173,7 +178,8 @@ Assert.Single(where);
 			(column, cmp, value)
 		]);
 
-		var client = Substitute.ForPartsOf<TestClient>();
+		var adapter = Substitute.For<IAdapter>();
+		var client = Substitute.ForPartsOf<TestClient>(adapter);
 
 		// Act
 		var (where, param) = QueryF.GetWhereAndParameters(client, predicates, false);
@@ -273,7 +279,7 @@ Assert.Single(where);
 		Test_In_With_Enumerable(Compare.NotIn, (v0, v1, v2) => new[] { TestId.Wrap(v0), TestId.Wrap(v1), TestId.Wrap(v2) }.ToList());
 	}
 
-	public abstract class TestClient : DbClient
+	public abstract class TestClient(IAdapter adapter) : DbClient(adapter)
 	{
 		public override string GetOperator(Compare cmp) =>
 			"cmp";

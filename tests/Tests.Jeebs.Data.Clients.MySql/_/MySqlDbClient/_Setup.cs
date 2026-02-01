@@ -3,18 +3,20 @@
 
 using Jeebs.Data.Map;
 
-namespace Jeebs.Data.Clients.SqlServer.SqlServerDbClient_Tests;
+namespace Jeebs.Data.Clients.MySql.MySqlDbClient_Tests;
 
-public static class SqlServerDbClient_Setup
+public abstract class MySqlDbClient_Setup
 {
-	public static (SqlServerDbClient client, Vars v) Get()
+	public (MySqlDbClient client, Vars v) Setup()
 	{
 		var schema = Rnd.Str;
 		var name = Rnd.Str;
 		var tableName = new TableName(schema, name);
 		var table = Substitute.For<ITable>();
 		table.GetName().Returns(tableName);
-		var client = new SqlServerDbClient();
+
+		var adapter = Substitute.For<IAdapter>();
+		var client = new MySqlDbClient(adapter);
 
 		return (client, new(table, schema, name));
 	}

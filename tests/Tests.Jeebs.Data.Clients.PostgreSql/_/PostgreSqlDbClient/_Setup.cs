@@ -3,18 +3,19 @@
 
 using Jeebs.Data.Map;
 
-namespace Jeebs.Data.Clients.MySql.MySqlDbClient_Tests;
+namespace Jeebs.Data.Clients.PostgreSql.PostgreSqlDbClient_Tests;
 
-public static class MySqlDbClient_Setup
+public abstract class PostgreSqlDbClient_Setup
 {
-	public static (MySqlDbClient client, Vars v) Get()
+	public (PostgreSqlDbClient client, Vars v) Setup()
 	{
 		var schema = Rnd.Str;
 		var name = Rnd.Str;
 		var tableName = new TableName(schema, name);
 		var table = Substitute.For<ITable>();
 		table.GetName().Returns(tableName);
-		var client = new MySqlDbClient();
+
+		var client = new PostgreSqlDbClient();
 
 		return (client, new(table, schema, name));
 	}

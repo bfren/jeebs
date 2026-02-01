@@ -3,18 +3,20 @@
 
 using Jeebs.Data.Map;
 
-namespace Jeebs.Data.Clients.PostgreSql.PostgreSqlDbClient_Tests;
+namespace Jeebs.Data.Clients.SqlServer.SqlServerDbClient_Tests;
 
-public static class PostgreSqlDbClient_Setup
+public abstract class SqlServerDbClient_Setup
 {
-	public static (PostgreSqlDbClient client, Vars v) Get()
+	public (SqlServerDbClient client, Vars v) Setup()
 	{
 		var schema = Rnd.Str;
 		var name = Rnd.Str;
 		var tableName = new TableName(schema, name);
 		var table = Substitute.For<ITable>();
 		table.GetName().Returns(tableName);
-		var client = new PostgreSqlDbClient();
+
+		var adapter = Substitute.For<IAdapter>();
+		var client = new SqlServerDbClient(adapter);
 
 		return (client, new(table, schema, name));
 	}

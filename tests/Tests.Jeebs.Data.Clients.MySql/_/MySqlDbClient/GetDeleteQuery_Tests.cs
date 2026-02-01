@@ -6,12 +6,14 @@ using Jeebs.Data.Map;
 
 namespace Jeebs.Data.Clients.MySql.MySqlDbClient_Tests;
 
-public class GetDeleteQuery_Tests
+public class GetDeleteQuery_Tests : MySqlDbClient_Setup
 {
 	[Fact]
 	public void Returns_Valid_Delete_Query_Without_Version()
 	{
 		// Arrange
+		var (client, v) = Setup();
+
 		var schema = Rnd.Str;
 		var name = Rnd.Str;
 		var table = new TableName(schema, name);
@@ -21,8 +23,6 @@ public class GetDeleteQuery_Tests
 		var c0Property = Substitute.ForPartsOf<PropertyInfo>();
 		c0Property.Name.Returns(c0Alias);
 		var c0 = new Column(table, c0Name, c0Property);
-
-		var client = new MySqlDbClient();
 
 		var id = Rnd.Lng;
 
@@ -39,6 +39,8 @@ public class GetDeleteQuery_Tests
 	public void Returns_Valid_Delete_Query_With_Version()
 	{
 		// Arrange
+		var (client, v) = Setup();
+
 		var schema = Rnd.Str;
 		var name = Rnd.Str;
 		var table = new TableName(schema, name);
@@ -54,8 +56,6 @@ public class GetDeleteQuery_Tests
 		var c1Property = Substitute.ForPartsOf<PropertyInfo>();
 		c1Property.Name.Returns(c1Alias);
 		var c1 = new Column(table, c1Name, c1Property);
-
-		var client = new MySqlDbClient();
 
 		var id = Rnd.Lng;
 

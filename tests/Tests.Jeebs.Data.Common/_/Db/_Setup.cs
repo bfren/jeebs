@@ -21,10 +21,19 @@ public abstract class Db_Setup
 
 		var connection = Substitute.ForPartsOf<DbConnection>();
 
+		var transaction = Substitute.ForPartsOf<DbTransaction>();
+
 		var client = Substitute.For<IDbClient>();
 		client.GetConnection(Arg.Any<string>()).Returns(connection);
 
-		var transaction = Substitute.ForPartsOf<DbTransaction>();
+		var adapter = Substitute.For<IAdapter>();
+		adapter.QuerySingleAsync<int>(transaction, Arg.Any<string>(), Arg.Any<object?>(), Arg.Any<CommandType>())
+			.Returns(Rnd.Int);
+		adapter.ExecuteAsync(transaction, Arg.Any<string>(), Arg.Any<object?>(), Arg.Any<CommandType>())
+			.Returns(Rnd.Flip ? 0 : 1);
+		adapter.ExecuteAsync<int>(transaction, Arg.Any<string>(), Arg.Any<object?>(), Arg.Any<CommandType>())
+			.Returns(Rnd.Int);
+		client.Adapter.Returns(adapter);
 
 		var w = Substitute.For<IUnitOfWork>();
 		w.Connection.Returns(connection);

@@ -7,12 +7,14 @@ using NSubstitute.Extensions;
 
 namespace Jeebs.Data.Clients.MySql.MySqlDbClient_Tests;
 
-public class GetCreateQuery_Tests
+public class GetCreateQuery_Tests : MySqlDbClient_Setup
 {
 	[Fact]
 	public void Returns_Valid_Insert_Query()
 	{
 		// Arrange
+		var (client, v) = Setup();
+
 		var schema = Rnd.Str;
 		var name = Rnd.Str;
 		var table = new TableName(schema, name);
@@ -32,7 +34,6 @@ public class GetCreateQuery_Tests
 		var c1 = new Column(table, c1Name, c1Property);
 
 		var list = new ColumnList([c0, c1]);
-		var client = new MySqlDbClient();
 
 		var expected = $"INSERT INTO `{schema}.{name}` (`{c0Name}`, `{c1Name}`) VALUES (@{c0Alias}, @{c1Alias}); " +
 			"SELECT LAST_INSERT_ID();";

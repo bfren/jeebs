@@ -11,14 +11,14 @@ public class Constructor_Tests
 	public void Sets_Properties()
 	{
 		// Arrange
-		var entities = Substitute.For<IEntityMapper>();
-		var types = Substitute.For<ITypeMapper>();
+		var adapter = Substitute.For<IAdapter>();
+		var mapper = Substitute.For<IEntityMapper>();
 
 		// Act
-		var result = Substitute.ForPartsOf<DbClient>(entities, types);
+		var result = Substitute.ForPartsOf<DbClient>(adapter, mapper);
 
 		// Assert
-		Assert.Same(entities, result.EntityMapper);
-		Assert.Same(types, result.TypeMapper);
+		Assert.Same(adapter, result.Adapter);
+		Assert.Same(mapper, result.EntityMapper);
 	}
 }

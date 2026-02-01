@@ -6,12 +6,14 @@ using Jeebs.Data.Map;
 
 namespace Jeebs.Data.Clients.Sqlite.SqliteDbClient_Tests;
 
-public class GetUpdateQuery_Tests
+public class GetUpdateQuery_Tests : SqliteDbClient_Setup
 {
 	[Fact]
 	public void Returns_Valid_Update_Query_Without_Version()
 	{
 		// Arrange
+		var (client, v) = Setup();
+
 		var schema = Rnd.Str;
 		var name = Rnd.Str;
 		var table = new TableName(schema, name);
@@ -35,7 +37,6 @@ public class GetUpdateQuery_Tests
 		var c2 = new Column(table, c2Name, c2Property);
 
 		var list = new ColumnList([c0, c1]);
-		var client = new SqliteDbClient();
 
 		var id = Rnd.Lng;
 
@@ -55,6 +56,8 @@ public class GetUpdateQuery_Tests
 	public void Returns_Valid_Update_Query_With_Version()
 	{
 		// Arrange
+		var (client, v) = Setup();
+
 		var schema = Rnd.Str;
 		var name = Rnd.Str;
 		var table = new TableName(schema, name);
@@ -84,7 +87,6 @@ public class GetUpdateQuery_Tests
 		var c3 = new Column(table, c3Name, c3Property);
 
 		var list = new ColumnList([c0, c1]);
-		var client = new SqliteDbClient();
 
 		var id = Rnd.Lng;
 
