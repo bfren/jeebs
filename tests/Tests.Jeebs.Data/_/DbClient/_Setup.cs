@@ -24,7 +24,7 @@ public abstract class DbClient_Setup
 		var map = Map<TestEntity>.To<TestTable>();
 
 		var entities = Substitute.For<IEntityMapper>();
-		entities.GetTableMapFor<TestEntity>().Returns(map.Wrap().AsResult());
+		entities.GetTableMapFor<TestEntity>().Returns(map.Wrap());
 
 		var db = Substitute.ForPartsOf<Db>(client, config, log);
 
