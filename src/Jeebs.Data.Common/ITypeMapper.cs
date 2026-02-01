@@ -56,7 +56,6 @@ public interface ITypeMapper
 	/// </summary>
 	/// <typeparam name="T">Base (abstract or interface) type to map.</typeparam>
 	/// <param name="handlerType">Handler type (with generic argument).</param>
-	/// <param name="addTypeHandler">Function to add a type handler.</param>
 	void AddGenericTypeHandlers<T>(Type handlerType);
 
 	/// <summary>

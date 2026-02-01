@@ -5,6 +5,9 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace Jeebs.Data;
 
+/// <summary>
+/// Extension methods for <see cref="IServiceCollection"/> objects.
+/// </summary>
 public static class ServiceCollectionExtensions
 {
 	/// <summary>

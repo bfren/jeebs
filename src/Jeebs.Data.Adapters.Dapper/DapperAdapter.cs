@@ -10,6 +10,9 @@ using Jeebs.Data.Common;
 
 namespace Jeebs.Data.Adapters.Dapper;
 
+/// <summary>
+/// Dapper database adapter.
+/// </summary>
 public sealed class DapperAdapter : IAdapter
 {
 	/// <inheritdoc/>

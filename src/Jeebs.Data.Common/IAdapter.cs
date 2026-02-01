@@ -8,6 +8,9 @@ using Jeebs.Data.Common;
 
 namespace Jeebs.Data;
 
+/// <summary>
+/// ADO.NET compatible database adapter for querying and mapping to result objects.
+/// </summary>
 public interface IAdapter
 {
 	/// <summary>

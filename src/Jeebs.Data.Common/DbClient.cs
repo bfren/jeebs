@@ -11,6 +11,9 @@ namespace Jeebs.Data.Common;
 /// <inheritdoc cref="IDbClient"/>
 public abstract partial class DbClient : Data.DbClient, IDbClient
 {
+	/// <summary>
+	/// Provides thread-safe locking.
+	/// </summary>
 	protected static readonly Lock X = new();
 
 	/// <summary>
