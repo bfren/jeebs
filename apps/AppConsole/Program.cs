@@ -52,8 +52,8 @@ var result = from r0 in one(2)
 			 select r2;
 
 (await result).Audit(
-	ok: x => log.Inf("Result: {0}", x),
-	fail: _ => log.Inf("No result")
+	fOk: x => log.Inf("Result: {0}", x),
+	fFail: _ => log.Inf("No result")
 );
 
 // Test exception output
@@ -67,7 +67,7 @@ log.Inf("Testing Result failure");
 R.Try(
 	() => Basic.DoSomething(Rnd.Str),
 	e => R.Fail(e).Ctx(nameof(Program), "Main")
-).Audit(fail: log.Failure);
+).Audit(fFail: log.Failure);
 
 // Test Microsoft ILogger
 var microsoftLogTest = LoggerMessage.Define<string>(LogLevel.Information, new(), "{Msg}");

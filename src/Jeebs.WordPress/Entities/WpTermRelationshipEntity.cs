@@ -16,7 +16,7 @@ public abstract record class WpTermRelationshipEntity : IWithId
 	/// </summary>
 	/// <exception cref="NotSupportedException"></exception>
 	[Ignore]
-	public IUnion Id
+	public IMonad Id
 	{
 		get => throw NotSupported;
 		init => throw NotSupported;

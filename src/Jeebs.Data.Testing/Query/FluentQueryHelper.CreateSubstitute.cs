@@ -15,7 +15,7 @@ public static partial class FluentQueryHelper
 	/// <typeparam name="TId">Entity ID Type.</typeparam>
 	public static IFluentQuery<TEntity, TId> CreateSubstitute<TEntity, TId>()
 		where TEntity : IWithId
-		where TId : class, IUnion, new()
+		where TId : class, IMonad, new()
 	{
 		var fluent = Substitute.For<IFluentQuery<TEntity, TId>>();
 		fluent.ReturnsForAll(fluent);

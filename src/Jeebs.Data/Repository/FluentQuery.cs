@@ -12,7 +12,7 @@ namespace Jeebs.Data.Repository;
 /// <inheritdoc cref="IFluentQuery{TEntity, TId}"/>
 public sealed partial record class FluentQuery<TEntity, TId> : IFluentQuery<TEntity, TId>
 	where TEntity : IWithId
-	where TId : class, IUnion, new()
+	where TId : class, IMonad, new()
 {
 	/// <summary>
 	/// Database object.
@@ -50,8 +50,8 @@ public sealed partial record class FluentQuery<TEntity, TId> : IFluentQuery<TEnt
 		(Db, Log) = (db, log);
 
 		Table = mapper.GetTableMapFor<TEntity>().Match(
-			fail: f => { Errors.Add(f); return new NullTable(); },
-			ok: x => x.Table
+			fFail: f => { Errors.Add(f); return new NullTable(); },
+			fOk: x => x.Table
 		);
 
 		Parts = new QueryParts(Table);

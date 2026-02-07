@@ -33,14 +33,14 @@ public static partial class QueryPostsF
 		// Get Meta values
 		return GetMetaDictionary<TModel>()
 			.MatchAsync(
-				ok: x =>
+				fOk: x =>
 				{
 					var ids = posts.Select(p => p.Id).ToImmutableList();
 					return from postMeta in QueryPostsMetaF.ExecuteAsync<PostMeta>(db, w, opt => opt with { PostIds = ids })
 						   from withMeta in SetMeta(posts, [.. postMeta], x)
 						   select posts;
 				},
-				fail: f =>
+				fFail: f =>
 				{
 					db.Log.Failure(f);
 					return posts;

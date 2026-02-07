@@ -53,7 +53,8 @@ public sealed record class TableMap : ITableMap
 				  && c.PropertyInfo.GetCustomAttribute<ReadonlyAttribute>() is null
 				  select c
 		)
-		.ContinueIf(x => x.Any(),
+		.IfNot(
+			x => x.Any(),
 			_ => R.Fail("No writeable columns found.")
 				.Ctx(nameof(TableMap), nameof(GetWriteableColumnNamesAndAliases))
 		)

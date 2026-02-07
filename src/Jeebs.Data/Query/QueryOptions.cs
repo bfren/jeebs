@@ -9,7 +9,7 @@ namespace Jeebs.Data.Query;
 
 /// <inheritdoc cref="IQueryOptions{TId}"/>
 public abstract record class QueryOptions<TId> : IQueryOptions<TId>
-	where TId : class, IUnion, new()
+	where TId : class, IMonad, new()
 {
 	/// <summary>
 	/// Abstraction for building query parts.

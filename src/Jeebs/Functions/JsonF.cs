@@ -41,6 +41,6 @@ public static partial class JsonF
 		Options.Converters.Add(new IdJsonConverterFactory());
 		Options.Converters.Add(new JsonStringEnumConverter(JsonNamingPolicy.CamelCase));
 		Options.Converters.Add(new MaybeJsonConverterFactory());
-		Options.Converters.Add(new UnionJsonConverterFactory());
+		Options.Converters.Add(new MonadJsonConverterFactory());
 	}
 }

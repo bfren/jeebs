@@ -8,7 +8,7 @@ namespace Jeebs.Data;
 public record class Foo : IWithId
 {
 	[Ignore]
-	public IUnion Id
+	public IMonad Id
 	{
 		get => FooId;
 		init => FooId = value switch { FooId f => f, _ => new() };

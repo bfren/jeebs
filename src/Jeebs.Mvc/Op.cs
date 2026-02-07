@@ -55,8 +55,8 @@ public record class Op<T> : Op, IOp<T>
 
 			_ =>
 				Result.Match(
-					ok: _ => Alert.Success(nameof(AlertType.Success)),
-					fail: r => Alert.Error(r.ToString() ?? r.GetType().Name)
+					fOk: _ => Alert.Success(nameof(AlertType.Success)),
+					fFail: r => Alert.Error(r.ToString() ?? r.GetType().Name)
 				)
 		};
 		init;
@@ -72,8 +72,8 @@ public record class Op<T> : Op, IOp<T>
 	{
 		get =>
 			statusCode.Match(
-				some: x => x,
-				none: () => Success switch
+				fSome: x => x,
+				fNone: () => Success switch
 				{
 					true =>
 						(int)HttpStatusCode.OK,

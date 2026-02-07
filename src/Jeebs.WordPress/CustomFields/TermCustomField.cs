@@ -85,8 +85,8 @@ public abstract class TermCustomField : CustomField<TermCustomField.Term>
 	/// <param name="value">Term ID value.</param>
 	internal static Result<WpTermId> ParseTermId(Type type, string value) =>
 		M.ParseUInt64(value).Match(
-			some: x => R.Wrap(new WpTermId { Value = x }),
-			none: () => R.Fail("'{Value}' is not a valid Term ID.", value)
+			fSome: x => R.Wrap(new WpTermId { Value = x }),
+			fNone: () => R.Fail("'{Value}' is not a valid Term ID.", value)
 				.Ctx(type.Name, nameof(ParseTermId))
 		);
 

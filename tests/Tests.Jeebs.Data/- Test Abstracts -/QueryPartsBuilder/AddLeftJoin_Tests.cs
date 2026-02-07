@@ -7,7 +7,7 @@ namespace Jeebs.Data.Query.QueryPartsBuilder_Tests;
 
 public abstract class AddLeftJoin_Tests<TBuilder, TId> : QueryPartsBuilder_Tests<TBuilder, TId>
 	where TBuilder : QueryPartsBuilder<TId>
-	where TId : class, IUnion, new()
+	where TId : class, IMonad, new()
 {
 	public abstract void Test00_Adds_Columns_To_LeftJoin();
 

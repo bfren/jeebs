@@ -22,8 +22,8 @@ public class ImageController(IImageDriver image) : Controller
 				select a;
 
 		return r.Match(
-			ok: x => File(x, "image/jpg") as IActionResult,
-			fail: _ => NotFound()
+			fOk: x => File(x, "image/jpg") as IActionResult,
+			fFail: _ => NotFound()
 		);
 	}
 }

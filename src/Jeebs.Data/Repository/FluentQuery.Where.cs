@@ -56,11 +56,11 @@ public sealed partial record class FluentQuery<TEntity, TId>
 
 		// Get column and add to QueryParts
 		return DataF.GetColumnFromAlias(Table, columnAlias).Match(
-			ok: x => Update(parts => parts with
+			fOk: x => Update(parts => parts with
 			{
 				Where = parts.Where.WithItem((x, compare, value ?? DBNull.Value))
 			}),
-			fail: f =>
+			fFail: f =>
 			{
 				Errors.Add(f);
 				return Unchanged();
@@ -72,8 +72,8 @@ public sealed partial record class FluentQuery<TEntity, TId>
 	public IFluentQuery<TEntity, TId> Where<TValue>(Expression<Func<TEntity, TValue>> aliasSelector, Compare compare, TValue value) =>
 		aliasSelector.GetPropertyInfo()
 			.Match(
-				some: x => Where(x.Name, compare, value),
-				none: Unchanged
+				fSome: x => Where(x.Name, compare, value),
+				fNone: Unchanged
 			);
 
 	/// <inheritdoc/>
@@ -105,8 +105,8 @@ public sealed partial record class FluentQuery<TEntity, TId>
 	public IFluentQuery<TEntity, TId> WhereIn<TValue>(Expression<Func<TEntity, TValue>> aliasSelector, IEnumerable<TValue> values) =>
 		aliasSelector.GetPropertyInfo()
 			.Match(
-				some: x => WhereIn(x.Name, values),
-				none: Unchanged
+				fSome: x => WhereIn(x.Name, values),
+				fNone: Unchanged
 			);
 
 	/// <inheritdoc/>
@@ -124,7 +124,7 @@ public sealed partial record class FluentQuery<TEntity, TId>
 	public IFluentQuery<TEntity, TId> WhereNotIn<TValue>(Expression<Func<TEntity, TValue>> aliasSelector, IEnumerable<TValue> values) =>
 		aliasSelector.GetPropertyInfo()
 			.Match(
-				some: x => WhereNotIn(x.Name, values),
-				none: Unchanged
+				fSome: x => WhereNotIn(x.Name, values),
+				fNone: Unchanged
 			);
 }

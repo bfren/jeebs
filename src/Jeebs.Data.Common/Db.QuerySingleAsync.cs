@@ -30,7 +30,7 @@ public abstract partial class Db
 			(query, parameters: param ?? new object(), type)
 		)
 		.Audit(
-			ok: LogQuery<T>
+			fOk: LogQuery<T>
 		)
 		.BindAsync(
 			x => Client.Adapter.QuerySingleAsync<T>(transaction, x.query, x.parameters, x.type)

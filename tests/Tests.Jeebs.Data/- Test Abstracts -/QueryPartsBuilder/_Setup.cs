@@ -7,7 +7,7 @@ namespace Jeebs.Data.Query.QueryPartsBuilder_Tests;
 
 public abstract class QueryPartsBuilder_Tests<TBuilder, TId>
 	where TBuilder : QueryPartsBuilder<TId>
-	where TId : class, IUnion, new()
+	where TId : class, IMonad, new()
 {
 	protected abstract TBuilder GetConfiguredBuilder(IExtract extract);
 

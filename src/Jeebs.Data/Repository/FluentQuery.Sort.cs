@@ -20,8 +20,8 @@ public sealed partial record class FluentQuery<TEntity, TId>
 		}
 
 		return DataF.GetColumnFromAlias(Table, columnAlias).Match(
-			ok: x => Update(parts => parts with { Sort = parts.Sort.WithItem((x, order)) }),
-			fail: f => { Errors.Add(f); return Unchanged(); }
+			fOk: x => Update(parts => parts with { Sort = parts.Sort.WithItem((x, order)) }),
+			fFail: f => { Errors.Add(f); return Unchanged(); }
 	   );
 	}
 
@@ -29,7 +29,7 @@ public sealed partial record class FluentQuery<TEntity, TId>
 	public IFluentQuery<TEntity, TId> Sort<TValue>(Expression<Func<TEntity, TValue>> aliasSelector, SortOrder order) =>
 		aliasSelector.GetPropertyInfo()
 			.Match(
-				some: x => Sort(x.Name, order),
-				none: Unchanged
+				fSome: x => Sort(x.Name, order),
+				fNone: Unchanged
 			);
 }

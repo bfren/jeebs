@@ -9,7 +9,7 @@ namespace Jeebs.Data.Query.QueryOptions_Tests;
 public abstract class QueryOptions_Tests<TOptions, TBuilder, TId>
 	where TOptions : QueryOptions<TId>
 	where TBuilder : class, IQueryPartsBuilder<TId>
-	where TId : class, IUnion, new()
+	where TId : class, IMonad, new()
 {
 	protected abstract (TOptions options, TBuilder builder) Setup();
 

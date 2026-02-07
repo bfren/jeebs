@@ -21,8 +21,8 @@ internal sealed class DateTimeJsonConverter : JsonConverter<DateTime>
 	/// <returns>Parsed DateTime or <see cref="DateTime.MinValue"/>.</returns>
 	public override DateTime Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options) =>
 		M.ParseDateTime(reader.GetString()).Match(
-			none: DateTime.MinValue.ToUniversalTime,
-			some: x => new DateTime(x.Ticks, DateTimeKind.Utc)
+			fNone: DateTime.MinValue.ToUniversalTime,
+			fSome: x => new DateTime(x.Ticks, DateTimeKind.Utc)
 		);
 
 	/// <summary>

@@ -17,7 +17,7 @@ public static partial class ListF
 	public static ImmutableList<T> Deserialise<T>(string json) =>
 		JsonF.Deserialise<List<T>>(json)
 			.Match(
-				fail: _ => new(),
-				ok: x => Create(items: x)
+				fFail: _ => new(),
+				fOk: x => Create(items: x)
 			);
 }

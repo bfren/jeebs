@@ -14,7 +14,7 @@ namespace Jeebs.Data.Common;
 /// <typeparam name="TId">StrongId type.</typeparam>
 public interface IRepository<TEntity, TId> : Base.IRepository<TEntity, TId>
 	where TEntity : IWithId
-	where TId : class, IUnion, new()
+	where TId : class, IMonad, new()
 {
 	/// <summary>
 	/// Create an entity.

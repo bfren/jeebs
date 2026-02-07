@@ -81,8 +81,8 @@ public abstract class PartsBuilder<TId> : QueryPartsBuilder<TId>
 #pragma warning restore CA1707 // Identifiers should not contain underscores
 			where TTable : ITable =>
 		DataF.GetColumnFromExpression(table, selector).Match(
-			ok: Client.EscapeWithTable,
-			fail: R.ThrowFailure<string>
+			fOk: Client.EscapeWithTable,
+			fFail: R.ThrowFailure<string>
 		);
 
 	#region Testing
