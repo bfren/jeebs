@@ -36,11 +36,9 @@ public static partial class JsonF
 			NumberHandling = JsonNumberHandling.AllowReadingFromString
 		};
 
+		Options.AddWrapConverters();
 		Options.Converters.Add(new DateTimeJsonConverter());
 		Options.Converters.Add(new EnumeratedJsonConverterFactory());
-		Options.Converters.Add(new IdJsonConverterFactory());
 		Options.Converters.Add(new JsonStringEnumConverter(JsonNamingPolicy.CamelCase));
-		Options.Converters.Add(new MaybeJsonConverterFactory());
-		Options.Converters.Add(new MonadJsonConverterFactory());
 	}
 }
