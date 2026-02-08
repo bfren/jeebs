@@ -58,7 +58,7 @@ await db
 		$"INSERT INTO {table} (foo, bar) VALUES (@foo, @bar);", new { foo, bar }, CommandType.Text
 	)
 	.AuditAsync(
-		fail: log.Failure
+		fFail: log.Failure
 	);
 Console.WriteLine();
 
@@ -70,8 +70,8 @@ await db
 		$"SELECT * FROM {table} WHERE foo = @foo AND bar = @bar;", new { foo, bar }, CommandType.Text
 	)
 	.AuditAsync(
-		ok: x => { if (x.Foo == foo) { log.Dbg("Succeeded: {@Test}.", x); id = x.Id.Value; } else { log.Err("Failed."); } },
-		fail: log.Failure
+		fOk: x => { if (x.Foo == foo) { log.Dbg("Succeeded: {@Test}.", x); id = x.Id.Value; } else { log.Err("Failed."); } },
+		fFail: log.Failure
 	);
 Console.WriteLine();
 
@@ -83,7 +83,7 @@ await db
 		$"UPDATE {table} SET foo = @newFoo WHERE id = @id;", new { newFoo, id }, CommandType.Text
 	)
 	.AuditAsync(
-		fail: log.Failure
+		fFail: log.Failure
 	);
 
 await db
@@ -91,8 +91,8 @@ await db
 		$"SELECT * FROM {table} WHERE id = @id;", new { id }, CommandType.Text
 	)
 	.AuditAsync(
-		ok: x => { if (x.Foo == newFoo) { log.Dbg("Succeeded: {@Test}.", x); } else { log.Err("Failed."); } },
-		fail: log.Failure
+		fOk: x => { if (x.Foo == newFoo) { log.Dbg("Succeeded: {@Test}.", x); } else { log.Err("Failed."); } },
+		fFail: log.Failure
 	);
 Console.WriteLine();
 
@@ -105,8 +105,8 @@ using (var w = await db.StartWorkAsync())
 			builder => builder.From(db.Test).Where<TestTable>(t => t.Id, Compare.Equal, id)
 		)
 		.AuditAsync(
-			ok: x => log.Dbg("Found {Count} entities:", x.Count()),
-			fail: log.Failure
+			fOk: x => log.Dbg("Found {Count} entities:", x.Count()),
+			fFail: log.Failure
 		)
 		.IfOkAsync(
 			x =>
@@ -128,8 +128,8 @@ await db
 		$"DELETE FROM {table} WHERE id = @id;", new { id }, CommandType.Text
 	)
 	.AuditAsync(
-		ok: x => { if (x) { log.Dbg("Succeeded."); } else { log.Err("Failed."); } },
-		fail: log.Failure
+		fOk: x => { if (x) { log.Dbg("Succeeded."); } else { log.Err("Failed."); } },
+		fFail: log.Failure
 	);
 Console.WriteLine();
 
@@ -170,7 +170,7 @@ using (var w = await db.StartWorkAsync())
 				$"INSERT INTO {jsonTable} (json_value) VALUES (@value);", new { value = Jsonb.Create(v) }, CommandType.Text, w.Transaction
 			)
 			.AuditAsync(
-				fail: log.Failure
+				fFail: log.Failure
 			);
 	}
 }
@@ -184,8 +184,8 @@ await db
 		CommandType.Text
 	)
 	.AuditAsync(
-		ok: x => { if (x == 18) { log.Dbg("Succeeded: {@Test}.", x); } else { log.Err("Failed: {@Test}.", x); } },
-		fail: log.Failure
+		fOk: x => { if (x == 18) { log.Dbg("Succeeded: {@Test}.", x); } else { log.Err("Failed: {@Test}.", x); } },
+		fFail: log.Failure
 	);
 Console.WriteLine();
 
@@ -207,8 +207,8 @@ using (var w = await db.StartWorkAsync())
 				new() { Value = v }, w.Transaction
 			)
 			.AuditAsync(
-				ok: x => { log.Dbg("New ID: {Id}", x.Value); repoIds.Add(x); },
-				fail: log.Failure
+				fOk: x => { log.Dbg("New ID: {Id}", x.Value); repoIds.Add(x); },
+				fFail: log.Failure
 			);
 	}
 }
@@ -223,8 +223,8 @@ using (var w = await db.StartWorkAsync())
 		await repo
 			.RetrieveAsync<JsonEntity>(x)
 			.AuditAsync(
-				ok: x => log.Dbg("Found entity with ID: {Id} and Value: {@Value}", x.Id.Value, x.Value),
-				fail: log.Failure
+				fOk: x => log.Dbg("Found entity with ID: {Id} and Value: {@Value}", x.Id.Value, x.Value),
+				fFail: log.Failure
 			);
 	}
 
@@ -233,8 +233,8 @@ using (var w = await db.StartWorkAsync())
 		.Sort(x => x.Id, SortOrder.Descending)
 		.QueryAsync<JsonEntity>()
 		.AuditAsync(
-			ok: x => log.Dbg("Found: {@List}", x.ToList()),
-			fail: log.Failure
+			fOk: x => log.Dbg("Found: {@List}", x.ToList()),
+			fFail: log.Failure
 		);
 
 }
@@ -258,8 +258,8 @@ Console.WriteLine();
 //var userId = await auth.User
 //	.CreateAsync(email, Rnd.Str)
 //	.AuditAsync(
-//		ok: x => log.Dbg("New User ID: {UserId}", x.Value),
-//		fail: f => log.Failure(f)
+//		fOk: x => log.Dbg("New User ID: {UserId}", x.Value),
+//		fFail: f => log.Failure(f)
 //	)
 //	.UnwrapAsync(x => x.Value(() => throw new Exception("Unable to get User ID.")));
 
@@ -268,8 +268,8 @@ Console.WriteLine();
 //await auth.User
 //	.UpdateLastSignInAsync(userId)
 //	.AuditAsync(
-//		ok: x => { if (x) { log.Dbg("Last sign in updated"); } else { log.Err("Unable to update last sign in"); } },
-//		fail: f => log.Failure(f)
+//		fOk: x => { if (x) { log.Dbg("Last sign in updated"); } else { log.Err("Unable to update last sign in"); } },
+//		fFail: f => log.Failure(f)
 //	);
 
 //// Don't insert duplicate user
@@ -277,8 +277,8 @@ Console.WriteLine();
 //await auth.User
 //	.CreateAsync(email, Rnd.Str)
 //	.AuditAsync(
-//		ok: _ => log.Err("Should not have inserted duplicate user!"),
-//		fail: f => log.Failure(f)
+//		fOk: _ => log.Err("Should not have inserted duplicate user!"),
+//		fFail: f => log.Failure(f)
 //	);
 
 //// Clean up users

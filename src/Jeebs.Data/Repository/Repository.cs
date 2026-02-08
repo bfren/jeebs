@@ -9,7 +9,7 @@ namespace Jeebs.Data.Repository;
 /// <inheritdoc cref="IRepository{TEntity, TId}"/>
 public abstract class Repository<TEntity, TId> : IRepository<TEntity, TId>
 	where TEntity : IWithId
-	where TId : class, IUnion, new()
+	where TId : class, IMonad, new()
 {
 	/// <summary>
 	/// IDb.
@@ -64,7 +64,7 @@ public abstract class Repository<TEntity, TId> : IRepository<TEntity, TId>
 	public virtual Task<Result<TId>> CreateAsync(TEntity entity) =>
 		Db.Client.GetCreateQuery<TEntity>()
 		.Audit(
-			ok: _ => LogFunc(nameof(CreateAsync))
+			fOk: _ => LogFunc(nameof(CreateAsync))
 		)
 		.BindAsync(
 			x => Db.ExecuteAsync<TId>(x, entity)
@@ -74,7 +74,7 @@ public abstract class Repository<TEntity, TId> : IRepository<TEntity, TId>
 	public virtual Task<Result<TModel>> RetrieveAsync<TModel>(TId id) =>
 		Db.Client.GetRetrieveQuery<TEntity, TModel>(id.Value)
 		.Audit(
-			ok: _ => LogFunc(nameof(RetrieveAsync))
+			fOk: _ => LogFunc(nameof(RetrieveAsync))
 		)
 		.BindAsync(
 			x => Db.QuerySingleAsync<TModel>(x, null)
@@ -85,7 +85,7 @@ public abstract class Repository<TEntity, TId> : IRepository<TEntity, TId>
 		where TModel : IWithId =>
 		Db.Client.GetUpdateQuery<TEntity, TModel>(model.Id.Value)
 		.Audit(
-			ok: _ => LogFunc(nameof(UpdateAsync))
+			fOk: _ => LogFunc(nameof(UpdateAsync))
 		)
 		.BindAsync(
 			x => Db.ExecuteAsync(x, model)
@@ -96,7 +96,7 @@ public abstract class Repository<TEntity, TId> : IRepository<TEntity, TId>
 		where TModel : IWithId =>
 		Db.Client.GetDeleteQuery<TEntity>(model.Id.Value)
 		.Audit(
-			ok: _ => LogFunc(nameof(DeleteAsync))
+			fOk: _ => LogFunc(nameof(DeleteAsync))
 		)
 		.BindAsync(
 			x => Db.ExecuteAsync(x, model)

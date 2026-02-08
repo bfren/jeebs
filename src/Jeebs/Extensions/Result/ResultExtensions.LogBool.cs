@@ -21,7 +21,7 @@ public static partial class ResultExtensions
 	/// <returns>Original object.</returns>
 	public static Result<bool> LogBool(this Result<bool> @this, ILog usingLog, string ifTrue, string ifFalse) =>
 		@this.Audit(
-			ok: x =>
+			fOk: x =>
 			{
 				if (x)
 				{
@@ -32,6 +32,6 @@ public static partial class ResultExtensions
 					usingLog.Err(ifFalse);
 				}
 			},
-			fail: usingLog.Failure
+			fFail: usingLog.Failure
 		);
 }

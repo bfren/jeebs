@@ -17,7 +17,7 @@ namespace Jeebs.Data.Query;
 /// <param name="mapper">IEntityMapper.</param>
 public abstract class QueryPartsBuilderWithEntity<TEntity, TId>(IEntityMapper mapper) : QueryPartsBuilder<TId>
 	where TEntity : IWithId
-	where TId : class, IUnion, new()
+	where TId : class, IMonad, new()
 {
 	private readonly IEntityMapper mapper = mapper;
 

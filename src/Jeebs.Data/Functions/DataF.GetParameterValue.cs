@@ -6,13 +6,13 @@ namespace Jeebs.Data.Functions;
 public static partial class DataF
 {
 	/// <summary>
-	/// Get a parameter value - if it's a <see cref="IUnion"/>, return <see cref="IUnion.Value"/>.
+	/// Get a parameter value - if it's a <see cref="IMonad"/>, return <see cref="IMonad.Value"/>.
 	/// </summary>
 	/// <param name="value">Parameter Value.</param>
 	public static dynamic GetParameterValue(dynamic value) =>
 		value switch
 		{
-			IUnion id =>
+			IMonad id =>
 				id.Value ?? new object(),
 
 			{ } x =>

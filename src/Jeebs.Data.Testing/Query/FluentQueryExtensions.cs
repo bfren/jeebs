@@ -22,6 +22,6 @@ public static class FluentQueryExtensions
 	/// <exception cref="CollectionException"></exception>
 	public static void AssertCalls<TEntity, TId>(this IFluentQuery<TEntity, TId> @this, params Action<ICall>[] inspectors)
 		where TEntity : IWithId
-		where TId : class, IUnion, new() =>
+		where TId : class, IMonad, new() =>
 		FluentQueryHelper.AssertCollection([.. @this.ReceivedCalls()], inspectors);
 }

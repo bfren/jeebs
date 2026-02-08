@@ -26,9 +26,9 @@ public static partial class CryptoF
 			R.Fail(ex).Msg(message).Ctx(nameof(CryptoF), nameof(Unlock));
 
 		return box.EncryptedContents.Match(
-			none: () => R.Fail("There are no encrypted contents to unlock.")
+			fNone: () => R.Fail("There are no encrypted contents to unlock.")
 				.Ctx(nameof(CryptoF), nameof(Unlock)),
-			some: x =>
+			fSome: x =>
 			{
 				try
 				{

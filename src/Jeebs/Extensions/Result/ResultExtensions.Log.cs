@@ -21,7 +21,7 @@ public static partial class ResultExtensions
 	/// <returns>Original object.</returns>
 	public static Result<T> Log<T>(this Result<T> @this, ILog usingLog, string message) =>
 		@this.Audit(
-			ok: x => usingLog.Inf(message, x ?? new object()),
-			fail: usingLog.Failure
+			fOk: x => usingLog.Inf(message, x ?? new object()),
+			fFail: usingLog.Failure
 		);
 }

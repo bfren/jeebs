@@ -117,8 +117,8 @@ public static partial class PhpF
 			{
 				var (key, value) = (PrivateDeserialise(str, ref pointer), PrivateDeserialise(str, ref pointer));
 				M.ParseInt32(key.ToString()).Match(
-					none: () => table.Add(key, value),
-					some: x => table.Add(x, value)
+					fNone: () => table.Add(key, value),
+					fSome: x => table.Add(x, value)
 				);
 			}
 

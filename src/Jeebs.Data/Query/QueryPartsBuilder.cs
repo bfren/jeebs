@@ -36,7 +36,7 @@ public abstract class QueryPartsBuilder
 /// </remarks>
 /// <param name="extract">IExtract.</param>
 public abstract class QueryPartsBuilder<TId>(IExtract extract) : QueryPartsBuilder, IQueryPartsBuilder<TId>
-	where TId : class, IUnion, new()
+	where TId : class, IMonad, new()
 {
 	/// <summary>
 	/// IExtract.

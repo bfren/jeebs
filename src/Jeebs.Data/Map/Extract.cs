@@ -42,7 +42,7 @@ public static class Extract<TModel>
 					  select column,
 				e => R.Fail(e).Msg("Error getting columns from table.").Ctx(nameof(Extract), nameof(From))
 			)
-			.ContinueIf(
+			.IfNot(
 				x => x.Any(),
 				_ => R.Fail("No columns were extracted from the tables.").Ctx(nameof(Extract), nameof(From))
 			)

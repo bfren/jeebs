@@ -103,8 +103,8 @@ public abstract class AttachmentCustomField : CustomField<AttachmentCustomField.
 	/// <param name="value">Post ID value.</param>
 	internal static Result<WpPostId> ParseAttachmentPostId(Type type, string value) =>
 		M.ParseUInt64(value).Match(
-			some: x => R.Wrap(new WpPostId { Value = x }),
-			none: () => R.Fail("'{Value}' is not a valid Post ID.", value)
+			fSome: x => R.Wrap(new WpPostId { Value = x }),
+			fNone: () => R.Fail("'{Value}' is not a valid Post ID.", value)
 				.Ctx(type.Name, nameof(ParseAttachmentPostId))
 		);
 

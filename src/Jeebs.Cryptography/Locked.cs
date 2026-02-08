@@ -82,8 +82,8 @@ public sealed class Locked<T> : Locked
 	/// <returns>JSON.</returns>
 	public Result<string> Serialise() =>
 		EncryptedContents.Match(
-			none: () => JsonF.Empty,
-			some: x => JsonF.Serialise(this)
+			fNone: () => JsonF.Empty,
+			fSome: x => JsonF.Serialise(this)
 		);
 
 	private byte[] HashKey(string key) =>

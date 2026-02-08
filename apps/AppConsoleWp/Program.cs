@@ -35,7 +35,7 @@ await bcg.Db.Query.PostsAsync<PostModel>(opt => opt with
 	Maximum = 3
 })
 .AuditAsync(
-	ok: x =>
+	fOk: x =>
 	{
 		if (!x.Any())
 		{
@@ -47,7 +47,7 @@ await bcg.Db.Query.PostsAsync<PostModel>(opt => opt with
 			log.Dbg("Post {Id:0000}: {Title}", item.Id.Value, item.Title);
 		}
 	},
-	fail: log.Failure
+	fFail: log.Failure
 );
 
 //
@@ -65,7 +65,7 @@ await bcg.Db.Query.PostsAsync<SermonModel>(2, opt => opt with
 	SortRandom = true
 })
 .AuditAsync(
-	ok: x =>
+	fOk: x =>
 	{
 		if (!x.Any())
 		{
@@ -79,7 +79,7 @@ await bcg.Db.Query.PostsAsync<SermonModel>(2, opt => opt with
 			log.Dbg("  - Published: {Published:dd/MM/yyyy}", item.PublishedOn);
 		}
 	},
-	fail: log.Failure
+	fFail: log.Failure
 );
 
 //
@@ -95,7 +95,7 @@ await bcg.Db.Query.PostsAsync<SermonModelWithTaxonomies>(opt => opt with
 	Maximum = 5
 })
 .AuditAsync(
-	ok: x =>
+	fOk: x =>
 	{
 		if (!x.Any())
 		{
@@ -109,7 +109,7 @@ await bcg.Db.Query.PostsAsync<SermonModelWithTaxonomies>(opt => opt with
 			log.Dbg("  - Series: {Series}", string.Join(", ", item.Series.Select(b => b.Title)));
 		}
 	},
-	fail: log.Failure
+	fFail: log.Failure
 );
 
 //
@@ -128,7 +128,7 @@ await bcg.Db.Query.PostsAsync<SermonModelWithTaxonomies>(opt => opt with
 	Maximum = 5
 })
 .AuditAsync(
-	ok: x =>
+	fOk: x =>
 	{
 		if (!x.Any())
 		{
@@ -147,7 +147,7 @@ await bcg.Db.Query.PostsAsync<SermonModelWithTaxonomies>(opt => opt with
 			log.Dbg("  - Bible Books: {Books}", string.Join(", ", item.BibleBooks.Select(b => b.Title)));
 		}
 	},
-	fail: log.Failure
+	fFail: log.Failure
 );
 
 //
@@ -163,7 +163,7 @@ await usa.Db.Query.TermsAsync<TaxonomyModel>(opt => opt with
 	CountAtLeast = countAtLeast
 })
 .AuditAsync(
-	ok: x =>
+	fOk: x =>
 	{
 		if (!x.Any())
 		{
@@ -175,7 +175,7 @@ await usa.Db.Query.TermsAsync<TaxonomyModel>(opt => opt with
 			log.Dbg("Term {Id:00}: {Title} ({Count})", item.Id.Value, item.Title, item.Count);
 		}
 	},
-	fail: log.Failure
+	fFail: log.Failure
 );
 
 //
@@ -186,7 +186,7 @@ Console.WriteLine();
 log.Dbg("== Get Posts with Custom Fields ==");
 await usa.Db.Query.PostsAsync<PostModelWithCustomFields>(opt => opt)
 .AuditAsync(
-	ok: x =>
+	fOk: x =>
 	{
 		if (!x.Any())
 		{
@@ -199,7 +199,7 @@ await usa.Db.Query.PostsAsync<PostModelWithCustomFields>(opt => opt)
 			log.Dbg("  - Image: {Image}", item.FeaturedImage.ValueObj);
 		}
 	},
-	fail: log.Failure
+	fFail: log.Failure
 );
 
 //
@@ -214,7 +214,7 @@ await bcg.Db.Query.PostsAsync<SermonModelWithCustomFields>(opt => opt with
 	Ids = ListF.Create<WpPostId>(new() { Value = 924L }, new() { Value = 1867L }, new() { Value = 2020L })
 })
 .AuditAsync(
-	ok: x =>
+	fOk: x =>
 	{
 		if (!x.Any())
 		{
@@ -231,7 +231,7 @@ await bcg.Db.Query.PostsAsync<SermonModelWithCustomFields>(opt => opt with
 			log.Dbg("  - Image: {Image}", item.Image?.ValueObj.UrlPath ?? "none");
 		}
 	},
-	fail: log.Failure
+	fFail: log.Failure
 );
 
 //
@@ -248,7 +248,7 @@ await bcg.Db.Query.PostsAsync<SermonModelWithCustomFields>(opt => opt with
 	CustomFields = ListF.Create([(field, Compare.Equal, first)])
 })
 .AuditAsync(
-	ok: x =>
+	fOk: x =>
 	{
 		if (!x.Any())
 		{
@@ -268,7 +268,7 @@ await bcg.Db.Query.PostsAsync<SermonModelWithCustomFields>(opt => opt with
 			log.Dbg("  - {FirstId:0000}: {FirstTitle}", obj.Id.Value, obj.Title);
 		}
 	},
-	fail: log.Failure
+	fFail: log.Failure
 );
 
 //
@@ -281,7 +281,7 @@ await bcg.Db.Query.PostsAsync<PostModelWithContent>(
 	opt => opt with { SortRandom = true }, GenerateExcerpt.Create()
 )
 .AuditAsync(
-	ok: x =>
+	fOk: x =>
 	{
 		if (!x.Any())
 		{
@@ -293,7 +293,7 @@ await bcg.Db.Query.PostsAsync<PostModelWithContent>(
 			log.Dbg("Post {Id:0000}: {@Content}", item.Id.Value, item.Content);
 		}
 	},
-	fail: log.Failure
+	fFail: log.Failure
 );
 
 //
@@ -307,7 +307,7 @@ await bcg.Db.Query.AttachmentsAsync<Attachment>(opt => opt with
 	Ids = ListF.Create<WpPostId>(new() { Value = 802L }, new() { Value = 862L }, new() { Value = 2377L })
 })
 .AuditAsync(
-	ok: x =>
+	fOk: x =>
 	{
 		if (!x.Any())
 		{
@@ -323,7 +323,7 @@ await bcg.Db.Query.AttachmentsAsync<Attachment>(opt => opt with
 			log.Dbg("  - FilePath: {FilePath}", item.GetFilePath(bcg.Db.WpConfig.UploadsPath));
 		}
 	},
-	fail: log.Failure
+	fFail: log.Failure
 );
 
 //
@@ -334,8 +334,8 @@ Console.WriteLine();
 log.Dbg("== Get Attachment file path ==");
 await bcg.Db.Query.AttachmentFilePathAsync(new() { Value = 802L })
 .AuditAsync(
-	ok: x => log.Dbg("Path: {FilePath}", x),
-	fail: log.Failure
+	fOk: x => log.Dbg("Path: {FilePath}", x),
+	fFail: log.Failure
 )
 ;
 
@@ -351,7 +351,7 @@ await bcg.Db.Query.PostsAsync<PostModel>(2, opt => opt with
 	Maximum = 15
 })
 .AuditAsync(
-	ok: x =>
+	fOk: x =>
 	{
 		if (!x.Any())
 		{
@@ -365,7 +365,7 @@ await bcg.Db.Query.PostsAsync<PostModel>(2, opt => opt with
 		log.Dbg("  - First Item: {FirstItem}", x.Values.FirstItem);
 		log.Dbg("  - Last Item: {LastItem}", x.Values.LastItem);
 	},
-	fail: log.Failure
+	fFail: log.Failure
 );
 
 // End

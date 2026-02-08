@@ -16,7 +16,7 @@ namespace Jeebs.Data.Repository;
 /// <typeparam name="TId">StrongId type.</typeparam>
 public interface IFluentQuery<TEntity, TId>
 	where TEntity : IWithId
-	where TId : class, IUnion, new()
+	where TId : class, IMonad, new()
 {
 	#region Where
 

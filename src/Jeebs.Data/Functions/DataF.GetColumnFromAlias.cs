@@ -31,8 +31,8 @@ public static partial class DataF
 			.Map(
 				x => (name: x.GetValue(table)?.ToString()!, prop: x)
 			)
-			.ContinueIf(
-				x => !string.IsNullOrEmpty(x.name),
+			.If(
+				x => string.IsNullOrEmpty(x.name),
 				x => R.Fail(
 						"Column with alias '{Alias}' has null or empty name in table '{Table}'.",
 						alias, table.GetType().Name
