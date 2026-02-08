@@ -3,6 +3,7 @@
 
 using System;
 using System.Threading.Tasks;
+using Jeebs.Data.Functions;
 using Jeebs.Data.Query;
 
 namespace Jeebs.Data.Clients.Rqlite;
@@ -13,12 +14,17 @@ public sealed partial class RqliteDb : Db
 	public override Task<Result<T>> QuerySingleAsync<T>(string query, object? param)
 	{
 		using var c = Factory.CreateClient(Config.ConnectionString);
-		return c.QueryAsync<T>(query, param ?? new()).GetSingleAsync(x => x.Value<T>());
+		return c.QueryAsync<T>(query, param ?? new())
+			.GetSingleAsync(x => x.Value<T>());
 	}
 
 	/// <inheritdoc/>
-	public override Task<Result<T>> QuerySingleAsync<T>(IQueryParts parts) => throw new NotImplementedException();
+	public override Task<Result<T>> QuerySingleAsync<T>(IQueryParts parts) =>
+		Client.GetQuery(parts)
+			.BindAsync(x => QuerySingleAsync<T>(x.query, x.param));
 
 	/// <inheritdoc/>
-	public override Task<Result<T>> QuerySingleAsync<T>(Func<IQueryBuilder, IQueryBuilderWithFrom> builder) => throw new NotImplementedException();
+	public override Task<Result<T>> QuerySingleAsync<T>(Func<IQueryBuilder, IQueryBuilderWithFrom> builder) =>
+		DataF.BuildQuery<T>(builder)
+			.BindAsync(QuerySingleAsync<T>);
 }
