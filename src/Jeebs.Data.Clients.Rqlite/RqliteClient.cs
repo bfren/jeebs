@@ -11,25 +11,46 @@ namespace Jeebs.Data.Clients.Rqlite;
 public partial class RqliteClient : DbClient
 {
 	/// <inheritdoc/>
-	public override string Escape(ITableName table) => throw new System.NotImplementedException();
+	public override string Escape(ITableName table) =>
+		Escape(table.GetFullName(s => s));
 
 	/// <inheritdoc/>
-	public override string Escape(ITableName table, string column) => throw new System.NotImplementedException();
+	public override string Escape(ITableName table, string column) =>
+		Escape(table) + "." + Escape(column);
 
 	/// <inheritdoc/>
-	public override string Escape(IColumn column, bool withAlias) => throw new System.NotImplementedException();
+	public override string Escape(IColumn column, bool withAlias) =>
+		withAlias switch
+		{
+			true =>
+				Escape(column.ColName) + " AS " + Escape(column.ColAlias),
+
+			false =>
+				Escape(column.ColName)
+		};
 
 	/// <inheritdoc/>
-	public override string Escape(string obj) => throw new System.NotImplementedException();
+	public override string EscapeWithTable(IColumn column, bool withAlias) =>
+		withAlias switch
+		{
+			true =>
+				Escape(column.TblName, column.ColName) + " AS " + Escape(column.ColAlias),
+
+			false =>
+				Escape(column.TblName, column.ColName)
+		};
 
 	/// <inheritdoc/>
-	public override string EscapeWithTable(IColumn column, bool withAlias) => throw new System.NotImplementedException();
+	public override string Escape(string obj) =>
+		$"\"{obj}\"";
 
 	/// <inheritdoc/>
-	public override string GetOperator(Compare cmp) => throw new System.NotImplementedException();
+	public override string GetOperator(Compare cmp) =>
+		cmp.ToOperator();
 
 	/// <inheritdoc/>
-	public override string GetParamRef(string paramName) => throw new System.NotImplementedException();
+	public override string GetParamRef(string paramName) =>
+		$":{paramName}";
 
 	/// <inheritdoc/>
 	public override string JoinList(List<string> objects, bool wrap) => throw new System.NotImplementedException();

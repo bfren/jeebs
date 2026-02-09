@@ -13,8 +13,8 @@ public sealed partial class RqliteDb : Db
 	/// <inheritdoc/>
 	public override Task<Result<T>> QuerySingleAsync<T>(string query, object? param)
 	{
-		using var c = Factory.CreateClient(Config.ConnectionString);
-		return c.QueryAsync<T>(query, param ?? new())
+		using var w = StartWork();
+		return w.QueryAsync<T>(query, param ?? new())
 			.GetSingleAsync(x => x.Value<T>());
 	}
 

@@ -18,8 +18,8 @@ public sealed partial class RqliteDb : Db
 	/// <inheritdoc/>
 	public override async Task<Result<IEnumerable<T>>> QueryAsync<T>(string query, object? param)
 	{
-		using var c = Factory.CreateClient(Config.ConnectionString);
-		return await c.QueryAsync<T>(query, param ?? new())
+		using var w = StartWork();
+		return await w.QueryAsync<T>(query, param ?? new())
 			.MapAsync(x => x.AsEnumerable());
 	}
 

@@ -14,8 +14,32 @@ public sealed partial class RqliteDb : Db
 	/// <inheritdoc/>
 	internal IRqliteClientFactory Factory { get; private init; }
 
-	/// <inheritdoc/>
+	/// <summary>
+	/// Inject dependencies.
+	/// </summary>
+	/// <param name="factory">IRqliteClientFactory.</param>
+	/// <param name="client">IDbClient.</param>
+	/// <param name="config">DbConfig options.</param>
+	/// <param name="log">ILog.</param>
+	/// <param name="name">DbConnectionConfig name.</param>
 	public RqliteDb(IRqliteClientFactory factory, IDbClient client, IOptions<DbConfig> config, ILog log, string name) :
 		base(client, config, log, name) =>
 		Factory = factory;
+
+	/// <summary>
+	/// Start work using new RqliteClient object.
+	/// </summary>
+	/// <returns>New RqliteClient object.</returns>
+	internal IRqliteClient StartWork()
+	{
+		var name = Config.ConnectionString;
+		return string.IsNullOrWhiteSpace(name) switch
+		{
+			true =>
+				Factory.CreateClientWithDefaults(),
+
+			false =>
+				Factory.CreateClient(name)
+		};
+	}
 }
