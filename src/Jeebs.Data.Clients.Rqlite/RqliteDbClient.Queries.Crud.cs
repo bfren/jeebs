@@ -5,7 +5,7 @@ using Jeebs.Data.Map;
 
 namespace Jeebs.Data.Clients.Rqlite;
 
-public partial class RqliteClient
+public partial class RqliteDbClient
 {
 	/// <inheritdoc/>
 	protected override string GetCreateQuery(

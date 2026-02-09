@@ -8,7 +8,7 @@ using Jeebs.Data.Map;
 namespace Jeebs.Data.Clients.Rqlite;
 
 /// <inheritdoc cref="IDbClient"/>
-public partial class RqliteClient : DbClient
+public partial class RqliteDbClient : DbClient
 {
 	/// <inheritdoc/>
 	public override string Escape(ITableName table) =>

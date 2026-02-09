@@ -10,7 +10,7 @@ using Jeebs.Data.Query;
 
 namespace Jeebs.Data.Clients.Rqlite;
 
-public partial class RqliteClient
+public partial class RqliteDbClient
 {
 	/// <inheritdoc/>
 	protected override Result<(string query, IQueryParametersDictionary param)> GetQuery(
