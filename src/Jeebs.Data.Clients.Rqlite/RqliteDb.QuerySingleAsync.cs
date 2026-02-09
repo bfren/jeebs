@@ -8,7 +8,7 @@ using Jeebs.Data.Query;
 
 namespace Jeebs.Data.Clients.Rqlite;
 
-public sealed partial class RqliteDb : Db
+public abstract partial class RqliteDb : Db
 {
 	/// <inheritdoc/>
 	public override Task<Result<T>> QuerySingleAsync<T>(string query, object? param)

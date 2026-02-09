@@ -6,13 +6,17 @@ using System.Threading.Tasks;
 
 namespace Jeebs.Data.Clients.Rqlite;
 
-public sealed partial class RqliteDb : Db
+public abstract partial class RqliteDb : Db
 {
 	/// <inheritdoc/>
-	public override async Task<Result<bool>> ExecuteAsync(string query, object? param)
+	public override Task<Result<bool>> ExecuteAsync(string query, object? param) =>
+		ExecuteAsync(true, (query, param ?? new()));
+
+	/// <inheritdoc/>
+	public async Task<Result<bool>> ExecuteAsync(bool asSingleTransaction, params (string query, object param)[] commands)
 	{
 		using var w = StartWork();
-		return await w.ExecuteAsync(true, (query, param ?? new()))
+		return await w.ExecuteAsync(asSingleTransaction, [.. commands])
 			.MapAsync(x => x.Any(r => r.RowsAffected > 0));
 	}
 

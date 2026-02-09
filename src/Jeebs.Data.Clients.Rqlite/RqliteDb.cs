@@ -9,7 +9,7 @@ using Rqlite.Client;
 namespace Jeebs.Data.Clients.Rqlite;
 
 /// <inheritdoc/>
-public sealed partial class RqliteDb : Db
+public abstract partial class RqliteDb : Db
 {
 	/// <inheritdoc/>
 	internal IRqliteClientFactory Factory { get; private init; }
@@ -30,7 +30,7 @@ public sealed partial class RqliteDb : Db
 	/// Start work using new RqliteClient object.
 	/// </summary>
 	/// <returns>New RqliteClient object.</returns>
-	internal IRqliteClient StartWork()
+	public IRqliteClient StartWork()
 	{
 		var name = Config.ConnectionString;
 		return string.IsNullOrWhiteSpace(name) switch

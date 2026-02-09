@@ -13,7 +13,7 @@ using Defaults = Jeebs.Collections.Defaults.PagingValues;
 
 namespace Jeebs.Data.Clients.Rqlite;
 
-public sealed partial class RqliteDb : Db
+public abstract partial class RqliteDb : Db
 {
 	/// <inheritdoc/>
 	public override async Task<Result<IEnumerable<T>>> QueryAsync<T>(string query, object? param)
