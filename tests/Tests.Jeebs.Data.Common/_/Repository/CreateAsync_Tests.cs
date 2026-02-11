@@ -23,7 +23,7 @@ public class CreateAsync_Tests : Repository_Setup
 	}
 
 	[Fact]
-	public async Task Calls_Db_ExecuteAsync()
+	public async Task Calls_Db_InsertAsync()
 	{
 		// Arrange
 		var (repo, v) = Setup();
@@ -34,7 +34,7 @@ public class CreateAsync_Tests : Repository_Setup
 		_ = await repo.CreateAsync(model, v.Transaction);
 
 		// Assert
-		await v.Db.Received(2).ExecuteAsync<FooId>(Arg.Any<string>(), model, CommandType.Text, v.Transaction);
+		await v.Db.Received(2).InsertAsync<FooId>(Arg.Any<string>(), model, CommandType.Text, v.Transaction);
 	}
 
 	[Fact]
