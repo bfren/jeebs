@@ -12,7 +12,7 @@ public partial class RqliteDbClient : DbClient
 {
 	/// <inheritdoc/>
 	public override string Escape(ITableName table) =>
-		table.GetFullName(x => x);
+		table.Name;
 
 	/// <inheritdoc/>
 	public override string Escape(ITableName table, string column) =>

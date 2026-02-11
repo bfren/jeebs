@@ -38,7 +38,7 @@ public partial class RqliteDbClient
 		return
 			$"SELECT {JoinList(col, false)} " +
 			$"FROM {Escape(table)} " +
-			$"WHERE {EscapeWithTable(idColumn)} = {id} " +
+			$"WHERE {Escape(idColumn)} = {id} " +
 			$"LIMIT 1"
 		;
 	}

@@ -21,21 +21,21 @@ public partial class SqliteDbClient : Common.DbClient
 
 	/// <inheritdoc/>
 	public override string Escape(ITableName table) =>
-		Escape(table.GetFullName(s => s));
+		table.Name;
 
 	/// <inheritdoc/>
 	public override string Escape(ITableName table, string column) =>
-		Escape(table) + "." + Escape(column);
+		Escape(table) + "." + column;
 
 	/// <inheritdoc/>
 	public override string Escape(IColumn column, bool withAlias) =>
 		withAlias switch
 		{
 			true =>
-				Escape(column.ColName) + " AS " + Escape(column.ColAlias),
+				column.ColName + " AS " + Escape(column.ColAlias),
 
 			false =>
-				Escape(column.ColName)
+				column.ColName
 		};
 
 	/// <inheritdoc/>
