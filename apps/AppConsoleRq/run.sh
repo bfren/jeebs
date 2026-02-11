@@ -1,3 +1,3 @@
 #!/bin/sh
 
-docker run -p4001:4001 rqlite/rqlite
+docker run -p4001:4001 rqlite/rqlite -raft-log-level=DEBUG

@@ -5,7 +5,7 @@
       "suite": "Jeebs"
     },
     "logging": {
-      "minimum": "Debug",
+      "minimum": "Verbose",
       "overrides": {
         "System.Net.Http.HttpClient": "Warning"
       },
