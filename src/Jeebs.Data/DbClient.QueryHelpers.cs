@@ -40,7 +40,7 @@ public abstract partial class DbClient : IDbClient
 		var col = new List<string>();
 		foreach (var column in columns)
 		{
-			col.Add(Escape(column, true));
+			col.Add(EscapeWithTable(column, true));
 		}
 
 		return col;
