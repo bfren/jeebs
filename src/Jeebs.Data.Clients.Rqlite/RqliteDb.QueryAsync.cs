@@ -31,7 +31,7 @@ public abstract partial class RqliteDb : Db
 	/// <inheritdoc/>
 	public override Task<Result<IPagedList<T>>> QueryAsync<T>(ulong page, IQueryParts parts) =>
 			from count in Client.GetCountQuery(parts)
-			from countResults in ExecuteAsync<ulong>(
+			from countResults in QuerySingleAsync<ulong>(
 				count.query, count.param
 			)
 			from paging in R.Try(

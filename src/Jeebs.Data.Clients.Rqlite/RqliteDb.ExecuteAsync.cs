@@ -17,13 +17,6 @@ public abstract partial class RqliteDb : Db
 	{
 		using var w = StartWork();
 		return await w.ExecuteAsync(asSingleTransaction, [.. commands])
-			.MapAsync(x => x.Any(r => r.RowsAffected > 0));
-	}
-
-	/// <inheritdoc/>
-	public override async Task<Result<TReturn>> ExecuteAsync<TReturn>(string query, object? param)
-	{
-		using var w = StartWork();
-		return await w.GetScalarAsync<TReturn>(query, param ?? new());
+			.MapAsync(x => x.All(r => r.RowsAffected > 0 || r.LastInsertId > 0));
 	}
 }
