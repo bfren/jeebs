@@ -19,8 +19,7 @@ public partial class RqliteDbClient
 		// Build and return query
 		return
 			$"INSERT INTO {Escape(table)} {JoinList(col, true)} " +
-			$"VALUES {JoinList(par, true)};" +
-			" SELECT last_insert_rowid();"
+			$"VALUES {JoinList(par, true)}"
 		;
 	}
 
@@ -39,7 +38,7 @@ public partial class RqliteDbClient
 		return
 			$"SELECT {JoinList(col, false)} " +
 			$"FROM {Escape(table)} " +
-			$"WHERE {Escape(idColumn)} = {id};"
+			$"WHERE {Escape(idColumn)} = {id}"
 		;
 	}
 
@@ -78,7 +77,7 @@ public partial class RqliteDbClient
 		sql = AddVersionToWhere(sql, versionColumn);
 
 		// Return query
-		return $"{sql};";
+		return sql;
 	}
 
 	/// <inheritdoc/>
@@ -107,6 +106,6 @@ public partial class RqliteDbClient
 		sql = AddVersionToWhere(sql, versionColumn);
 
 		// Return query
-		return $"{sql};";
+		return sql;
 	}
 }

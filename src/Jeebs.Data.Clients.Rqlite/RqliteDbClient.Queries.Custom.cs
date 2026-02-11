@@ -27,7 +27,7 @@ public partial class RqliteDbClient
 
 		// Return query and parameters
 		return (
-			$"SELECT {JoinList(col, false)} FROM {Escape(table)} WHERE {string.Join(" AND ", where)};",
+			$"SELECT {JoinList(col, false)} FROM {Escape(table)} WHERE {string.Join(" AND ", where)}",
 			param
 		);
 	}
@@ -132,6 +132,6 @@ public partial class RqliteDbClient
 		}
 
 		// Return query string
-		return ($"{sql};", parameters);
+		return (sql, parameters);
 	}
 }

@@ -12,7 +12,7 @@ public partial class RqliteDbClient : DbClient
 {
 	/// <inheritdoc/>
 	public override string Escape(ITableName table) =>
-		Escape(table.GetFullName(s => s));
+		Escape(table.Name);
 
 	/// <inheritdoc/>
 	public override string Escape(ITableName table, string column) =>
@@ -53,5 +53,16 @@ public partial class RqliteDbClient : DbClient
 		$":{paramName}";
 
 	/// <inheritdoc/>
-	public override string JoinList(List<string> objects, bool wrap) => throw new System.NotImplementedException();
+	public override string JoinList(List<string> objects, bool wrap)
+	{
+		var list = string.Join(", ", objects);
+		return wrap switch
+		{
+			true =>
+				$"({list})",
+
+			false =>
+				list
+		};
+	}
 }
