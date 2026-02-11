@@ -32,8 +32,7 @@
     <PackageVersion Include="NSubstitute" Version="5.3.0" />
     <PackageVersion Include="NSubstitute.Analyzers.CSharp" Version="1.0.17" />
     <PackageVersion Include="Rnd" Version="10.2.0" />
-    <PackageVersion Include="Rqlite" Version="1.0.1" />
-    <PackageVersion Include="Rqlite.Internal" Version="1.0.1" />
+    <PackageVersion Include="Rqlite" Version="1.1.0-beta.8" />
     <PackageVersion Include="Serilog" Version="4.3.0" />
     <PackageVersion Include="Serilog.Extensions.Hosting" Version="10.0.0" />
     <PackageVersion Include="Serilog.Sinks.Async" Version="2.1.0" />

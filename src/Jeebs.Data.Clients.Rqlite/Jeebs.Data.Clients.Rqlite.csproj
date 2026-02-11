@@ -1,7 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <ItemGroup>
     <PackageReference Include="Rqlite" />
-    <PackageReference Include="Rqlite.Internal" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Jeebs.Data\Jeebs.Data.csproj" />

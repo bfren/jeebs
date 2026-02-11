@@ -22,4 +22,8 @@
     <ProjectReference Include="..\..\src\Jeebs.Apps\Jeebs.Apps.csproj" />
     <ProjectReference Include="..\..\src\Jeebs.Data.Clients.Rqlite\Jeebs.Data.Clients.Rqlite.csproj" />
   </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Rnd" />
+  </ItemGroup>
+  <ProjectExtensions><VisualStudio><UserProperties jeebsconfig_1json__JsonSchema="https://schemas.bfren.dev/jeebs/application/config.json" /></VisualStudio></ProjectExtensions>
 </Project>
