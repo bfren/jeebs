@@ -11,17 +11,18 @@ namespace Jeebs.Data.Clients.Rqlite;
 public abstract partial class RqliteDb : Db
 {
 	/// <inheritdoc/>
-	public override Task<Result<T>> QuerySingleAsync<T>(string query, object? param)
+	public override async Task<Result<T>> QuerySingleAsync<T>(string query, object? param)
 	{
 		using var w = StartWork();
-		return w.QueryAsync<T>(query, param ?? new())
+		return await w.QueryAsync<T>(query, param ?? new())
 			.GetSingleAsync(x => x.Value<T>());
 	}
 
 	/// <inheritdoc/>
 	public override Task<Result<T>> QuerySingleAsync<T>(IQueryParts parts) =>
-		Client.GetQuery(parts)
-			.BindAsync(x => QuerySingleAsync<T>(x.query, x.param));
+		from q in Client.GetQuery(parts)
+		from r in QuerySingleAsync<T>(q.query, q.param)
+		select r;
 
 	/// <inheritdoc/>
 	public override Task<Result<T>> QuerySingleAsync<T>(Func<IQueryBuilder, IQueryBuilderWithFrom> builder) =>
