@@ -110,16 +110,16 @@ public interface IDb : Data.IDb
 	/// <param name="transaction">Database transaction.</param>
 	Task<Result<bool>> ExecuteAsync(string query, object? param, CommandType type, IDbTransaction transaction);
 
-	/// <inheritdoc cref="ExecuteAsync{TReturn}(string, object?, CommandType, IDbTransaction)"/>
-	Task<Result<TReturn>> ExecuteAsync<TReturn>(string query, object? param, CommandType type);
+	/// <inheritdoc cref="InsertAsync{TReturn}(string, object?, CommandType, IDbTransaction)"/>
+	Task<Result<TId>> InsertAsync<TId>(string query, object? param, CommandType type);
 
 	/// <summary>
-	/// Execute a query and return a single scalar value.
+	/// Insert a record into the database and return the ID.
 	/// </summary>
-	/// <typeparam name="TReturn">Return value type.</typeparam>
+	/// <typeparam name="TId">ID value type.</typeparam>
 	/// <param name="query">Query text.</param>
 	/// <param name="param">Query parameters.</param>
 	/// <param name="type">Command type.</param>
 	/// <param name="transaction">Database transaction.</param>
-	Task<Result<TReturn>> ExecuteAsync<TReturn>(string query, object? param, CommandType type, IDbTransaction transaction);
+	Task<Result<TId>> InsertAsync<TId>(string query, object? param, CommandType type, IDbTransaction transaction);
 }

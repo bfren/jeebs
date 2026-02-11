@@ -1,9 +1,9 @@
 {
-	"jeebs": {
-		"app": {
-			"name": "PostgreSQL",
-			"suite": "Jeebs"
-		},
+  "jeebs": {
+    "app": {
+      "name": "PostgreSQL",
+      "suite": "Jeebs"
+    },
     "db": {
       "default": "arwen",
       "connections": {
@@ -12,8 +12,8 @@
         }
       }
     },
-		"logging": {
-			"minimum": "Verbose",
+    "logging": {
+      "minimum": "Verbose",
       "overrides": {
         "Microsoft": "Warning",
         "Microsoft.Hosting.Lifetime": "Information",
@@ -30,7 +30,7 @@
           "minimum": "Information"
         }
       }
-		},
+    },
     "services": {
       "console": {
         "local": {}
@@ -42,5 +42,5 @@
         }
       }
     }
-	}
+  }
 }

@@ -2,23 +2,14 @@
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using System.Collections.Generic;
-using System.Data.Common;
-using System.Data.SQLite;
 using Jeebs.Data.Enums;
 using Jeebs.Data.Map;
 
-namespace Jeebs.Data.Clients.Sqlite;
+namespace Jeebs.Data.Clients.Rqlite;
 
 /// <inheritdoc cref="IDbClient"/>
-public partial class SqliteDbClient : Common.DbClient
+public partial class RqliteDbClient : DbClient
 {
-	/// <inheritdoc/>
-	public SqliteDbClient(IAdapter adapter) : base(adapter) { }
-
-	/// <inheritdoc/>
-	public override DbConnection GetConnection(string connectionString) =>
-		new SQLiteConnection(connectionString);
-
 	/// <inheritdoc/>
 	public override string Escape(ITableName table) =>
 		table.Name;
@@ -59,7 +50,7 @@ public partial class SqliteDbClient : Common.DbClient
 
 	/// <inheritdoc/>
 	public override string GetParamRef(string paramName) =>
-		$"@{paramName}";
+		$":{paramName}";
 
 	/// <inheritdoc/>
 	public override string JoinList(List<string> objects, bool wrap)

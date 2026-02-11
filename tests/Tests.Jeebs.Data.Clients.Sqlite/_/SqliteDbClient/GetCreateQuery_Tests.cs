@@ -35,7 +35,7 @@ public class GetCreateQuery_Tests : SqliteDbClient_Setup
 
 		var list = new ColumnList([c0, c1]);
 
-		var expected = $"INSERT INTO \"{schema}.{name}\" (\"{c0Name}\", \"{c1Name}\") VALUES (@{c0Alias}, @{c1Alias}); " +
+		var expected = $"INSERT INTO {name} ({c0Name}, {c1Name}) VALUES (@{c0Alias}, @{c1Alias}); " +
 			"SELECT last_insert_rowid();";
 
 		// Act

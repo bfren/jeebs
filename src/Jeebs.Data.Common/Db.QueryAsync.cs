@@ -66,7 +66,7 @@ public abstract partial class Db
 	/// <inheritdoc/>
 	public Task<Result<IPagedList<T>>> QueryAsync<T>(ulong page, IQueryParts parts, IDbTransaction transaction) =>
 		from count in Client.GetCountQuery(parts)
-		from countResults in ExecuteAsync<ulong>(
+		from countResults in QuerySingleAsync<ulong>(
 			count.query, count.param, CommandType.Text, transaction
 		)
 		from paging in R.Try(

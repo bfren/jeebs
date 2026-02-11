@@ -12,7 +12,7 @@ public class GetRetrieveQuery_Tests : MySqlDbClient_Setup
 	public void Returns_Valid_Select_Query()
 	{
 		// Arrange
-		var (client, v) = Setup();
+		var (client, _) = Setup();
 
 		var schema = Rnd.Str;
 		var name = Rnd.Str;

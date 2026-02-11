@@ -30,7 +30,7 @@ public class CreateAsync_Tests : Repository_Setup
 		_ = await repo.CreateAsync(model);
 
 		// Assert
-		await v.Db.Received().ExecuteAsync<FooId>(Arg.Any<string>(), model);
+		await v.Db.Received().InsertAsync<FooId>(Arg.Any<string>(), model);
 	}
 
 	[Fact]
