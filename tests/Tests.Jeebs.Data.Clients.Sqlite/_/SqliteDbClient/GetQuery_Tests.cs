@@ -46,11 +46,11 @@ public class GetQuery_Tests : SqliteDbClient_Setup
 		]);
 
 		var expected = "SELECT" +
-			$" \"{c0Name}\" AS \"{c0Alias}\"," +
-			$" \"{c1Name}\" AS \"{c1Alias}\"" +
-			$" FROM \"{schema}.{name}\"" +
-			$" WHERE \"{p0Column.ColName}\" LIKE @P0" +
-			$" AND \"{p1Column.ColName}\" >= @P1;";
+			$" {c0Name} AS \"{c0Alias}\"," +
+			$" {c1Name} AS \"{c1Alias}\"" +
+			$" FROM {name}" +
+			$" WHERE {p0Column.ColName} LIKE @P0" +
+			$" AND {p1Column.ColName} >= @P1;";
 
 		// Act
 		var (query, param) = client.GetQueryTest(table, list, predicates).Unsafe().Unwrap();
@@ -83,7 +83,7 @@ public class GetQuery_Tests : SqliteDbClient_Setup
 		var (query, _) = client.GetQuery(parts).Unsafe().Unwrap();
 
 		// Assert
-		Assert.Contains($"\"{v.Schema}.{v.Name}\"", query);
+		Assert.Contains($"{v.Name}", query);
 	}
 
 	[Fact]
@@ -93,7 +93,7 @@ public class GetQuery_Tests : SqliteDbClient_Setup
 		var (client, v) = Setup();
 
 		var parts = new QueryParts(v.Table) with { SelectCount = true };
-		var expected = $"SELECT COUNT() FROM \"{v.Schema}.{v.Name}\";";
+		var expected = $"SELECT COUNT() FROM {v.Name};";
 
 		// Act
 		var (query, _) = client.GetQuery(parts).Unsafe().Unwrap();
@@ -109,7 +109,7 @@ public class GetQuery_Tests : SqliteDbClient_Setup
 		var (client, v) = Setup();
 
 		var parts = new QueryParts(v.Table);
-		var expected = $"SELECT * FROM \"{v.Schema}.{v.Name}\";";
+		var expected = $"SELECT * FROM {v.Name};";
 
 		// Act
 		var (query, _) = client.GetQuery(parts).Unsafe().Unwrap();
@@ -135,9 +135,9 @@ public class GetQuery_Tests : SqliteDbClient_Setup
 			SelectColumns = new ColumnList([c0, c1])
 		};
 		var expected = "SELECT" +
-			$" \"{v.Schema}.{v.Name}\".\"{c0Name}\" AS \"{c0Alias}\"," +
-			$" \"{v.Schema}.{v.Name}\".\"{c1Name}\" AS \"{c1Alias}\"" +
-			$" FROM \"{v.Schema}.{v.Name}\";";
+			$" {v.Name}.{c0Name} AS \"{c0Alias}\"," +
+			$" {v.Name}.{c1Name} AS \"{c1Alias}\"" +
+			$" FROM {v.Name};";
 
 		// Act
 		var (query, _) = client.GetQuery(parts).Unsafe().Unwrap();
@@ -167,11 +167,11 @@ public class GetQuery_Tests : SqliteDbClient_Setup
 		var parts = setJoin(new(v.Table), join);
 
 		var expected = "SELECT" +
-			$" * FROM \"{v.Schema}.{v.Name}\"" +
-			$" {joinType} JOIN \"{to0Table.Schema}.{to0Table.Name}\"" +
-			$" ON \"{v.Schema}.{v.Name}\".\"{fromName}\" = \"{to0Table.Schema}.{to0Table.Name}\".\"{to0Name}\"" +
-			$" {joinType} JOIN \"{to1Table.Schema}.{to1Table.Name}\"" +
-			$" ON \"{to0Table.Schema}.{to0Table.Name}\".\"{to0Name}\" = \"{to1Table.Schema}.{to1Table.Name}\".\"{to1Name}\";";
+			$" * FROM {v.Name}" +
+			$" {joinType} JOIN {to0Table.Name}" +
+			$" ON {v.Name}.{fromName} = {to0Table.Name}.{to0Name}" +
+			$" {joinType} JOIN {to1Table.Name}" +
+			$" ON {to0Table.Name}.{to0Name} = {to1Table.Name}.{to1Name};";
 
 		// Act
 		var (query, _) = client.GetQuery(parts).Unsafe().Unwrap();
@@ -221,9 +221,9 @@ public class GetQuery_Tests : SqliteDbClient_Setup
 		var parts = new QueryParts(v.Table) { Where = where };
 
 		var expected = "SELECT *" +
-			$" FROM \"{v.Schema}.{v.Name}\"" +
-			$" WHERE \"{c0Table.Schema}.{c0Table.Name}\".\"{c0Name}\" LIKE @P0" +
-			$" AND \"{c1Table.Schema}.{c1Table.Name}\".\"{c1Name}\" >= @P1;";
+			$" FROM {v.Name}" +
+			$" WHERE {c0Table.Name}.{c0Name} LIKE @P0" +
+			$" AND {c1Table.Name}.{c1Name} >= @P1;";
 
 		// Act
 		var (query, _) = client.GetQuery(parts).Unsafe().Unwrap();
@@ -262,7 +262,7 @@ public class GetQuery_Tests : SqliteDbClient_Setup
 			])
 		};
 
-		var expected = $"SELECT * FROM \"{v.Schema}.{v.Name}\" WHERE ({w0}) AND ({w1});";
+		var expected = $"SELECT * FROM {v.Name} WHERE ({w0}) AND ({w1});";
 
 		// Act
 		var (query, param) = client.GetQuery(parts).Unsafe().Unwrap();
@@ -341,7 +341,7 @@ public class GetQuery_Tests : SqliteDbClient_Setup
 			SortRandom = true
 		};
 
-		var expected = $"SELECT * FROM \"{v.Schema}.{v.Name}\" ORDER BY random();";
+		var expected = $"SELECT * FROM {v.Name} ORDER BY random();";
 
 		// Act
 		var (query, _) = client.GetQuery(parts).Unsafe().Unwrap();
@@ -374,9 +374,9 @@ public class GetQuery_Tests : SqliteDbClient_Setup
 		};
 
 		var expected = "SELECT" +
-			$" * FROM \"{v.Schema}.{v.Name}\" ORDER BY" +
-			$" \"{sort0Table.Schema}.{sort0Table.Name}\".\"{sort0Name}\" ASC," +
-			$" \"{sort1Table.Schema}.{sort1Table.Name}\".\"{sort1Name}\" DESC;";
+			$" * FROM {v.Name} ORDER BY" +
+			$" {sort0Table.Name}.{sort0Name} ASC," +
+			$" {sort1Table.Name}.{sort1Name} DESC;";
 
 		// Act
 		var (query, _) = client.GetQuery(parts).Unsafe().Unwrap();
@@ -393,7 +393,7 @@ public class GetQuery_Tests : SqliteDbClient_Setup
 
 		var max = Rnd.UInt64;
 		var parts = new QueryParts(v.Table) { Maximum = max };
-		var expected = $"SELECT * FROM \"{v.Schema}.{v.Name}\" LIMIT {max};";
+		var expected = $"SELECT * FROM {v.Name} LIMIT {max};";
 
 		// Act
 		var (query, _) = client.GetQuery(parts).Unsafe().Unwrap();
@@ -411,7 +411,7 @@ public class GetQuery_Tests : SqliteDbClient_Setup
 		var skip = Rnd.UInt64;
 		var max = Rnd.UInt64;
 		var parts = new QueryParts(v.Table) { Skip = skip, Maximum = max };
-		var expected = $"SELECT * FROM \"{v.Schema}.{v.Name}\" LIMIT {skip}, {max};";
+		var expected = $"SELECT * FROM {v.Name} LIMIT {skip}, {max};";
 
 		// Act
 		var (query, _) = client.GetQuery(parts).Unsafe().Unwrap();

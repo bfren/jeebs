@@ -12,7 +12,7 @@ public class GetUpdateQuery_Tests : SqliteDbClient_Setup
 	public void Returns_Valid_Update_Query_Without_Version()
 	{
 		// Arrange
-		var (client, v) = Setup();
+		var (client, _) = Setup();
 
 		var schema = Rnd.Str;
 		var name = Rnd.Str;
@@ -40,10 +40,10 @@ public class GetUpdateQuery_Tests : SqliteDbClient_Setup
 
 		var id = Rnd.Lng;
 
-		var expected = $"UPDATE \"{schema}.{name}\" SET" +
-			$" \"{c0Name}\" = @{c0Alias}," +
-			$" \"{c1Name}\" = @{c1Alias}" +
-			$" WHERE \"{c2Name}\" = {id};";
+		var expected = $"UPDATE {name} SET" +
+			$" {c0Name} = @{c0Alias}," +
+			$" {c1Name} = @{c1Alias}" +
+			$" WHERE {c2Name} = {id};";
 
 		// Act
 		var result = client.GetUpdateQueryTest(table, list, c2, id);
@@ -56,7 +56,7 @@ public class GetUpdateQuery_Tests : SqliteDbClient_Setup
 	public void Returns_Valid_Update_Query_With_Version()
 	{
 		// Arrange
-		var (client, v) = Setup();
+		var (client, _) = Setup();
 
 		var schema = Rnd.Str;
 		var name = Rnd.Str;
@@ -90,12 +90,12 @@ public class GetUpdateQuery_Tests : SqliteDbClient_Setup
 
 		var id = Rnd.Lng;
 
-		var expected = $"UPDATE \"{schema}.{name}\" SET" +
-			$" \"{c0Name}\" = @{c0Alias}," +
-			$" \"{c1Name}\" = @{c1Alias}," +
-			$" \"{c3Name}\" = @{c3Alias} + 1" +
-			$" WHERE \"{c2Name}\" = {id}" +
-			$" AND \"{c3Name}\" = @{c3Alias};";
+		var expected = $"UPDATE {name} SET" +
+			$" {c0Name} = @{c0Alias}," +
+			$" {c1Name} = @{c1Alias}," +
+			$" {c3Name} = @{c3Alias} + 1" +
+			$" WHERE {c2Name} = {id}" +
+			$" AND {c3Name} = @{c3Alias};";
 
 		// Act
 		var result = client.GetUpdateQueryTest(table, list, c2, id, c3);
