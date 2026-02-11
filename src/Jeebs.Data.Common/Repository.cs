@@ -42,7 +42,7 @@ public abstract class Repository<TEntity, TId> : Base.Repository<TEntity, TId>, 
 			fOk: _ => LogFunc(nameof(CreateAsync))
 		)
 		.BindAsync(
-			x => Db.ExecuteAsync<TId>(x, entity, CommandType.Text, transaction)
+			x => Db.InsertAsync<TId>(x, entity, CommandType.Text, transaction)
 		);
 
 	/// <inheritdoc/>

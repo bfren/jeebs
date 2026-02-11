@@ -130,7 +130,7 @@ public abstract class Db : IDb
 	public abstract Task<Result<bool>> ExecuteAsync(string query, object? param);
 
 	/// <inheritdoc/>
-	public abstract Task<Result<TReturn>> ExecuteAsync<TReturn>(string query, object? param);
+	public abstract Task<Result<TReturn>> InsertAsync<TReturn>(string query, object? param);
 
 	#region Testing
 

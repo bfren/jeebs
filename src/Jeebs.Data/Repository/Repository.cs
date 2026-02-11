@@ -67,7 +67,7 @@ public abstract class Repository<TEntity, TId> : IRepository<TEntity, TId>
 			fOk: _ => LogFunc(nameof(CreateAsync))
 		)
 		.BindAsync(
-			x => Db.ExecuteAsync<TId>(x, entity)
+			x => Db.InsertAsync<TId>(x, entity)
 		);
 
 	/// <inheritdoc/>

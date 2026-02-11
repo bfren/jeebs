@@ -108,11 +108,11 @@ public interface IDb
 	Task<Result<bool>> ExecuteAsync(string query, object? param);
 
 	/// <summary>
-	/// Execute a query and return a value.
+	/// Insert a record into the database and return the ID.
 	/// </summary>
-	/// <typeparam name="T">Return value type.</typeparam>
+	/// <typeparam name="TId">ID value type.</typeparam>
 	/// <param name="query">Query text.</param>
 	/// <param name="param">Query parameters.</param>
-	/// <returns>Query return value.</returns>
-	Task<Result<T>> ExecuteAsync<T>(string query, object? param);
+	/// <returns>Last insert ID.</returns>
+	Task<Result<TId>> InsertAsync<TId>(string query, object? param);
 }
