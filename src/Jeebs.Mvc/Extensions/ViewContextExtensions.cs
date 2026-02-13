@@ -6,6 +6,6 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 namespace Jeebs.Mvc;
 
 /// <summary>
-/// <see cref="ViewContext"/> Extensions.
+/// <see cref="ViewContext"/> extension methods.
 /// </summary>
 public static partial class ViewContextExtensions { }

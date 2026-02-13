@@ -7,7 +7,7 @@ using Microsoft.Extensions.Configuration;
 namespace Jeebs.Config;
 
 /// <summary>
-/// Extension methods for <see cref="IConfiguration"/> objects.
+/// <see cref="IConfiguration"/> extension methods.
 /// </summary>
 public static class ConfigurationExtensions
 {

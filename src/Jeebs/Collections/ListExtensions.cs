@@ -7,7 +7,7 @@ using System.Collections.Generic;
 namespace Jeebs.Collections;
 
 /// <summary>
-/// Extension methods for <see cref="List{T}"/> objects.
+/// <see cref="List{T}"/> extension methods.
 /// </summary>
 public static class ListExtensions
 {

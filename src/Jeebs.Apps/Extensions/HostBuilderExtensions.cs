@@ -6,6 +6,6 @@ using Microsoft.Extensions.Hosting;
 namespace Jeebs.Apps;
 
 /// <summary>
-/// <see cref="IHostBuilder"/> extensions.
+/// <see cref="IHostBuilder"/> extension methods.
 /// </summary>
 public static partial class HostBuilderExtensions { }

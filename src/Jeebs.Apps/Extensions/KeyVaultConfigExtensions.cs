@@ -6,6 +6,6 @@ using Jeebs.Config.Azure.KeyVault;
 namespace Jeebs.Apps;
 
 /// <summary>
-/// <see cref="KeyVaultConfig"/> extensions.
+/// <see cref="KeyVaultConfig"/> extension methods.
 /// </summary>
 public static partial class KeyVaultConfigExtensions { }

@@ -6,6 +6,6 @@ using Jeebs.Data.Common;
 namespace Jeebs.Data.Adapters.Dapper;
 
 /// <summary>
-/// Extensions for <see cref="ITypeMapper"/> objects.
+/// <see cref="ITypeMapper"/> extension methods.
 /// </summary>
 public static partial class TypeMapperExtensions { }

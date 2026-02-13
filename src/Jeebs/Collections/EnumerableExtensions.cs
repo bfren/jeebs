@@ -9,7 +9,7 @@ using D = Jeebs.Collections.Defaults.PagingValues;
 namespace Jeebs.Collections;
 
 /// <summary>
-/// Extension methods for <see cref="IEnumerable{T}"/> objects.
+/// <see cref="IEnumerable{T}"/> extension methods.
 /// </summary>
 public static class EnumerableExtensions
 {

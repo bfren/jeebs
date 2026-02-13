@@ -6,6 +6,6 @@ using Microsoft.Extensions.DependencyInjection;
 namespace Jeebs.Cqrs;
 
 /// <summary>
-/// Extension methods for <see cref="ServiceCollection"/> objects.
+/// <see cref="IServiceCollection"/> extension methods.
 /// </summary>
 public static partial class ServiceCollectionExtensions { }

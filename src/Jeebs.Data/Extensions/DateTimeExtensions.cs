@@ -6,6 +6,6 @@ using System;
 namespace Jeebs.Data;
 
 /// <summary>
-/// <see cref="DateTime"/> Extensions.
+/// <see cref="DateTime"/> extension methods.
 /// </summary>
 public static partial class DateTimeExtensions { }

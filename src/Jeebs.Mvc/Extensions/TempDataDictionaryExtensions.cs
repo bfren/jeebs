@@ -9,7 +9,7 @@ using Microsoft.AspNetCore.Mvc.ViewFeatures;
 namespace Jeebs.Mvc;
 
 /// <summary>
-/// Extension methods for TempData to add / retrieve alert messages.
+/// <see cref="ITempDataDictionary"/> extension methods.
 /// </summary>
 public static partial class TempDataDictionaryExtensions
 {

@@ -4,7 +4,7 @@
 namespace Jeebs.Collections;
 
 /// <summary>
-/// Extension methods for <see cref="PagedList{T}"/> objects.
+/// <see cref="PagedList{T}"/> extension methods.
 /// </summary>
 public static class PagedListExtensions
 {
