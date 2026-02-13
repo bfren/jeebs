@@ -19,7 +19,7 @@ internal sealed class Db : RqliteDb
 	public Db(IRqliteClientFactory factory, IDbClient client, IOptions<DbConfig> config, ILog<Db> log) :
 		base(factory, client, config, log, "local")
 	{
-		factory.JsonOptions.AddWrapConverters();
+		factory.JsonOptions.Converters.AddWrapConverters();
 
 		Test = new();
 
