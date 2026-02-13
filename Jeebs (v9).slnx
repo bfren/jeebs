@@ -1,0 +1,156 @@
+<Solution>
+  <Folder Name="/apps/">
+    <File Path="apps/.editorconfig" />
+    <File Path="apps/Directory.Build.props" />
+    <Project Path="apps/AppApi/AppApi.csproj">
+      <Build Solution="Release|*" Project="false" />
+    </Project>
+    <Project Path="apps/AppBasic/AppBasic.csproj">
+      <Build Solution="Release|*" Project="false" />
+    </Project>
+    <Project Path="apps/AppConsole/AppConsole.csproj">
+      <Build Solution="Release|*" Project="false" />
+    </Project>
+    <Project Path="apps/AppConsolePg/AppConsolePg.csproj">
+      <Build Solution="Release|*" Project="false" />
+    </Project>
+    <Project Path="apps/AppConsoleRq/AppConsoleRq.csproj">
+      <Build Solution="Release|*" Project="false" />
+    </Project>
+    <Project Path="apps/AppConsoleWp/AppConsoleWp.csproj">
+      <Build Solution="Release|*" Project="false" />
+    </Project>
+    <Project Path="apps/AppMvc/AppMvc.csproj">
+      <Build Solution="Release|*" Project="false" />
+    </Project>
+    <Project Path="apps/AppService/AppService.csproj">
+      <Build Solution="Release|*" Project="false" />
+    </Project>
+    <Project Path="apps/AppWeb/AppWeb.csproj">
+      <Build Solution="Release|*" Project="false" />
+    </Project>
+  </Folder>
+  <Folder Name="/Solution Items/">
+    <File Path=".editorconfig" />
+    <File Path=".github/FUNDING.yml" />
+    <File Path=".github/workflows/publish.yml" />
+    <File Path=".github/workflows/test.yml" />
+    <File Path=".github/workflows/workflow-cleanup.yml" />
+    <File Path=".gitignore" />
+    <File Path="Directory.Packages.props" />
+    <File Path="jeebs-v9.code-workspace" />
+    <File Path="LICENSE" />
+    <File Path="Pack.csproj" />
+    <File Path="README.md" />
+    <File Path="Test.csproj" />
+    <File Path="Version" />
+  </Folder>
+  <Folder Name="/src/">
+    <File Path="src/.editorconfig" />
+    <File Path="src/Directory.Build.props" />
+    <Project Path="src/Jeebs.Calendar/Jeebs.Calendar.csproj" />
+    <Project Path="src/Jeebs.Config/Jeebs.Config.csproj" />
+    <Project Path="src/Jeebs.Cqrs/Jeebs.Cqrs.csproj" />
+    <Project Path="src/Jeebs.Cryptography/Jeebs.Cryptography.csproj" />
+    <Project Path="src/Jeebs.WordPress/Jeebs.WordPress.csproj" />
+    <Project Path="src/Jeebs/Jeebs.csproj" />
+  </Folder>
+  <Folder Name="/src/.Apps/">
+    <Project Path="src/Jeebs.Apps.Web/Jeebs.Apps.Web.csproj" />
+    <Project Path="src/Jeebs.Apps/Jeebs.Apps.csproj" />
+  </Folder>
+  <Folder Name="/src/.Data/">
+    <Project Path="src/Jeebs.Data.Common/Jeebs.Data.Common.csproj" />
+    <Project Path="src/Jeebs.Data.Testing/Jeebs.Data.Testing.csproj" />
+    <Project Path="src/Jeebs.Data/Jeebs.Data.csproj" />
+  </Folder>
+  <Folder Name="/src/.Data/.Adapters/">
+    <Project Path="src/Jeebs.Data.Adapters.Dapper/Jeebs.Data.Adapters.Dapper.csproj" />
+  </Folder>
+  <Folder Name="/src/.Data/.Clients/">
+    <Project Path="src/Jeebs.Data.Clients.MySql/Jeebs.Data.Clients.MySql.csproj" />
+    <Project Path="src/Jeebs.Data.Clients.PostgreSQL/Jeebs.Data.Clients.PostgreSql.csproj" />
+    <Project Path="src/Jeebs.Data.Clients.Rqlite/Jeebs.Data.Clients.Rqlite.csproj" />
+    <Project Path="src/Jeebs.Data.Clients.Sqlite/Jeebs.Data.Clients.Sqlite.csproj" />
+    <Project Path="src/Jeebs.Data.Clients.SqlServer/Jeebs.Data.Clients.SqlServer.csproj" />
+  </Folder>
+  <Folder Name="/src/.Logging/">
+    <Project Path="src/Jeebs.Logging.Serilog.MySql/Jeebs.Logging.Serilog.MySql.csproj" />
+    <Project Path="src/Jeebs.Logging.Serilog.PostgreSql/Jeebs.Logging.Serilog.PostgreSql.csproj" />
+    <Project Path="src/Jeebs.Logging.Serilog/Jeebs.Logging.Serilog.csproj" />
+  </Folder>
+  <Folder Name="/src/.Mvc/">
+    <Project Path="src/Jeebs.Mvc/Jeebs.Mvc.csproj" />
+  </Folder>
+  <Folder Name="/src/.Services/">
+    <Project Path="src/Jeebs.Services.Drawing/Jeebs.Services.Drawing.csproj" />
+    <Project Path="src/Jeebs.Services.Webhook/Jeebs.Services.Webhook.csproj" />
+    <Project Path="src/Jeebs.Services/Jeebs.Services.csproj" />
+  </Folder>
+  <Folder Name="/src/.Services/.Drivers/">
+    <Project Path="src/Jeebs.Services.Drivers.Drawing.Skia/Jeebs.Services.Drivers.Drawing.Skia.csproj" />
+    <Project Path="src/Jeebs.Services.Drivers.Webhook.Slack/Jeebs.Services.Drivers.Webhook.Slack.csproj" />
+  </Folder>
+  <Folder Name="/tests/">
+    <File Path="tests/.editorconfig" />
+    <File Path="tests/Directory.Build.props" />
+    <Project Path="tests/Tests.Jeebs.Calendar/Tests.Jeebs.Calendar.csproj">
+      <Build Solution="Release|*" Project="false" />
+    </Project>
+    <Project Path="tests/Tests.Jeebs.Config/Tests.Jeebs.Config.csproj">
+      <Build Solution="Release|*" Project="false" />
+    </Project>
+    <Project Path="tests/Tests.Jeebs.Cqrs/Tests.Jeebs.Cqrs.csproj">
+      <Build Solution="Release|*" Project="false" />
+    </Project>
+    <Project Path="tests/Tests.Jeebs.Cryptography/Tests.Jeebs.Cryptography.csproj">
+      <Build Solution="Release|*" Project="false" />
+    </Project>
+    <Project Path="tests/Tests.Jeebs.WordPress/Tests.Jeebs.WordPress.csproj">
+      <Build Solution="Release|*" Project="false" />
+    </Project>
+    <Project Path="tests/Tests.Jeebs/Tests.Jeebs.csproj">
+      <Build Solution="Release|*" Project="false" />
+    </Project>
+  </Folder>
+  <Folder Name="/tests/.Data/">
+    <Project Path="tests/Tests.Jeebs.Data.Common/Tests.Jeebs.Data.Common.csproj">
+      <Build Solution="Release|*" Project="false" />
+    </Project>
+    <Project Path="tests/Tests.Jeebs.Data.Testing/Tests.Jeebs.Data.Testing.csproj">
+      <Build Solution="Release|*" Project="false" />
+    </Project>
+    <Project Path="tests/Tests.Jeebs.Data/Tests.Jeebs.Data.csproj">
+      <Build Solution="Release|*" Project="false" />
+    </Project>
+  </Folder>
+  <Folder Name="/tests/.Data/.Adapters/">
+    <Project Path="tests/Tests.Jeebs.Data.Adapters.Dapper/Tests.Jeebs.Data.Adapters.Dapper.csproj">
+      <Build Solution="Release|*" Project="false" />
+    </Project>
+  </Folder>
+  <Folder Name="/tests/.Data/.Clients/">
+    <Project Path="tests/Tests.Jeebs.Data.Clients.MySql/Tests.Jeebs.Data.Clients.MySql.csproj">
+      <Build Solution="Release|*" Project="false" />
+    </Project>
+    <Project Path="tests/Tests.Jeebs.Data.Clients.PostgreSql/Tests.Jeebs.Data.Clients.PostgreSql.csproj">
+      <Build Solution="Release|*" Project="false" />
+    </Project>
+    <Project Path="tests/Tests.Jeebs.Data.Clients.Sqlite/Tests.Jeebs.Data.Clients.Sqlite.csproj">
+      <Build Solution="Release|*" Project="false" />
+    </Project>
+    <Project Path="tests/Tests.Jeebs.Data.Clients.SqlServer/Tests.Jeebs.Data.Clients.SqlServer.csproj">
+      <Build Solution="Release|*" Project="false" />
+    </Project>
+  </Folder>
+  <Folder Name="/tests/.Logging/">
+    <Project Path="tests/Tests.Jeebs.Logging.Serilog/Tests.Jeebs.Logging.Serilog.csproj">
+      <Build Solution="Release|*" Project="false" />
+    </Project>
+  </Folder>
+  <Folder Name="/tests/.Mvc/">
+    <Project Path="tests/Tests.Jeebs.Mvc/Tests.Jeebs.Mvc.csproj">
+      <Build Solution="Release|*" Project="false" />
+    </Project>
+  </Folder>
+</Solution>
