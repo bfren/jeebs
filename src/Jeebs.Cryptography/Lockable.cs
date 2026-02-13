@@ -9,22 +9,15 @@ namespace Jeebs.Cryptography;
 /// Contains contents that can been encrypted.
 /// </summary>
 /// <typeparam name="T">Value type.</typeparam>
-/// <param name="contents">Contents.</param>
-public sealed class Lockable<T>(T contents) : Lockable
+public sealed record class Lockable<T>(T Value) : Lockable, IMonad<Lockable<T>, T>
 {
-	/// <summary>
-	/// Lockable contents.
-	/// </summary>
-	public T Contents { get; private init; } =
-		contents;
-
 	/// <summary>
 	/// Lock this object.
 	/// </summary>
 	/// <param name="key">Encryption key - must be <see cref="Lockable.KeyLength"/> bytes.</param>
 	/// <returns>Locked box.</returns>
 	public Result<Locked<T>> Lock(byte[] key) =>
-		CryptoF.Lock(Contents, key);
+		CryptoF.Lock(Value, key);
 
 	/// <summary>
 	/// Lock this object.
@@ -32,13 +25,13 @@ public sealed class Lockable<T>(T contents) : Lockable
 	/// <param name="key">Encryption key.</param>
 	/// <returns>Locked box.</returns>
 	public Result<Locked<T>> Lock(string key) =>
-		CryptoF.Lock(Contents, key);
+		CryptoF.Lock(Value, key);
 }
 
 /// <summary>
 /// Holds constants for <see cref="Lockable{T}"/>.
 /// </summary>
-public abstract class Lockable
+public abstract record class Lockable
 {
 	/// <summary>
 	/// Length of encryption key (if it's a byte array).

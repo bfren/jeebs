@@ -95,7 +95,7 @@ public class Unlock_Tests
 
 		// Assert
 		var ok = result.AssertOk();
-		Assert.Equal(value, ok.Contents);
+		Assert.Equal(value, ok.Value);
 	}
 
 	[Fact]
@@ -112,6 +112,6 @@ public class Unlock_Tests
 
 		// Assert
 		var ok = result.AssertOk();
-		Assert.Equal(value, ok.Contents);
+		Assert.Equal(value, ok.Value);
 	}
 }

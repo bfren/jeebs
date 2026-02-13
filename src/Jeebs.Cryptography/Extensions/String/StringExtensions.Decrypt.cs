@@ -17,7 +17,7 @@ public static partial class StringExtensions
 	public static Result<T> Decrypt<T>(this string @this, byte[] key) =>
 		from l in JsonF.Deserialise<Locked<T>>(@this)
 		from c in l.Unlock(key)
-		select c.Contents;
+		select c.Value;
 
 	/// <summary>
 	/// Decrypt a string using the specified key.
@@ -29,7 +29,7 @@ public static partial class StringExtensions
 	public static Result<T> Decrypt<T>(this string @this, string key) =>
 		from l in JsonF.Deserialise<Locked<T>>(@this)
 		from c in l.Unlock(key)
-		select c.Contents;
+		select c.Value;
 
 	/// <summary>
 	/// Decrypt a string using the specified key.
