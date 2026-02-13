@@ -37,6 +37,7 @@ public static partial class JsonF
 		};
 
 		Options.AddWrapConverters();
+		Options.Converters.Add(new DateTimeIntJsonConverter());
 		Options.Converters.Add(new DateTimeJsonConverter());
 		Options.Converters.Add(new EnumeratedJsonConverterFactory());
 		Options.Converters.Add(new JsonStringEnumConverter(JsonNamingPolicy.CamelCase));
