@@ -13,7 +13,7 @@ public class Constructor_Tests
 		var box = new Lockable<string>(value);
 
 		// Act
-		var result = box.Contents;
+		var result = box.Value;
 
 		// Assert
 		Assert.Equal(value, result);
