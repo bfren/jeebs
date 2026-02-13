@@ -6,10 +6,7 @@ using SkiaSharp;
 
 namespace Jeebs.Services.Drivers.Drawing.Skia;
 
-/// <summary>
-/// <see cref="ImageFormat"/> extension methods.
-/// </summary>
-public static class ImageFormatExtensions
+public static partial class ImageFormatExtensions
 {
 	/// <summary>
 	/// Return the <see cref="SKEncodedImageFormat"/> equivalent of an <see cref="ImageFormat"/>.
