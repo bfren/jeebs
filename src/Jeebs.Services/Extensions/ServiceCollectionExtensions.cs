@@ -3,9 +3,9 @@
 
 using Microsoft.Extensions.DependencyInjection;
 
-namespace Jeebs.Data;
+namespace Jeebs.Services;
 
 /// <summary>
-/// Extension methods for <see cref="IServiceCollection"/> objects.
+/// <see cref="IServiceCollection"/> Extensions.
 /// </summary>
 public static partial class ServiceCollectionExtensions { }

@@ -1,11 +1,9 @@
 // Jeebs Rapid Application Development
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
-using Microsoft.Extensions.DependencyInjection;
-
-namespace Jeebs.Data;
+namespace Jeebs.WordPress;
 
 /// <summary>
-/// Extension methods for <see cref="IServiceCollection"/> objects.
+/// IServiceCollection extension methods.
 /// </summary>
 public static partial class ServiceCollectionExtensions { }
