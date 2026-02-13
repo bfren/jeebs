@@ -7,22 +7,27 @@ namespace Jeebs;
 
 public readonly partial struct DateTimeInt
 {
-	/// <inheritdoc/>
-	public static DateTimeInt Parse(string? s, IFormatProvider? provider)
+	/// <summary>
+	/// Parse a string as DateTimeInt.
+	/// </summary>
+	/// <param name="s">ReadOnlySpan.</param>
+	/// <param name="provider">IFormatProvider.</param>
+	/// <returns>DateTimeInt</returns>
+	private static DateTimeInt Parse(ReadOnlySpan<char> s, IFormatProvider? provider)
 	{
-		if (string.IsNullOrWhiteSpace(s))
+		if (s.Length == 0)
 		{
 			return MinValue;
 		}
 
 		if (s.Length != 12)
 		{
-			throw new ArgumentException($"{nameof(DateTimeInt)} value must be a 12 characters long", nameof(s));
+			throw new ArgumentException($"{nameof(DateTimeInt)} value must be a 12 characters long.", nameof(s));
 		}
 
 		if (!ulong.TryParse(s, out _))
 		{
-			throw new ArgumentException("Not a valid number", nameof(s));
+			throw new ArgumentException("Not a valid number.", nameof(s));
 		}
 
 		return new(
@@ -35,11 +40,15 @@ public readonly partial struct DateTimeInt
 	}
 
 	/// <inheritdoc/>
+	public static DateTimeInt Parse(string s, IFormatProvider? provider) =>
+		Parse(s.Trim().AsSpan(), provider);
+
+	/// <inheritdoc/>
 	public static bool TryParse(string? s, IFormatProvider? provider, out DateTimeInt result)
 	{
 		try
 		{
-			result = Parse(s, provider);
+			result = Parse(s ?? string.Empty, provider);
 			return true;
 		}
 		catch (Exception)

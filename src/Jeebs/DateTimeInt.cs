@@ -79,7 +79,7 @@ public readonly partial struct DateTimeInt : IEquatable<DateTimeInt>, IParsable<
 	/// </summary>
 	/// <param name="value">DateTime string value - format yyyymmddHHMM.</param>
 	public DateTimeInt(string? value) =>
-		(Year, Month, Day, Hour, Minute) = Parse(value, F.DefaultCulture);
+		(Year, Month, Day, Hour, Minute) = Parse(value ?? string.Empty, F.DefaultCulture);
 
 	/// <summary>
 	/// Construct object from long - will be converted to a 12-digit string with leading zeroes.

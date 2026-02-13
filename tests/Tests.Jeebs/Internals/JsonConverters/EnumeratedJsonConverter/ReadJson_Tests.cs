@@ -1,19 +1,22 @@
 // Jeebs Unit Tests
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
-namespace Jeebs.Functions.JsonConverters.EnumeratedConverter_Tests;
+using Jeebs.Functions;
 
-public class ReadJson_Tests
+namespace Jeebs.Internals.JsonConverters.EnumeratedJsonConverter_Tests;
+
+public class ReadJson_Tests : Setup
 {
 	[Fact]
 	public void Deserialise_Returns_Object_With_Value()
 	{
 		// Arrange
+		var opt = GetOptions();
 		var value = Rnd.Str;
 		var json = $"\"{value}\"";
 
 		// Act
-		var result = JsonF.Deserialise<EnumeratedTest0>(json);
+		var result = JsonF.Deserialise<EnumeratedTest0>(json, opt);
 
 		// Assert
 		var ok = result.AssertOk();
@@ -24,10 +27,11 @@ public class ReadJson_Tests
 	public void Deserialise_Null_Returns_Fail()
 	{
 		// Arrange
+		var opt = GetOptions();
 		var json = JsonF.Empty;
 
 		// Act
-		var result = JsonF.Deserialise<EnumeratedTest0>(json);
+		var result = JsonF.Deserialise<EnumeratedTest0>(json, opt);
 
 		// Assert
 		result.AssertFailure("Cannot deserialise a null or empty string.");
@@ -37,12 +41,13 @@ public class ReadJson_Tests
 	public void Deserialise_Object_With_Enumerated_Property_Returns_Object()
 	{
 		// Arrange
+		var opt = GetOptions();
 		var id = Rnd.Int;
 		var value = Rnd.Str;
-		var json = $"{{ \"id\": {id}, \"enumeratedValue\": \"{value}\" }}";
+		var json = $"{{ \"Id\": {id}, \"EnumeratedValue\": \"{value}\" }}";
 
 		// Act
-		var result = JsonF.Deserialise<EnumeratedWrapperTest0>(json);
+		var result = JsonF.Deserialise<EnumeratedWrapperTest0>(json, opt);
 
 		// Assert
 		var ok = result.AssertOk();
@@ -57,10 +62,11 @@ public class ReadJson_Tests
 	public void Deserialise_Object_With_Enumerated_Property_But_Null_Value_And_Disallow_Empty_Returns_Fail(string? input)
 	{
 		// Arrange
-		var json = $"{{ \"enumeratedValue\": {input} }}";
+		var opt = GetOptions();
+		var json = $"{{ \"EnumeratedValue\": {input} }}";
 
 		// Act
-		var result = JsonF.Deserialise<EnumeratedWrapperTest1>(json);
+		var result = JsonF.Deserialise<EnumeratedWrapperTest1>(json, opt);
 
 		// Assert
 		var fail = result.AssertFailure();
