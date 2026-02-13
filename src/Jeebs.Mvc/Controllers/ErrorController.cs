@@ -3,7 +3,6 @@
 
 using System.Threading.Tasks;
 using Jeebs.Logging;
-using Jeebs.Mvc.Extensions;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 

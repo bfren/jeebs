@@ -3,7 +3,6 @@
 
 using System;
 using System.Text;
-using Jeebs.Calendar.Extensions;
 using Jeebs.Calendar.Functions;
 using Jeebs.Calendar.Models;
 
