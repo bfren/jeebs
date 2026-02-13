@@ -1,9 +1,11 @@
 // Jeebs Rapid Application Development
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
-namespace Jeebs.Calendar.Extensions;
+using System.Text;
+
+namespace Jeebs.Calendar;
 
 /// <summary>
-/// StringBuilder extensions.
+/// <see cref="StringBuilder"/> extension methods.
 /// </summary>
 internal static partial class StringBuilderExtensions { }

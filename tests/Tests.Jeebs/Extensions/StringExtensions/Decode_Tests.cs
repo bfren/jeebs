@@ -1,7 +1,7 @@
 // Jeebs Unit Tests
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
-namespace Jeebs.Extensions.StringExtensions_Tests;
+namespace Jeebs.StringExtensions_Tests;
 
 public class Decode_Tests
 {

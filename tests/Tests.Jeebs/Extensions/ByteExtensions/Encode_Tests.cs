@@ -1,9 +1,9 @@
 // Jeebs Unit Tests
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
-using static Jeebs.Extensions.StringExtensions_Tests.Encode_Tests;
+using static Jeebs.StringExtensions_Tests.Encode_Tests;
 
-namespace Jeebs.Extensions.ByteExtensions_Tests;
+namespace Jeebs.ByteExtensions_Tests;
 
 public class Encode_Tests
 {

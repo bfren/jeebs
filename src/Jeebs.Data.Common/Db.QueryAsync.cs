@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 using Jeebs.Collections;
 using Jeebs.Data.Functions;
 using Jeebs.Data.Query;
-using Defaults = Jeebs.Collections.Defaults.PagingValues;
+using Defaults = Jeebs.Constants.PagingValues;
 
 namespace Jeebs.Data.Common;
 

@@ -6,14 +6,6 @@ using System;
 namespace Jeebs.Data;
 
 /// <summary>
-/// <see cref="DateTime"/> Extensions.
+/// <see cref="DateTime"/> extension methods.
 /// </summary>
-public static class DateTimeExtensions
-{
-	/// <summary>
-	/// Return a MySql formatted DateTime string for the specified date (yyyy-MM-dd HH:mm:ss).
-	/// </summary>
-	/// <param name="this">DateTime object.</param>
-	public static string ToMySqlString(this DateTime @this) =>
-		@this.ToString("yyyy-MM-dd HH:mm:ss", F.DefaultCulture);
-}
+public static partial class DateTimeExtensions { }

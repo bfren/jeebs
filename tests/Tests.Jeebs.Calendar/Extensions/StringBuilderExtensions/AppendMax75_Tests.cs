@@ -3,7 +3,7 @@
 
 using System.Text;
 
-namespace Jeebs.Calendar.Extensions.StringBuilderExtensions_Tests;
+namespace Jeebs.Calendar.StringBuilderExtensions_Tests;
 
 public class AppendMax75_Tests
 {
