@@ -9,6 +9,9 @@ namespace Jeebs;
 /// <summary>
 /// DateTime Integer.
 /// </summary>
+/// <remarks>
+/// DateTimes are assumed to be - or converted into - UTC values before being stored.
+/// </remarks>
 public readonly partial struct DateTimeInt : IEquatable<DateTimeInt>, IParsable<DateTimeInt>
 {
 	private const string FormatString = "000000000000";
@@ -66,6 +69,12 @@ public readonly partial struct DateTimeInt : IEquatable<DateTimeInt>, IParsable<
 	public DateTimeInt(DateTime dt) : this(dt.Year, dt.Month, dt.Day, dt.Hour, dt.Minute) { }
 
 	/// <summary>
+	/// Construct object using a DateTimeOffset object.
+	/// </summary>
+	/// <param name="dt">DateTimeOffset.</param>
+	public DateTimeInt(DateTimeOffset dt) : this(dt.ToUniversalTime().DateTime) { }
+
+	/// <summary>
 	/// Construct object from string - must be exactly 12 characters long (yyyymmddHHMM).
 	/// </summary>
 	/// <param name="value">DateTime string value - format yyyymmddHHMM.</param>
@@ -98,7 +107,7 @@ public readonly partial struct DateTimeInt : IEquatable<DateTimeInt>, IParsable<
 		IsValidDateTime() switch
 		{
 			{ } x when x.Valid =>
-				new DateTime(Year, Month, Day, Hour, Minute, 0),
+				new DateTime(Year, Month, Day, Hour, Minute, 0, DateTimeKind.Utc),
 
 			{ } x =>
 				R.Fail("Invalid {Part} - 'Y:{Year} M:{Month} D:{Day} H:{Hour} m:{Minute}'.", x.Part, Year, Month, Day, Hour, Minute)
@@ -113,10 +122,10 @@ public readonly partial struct DateTimeInt : IEquatable<DateTimeInt>, IParsable<
 		IsValidDateTime().Valid switch
 		{
 			true =>
-				$"{Year:0000}{Month:00}{Day:00}{Hour:00}{Minute:00}",
+				string.Format(F.DefaultCulture, "{0:0000}{1:00}{2:00}{3:00}{4:00}", Year, Month, Day, Hour, Minute),
 
 			false =>
-				0.ToString(FormatString, F.DefaultCulture)
+				FormatString
 		};
 
 	/// <summary>
@@ -126,10 +135,10 @@ public readonly partial struct DateTimeInt : IEquatable<DateTimeInt>, IParsable<
 	public long ToLong() =>
 		IsValidDateTime().Valid switch
 		{
-			true =>
-				long.Parse(ToString(), F.DefaultCulture),
+			true when long.TryParse(ToString(), out var value) =>
+				value,
 
-			false =>
+			_ =>
 				0
 		};
 

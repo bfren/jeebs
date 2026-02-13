@@ -2,7 +2,6 @@
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using System;
-using System.Diagnostics.CodeAnalysis;
 
 namespace Jeebs;
 
@@ -11,7 +10,7 @@ public readonly partial struct DateTimeInt
 	/// <inheritdoc/>
 	public static DateTimeInt Parse(string? s, IFormatProvider? provider)
 	{
-		if (string.IsNullOrEmpty(s))
+		if (string.IsNullOrWhiteSpace(s))
 		{
 			return MinValue;
 		}
@@ -36,11 +35,11 @@ public readonly partial struct DateTimeInt
 	}
 
 	/// <inheritdoc/>
-	public static bool TryParse([NotNullWhen(true)] string? s, IFormatProvider? provider, [MaybeNullWhen(false)] out DateTimeInt result)
+	public static bool TryParse(string? s, IFormatProvider? provider, out DateTimeInt result)
 	{
 		try
 		{
-			result = Parse(s!, provider);
+			result = Parse(s, provider);
 			return true;
 		}
 		catch (Exception)
