@@ -10,7 +10,7 @@ public readonly partial struct DateTimeInt
 	/// <inheritdoc/>
 	public static DateTimeInt Parse(string? s, IFormatProvider? provider)
 	{
-		if (string.IsNullOrEmpty(s))
+		if (string.IsNullOrWhiteSpace(s))
 		{
 			return MinValue;
 		}
