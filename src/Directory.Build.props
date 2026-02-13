@@ -24,13 +24,13 @@
   <!-- Enable Internal Testing -->
   <ItemGroup Label="Test Internals">
     <AssemblyAttribute Include="System.Runtime.CompilerServices.InternalsVisibleToAttribute">
-      <_Parameter1>Tests.$(AssemblyName)</_Parameter1>
+      <_Parameter1>Tests.$(MSBuildProjectName)</_Parameter1>
     </AssemblyAttribute>
   </ItemGroup>
 
   <!-- Get Paths to Files -->
   <PropertyGroup>
-    <SolutionFilePath>$([MSBuild]::GetPathOfFileAbove('Jeebs (v9).sln'))</SolutionFilePath>
+    <SolutionFilePath>$([MSBuild]::GetPathOfFileAbove('Jeebs (v9).slnx'))</SolutionFilePath>
     <SolutionRootPath>$([System.IO.Path]::GetDirectoryName('$(SolutionFilePath)'))</SolutionRootPath>
   </PropertyGroup>
   <PropertyGroup>
