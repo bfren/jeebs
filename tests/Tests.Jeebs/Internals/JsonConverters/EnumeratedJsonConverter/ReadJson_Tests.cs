@@ -44,7 +44,7 @@ public class ReadJson_Tests : Setup
 		var opt = GetOptions();
 		var id = Rnd.Int;
 		var value = Rnd.Str;
-		var json = $"{{ \"id\": {id}, \"enumeratedValue\": \"{value}\" }}";
+		var json = $"{{ \"Id\": {id}, \"EnumeratedValue\": \"{value}\" }}";
 
 		// Act
 		var result = JsonF.Deserialise<EnumeratedWrapperTest0>(json, opt);
@@ -63,7 +63,7 @@ public class ReadJson_Tests : Setup
 	{
 		// Arrange
 		var opt = GetOptions();
-		var json = $"{{ \"enumeratedValue\": {input} }}";
+		var json = $"{{ \"EnumeratedValue\": {input} }}";
 
 		// Act
 		var result = JsonF.Deserialise<EnumeratedWrapperTest1>(json, opt);
