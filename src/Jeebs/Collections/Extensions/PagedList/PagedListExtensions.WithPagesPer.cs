@@ -3,10 +3,7 @@
 
 namespace Jeebs.Collections;
 
-/// <summary>
-/// <see cref="PagedList{T}"/> extension methods.
-/// </summary>
-public static class PagedListExtensions
+public static partial class PagedListExtensions
 {
 	/// <summary>
 	/// Modify 'pages per' in pagination (the other paging values cannot be changed).
