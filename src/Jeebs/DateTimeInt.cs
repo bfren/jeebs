@@ -66,13 +66,13 @@ public readonly partial struct DateTimeInt : IEquatable<DateTimeInt>, IParsable<
 	/// Construct object using a DateTime object.
 	/// </summary>
 	/// <param name="dt">DateTime.</param>
-	public DateTimeInt(DateTime dt) : this(new DateTimeOffset(dt.ToUniversalTime())) { }
+	public DateTimeInt(DateTime dt) : this(dt.Year, dt.Month, dt.Day, dt.Hour, dt.Minute) { }
 
 	/// <summary>
 	/// Construct object using a DateTimeOffset object.
 	/// </summary>
 	/// <param name="dt">DateTimeOffset.</param>
-	public DateTimeInt(DateTimeOffset dt) : this(dt.Year, dt.Month, dt.Day, dt.Hour, dt.Minute) { }
+	public DateTimeInt(DateTimeOffset dt) : this(dt.ToUniversalTime().DateTime) { }
 
 	/// <summary>
 	/// Construct object from string - must be exactly 12 characters long (yyyymmddHHMM).

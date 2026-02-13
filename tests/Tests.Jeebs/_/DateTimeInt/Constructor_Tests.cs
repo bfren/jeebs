@@ -33,6 +33,20 @@ public class Constructor_Tests
 	}
 
 	[Fact]
+	public void From_DateTimeOffset_Sets_Values()
+	{
+		// Arrange
+		const string expected = "200001020504";
+		var input = new DateTimeOffset(2000, 1, 2, 3, 4, 5, TimeSpan.FromHours(-2));
+
+		// Act
+		var result = new DateTimeInt(input);
+
+		// Assert
+		Assert.Equal(expected, result.ToString());
+	}
+
+	[Fact]
 	public void From_Valid_String_Sets_Values()
 	{
 		// Arrange
