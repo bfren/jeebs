@@ -11,7 +11,7 @@ public readonly partial struct DateTimeInt
 
 	/// <inheritdoc/>
 	public static bool operator !=(DateTimeInt left, DateTimeInt right) =>
-		!(left == right);
+		!left.Equals(right);
 
 	/// <inheritdoc/>
 	public static bool operator <(DateTimeInt left, DateTimeInt right) =>
