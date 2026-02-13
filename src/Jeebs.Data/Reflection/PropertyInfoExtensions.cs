@@ -8,7 +8,7 @@ using Jeebs.Data.Attributes;
 namespace Jeebs.Data.Reflection;
 
 /// <summary>
-/// PropertyInfo extensions: IsReadonly.
+/// <see cref="PropertyInfo"/> extension methods.
 /// </summary>
 public static class PropertyInfoExtensions
 {

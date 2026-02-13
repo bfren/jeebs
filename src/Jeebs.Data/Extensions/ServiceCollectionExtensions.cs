@@ -6,27 +6,6 @@ using Microsoft.Extensions.DependencyInjection;
 namespace Jeebs.Data;
 
 /// <summary>
-/// Extension methods for <see cref="IServiceCollection"/> objects.
+/// <see cref="IServiceCollection"/> extension methods.
 /// </summary>
-public static class ServiceCollectionExtensions
-{
-	/// <summary>
-	/// Add Db and DbClient instances to the <see cref="IServiceCollection"/>.
-	/// </summary>
-	/// <typeparam name="TDb">Database type.</typeparam>
-	/// <typeparam name="TDbClient">Database Client type.</typeparam>
-	/// <param name="this">IServiceCollection.</param>
-	/// <returns>IServiceCollection.</returns>
-	public static IServiceCollection AddData<TDb, TDbClient>(this IServiceCollection @this)
-		where TDb : class, IDb
-		where TDbClient : class, IDbClient
-	{
-		_ = @this.AddSingleton<TDb>();
-		_ = @this.AddTransient<IDb>(p => p.GetRequiredService<TDb>());
-
-		_ = @this.AddTransient<TDbClient>();
-		_ = @this.AddTransient<IDbClient, TDbClient>();
-
-		return @this;
-	}
-}
+public static partial class ServiceCollectionExtensions { }

@@ -2,7 +2,7 @@
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using Jeebs.Logging;
-using Jeebs.Mvc.Extensions;
+using Jeebs.Mvc;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AppMvc.Controllers;
