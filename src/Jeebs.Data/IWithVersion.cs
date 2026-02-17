@@ -3,9 +3,7 @@
 
 namespace Jeebs.Data;
 
-/// <summary>
-/// Object (Entity or Model) with Version property.
-/// </summary>
+/// <inheritdoc cref="IWithVersion{TId, TValue}"/>
 public interface IWithVersion : IWithId
 {
 	/// <summary>
@@ -13,3 +11,13 @@ public interface IWithVersion : IWithId
 	/// </summary>
 	long Version { get; }
 }
+
+/// <summary>
+/// Object (Entity or Model) with Version property.
+/// </summary>
+/// <typeparam name="TId">ID Type.</typeparam>
+/// <typeparam name="TValue">ID Value type</typeparam>
+public interface IWithVersion<TId, TValue> : IWithVersion, IWithId<TId, TValue>
+	where TId : class, IId<TId, TValue>, new()
+	where TValue : struct
+{ }
