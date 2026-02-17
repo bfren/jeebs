@@ -4,7 +4,7 @@
 using Jeebs.Services.Drawing;
 using Jeebs.Services.Drivers.Drawing.Skia;
 using Microsoft.AspNetCore.Mvc;
-using Wrap.Extensions;
+using Wrap.Mvc;
 
 namespace AppMvc;
 
@@ -21,6 +21,6 @@ public sealed class App : Jeebs.Apps.Web.MvcApp
 	protected override void ConfigureServicesMvcOptions(HostBuilderContext ctx, MvcOptions opt)
 	{
 		base.ConfigureServicesMvcOptions(ctx, opt);
-		opt.AddIdModelBinder();
+		opt.ModelBinderProviders.AddWrapModelBinders();
 	}
 }

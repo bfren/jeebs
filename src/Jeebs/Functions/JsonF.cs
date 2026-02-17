@@ -36,7 +36,7 @@ public static partial class JsonF
 			NumberHandling = JsonNumberHandling.AllowReadingFromString
 		};
 
-		Options.AddWrapConverters();
+		Options.Converters.AddWrapConverters();
 		Options.Converters.Add(new DateTimeIntJsonConverter());
 		Options.Converters.Add(new DateTimeJsonConverter());
 		Options.Converters.Add(new EnumeratedJsonConverterFactory());
