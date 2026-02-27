@@ -11,7 +11,9 @@
     <Project Path="apps/AppConsole/AppConsole.csproj">
       <Build Solution="Release|*" Project="false" />
     </Project>
-    <Project Path="apps/AppConsoleAuthDb/AppConsoleAuthDb.csproj" Id="ab8f57a7-2e02-4a38-8650-a98aedaa01ff" />
+    <Project Path="apps/AppConsoleAuthDb/AppConsoleAuthDb.csproj" Id="ab8f57a7-2e02-4a38-8650-a98aedaa01ff">
+      <Build Solution="Release|*" Project="false" />
+    </Project>
     <Project Path="apps/AppConsolePg/AppConsolePg.csproj">
       <Build Solution="Release|*" Project="false" />
     </Project>
