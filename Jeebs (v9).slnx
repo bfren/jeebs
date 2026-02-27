@@ -59,6 +59,14 @@
     <Project Path="src/Jeebs.Apps.Web/Jeebs.Apps.Web.csproj" />
     <Project Path="src/Jeebs.Apps/Jeebs.Apps.csproj" />
   </Folder>
+  <Folder Name="/src/.Auth/">
+    <Project Path="src/Jeebs.Auth.Data/Jeebs.Auth.Data.csproj" Id="71a1c72b-4f48-4da3-9a5f-bfa83706eee0" />
+  </Folder>
+  <Folder Name="/src/.Auth/.Clients/">
+    <Project Path="src/Jeebs.Auth.Data.Clients.MySql/Jeebs.Auth.Data.Clients.MySql.csproj" Id="d95b5ef6-a7f2-40dc-a322-d5da445b96cb" />
+    <Project Path="src/Jeebs.Auth.Data.Clients.PostgreSql/Jeebs.Auth.Data.Clients.PostgreSql.csproj" Id="6d5aad1d-c3d4-440d-a485-dc6560b166ee" />
+    <Project Path="src/Jeebs.Auth.Data.Clients.Sqlite/Jeebs.Auth.Data.Clients.Sqlite.csproj" Id="3b329ea2-b930-4a7b-ba0f-087fe49c8ac7" />
+  </Folder>
   <Folder Name="/src/.Data/">
     <Project Path="src/Jeebs.Data.Common/Jeebs.Data.Common.csproj" />
     <Project Path="src/Jeebs.Data.Testing/Jeebs.Data.Testing.csproj" />

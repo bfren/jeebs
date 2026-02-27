@@ -32,7 +32,7 @@
     <PackageVersion Include="NSubstitute" Version="5.3.0" />
     <PackageVersion Include="NSubstitute.Analyzers.CSharp" Version="1.0.17" />
     <PackageVersion Include="Rnd" Version="10.2.1" />
-    <PackageVersion Include="Rqlite" Version="1.1.0" />
+    <PackageVersion Include="Rqlite" Version="1.1.1" />
     <PackageVersion Include="Serilog" Version="4.3.1" />
     <PackageVersion Include="Serilog.Extensions.Hosting" Version="10.0.0" />
     <PackageVersion Include="Serilog.Sinks.Async" Version="2.1.0" />
@@ -40,16 +40,17 @@
     <PackageVersion Include="Serilog.Sinks.File" Version="7.0.0" />
     <PackageVersion Include="Serilog.Sinks.Seq" Version="9.0.0" />
     <PackageVersion Include="Serilog.Sinks.Slack" Version="2.2.3" />
+    <PackageVersion Include="Simple.Migrations" Version="0.9.21" />
     <PackageVersion Include="SkiaSharp" Version="3.119.2" />
     <PackageVersion Include="Sodium.Core" Version="1.4.0" />
     <PackageVersion Include="System.Collections.Immutable" Version="10.0.2" />
     <PackageVersion Include="System.Data.SQLite.Core" Version="1.0.119" />
     <PackageVersion Include="System.IdentityModel.Tokens.Jwt" Version="8.15.0" />
     <PackageVersion Include="System.Text.Json" Version="10.0.2" />
-    <PackageVersion Include="Wrap" Version="1.2.0" />
-    <PackageVersion Include="Wrap.Id.Dapper" Version="1.2.0" />
-    <PackageVersion Include="Wrap.Mvc" Version="1.2.0" />
-    <PackageVersion Include="Wrap.Testing" Version="1.2.0" />
+    <PackageVersion Include="Wrap" Version="1.2.1" />
+    <PackageVersion Include="Wrap.Id.Dapper" Version="1.2.1" />
+    <PackageVersion Include="Wrap.Mvc" Version="1.2.1" />
+    <PackageVersion Include="Wrap.Testing" Version="1.2.1" />
     <PackageVersion Include="xunit.runner.visualstudio" Version="3.1.5" />
     <PackageVersion Include="xunit.v3" Version="3.2.2" />
     <PackageVersion Include="xunit.v3.assert" Version="3.2.2" />
