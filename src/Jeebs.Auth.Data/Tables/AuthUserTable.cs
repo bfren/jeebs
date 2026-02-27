@@ -2,6 +2,7 @@
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using Jeebs.Auth.Data.Entities;
+using Jeebs.Auth.Data.Models;
 using Jeebs.Data.Attributes;
 using Jeebs.Data.Map;
 
@@ -24,23 +25,23 @@ public sealed record class AuthUserTable() : Table(AuthDb.Schema, TableName)
 	public string Id =>
 		"user_id";
 
-	/// <inheritdoc cref="AuthUserModel.EmailAddress"/>
+	/// <inheritdoc cref="AuthUserModel{TRole}.EmailAddress"/>
 	public string EmailAddress =>
 		"user_email";
 
-	/// <inheritdoc cref="AuthUserModel.FriendlyName"/>
+	/// <inheritdoc cref="AuthUserModel{TRole}.FriendlyName"/>
 	public string FriendlyName =>
 		"user_friendly_name";
 
-	/// <inheritdoc cref="AuthUserModel.GivenName"/>
+	/// <inheritdoc cref="AuthUserModel{TRole}.GivenName"/>
 	public string GivenName =>
 		"user_given_name";
 
-	/// <inheritdoc cref="AuthUserModel.FriendlyName"/>
+	/// <inheritdoc cref="AuthUserModel{TRole}.FriendlyName"/>
 	public string FamilyName =>
 		"user_family_name";
 
-	/// <inheritdoc cref="AuthUserModel.IsSuper"/>
+	/// <inheritdoc cref="AuthUserModel{TRole}.IsSuper"/>
 	public string IsSuper =>
 		"user_is_super";
 
@@ -56,14 +57,6 @@ public sealed record class AuthUserTable() : Table(AuthDb.Schema, TableName)
 	/// <inheritdoc cref="AuthUserEntity.PasswordHash"/>
 	public string PasswordHash =>
 		"user_password_hash";
-
-	/// <inheritdoc cref="AuthUserEntity.TotpSecret"/>
-	public string TotpSecret =>
-		"user_totp_secret";
-
-	/// <inheritdoc cref="AuthUserEntity.TotpBackupCodes"/>
-	public string TotpBackupCodes =>
-		"user_totp_backup_codes";
 
 	/// <inheritdoc cref="AuthUserEntity.IsEnabled"/>
 	public string IsEnabled =>
