@@ -10,8 +10,6 @@
     <PackageVersion Include="Azure.Identity" Version="1.17.1" />
     <PackageVersion Include="coverlet.collector" Version="8.0.0" />
     <PackageVersion Include="Dapper" Version="2.1.66" />
-    <PackageVersion Include="MaybeF" Version="10.0.0" />
-    <PackageVersion Include="MaybeF.Testing" Version="10.0.0" />
     <PackageVersion Include="Microsoft.Data.SqlClient" Version="6.1.4" />
     <PackageVersion Include="Microsoft.Extensions.Caching.Memory" Version="10.0.3" />
     <PackageVersion Include="Microsoft.Extensions.Configuration" Version="10.0.3" />
