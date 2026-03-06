@@ -4,7 +4,7 @@
 using System;
 using System.Data.SQLite;
 using Jeebs.Auth.Data.Tables;
-using Jeebs.Data;
+using Jeebs.Data.Common;
 using SimpleMigrations;
 using SimpleMigrations.Console;
 using SimpleMigrations.DatabaseProvider;

@@ -4,9 +4,8 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Threading.Tasks;
-using Jeebs.Data.Common;
 
-namespace Jeebs.Data;
+namespace Jeebs.Data.Common;
 
 /// <summary>
 /// ADO.NET compatible database adapter for querying and mapping to result objects.

@@ -3,7 +3,7 @@
 
 using System;
 using Jeebs.Auth.Data.Tables;
-using Jeebs.Data;
+using Jeebs.Data.Common;
 using MySqlConnector;
 using SimpleMigrations;
 using SimpleMigrations.Console;

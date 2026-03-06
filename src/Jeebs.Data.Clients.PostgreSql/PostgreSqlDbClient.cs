@@ -4,6 +4,7 @@
 using System.Collections.Generic;
 using System.Data.Common;
 using Jeebs.Data.Adapters.Dapper;
+using Jeebs.Data.Common;
 using Jeebs.Data.Enums;
 using Jeebs.Data.Map;
 using Npgsql;
