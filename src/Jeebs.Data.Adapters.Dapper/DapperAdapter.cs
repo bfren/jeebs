@@ -22,7 +22,12 @@ public sealed class DapperAdapter : IAdapter
 	/// Return a default instance of the adapter.
 	/// </summary>
 	public static DapperAdapter DefaultInstance =>
-		new(DapperTypeMapper.Instance);
+		new();
+
+	/// <summary>
+	/// Inject dependencies.
+	/// </summary>
+	public DapperAdapter() : this(DapperTypeMapper.Instance) { }
 
 	/// <summary>
 	/// Inject dependencies.
