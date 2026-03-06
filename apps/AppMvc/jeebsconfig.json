@@ -13,21 +13,21 @@
         }
       }
     },
-		"logging": {
-			"minimum": "Debug",
-			"overrides": {
-				"Microsoft": "Warning",
-				"Microsoft.Hosting.Lifetime": "Information"
-			},
-			"providers": {
-				"console.local": {
-					"enabled": true
-				},
-				"seq.live": {
-					"enabled": true
-				}
-			}
-		},
+    "logging": {
+      "minimum": "Debug",
+      "overrides": {
+        "Microsoft": "Warning",
+        "Microsoft.Hosting.Lifetime": "Information"
+      },
+      "providers": {
+        "console.local": {
+          "enabled": true
+        },
+        "seq.live": {
+          "enabled": true
+        }
+      }
+    },
     "services": {
       "console": {
         "local": {}
@@ -37,6 +37,12 @@
           "server": "",
           "apiKey": ""
         }
+      }
+    },
+    "web": {
+      "auth": {
+        "enabled": true,
+        "scheme": "cookies"
       }
     }
   }
