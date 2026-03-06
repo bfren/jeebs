@@ -37,7 +37,6 @@ public interface IAuthUserRepository : IRepository<AuthUserEntity, AuthUserId>
 	/// Update the user's last sign in to now.
 	/// </summary>
 	/// <param name="userId">User ID.</param>
-	/// <param name="transaction">IDbTransaction.</param>
 	/// <returns>Success or failure.</returns>
 	Task<Result<bool>> UpdateLastSignInAsync(AuthUserId userId);
 }

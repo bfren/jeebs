@@ -10,6 +10,7 @@ namespace Jeebs.Auth.Data.Models;
 /// <summary>
 /// Auth User model.
 /// </summary>
+/// <typeparam name="TRole">Auth Role type.</typeparam>
 public abstract record class AuthUserModel<TRole>() : IAuthUser<TRole>
 	where TRole : AuthRoleModel
 {

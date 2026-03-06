@@ -13,6 +13,7 @@ using Jeebs.Data.Enums;
 
 namespace Jeebs.Auth.Data;
 
+/// <inheritdoc cref="IAuthDataProvider"/>
 public sealed class AuthDataProvider : IAuthDataProvider
 {
 	/// <inheritdoc/>
