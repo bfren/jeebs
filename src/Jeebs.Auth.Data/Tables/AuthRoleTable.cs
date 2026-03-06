@@ -33,6 +33,11 @@ public sealed record class AuthRoleTable() : Table(AuthDb.Schema, TableName)
 
 	#region From AuthRoleEntity
 
+	/// <inheritdoc cref="AuthRoleEntity.Version"/>
+	[Version]
+	public string Version =>
+		"role_version";
+
 	/// <inheritdoc cref="AuthRoleEntity.Description"/>
 	public string Description =>
 		"role_description";
