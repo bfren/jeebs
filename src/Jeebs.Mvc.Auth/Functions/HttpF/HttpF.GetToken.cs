@@ -20,7 +20,7 @@ public static partial class HttpF
 				JsonWebToken.Wrap(authorisationHeader["Bearer ".Length..].Trim()),
 
 			_ =>
-				R.Fail("Invalid Authorization header.")
+				R.Fail("Invalid Authorization header: '{Header}'.", authorisationHeader)
 					.Ctx(nameof(HttpF), nameof(GetToken))
 		};
 }
