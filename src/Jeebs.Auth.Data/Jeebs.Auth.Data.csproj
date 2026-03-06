@@ -1,6 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <ItemGroup>
     <ProjectReference Include="..\Jeebs.Cryptography\Jeebs.Cryptography.csproj" />
-    <ProjectReference Include="..\Jeebs.Data\Jeebs.Data.csproj" />
+    <ProjectReference Include="..\Jeebs.Data.Common\Jeebs.Data.Common.csproj" />
   </ItemGroup>
 </Project>

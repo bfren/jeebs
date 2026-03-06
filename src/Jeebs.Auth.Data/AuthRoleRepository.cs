@@ -4,7 +4,7 @@
 using System.Threading.Tasks;
 using Jeebs.Auth.Data.Entities;
 using Jeebs.Auth.Data.Ids;
-using Jeebs.Data.Repository;
+using Jeebs.Data.Common;
 using Jeebs.Logging;
 
 namespace Jeebs.Auth.Data;

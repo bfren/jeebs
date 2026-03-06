@@ -4,7 +4,7 @@
 using Jeebs.Auth.Data.Entities;
 using Jeebs.Auth.Data.Tables;
 using Jeebs.Config.Db;
-using Jeebs.Data;
+using Jeebs.Data.Common;
 using Jeebs.Data.Map;
 using Jeebs.Logging;
 using Microsoft.Extensions.Options;
@@ -12,37 +12,31 @@ using Microsoft.Extensions.Options;
 namespace Jeebs.Auth.Data;
 
 /// <inheritdoc cref="IAuthDb"/>
-public abstract class AuthDb : Db, IAuthDb
+public sealed class AuthDb : Db, IAuthDb
 {
 	/// <summary>
-	/// Schema name
+	/// Schema name.
 	/// </summary>
 	public static string Schema { get; } = "auth";
 
 	/// <inheritdoc/>
 	public new IAuthDbClient Client { get; private init; }
 
-	/// <summary>
-	/// Role Table
-	/// </summary>
+	/// <inheritdoc/>
 	public AuthRoleTable Role { get; }
 
-	/// <summary>
-	/// User Table
-	/// </summary>
+	/// <inheritdoc/>
 	public AuthUserTable User { get; }
 
-	/// <summary>
-	/// User Role Table
-	/// </summary>
+	/// <inheritdoc/>
 	public AuthUserRoleTable UserRole { get; }
 
 	/// <summary>
-	/// Create object
+	/// Create object.
 	/// </summary>
-	/// <param name="client">IAuthDbClient</param>
-	/// <param name="config">DbConfig</param>
-	/// <param name="log">ILog</param>
+	/// <param name="client">IAuthDbClient.</param>
+	/// <param name="config">DbConfig.</param>
+	/// <param name="log">ILog.</param>
 	public AuthDb(IAuthDbClient client, IOptions<DbConfig> config, ILog<AuthDb> log) :
 		base(client, config, log, config.Value.Authentication)
 	{
@@ -64,7 +58,8 @@ public abstract class AuthDb : Db, IAuthDb
 	}
 
 	/// <inheritdoc/>
-	public abstract void AddTypeHandlers();
+	public void AddTypeHandlers() =>
+		Client.TypeMap(m => m.AddIdTypeHandlers());
 
 	/// <inheritdoc/>
 	public void MigrateToLatest() =>

@@ -5,8 +5,8 @@ using System.Threading.Tasks;
 using Jeebs.Auth.Data.Entities;
 using Jeebs.Auth.Data.Ids;
 using Jeebs.Cryptography;
+using Jeebs.Data.Common;
 using Jeebs.Data.Enums;
-using Jeebs.Data.Repository;
 using Jeebs.Logging;
 
 namespace Jeebs.Auth.Data;

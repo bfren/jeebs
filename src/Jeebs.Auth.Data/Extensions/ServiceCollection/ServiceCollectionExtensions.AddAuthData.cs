@@ -1,7 +1,7 @@
 // Jeebs Rapid Application Development
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
-using Jeebs.Data;
+using Jeebs.Data.Common;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Jeebs.Auth.Data;
@@ -30,8 +30,12 @@ public static partial class ServiceCollectionExtensions
 		}
 
 		// Register Auth repositories
+		_ = services.AddTransient<AuthRoleRepository>();
+		_ = services.AddTransient<IAuthRoleRepository>(s => s.GetRequiredService<AuthRoleRepository>());
 		_ = services.AddTransient<AuthUserRepository>();
 		_ = services.AddTransient<IAuthUserRepository>(s => s.GetRequiredService<AuthUserRepository>());
+		_ = services.AddTransient<AuthUserRoleRepository>();
+		_ = services.AddTransient<IAuthUserRoleRepository>(s => s.GetRequiredService<AuthUserRoleRepository>());
 
 		// Register Auth provider
 		_ = services.AddTransient<AuthDataProvider>();
