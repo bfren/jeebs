@@ -126,6 +126,9 @@
       <Build Solution="Release|*" Project="false" />
     </Project>
   </Folder>
+  <Folder Name="/tests/.Auth/">
+    <Project Path="tests/Tests.Jeebs.Auth.Jwt/Tests.Jeebs.Auth.Jwt.csproj" Id="2f18d12f-21c1-4a6b-981b-dc0b614f0e12" />
+  </Folder>
   <Folder Name="/tests/.Data/">
     <Project Path="tests/Tests.Jeebs.Data.Common/Tests.Jeebs.Data.Common.csproj">
       <Build Solution="Release|*" Project="false" />
