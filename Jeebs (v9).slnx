@@ -165,6 +165,7 @@
     </Project>
   </Folder>
   <Folder Name="/tests/.Mvc/">
+    <Project Path="tests/Tests.Jeebs.Mvc.Auth/Tests.Jeebs.Mvc.Auth.csproj" Id="872ebc69-641f-4560-b838-93b7c4e88922" />
     <Project Path="tests/Tests.Jeebs.Mvc/Tests.Jeebs.Mvc.csproj">
       <Build Solution="Release|*" Project="false" />
     </Project>
