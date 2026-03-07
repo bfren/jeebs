@@ -4,17 +4,17 @@
 namespace Jeebs.Auth.Jwt.Constants;
 
 /// <summary>
-/// JWT claim types
+/// Claim types for User Principals.
 /// </summary>
-public static class JwtClaimTypes
+public static class ClaimTypes
 {
 	/// <summary>
-	/// User ID claim type
+	/// User ID claim type.
 	/// </summary>
 	public static readonly string UserId = "jeebs:user:id";
 
 	/// <summary>
-	/// IsSuper claim type
+	/// IsSuper claim type.
 	/// </summary>
 	public static readonly string IsSuper = "jeebs:user:isSuper";
 }

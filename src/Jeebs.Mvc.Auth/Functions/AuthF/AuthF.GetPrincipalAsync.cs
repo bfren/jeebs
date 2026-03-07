@@ -27,21 +27,21 @@ public static partial class AuthF
 		// Create claims object
 		var claims = new List<Claim>
 		{
-			new (JwtClaimTypes.UserId, user.Id.Value.ToString(CultureInfo.InvariantCulture), ClaimValueTypes.Integer32),
-			new (ClaimTypes.Name, user.FriendlyName ?? user.EmailAddress, ClaimValueTypes.String),
-			new (ClaimTypes.Email, user.EmailAddress, ClaimValueTypes.Email),
+			new (Jeebs.Auth.Jwt.Constants.ClaimTypes.UserId, user.Id.Value.ToString(CultureInfo.InvariantCulture), ClaimValueTypes.Integer32),
+			new (System.Security.Claims.ClaimTypes.Name, user.FriendlyName ?? user.EmailAddress, ClaimValueTypes.String),
+			new (System.Security.Claims.ClaimTypes.Email, user.EmailAddress, ClaimValueTypes.Email),
 		};
 
 		// Add super permission
 		if (user.IsSuper)
 		{
-			claims.Add(new(JwtClaimTypes.IsSuper, true.ToString(), ClaimValueTypes.Boolean));
+			claims.Add(new(Jeebs.Auth.Jwt.Constants.ClaimTypes.IsSuper, true.ToString(), ClaimValueTypes.Boolean));
 		}
 
 		// Add roles
 		foreach (var role in user.Roles)
 		{
-			claims.Add(new(ClaimTypes.Role, role.Name, ClaimValueTypes.String));
+			claims.Add(new(System.Security.Claims.ClaimTypes.Role, role.Name, ClaimValueTypes.String));
 		}
 
 		// Add custom Claims
