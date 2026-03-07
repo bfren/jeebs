@@ -8,16 +8,13 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace Jeebs.Mvc.Auth;
 
-/// <summary>
-/// Extension methods for IServiceCollection
-/// </summary>
-public static class ServiceCollectionExtensions
+public static partial class ServiceCollectionExtensions
 {
 	/// <summary>
-	/// Add authentication
+	/// Add authentication using settings from <paramref name="config"/>.
 	/// </summary>
-	/// <param name="this">IServiceCollection</param>
-	/// <param name="config">IConfiguration</param>
+	/// <param name="this">IServiceCollection.</param>
+	/// <param name="config">IConfiguration.</param>
 	/// <exception cref="AuthNotEnabledException"></exception>
 	public static AuthBuilder AddAuthentication(this IServiceCollection @this, IConfiguration config)
 	{
