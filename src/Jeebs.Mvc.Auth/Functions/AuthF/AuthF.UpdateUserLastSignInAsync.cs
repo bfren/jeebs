@@ -16,7 +16,8 @@ public static partial class AuthF
 	/// <param name="auth">IAuthDataProvider.</param>
 	/// <param name="user">AuthUserId.</param>
 	/// <param name="log">ILog.</param>
-	public static async Task<Maybe<bool>> UpdateUserLastSignInAsync(
+	/// <returns>Success or failure.</returns>
+	public static async Task<bool> UpdateUserLastSignInAsync(
 		IAuthDataProvider auth,
 		AuthUserId user,
 		ILog log
@@ -25,10 +26,7 @@ public static partial class AuthF
 		log.Vrb("Updating last sign in for user {UserId}.", user.Value);
 		return await auth.User
 			.UpdateLastSignInAsync(user)
-			.AuditAsync(fFail: log.Failure)
-			.MatchAsync(
-				fOk: x => M.Wrap(x),
-				fFail: _ => false
-			);
+			.IfFailedAsync(log.Failure)
+			.UnwrapAsync(ifFailed: _ => false);
 	}
 }
