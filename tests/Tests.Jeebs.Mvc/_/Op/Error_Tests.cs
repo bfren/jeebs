@@ -36,6 +36,6 @@ public class Error_Tests
 		var op = Assert.IsType<Op<bool>>(result);
 		Assert.False(op.Value);
 		Assert.Equal(AlertType.Error, op.Message.Type);
-		Assert.Equal(failure.ToString(), op.Message.Text);
+		Assert.Equal(failure.Message, op.Message.Text);
 	}
 }

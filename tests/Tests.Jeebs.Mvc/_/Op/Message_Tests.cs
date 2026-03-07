@@ -49,6 +49,6 @@ public class Message_Tests
 
 		// Assert
 		Assert.Equal(AlertType.Error, result.Type);
-		Assert.Equal(failure.ToString(), result.Text);
+		Assert.Equal(failure.Message, result.Text);
 	}
 }
