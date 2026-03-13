@@ -14,7 +14,7 @@ public sealed record class ConsoleConfig : IOptions<ConsoleConfig>, IServiceConf
 	/// Log message template.
 	/// </summary>
 	public string Template { get; init; } =
-		"[{Timestamp:yyMMdd HHmm} {Level:u3}] {Message:lj} | {SourceContext}{NewLine}";
+		"[{Timestamp:yyMMdd HHmm} {Level:u3}] {Message:lj} | {SourceContext}{NewLine}{Exception}";
 
 	/// <summary>
 	/// Whether or not to add a prefix to the output.

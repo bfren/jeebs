@@ -1,0 +1,30 @@
+// Jeebs Rapid Application Development
+// Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
+
+using Jeebs.Auth.Data.Ids;
+
+namespace Jeebs.Auth.Data.Entities;
+
+/// <summary>
+/// Auth User/Role relationship entity.
+/// </summary>
+public sealed record class AuthUserRoleEntity : IWithId<AuthUserRoleId, long>, IAuthUserRole
+{
+	/// <summary>
+	/// User Role ID.
+	/// </summary>
+	public AuthUserRoleId Id { get; init; } =
+		new();
+
+	/// <summary>
+	/// User ID.
+	/// </summary>
+	public AuthUserId UserId { get; init; } =
+		new();
+
+	/// <summary>
+	/// Role ID.
+	/// </summary>
+	public AuthRoleId RoleId { get; init; } =
+		new();
+}

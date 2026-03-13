@@ -17,7 +17,7 @@ public sealed record class JeebsConfig : IOptions<JeebsConfig>
 	public static readonly string Key = "jeebs";
 
 	/// <summary>
-	/// App congiguration.
+	/// App configuration.
 	/// </summary>
 	public App.AppConfig App { get; init; } = new();
 
@@ -32,7 +32,7 @@ public sealed record class JeebsConfig : IOptions<JeebsConfig>
 	public Db.DbConfig Db { get; init; } = new();
 
 	/// <summary>
-	/// Logging congiguration.
+	/// Logging configuration.
 	/// </summary>
 	public Logging.LoggingConfig Logging { get; init; } = new();
 
@@ -42,7 +42,7 @@ public sealed record class JeebsConfig : IOptions<JeebsConfig>
 	public Services.ServicesConfig Services { get; init; } = new();
 
 	/// <summary>
-	/// Web congiguration.
+	/// Web configuration.
 	/// </summary>
 	public Web.WebConfig Web { get; init; } = new();
 

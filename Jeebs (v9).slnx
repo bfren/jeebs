@@ -11,6 +11,9 @@
     <Project Path="apps/AppConsole/AppConsole.csproj">
       <Build Solution="Release|*" Project="false" />
     </Project>
+    <Project Path="apps/AppConsoleAuthDb/AppConsoleAuthDb.csproj" Id="ab8f57a7-2e02-4a38-8650-a98aedaa01ff">
+      <Build Solution="Release|*" Project="false" />
+    </Project>
     <Project Path="apps/AppConsolePg/AppConsolePg.csproj">
       <Build Solution="Release|*" Project="false" />
     </Project>
@@ -59,6 +62,15 @@
     <Project Path="src/Jeebs.Apps.Web/Jeebs.Apps.Web.csproj" />
     <Project Path="src/Jeebs.Apps/Jeebs.Apps.csproj" />
   </Folder>
+  <Folder Name="/src/.Auth/">
+    <Project Path="src/Jeebs.Auth.Data/Jeebs.Auth.Data.csproj" Id="71a1c72b-4f48-4da3-9a5f-bfa83706eee0" />
+    <Project Path="src/Jeebs.Auth.Jwt/Jeebs.Auth.Jwt.csproj" Id="719480bd-f890-4f03-94e2-dd308e701b68" />
+  </Folder>
+  <Folder Name="/src/.Auth/.Clients/">
+    <Project Path="src/Jeebs.Auth.Data.Clients.MySql/Jeebs.Auth.Data.Clients.MySql.csproj" Id="d95b5ef6-a7f2-40dc-a322-d5da445b96cb" />
+    <Project Path="src/Jeebs.Auth.Data.Clients.PostgreSql/Jeebs.Auth.Data.Clients.PostgreSql.csproj" Id="6d5aad1d-c3d4-440d-a485-dc6560b166ee" />
+    <Project Path="src/Jeebs.Auth.Data.Clients.Sqlite/Jeebs.Auth.Data.Clients.Sqlite.csproj" Id="3b329ea2-b930-4a7b-ba0f-087fe49c8ac7" />
+  </Folder>
   <Folder Name="/src/.Data/">
     <Project Path="src/Jeebs.Data.Common/Jeebs.Data.Common.csproj" />
     <Project Path="src/Jeebs.Data.Testing/Jeebs.Data.Testing.csproj" />
@@ -80,6 +92,7 @@
     <Project Path="src/Jeebs.Logging.Serilog/Jeebs.Logging.Serilog.csproj" />
   </Folder>
   <Folder Name="/src/.Mvc/">
+    <Project Path="src/Jeebs.Mvc.Auth/Jeebs.Mvc.Auth.csproj" Id="04120d15-367b-4e63-85f0-653d981f0555" />
     <Project Path="src/Jeebs.Mvc/Jeebs.Mvc.csproj" />
   </Folder>
   <Folder Name="/src/.Services/">
@@ -112,6 +125,9 @@
     <Project Path="tests/Tests.Jeebs/Tests.Jeebs.csproj">
       <Build Solution="Release|*" Project="false" />
     </Project>
+  </Folder>
+  <Folder Name="/tests/.Auth/">
+    <Project Path="tests/Tests.Jeebs.Auth.Jwt/Tests.Jeebs.Auth.Jwt.csproj" Id="2f18d12f-21c1-4a6b-981b-dc0b614f0e12" />
   </Folder>
   <Folder Name="/tests/.Data/">
     <Project Path="tests/Tests.Jeebs.Data.Common/Tests.Jeebs.Data.Common.csproj">
@@ -149,6 +165,7 @@
     </Project>
   </Folder>
   <Folder Name="/tests/.Mvc/">
+    <Project Path="tests/Tests.Jeebs.Mvc.Auth/Tests.Jeebs.Mvc.Auth.csproj" Id="872ebc69-641f-4560-b838-93b7c4e88922" />
     <Project Path="tests/Tests.Jeebs.Mvc/Tests.Jeebs.Mvc.csproj">
       <Build Solution="Release|*" Project="false" />
     </Project>

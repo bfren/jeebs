@@ -1,0 +1,48 @@
+{
+  "jeebs": {
+    "app": {
+      "name": "Auth Database",
+      "suite": "Jeebs"
+    },
+    "db": {
+      "default": "arwen",
+      "connections": {
+        "arwen-mariadb": {
+          "connectionString": ""
+        },
+        "arwen-postgres": {
+          "connectionString": ""
+        },
+        "local-sqlite": {
+          "connectionString": ""
+        }
+      }
+    },
+    "logging": {
+      "minimum": "Verbose",
+      "overrides": {
+        "Microsoft": "Warning",
+        "Microsoft.Hosting.Lifetime": "Information"
+      },
+      "providers": {
+        "console.local": {
+          "enabled": true
+        },
+        "seq.live": {
+          "enabled": true
+        }
+      }
+    },
+    "services": {
+      "console": {
+        "local": {}
+      },
+      "seq": {
+        "live": {
+          "server": "",
+          "apiKey": ""
+        }
+      }
+    }
+  }
+}

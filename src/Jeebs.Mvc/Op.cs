@@ -56,7 +56,7 @@ public record class Op<T> : Op, IOp<T>
 			_ =>
 				Result.Match(
 					fOk: _ => Alert.Success(nameof(AlertType.Success)),
-					fFail: r => Alert.Error(r.ToString() ?? r.GetType().Name)
+					fFail: r => Alert.Error(F.Format(r.Message, r.Args))
 				)
 		};
 		init;

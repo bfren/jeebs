@@ -1,0 +1,5 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\Jeebs.Auth.Jwt\Jeebs.Auth.Jwt.csproj" />
+  </ItemGroup>
+</Project>
