@@ -19,7 +19,7 @@ public sealed class PostgreSqlDbClient : Jeebs.Data.Clients.PostgreSql.PostgreSq
 			UPDATE {AuthDb.Schema}.{AuthUserTable.TableName}
 			SET {new AuthUserTable().LastSignedIn} = NOW()
 			WHERE {new AuthUserTable().Id} = @id
-			RETURNING *;
+			RETURNING COUNT(*);
 		";
 
 	private static void DoMigration(string connectionString, Action<SimpleMigrator> act)

@@ -23,7 +23,7 @@ public sealed class MySqlDbClient : Jeebs.Data.Clients.MySql.MySqlDbClient, IAut
 			UPDATE `{AuthDb.Schema}.{AuthUserTable.TableName}`
 			SET `{new AuthUserTable().LastSignedIn}` = NOW()
 			WHERE `{new AuthUserTable().Id}` = @id;
-			RETURN ROW_COUNT();
+			SELECT ROW_COUNT();
 		";
 
 	private static void DoMigration(string connectionString, Action<SimpleMigrator> act)

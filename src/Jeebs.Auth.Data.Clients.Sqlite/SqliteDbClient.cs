@@ -23,7 +23,7 @@ public sealed class SqliteDbClient : Jeebs.Data.Clients.Sqlite.SqliteDbClient, I
 			UPDATE ""{AuthDb.Schema}.{AuthUserTable.TableName}""
 			SET ""{new AuthUserTable().LastSignedIn}"" = datetime(""now"")
 			WHERE ""{new AuthUserTable().Id}"" = @id
-			RETURNING *;
+			RETURNING COUNT(*);
 		";
 
 	private static void DoMigration(string connectionString, Action<SimpleMigrator> act)
