@@ -14,7 +14,7 @@
       }
     },
     "logging": {
-      "minimum": "Debug",
+      "minimum": "Verbose",
       "overrides": {
         "Microsoft": "Warning",
         "Microsoft.Hosting.Lifetime": "Information"
