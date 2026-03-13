@@ -63,7 +63,7 @@ public class SerilogLogger : Log
 
 	/// <inheritdoc/>
 	public override void Vrb(Exception ex, string message, params object?[] args) =>
-		logger.ForContext("Exception", ex, true).Verbose(Prefix(message), args);
+		logger.Verbose(ex, Prefix(message), args);
 
 	/// <inheritdoc/>
 	public override void Dbg(string message, params object?[] args) =>
@@ -71,7 +71,7 @@ public class SerilogLogger : Log
 
 	/// <inheritdoc/>
 	public override void Dbg(Exception ex, string message, params object?[] args) =>
-		logger.ForContext("Exception", ex, true).Debug(Prefix(message), args);
+		logger.Debug(ex, Prefix(message), args);
 
 	/// <inheritdoc/>
 	public override void Inf(string message, params object?[] args) =>
@@ -79,7 +79,7 @@ public class SerilogLogger : Log
 
 	/// <inheritdoc/>
 	public override void Inf(Exception ex, string message, params object?[] args) =>
-		logger.ForContext("Exception", ex, true).Information(Prefix(message), args);
+		logger.Information(ex, Prefix(message), args);
 
 	/// <inheritdoc/>
 	public override void Wrn(string message, params object?[] args) =>
@@ -87,7 +87,7 @@ public class SerilogLogger : Log
 
 	/// <inheritdoc/>
 	public override void Wrn(Exception ex, string message, params object?[] args) =>
-		logger.ForContext("Exception", ex, true).Warning(Prefix(message), args);
+		logger.Warning(ex, Prefix(message), args);
 
 	/// <inheritdoc/>
 	public override void Err(string message, params object?[] args) =>
@@ -95,7 +95,7 @@ public class SerilogLogger : Log
 
 	/// <inheritdoc/>
 	public override void Err(Exception ex, string message, params object?[] args) =>
-		logger.ForContext("Exception", ex, true).Error(Prefix(message), args);
+		logger.Error(ex, Prefix(message), args);
 
 	/// <inheritdoc/>
 	public override void Ftl(string message, params object?[] args) =>
@@ -103,7 +103,7 @@ public class SerilogLogger : Log
 
 	/// <inheritdoc/>
 	public override void Ftl(Exception ex, string message, params object?[] args) =>
-		logger.ForContext("Exception", ex, true).Fatal(Prefix(message), args);
+		logger.Fatal(ex, Prefix(message), args);
 
 	/// <inheritdoc/>
 	public override void Dispose()
