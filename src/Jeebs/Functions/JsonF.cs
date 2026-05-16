@@ -32,8 +32,9 @@ public static partial class JsonF
 		{
 			DefaultIgnoreCondition = JsonIgnoreCondition.Never,
 			DictionaryKeyPolicy = JsonNamingPolicy.CamelCase,
-			PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
-			NumberHandling = JsonNumberHandling.AllowReadingFromString
+			NumberHandling = JsonNumberHandling.AllowReadingFromString,
+			PropertyNameCaseInsensitive = true,
+			PropertyNamingPolicy = JsonNamingPolicy.CamelCase
 		};
 
 		Options.Converters.AddWrapConverters();

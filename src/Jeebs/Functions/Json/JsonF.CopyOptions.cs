@@ -2,6 +2,7 @@
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using System.Text.Json;
+using System.Text.Json.Serialization;
 
 namespace Jeebs.Functions;
 
@@ -15,10 +16,11 @@ public static partial class JsonF
 	{
 		var copy = new JsonSerializerOptions
 		{
-			DefaultIgnoreCondition = Options.DefaultIgnoreCondition,
-			DictionaryKeyPolicy = Options.DictionaryKeyPolicy,
-			PropertyNamingPolicy = Options.PropertyNamingPolicy,
-			NumberHandling = Options.NumberHandling
+			DefaultIgnoreCondition = JsonIgnoreCondition.Never,
+			DictionaryKeyPolicy = JsonNamingPolicy.CamelCase,
+			NumberHandling = JsonNumberHandling.AllowReadingFromString,
+			PropertyNameCaseInsensitive = true,
+			PropertyNamingPolicy = JsonNamingPolicy.CamelCase
 		};
 
 		foreach (var item in Options.Converters)
