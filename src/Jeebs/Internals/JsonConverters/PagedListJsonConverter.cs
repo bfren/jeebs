@@ -24,7 +24,7 @@ public sealed class PagedListJsonConverter<T> : JsonConverter<IPagedList<T>>
 	public override IPagedList<T> Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
 	{
 		var wrapper = JsonSerializer.Deserialize<PagedListJsonWrapper<T>>(ref reader, options);
-		return new PagedList<T>(wrapper.Values, wrapper.Items);
+		return new PagedList<T>(wrapper.Values ?? new PagingValues(), wrapper.Items ?? []);
 	}
 
 	/// <summary>
