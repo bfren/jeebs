@@ -111,4 +111,25 @@ public sealed record class PagingValues : IPagingValues
 		Skip = (int)(FirstItem > 0 ? FirstItem - 1 : 0);
 		Take = (int)ItemsPer;
 	}
+
+	/// <summary>
+	/// Create concrete implementation from interface values.
+	/// </summary>
+	/// <param name="values">Interface values.</param>
+	/// <returns>Concrete implementation.</returns>
+	public static PagingValues From(IPagingValues values) =>
+		new()
+		{
+			FirstItem = values.FirstItem,
+			Items = values.Items,
+			ItemsPer = values.ItemsPer,
+			LastItem = values.LastItem,
+			LowerPage = values.LowerPage,
+			Page = values.Page,
+			Pages = values.Pages,
+			PagesPer = values.PagesPer,
+			Skip = values.Skip,
+			Take = values.Take,
+			UpperPage = values.UpperPage
+		};
 }

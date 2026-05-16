@@ -32,14 +32,17 @@ public static partial class JsonF
 		{
 			DefaultIgnoreCondition = JsonIgnoreCondition.Never,
 			DictionaryKeyPolicy = JsonNamingPolicy.CamelCase,
-			PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
-			NumberHandling = JsonNumberHandling.AllowReadingFromString
+			NumberHandling = JsonNumberHandling.AllowReadingFromString,
+			PropertyNameCaseInsensitive = true,
+			PropertyNamingPolicy = JsonNamingPolicy.CamelCase
 		};
 
 		Options.Converters.AddWrapConverters();
 		Options.Converters.Add(new DateTimeIntJsonConverter());
 		Options.Converters.Add(new DateTimeJsonConverter());
 		Options.Converters.Add(new EnumeratedJsonConverterFactory());
+		Options.Converters.Add(new ImmutableListJsonConverterFactory());
 		Options.Converters.Add(new JsonStringEnumConverter(JsonNamingPolicy.CamelCase));
+		Options.Converters.Add(new PagedListJsonConverterFactory());
 	}
 }
