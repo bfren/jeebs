@@ -19,6 +19,11 @@ public sealed class DapperAdapter : IAdapter
 	public ITypeMapper Mapper { get; init; }
 
 	/// <summary>
+	/// [Optional] Caching service.
+	/// </summary>
+	private ICacheService Cache { get; init; }
+
+	/// <summary>
 	/// Return a default instance of the adapter.
 	/// </summary>
 	public static DapperAdapter DefaultInstance =>
@@ -27,14 +32,15 @@ public sealed class DapperAdapter : IAdapter
 	/// <summary>
 	/// Inject dependencies.
 	/// </summary>
-	public DapperAdapter() : this(DapperTypeMapper.Instance) { }
+	public DapperAdapter() : this(DapperTypeMapper.Instance, new NullCacheService()) { }
 
 	/// <summary>
 	/// Inject dependencies.
 	/// </summary>
 	/// <param name="mapper">ITypeMapper.</param>
-	public DapperAdapter(ITypeMapper mapper) =>
-		Mapper = mapper;
+	/// <param name="cache">ICacheService.</param>
+	public DapperAdapter(ITypeMapper mapper, ICacheService cache) =>
+		(Mapper, Cache) = (mapper, cache);
 
 	/// <inheritdoc/>
 	public Task<Result<int>> ExecuteAsync(IDbTransaction transaction, string query, object? param, CommandType type) =>
@@ -64,14 +70,18 @@ public sealed class DapperAdapter : IAdapter
 	/// <inheritdoc/>
 	public Task<Result<IEnumerable<T>>> QueryAsync<T>(IDbTransaction transaction, string query, object? param, CommandType type) =>
 		R.TryAsync(
-			() => transaction.Connection!.QueryAsync<T>(query, param, transaction, commandType: type),
+			() => Cache.GetOrCreateAsync(query, param,
+				() => transaction.Connection!.QueryAsync<T>(query, param, transaction, commandType: type)
+			),
 			ex => Fail(nameof(QueryAsync), ex, query, param)
 		);
 
 	/// <inheritdoc/>
 	public Task<Result<T>> QuerySingleAsync<T>(IDbTransaction transaction, string query, object? param, CommandType type) =>
 		R.TryAsync(
-			() => transaction.Connection!.QuerySingleAsync<T>(query, param, transaction, commandType: type),
+			() => Cache.GetOrCreateAsync(query, param,
+				() => transaction.Connection!.QuerySingleAsync<T>(query, param, transaction, commandType: type)
+			),
 			ex => Fail(nameof(QuerySingleAsync), ex, query, param)
 		);
 
