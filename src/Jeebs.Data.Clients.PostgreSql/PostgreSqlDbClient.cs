@@ -17,7 +17,7 @@ public partial class PostgreSqlDbClient : Common.DbClient
 	/// <summary>
 	/// Create default instance using DapperAdapter.
 	/// </summary>
-	public PostgreSqlDbClient() : base(new DapperAdapter(new PostgreSqlDbTypeMapper())) { }
+	public PostgreSqlDbClient() : base(new DapperAdapter(new PostgreSqlDbTypeMapper(), new NullCacheService())) { }
 
 	/// <summary>
 	/// For testing - inject IAdapter.
