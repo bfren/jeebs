@@ -32,7 +32,7 @@ public abstract class TermCustomField : CustomField<TermCustomField.Term>
 		QueryTerms = queryTerms;
 
 	/// <inheritdoc/>
-	public override Task<Result<bool>> HydrateAsync(IWpDb db, IUnitOfWork w, MetaDictionary meta, bool isRequired)
+	public override async Task<Result<bool>> HydrateAsync(IWpDb db, IUnitOfWork w, MetaDictionary meta, bool isRequired)
 	{
 		// First, get the Term ID from the meta dictionary
 		// If meta doesn't contain the key and this is a required field, return failure
@@ -46,15 +46,14 @@ public abstract class TermCustomField : CustomField<TermCustomField.Term>
 			if (isRequired)
 			{
 				return R.Fail("Meta Key '{Key}' not found for Custom Field '{Type}'.", Key, GetType().Name)
-					.Ctx(GetType().Name, nameof(HydrateAsync))
-					.AsTask<bool>();
+					.Ctx(GetType().Name, nameof(HydrateAsync));
 			}
 
-			return R.False.AsTask();
+			return R.False;
 		}
 
 		// If we're here we have a Term ID, so get it and hydrate the custom field
-		return
+		return await
 			R.Wrap(
 				ValueStr
 			)
