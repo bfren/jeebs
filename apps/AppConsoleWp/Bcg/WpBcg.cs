@@ -14,10 +14,12 @@ namespace AppConsoleWp.Bcg;
 /// <remarks>
 /// Create instance.
 /// </remarks>
+/// <param name="dbClient">IDbClient.</param>
 /// <param name="dbConfig">DbConfig.</param>
 /// <param name="wpConfig">WpBcgConfig.</param>
 /// <param name="log">ILog.</param>
 public sealed class WpBcg(
+	Jeebs.Data.Common.IDbClient dbClient,
 	IOptions<DbConfig> dbConfig,
 	IOptions<WpBcgConfig> wpConfig,
 	Jeebs.Logging.ILog<WpBcg> log
@@ -35,7 +37,7 @@ public sealed class WpBcg(
 	Entities.TermTaxonomy,
 	Entities.User,
 	Entities.UserMeta
->(dbConfig, wpConfig, log)
+>(dbClient, dbConfig, wpConfig, log)
 {
 
 	/// <summary>

@@ -14,10 +14,12 @@ namespace AppConsoleWp.Usa;
 /// <remarks>
 /// Create instance.
 /// </remarks>
+/// <param name="dbClient">IDbClient.</param>
 /// <param name="dbConfig">DbConfig.</param>
 /// <param name="wpConfig">WpUsaConfig.</param>
 /// <param name="log">ILog.</param>
 public sealed class WpUsa(
+	Jeebs.Data.Common.IDbClient dbClient,
 	IOptions<DbConfig> dbConfig,
 	IOptions<WpUsaConfig> wpConfig,
 	ILog<WpUsa> log
@@ -35,7 +37,7 @@ public sealed class WpUsa(
 	Entities.TermTaxonomy,
 	Entities.User,
 	Entities.UserMeta
->(dbConfig, wpConfig, log)
+>(dbClient, dbConfig, wpConfig, log)
 {
 
 	/// <summary>

@@ -3,6 +3,7 @@
 
 using AppConsoleWp.Bcg;
 using AppConsoleWp.Usa;
+using Jeebs.Data.Common;
 using Jeebs.WordPress;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -22,5 +23,8 @@ internal sealed class App : Jeebs.Apps.App
 		// Add WordPress
 		services.AddWordPressInstance("bcg").Using<WpBcg, WpBcgConfig>(ctx.Configuration);
 		services.AddWordPressInstance("usa").Using<WpUsa, WpUsaConfig>(ctx.Configuration);
+
+		// Add data query caching
+		services.AddDataQueryCache();
 	}
 }
