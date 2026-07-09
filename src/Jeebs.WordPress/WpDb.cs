@@ -10,7 +10,6 @@ using Jeebs.Data.Map;
 using Jeebs.Logging;
 using Jeebs.WordPress.Entities;
 using Jeebs.WordPress.Entities.Ids;
-using Jeebs.WordPress.Functions;
 using Jeebs.WordPress.TypeHandlers;
 using Microsoft.Extensions.Options;
 
@@ -56,11 +55,6 @@ public sealed class WpDb<TC, TCm, TL, TO, TP, TPm, TT, TTm, TTr, TTt, TU, TUm> :
 	/// <inheritdoc/>
 	public IWpDbSchema Schema { get; private init; }
 
-	/// <inheritdoc cref="WpDb{Tc, Tcm, Tl, To, Tp, Tpm, Tt, Ttm, Ttr, Ttt, Tu, Tum}.WpDb(IDbClient, IOptions{DbConfig}, IOptions{WpConfig}, ILog)"/>
-	public WpDb(IOptions<DbConfig> dbConfig, IOptions<WpConfig> wpConfig, ILog log) :
-		this(DbF.CreateClient(), dbConfig, wpConfig, log)
-	{ }
-
 	/// <summary>
 	/// Create tables and map entity types.
 	/// </summary>
@@ -68,7 +62,7 @@ public sealed class WpDb<TC, TCm, TL, TO, TP, TPm, TT, TTm, TTr, TTt, TU, TUm> :
 	/// <param name="dbConfig">Database configuration.</param>
 	/// <param name="wpConfig">WordPress configuration.</param>
 	/// <param name="log">ILog.</param>
-	internal WpDb(IDbClient client, IOptions<DbConfig> dbConfig, IOptions<WpConfig> wpConfig, ILog log) :
+	public WpDb(IDbClient client, IOptions<DbConfig> dbConfig, IOptions<WpConfig> wpConfig, ILog log) :
 		base(client, dbConfig, log, wpConfig.Value.Db)
 	{
 		// Log WordPress config
