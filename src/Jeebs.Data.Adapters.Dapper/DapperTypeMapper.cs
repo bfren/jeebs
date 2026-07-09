@@ -23,7 +23,7 @@ public class DapperTypeMapper : ITypeMapper
 	/// <summary>
 	/// Default (global) instance.
 	/// </summary>
-	internal static DapperTypeMapper Instance =>
+	public static DapperTypeMapper Instance =>
 		LazyInstance.Value;
 
 	/// <summary>

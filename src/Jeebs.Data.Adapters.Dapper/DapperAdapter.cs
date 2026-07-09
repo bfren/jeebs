@@ -32,7 +32,7 @@ public sealed class DapperAdapter : IAdapter
 	/// <summary>
 	/// Inject dependencies.
 	/// </summary>
-	public DapperAdapter() : this(DapperTypeMapper.Instance, new NullCacheService()) { }
+	private DapperAdapter() : this(DapperTypeMapper.Instance, new NullCacheService()) { }
 
 	/// <summary>
 	/// Inject dependencies.
