@@ -4,7 +4,7 @@
 using System;
 using System.Threading.Tasks;
 
-namespace Jeebs.Data.Adapters.Dapper;
+namespace Jeebs.Data.Common;
 
 /// <summary>
 /// Cache service to improve query performance.

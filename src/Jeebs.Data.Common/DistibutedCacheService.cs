@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using Jeebs.Functions;
 using Microsoft.Extensions.Caching.Distributed;
 
-namespace Jeebs.Data.Adapters.Dapper;
+namespace Jeebs.Data.Common;
 
 /// <inheritdoc/>
 /// <param name="cache">The distributed cache instance.</param>

@@ -4,7 +4,7 @@
 using System;
 using System.Threading.Tasks;
 
-namespace Jeebs.Data.Adapters.Dapper;
+namespace Jeebs.Data.Common;
 
 /// <summary>
 /// Null cache service - simply runs the fetch function without caching the result.
