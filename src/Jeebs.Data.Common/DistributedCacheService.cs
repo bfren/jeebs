@@ -10,11 +10,16 @@ namespace Jeebs.Data.Common;
 
 /// <inheritdoc/>
 /// <param name="cache">The distributed cache instance.</param>
-/// <param name="relativeExpiration">The relative expiration time.</param>
-public sealed class DistibutedCacheService(IDistributedCache cache, TimeSpan relativeExpiration) : ICacheService
+public sealed class DistributedCacheService(IDistributedCache cache) : ICacheService
 {
+	private readonly TimeSpan defaultRelativeExpiration = TimeSpan.FromSeconds(60);
+
 	/// <inheritdoc/>
-	public async Task<T> GetOrCreateAsync<T>(string query, object? param, Func<Task<T>> fetch)
+	public Task<T> GetOrCreateAsync<T>(string query, object? param, Func<Task<T>> fetch) =>
+		GetOrCreateAsync(query, param, fetch, defaultRelativeExpiration);
+
+	/// <inheritdoc/>
+	public async Task<T> GetOrCreateAsync<T>(string query, object? param, Func<Task<T>> fetch, TimeSpan relativeExpiration)
 	{
 		// Check cache before fetching
 		var key = $"{query}:{JsonF.Serialise(param).Unwrap(_ => JsonF.Empty)}";
