@@ -14,4 +14,8 @@ public sealed class NullCacheService : ICacheService
 	/// <inheritdoc/>
 	public Task<T> GetOrCreateAsync<T>(string query, object? param, Func<Task<T>> fetch) =>
 		fetch();
+
+	/// <inheritdoc/>
+	public Task<T> GetOrCreateAsync<T>(string query, object? param, Func<Task<T>> fetch, TimeSpan relativeExpiration) =>
+		fetch();
 }
