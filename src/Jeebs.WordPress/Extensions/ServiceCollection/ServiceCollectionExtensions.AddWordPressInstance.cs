@@ -4,6 +4,7 @@
 using Jeebs.Config.WordPress;
 using Jeebs.Data.Adapters.Dapper;
 using Jeebs.Data.Clients.MySql;
+using Jeebs.Data.Common;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -53,9 +54,10 @@ public static partial class ServiceCollectionExtensions
 			where TWpConfig : WpConfig
 		{
 			_ = services
-				.AddTransient<Data.Common.IDbClient, MySqlDbClient>()
-				.AddTransient<Data.Common.IAdapter, DapperAdapter>()
-				.AddTransient<Data.Common.ITypeMapper>(_ => DapperTypeMapper.Instance);
+				.AddTransient<IDbClient, MySqlDbClient>()
+				.AddTransient<IAdapter, DapperAdapter>()
+				.AddTransient<ITypeMapper>(_ => DapperTypeMapper.Instance)
+				.AddDataQueryCache();
 
 			_ = services
 				.Configure<TWpConfig>(config.GetSection(section))
