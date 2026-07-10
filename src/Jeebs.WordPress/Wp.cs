@@ -95,6 +95,7 @@ public abstract class Wp<TConfig, TC, TCm, TL, TO, TP, TPm, TT, TTm, TTr, TTt, T
 	/// <summary>
 	/// Create object and register custom fields / post types / taxonomies.
 	/// </summary>
+	/// <param name="dbClient">IDbClient.</param>
 	/// <param name="dbConfig">DbConfig.</param>
 	/// <param name="wpConfig">WpConfig.</param>
 	/// <param name="logForDb">ILog.</param>
