@@ -40,7 +40,7 @@
     <PackageVersion Include="Serilog.Sinks.Seq" Version="9.1.0" />
     <PackageVersion Include="Serilog.Sinks.Slack" Version="2.2.3" />
     <PackageVersion Include="Simple.Migrations" Version="0.9.21" />
-    <PackageVersion Include="SkiaSharp" Version="4.148.0" />
+    <PackageVersion Include="SkiaSharp" Version="4.150.0" />
     <PackageVersion Include="Sodium.Core" Version="1.4.1" />
     <PackageVersion Include="System.Collections.Immutable" Version="10.0.2" />
     <PackageVersion Include="System.Data.SQLite.Core" Version="1.0.119" />

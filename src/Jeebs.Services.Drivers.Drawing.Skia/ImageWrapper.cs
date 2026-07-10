@@ -74,7 +74,7 @@ public sealed class ImageWrapper : Services.Drawing.ImageWrapper, IDisposable
 			using var paint = new SKPaint { IsAntialias = width > 200 || height > 200 };
 
 			// Draw the actual image
-			surface.Canvas.DrawImage(SKImage.FromEncodedData(image), source, destination, paint);
+			surface.Canvas.DrawImage(SKImage.FromEncodedData(image), source, destination, new(), paint);
 
 			// Return resized image
 			using var resized = surface.Snapshot();
