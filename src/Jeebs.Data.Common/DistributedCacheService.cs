@@ -3,24 +3,31 @@
 
 using System;
 using System.Threading.Tasks;
+using Jeebs.Config.Db;
 using Jeebs.Functions;
 using Microsoft.Extensions.Caching.Distributed;
+using Microsoft.Extensions.Options;
 
 namespace Jeebs.Data.Common;
 
 /// <inheritdoc/>
+/// <param name="dbConfig">Database configuration.</param>
 /// <param name="cache">The distributed cache instance.</param>
-public sealed class DistributedCacheService(IDistributedCache cache) : ICacheService
+public sealed class DistributedCacheService(IOptions<DbConfig> dbConfig, IDistributedCache cache) : ICacheService
 {
-	private readonly TimeSpan defaultRelativeExpiration = TimeSpan.FromSeconds(60);
-
 	/// <inheritdoc/>
 	public Task<T> GetOrCreateAsync<T>(string query, object? param, Func<Task<T>> fetch) =>
-		GetOrCreateAsync(query, param, fetch, defaultRelativeExpiration);
+		GetOrCreateAsync(query, param, fetch, TimeSpan.FromSeconds(dbConfig.Value.QueryCacheSeconds));
 
 	/// <inheritdoc/>
 	public async Task<T> GetOrCreateAsync<T>(string query, object? param, Func<Task<T>> fetch, TimeSpan relativeExpiration)
 	{
+		// If expiration is zero or negative, don't cache
+		if (relativeExpiration.Seconds == 0)
+		{
+			return await fetch();
+		}
+
 		// Check cache before fetching
 		var key = $"{query}:{JsonF.Serialise(param).Unwrap(_ => JsonF.Empty)}";
 		var cachedString = await cache.GetStringAsync(key);

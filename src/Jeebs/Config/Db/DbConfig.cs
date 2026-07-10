@@ -33,6 +33,11 @@ public sealed record class DbConfig : IOptions<DbConfig>
 	}
 
 	/// <summary>
+	/// Time in seconds to cache database query results. Set to 0 to disable caching.
+	/// </summary>
+	public int QueryCacheSeconds { get; init; }
+
+	/// <summary>
 	/// Dictionary of database connections.
 	/// </summary>
 	public Dictionary<string, DbConnectionConfig> Connections { get; init; } = [];
