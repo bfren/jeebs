@@ -4,6 +4,7 @@
 using System;
 using Jeebs.Config.Db;
 using Jeebs.Config.WordPress;
+using Jeebs.Data.Common;
 using Jeebs.Logging;
 using Jeebs.WordPress.Entities;
 using Microsoft.Extensions.Caching.Memory;
@@ -94,16 +95,17 @@ public abstract class Wp<TConfig, TC, TCm, TL, TO, TP, TPm, TT, TTm, TTr, TTt, T
 	/// <summary>
 	/// Create object and register custom fields / post types / taxonomies.
 	/// </summary>
+	/// <param name="dbClient">IDbClient.</param>
 	/// <param name="dbConfig">DbConfig.</param>
 	/// <param name="wpConfig">WpConfig.</param>
 	/// <param name="logForDb">ILog.</param>
-	protected Wp(IOptions<DbConfig> dbConfig, IOptions<TConfig> wpConfig, ILog logForDb)
+	protected Wp(IDbClient dbClient, IOptions<DbConfig> dbConfig, IOptions<TConfig> wpConfig, ILog logForDb)
 	{
 		// Store config
 		Config = wpConfig.Value;
 
 		// Create new database object using this instance's entity types
-		Db = new WpDb<TC, TCm, TL, TO, TP, TPm, TT, TTm, TTr, TTt, TU, TUm>(dbConfig, wpConfig, logForDb);
+		Db = new WpDb<TC, TCm, TL, TO, TP, TPm, TT, TTm, TTr, TTt, TU, TUm>(dbClient, dbConfig, wpConfig, logForDb);
 
 		// Initialise
 		Init<WpConfig>(logForDb.ForContext<Wp>());

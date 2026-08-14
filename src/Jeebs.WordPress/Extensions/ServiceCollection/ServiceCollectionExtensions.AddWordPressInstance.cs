@@ -2,6 +2,9 @@
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using Jeebs.Config.WordPress;
+using Jeebs.Data.Adapters.Dapper;
+using Jeebs.Data.Clients.MySql;
+using Jeebs.Data.Common;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -48,9 +51,19 @@ public static partial class ServiceCollectionExtensions
 		/// <param name="config">IConfiguration.</param>
 		public IServiceCollection Using<TWp, TWpConfig>(IConfiguration config)
 			where TWp : class, IWp<TWpConfig>
-			where TWpConfig : WpConfig =>
-			services
+			where TWpConfig : WpConfig
+		{
+			_ = services
+				.AddTransient<IDbClient, MySqlDbClient>()
+				.AddTransient<IAdapter, DapperAdapter>()
+				.AddTransient<ITypeMapper>(_ => DapperTypeMapper.Instance)
+				.AddDataQueryCache();
+
+			_ = services
 				.Configure<TWpConfig>(config.GetSection(section))
 				.AddScoped<TWp>();
+
+			return services;
+		}
 	}
 }

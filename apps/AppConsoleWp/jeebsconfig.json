@@ -10,7 +10,8 @@
         "arwen": {
           "connectionString": ""
         }
-      }
+      },
+      "queryCacheSeconds": 10
     },
 		"logging": {
 			"minimum": "Debug",

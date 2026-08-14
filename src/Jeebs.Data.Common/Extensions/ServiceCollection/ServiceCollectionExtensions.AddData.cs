@@ -19,6 +19,9 @@ public static partial class ServiceCollectionExtensions
 		_ = @this.AddTransient<IDb>(p => p.GetRequiredService<TDb>());
 		_ = @this.AddTransient<IDbClient, TDbClient>();
 
+		// Add Null cache implementation
+		_ = @this.AddTransient<ICacheService, NullCacheService>();
+
 		return @this;
 	}
 
