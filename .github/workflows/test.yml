@@ -42,18 +42,18 @@ jobs:
     -
       name: A - Restore
       run: |
-        dotnet restore Jeebs.slnx
+        dotnet restore "Jeebs (v9).slnx"
     -
       name: B - Build
       run: |
-        dotnet build Jeebs.slnx \
+        dotnet build "Jeebs (v9).slnx" \
           --no-restore \
           --configuration Test
     -
       name: C - Test
       run: |
         dotnet test \
-          --solution Jeebs.slnx \
+          --solution "Jeebs (v9).slnx" \
           --no-restore \
           --no-build \
           --configuration Test
