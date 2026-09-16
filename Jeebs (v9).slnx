@@ -46,7 +46,6 @@
     <File Path="LICENSE" />
     <File Path="Pack.csproj" />
     <File Path="README.md" />
-    <File Path="Test.csproj" />
     <File Path="Version" />
   </Folder>
   <Folder Name="/src/">

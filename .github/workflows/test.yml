@@ -42,20 +42,21 @@ jobs:
     -
       name: A - Restore
       run: |
-        dotnet restore Test.csproj
+        dotnet restore Jeebs.slnx
     -
       name: B - Build
       run: |
-        dotnet build Test.csproj \
+        dotnet build Jeebs.slnx \
           --no-restore \
-          --configuration Test
+          --configuration Debug
     -
       name: C - Test
       run: |
-        dotnet test Test.csproj \
+        dotnet test \
+          --solution Jeebs.slnx \
           --no-restore \
           --no-build \
-          --configuration Test
+          --configuration Debug
     -
       if: success()
       name: Finish - Success
