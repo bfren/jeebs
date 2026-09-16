@@ -92,8 +92,8 @@ public class ReadJson_Tests : Setup
 
 		// Assert
 		Assert.NotNull(result);
-		Assert.Single(result);
-		Assert.Equal(42, result[0]);
+		var s = Assert.Single(result);
+		Assert.Equal(42, s);
 	}
 
 	[Fact]
