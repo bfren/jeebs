@@ -1,6 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <RootNamespace>Jeebs.Data.Clients.PostgreSql</RootNamespace>
+    <Configurations>Debug;Release;Test</Configurations>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="Npgsql" />
