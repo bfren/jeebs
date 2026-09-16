@@ -19,7 +19,7 @@ jobs:
     steps:
     -
       name: Prepare - Checkout Code
-      uses: actions/checkout@v6
+      uses: actions/checkout@v7
     -
       name: Prepare - Read Version
       uses: bfren/read-file@v2
@@ -28,7 +28,7 @@ jobs:
       id: version
     -
       name: Prepare - Setup .NET
-      uses: actions/setup-dotnet@v5
+      uses: actions/setup-dotnet@v6
       with:
         dotnet-version: |
           10.0.x
@@ -42,17 +42,18 @@ jobs:
     -
       name: A - Restore
       run: |
-        dotnet restore Test.csproj
+        dotnet restore "Jeebs (v9).slnx"
     -
       name: B - Build
       run: |
-        dotnet build Test.csproj \
+        dotnet build "Jeebs (v9).slnx" \
           --no-restore \
           --configuration Test
     -
       name: C - Test
       run: |
-        dotnet test Test.csproj \
+        dotnet test \
+          --solution "Jeebs (v9).slnx" \
           --no-restore \
           --no-build \
           --configuration Test

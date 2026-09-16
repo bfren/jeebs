@@ -1,6 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <RootNamespace>Jeebs.Data.Clients.MySql</RootNamespace>
+    <Configurations>Debug;Release;Test</Configurations>
   </PropertyGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\src\Jeebs.Data.Clients.MySql\Jeebs.Data.Clients.MySql.csproj" />
