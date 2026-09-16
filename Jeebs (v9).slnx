@@ -96,7 +96,7 @@
   </Folder>
   <Folder Name="/src/.Data/.Clients/">
     <Project Path="src/Jeebs.Data.Clients.MySql/Jeebs.Data.Clients.MySql.csproj" />
-    <Project Path="src/Jeebs.Data.Clients.PostgreSQL/Jeebs.Data.Clients.PostgreSql.csproj" />
+    <Project Path="src/Jeebs.Data.Clients.PostgreSql/Jeebs.Data.Clients.PostgreSql.csproj" />
     <Project Path="src/Jeebs.Data.Clients.Rqlite/Jeebs.Data.Clients.Rqlite.csproj" />
     <Project Path="src/Jeebs.Data.Clients.Sqlite/Jeebs.Data.Clients.Sqlite.csproj" />
     <Project Path="src/Jeebs.Data.Clients.SqlServer/Jeebs.Data.Clients.SqlServer.csproj" />
