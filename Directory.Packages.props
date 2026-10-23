@@ -11,6 +11,7 @@
     <PackageVersion Include="coverlet.collector" Version="10.1.0" />
     <PackageVersion Include="Dapper" Version="2.1.89" />
     <PackageVersion Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="10.0.13" />
+    <PackageVersion Include="Microsoft.Bcl.Cryptography" Version="10.0.13" />
     <PackageVersion Include="Microsoft.Data.SqlClient" Version="7.1.1" />
     <PackageVersion Include="Microsoft.Extensions.Caching.Abstractions" Version="10.0.13" />
     <PackageVersion Include="Microsoft.Extensions.Caching.Memory" Version="10.0.13" />
@@ -24,6 +25,8 @@
     <PackageVersion Include="Microsoft.Extensions.Logging" Version="10.0.13" />
     <PackageVersion Include="Microsoft.Extensions.Logging.Abstractions" Version="10.0.13" />
     <PackageVersion Include="Microsoft.Extensions.Options.ConfigurationExtensions" Version="10.0.13" />
+    <PackageVersion Include="Microsoft.IdentityModel.Protocols.OpenIdConnect" Version="8.23.0" />
+    <PackageVersion Include="Microsoft.IdentityModel.Tokens" Version="8.23.0" />
     <PackageVersion Include="Microsoft.NET.Test.Sdk" Version="18.11.0" />
     <PackageVersion Include="MySqlConnector" Version="2.6.2" />
     <PackageVersion Include="MySqlConnector.Logging.Serilog" Version="2.0.0" />
@@ -44,9 +47,13 @@
     <PackageVersion Include="SkiaSharp" Version="4.153.1" />
     <PackageVersion Include="Sodium.Core" Version="1.4.1" />
     <PackageVersion Include="System.Collections.Immutable" Version="10.0.2" />
+    <PackageVersion Include="System.Configuration.ConfigurationManager" Version="10.0.13" />
     <PackageVersion Include="System.Data.SQLite.Core" Version="1.0.119" />
     <PackageVersion Include="System.IdentityModel.Tokens.Jwt" Version="8.23.0" />
+    <PackageVersion Include="System.Security.Cryptography.Pkcs" Version="10.0.13" />
+    <PackageVersion Include="System.Security.Cryptography.ProtectedData" Version="10.0.13" />
     <PackageVersion Include="System.Text.Json" Version="10.0.2" />
+    <PackageVersion Include="System.Threading.RateLimiting" Version="10.0.13" />
     <PackageVersion Include="Wrap" Version="1.2.9" />
     <PackageVersion Include="Wrap.Id.Dapper" Version="1.2.9" />
     <PackageVersion Include="Wrap.Mvc" Version="1.2.9" />
