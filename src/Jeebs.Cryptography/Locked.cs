@@ -1,6 +1,7 @@
 // Jeebs Rapid Application Development
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
+using System.Text;
 using Jeebs.Cryptography.Functions;
 using Jeebs.Functions;
 using Sodium;
@@ -19,7 +20,7 @@ public abstract class Locked
 		M.None;
 
 	/// <summary>
-	/// Encryption salt.
+	/// Encryption salt (16 bytes, as required by Argon2).
 	/// </summary>
 	public byte[] Salt { get; init; }
 
@@ -87,5 +88,5 @@ public sealed class Locked<T> : Locked
 		);
 
 	private byte[] HashKey(string key) =>
-		GenericHash.Hash(key, Salt, Lockable.KeyLength);
+		PasswordHash.ArgonHashBinary(Encoding.UTF8.GetBytes(key), Salt, PasswordHash.StrengthArgon.Interactive, Lockable.KeyLength);
 }
