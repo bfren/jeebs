@@ -7,6 +7,7 @@ using Jeebs.Auth.Data.Clients.Sqlite;
 using Jeebs.Config.Db;
 using Jeebs.Data.Adapters.Dapper;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 
 var (app, log) = Jeebs.Apps.Host.Create(args);
@@ -17,7 +18,7 @@ log.Dbg("= Auth Database Console Test =");
 // Create clients
 var adapter = DapperAdapter.DefaultInstance;
 var postgres = new PostgreSqlDbClient();
-var mariadb = new MySqlDbClient(adapter);
+var mariadb = new MySqlDbClient(adapter, app.Services.GetRequiredService<ILoggerFactory>());
 var sqlitedb = new SqliteDbClient(adapter);
 
 // Get config

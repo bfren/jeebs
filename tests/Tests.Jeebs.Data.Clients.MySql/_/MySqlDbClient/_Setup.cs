@@ -3,6 +3,7 @@
 
 using Jeebs.Data.Common;
 using Jeebs.Data.Map;
+using Microsoft.Extensions.Logging.Abstractions;
 
 namespace Jeebs.Data.Clients.MySql.MySqlDbClient_Tests;
 
@@ -17,7 +18,7 @@ public abstract class MySqlDbClient_Setup
 		table.GetName().Returns(tableName);
 
 		var adapter = Substitute.For<IAdapter>();
-		var client = new MySqlDbClient(adapter);
+		var client = new MySqlDbClient(adapter, NullLoggerFactory.Instance);
 
 		return (client, new(table, schema, name));
 	}

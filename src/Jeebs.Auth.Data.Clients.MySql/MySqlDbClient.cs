@@ -4,7 +4,7 @@
 using System;
 using Jeebs.Auth.Data.Tables;
 using Jeebs.Data.Common;
-using MySqlConnector;
+using Microsoft.Extensions.Logging;
 using SimpleMigrations;
 using SimpleMigrations.Console;
 using SimpleMigrations.DatabaseProvider;
@@ -15,7 +15,7 @@ namespace Jeebs.Auth.Data.Clients.MySql;
 public sealed class MySqlDbClient : Jeebs.Data.Clients.MySql.MySqlDbClient, IAuthDbClient
 {
 	/// <inheritdoc/>
-	public MySqlDbClient(IAdapter adapter) : base(adapter) { }
+	public MySqlDbClient(IAdapter adapter, ILoggerFactory loggerFactory) : base(adapter, loggerFactory) { }
 
 	/// <inheritdoc/>
 	public string GetUpdateUserLastSignInQuery() =>
@@ -26,10 +26,10 @@ public sealed class MySqlDbClient : Jeebs.Data.Clients.MySql.MySqlDbClient, IAut
 			SELECT ROW_COUNT();
 		";
 
-	private static void DoMigration(string connectionString, Action<SimpleMigrator> act)
+	private void DoMigration(string connectionString, Action<SimpleMigrator> act)
 	{
-		// Connection to database
-		using var db = new MySqlConnection(connectionString);
+		// Connection to database - from the shared data source, so MySqlConnector can log
+		using var db = GetConnection(connectionString);
 
 		// Get migration objects
 		var provider = new MysqlDatabaseProvider(db) { TableName = $"`{AuthDb.Schema}.version_info`" };

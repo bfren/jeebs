@@ -1,11 +1,14 @@
 // Jeebs Rapid Application Development
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
+using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Data.Common;
 using Jeebs.Data.Common;
 using Jeebs.Data.Enums;
 using Jeebs.Data.Map;
+using Microsoft.Extensions.Logging;
 using MySqlConnector;
 
 namespace Jeebs.Data.Clients.MySql;
@@ -13,12 +16,38 @@ namespace Jeebs.Data.Clients.MySql;
 /// <inheritdoc cref="IDbClient"/>
 public partial class MySqlDbClient : Common.DbClient
 {
-	/// <inheritdoc/>
-	public MySqlDbClient(IAdapter adapter) : base(adapter) { }
+	/// <summary>
+	/// One data source (and connection pool) per connection string, shared by every client instance
+	/// because clients are registered as transient.
+	/// </summary>
+	private static readonly ConcurrentDictionary<string, Lazy<MySqlDataSource>> DataSources = new();
+
+	private readonly ILoggerFactory loggerFactory;
+
+	/// <summary>
+	/// Inject dependencies.
+	/// </summary>
+	/// <param name="adapter">IAdapter.</param>
+	/// <param name="loggerFactory">Used to log what MySqlConnector is doing.</param>
+	public MySqlDbClient(IAdapter adapter, ILoggerFactory loggerFactory) : base(adapter) =>
+		this.loggerFactory = loggerFactory;
 
 	/// <inheritdoc/>
+	/// <remarks>
+	/// Connections come from a <see cref="MySqlDataSource"/> so MySqlConnector logs through <see cref="ILoggerFactory"/>.
+	/// shortcut: the logger factory used is the one from the first client to ask for each connection string,
+	/// which is fine while an app has one logger factory; key on the factory as well if that ever changes.
+	/// </remarks>
 	public override DbConnection GetConnection(string connectionString) =>
-		new MySqlConnection(connectionString);
+		DataSources
+			.GetOrAdd(
+				connectionString,
+				cs => new(
+					() => new MySqlDataSourceBuilder(cs).UseLoggerFactory(loggerFactory).Build()
+				)
+			)
+			.Value
+			.CreateConnection();
 
 	/// <inheritdoc/>
 	public override string Escape(ITableName table) =>

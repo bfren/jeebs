@@ -102,7 +102,6 @@
     <Project Path="src/Jeebs.Data.Clients.SqlServer/Jeebs.Data.Clients.SqlServer.csproj" />
   </Folder>
   <Folder Name="/src/.Logging/">
-    <Project Path="src/Jeebs.Logging.Serilog.MySql/Jeebs.Logging.Serilog.MySql.csproj" />
     <Project Path="src/Jeebs.Logging.Serilog.PostgreSql/Jeebs.Logging.Serilog.PostgreSql.csproj" />
     <Project Path="src/Jeebs.Logging.Serilog/Jeebs.Logging.Serilog.csproj" />
   </Folder>
