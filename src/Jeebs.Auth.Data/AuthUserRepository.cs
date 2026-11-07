@@ -32,21 +32,30 @@ public sealed class AuthUserRepository : Repository<AuthUserEntity, AuthUserId>,
 		CreateAsync(email, plainTextPassword, null);
 
 	/// <inheritdoc/>
-	public Task<Result<AuthUserId>> CreateAsync(string email, string plainTextPassword, string? friendlyName) =>
-		RetrieveAsync<CheckAuthUserExists>(
-			email
-		)
-		.MatchAsync(
-			fOk: _ => R.Fail("User with {Email} already exists.", email)
-				.Ctx(nameof(AuthUserRepository), nameof(CreateAsync)),
-			fFail: _ => CreateAsync(new()
-			{
-				EmailAddress = email,
-				FriendlyName = friendlyName,
-				PasswordHash = plainTextPassword.HashPassword(),
-				IsEnabled = true
-			})
-		);
+	public async Task<Result<AuthUserId>> CreateAsync(string email, string plainTextPassword, string? friendlyName)
+	{
+		if (string.IsNullOrEmpty(plainTextPassword))
+		{
+			return R.Fail("Password cannot be empty.")
+				.Ctx(nameof(AuthUserRepository), nameof(CreateAsync));
+		}
+
+		return await
+			RetrieveAsync<CheckAuthUserExists>(
+				email
+			)
+			.MatchAsync(
+				fOk: _ => R.Fail("User with {Email} already exists.", email)
+					.Ctx(nameof(AuthUserRepository), nameof(CreateAsync)),
+				fFail: _ => CreateAsync(new()
+				{
+					EmailAddress = email,
+					FriendlyName = friendlyName,
+					PasswordHash = plainTextPassword.HashPassword(),
+					IsEnabled = true
+				})
+			);
+	}
 
 	/// <inheritdoc/>
 	public Task<Result<TModel>> RetrieveAsync<TModel>(string email) =>
