@@ -23,10 +23,15 @@ internal sealed class DateTimeIntJsonConverter : JsonConverter<DateTimeInt>
 	/// <param name="options">JsonSerializerOptions.</param>
 	/// <returns>Parsed DateTime or <see cref="DateTime.MinValue"/>.</returns>
 	public override DateTimeInt Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options) =>
-		M.ParseInt64(reader.GetString()).Match(
-			fNone: () => DateTimeInt.MinValue,
-			fSome: x => new DateTimeInt(x)
-		);
+		// parse the yyyymmddHHMM string itself - parsing it as a number drops the leading zero of years before 1000
+		DateTimeInt.TryParse(reader.GetString(), F.DefaultCulture, out var value) switch
+		{
+			true =>
+				value,
+
+			false =>
+				DateTimeInt.MinValue
+		};
 
 	/// <summary>
 	/// Convert to UTC and then to a sortable ('s') formatted string.

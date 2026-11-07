@@ -51,6 +51,33 @@ public class IsValidDateTime_Tests
 	}
 
 	[Theory]
+	[InlineData(2001, 1, 31)]
+	[InlineData(2001, 2, 28)]
+	[InlineData(2000, 2, 29)]
+	[InlineData(2004, 2, 29)]
+	[InlineData(2001, 3, 31)]
+	[InlineData(2001, 4, 30)]
+	[InlineData(2001, 5, 31)]
+	[InlineData(2001, 6, 30)]
+	[InlineData(2001, 7, 31)]
+	[InlineData(2001, 8, 31)]
+	[InlineData(2001, 9, 30)]
+	[InlineData(2001, 10, 31)]
+	[InlineData(2001, 11, 30)]
+	[InlineData(2001, 12, 31)]
+	public void Last_Day_Of_Month_Returns_True(int year, int month, int day)
+	{
+		// Arrange
+		var input = new DateTimeInt(year, month, day, 12, 30);
+
+		// Act
+		var (valid, _) = input.IsValidDateTime();
+
+		// Assert
+		Assert.True(valid);
+	}
+
+	[Theory]
 	[MemberData(nameof(Invalid_DateTime_Data))]
 	public void Invalid_Returns_False_And_Part(int year, int month, int day, int hour, int minute, string part)
 	{

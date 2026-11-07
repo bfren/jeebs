@@ -16,8 +16,6 @@ public readonly partial struct DateTimeInt : IEquatable<DateTimeInt>, IParsable<
 {
 	private const string FormatString = "000000000000";
 
-	private static readonly int[] ThirtyOneDayMonths = [1, 3, 5, 7, 8, 10, 12];
-
 	private static readonly int[] ThirtyDayMonths = [4, 6, 9, 11];
 
 	/// <summary>
@@ -159,24 +157,21 @@ public readonly partial struct DateTimeInt : IEquatable<DateTimeInt>, IParsable<
 			return (false, nameof(Day));
 		}
 
-		if (ThirtyOneDayMonths.Contains(Month) && Day > 31)
+		var daysInMonth = Month switch
+		{
+			2 =>
+				IsLeapYear(Year) ? 29 : 28,
+
+			_ when ThirtyDayMonths.Contains(Month) =>
+				30,
+
+			_ =>
+				31
+		};
+
+		if (Day > daysInMonth)
 		{
 			return (false, nameof(Day));
-		}
-		else if (ThirtyDayMonths.Contains(Month) && Day > 30)
-		{
-			return (false, nameof(Day));
-		}
-		else // February is the only month left
-		{
-			if (IsLeapYear(Year) && Day > 29)
-			{
-				return (false, nameof(Day));
-			}
-			else if (Day > 28)
-			{
-				return (false, nameof(Day));
-			}
 		}
 
 		if (Hour is < 0 or > 23)
