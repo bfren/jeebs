@@ -31,7 +31,7 @@ public sealed class ImageWrapper : Services.Drawing.ImageWrapper, IDisposable
 	{
 		var encodedFormat = format.GetEncodedImageFormat();
 		using var data = SKImage.FromEncodedData(image).Encode(encodedFormat, 80);
-		using var fs = File.OpenWrite(path);
+		using var fs = File.Create(path);
 		data.SaveTo(fs);
 	}
 
