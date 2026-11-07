@@ -43,7 +43,7 @@ public abstract class Db_Setup
 		db.Configure().StartWork().Returns(w);
 		db.Configure().StartWorkAsync().Returns(Task.FromResult(w));
 
-		return (db, new(client, config, connection, log, transaction));
+		return (db, new(client, config, connection, log, transaction, w));
 	}
 
 	public sealed record Vars(
@@ -51,7 +51,8 @@ public abstract class Db_Setup
 		DbConnectionConfig Config,
 		IDbConnection Connection,
 		ILog Log,
-		IDbTransaction Transaction
+		IDbTransaction Transaction,
+		IUnitOfWork UnitOfWork
 	);
 
 	public static bool Cmp(object expected, object actual) =>

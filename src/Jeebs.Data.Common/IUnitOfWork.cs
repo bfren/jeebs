@@ -22,13 +22,20 @@ public interface IUnitOfWork : IAsyncDisposable, IDisposable
 	/// </summary>
 	IDbTransaction Transaction { get; }
 
-	/// <inheritdoc cref="CommitAsync"/>
-	void Commit();
+	/// <inheritdoc cref="CommitAsync()"/>
+	Result<bool> Commit();
 
 	/// <summary>
-	/// Commits all queries - should normally be called as part of Dispose().
+	/// Commits all queries - must be called to save work, as Dispose() rolls back anything not committed.
 	/// </summary>
-	Task CommitAsync();
+	/// <returns>True if the commit succeeded, or a failure (after rolling back) if it did not.</returns>
+	Task<Result<bool>> CommitAsync();
+
+	/// <inheritdoc cref="CommitAsync()"/>
+	/// <typeparam name="T">Value type.</typeparam>
+	/// <param name="value">Value to return if the commit succeeds.</param>
+	/// <returns><paramref name="value"/> if the commit succeeded, or a failure (after rolling back) if it did not.</returns>
+	Task<Result<T>> CommitAsync<T>(T value);
 
 	/// <inheritdoc cref="RollbackAsync"/>
 	void Rollback();

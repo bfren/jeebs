@@ -53,4 +53,21 @@ public class DeleteAsync_Tests : Repository_Setup
 		// Assert
 		v.Log.ReceivedWithAnyArgs(2).Vrb(Arg.Any<string>(), Arg.Any<object[]>());
 	}
+
+	[Fact]
+	public async Task Without_Transaction__Commits_With_Result()
+	{
+		// Arrange
+		var (repo, v) = Setup();
+		var model = new FooModel { Id = IdGen.LongId<FooId>() };
+		v.Db.ExecuteAsync(Arg.Any<string>(), model, CommandType.Text, v.Transaction).Returns(true);
+		v.UnitOfWork.CommitAsync(Arg.Any<bool>()).Returns(x => R.Wrap(x.Arg<bool>()));
+
+		// Act
+		var result = await repo.DeleteAsync(model);
+
+		// Assert
+		Assert.True(result.AssertOk());
+		await v.UnitOfWork.Received(1).CommitAsync(true);
+	}
 }

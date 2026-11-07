@@ -16,7 +16,12 @@ public abstract partial class Db
 	public async Task<Result<T>> InsertAsync<T>(string query, object? param, CommandType type)
 	{
 		await using var w = await StartWorkAsync();
-		return await InsertAsync<T>(query, param, type, w.Transaction);
+		return await InsertAsync<T>(
+			query, param, type, w.Transaction
+		)
+		.BindAsync(
+			w.CommitAsync
+		);
 	}
 
 	/// <inheritdoc/>
