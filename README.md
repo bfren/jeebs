@@ -20,7 +20,11 @@ I am definitely a backend developer at heart, although like everyone I have to w
 
 The code in these libraries has been under active development and use for over a decade, powering all my own websites, and some for other people as well.
 
-### Jeebs v9 (under development)
+### Jeebs v10 (under development)
+
+Using [Ponytail](https://ponytail.dev) and Claude to improve the codebase, including moving to .NET 11.
+
+### Jeebs v9
 
 Jeebs v9 targets .NET 10 and switches from the `Maybe` project to use the more versatile `Wrap`, splitting `Maybe` and `Result` types, and bringing in `Id` and generic `Either` monads.
 

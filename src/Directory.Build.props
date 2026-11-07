@@ -30,7 +30,7 @@
 
   <!-- Get Paths to Files -->
   <PropertyGroup>
-    <SolutionFilePath>$([MSBuild]::GetPathOfFileAbove('Jeebs (v9).slnx'))</SolutionFilePath>
+    <SolutionFilePath>$([MSBuild]::GetPathOfFileAbove('Jeebs (v10).slnx'))</SolutionFilePath>
     <SolutionRootPath>$([System.IO.Path]::GetDirectoryName('$(SolutionFilePath)'))</SolutionRootPath>
   </PropertyGroup>
   <PropertyGroup>
