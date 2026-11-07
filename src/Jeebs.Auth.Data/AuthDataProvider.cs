@@ -47,7 +47,7 @@ public sealed class AuthDataProvider : IAuthDataProvider
 	public async Task<Result<bool>> ChangeUserPasswordAsync(AuthChangePasswordModel model)
 	{
 		// If the password is empty, do nothing
-		if (string.IsNullOrEmpty(model.NewPassword))
+		if (string.IsNullOrWhiteSpace(model.NewPassword))
 		{
 			return R.Fail("New password cannot be empty.")
 				.Ctx(nameof(AuthDataProvider), nameof(ChangeUserPasswordAsync));

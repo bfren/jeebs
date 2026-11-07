@@ -34,7 +34,7 @@ public sealed class AuthUserRepository : Repository<AuthUserEntity, AuthUserId>,
 	/// <inheritdoc/>
 	public async Task<Result<AuthUserId>> CreateAsync(string email, string plainTextPassword, string? friendlyName)
 	{
-		if (string.IsNullOrEmpty(plainTextPassword))
+		if (string.IsNullOrWhiteSpace(plainTextPassword))
 		{
 			return R.Fail("Password cannot be empty.")
 				.Ctx(nameof(AuthUserRepository), nameof(CreateAsync));
