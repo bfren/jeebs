@@ -134,6 +134,10 @@ public sealed class AuthDataProvider : IAuthDataProvider
 		{
 			if (!x.IsEnabled)
 			{
+				// verify a dummy password hash to prevent timing attacks
+				const string dummy = "$argon2id$v=19$m=65536,t=3,p=4$GDkIIfquN/md73QkMsNmbQ$LHBASiBZhEld/mfYdLYsg1CAEX+wCyFmY6i6FlFljtk";
+				_ = dummy.VerifyPassword(nameof(dummy));
+
 				return R.Fail("User {Email} is not enabled.", email)
 					.Ctx(nameof(AuthDataProvider), nameof(ValidateUserAsync));
 			}
