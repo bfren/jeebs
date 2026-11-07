@@ -3,6 +3,7 @@
     <Configurations>Debug;Release;Test</Configurations>
   </PropertyGroup>
   <ItemGroup>
+    <PackageReference Include="MySqlConnector" />
     <PackageReference Include="MySqlConnector.Logging.Serilog" />
   </ItemGroup>
   <ItemGroup>
