@@ -341,7 +341,7 @@ public class GetQuery_Tests : PostgreSqlDbClient_Setup
 			SortRandom = true
 		};
 
-		var expected = $"SELECT * FROM {v.Schema}.{v.Name} ORDER BY RAND();";
+		var expected = $"SELECT * FROM {v.Schema}.{v.Name} ORDER BY random();";
 
 		// Act
 		var (query, _) = client.GetQuery(parts).Unsafe().Unwrap();
