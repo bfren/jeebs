@@ -32,7 +32,12 @@ public abstract class Repository<TEntity, TId> : Base.Repository<TEntity, TId>, 
 	public override async Task<Result<TId>> CreateAsync(TEntity entity)
 	{
 		await using var w = await Db.StartWorkAsync();
-		return await CreateAsync(entity, w.Transaction);
+		return await CreateAsync(
+			entity, w.Transaction
+		)
+		.BindAsync(
+			w.CommitAsync
+		);
 	}
 
 	/// <inheritdoc/>
@@ -66,7 +71,12 @@ public abstract class Repository<TEntity, TId> : Base.Repository<TEntity, TId>, 
 	public override async Task<Result<bool>> UpdateAsync<TModel>(TModel model)
 	{
 		await using var w = await Db.StartWorkAsync();
-		return await UpdateAsync(model, w.Transaction);
+		return await UpdateAsync(
+			model, w.Transaction
+		)
+		.BindAsync(
+			w.CommitAsync
+		);
 	}
 
 	/// <inheritdoc/>
@@ -84,7 +94,12 @@ public abstract class Repository<TEntity, TId> : Base.Repository<TEntity, TId>, 
 	public override async Task<Result<bool>> DeleteAsync<TModel>(TModel model)
 	{
 		await using var w = await Db.StartWorkAsync();
-		return await DeleteAsync(model, w.Transaction);
+		return await DeleteAsync(
+			model, w.Transaction
+		)
+		.BindAsync(
+			w.CommitAsync
+		);
 	}
 
 	/// <inheritdoc/>

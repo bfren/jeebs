@@ -51,4 +51,22 @@ public class CreateAsync_Tests : Repository_Setup
 		// Assert
 		v.Log.ReceivedWithAnyArgs(2).Vrb(Arg.Any<string>(), Arg.Any<object[]>());
 	}
+
+	[Fact]
+	public async Task Without_Transaction__Commits_With_Result()
+	{
+		// Arrange
+		var (repo, v) = Setup();
+		var model = new Foo { Id = IdGen.LongId<FooId>() };
+		var id = IdGen.LongId<FooId>();
+		v.Db.InsertAsync<FooId>(Arg.Any<string>(), model, CommandType.Text, v.Transaction).Returns(id);
+		v.UnitOfWork.CommitAsync(Arg.Any<FooId>()).Returns(x => R.Wrap(x.Arg<FooId>()));
+
+		// Act
+		var result = await repo.CreateAsync(model);
+
+		// Assert
+		Assert.Equal(id, result.AssertOk());
+		await v.UnitOfWork.Received(1).CommitAsync(id);
+	}
 }

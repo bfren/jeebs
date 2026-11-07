@@ -42,22 +42,26 @@ public sealed class UnitOfWork : IUnitOfWork
 		(this.connection, this.transaction, this.log) = (connection, transaction, log);
 
 	/// <inheritdoc/>
-	public void Commit()
+	public Result<bool> Commit()
 	{
 		if (!pending)
 		{
-			return;
+			return R.Fail("No pending transaction to commit.")
+				.Ctx(nameof(UnitOfWork), nameof(Commit));
 		}
 
 		try
 		{
 			log.Vrb("Committing transaction.");
 			transaction.Commit();
+			return R.True;
 		}
 		catch (Exception ex)
 		{
 			log.Err(ex, "Error committing transaction.");
 			Rollback();
+			return R.Fail(ex)
+				.Ctx(nameof(UnitOfWork), nameof(Commit));
 		}
 		finally
 		{
@@ -66,28 +70,36 @@ public sealed class UnitOfWork : IUnitOfWork
 	}
 
 	/// <inheritdoc/>
-	public async Task CommitAsync()
+	public async Task<Result<bool>> CommitAsync()
 	{
 		if (!pending)
 		{
-			return;
+			return R.Fail("No pending transaction to commit.")
+				.Ctx(nameof(UnitOfWork), nameof(CommitAsync));
 		}
 
 		try
 		{
 			log.Vrb("Committing transaction.");
 			await transaction.CommitAsync();
+			return R.True;
 		}
 		catch (Exception ex)
 		{
 			log.Err(ex, "Error committing transaction.");
 			await RollbackAsync();
+			return R.Fail(ex)
+				.Ctx(nameof(UnitOfWork), nameof(CommitAsync));
 		}
 		finally
 		{
 			pending = false;
 		}
 	}
+
+	/// <inheritdoc/>
+	public Task<Result<T>> CommitAsync<T>(T value) =>
+		CommitAsync().MapAsync(_ => value);
 
 	/// <inheritdoc/>
 	public void Rollback()
@@ -138,18 +150,24 @@ public sealed class UnitOfWork : IUnitOfWork
 	/// <inheritdoc cref="DisposeAsync"/>
 	public void Dispose()
 	{
-		Commit();
+		if (pending)
+		{
+			Rollback();
+		}
 
 		Dispose(true);
 		GC.SuppressFinalize(this);
 	}
 
 	/// <summary>
-	/// Commits transaction, then disposes <see cref="transaction"/> and <see cref="connection"/> objects.
+	/// Rolls back anything not committed, then disposes <see cref="transaction"/> and <see cref="connection"/> objects.
 	/// </summary>
 	public async ValueTask DisposeAsync()
 	{
-		await CommitAsync();
+		if (pending)
+		{
+			await RollbackAsync();
+		}
 
 		await transaction.DisposeAsync();
 		await connection.DisposeAsync();
