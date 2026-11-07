@@ -15,6 +15,6 @@ public sealed class SqliteLoggingConnector : ILoggingConnector
 	/// <inheritdoc/>
 	public void Enable(LoggerConfiguration serilog, JeebsConfig jeebs) =>
 		SqliteLogging.Enable(
-			LoggerFactory.Create(builder => builder.AddSerilog()).CreateLogger(SqliteLogging.Category)
+			LoggerFactory.Create(builder => builder.AddSerilog())
 		);
 }

@@ -1,6 +1,7 @@
 // Jeebs Rapid Application Development
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
+using System;
 using System.Data.SQLite;
 using System.Threading;
 using Microsoft.Extensions.Logging;
@@ -12,7 +13,7 @@ namespace Jeebs.Logging.Serilog.Sqlite;
 /// </summary>
 /// <remarks>
 /// System.Data.SQLite has no ILogger support: it raises static (process-wide) events instead,
-/// so the handlers are added once and write to the most recently enabled logger.
+/// so the handlers are added once and write to the most recently enabled logger factory.
 /// </remarks>
 internal static partial class SqliteLogging
 {
@@ -21,22 +22,26 @@ internal static partial class SqliteLogging
 	/// </summary>
 	internal const string Category = "System.Data.SQLite";
 
-	private static ILogger logger = Microsoft.Extensions.Logging.Abstractions.NullLogger.Instance;
+	private static Lazy<ILogger> logger = new(() => Microsoft.Extensions.Logging.Abstractions.NullLogger.Instance);
 
 	private static int subscribed;
 
 	/// <summary>
-	/// Start sending System.Data.SQLite events to <paramref name="log"/>.
+	/// Start sending System.Data.SQLite events to a logger from <paramref name="factory"/>.
 	/// </summary>
-	/// <param name="log">ILogger.</param>
-	internal static void Enable(ILogger log)
+	/// <remarks>
+	/// The logger is created on the first event, not now: connectors are enabled while Serilog is still
+	/// being configured, and a Serilog logger created before the host sets <c>Log.Logger</c> writes nothing.
+	/// </remarks>
+	/// <param name="factory">ILoggerFactory.</param>
+	internal static void Enable(ILoggerFactory factory)
 	{
-		logger = log;
+		logger = new(() => factory.CreateLogger(Category));
 
 		if (Interlocked.Exchange(ref subscribed, 1) == 0)
 		{
-			SQLiteLog.Log += (_, e) => Write(logger, e);
-			SQLiteConnection.Changed += (_, e) => Write(logger, e);
+			SQLiteLog.Log += (_, e) => Write(logger.Value, e);
+			SQLiteConnection.Changed += (_, e) => Write(logger.Value, e);
 		}
 	}
 

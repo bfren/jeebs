@@ -10,12 +10,17 @@ public class Enable_Tests
 {
 	private const string ConnectionString = "Data Source=:memory:";
 
-	private static CaptureLogger Setup()
+	private static (ILoggerFactory, CaptureLogger) SetupFactory()
 	{
 		var log = new CaptureLogger();
-		SqliteLogging.Enable(log);
-		return log;
+		var factory = Substitute.For<ILoggerFactory>();
+		_ = factory.CreateLogger(Arg.Any<string>()).Returns(log);
+		SqliteLogging.Enable(factory);
+		return (factory, log);
 	}
+
+	private static CaptureLogger Setup() =>
+		SetupFactory().Item2;
 
 	private static void Execute(SQLiteConnection connection, string sql)
 	{
@@ -79,6 +84,24 @@ public class Enable_Tests
 
 		// Assert
 		Assert.Contains(log.Entries, x => x.Level == LogLevel.Error && x.Message.Contains("no such table: missing"));
+	}
+
+	[Fact]
+	public void Creates_Logger_On_First_Event__Not_When_Enabled()
+	{
+		// Arrange - Serilog loggers created before the host sets Log.Logger never write anything
+		var (factory, _) = SetupFactory();
+
+		// Act
+		var before = factory.ReceivedCalls().Count();
+		using (var connection = new SQLiteConnection(ConnectionString))
+		{
+			connection.Open();
+		}
+
+		// Assert
+		Assert.Equal(0, before);
+		_ = factory.Received(1).CreateLogger(SqliteLogging.Category);
 	}
 
 	private sealed class CaptureLogger : ILogger
