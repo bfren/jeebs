@@ -23,7 +23,8 @@
       "overrides": {
         "Microsoft": "Warning",
         "Microsoft.Hosting.Lifetime": "Information",
-        "MySqlConnector": "Verbose"
+        "MySqlConnector": "Verbose",
+        "System.Data.SQLite": "Verbose"
       },
       "providers": {
         "console.local": {
