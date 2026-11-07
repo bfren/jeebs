@@ -33,6 +33,11 @@ public interface IAuthUser<TRole> : IWithId<AuthUserId, long>
 	string? FamilyName { get; init; }
 
 	/// <summary>
+	/// True if the user's password requires rehashing with Argon2id Interactive settings
+	/// </summary>
+	bool RequiresRehash { get; init; }
+
+	/// <summary>
 	/// Whether or not the user account has super permissions
 	/// </summary>
 	bool IsSuper { get; init; }

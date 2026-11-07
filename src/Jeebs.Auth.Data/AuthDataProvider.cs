@@ -130,25 +130,38 @@ public sealed class AuthDataProvider : IAuthDataProvider
 		}
 
 		// Check the user is enabled and the password is correct
-		return await User.RetrieveAsync<AuthUserEntity>(email).BindAsync(x =>
-		{
-			if (!x.IsEnabled)
+		return await User
+			.RetrieveAsync<AuthUserEntity>(
+				email
+			)
+			.BindAsync(async x =>
 			{
-				// verify a dummy password hash to prevent timing attacks
-				const string dummy = "$argon2id$v=19$m=65536,t=3,p=4$GDkIIfquN/md73QkMsNmbQ$LHBASiBZhEld/mfYdLYsg1CAEX+wCyFmY6i6FlFljtk";
-				_ = dummy.VerifyPassword(nameof(dummy));
+				if (!x.IsEnabled)
+				{
+					// verify a dummy password hash to prevent timing attacks
+					const string dummy = "$argon2id$v=19$m=65536,t=3,p=4$GDkIIfquN/md73QkMsNmbQ$LHBASiBZhEld/mfYdLYsg1CAEX+wCyFmY6i6FlFljtk";
+					_ = dummy.VerifyPassword(nameof(dummy));
 
-				return R.Fail("User {Email} is not enabled.", email)
-					.Ctx(nameof(AuthDataProvider), nameof(ValidateUserAsync));
-			}
+					return R.Fail("User {Email} is not enabled.", email)
+						.Ctx(nameof(AuthDataProvider), nameof(ValidateUserAsync));
+				}
 
-			if (!x.PasswordHash.VerifyPassword(password))
-			{
-				return R.Fail("Invalid password.")
-					.Ctx(nameof(AuthDataProvider), nameof(ValidateUserAsync));
-			}
+				if (!x.PasswordHash.VerifyPassword(password))
+				{
+					return R.Fail("Invalid password.")
+						.Ctx(nameof(AuthDataProvider), nameof(ValidateUserAsync));
+				}
 
-			return R.True;
-		});
+				if (!x.RequiresRehash)
+				{
+					return R.True;
+				}
+
+				return await User.UpdateAsync(x with
+				{
+					PasswordHash = password.HashPassword(),
+					RequiresRehash = false
+				});
+			});
 	}
 }
