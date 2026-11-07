@@ -18,10 +18,6 @@ public static partial class CryptoF
 	internal static Result<string> CheckContents<T>(T contents) =>
 		contents switch
 		{
-			// string values do not need serialisation
-			string str =>
-				str,
-
 			// serialise objects as JSON
 			T obj =>
 				JsonF.Serialise(obj),
