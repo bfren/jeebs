@@ -3,7 +3,7 @@
 
 using Jeebs.Data.Enums;
 
-namespace Jeebs.Data.Clients.SqlServer.SortOrderExtensions_Tests;
+namespace Jeebs.Data.SortOrderExtensions_Tests;
 
 public class ToOperator_Tests
 {

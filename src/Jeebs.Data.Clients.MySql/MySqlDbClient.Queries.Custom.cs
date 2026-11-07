@@ -10,7 +10,7 @@ public partial class MySqlDbClient
 		"RAND()";
 
 	/// <inheritdoc/>
-	protected override string GetLimitAndOffset(ulong? maximum, ulong skip) =>
+	protected override string GetLimitAndOffset(ulong? maximum, ulong skip, bool sorted) =>
 		(maximum, skip) switch
 		{
 			( > 0, > 0) =>

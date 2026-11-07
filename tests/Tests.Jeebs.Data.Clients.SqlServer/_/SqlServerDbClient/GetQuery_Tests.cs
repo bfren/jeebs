@@ -393,7 +393,7 @@ public class GetQuery_Tests : SqlServerDbClient_Setup
 
 		var max = Rnd.UInt64;
 		var parts = new QueryParts(v.Table) { Maximum = max };
-		var expected = $"SELECT * FROM [{v.Schema}].[{v.Name}] OFFSET 0 ROWS FETCH NEXT {max} ROWS ONLY";
+		var expected = $"SELECT * FROM [{v.Schema}].[{v.Name}] ORDER BY (SELECT NULL) OFFSET 0 ROWS FETCH NEXT {max} ROWS ONLY";
 
 		// Act
 		var (query, _) = client.GetQuery(parts).Unsafe().Unwrap();
@@ -411,7 +411,7 @@ public class GetQuery_Tests : SqlServerDbClient_Setup
 		var skip = Rnd.UInt64;
 		var max = Rnd.UInt64;
 		var parts = new QueryParts(v.Table) { Skip = skip, Maximum = max };
-		var expected = $"SELECT * FROM [{v.Schema}].[{v.Name}] OFFSET {skip} ROWS FETCH NEXT {max} ROWS ONLY";
+		var expected = $"SELECT * FROM [{v.Schema}].[{v.Name}] ORDER BY (SELECT NULL) OFFSET {skip} ROWS FETCH NEXT {max} ROWS ONLY";
 
 		// Act
 		var (query, _) = client.GetQuery(parts).Unsafe().Unwrap();
@@ -428,7 +428,24 @@ public class GetQuery_Tests : SqlServerDbClient_Setup
 
 		var skip = Rnd.UInt64;
 		var parts = new QueryParts(v.Table) { Skip = skip };
-		var expected = $"SELECT * FROM [{v.Schema}].[{v.Name}] OFFSET {skip} ROWS";
+		var expected = $"SELECT * FROM [{v.Schema}].[{v.Name}] ORDER BY (SELECT NULL) OFFSET {skip} ROWS";
+
+		// Act
+		var (query, _) = client.GetQuery(parts).Unsafe().Unwrap();
+
+		// Assert
+		Assert.Equal(expected, query);
+	}
+
+	[Fact]
+	public void With_Parts_Sorted_And_Limit__Does_Not_Add_Extra_Order_By()
+	{
+		// Arrange
+		var (client, v) = Setup();
+
+		var max = Rnd.UInt64;
+		var parts = new QueryParts(v.Table) { SortRandom = true, Maximum = max };
+		var expected = $"SELECT * FROM [{v.Schema}].[{v.Name}] ORDER BY NEWID() OFFSET 0 ROWS FETCH NEXT {max} ROWS ONLY";
 
 		// Act
 		var (query, _) = client.GetQuery(parts).Unsafe().Unwrap();

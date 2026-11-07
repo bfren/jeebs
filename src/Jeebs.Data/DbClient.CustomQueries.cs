@@ -28,7 +28,8 @@ public abstract partial class DbClient : IDbClient
 	/// </summary>
 	/// <param name="maximum">Maximum number of results to return (null or 0 for no limit).</param>
 	/// <param name="skip">Number of results to skip (0 for none).</param>
-	protected abstract string GetLimitAndOffset(ulong? maximum, ulong skip);
+	/// <param name="sorted">Whether the query already has an ORDER BY clause.</param>
+	protected abstract string GetLimitAndOffset(ulong? maximum, ulong skip, bool sorted);
 
 	/// <summary>
 	/// Return a query to retrieve a list of entities that match all the specified parameters.
@@ -149,14 +150,14 @@ public abstract partial class DbClient : IDbClient
 			var orderBy = new List<string>();
 			foreach (var (column, order) in parts.Sort)
 			{
-				orderBy.Add($"{Escape(column.TblName, column.ColName)} {(order == SortOrder.Descending ? "DESC" : "ASC")}");
+				orderBy.Add($"{Escape(column.TblName, column.ColName)} {order.ToOperator()}");
 			}
 
 			sql += $" ORDER BY {JoinList(orderBy, false)}";
 		}
 
 		// Add LIMIT and OFFSET
-		sql += GetLimitAndOffset(parts.Maximum, parts.Skip);
+		sql += GetLimitAndOffset(parts.Maximum, parts.Skip, parts.SortRandom || parts.Sort.Count > 0);
 
 		// Return query string
 		return ($"{sql}{QueryTerminator}", parameters);

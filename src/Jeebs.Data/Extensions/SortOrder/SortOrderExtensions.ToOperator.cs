@@ -3,12 +3,12 @@
 
 using Jeebs.Data.Enums;
 
-namespace Jeebs.Data.Clients.MySql;
+namespace Jeebs.Data;
 
 public static partial class SortOrderExtensions
 {
 	/// <summary>
-	/// Convert a <see cref="SortOrder"/> type to the actual MySQL operator<br/>
+	/// Convert a <see cref="SortOrder"/> type to the SQL keyword (ASC or DESC)<br/>
 	/// Default value is "ASC"
 	/// </summary>
 	/// <param name="this">SortOrder.</param>
