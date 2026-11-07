@@ -29,7 +29,7 @@ public class Enable_Tests
 	}
 
 	[Fact]
-	public void Logs_Open_Close_And_Statements_At_Debug()
+	public void Logs_Open_And_Statements_At_Debug__Not_Close()
 	{
 		// Arrange
 		var log = Setup();
@@ -49,7 +49,7 @@ public class Enable_Tests
 		// Assert
 		Assert.Contains((LogLevel.Debug, "Opened connection."), log.Entries);
 		Assert.Contains((LogLevel.Debug, $"Executing {insert}"), log.Entries);
-		Assert.Contains((LogLevel.Debug, "Closed connection."), log.Entries);
+		Assert.DoesNotContain(log.Entries, x => x.Message.StartsWith("Closed"));
 	}
 
 	[Fact]
@@ -84,6 +84,29 @@ public class Enable_Tests
 
 		// Assert
 		Assert.Contains(log.Entries, x => x.Level == LogLevel.Error && x.Message.Contains("no such table: missing"));
+	}
+
+	[Theory]
+	[InlineData(27, LogLevel.Information)] // SQLITE_NOTICE
+	[InlineData(28, LogLevel.Warning)] // SQLITE_WARNING
+	[InlineData(284, LogLevel.Warning)] // SQLITE_WARNING_AUTOINDEX: extended codes keep the primary code in the low byte
+	[InlineData(1, LogLevel.Error)] // SQLITE_ERROR
+	public void Engine_Message__Uses_Level_For_Result_Code(int code, LogLevel expected)
+	{
+		// Arrange - SQLite's own log only starts once a connection has been opened
+		var log = Setup();
+		using (var connection = new SQLiteConnection(ConnectionString))
+		{
+			connection.Open();
+		}
+
+		var message = Rnd.Str;
+
+		// Act
+		SQLiteLog.LogMessage(code, message);
+
+		// Assert
+		Assert.Contains(log.Entries, x => x.Level == expected && x.Message.StartsWith(message));
 	}
 
 	[Fact]
