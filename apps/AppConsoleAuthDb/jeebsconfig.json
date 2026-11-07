@@ -22,7 +22,8 @@
       "minimum": "Verbose",
       "overrides": {
         "Microsoft": "Warning",
-        "Microsoft.Hosting.Lifetime": "Information"
+        "Microsoft.Hosting.Lifetime": "Information",
+        "MySqlConnector": "Verbose"
       },
       "providers": {
         "console.local": {
