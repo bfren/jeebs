@@ -22,7 +22,7 @@ public static partial class StringExtensions
 
 		// Hash string and then remove null characters
 		var hash = PasswordHash
-			.ArgonHashString(@this, PasswordHash.StrengthArgon.Moderate)
+			.ArgonHashString(@this, PasswordHash.StrengthArgon.Interactive)
 			.Where(c => c != char.MinValue)
 			.ToArray();
 
