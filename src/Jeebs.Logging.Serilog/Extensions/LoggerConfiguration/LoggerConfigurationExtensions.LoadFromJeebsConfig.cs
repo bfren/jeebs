@@ -10,9 +10,10 @@ namespace Jeebs.Logging.Serilog;
 public static partial class LoggerConfigurationExtensions
 {
 	/// <summary>
-	/// Source context prefix used by MySqlConnector's loggers.
+	/// Database drivers that log every command at Debug - they only show warnings
+	/// unless the config sets a level for them.
 	/// </summary>
-	internal const string MySqlConnectorSource = "MySqlConnector";
+	internal static readonly string[] QuietByDefault = ["MySqlConnector", "System.Data.SQLite"];
 
 	/// <summary>
 	/// Load Serilog configuration from JeebsConfig object.
@@ -33,10 +34,13 @@ public static partial class LoggerConfigurationExtensions
 			_ = @this.MinimumLevel.Override(key, GetMinimum(level, jeebs.Logging.Minimum));
 		}
 
-		// MySqlConnector logs every command at Debug, so only show its warnings unless the config asks for more
-		if (!jeebs.Logging.Overrides.ContainsKey(MySqlConnectorSource))
+		// Database drivers only show warnings unless the config asks for more
+		foreach (var source in QuietByDefault)
 		{
-			_ = @this.MinimumLevel.Override(MySqlConnectorSource, LogEventLevel.Warning);
+			if (!jeebs.Logging.Overrides.ContainsKey(source))
+			{
+				_ = @this.MinimumLevel.Override(source, LogEventLevel.Warning);
+			}
 		}
 
 		// Configure providers

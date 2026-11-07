@@ -103,6 +103,7 @@
   </Folder>
   <Folder Name="/src/.Logging/">
     <Project Path="src/Jeebs.Logging.Serilog.PostgreSql/Jeebs.Logging.Serilog.PostgreSql.csproj" />
+    <Project Path="src/Jeebs.Logging.Serilog.Sqlite/Jeebs.Logging.Serilog.Sqlite.csproj" />
     <Project Path="src/Jeebs.Logging.Serilog/Jeebs.Logging.Serilog.csproj" />
   </Folder>
   <Folder Name="/src/.Mvc/">
@@ -183,6 +184,9 @@
   </Folder>
   <Folder Name="/tests/.Logging/">
     <Project Path="tests/Tests.Jeebs.Logging.Serilog/Tests.Jeebs.Logging.Serilog.csproj">
+      <Build Solution="Release|*" Project="false" />
+    </Project>
+    <Project Path="tests/Tests.Jeebs.Logging.Serilog.Sqlite/Tests.Jeebs.Logging.Serilog.Sqlite.csproj" Id="c97456cd-174b-48a6-ab3d-508a4e988d4f">
       <Build Solution="Release|*" Project="false" />
     </Project>
   </Folder>
