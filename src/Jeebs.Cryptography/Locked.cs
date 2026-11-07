@@ -1,9 +1,9 @@
 // Jeebs Rapid Application Development
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
+using System.Text;
 using Jeebs.Cryptography.Functions;
 using Jeebs.Functions;
-using RndF;
 using Sodium;
 
 namespace Jeebs.Cryptography;
@@ -20,9 +20,9 @@ public abstract class Locked
 		M.None;
 
 	/// <summary>
-	/// Encryption salt.
+	/// Encryption salt (16 bytes, as required by Argon2).
 	/// </summary>
-	public string Salt { get; init; }
+	public byte[] Salt { get; init; }
 
 	/// <summary>
 	/// Encryption nonce.
@@ -33,7 +33,7 @@ public abstract class Locked
 	/// Create new Locked box with random salt and nonce.
 	/// </summary>
 	internal Locked() =>
-		(Salt, Nonce) = (Rnd.StringF.Get(32, Chars.All), SecretBox.GenerateNonce());
+		(Salt, Nonce) = (SodiumCore.GetRandomBytes(16), SecretBox.GenerateNonce());
 }
 
 /// <inheritdoc/>
@@ -88,5 +88,5 @@ public sealed class Locked<T> : Locked
 		);
 
 	private byte[] HashKey(string key) =>
-		PasswordHash.ArgonHashBinary(key, Salt, outputLength: Lockable.KeyLength);
+		PasswordHash.ArgonHashBinary(Encoding.UTF8.GetBytes(key), Salt, PasswordHash.StrengthArgon.Interactive, Lockable.KeyLength);
 }

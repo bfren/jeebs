@@ -32,10 +32,6 @@ public abstract record class AuthUserModel<TRole>() : IAuthUser<TRole>
 	public string? FamilyName { get; init; }
 
 	/// <inheritdoc/>
-	public bool RequiresRehash { get; init; } =
-		true;
-
-	/// <inheritdoc/>
 	public bool IsSuper { get; init; }
 
 	/// <inheritdoc/>

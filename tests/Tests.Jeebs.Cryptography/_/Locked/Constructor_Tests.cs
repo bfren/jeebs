@@ -14,7 +14,7 @@ public class Constructor_Tests
 		var result = new Locked<int>(Rnd.Str, Rnd.Str);
 
 		// Assert
-		Assert.NotEmpty(result.Salt);
+		Assert.Equal(16, result.Salt.Length);
 		Assert.NotEmpty(result.Nonce);
 	}
 

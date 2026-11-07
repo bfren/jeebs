@@ -1,6 +1,7 @@
 // Jeebs Rapid Application Development
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -134,34 +135,40 @@ public sealed class AuthDataProvider : IAuthDataProvider
 			.RetrieveAsync<AuthUserEntity>(
 				email
 			)
+			.IfFailedAsync(
+				// verify a password even when the user doesn't exist so the response time doesn't reveal it
+				_ => DummyHash.Value.VerifyPassword(password)
+			)
 			.BindAsync(async x =>
 			{
+				var verified = x.PasswordHash.VerifyPassword(password);
+
 				if (!x.IsEnabled)
 				{
-					// verify a dummy password hash to prevent timing attacks
-					const string dummy = "$argon2id$v=19$m=65536,t=3,p=4$GDkIIfquN/md73QkMsNmbQ$LHBASiBZhEld/mfYdLYsg1CAEX+wCyFmY6i6FlFljtk";
-					_ = dummy.VerifyPassword(nameof(dummy));
-
 					return R.Fail("User {Email} is not enabled.", email)
 						.Ctx(nameof(AuthDataProvider), nameof(ValidateUserAsync));
 				}
 
-				if (!x.PasswordHash.VerifyPassword(password))
+				if (!verified)
 				{
 					return R.Fail("Invalid password.")
 						.Ctx(nameof(AuthDataProvider), nameof(ValidateUserAsync));
 				}
 
-				if (!x.RequiresRehash)
+				// upgrade hashes made with older settings - a failed update must not stop the user signing in,
+				// and the rehash will be tried again next time
+				if (x.PasswordHash.PasswordNeedsRehash())
 				{
-					return R.True;
+					_ = await User.UpdateAsync(x with { PasswordHash = password.HashPassword() });
 				}
 
-				return await User.UpdateAsync(x with
-				{
-					PasswordHash = password.HashPassword(),
-					RequiresRehash = false
-				});
+				return R.True;
 			});
 	}
+
+	/// <summary>
+	/// Hash with the current settings, verified when a user doesn't exist so it takes as long as a real check.
+	/// </summary>
+	private static readonly Lazy<string> DummyHash =
+		new(() => "dummy password for unknown users".HashPassword());
 }

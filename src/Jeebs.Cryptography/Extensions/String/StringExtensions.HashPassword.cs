@@ -9,6 +9,12 @@ namespace Jeebs.Cryptography;
 public static partial class StringExtensions
 {
 	/// <summary>
+	/// Argon2id settings used for new password hashes - see <see cref="PasswordNeedsRehash"/>.
+	/// </summary>
+	internal const PasswordHash.StrengthArgon PasswordStrength =
+		PasswordHash.StrengthArgon.Interactive;
+
+	/// <summary>
 	/// Hash a password using argon2id - returns hash containing the salt (of length 128 bytes).
 	/// </summary>
 	/// <param name="this">Password to hash.</param>
@@ -22,7 +28,7 @@ public static partial class StringExtensions
 
 		// Hash string and then remove null characters
 		var hash = PasswordHash
-			.ArgonHashString(@this, PasswordHash.StrengthArgon.Interactive)
+			.ArgonHashString(@this, PasswordStrength)
 			.Where(c => c != char.MinValue)
 			.ToArray();
 

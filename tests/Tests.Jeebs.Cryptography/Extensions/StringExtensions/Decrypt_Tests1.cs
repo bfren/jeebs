@@ -5,7 +5,7 @@ namespace Jeebs.Cryptography.StringExtensions_Tests;
 
 public partial class Decrypt_Tests
 {
-	private readonly string defaultInputStringEncryptedWithStringKey = /*lang=json,strict*/ "{\"value\":{},\"encryptedContents\":\"RKDdTvdBrxf28cMuuBF+mKkVkYEhJSgwnCnTprGtHeeIMr56\",\"salt\":\"kJ3HSzbuEssDYpGmK9ix1A==\",\"nonce\":\"ehg2foprhsqf7UTrBRpU0cjWvkK0sn/f\"}";
+	private readonly string defaultInputStringEncryptedWithStringKey = /*lang=json,strict*/ "{\"encryptedContents\":\"lWTRclbJVtadP5aIIUuKVNB5XlHJMzG3Du0VwMBRolYwAA82\",\"salt\":\"j6y62EQdamhr+BMojKpV0A==\",\"nonce\":\"My9LLDwKbowndscV+rpdjUsc2DVF57+A\"}";
 	private readonly string defaultStringKey = "nXhxz39cHyPx3a";
 
 	[Fact]
