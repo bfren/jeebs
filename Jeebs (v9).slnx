@@ -172,6 +172,9 @@
     <Project Path="tests/Tests.Jeebs.Data.Clients.PostgreSql/Tests.Jeebs.Data.Clients.PostgreSql.csproj">
       <Build Solution="Release|*" Project="false" />
     </Project>
+    <Project Path="tests/Tests.Jeebs.Data.Clients.Rqlite/Tests.Jeebs.Data.Clients.Rqlite.csproj" Id="dd8628e1-9207-4133-96b5-69e7fadd22d5">
+      <Build Solution="Release|*" Project="false" />
+    </Project>
     <Project Path="tests/Tests.Jeebs.Data.Clients.Sqlite/Tests.Jeebs.Data.Clients.Sqlite.csproj">
       <Build Solution="Release|*" Project="false" />
     </Project>

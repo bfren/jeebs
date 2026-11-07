@@ -3,7 +3,7 @@
 
 using Jeebs.Data.Enums;
 
-namespace Jeebs.Data.Clients.SqlServer;
+namespace Jeebs.Data;
 
 /// <summary>
 /// <see cref="SortOrder"/> extension methods.

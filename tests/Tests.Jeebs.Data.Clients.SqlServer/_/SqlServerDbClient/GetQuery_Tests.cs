@@ -393,7 +393,7 @@ public class GetQuery_Tests : SqlServerDbClient_Setup
 
 		var max = Rnd.UInt64;
 		var parts = new QueryParts(v.Table) { Maximum = max };
-		var expected = $"SELECT * FROM [{v.Schema}].[{v.Name}] OFFSET 0 ROWS FETCH NEXT {max} ROWS ONLY";
+		var expected = $"SELECT * FROM [{v.Schema}].[{v.Name}] ORDER BY (SELECT NULL) OFFSET 0 ROWS FETCH NEXT {max} ROWS ONLY";
 
 		// Act
 		var (query, _) = client.GetQuery(parts).Unsafe().Unwrap();
@@ -411,7 +411,91 @@ public class GetQuery_Tests : SqlServerDbClient_Setup
 		var skip = Rnd.UInt64;
 		var max = Rnd.UInt64;
 		var parts = new QueryParts(v.Table) { Skip = skip, Maximum = max };
-		var expected = $"SELECT * FROM [{v.Schema}].[{v.Name}] OFFSET {skip} ROWS FETCH NEXT {max} ROWS ONLY";
+		var expected = $"SELECT * FROM [{v.Schema}].[{v.Name}] ORDER BY (SELECT NULL) OFFSET {skip} ROWS FETCH NEXT {max} ROWS ONLY";
+
+		// Act
+		var (query, _) = client.GetQuery(parts).Unsafe().Unwrap();
+
+		// Assert
+		Assert.Equal(expected, query);
+	}
+
+	[Fact]
+	public void With_Parts_Skip_Without_Maximum_Adds_Offset()
+	{
+		// Arrange
+		var (client, v) = Setup();
+
+		var skip = Rnd.UInt64;
+		var parts = new QueryParts(v.Table) { Skip = skip };
+		var expected = $"SELECT * FROM [{v.Schema}].[{v.Name}] ORDER BY (SELECT NULL) OFFSET {skip} ROWS";
+
+		// Act
+		var (query, _) = client.GetQuery(parts).Unsafe().Unwrap();
+
+		// Assert
+		Assert.Equal(expected, query);
+	}
+
+	[Fact]
+	public void With_Parts_Sorted_And_Limit__Does_Not_Add_Extra_Order_By()
+	{
+		// Arrange
+		var (client, v) = Setup();
+
+		var max = Rnd.UInt64;
+		var parts = new QueryParts(v.Table) { SortRandom = true, Maximum = max };
+		var expected = $"SELECT * FROM [{v.Schema}].[{v.Name}] ORDER BY NEWID() OFFSET 0 ROWS FETCH NEXT {max} ROWS ONLY";
+
+		// Act
+		var (query, _) = client.GetQuery(parts).Unsafe().Unwrap();
+
+		// Assert
+		Assert.Equal(expected, query);
+	}
+
+	[Fact]
+	public void GetCountQuery_Removes_Sort_And_Paging()
+	{
+		// Arrange
+		var (client, v) = Setup();
+
+		var sortTable = new TableName(Rnd.Str, Rnd.Str);
+		IColumn sort = new Column(sortTable, Rnd.Str, Helpers.CreateInfoFromAlias());
+		var parts = new QueryParts(v.Table)
+		{
+			Sort = ListF.Create([(sort, SortOrder.Descending)]),
+			SortRandom = true,
+			Maximum = Rnd.UInt64,
+			Skip = Rnd.UInt64
+		};
+		var expected = $"SELECT COUNT(*) FROM [{v.Schema}].[{v.Name}]";
+
+		// Act
+		var (query, _) = client.GetCountQuery(parts).Unsafe().Unwrap();
+
+		// Assert
+		Assert.Equal(expected, query);
+	}
+
+	[Fact]
+	public void With_Parts_Column_Sort_And_Limit__Does_Not_Add_Extra_Order_By()
+	{
+		// Arrange
+		var (client, v) = Setup();
+
+		var sortTable = new TableName(Rnd.Str, Rnd.Str);
+		var sortName = Rnd.Str;
+		IColumn sort = new Column(sortTable, sortName, Helpers.CreateInfoFromAlias());
+		var max = Rnd.UInt64;
+		var parts = new QueryParts(v.Table)
+		{
+			Sort = ListF.Create([(sort, SortOrder.Ascending)]),
+			Maximum = max
+		};
+		var expected = $"SELECT * FROM [{v.Schema}].[{v.Name}]" +
+			$" ORDER BY [{sortTable.Schema}].[{sortTable.Name}].[{sortName}] ASC" +
+			$" OFFSET 0 ROWS FETCH NEXT {max} ROWS ONLY";
 
 		// Act
 		var (query, _) = client.GetQuery(parts).Unsafe().Unwrap();
