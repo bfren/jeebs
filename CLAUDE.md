@@ -1,6 +1,6 @@
-# Jeebs v9
+# Jeebs v10
 
-.NET 10 libraries (`src/`), their tests (`tests/`) and sample apps (`apps/`), all in `Jeebs (v9).slnx`.
+.NET 10 libraries (`src/`), their tests (`tests/`) and sample apps (`apps/`), all in `Jeebs (v10).slnx`.
 Packages are versioned centrally in `Directory.Packages.props`; the release version is in `Version`.
 
 ## Before handing back C# changes
@@ -8,8 +8,8 @@ Packages are versioned centrally in `Directory.Packages.props`; the release vers
 Run both, exactly as CI does, and fix anything they report:
 
 ```bash
-dotnet test --solution "Jeebs (v9).slnx" --configuration Test
-dotnet format style "Jeebs (v9).slnx" --verify-no-changes --include <changed .cs files>
+dotnet test --solution "Jeebs (10).slnx" --configuration Test
+dotnet format style "Jeebs (v10).slnx" --verify-no-changes --include <changed .cs files>
 ```
 
 CI fails when `dotnet format style` has to change anything (e.g. an unused `using`, IDE0005, or a

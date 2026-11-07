@@ -20,7 +20,7 @@ jobs:
   prepare:
     uses: bfren/dotnet/.github/workflows/prepare.yml@main
     with:
-      solution: "Jeebs (v9).slnx"
+      solution: "Jeebs (v10).slnx"
       dotnet-versions: 10.0.x
   nuget:
     needs: prepare
