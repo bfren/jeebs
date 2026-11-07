@@ -14,14 +14,14 @@ public class AddWhereCustom_Tests : AddWhereCustom_Tests<TestBuilder, TestId>
 	[Theory]
 	[MemberData(nameof(Test00_Data))]
 	public override void Test00_Clause_Null_Or_Empty_Returns_None_With_TryingToAddEmptyClauseToWhereCustomMsg(string? input) =>
-		Test00(input!);
+		Test00(input);
 
 	[Theory]
 #pragma warning disable xUnit1045 // Avoid using TheoryData type arguments that might not be serializable
 	[MemberData(nameof(Test01_Data))]
 #pragma warning restore xUnit1045 // Avoid using TheoryData type arguments that might not be serializable
 	public override void Test01_Invalid_Parameters_Returns_None_With_UnableToAddParametersToWhereCustomMsg(object? input) =>
-		Test01(input!);
+		Test01(input);
 
 	[Fact]
 	public override void Test02_Returns_New_Parts_With_Clause_And_Parameters() =>

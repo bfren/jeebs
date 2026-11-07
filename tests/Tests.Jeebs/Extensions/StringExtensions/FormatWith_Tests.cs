@@ -8,7 +8,7 @@ public class FormatWith_Tests
 	public class With_Invalid_Format_String
 	{
 		[Theory]
-		[InlineData(null!)]
+		[InlineData(null)]
 		[InlineData("")]
 		[InlineData(" ")]
 		public void Returns_Empty_String(string? input)

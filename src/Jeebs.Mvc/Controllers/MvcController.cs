@@ -38,7 +38,7 @@ public abstract class MvcController : Controller
 	/// <typeparam name="T">Result value type.</typeparam>
 	/// <param name="result">Result object.</param>
 	/// <param name="success">Function to run when the result is successful.</param>
-	protected Task<IActionResult> ProcessAsync<T>(Wrap.Result<T> result, Func<T, Task<IActionResult>> success) =>
+	protected Task<IActionResult> ProcessAsync<T>(Result<T> result, Func<T, Task<IActionResult>> success) =>
 		result.MatchAsync(
 			fOk: success,
 			fFail: this.ExecuteErrorAsync
@@ -50,7 +50,7 @@ public abstract class MvcController : Controller
 	/// <typeparam name="T">Result value type.</typeparam>
 	/// <param name="result">Result object.</param>
 	/// <param name="success">Function to run when the result is successful.</param>
-	protected Task<IActionResult> ProcessAsync<T>(Task<Wrap.Result<T>> result, Func<T, IActionResult> success) =>
+	protected Task<IActionResult> ProcessAsync<T>(Task<Result<T>> result, Func<T, IActionResult> success) =>
 		result.MatchAsync(
 			fOk: success,
 			fFail: this.ExecuteErrorAsync
@@ -62,14 +62,14 @@ public abstract class MvcController : Controller
 	/// <typeparam name="T">Result value type.</typeparam>
 	/// <param name="result">Result object.</param>
 	/// <param name="success">Function to run when the result is successful.</param>
-	protected Task<IActionResult> ProcessAsync<T>(Task<Wrap.Result<T>> result, Func<T, Task<IActionResult>> success) =>
+	protected Task<IActionResult> ProcessAsync<T>(Task<Result<T>> result, Func<T, Task<IActionResult>> success) =>
 		result.MatchAsync(
 			fOk: success,
 			fFail: this.ExecuteErrorAsync
 		);
 
-	/// <inheritdoc cref="ProcessAsync{T}(Task{Wrap.Result{T}}, Func{T, Task{IActionResult}})"/>
-	protected IActionResult Process<T>(Wrap.Result<T> result, Func<T, IActionResult> success) =>
+	/// <inheritdoc cref="ProcessAsync{T}(Task{Result{T}}, Func{T, Task{IActionResult}})"/>
+	protected IActionResult Process<T>(Result<T> result, Func<T, IActionResult> success) =>
 		result.Match(
 			fOk: success,
 			fFail: f => this.ExecuteErrorAsync(f).GetAwaiter().GetResult()

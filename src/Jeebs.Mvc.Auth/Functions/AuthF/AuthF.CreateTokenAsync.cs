@@ -18,11 +18,11 @@ public static partial class AuthF
 	/// <param name="user">ClaimsPrincipal.</param>
 	/// <param name="log">ILog.</param>
 	/// <returns>Auth operation result.</returns>
-	public static async Task<AuthOp> CreateTokenAsync(IAuthJwtProvider jwt, ClaimsPrincipal user, ILog log) =>
-		jwt.CreateToken(user)
+	public static Task<AuthOp> CreateTokenAsync(IAuthJwtProvider jwt, ClaimsPrincipal user, ILog log) =>
+				Task.FromResult(jwt.CreateToken(user)
 			.Audit(fFail: log.Failure)
 			.Match<JsonWebToken, AuthOp>(
 				fOk: x => new AuthOp.SignedIn(x),
 				fFail: _ => new AuthOp.TryAgain()
-			);
+			));
 }

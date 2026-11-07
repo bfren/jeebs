@@ -17,7 +17,7 @@ public class Format_Tests
 		var parameter = Substitute.For<IDbDataParameter>();
 
 		// Act
-		handler.SetValue(parameter, null!);
+		handler.SetValue(parameter, null);
 
 		// Assert
 		Assert.IsType<DBNull>(parameter.Value);

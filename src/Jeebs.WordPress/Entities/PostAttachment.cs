@@ -37,8 +37,7 @@ public abstract record class PostAttachment : WpPostEntity, IPostAttachment
 				_ => JsonF.Empty
 			);
 
-		init =>
-			field = value;
+		init;
 	} = string.Empty;
 
 	/// <inheritdoc/>

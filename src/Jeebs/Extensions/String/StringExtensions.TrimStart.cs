@@ -17,7 +17,7 @@ public static partial class StringExtensions
 		@this.StartsWith(value, StringComparison.InvariantCulture) switch
 		{
 			true =>
-				@this.Remove(@this.IndexOf(value, StringComparison.InvariantCulture)),
+				@this[..@this.IndexOf(value, StringComparison.InvariantCulture)],
 
 			false =>
 				@this

@@ -9,7 +9,7 @@ namespace Jeebs.Mvc.Controllers;
 /// <summary>
 /// Simple Controller.
 /// </summary>
-public abstract class SimpleController : Microsoft.AspNetCore.Mvc.Controller
+public abstract class SimpleController : Controller
 {
 	/// <summary>
 	/// Disable favicon.ico.
