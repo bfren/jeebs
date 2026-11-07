@@ -71,7 +71,7 @@ public class CommitAsync_Tests
 
 		// Assert
 		Assert.True(result.AssertOk());
-		await transaction.Received(1).CommitAsync();
+		await transaction.Received(1).CommitAsync(Arg.Any<CancellationToken>());
 	}
 
 	[Fact]
@@ -88,7 +88,7 @@ public class CommitAsync_Tests
 		// Assert
 		var fail = result.AssertFailure();
 		Assert.Same(exception, fail.Exception);
-		await transaction.Received(1).RollbackAsync();
+		await transaction.Received(1).RollbackAsync(Arg.Any<CancellationToken>());
 	}
 
 	[Fact]

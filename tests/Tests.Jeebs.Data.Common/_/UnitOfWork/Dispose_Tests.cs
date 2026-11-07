@@ -54,8 +54,8 @@ public class Dispose_Tests
 		await unitOfWork.DisposeAsync();
 
 		// Assert
-		await transaction.Received(1).RollbackAsync();
-		await transaction.DidNotReceive().CommitAsync();
+		await transaction.Received(1).RollbackAsync(Arg.Any<CancellationToken>());
+		await transaction.DidNotReceive().CommitAsync(Arg.Any<CancellationToken>());
 	}
 
 	[Fact]
@@ -69,6 +69,6 @@ public class Dispose_Tests
 		await unitOfWork.DisposeAsync();
 
 		// Assert
-		await transaction.DidNotReceive().RollbackAsync();
+		await transaction.DidNotReceive().RollbackAsync(Arg.Any<CancellationToken>());
 	}
 }
