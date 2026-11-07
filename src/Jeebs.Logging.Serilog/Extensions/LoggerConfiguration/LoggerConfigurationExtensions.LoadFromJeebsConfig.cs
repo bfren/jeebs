@@ -3,11 +3,17 @@
 
 using Jeebs.Config;
 using Serilog;
+using Serilog.Events;
 
 namespace Jeebs.Logging.Serilog;
 
 public static partial class LoggerConfigurationExtensions
 {
+	/// <summary>
+	/// Source context prefix used by MySqlConnector's loggers.
+	/// </summary>
+	internal const string MySqlConnectorSource = "MySqlConnector";
+
 	/// <summary>
 	/// Load Serilog configuration from JeebsConfig object.
 	/// </summary>
@@ -25,6 +31,12 @@ public static partial class LoggerConfigurationExtensions
 		foreach (var (key, level) in jeebs.Logging.Overrides)
 		{
 			_ = @this.MinimumLevel.Override(key, GetMinimum(level, jeebs.Logging.Minimum));
+		}
+
+		// MySqlConnector logs every command at Debug, so only show its warnings unless the config asks for more
+		if (!jeebs.Logging.Overrides.ContainsKey(MySqlConnectorSource))
+		{
+			_ = @this.MinimumLevel.Override(MySqlConnectorSource, LogEventLevel.Warning);
 		}
 
 		// Configure providers

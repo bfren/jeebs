@@ -4,6 +4,7 @@
 using System;
 using Jeebs.Auth.Data.Tables;
 using Jeebs.Data.Common;
+using Microsoft.Extensions.Logging;
 using MySqlConnector;
 using SimpleMigrations;
 using SimpleMigrations.Console;
@@ -15,7 +16,7 @@ namespace Jeebs.Auth.Data.Clients.MySql;
 public sealed class MySqlDbClient : Jeebs.Data.Clients.MySql.MySqlDbClient, IAuthDbClient
 {
 	/// <inheritdoc/>
-	public MySqlDbClient(IAdapter adapter) : base(adapter) { }
+	public MySqlDbClient(IAdapter adapter, ILoggerFactory loggerFactory) : base(adapter, loggerFactory) { }
 
 	/// <inheritdoc/>
 	public string GetUpdateUserLastSignInQuery() =>
