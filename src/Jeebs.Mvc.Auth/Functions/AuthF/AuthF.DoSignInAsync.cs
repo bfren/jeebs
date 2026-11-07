@@ -68,7 +68,10 @@ public static partial class AuthF
 			var principal = await GetPrincipalAsync(user, v.Model.Password, v.GetClaims);
 
 			// Update last sign in
-			ThreadF.FireAndForget(async () => await UpdateUserLastSignInAsync(v.Auth, user.Id, v.Log));
+			ThreadF.FireAndForget(
+				() => UpdateUserLastSignInAsync(v.Auth, user.Id, v.Log),
+				e => v.Log.Err(e, "Error updating last sign in for user {UserId}.", user.Id.Value)
+			);
 
 			// Sign in and return result
 			return await v.SignInAsync(principal);

@@ -4,7 +4,6 @@
 using System;
 using System.Collections.Generic;
 using System.Net.Http;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
@@ -25,13 +24,12 @@ public abstract class Menu
 	public delegate string? GetUri(IUrlHelper urlHelper, MenuItem item);
 
 	/// <summary>
-	/// Load a URI.
+	/// Load a URI and return a line describing the result.
 	/// </summary>
-	/// <param name="result">StringBuilder result (to output).</param>
 	/// <param name="client">HttpClient.</param>
 	/// <param name="uri">URI to load.</param>
 	/// <param name="token">CancellationToken.</param>
-	public delegate ValueTask LoadUri(StringBuilder result, HttpClient client, string uri, CancellationToken token);
+	public delegate ValueTask<string> LoadUri(HttpClient client, string uri, CancellationToken token);
 
 	/// <summary>
 	/// List of top-level menu items.
@@ -143,28 +141,28 @@ public abstract class Menu
 		/// <param name="loadUri">LoadUri.</param>
 		internal static async Task<Maybe<string>> LoadUrisAsync(HttpClient client, List<string> uris, LoadUri loadUri)
 		{
-			// Use a StringBuilder to hold the response text
-			var result = new StringBuilder();
+			// Each URI writes only its own slot, so the parallel loads can't interfere and the lines stay in order
+			var lines = new string[uris.Count];
 
-			// Loop through provided list, or default list of Items
-			await Parallel.ForEachAsync(
-				source: uris,
+			// Load up to three URIs at a time
+			await Parallel.ForAsync(
+				fromInclusive: 0,
+				toExclusive: uris.Count,
 				parallelOptions: new() { MaxDegreeOfParallelism = 3 },
-				body: (uri, token) => loadUri(result, client, uri, token)
+				body: async (i, token) => lines[i] = await loadUri(client, uris[i], token)
 			);
 
 			// Return result
-			return result.ToString();
+			return string.Concat(lines);
 		}
 
 		/// <summary>
-		/// Load a URI asynchronously, writing output to <paramref name="result"/>.
+		/// Load a URI asynchronously, returning a line describing the result.
 		/// </summary>
-		/// <param name="result">StringBuilder.</param>
 		/// <param name="client">HttpClient.</param>
 		/// <param name="uri">The URI to load.</param>
 		/// <param name="token">CancellationToken.</param>
-		internal static async ValueTask LoadUriAsync(StringBuilder result, HttpClient client, string uri, CancellationToken token)
+		internal static async ValueTask<string> LoadUriAsync(HttpClient client, string uri, CancellationToken token)
 		{
 			// Output URI to be loaded
 			var output = $"Loading {uri} .. ";
@@ -182,9 +180,14 @@ public abstract class Menu
 			{
 				output += $"failed: {ex}";
 			}
+			catch (TaskCanceledException ex) when (!token.IsCancellationRequested)
+			{
+				// the request timed out (rather than the whole load being cancelled)
+				output += $"failed: {ex}";
+			}
 
 			// Put the next URL on a new line
-			_ = result.Append(output).AppendLine("<br/>");
+			return output + "<br/>" + Environment.NewLine;
 		}
 	}
 }

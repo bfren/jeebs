@@ -1,7 +1,6 @@
 // Jeebs Rapid Application Development
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
-using System;
 using System.Collections.Generic;
 using System.Net.Http;
 using Jeebs.Config;
@@ -90,9 +89,8 @@ public abstract class WebhookDriver<TConfig, TMessage> : Driver<TConfig>, IWebho
 	/// </summary>
 	/// <param name="request"></param>
 	protected void Send(HttpRequestMessage request) =>
-		ThreadF.FireAndForget(async () =>
-		{
-			try
+		ThreadF.FireAndForget(
+			async () =>
 			{
 				var client = Factory.CreateClient();
 				var response = await client.SendAsync(request);
@@ -100,12 +98,9 @@ public abstract class WebhookDriver<TConfig, TMessage> : Driver<TConfig>, IWebho
 				{
 					Log.Wrn("Unable to send message: {@Response}", response);
 				}
-			}
-			catch (Exception ex)
-			{
-				Log.Err(ex, "Error sending message: {@Request}", request);
-			}
-		});
+			},
+			e => Log.Err(e, "Error sending message: {@Request}", request)
+		);
 
 	#endregion Actually Send
 }
