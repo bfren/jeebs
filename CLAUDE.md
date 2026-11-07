@@ -48,3 +48,6 @@ mixed. Check with `git ls-files --eol | grep -E "w/(mixed|lf)"`.
 - Data clients share one query builder in `src/Jeebs.Data/DbClient.CustomQueries.cs`; each client
   overrides only what differs (`RandomSort`, `GetLimitAndOffset`, `QueryTerminator`).
 - Writes through a unit of work must call `Commit` / `CommitAsync`: disposing it rolls back.
+- Logging for a database driver lives in its own `src/Jeebs.Logging.Serilog.<Driver>` project as an
+  `ILoggingConnector`, switched on by referencing that package (see `.PostgreSql`, `.Sqlite`).
+  The exception is MySQL, whose logger has to be set on its `MySqlDataSource` in `MySqlDbClient`.
