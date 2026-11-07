@@ -2,7 +2,6 @@
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using System.Collections.Generic;
-using System.Linq;
 
 namespace Jeebs;
 
@@ -131,7 +130,7 @@ public sealed record class MimeType : Enumerated
 		All = new HashSet<MimeType>([Blank, General, Bmp, Doc, Docx, Gif, Jpg, M4a, Mp3, Pdf, Png, Ppt, Pptx, Rar, Tar, Text, Xls, Xlsx, Zip]);
 
 	internal static HashSet<MimeType> AllTest() =>
-		All;
+		[.. Snapshot(All)];
 
 	/// <summary>
 	/// Add a custom mime types.
@@ -139,7 +138,7 @@ public sealed record class MimeType : Enumerated
 	/// <param name="mimeType">Mime types to add.</param>
 	/// <returns>True on success.</returns>
 	public static bool AddCustomMimeType(MimeType mimeType) =>
-		All.Add(mimeType);
+		Add(All, mimeType);
 
 	/// <summary>
 	/// Parse MimeType value.
@@ -155,6 +154,6 @@ public sealed record class MimeType : Enumerated
 		}
 
 		// Parse and return value
-		return Parse(mimeType, All.ToArray()).Unwrap(_ => Blank);
+		return Parse(mimeType, Snapshot(All)).Unwrap(_ => Blank);
 	}
 }

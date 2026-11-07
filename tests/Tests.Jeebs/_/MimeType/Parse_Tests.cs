@@ -80,4 +80,21 @@ public class Parse_Tests
 		// Assert
 		Assert.Same(type, result);
 	}
+
+	[Fact]
+	public void Custom_MimeType_Added_After_Failed_Parse__Returns_Custom_MimeType()
+	{
+		// Arrange - a failed parse must not be cached, or the type stays unknown after it is registered
+		var name = Rnd.Str;
+		var type = new MimeType(name);
+		var before = MimeType.Parse(name);
+
+		// Act
+		MimeType.AddCustomMimeType(type);
+		var result = MimeType.Parse(name);
+
+		// Assert
+		Assert.Same(MimeType.Blank, before);
+		Assert.Same(type, result);
+	}
 }

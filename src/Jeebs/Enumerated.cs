@@ -4,6 +4,7 @@
 using System;
 using System.Collections;
 using System.Collections.Concurrent;
+using System.Collections.Generic;
 using Jeebs.Functions;
 
 namespace Jeebs;
@@ -92,25 +93,57 @@ public abstract record class Enumerated : IEquatable<Enumerated>, IEquatable<str
 	/// <param name="name">Enum name.</param>
 	/// <param name="values">Enum values to check name against.</param>
 	protected static Result<T> Parse<T>(string name, T[] values)
-		where T : Enumerated =>
-		(Result<T>)Cache.GetOrAdd(
-			$"{typeof(T)}-{name}",
-			(_, args) =>
-			{
-				// Check all given values against name
-				foreach (var item in args.Values)
-				{
-					if (Check(args.Name, item) is Ok<T> s)
-					{
-						return s;
-					}
-				}
+		where T : Enumerated
+	{
+		var key = $"{typeof(T)}-{name}";
+		if (Cache.TryGetValue(key, out var cached))
+		{
+			return (Result<T>)cached;
+		}
 
-				// If we get here the name was never matched
-				return EnumF.FailNotAValidValue<T>(nameof(Enumerated), nameof(Parse), name);
-			},
-			new ParseArgs<T>(name, values)
-		);
+		// Check all given values against name
+		foreach (var item in values)
+		{
+			if (Check(name, item) is Ok<T> s)
+			{
+				_ = Cache.TryAdd(key, s);
+				return s;
+			}
+		}
+
+		// Not cached, so a value registered later (e.g. a custom type) can still be found
+		return EnumF.FailNotAValidValue<T>(nameof(Enumerated), nameof(Parse), name);
+	}
+
+	/// <summary>
+	/// Add <paramref name="value"/> to <paramref name="values"/>, safely when other threads are using it.
+	/// </summary>
+	/// <typeparam name="T">Enum value type.</typeparam>
+	/// <param name="values">Registered values - lock on this whenever it is read or changed.</param>
+	/// <param name="value">Value to add.</param>
+	/// <returns>True if the value was added, false if it was already registered.</returns>
+	protected static bool Add<T>(HashSet<T> values, T value)
+		where T : Enumerated
+	{
+		lock (values)
+		{
+			return values.Add(value);
+		}
+	}
+
+	/// <summary>
+	/// Return a copy of <paramref name="values"/>, safely when other threads are using it.
+	/// </summary>
+	/// <typeparam name="T">Enum value type.</typeparam>
+	/// <param name="values">Registered values - lock on this whenever it is read or changed.</param>
+	protected static T[] Snapshot<T>(HashSet<T> values)
+		where T : Enumerated
+	{
+		lock (values)
+		{
+			return [.. values];
+		}
+	}
 
 	/// <summary>
 	/// Returns true if the given name matches a registered Enum value.
@@ -121,32 +154,6 @@ public abstract record class Enumerated : IEquatable<Enumerated>, IEquatable<str
 	protected static bool IsRegistered<T>(string name, T[] values)
 		where T : Enumerated =>
 		Parse(name, values).IsOk;
-
-	/// <summary>
-	/// Parse Arguments.
-	/// </summary>
-	/// <typeparam name="T">Enum Type.</typeparam>
-	private sealed class ParseArgs<T>
-		where T : Enumerated
-	{
-		/// <summary>
-		/// Enum name to parse.
-		/// </summary>
-		public string Name { get; private init; }
-
-		/// <summary>
-		/// Enum values to test Name against.
-		/// </summary>
-		public T[] Values { get; private init; }
-
-		/// <summary>
-		/// Create object.
-		/// </summary>
-		/// <param name="name">Enumerated name to parse.</param>
-		/// <param name="values">Enumerated values to check <paramref name="name"/> against.</param>
-		public ParseArgs(string name, T[] values) =>
-			(Name, Values) = (name, values);
-	}
 
 	#endregion Static Members
 
