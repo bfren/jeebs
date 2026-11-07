@@ -2,7 +2,6 @@
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using System.Collections.Generic;
-using System.Linq;
 
 namespace Jeebs.WordPress.Enums;
 
@@ -58,7 +57,7 @@ public sealed record class PostType : Enumerated
 	private static HashSet<PostType> All { get; }
 
 	internal static HashSet<PostType> AllTest() =>
-		All;
+		[.. Snapshot(All)];
 
 	/// <summary>
 	/// Populate set of post types.
@@ -71,12 +70,12 @@ public sealed record class PostType : Enumerated
 	/// </summary>
 	/// <param name="type">PostType to add.</param>
 	public static bool AddCustomPostType(PostType type) =>
-		All.Add(type);
+		Add(All, type);
 
 	/// <summary>
 	/// Parse PostType value name.
 	/// </summary>
 	/// <param name="name">Value name.</param>
 	public static PostType Parse(string name) =>
-		Parse(name, All.ToArray()).Unwrap(_ => Post);
+		Parse(name, Snapshot(All)).Unwrap(_ => Post);
 }

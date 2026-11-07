@@ -2,7 +2,6 @@
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using System.Collections.Generic;
-using System.Linq;
 
 namespace Jeebs.WordPress.Enums;
 
@@ -53,7 +52,7 @@ public sealed record class Taxonomy : Enumerated
 	private static HashSet<Taxonomy> All { get; }
 
 	internal static HashSet<Taxonomy> AllTest() =>
-		All;
+		[.. Snapshot(All)];
 
 	/// <summary>
 	/// Populate list of taxonomies.
@@ -66,19 +65,19 @@ public sealed record class Taxonomy : Enumerated
 	/// </summary>
 	/// <param name="taxonomy">Taxonomy to add.</param>
 	public static bool AddCustomTaxonomy(Taxonomy taxonomy) =>
-		All.Add(taxonomy);
+		Add(All, taxonomy);
 
 	/// <summary>
 	/// Parse Taxonomy value name.
 	/// </summary>
 	/// <param name="name">Value name.</param>
 	public static Taxonomy Parse(string name) =>
-		Parse(name, All.ToArray()).Unwrap(_ => Blank);
+		Parse(name, Snapshot(All)).Unwrap(_ => Blank);
 
 	/// <summary>
 	/// Returns whether or not the specified taxonomy has been registered.
 	/// </summary>
 	/// <param name="taxonomy">Taxonomy to check.</param>
 	public static bool IsRegistered(Taxonomy taxonomy) =>
-		IsRegistered(taxonomy.ToString(), All.ToArray());
+		IsRegistered(taxonomy.ToString(), Snapshot(All));
 }

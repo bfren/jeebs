@@ -39,4 +39,22 @@ public class AddCustomMimeType_Tests
 			x => x.Equals(type)
 		);
 	}
+
+	[Fact]
+	public void Adding_While_Parsing_On_Other_Threads__Adds_Every_Type_Without_Error()
+	{
+		// Arrange
+		var types = Enumerable.Range(0, 2000).Select(_ => new MimeType(Rnd.Str)).ToList();
+
+		// Act - parse on every other iteration, so reads and writes overlap
+		Parallel.For(0, types.Count, i =>
+		{
+			_ = MimeType.AddCustomMimeType(types[i]);
+			_ = MimeType.Parse(i % 2 == 0 ? MimeType.Pdf.ToString() : Rnd.Str);
+		});
+
+		// Assert
+		var all = MimeType.AllTest();
+		Assert.All(types, t => Assert.Contains(t, all));
+	}
 }

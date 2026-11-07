@@ -84,10 +84,11 @@ internal static partial class SqliteLogging
 	}
 
 	/// <summary>
-	/// Write a connection event - opening and closing connections, and the SQL of each statement run.
+	/// Write a connection event - opening connections, and the SQL of each statement run.
 	/// </summary>
 	/// <remarks>
 	/// Other events are ignored: most are noise, and some carry the connection string (which may contain a password).
+	/// Closed isn't logged because System.Data.SQLite also raises it at the start of every Open.
 	/// Statements are logged as written, with parameter names but not their values.
 	/// </remarks>
 	/// <param name="log">ILogger.</param>
@@ -97,10 +98,6 @@ internal static partial class SqliteLogging
 		if (e.EventType == SQLiteConnectionEventType.Opened)
 		{
 			LogOpened(log);
-		}
-		else if (e.EventType == SQLiteConnectionEventType.Closed)
-		{
-			LogClosed(log);
 		}
 		else if (e.EventType == SQLiteConnectionEventType.NewDataReader && e.Command is not null)
 		{
@@ -113,9 +110,6 @@ internal static partial class SqliteLogging
 
 	[LoggerMessage(Level = LogLevel.Debug, Message = "Opened connection.")]
 	private static partial void LogOpened(ILogger log);
-
-	[LoggerMessage(Level = LogLevel.Debug, Message = "Closed connection.")]
-	private static partial void LogClosed(ILogger log);
 
 	[LoggerMessage(Level = LogLevel.Debug, Message = "Executing {Sql}")]
 	private static partial void LogExecuting(ILogger log, string sql);

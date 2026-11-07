@@ -173,6 +173,18 @@ await db.ExecuteAsync(
 );
 Console.WriteLine();
 
+// Update a row that no longer exists - rows have been inserted on this connection, so rqlite's
+// last insert ID is not 0, but nothing changes and ExecuteAsync must return false
+header("== Updating deleted data ==");
+await db.ExecuteAsync(
+	$"UPDATE {table} SET foo = :newFoo WHERE id = :id", new { newFoo = Rnd.Str, id }
+)
+.AuditAsync(
+	fOk: x => { if (!x) { log.Dbg("Succeeded: no rows changed."); } else { log.Err("Failed: reported success but no rows exist."); } },
+	fFail: log.Failure
+);
+Console.WriteLine();
+
 // Insert values using repository
 header("== Inserting values using repository ==");
 var v0 = new TestEntity(8, Rnd.Str, Rnd.Str, Rnd.UInt64);
