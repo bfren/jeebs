@@ -37,13 +37,13 @@ slack.Send("test error", NotificationLevel.Error);
 var notifier = app.Services.GetRequiredService<INotifier>();
 notifier.Send("test notification");
 
-var one = async Task<Result<int>> (int input) =>
+async Task<Result<int>> one(int input) =>
 	await Task.FromResult(input + 1);
 
-var two = async Task<Result<string>> (int input) =>
+async Task<Result<string>> two(int input) =>
 	await Task.FromResult(input.ToString());
 
-var three = async Task<Result<bool>> (string input) =>
+async Task<Result<bool>> three(string input) =>
 	await Task.FromResult(input == "3");
 
 var result = from r0 in one(2)

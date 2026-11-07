@@ -17,7 +17,7 @@ public static partial class StringExtensions
 		@this.EndsWith(value, StringComparison.InvariantCulture) switch
 		{
 			true =>
-				@this.Remove(@this.LastIndexOf(value, StringComparison.InvariantCulture)),
+				@this[..@this.LastIndexOf(value, StringComparison.InvariantCulture)],
 
 			false =>
 				@this

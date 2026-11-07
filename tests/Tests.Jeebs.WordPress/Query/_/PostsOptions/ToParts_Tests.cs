@@ -67,7 +67,7 @@ public class ToParts_Tests : ToParts_Tests<PostsOptions, IQueryPostsPartsBuilder
 		var (options, builder) = Setup();
 		var opt = options with
 		{
-			SearchText = input!
+			SearchText = input
 		};
 
 		// Act

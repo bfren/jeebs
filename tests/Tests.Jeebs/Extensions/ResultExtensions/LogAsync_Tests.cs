@@ -8,7 +8,7 @@ namespace Jeebs.ResultExtensions_Tests;
 public class LogAsync_Tests
 {
 	[Fact]
-	public async Task Is_Ok__Calls_Log_Inf__With_Correct_Values()
+	public Task Is_Ok__Calls_Log_Inf__With_Correct_Values()
 	{
 		// Arrange
 		var value = Rnd.Str;
@@ -23,10 +23,11 @@ public class LogAsync_Tests
 		// Assert
 		log.Received().Inf("Done: {Value}.", value);
 		log.Received().Inf(message, value);
+		return Task.CompletedTask;
 	}
 
 	[Fact]
-	public async Task Is_Fail__Calls_Log_Failure__With_Correct_Values()
+	public Task Is_Fail__Calls_Log_Failure__With_Correct_Values()
 	{
 		// Arrange
 		var failure = FailGen.Create();
@@ -40,5 +41,6 @@ public class LogAsync_Tests
 
 		// Assert
 		log.Received(2).Failure(failure.Value);
+		return Task.CompletedTask;
 	}
 }

@@ -45,7 +45,7 @@ public class WhereIn_Tests : FluentQuery_Tests
 		Assert.Equal(v.Table.Foo, column0.ColName);
 		Assert.Equal(nameof(TestEntity.Foo), column0.ColAlias);
 		Assert.Equal(Compare.In, compare0);
-		Assert.Collection((IEnumerable<string>)value0!,
+		Assert.Collection((IEnumerable<string>)value0,
 			y => Assert.Equal(v0, y),
 			y => Assert.Equal(v1, y)
 		);
@@ -55,7 +55,7 @@ public class WhereIn_Tests : FluentQuery_Tests
 		Assert.Equal(v.Table.Foo, column1.ColName);
 		Assert.Equal(nameof(TestEntity.Foo), column1.ColAlias);
 		Assert.Equal(Compare.In, compare1);
-		Assert.Collection((IEnumerable<string>)value1!,
+		Assert.Collection((IEnumerable<string>)value1,
 			y => Assert.Equal(v0, y),
 			y => Assert.Equal(v1, y)
 		);

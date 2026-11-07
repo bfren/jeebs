@@ -5,7 +5,6 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Security.Claims;
 using System.Threading.Tasks;
-using Jeebs.Auth.Jwt.Constants;
 using Jeebs.Mvc.Auth.Models;
 
 namespace Jeebs.Mvc.Auth.Functions;
@@ -28,8 +27,8 @@ public static partial class AuthF
 		var claims = new List<Claim>
 		{
 			new (Jeebs.Auth.Jwt.Constants.ClaimTypes.UserId, user.Id.Value.ToString(CultureInfo.InvariantCulture), ClaimValueTypes.Integer32),
-			new (System.Security.Claims.ClaimTypes.Name, user.FriendlyName ?? user.EmailAddress, ClaimValueTypes.String),
-			new (System.Security.Claims.ClaimTypes.Email, user.EmailAddress, ClaimValueTypes.Email),
+			new (ClaimTypes.Name, user.FriendlyName ?? user.EmailAddress, ClaimValueTypes.String),
+			new (ClaimTypes.Email, user.EmailAddress, ClaimValueTypes.Email),
 		};
 
 		// Add super permission
@@ -41,7 +40,7 @@ public static partial class AuthF
 		// Add roles
 		foreach (var role in user.Roles)
 		{
-			claims.Add(new(System.Security.Claims.ClaimTypes.Role, role.Name, ClaimValueTypes.String));
+			claims.Add(new(ClaimTypes.Role, role.Name, ClaimValueTypes.String));
 		}
 
 		// Add custom Claims
