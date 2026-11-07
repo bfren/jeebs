@@ -104,7 +104,7 @@ public partial class PostgreSqlDbClient
 		// Add ORDER BY
 		if (parts.SortRandom)
 		{
-			sql += " ORDER BY RAND()";
+			sql += " ORDER BY random()";
 		}
 		else if (parts.Sort.Count > 0)
 		{
