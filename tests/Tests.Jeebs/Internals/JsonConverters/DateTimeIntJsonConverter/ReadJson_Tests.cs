@@ -24,6 +24,24 @@ public class ReadJson_Tests : Setup
 			var ok = result.AssertOk();
 			Assert.Equal(input, ok.Value);
 		}
+
+		[Theory]
+		[InlineData(1, 1, 1, 0, 0)]
+		[InlineData(999, 12, 31, 12, 0)]
+		public void Year_Before_1000__Returns_Value(int year, int month, int day, int hour, int minute)
+		{
+			// Arrange - these serialise with a leading zero, e.g. 099912311200
+			var opt = GetOptions();
+			var input = new DateTimeInt(year, month, day, hour, minute);
+			var json = $"{{\"Value\":\"{input}\"}}";
+
+			// Act
+			var result = JsonF.Deserialise<DateTimeIntWrapped>(json, opt);
+
+			// Assert
+			var ok = result.AssertOk();
+			Assert.Equal(input, ok.Value);
+		}
 	}
 
 	public class With_Invalid_Input : Setup
