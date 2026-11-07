@@ -15,22 +15,25 @@ public sealed class ImageWrapper : Services.Drawing.ImageWrapper, IDisposable
 {
 	/// <inheritdoc/>
 	public override int Width =>
-		SKImage.FromEncodedData(image).Width;
+		decoded.Value.Width;
 
 	/// <inheritdoc/>
 	public override int Height =>
-		SKImage.FromEncodedData(image).Height;
+		decoded.Value.Height;
 
 	private readonly SKData image;
 
+	// decoded once, on first use, and shared by every method
+	private readonly Lazy<SKImage> decoded;
+
 	internal ImageWrapper(SKData image) =>
-		this.image = image;
+		(this.image, decoded) = (image, new(() => SKImage.FromEncodedData(image)));
 
 	/// <inheritdoc/>
 	public override void Save(string path, ImageFormat format)
 	{
 		var encodedFormat = format.GetEncodedImageFormat();
-		using var data = SKImage.FromEncodedData(image).Encode(encodedFormat, 80);
+		using var data = decoded.Value.Encode(encodedFormat, 80);
 		using var fs = File.Create(path);
 		data.SaveTo(fs);
 	}
@@ -52,7 +55,7 @@ public sealed class ImageWrapper : Services.Drawing.ImageWrapper, IDisposable
 		R.Try(
 			() =>
 			{
-				using var data = SKImage.FromEncodedData(image).Encode(format, quality);
+				using var data = decoded.Value.Encode(format, quality);
 				using var ms = new MemoryStream();
 				data.SaveTo(ms);
 				return ms.ToArray();
@@ -74,7 +77,7 @@ public sealed class ImageWrapper : Services.Drawing.ImageWrapper, IDisposable
 			using var paint = new SKPaint { IsAntialias = width > 200 || height > 200 };
 
 			// Draw the actual image
-			surface.Canvas.DrawImage(SKImage.FromEncodedData(image), source, destination, new(), paint);
+			surface.Canvas.DrawImage(decoded.Value, source, destination, new(), paint);
 
 			// Return resized image
 			using var resized = surface.Snapshot();
@@ -83,6 +86,13 @@ public sealed class ImageWrapper : Services.Drawing.ImageWrapper, IDisposable
 		});
 
 	/// <inheritdoc/>
-	public void Dispose() =>
+	public void Dispose()
+	{
+		if (decoded.IsValueCreated)
+		{
+			decoded.Value.Dispose();
+		}
+
 		image.Dispose();
+	}
 }

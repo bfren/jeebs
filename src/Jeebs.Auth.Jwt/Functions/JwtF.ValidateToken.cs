@@ -43,9 +43,9 @@ public static partial class JwtF
 			return R.Fail("Security token is not valid yet.")
 				.Ctx(nameof(JwtF), nameof(ValidateToken));
 		}
-		catch (Exception e) when (e.Message.Contains("IDX10223"))
+		catch (SecurityTokenExpiredException)
 		{
-			return R.Fail(e).Msg("Token has expired.")
+			return R.Fail("Token has expired.")
 				.Ctx(nameof(JwtF), nameof(ValidateToken));
 		}
 		catch (Exception e)
