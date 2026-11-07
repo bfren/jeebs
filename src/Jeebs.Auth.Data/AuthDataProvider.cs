@@ -170,5 +170,5 @@ public sealed class AuthDataProvider : IAuthDataProvider
 	/// Hash with the current settings, verified when a user doesn't exist so it takes as long as a real check.
 	/// </summary>
 	private static readonly Lazy<string> DummyHash =
-		new(() => "dummy password for unknown users".HashPassword());
+		new("dummy password for unknown users".HashPassword);
 }
