@@ -3,6 +3,7 @@
 
 using Jeebs.Cryptography.Functions;
 using Jeebs.Functions;
+using RndF;
 using Sodium;
 
 namespace Jeebs.Cryptography;
@@ -21,7 +22,7 @@ public abstract class Locked
 	/// <summary>
 	/// Encryption salt.
 	/// </summary>
-	public byte[] Salt { get; init; }
+	public string Salt { get; init; }
 
 	/// <summary>
 	/// Encryption nonce.
@@ -32,7 +33,7 @@ public abstract class Locked
 	/// Create new Locked box with random salt and nonce.
 	/// </summary>
 	internal Locked() =>
-		(Salt, Nonce) = (SodiumCore.GetRandomBytes(16), SecretBox.GenerateNonce());
+		(Salt, Nonce) = (Rnd.StringF.Get(32, Chars.All), SecretBox.GenerateNonce());
 }
 
 /// <inheritdoc/>
@@ -87,5 +88,5 @@ public sealed class Locked<T> : Locked
 		);
 
 	private byte[] HashKey(string key) =>
-		GenericHash.Hash(key, Salt, Lockable.KeyLength);
+		PasswordHash.ArgonHashBinary(key, Salt, outputLength: Lockable.KeyLength);
 }
