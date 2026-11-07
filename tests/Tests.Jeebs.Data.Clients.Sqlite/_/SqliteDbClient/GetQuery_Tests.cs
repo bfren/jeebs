@@ -93,7 +93,7 @@ public class GetQuery_Tests : SqliteDbClient_Setup
 		var (client, v) = Setup();
 
 		var parts = new QueryParts(v.Table) with { SelectCount = true };
-		var expected = $"SELECT COUNT() FROM {v.Name};";
+		var expected = $"SELECT COUNT(*) FROM {v.Name};";
 
 		// Act
 		var (query, _) = client.GetQuery(parts).Unsafe().Unwrap();
@@ -412,6 +412,23 @@ public class GetQuery_Tests : SqliteDbClient_Setup
 		var max = Rnd.UInt64;
 		var parts = new QueryParts(v.Table) { Skip = skip, Maximum = max };
 		var expected = $"SELECT * FROM {v.Name} LIMIT {skip}, {max};";
+
+		// Act
+		var (query, _) = client.GetQuery(parts).Unsafe().Unwrap();
+
+		// Assert
+		Assert.Equal(expected, query);
+	}
+
+	[Fact]
+	public void With_Parts_Skip_Without_Maximum_Adds_Offset()
+	{
+		// Arrange
+		var (client, v) = Setup();
+
+		var skip = Rnd.UInt64;
+		var parts = new QueryParts(v.Table) { Skip = skip };
+		var expected = $"SELECT * FROM {v.Name} LIMIT {skip}, -1;";
 
 		// Act
 		var (query, _) = client.GetQuery(parts).Unsafe().Unwrap();
