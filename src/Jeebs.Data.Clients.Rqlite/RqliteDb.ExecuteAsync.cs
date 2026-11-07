@@ -17,6 +17,7 @@ public abstract partial class RqliteDb : Db
 	{
 		using var w = StartWork();
 		return await w.ExecuteAsync(asSingleTransaction, [.. commands])
-			.MapAsync(x => x.All(r => r.RowsAffected > 0 || r.LastInsertId > 0));
+			// LastInsertId is kept per connection, so it is not reset by an UPDATE or DELETE that changes nothing
+			.MapAsync(x => x.All(r => r.RowsAffected > 0));
 	}
 }

@@ -1,7 +1,6 @@
 // Jeebs Unit Tests
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
-using System.Text;
 using static Jeebs.Mvc.Models.Menu;
 
 namespace Jeebs.Mvc.Models.Menu_Tests.MenuF_Tests;
@@ -35,13 +34,35 @@ public class LoadUrisAsync_Tests
 		var u2 = Rnd.Str;
 		var uris = new[] { u0, u1, u2 }.ToList();
 		var loadUri = Substitute.For<LoadUri>();
+		loadUri.Invoke(default!, default!, TestContext.Current.CancellationToken).ReturnsForAnyArgs(ValueTask.FromResult(Rnd.Str));
 
 		// Act
 		await MenuF.LoadUrisAsync(client, uris, loadUri);
 
 		// Assert
-		await loadUri.Received(1).Invoke(Arg.Any<StringBuilder>(), client, u0, Arg.Any<CancellationToken>());
-		await loadUri.Received(1).Invoke(Arg.Any<StringBuilder>(), client, u1, Arg.Any<CancellationToken>());
-		await loadUri.Received(1).Invoke(Arg.Any<StringBuilder>(), client, u2, Arg.Any<CancellationToken>());
+		await loadUri.Received(1).Invoke(client, u0, Arg.Any<CancellationToken>());
+		await loadUri.Received(1).Invoke(client, u1, Arg.Any<CancellationToken>());
+		await loadUri.Received(1).Invoke(client, u2, Arg.Any<CancellationToken>());
+	}
+
+	[Fact]
+	public async Task Returns_Every_Line_In_Uri_Order()
+	{
+		// Arrange
+		var client = new HttpClient(new MockHttpMessageHandler());
+		var uris = Enumerable.Range(0, 50).Select(i => i.ToString()).ToList();
+
+		// later URIs finish first, so lines would come back out of order (or be lost) if they shared one buffer
+		static async ValueTask<string> loadUri(HttpClient _, string uri, CancellationToken token)
+		{
+			await Task.Delay(50 - int.Parse(uri), token);
+			return $"{uri};";
+		}
+
+		// Act
+		var result = await MenuF.LoadUrisAsync(client, uris, loadUri);
+
+		// Assert
+		Assert.Equal(string.Concat(uris.Select(u => $"{u};")), result.AssertSome());
 	}
 }
