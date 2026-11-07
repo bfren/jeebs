@@ -1,0 +1,9 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <Configurations>Debug;Release;Test</Configurations>
+  </PropertyGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\Jeebs.Data.Clients.Rqlite\Jeebs.Data.Clients.Rqlite.csproj" />
+    <ProjectReference Include="..\Tests.Jeebs.Data\Tests.Jeebs.Data.csproj" />
+  </ItemGroup>
+</Project>

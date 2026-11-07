@@ -69,7 +69,15 @@ public abstract partial class DbClient : IDbClient
 
 	/// <inheritdoc/>
 	public Result<(string query, IQueryParametersDictionary param)> GetCountQuery(IQueryParts parts) =>
-		GetQuery(new QueryParts(parts) with { SelectCount = true });
+		// a count returns one row, so sorting and paging it would fail or skip the count itself
+		GetQuery(new QueryParts(parts) with
+		{
+			SelectCount = true,
+			Sort = new ImmutableList<(IColumn column, SortOrder order)>(),
+			SortRandom = false,
+			Maximum = null,
+			Skip = 0
+		});
 
 	/// <inheritdoc/>
 	public virtual Result<(string query, IQueryParametersDictionary param)> GetQuery(IQueryParts parts)
