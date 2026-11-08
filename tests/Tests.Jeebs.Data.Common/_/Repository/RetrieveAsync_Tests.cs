@@ -34,7 +34,7 @@ public class RetrieveAsync_Tests : Repository_Setup
 		await repo.RetrieveAsync<FooModel>(value, v.Transaction);
 
 		// Assert
-		await v.Db.Received(2).QuerySingleAsync<FooModel>(Arg.Any<string>(), Arg.Any<object?>(), CommandType.Text, v.Transaction);
+		await v.Db.Received(2).QuerySingleAsync<FooModel>(Arg.Any<string>(), Arg.Is<object?>(x => Equals(x!.GetType().GetProperty("Id")!.GetValue(x), value.Value)), CommandType.Text, v.Transaction);
 	}
 
 	[Fact]

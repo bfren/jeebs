@@ -39,7 +39,7 @@ public partial class SqlServerDbClient
 		return
 			$"SELECT {JoinList(col, false)} " +
 			$"FROM {Escape(table)} " +
-			$"WHERE {Escape(idColumn)} = {id}"
+			$"WHERE {Escape(idColumn)} = {GetParamRef(nameof(IWithId.Id))}"
 		;
 	}
 
@@ -71,7 +71,7 @@ public partial class SqlServerDbClient
 		var sql =
 			$"UPDATE {Escape(table)} " +
 			$"SET {JoinList(set, false)} " +
-			$"WHERE {Escape(idColumn)} = {id}"
+			$"WHERE {Escape(idColumn)} = {GetParamRef(nameof(IWithId.Id))}"
 		;
 
 		// Add WHERE Version
@@ -97,7 +97,7 @@ public partial class SqlServerDbClient
 		// Begin query
 		var sql =
 			$"DELETE FROM {Escape(table)} " +
-			$"WHERE {Escape(idColumn)} = {id}"
+			$"WHERE {Escape(idColumn)} = {GetParamRef(nameof(IWithId.Id))}"
 		;
 
 		// Add WHERE Version

@@ -38,7 +38,7 @@ public partial class RqliteDbClient
 		return
 			$"SELECT {JoinList(col, false)} " +
 			$"FROM {Escape(table)} " +
-			$"WHERE {Escape(idColumn)} = {id} " +
+			$"WHERE {Escape(idColumn)} = {GetParamRef(nameof(IWithId.Id))} " +
 			$"LIMIT 1"
 		;
 	}
@@ -71,7 +71,7 @@ public partial class RqliteDbClient
 		var sql =
 			$"UPDATE {Escape(table)} " +
 			$"SET {JoinList(set, false)} " +
-			$"WHERE {Escape(idColumn)} = {id}"
+			$"WHERE {Escape(idColumn)} = {GetParamRef(nameof(IWithId.Id))}"
 		;
 
 		// Add WHERE Version
@@ -100,7 +100,7 @@ public partial class RqliteDbClient
 		// Begin query
 		var sql =
 			$"DELETE FROM {Escape(table)} " +
-			$"WHERE {Escape(idColumn)} = {id}"
+			$"WHERE {Escape(idColumn)} = {GetParamRef(nameof(IWithId.Id))}"
 		;
 
 		// Add WHERE Version

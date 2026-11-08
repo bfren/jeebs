@@ -43,7 +43,7 @@ public class GetUpdateQuery_Tests : MySqlDbClient_Setup
 		var expected = $"UPDATE `{schema}.{name}` SET" +
 			$" `{c0Name}` = @{c0Alias}," +
 			$" `{c1Name}` = @{c1Alias}" +
-			$" WHERE `{c2Name}` = {id};";
+			$" WHERE `{c2Name}` = @Id;";
 
 		// Act
 		var result = client.GetUpdateQueryTest(table, list, c2, id);
@@ -94,7 +94,7 @@ public class GetUpdateQuery_Tests : MySqlDbClient_Setup
 			$" `{c0Name}` = @{c0Alias}," +
 			$" `{c1Name}` = @{c1Alias}," +
 			$" `{c3Name}` = @{c3Alias} + 1" +
-			$" WHERE `{c2Name}` = {id}" +
+			$" WHERE `{c2Name}` = @Id" +
 			$" AND `{c3Name}` = @{c3Alias};";
 
 		// Act

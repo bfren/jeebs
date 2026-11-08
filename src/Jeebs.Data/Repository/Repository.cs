@@ -77,7 +77,7 @@ public abstract class Repository<TEntity, TId> : IRepository<TEntity, TId>
 			fOk: _ => LogFunc(nameof(RetrieveAsync))
 		)
 		.BindAsync(
-			x => Db.QuerySingleAsync<TModel>(x, null)
+			x => Db.QuerySingleAsync<TModel>(x, new { Id = id.Value })
 		);
 
 	/// <inheritdoc/>

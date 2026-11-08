@@ -26,7 +26,7 @@ public class GetDeleteQuery_Tests : MySqlDbClient_Setup
 
 		var id = Rnd.Lng;
 
-		var expected = $"DELETE FROM `{schema}.{name}` WHERE `{c0Name}` = {id};";
+		var expected = $"DELETE FROM `{schema}.{name}` WHERE `{c0Name}` = @Id;";
 
 		// Act
 		var result = client.GetDeleteQueryTest(table, c0, id);
@@ -59,7 +59,7 @@ public class GetDeleteQuery_Tests : MySqlDbClient_Setup
 
 		var id = Rnd.Lng;
 
-		var expected = $"DELETE FROM `{schema}.{name}` WHERE `{c0Name}` = {id} AND `{c1Name}` = @{c1Alias};";
+		var expected = $"DELETE FROM `{schema}.{name}` WHERE `{c0Name}` = @Id AND `{c1Name}` = @{c1Alias};";
 
 		// Act
 		var result = client.GetDeleteQueryTest(table, c0, id, c1);

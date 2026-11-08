@@ -40,7 +40,7 @@ public class GetRetrieveQuery_Tests : SqlServerDbClient_Setup
 			$" [{c0Name}] AS [{c0Alias}]," +
 			$" [{c1Name}] AS [{c1Alias}]" +
 			$" FROM [{schema}].[{name}]" +
-			$" WHERE [{c2Name}] = {id}";
+			$" WHERE [{c2Name}] = @Id";
 
 		// Act
 		var result = client.GetRetrieveQueryTest(table, list, c2, id);

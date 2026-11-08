@@ -39,7 +39,7 @@ public partial class PostgreSqlDbClient
 		return
 			$"SELECT {JoinList(col, false)} " +
 			$"FROM {Escape(table)} " +
-			$"WHERE {Escape(idColumn)} = {id};"
+			$"WHERE {Escape(idColumn)} = {GetParamRef(nameof(IWithId.Id))};"
 		;
 	}
 
@@ -71,7 +71,7 @@ public partial class PostgreSqlDbClient
 		var sql =
 			$"UPDATE {Escape(table)} " +
 			$"SET {JoinList(set, false)} " +
-			$"WHERE {Escape(idColumn)} = {id}"
+			$"WHERE {Escape(idColumn)} = {GetParamRef(nameof(IWithId.Id))}"
 		;
 
 		// Add WHERE Version
@@ -100,7 +100,7 @@ public partial class PostgreSqlDbClient
 		// Begin query
 		var sql =
 			$"DELETE FROM {Escape(table)} " +
-			$"WHERE {Escape(idColumn)} = {id}"
+			$"WHERE {Escape(idColumn)} = {GetParamRef(nameof(IWithId.Id))}"
 		;
 
 		// Add WHERE Version
