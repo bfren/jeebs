@@ -50,6 +50,15 @@ public abstract class MvcController : Controller
 	/// <typeparam name="T">Result value type.</typeparam>
 	/// <param name="result">Result object.</param>
 	/// <param name="success">Function to run when the result is successful.</param>
+	protected Task<IActionResult> ProcessAsync<T>(Result<T> result, Func<T, IActionResult> success) =>
+		ProcessAsync(result, x => Task.FromResult(success(x)));
+
+	/// <summary>
+	/// Do something, process the result and return errors if necessary, or perform the success function.
+	/// </summary>
+	/// <typeparam name="T">Result value type.</typeparam>
+	/// <param name="result">Result object.</param>
+	/// <param name="success">Function to run when the result is successful.</param>
 	protected Task<IActionResult> ProcessAsync<T>(Task<Result<T>> result, Func<T, IActionResult> success) =>
 		result.MatchAsync(
 			fOk: success,
@@ -66,13 +75,6 @@ public abstract class MvcController : Controller
 		result.MatchAsync(
 			fOk: success,
 			fFail: this.ExecuteErrorAsync
-		);
-
-	/// <inheritdoc cref="ProcessAsync{T}(Task{Result{T}}, Func{T, Task{IActionResult}})"/>
-	protected IActionResult Process<T>(Result<T> result, Func<T, IActionResult> success) =>
-		result.Match(
-			fOk: success,
-			fFail: f => this.ExecuteErrorAsync(f).GetAwaiter().GetResult()
 		);
 
 	/// <summary>
