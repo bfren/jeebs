@@ -122,8 +122,8 @@ public interface IDbClient
 	/// </summary>
 	/// <typeparam name="TEntity">Entity type.</typeparam>
 	/// <typeparam name="TModel">Return model type.</typeparam>
-	/// <param name="id">Entity ID.</param>
-	Result<string> GetRetrieveQuery<TEntity, TModel>(object id)
+	/// <remarks>The query expects the ID as a parameter named Id.</remarks>
+	Result<string> GetRetrieveQuery<TEntity, TModel>()
 		where TEntity : IWithId;
 
 	/// <summary>
@@ -131,16 +131,16 @@ public interface IDbClient
 	/// </summary>
 	/// <typeparam name="TEntity">Entity type.</typeparam>
 	/// <typeparam name="TModel">Return model type.</typeparam>
-	/// <param name="id">Entity ID.</param>
-	Result<string> GetUpdateQuery<TEntity, TModel>(object id)
+	/// <remarks>The query expects the ID as a parameter named Id.</remarks>
+	Result<string> GetUpdateQuery<TEntity, TModel>()
 		where TEntity : IWithId;
 
 	/// <summary>
 	/// Return a query to delete a single entity by ID.
 	/// </summary>
 	/// <typeparam name="TEntity">Entity type.</typeparam>
-	/// <param name="id">Entity ID.</param>
-	Result<string> GetDeleteQuery<TEntity>(object id)
+	/// <remarks>The query expects the ID as a parameter named Id.</remarks>
+	Result<string> GetDeleteQuery<TEntity>()
 		where TEntity : IWithId;
 
 	#endregion CRUD Queries

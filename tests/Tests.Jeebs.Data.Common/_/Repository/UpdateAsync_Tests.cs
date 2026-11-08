@@ -20,7 +20,7 @@ public class UpdateAsync_Tests : Repository_Setup
 		_ = await repo.UpdateAsync(model, v.Transaction);
 
 		// Assert
-		v.Client.Received(2).GetUpdateQuery<Foo, FooModel>(value);
+		v.Client.Received(2).GetUpdateQuery<Foo, FooModel>();
 	}
 
 	[Fact]

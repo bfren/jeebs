@@ -59,7 +59,7 @@ public abstract class Repository<TEntity, TId> : Base.Repository<TEntity, TId>, 
 
 	/// <inheritdoc/>
 	public virtual Task<Result<TModel>> RetrieveAsync<TModel>(TId id, IDbTransaction transaction) =>
-		Db.Client.GetRetrieveQuery<TEntity, TModel>(id.Value)
+		Db.Client.GetRetrieveQuery<TEntity, TModel>()
 		.Audit(
 			fOk: _ => LogFunc(nameof(RetrieveAsync))
 		)
@@ -82,7 +82,7 @@ public abstract class Repository<TEntity, TId> : Base.Repository<TEntity, TId>, 
 	/// <inheritdoc/>
 	public virtual Task<Result<bool>> UpdateAsync<TModel>(TModel model, IDbTransaction transaction)
 		where TModel : IWithId =>
-		Db.Client.GetUpdateQuery<TEntity, TModel>(model.Id.Value)
+		Db.Client.GetUpdateQuery<TEntity, TModel>()
 		.Audit(
 			fOk: _ => LogFunc(nameof(UpdateAsync))
 		)
@@ -105,7 +105,7 @@ public abstract class Repository<TEntity, TId> : Base.Repository<TEntity, TId>, 
 	/// <inheritdoc/>
 	public virtual Task<Result<bool>> DeleteAsync<TModel>(TModel model, IDbTransaction transaction)
 		where TModel : IWithId =>
-		Db.Client.GetDeleteQuery<TEntity>(model.Id.Value)
+		Db.Client.GetDeleteQuery<TEntity>()
 		.Audit(
 			fOk: _ => LogFunc(nameof(DeleteAsync))
 		)

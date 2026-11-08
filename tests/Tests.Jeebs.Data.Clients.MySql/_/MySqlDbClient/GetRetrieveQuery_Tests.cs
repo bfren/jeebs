@@ -34,8 +34,6 @@ public class GetRetrieveQuery_Tests : MySqlDbClient_Setup
 
 		var list = new ColumnList([c0, c1]);
 
-		var id = Rnd.Lng;
-
 		var expected = "SELECT" +
 			$" `{c0Name}` AS '{c0Alias}'," +
 			$" `{c1Name}` AS '{c1Alias}'" +
@@ -43,7 +41,7 @@ public class GetRetrieveQuery_Tests : MySqlDbClient_Setup
 			$" WHERE `{c2Name}` = @Id;";
 
 		// Act
-		var result = client.GetRetrieveQueryTest(table, list, c2, id);
+		var result = client.GetRetrieveQueryTest(table, list, c2);
 
 		// Assert
 		Assert.Equal(expected, result);

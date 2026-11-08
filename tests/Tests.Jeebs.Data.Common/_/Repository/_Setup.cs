@@ -12,9 +12,9 @@ public abstract class Repository_Setup
 	{
 		var client = Substitute.For<IDbClient>();
 		client.GetCreateQuery<Foo>().Returns(Rnd.Str);
-		client.GetRetrieveQuery<Foo, FooModel>(Arg.Any<long>()).Returns(Rnd.Str);
-		client.GetUpdateQuery<Foo, FooModel>(Arg.Any<long>()).Returns(Rnd.Str);
-		client.GetDeleteQuery<Foo>(Arg.Any<long>()).Returns(Rnd.Str);
+		client.GetRetrieveQuery<Foo, FooModel>().Returns(Rnd.Str);
+		client.GetUpdateQuery<Foo, FooModel>().Returns(Rnd.Str);
+		client.GetDeleteQuery<Foo>().Returns(Rnd.Str);
 
 		var transaction = Substitute.For<IDbTransaction>();
 

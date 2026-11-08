@@ -16,7 +16,7 @@ public class RetrieveAsync_Tests : Repository_Setup
 		await repo.RetrieveAsync<FooModel>(FooId.Wrap(value));
 
 		// Assert
-		v.Client.Received().GetRetrieveQuery<Foo, FooModel>(value);
+		v.Client.Received().GetRetrieveQuery<Foo, FooModel>();
 	}
 
 	[Fact]

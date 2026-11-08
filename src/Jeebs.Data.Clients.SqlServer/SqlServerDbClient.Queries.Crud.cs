@@ -28,8 +28,7 @@ public partial class SqlServerDbClient
 	protected override string GetRetrieveQuery(
 		ITableName table,
 		IColumnList columns,
-		IColumn idColumn,
-		object id
+		IColumn idColumn
 	)
 	{
 		// Get columns
@@ -47,17 +46,15 @@ public partial class SqlServerDbClient
 	protected override string GetUpdateQuery(
 		ITableName table,
 		IColumnList columns,
-		IColumn idColumn,
-		object id
+		IColumn idColumn
 	) =>
-		GetUpdateQuery(table, columns, idColumn, id, null);
+		GetUpdateQuery(table, columns, idColumn, null);
 
 	/// <inheritdoc/>
 	protected override string GetUpdateQuery(
 		ITableName table,
 		IColumnList columns,
 		IColumn idColumn,
-		object id,
 		IColumn? versionColumn
 	)
 	{
@@ -81,16 +78,14 @@ public partial class SqlServerDbClient
 	/// <inheritdoc/>
 	protected override string GetDeleteQuery(
 		ITableName table,
-		IColumn idColumn,
-		object id
+		IColumn idColumn
 	) =>
-		GetDeleteQuery(table, idColumn, id, null);
+		GetDeleteQuery(table, idColumn, null);
 
 	/// <inheritdoc/>
 	protected override string GetDeleteQuery(
 		ITableName table,
 		IColumn idColumn,
-		object id,
 		IColumn? versionColumn
 	)
 	{
