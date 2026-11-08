@@ -37,7 +37,8 @@ reporting, so findings come from reading the code.
 
 - **Unit of work:** async only - `StartWork()`, `Commit()`, `Rollback()` and `IDisposable` are gone,
   and `StartWorkAsync()` is no longer on `IDb`. Use `db.DoWorkAsync(unitOfWork => ...)`: it commits
-  if the work returns Ok (the v9 behaviour), and rolls back if it fails or throws. `CommitAsync` now
+  if the work returns Ok (like v9's commit-on-dispose, except that a Failure now rolls back instead
+  of committing), and rolls back if it throws. `CommitAsync` now
   returns `Result<bool>` (Ok again on a repeat commit, a failure after a rollback).
 - **Queries in a unit of work** take the `IUnitOfWork` instead of an `IDbTransaction`
   (`db.ExecuteAsync(sql, param, type, unitOfWork)`, `repo.CreateAsync(entity, unitOfWork)`). Its transaction is only

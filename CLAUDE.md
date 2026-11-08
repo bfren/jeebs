@@ -47,8 +47,8 @@ mixed. Check with `git ls-files --eol | grep -E "w/(mixed|lf)"`.
   `R.Fail("Message {Value}.", value).Ctx(nameof(Type), nameof(Method))`.
 - Data clients share one query builder in `src/Jeebs.Data/DbClient.CustomQueries.cs`; each client
   overrides only what differs (`RandomSort`, `GetLimitAndOffset`, `QueryTerminator`).
-- Data access is async only, and goes through `db.DoWorkAsync(unitOfWork => ...)` (the overloads
-  without a unit of work use it too). It commits when the work returns Ok and rolls back when it
+- `Data.Common` databases are async only, and go through `db.DoWorkAsync(unitOfWork => ...)` (the
+  overloads without a unit of work use it too; Rqlite has its own client and is not affected). It commits when the work returns Ok and rolls back when it
   fails or throws; queries inside it take `unitOfWork`, not a transaction. The transaction is lazy:
   only a write begins it, and a read joins it only once begun, so read-only work has no transaction.
   Committing again after a successful commit returns Ok; committing after a rollback fails.
