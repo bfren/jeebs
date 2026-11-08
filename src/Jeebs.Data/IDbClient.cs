@@ -95,17 +95,6 @@ public interface IDbClient
 	#region Custom Queries
 
 	/// <summary>
-	/// Return a query to retrieve a list of entities that match all the specified parameters.
-	/// </summary>
-	/// <typeparam name="TEntity">Entity type.</typeparam>
-	/// <typeparam name="TModel">Return model type.</typeparam>
-	/// <param name="predicates">Predicates (matched using AND).</param>
-	Result<(string query, IQueryParametersDictionary param)> GetQuery<TEntity, TModel>(
-		(string, Compare, dynamic)[] predicates
-	)
-		where TEntity : IWithId;
-
-	/// <summary>
 	/// Return a query to retrieve how many entities match the specified query parts.
 	/// </summary>
 	/// <param name="parts">IQueryParts.</param>

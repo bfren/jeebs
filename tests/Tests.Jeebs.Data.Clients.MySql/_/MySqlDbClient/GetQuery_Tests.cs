@@ -12,66 +12,6 @@ namespace Jeebs.Data.Clients.MySql.MySqlDbClient_Tests;
 public class GetQuery_Tests : MySqlDbClient_Setup
 {
 	[Fact]
-	public void With_Predicates_Returns_Valid_Select_Query()
-	{
-		// Arrange
-		var (client, v) = Setup();
-
-		var schema = Rnd.Str;
-		var name = Rnd.Str;
-		var table = new TableName(schema, name);
-
-		var c0Name = Rnd.Str;
-		var c0Alias = Rnd.Str;
-		var c0 = new Column(table, c0Name, Helpers.CreateInfoFromAlias(c0Alias));
-
-		var c1Name = Rnd.Str;
-		var c1Alias = Rnd.Str;
-		var c1 = new Column(table, c1Name, Helpers.CreateInfoFromAlias(c1Alias));
-
-		var list = new ColumnList([c0, c1]);
-
-		var p0Column = new Column(table, Rnd.Str, Helpers.CreateInfoFromAlias());
-		var p0Operator = Compare.Like;
-		var p0Value = Rnd.Str;
-
-		var p1Column = new Column(table, Rnd.Str, Helpers.CreateInfoFromAlias());
-		var p1Operator = Compare.MoreThanOrEqual;
-		var p1Value = Rnd.Int;
-
-		var predicates = ListF.Create<(IColumn, Compare, dynamic)>(
-		[
-			( p0Column, p0Operator, p0Value ),
-			( p1Column, p1Operator, p1Value )
-		]);
-
-		var expected = "SELECT" +
-			$" `{c0Name}` AS '{c0Alias}'," +
-			$" `{c1Name}` AS '{c1Alias}'" +
-			$" FROM `{schema}.{name}`" +
-			$" WHERE `{p0Column.ColName}` LIKE @P0" +
-			$" AND `{p1Column.ColName}` >= @P1;";
-
-		// Act
-		var (query, param) = client.GetQueryTest(table, list, predicates).Unsafe().Unwrap();
-
-		// Assert
-		Assert.Equal(expected, query);
-		Assert.Collection(param,
-			x =>
-			{
-				Assert.Equal("P0", x.Key);
-				Assert.Equal(p0Value, x.Value);
-			},
-			x =>
-			{
-				Assert.Equal("P1", x.Key);
-				Assert.Equal(p1Value, x.Value);
-			}
-		);
-	}
-
-	[Fact]
 	public void With_Parts_Escapes_From_Table()
 	{
 		// Arrange
