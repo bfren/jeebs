@@ -35,8 +35,14 @@ reporting, so findings come from reading the code.
 
 ## Breaking changes for the major version release notes
 
-- **Unit of work:** dispose rolls back; apps that call `StartWork` / `StartWorkAsync` themselves
-  must call `Commit` / `CommitAsync`. `Commit` / `CommitAsync` now return `Result<bool>`.
+- **Unit of work:** async only - `StartWork()`, `Commit()`, `Rollback()` and `IDisposable` are gone,
+  and `StartWorkAsync()` is no longer on `IDb`. Use `db.DoWorkAsync(unitOfWork => ...)`: it commits
+  if the work returns Ok (the v9 behaviour), and rolls back if it fails or throws. `CommitAsync` now
+  returns `Result<bool>` (Ok again on a repeat commit, a failure after a rollback).
+- **Queries in a unit of work** take the `IUnitOfWork` instead of an `IDbTransaction`
+  (`db.ExecuteAsync(sql, param, type, unitOfWork)`, `repo.CreateAsync(entity, unitOfWork)`). Its transaction is only
+  begun by the first write, so reads before any write run without one. `IAdapter` methods now take
+  the connection as well as the transaction.
 - **Query builder:** custom `DbClient` subclasses must implement `RandomSort` and
   `GetLimitAndOffset(ulong? maximum, ulong skip, bool sorted)`.
 - **`SortOrderExtensions.ToOperator`** moved to the `Jeebs.Data` namespace.
