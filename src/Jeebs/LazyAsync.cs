@@ -2,6 +2,7 @@
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using System;
+using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 
 namespace Jeebs;
@@ -17,6 +18,18 @@ public sealed class LazyAsync<T>
 	/// </summary>
 	public Task<T> Value =>
 		task.Value;
+
+	/// <summary>
+	/// True once <see cref="Value"/> has been requested (the task has started, but may not have finished).
+	/// </summary>
+	public bool Initialised =>
+		task.IsValueCreated;
+
+	/// <summary>
+	/// Await this object directly, instead of <see cref="Value"/>.
+	/// </summary>
+	public TaskAwaiter<T> GetAwaiter() =>
+		Value.GetAwaiter();
 
 	private readonly Lazy<Task<T>> task;
 
