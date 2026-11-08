@@ -13,17 +13,9 @@ public sealed partial record class FluentQuery<TEntity, TId>
 	/// <inheritdoc/>
 	public async Task<Result<IEnumerable<TModel>>> QueryAsync<TModel>()
 	{
-
-		// Return if there were any errors (usually when converting a column alias to a column object)
-		if (Errors.Count > 0)
+		if (CheckParts(nameof(QueryAsync)) is Failure f)
 		{
-			return R.Fail("Query errors.", Errors).Ctx(nameof(FluentQuery<,>), nameof(QueryAsync));
-		}
-
-		// Return if there are no where clauses
-		if (Parts.Where.Count == 0 && Parts.WhereCustom.Count == 0)
-		{
-			return R.Fail("No predicates defined for WHERE clause.").Ctx(nameof(FluentQuery<,>), nameof(QueryAsync));
+			return f;
 		}
 
 		// Add select columns to query

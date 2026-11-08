@@ -10,16 +10,9 @@ public sealed partial record class FluentQuery<TEntity, TId>
 	/// <inheritdoc/>
 	public async Task<Result<long>> CountAsync()
 	{
-		// Return if there were any errors (usually when converting a column alias to a column object)
-		if (Errors.Count > 0)
+		if (CheckParts(nameof(CountAsync)) is Failure f)
 		{
-			return R.Fail("Query errors.", Errors).Ctx(nameof(FluentQuery<,>), nameof(CountAsync));
-		}
-
-		// Return if there are no where clauses
-		if (Parts.Where.Count == 0 && Parts.WhereCustom.Count == 0)
-		{
-			return R.Fail("No predicates defined for WHERE clause.").Ctx(nameof(FluentQuery<,>), nameof(CountAsync));
+			return f;
 		}
 
 		// Get and execute query
