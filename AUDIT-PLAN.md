@@ -60,6 +60,10 @@ Won't do: **#12** reads without a transaction (speed only), and rate limiting on
   logs through the app's `ILoggerFactory` (Serilog in Jeebs apps) instead, with no package to
   add. It shows warnings only unless `jeebs:logging:overrides` sets `"MySqlConnector"` to
   another level (e.g. `"Debug"`).
+- **Web apps:** `MvcApp` / `ApiApp` / `RazorApp` now get request logging, site verification,
+  the exception handler, status-code pages and HSTS, which they silently lacked. Production
+  errors in MVC and Razor apps now go to `/Error` (the `ErrorController`), and error views are
+  sent with their real status code instead of 200.
 
 ---
 
@@ -190,21 +194,23 @@ Must fix: B1–B5. Should fix: B6–B9. Nice to have: B10–B12.
 
 ## Phase 8 — web app pipeline (B1, B5, B6, B9) — issue #624
 
-- [ ] **B1 MvcApp skips the base setup** — `src/Jeebs.Apps.Web/MvcApp.cs:262`
+- [x] **B1 MvcApp skips the base setup** — `src/Jeebs.Apps.Web/MvcApp.cs:262`
   `MvcApp.Configure` never calls `base.Configure` (lost in `7c79715a`, the .NET 6 move). So
   `MvcApp` / `ApiApp` / `RazorApp` get no request logging, site verification, exception handler,
-  status-code pages (`ErrorController` is never reached) or HSTS. Fix: call `base.Configure(app)`
-  first, and move `UseAuthorization` out of `WebApp.Configure` so it runs once, after
-  `UseRouting` (MvcApp already does that).
-- [ ] **B5 Request logging swallows exceptions** — `src/Jeebs.Apps.Web/Middleware/LoggerMiddleware.cs:71`
+  status-code pages (`ErrorController` is never reached) or HSTS.
+  Done: the start of `WebApp.Configure` (logging, verification, exception handling, security
+  headers) moved into a protected `ConfigureStart`, which `MvcApp.Configure` now calls first.
+  `WebApp.Configure` keeps its auth step for plain `WebApp`s; `MvcApp` still runs `ConfigureAuth`
+  once, after `UseRouting`.
+- [x] **B5 Request logging swallows exceptions** — `src/Jeebs.Apps.Web/Middleware/LoggerMiddleware.cs:71`
   It logs a 500 and doesn't rethrow, so a crash in `ApiApp` (no exception handler) returns an
-  empty 200. Fix: `throw;` after the log line. Do this together with B1.
-- [ ] **B6 Error pages are sent as HTTP 200** —
+  empty 200. Done: `throw;` after the log line.
+- [x] **B6 Error pages are sent as HTTP 200** —
   `src/Jeebs.Mvc/Extensions/MvcController/MvcControllerExtensions.ExecuteErrorAsync.cs:43`
-  Works out `status` but never sets it. Fix: `@this.Response.StatusCode = status;` before
-  `return @this.View(...)`.
-- [ ] **B9 Test:** there is no `Tests.Jeebs.Apps.Web`. Add one test: create an `MvcApp`, hit an
-  endpoint that throws, expect a 500 from the error handler. That is what would have caught B1.
+  Done: `@this.Response.StatusCode = status;` before `return @this.View(...)`.
+- [x] **B9 Test:** new `Tests.Jeebs.Apps.Web` with `MvcApp_Tests.Configure_Tests` (a
+  Production `MvcApp` on Kestrel: an endpoint that throws returns 500 with the `/Error` body) and
+  `LoggerMiddleware_Tests.InvokeAsync_Tests` (rethrows). Both fail without the B1 / B5 fixes.
 
 ## Phase 9 — encoding and secrets (B2, B4, B10)
 
