@@ -16,9 +16,9 @@ public static partial class QueryPostsMetaF
 	/// </summary>
 	/// <typeparam name="TModel">Return Model type.</typeparam>
 	/// <param name="db">IWpDbQuery.</param>
-	/// <param name="w">IUnitOfWork.</param>
+	/// <param name="unitOfWork">IUnitOfWork.</param>
 	/// <param name="opt">Function to return query options.</param>
-	public static Task<Result<IEnumerable<TModel>>> ExecuteAsync<TModel>(IWpDb db, IUnitOfWork w, GetPostsMetaOptions opt)
+	public static Task<Result<IEnumerable<TModel>>> ExecuteAsync<TModel>(IWpDb db, IUnitOfWork unitOfWork, GetPostsMetaOptions opt)
 		where TModel : IWithId<WpPostMetaId, ulong> =>
 		R.Try(
 			() => opt(new PostsMetaOptions(db.Schema)),
@@ -29,6 +29,6 @@ public static partial class QueryPostsMetaF
 			x => x.ToParts<TModel>()
 		)
 		.BindAsync(
-			x => db.QueryAsync<TModel>(x, w.Transaction)
+			x => db.QueryAsync<TModel>(x, unitOfWork)
 		);
 }

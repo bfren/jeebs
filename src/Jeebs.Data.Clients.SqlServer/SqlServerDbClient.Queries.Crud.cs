@@ -28,8 +28,7 @@ public partial class SqlServerDbClient
 	protected override string GetRetrieveQuery(
 		ITableName table,
 		IColumnList columns,
-		IColumn idColumn,
-		object id
+		IColumn idColumn
 	)
 	{
 		// Get columns
@@ -39,7 +38,7 @@ public partial class SqlServerDbClient
 		return
 			$"SELECT {JoinList(col, false)} " +
 			$"FROM {Escape(table)} " +
-			$"WHERE {Escape(idColumn)} = {id}"
+			$"WHERE {Escape(idColumn)} = {GetParamRef(nameof(IWithId.Id))}"
 		;
 	}
 
@@ -47,17 +46,15 @@ public partial class SqlServerDbClient
 	protected override string GetUpdateQuery(
 		ITableName table,
 		IColumnList columns,
-		IColumn idColumn,
-		object id
+		IColumn idColumn
 	) =>
-		GetUpdateQuery(table, columns, idColumn, id, null);
+		GetUpdateQuery(table, columns, idColumn, null);
 
 	/// <inheritdoc/>
 	protected override string GetUpdateQuery(
 		ITableName table,
 		IColumnList columns,
 		IColumn idColumn,
-		object id,
 		IColumn? versionColumn
 	)
 	{
@@ -71,7 +68,7 @@ public partial class SqlServerDbClient
 		var sql =
 			$"UPDATE {Escape(table)} " +
 			$"SET {JoinList(set, false)} " +
-			$"WHERE {Escape(idColumn)} = {id}"
+			$"WHERE {Escape(idColumn)} = {GetParamRef(nameof(IWithId.Id))}"
 		;
 
 		// Add WHERE Version
@@ -81,23 +78,21 @@ public partial class SqlServerDbClient
 	/// <inheritdoc/>
 	protected override string GetDeleteQuery(
 		ITableName table,
-		IColumn idColumn,
-		object id
+		IColumn idColumn
 	) =>
-		GetDeleteQuery(table, idColumn, id, null);
+		GetDeleteQuery(table, idColumn, null);
 
 	/// <inheritdoc/>
 	protected override string GetDeleteQuery(
 		ITableName table,
 		IColumn idColumn,
-		object id,
 		IColumn? versionColumn
 	)
 	{
 		// Begin query
 		var sql =
 			$"DELETE FROM {Escape(table)} " +
-			$"WHERE {Escape(idColumn)} = {id}"
+			$"WHERE {Escape(idColumn)} = {GetParamRef(nameof(IWithId.Id))}"
 		;
 
 		// Add WHERE Version

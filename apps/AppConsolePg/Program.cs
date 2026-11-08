@@ -9,6 +9,7 @@ using Jeebs.Data.Clients.PostgreSql.TypeHandlers;
 using Jeebs.Data.Enums;
 using Microsoft.Extensions.DependencyInjection;
 using RndF;
+using Wrap;
 using Wrap.Extensions;
 
 var (app, log) = Jeebs.Apps.Host.Create<App>(args);
@@ -98,26 +99,23 @@ Console.WriteLine();
 
 // Return values using querying
 log.Dbg("== Retrieving values using querying ==");
-using (var w = await db.StartWorkAsync())
-{
-	var queryMatch = await db
-		.QueryAsync<TestObj>(
-			builder => builder.From(db.Test).Where<TestTable>(t => t.Id, Compare.Equal, id)
-		)
-		.AuditAsync(
-			fOk: x => log.Dbg("Found {Count} entities:", x.Count()),
-			fFail: log.Failure
-		)
-		.IfOkAsync(
-			x =>
+var queryMatch = await db
+	.QueryAsync<TestObj>(
+		builder => builder.From(db.Test).Where<TestTable>(t => t.Id, Compare.Equal, id)
+	)
+	.AuditAsync(
+		fOk: x => log.Dbg("Found {Count} entities:", x.Count()),
+		fFail: log.Failure
+	)
+	.IfOkAsync(
+		x =>
+		{
+			foreach (var y in x)
 			{
-				foreach (var y in x)
-				{
-					log.Dbg("{@Value}", y);
-				}
+				log.Dbg("{@Value}", y);
 			}
-		);
-}
+		}
+	);
 
 Console.ReadLine();
 
@@ -161,19 +159,27 @@ log.Dbg("== Inserting values as Jsonb ==");
 var v0 = new TestObj(7, Rnd.Str, Rnd.Str, Rnd.UInt64);
 var v1 = new TestObj(18, Rnd.Str, Rnd.Str, Rnd.UInt64);
 var v2 = new TestObj(93, Rnd.Str, Rnd.Str, Rnd.UInt64);
-using (var w = await db.StartWorkAsync())
+await db.DoWorkAsync(async unitOfWork =>
 {
 	foreach (var v in new[] { v0, v1, v2 })
 	{
-		await db
+		var result = await db
 			.ExecuteAsync(
-				$"INSERT INTO {jsonTable} (json_value) VALUES (@value);", new { value = Jsonb.Create(v) }, CommandType.Text, w.Transaction
+				$"INSERT INTO {jsonTable} (json_value) VALUES (@value);", new { value = Jsonb.Create(v) }, CommandType.Text, unitOfWork
 			)
 			.AuditAsync(
 				fFail: log.Failure
 			);
+
+		// returning a failure stops the loop and saves none of the inserts
+		if (!result.IsOk)
+		{
+			return result;
+		}
 	}
-}
+
+	return R.True;
+});
 Console.WriteLine();
 
 log.Dbg("== Checking Jsonb insert has worked ==");
@@ -198,46 +204,50 @@ var v3 = new TestObj(8, Rnd.Str, Rnd.Str, Rnd.UInt64);
 var v4 = new TestObj(19, Rnd.Str, Rnd.Str, Rnd.UInt64);
 var v5 = new TestObj(94, Rnd.Str, Rnd.Str, Rnd.UInt64);
 var repoIds = new List<TestId>();
-using (var w = await db.StartWorkAsync())
+await db.DoWorkAsync(async unitOfWork =>
 {
 	foreach (var v in new[] { v3, v4, v5 })
 	{
-		await repo
+		var result = await repo
 			.CreateAsync(
-				new() { Value = v }, w.Transaction
+				new() { Value = v }, unitOfWork
 			)
 			.AuditAsync(
 				fOk: x => { log.Dbg("New ID: {Id}", x.Value); repoIds.Add(x); },
 				fFail: log.Failure
 			);
+
+		// returning a failure stops the loop and saves none of the inserts
+		if (result.Unsafe().TryFailure(out var failure))
+		{
+			return R.Fail(failure);
+		}
 	}
-}
+
+	return R.True;
+});
 Console.WriteLine();
 
 // Retrieving values using repository
 log.Dbg("== Retrieving values using repository ==");
-using (var w = await db.StartWorkAsync())
+foreach (var x in repoIds)
 {
-	foreach (var x in repoIds)
-	{
-		await repo
-			.RetrieveAsync<JsonEntity>(x)
-			.AuditAsync(
-				fOk: x => log.Dbg("Found entity with ID: {Id} and Value: {@Value}", x.Id.Value, x.Value),
-				fFail: log.Failure
-			);
-	}
-
-	await repo.Fluent()
-		.WhereIn(x => x.Id, repoIds)
-		.Sort(x => x.Id, SortOrder.Descending)
-		.QueryAsync<JsonEntity>()
+	await repo
+		.RetrieveAsync<JsonEntity>(x)
 		.AuditAsync(
-			fOk: x => log.Dbg("Found: {@List}", x.ToList()),
+			fOk: x => log.Dbg("Found entity with ID: {Id} and Value: {@Value}", x.Id.Value, x.Value),
 			fFail: log.Failure
 		);
-
 }
+
+await repo.Fluent()
+	.WhereIn(x => x.Id, repoIds)
+	.Sort(x => x.Id, SortOrder.Descending)
+	.QueryAsync<JsonEntity>()
+	.AuditAsync(
+		fOk: x => log.Dbg("Found: {@List}", x.ToList()),
+		fFail: log.Failure
+	);
 Console.WriteLine();
 
 // Drop table

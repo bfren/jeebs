@@ -18,7 +18,7 @@ public interface IQueryPosts
 	/// <inheritdoc cref="ExecuteAsync{T}(IWpDb, IUnitOfWork, ulong, GetPostsOptions, IContentFilter[])"/>
 	Task<Result<IEnumerable<T>>> ExecuteAsync<T>(
 		IWpDb db,
-		IUnitOfWork w,
+		IUnitOfWork unitOfWork,
 		GetPostsOptions opt,
 		params IContentFilter[] filters
 	)
@@ -29,13 +29,13 @@ public interface IQueryPosts
 	/// </summary>
 	/// <typeparam name="T">Return value type.</typeparam>
 	/// <param name="db">IWpDb.</param>
-	/// <param name="w">IUnitOfWork.</param>
+	/// <param name="unitOfWork">IUnitOfWork.</param>
 	/// <param name="page">Page number.</param>
 	/// <param name="opt">Function to return query options.</param>
 	/// <param name="filters">Optional content filters to apply.</param>
 	Task<Result<IPagedList<T>>> ExecuteAsync<T>(
 		IWpDb db,
-		IUnitOfWork w,
+		IUnitOfWork unitOfWork,
 		ulong page,
 		GetPostsOptions opt,
 		params IContentFilter[] filters

@@ -14,14 +14,14 @@ public abstract class Adapter : IAdapter
 	public abstract ITypeMapper Mapper { get; }
 
 	/// <inheritdoc/>
-	public abstract Task<Result<int>> ExecuteAsync(IDbTransaction transaction, string query, object? param, CommandType type);
+	public abstract Task<Result<int>> ExecuteAsync(IDbConnection connection, IDbTransaction transaction, string query, object? param, CommandType type);
 
 	/// <inheritdoc/>
-	public abstract Task<Result<T>> ExecuteAsync<T>(IDbTransaction transaction, string query, object? param, CommandType type);
+	public abstract Task<Result<T>> ExecuteAsync<T>(IDbConnection connection, IDbTransaction transaction, string query, object? param, CommandType type);
 
 	/// <inheritdoc/>
-	public abstract Task<Result<IEnumerable<T>>> QueryAsync<T>(IDbTransaction transaction, string query, object? param, CommandType type);
+	public abstract Task<Result<IEnumerable<T>>> QueryAsync<T>(IDbConnection connection, IDbTransaction? transaction, string query, object? param, CommandType type);
 
 	/// <inheritdoc/>
-	public abstract Task<Result<T>> QuerySingleAsync<T>(IDbTransaction transaction, string query, object? param, CommandType type);
+	public abstract Task<Result<T>> QuerySingleAsync<T>(IDbConnection connection, IDbTransaction? transaction, string query, object? param, CommandType type);
 }

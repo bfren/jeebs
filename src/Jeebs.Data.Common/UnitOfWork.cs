@@ -2,7 +2,6 @@
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using System;
-using System.Data;
 using System.Data.Common;
 using System.Threading.Tasks;
 using Jeebs.Logging;
@@ -14,74 +13,49 @@ public sealed class UnitOfWork : IUnitOfWork
 {
 	private readonly ILog log;
 
-	private bool pending = true;
-
 	/// <summary>
-	/// DbConnection object to allow access to async methods.
+	/// Null while work is pending, true once committed, false once rolled back.
 	/// </summary>
-	private readonly DbConnection connection;
+	private bool? committed;
 
-	IDbConnection IUnitOfWork.Connection =>
-		connection;
+	/// <inheritdoc/>
+	public DbConnection Connection { get; }
 
-	/// <summary>
-	/// DbTransaction object to allow access to async methods.
-	/// </summary>
-	private readonly DbTransaction transaction;
-
-	IDbTransaction IUnitOfWork.Transaction =>
-		transaction;
+	/// <inheritdoc/>
+	public LazyAsync<DbTransaction> Transaction { get; }
 
 	/// <summary>
 	/// Create object.
 	/// </summary>
-	/// <param name="connection">Database Connection wrapper.</param>
-	/// <param name="transaction">Database Transaction wrapper.</param>
+	/// <param name="connection">Open database connection.</param>
+	/// <param name="transaction">Begins the transaction the first time it is used.</param>
 	/// <param name="log">ILog.</param>
-	public UnitOfWork(DbConnection connection, DbTransaction transaction, ILog log) =>
-		(this.connection, this.transaction, this.log) = (connection, transaction, log);
-
-	/// <inheritdoc/>
-	public Result<bool> Commit()
-	{
-		if (!pending)
-		{
-			return R.Fail("No pending transaction to commit.")
-				.Ctx(nameof(UnitOfWork), nameof(Commit));
-		}
-
-		try
-		{
-			log.Vrb("Committing transaction.");
-			transaction.Commit();
-			return R.True;
-		}
-		catch (Exception ex)
-		{
-			log.Err(ex, "Error committing transaction.");
-			Rollback();
-			return R.Fail(ex)
-				.Ctx(nameof(UnitOfWork), nameof(Commit));
-		}
-		finally
-		{
-			pending = false;
-		}
-	}
+	public UnitOfWork(DbConnection connection, LazyAsync<DbTransaction> transaction, ILog log) =>
+		(Connection, Transaction, this.log) = (connection, transaction, log);
 
 	/// <inheritdoc/>
 	public async Task<Result<bool>> CommitAsync()
 	{
-		if (!pending)
+		// nothing to commit: no transaction has begun (stay pending for later writes), or it is already
+		// committed (a repeat commit, e.g. by DoWorkAsync) - but a commit after a rollback fails
+		if (committed is not null || !Transaction.Initialised)
 		{
-			return R.Fail("No pending transaction to commit.")
-				.Ctx(nameof(UnitOfWork), nameof(CommitAsync));
+			return committed switch
+			{
+				false =>
+					R.Fail("No pending transaction to commit.")
+						.Ctx(nameof(UnitOfWork), nameof(CommitAsync)),
+
+				_ =>
+					R.True
+			};
 		}
 
 		try
 		{
 			log.Vrb("Committing transaction.");
-			await transaction.CommitAsync();
+			await (await Transaction).CommitAsync();
+			committed = true;
 			return R.True;
 		}
 		catch (Exception ex)
@@ -90,10 +64,6 @@ public sealed class UnitOfWork : IUnitOfWork
 			await RollbackAsync();
 			return R.Fail(ex)
 				.Ctx(nameof(UnitOfWork), nameof(CommitAsync));
-		}
-		finally
-		{
-			pending = false;
 		}
 	}
 
@@ -102,32 +72,10 @@ public sealed class UnitOfWork : IUnitOfWork
 		CommitAsync().MapAsync(_ => value);
 
 	/// <inheritdoc/>
-	public void Rollback()
-	{
-		if (!pending)
-		{
-			return;
-		}
-
-		try
-		{
-			log.Dbg("Rolling back transaction.");
-			transaction.Rollback();
-		}
-		catch (Exception ex)
-		{
-			log.Err(ex, "Error rolling back transaction.");
-		}
-		finally
-		{
-			pending = false;
-		}
-	}
-
-	/// <inheritdoc/>
 	public async Task RollbackAsync()
 	{
-		if (!pending)
+		// nothing to roll back: already finished, or no transaction has begun (stay pending for later writes)
+		if (committed is not null || !Transaction.Initialised)
 		{
 			return;
 		}
@@ -135,7 +83,7 @@ public sealed class UnitOfWork : IUnitOfWork
 		try
 		{
 			log.Dbg("Rolling back transaction.");
-			await transaction.RollbackAsync();
+			await (await Transaction).RollbackAsync();
 		}
 		catch (Exception ex)
 		{
@@ -143,47 +91,23 @@ public sealed class UnitOfWork : IUnitOfWork
 		}
 		finally
 		{
-			pending = false;
+			committed = false;
 		}
-	}
-
-	/// <inheritdoc cref="DisposeAsync"/>
-	public void Dispose()
-	{
-		if (pending)
-		{
-			Rollback();
-		}
-
-		Dispose(true);
-		GC.SuppressFinalize(this);
 	}
 
 	/// <summary>
-	/// Rolls back anything not committed, then disposes <see cref="transaction"/> and <see cref="connection"/> objects.
+	/// Rolls back anything not committed, then disposes the transaction (if one was begun) and the connection.
 	/// </summary>
 	public async ValueTask DisposeAsync()
 	{
-		if (pending)
+		await RollbackAsync();
+
+		// a transaction that failed to begin has nothing to dispose
+		if (Transaction is { Initialised: true, Value.IsCompletedSuccessfully: true })
 		{
-			await RollbackAsync();
+			await Transaction.Value.Result.DisposeAsync();
 		}
 
-		await transaction.DisposeAsync();
-		await connection.DisposeAsync();
-
-		Dispose(false);
-		GC.SuppressFinalize(this);
-	}
-
-	private void Dispose(bool disposing)
-	{
-		if (!disposing)
-		{
-			return;
-		}
-
-		transaction.Dispose();
-		connection.Dispose();
+		await Connection.DisposeAsync();
 	}
 }

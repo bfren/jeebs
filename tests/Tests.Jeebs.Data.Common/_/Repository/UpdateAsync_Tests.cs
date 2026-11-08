@@ -17,10 +17,10 @@ public class UpdateAsync_Tests : Repository_Setup
 
 		// Act
 		_ = await repo.UpdateAsync(model);
-		_ = await repo.UpdateAsync(model, v.Transaction);
+		_ = await repo.UpdateAsync(model, v.UnitOfWork);
 
 		// Assert
-		v.Client.Received(2).GetUpdateQuery<Foo, FooModel>(value);
+		v.Client.Received(2).GetUpdateQuery<Foo, FooModel>();
 	}
 
 	[Fact]
@@ -32,10 +32,10 @@ public class UpdateAsync_Tests : Repository_Setup
 
 		// Act
 		await repo.UpdateAsync(model);
-		await repo.UpdateAsync(model, v.Transaction);
+		await repo.UpdateAsync(model, v.UnitOfWork);
 
 		// Assert
-		await v.Db.Received(2).ExecuteAsync(Arg.Any<string>(), model, CommandType.Text, v.Transaction);
+		await v.Db.Received(2).ExecuteAsync(Arg.Any<string>(), model, CommandType.Text, v.UnitOfWork);
 	}
 
 	[Fact]
@@ -48,7 +48,7 @@ public class UpdateAsync_Tests : Repository_Setup
 
 		// Act
 		_ = await repo.UpdateAsync(model);
-		_ = await repo.UpdateAsync(model, v.Transaction);
+		_ = await repo.UpdateAsync(model, v.UnitOfWork);
 
 		// Assert
 		v.Log.ReceivedWithAnyArgs(2).Vrb(Arg.Any<string>(), Arg.Any<object[]>());
@@ -60,7 +60,7 @@ public class UpdateAsync_Tests : Repository_Setup
 		// Arrange
 		var (repo, v) = Setup();
 		var model = new FooModel { Id = IdGen.LongId<FooId>() };
-		v.Db.ExecuteAsync(Arg.Any<string>(), model, CommandType.Text, v.Transaction).Returns(true);
+		v.Db.ExecuteAsync(Arg.Any<string>(), model, CommandType.Text, v.UnitOfWork).Returns(true);
 		v.UnitOfWork.CommitAsync(Arg.Any<bool>()).Returns(x => R.Wrap(x.Arg<bool>()));
 
 		// Act

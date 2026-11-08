@@ -16,7 +16,7 @@ public class CreateAsync_Tests : Repository_Setup
 
 		// Act
 		_ = await repo.CreateAsync(model);
-		_ = await repo.CreateAsync(model, v.Transaction);
+		_ = await repo.CreateAsync(model, v.UnitOfWork);
 
 		// Assert
 		v.Client.Received(2).GetCreateQuery<Foo>();
@@ -31,10 +31,10 @@ public class CreateAsync_Tests : Repository_Setup
 
 		// Act
 		_ = await repo.CreateAsync(model);
-		_ = await repo.CreateAsync(model, v.Transaction);
+		_ = await repo.CreateAsync(model, v.UnitOfWork);
 
 		// Assert
-		await v.Db.Received(2).InsertAsync<FooId>(Arg.Any<string>(), model, CommandType.Text, v.Transaction);
+		await v.Db.Received(2).InsertAsync<FooId>(Arg.Any<string>(), model, CommandType.Text, v.UnitOfWork);
 	}
 
 	[Fact]
@@ -46,7 +46,7 @@ public class CreateAsync_Tests : Repository_Setup
 
 		// Act
 		_ = await repo.CreateAsync(model);
-		_ = await repo.CreateAsync(model, v.Transaction);
+		_ = await repo.CreateAsync(model, v.UnitOfWork);
 
 		// Assert
 		v.Log.ReceivedWithAnyArgs(2).Vrb(Arg.Any<string>(), Arg.Any<object[]>());
@@ -59,7 +59,7 @@ public class CreateAsync_Tests : Repository_Setup
 		var (repo, v) = Setup();
 		var model = new Foo { Id = IdGen.LongId<FooId>() };
 		var id = IdGen.LongId<FooId>();
-		v.Db.InsertAsync<FooId>(Arg.Any<string>(), model, CommandType.Text, v.Transaction).Returns(id);
+		v.Db.InsertAsync<FooId>(Arg.Any<string>(), model, CommandType.Text, v.UnitOfWork).Returns(id);
 		v.UnitOfWork.CommitAsync(Arg.Any<FooId>()).Returns(x => R.Wrap(x.Arg<FooId>()));
 
 		// Act

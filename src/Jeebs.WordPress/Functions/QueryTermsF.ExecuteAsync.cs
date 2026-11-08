@@ -16,9 +16,9 @@ public static partial class QueryTermsF
 	/// </summary>
 	/// <typeparam name="TModel">Return Model type.</typeparam>
 	/// <param name="db">IWpDb.</param>
-	/// <param name="w">IUnitOfWork.</param>
+	/// <param name="unitOfWork">IUnitOfWork.</param>
 	/// <param name="opt">Function to return query options.</param>
-	public static Task<Result<IEnumerable<TModel>>> ExecuteAsync<TModel>(IWpDb db, IUnitOfWork w, GetTermsOptions opt)
+	public static Task<Result<IEnumerable<TModel>>> ExecuteAsync<TModel>(IWpDb db, IUnitOfWork unitOfWork, GetTermsOptions opt)
 		where TModel : IWithId<WpTermId, ulong> =>
 		R.Try(
 			() => opt(new TermsOptions(db.Schema)),
@@ -29,6 +29,6 @@ public static partial class QueryTermsF
 			x => x.ToParts<TModel>()
 		)
 		.BindAsync(
-			x => db.QueryAsync<TModel>(x, w.Transaction)
+			x => db.QueryAsync<TModel>(x, unitOfWork)
 		);
 }

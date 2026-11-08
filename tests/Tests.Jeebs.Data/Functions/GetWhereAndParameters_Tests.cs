@@ -126,13 +126,73 @@ Assert.Single(where);
 		Assert.Equal(value, single.Value);
 	}
 
-	private static void Test_In_With_Not_Enumerable(Compare cmp)
+	private static void Test_In_With_Not_Enumerable(Compare cmp, object value)
+	{
+		// Arrange
+		var name = Rnd.Str;
+		var column = Substitute.For<IColumn>();
+		column.ColName.Returns(name);
+		var predicates = ListF.Create(
+		[
+			(column, cmp, (dynamic)value)
+		]);
+
+		var client = Substitute.ForPartsOf<TestClient>();
+
+		// Act
+		var (where, param) = DataF.GetWhereAndParameters(client, predicates, false);
+
+		// Assert
+		var x = Assert.Single(where);
+		Assert.Equal($"--{name}-- cmp (~P0)", x);
+		var single = Assert.Single(param);
+		Assert.Equal("P0", single.Key);
+		Assert.Equal(value, single.Value);
+	}
+
+	[Fact]
+	public void Operator_Is_In_And_Value_Not_Enumerable_Adds_Single_Param()
+	{
+		Test_In_With_Not_Enumerable(Compare.In, Rnd.Int);
+		Test_In_With_Not_Enumerable(Compare.In, Rnd.Str);
+	}
+
+	[Fact]
+	public void Operator_Is_NotIn_And_Value_Not_Enumerable_Adds_Single_Param()
+	{
+		Test_In_With_Not_Enumerable(Compare.NotIn, Rnd.Int);
+		Test_In_With_Not_Enumerable(Compare.NotIn, Rnd.Str);
+	}
+
+	[Fact]
+	public void Operator_Is_In_And_Value_Is_Empty_Matches_Nothing()
 	{
 		// Arrange
 		var column = Substitute.For<IColumn>();
 		var predicates = ListF.Create(
 		[
-			(column, cmp, (dynamic)Rnd.Int)
+			(column, Compare.In, (dynamic)Array.Empty<long>())
+		]);
+
+		var client = Substitute.ForPartsOf<TestClient>();
+
+		// Act
+		var (where, param) = DataF.GetWhereAndParameters(client, predicates, false);
+
+		// Assert
+		var x = Assert.Single(where);
+		Assert.Equal("1 = 0", x);
+		Assert.Empty(param);
+	}
+
+	[Fact]
+	public void Operator_Is_NotIn_And_Value_Is_Empty_Ignores_Predicate()
+	{
+		// Arrange
+		var column = Substitute.For<IColumn>();
+		var predicates = ListF.Create(
+		[
+			(column, Compare.NotIn, (dynamic)Array.Empty<long>())
 		]);
 
 		var client = Substitute.ForPartsOf<TestClient>();
@@ -143,18 +203,6 @@ Assert.Single(where);
 		// Assert
 		Assert.Empty(where);
 		Assert.Empty(param);
-	}
-
-	[Fact]
-	public void Operator_Is_In_And_Value_Not_Enumerable_Ignores_Predicate()
-	{
-		Test_In_With_Not_Enumerable(Compare.In);
-	}
-
-	[Fact]
-	public void Operator_Is_NotIn_And_Value_Not_Enumerable_Ignores_Predicate()
-	{
-		Test_In_With_Not_Enumerable(Compare.NotIn);
 	}
 
 	private static void Test_In_With_Enumerable(Compare cmp, Func<long, long, long, object> getValue)

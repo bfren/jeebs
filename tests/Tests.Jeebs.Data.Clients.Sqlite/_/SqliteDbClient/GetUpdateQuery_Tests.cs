@@ -38,15 +38,13 @@ public class GetUpdateQuery_Tests : SqliteDbClient_Setup
 
 		var list = new ColumnList([c0, c1]);
 
-		var id = Rnd.Lng;
-
 		var expected = $"UPDATE {name} SET" +
 			$" {c0Name} = @{c0Alias}," +
 			$" {c1Name} = @{c1Alias}" +
-			$" WHERE {c2Name} = {id};";
+			$" WHERE {c2Name} = @Id;";
 
 		// Act
-		var result = client.GetUpdateQueryTest(table, list, c2, id);
+		var result = client.GetUpdateQueryTest(table, list, c2);
 
 		// Assert
 		Assert.Equal(expected, result);
@@ -88,17 +86,15 @@ public class GetUpdateQuery_Tests : SqliteDbClient_Setup
 
 		var list = new ColumnList([c0, c1]);
 
-		var id = Rnd.Lng;
-
 		var expected = $"UPDATE {name} SET" +
 			$" {c0Name} = @{c0Alias}," +
 			$" {c1Name} = @{c1Alias}," +
 			$" {c3Name} = @{c3Alias} + 1" +
-			$" WHERE {c2Name} = {id}" +
+			$" WHERE {c2Name} = @Id" +
 			$" AND {c3Name} = @{c3Alias};";
 
 		// Act
-		var result = client.GetUpdateQueryTest(table, list, c2, id, c3);
+		var result = client.GetUpdateQueryTest(table, list, c2, c3);
 
 		// Assert
 		Assert.Equal(expected, result);

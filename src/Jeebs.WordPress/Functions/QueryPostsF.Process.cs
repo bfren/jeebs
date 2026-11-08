@@ -17,23 +17,23 @@ public static partial class QueryPostsF
 	/// <typeparam name="TList">List type.</typeparam>
 	/// <typeparam name="TModel">Model type.</typeparam>
 	/// <param name="db">IWpDb.</param>
-	/// <param name="w">IUnitOfWork.</param>
+	/// <param name="unitOfWork">IUnitOfWork.</param>
 	/// <param name="posts">Posts.</param>
 	/// <param name="filters">Optional content filters.</param>
-	internal static Task<Result<TList>> Process<TList, TModel>(IWpDb db, IUnitOfWork w, TList posts, params IContentFilter[] filters)
+	internal static Task<Result<TList>> Process<TList, TModel>(IWpDb db, IUnitOfWork unitOfWork, TList posts, params IContentFilter[] filters)
 		where TList : IEnumerable<TModel>
 		where TModel : IWithId<WpPostId, ulong> =>
 		R.Wrap(
 			posts
 		)
 		.BindAsync(
-			x => AddMetaAsync<TList, TModel>(db, w, x)
+			x => AddMetaAsync<TList, TModel>(db, unitOfWork, x)
 		)
 		.BindAsync(
-			x => AddCustomFieldsAsync<TList, TModel>(db, w, x)
+			x => AddCustomFieldsAsync<TList, TModel>(db, unitOfWork, x)
 		)
 		.BindAsync(
-			x => AddTaxonomiesAsync<TList, TModel>(db, w, x)
+			x => AddTaxonomiesAsync<TList, TModel>(db, unitOfWork, x)
 		)
 		.IfAsync(
 			_ => filters.Length > 0,

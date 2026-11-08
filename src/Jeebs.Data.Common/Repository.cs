@@ -29,88 +29,69 @@ public abstract class Repository<TEntity, TId> : Base.Repository<TEntity, TId>, 
 	#region CRUD Queries
 
 	/// <inheritdoc/>
-	public override async Task<Result<TId>> CreateAsync(TEntity entity)
-	{
-		await using var w = await Db.StartWorkAsync();
-		return await CreateAsync(
-			entity, w.Transaction
-		)
-		.BindAsync(
-			w.CommitAsync
+	public override Task<Result<TId>> CreateAsync(TEntity entity) =>
+		Db.DoWorkAsync(
+			unitOfWork => CreateAsync(entity, unitOfWork)
 		);
-	}
 
 	/// <inheritdoc/>
-	public virtual Task<Result<TId>> CreateAsync(TEntity entity, IDbTransaction transaction) =>
+	public virtual Task<Result<TId>> CreateAsync(TEntity entity, IUnitOfWork unitOfWork) =>
 		Db.Client.GetCreateQuery<TEntity>()
 		.Audit(
 			fOk: _ => LogFunc(nameof(CreateAsync))
 		)
 		.BindAsync(
-			x => Db.InsertAsync<TId>(x, entity, CommandType.Text, transaction)
+			x => Db.InsertAsync<TId>(x, entity, CommandType.Text, unitOfWork)
 		);
 
 	/// <inheritdoc/>
-	public override async Task<Result<TModel>> RetrieveAsync<TModel>(TId id)
-	{
-		await using var w = await Db.StartWorkAsync();
-		return await RetrieveAsync<TModel>(id, w.Transaction);
-	}
+	public override Task<Result<TModel>> RetrieveAsync<TModel>(TId id) =>
+		Db.DoWorkAsync(
+			unitOfWork => RetrieveAsync<TModel>(id, unitOfWork)
+		);
 
 	/// <inheritdoc/>
-	public virtual Task<Result<TModel>> RetrieveAsync<TModel>(TId id, IDbTransaction transaction) =>
-		Db.Client.GetRetrieveQuery<TEntity, TModel>(id.Value)
+	public virtual Task<Result<TModel>> RetrieveAsync<TModel>(TId id, IUnitOfWork unitOfWork) =>
+		Db.Client.GetRetrieveQuery<TEntity, TModel>()
 		.Audit(
 			fOk: _ => LogFunc(nameof(RetrieveAsync))
 		)
 		.BindAsync(
-			x => Db.QuerySingleAsync<TModel>(x, null, CommandType.Text, transaction)
+			x => Db.QuerySingleAsync<TModel>(x, new { Id = id.Value }, CommandType.Text, unitOfWork)
 		);
 
 	/// <inheritdoc/>
-	public override async Task<Result<bool>> UpdateAsync<TModel>(TModel model)
-	{
-		await using var w = await Db.StartWorkAsync();
-		return await UpdateAsync(
-			model, w.Transaction
-		)
-		.BindAsync(
-			w.CommitAsync
+	public override Task<Result<bool>> UpdateAsync<TModel>(TModel model) =>
+		Db.DoWorkAsync(
+			unitOfWork => UpdateAsync(model, unitOfWork)
 		);
-	}
 
 	/// <inheritdoc/>
-	public virtual Task<Result<bool>> UpdateAsync<TModel>(TModel model, IDbTransaction transaction)
+	public virtual Task<Result<bool>> UpdateAsync<TModel>(TModel model, IUnitOfWork unitOfWork)
 		where TModel : IWithId =>
-		Db.Client.GetUpdateQuery<TEntity, TModel>(model.Id.Value)
+		Db.Client.GetUpdateQuery<TEntity, TModel>()
 		.Audit(
 			fOk: _ => LogFunc(nameof(UpdateAsync))
 		)
 		.BindAsync(
-			x => Db.ExecuteAsync(x, model, CommandType.Text, transaction)
+			x => Db.ExecuteAsync(x, model, CommandType.Text, unitOfWork)
 		);
 
 	/// <inheritdoc/>
-	public override async Task<Result<bool>> DeleteAsync<TModel>(TModel model)
-	{
-		await using var w = await Db.StartWorkAsync();
-		return await DeleteAsync(
-			model, w.Transaction
-		)
-		.BindAsync(
-			w.CommitAsync
+	public override Task<Result<bool>> DeleteAsync<TModel>(TModel model) =>
+		Db.DoWorkAsync(
+			unitOfWork => DeleteAsync(model, unitOfWork)
 		);
-	}
 
 	/// <inheritdoc/>
-	public virtual Task<Result<bool>> DeleteAsync<TModel>(TModel model, IDbTransaction transaction)
+	public virtual Task<Result<bool>> DeleteAsync<TModel>(TModel model, IUnitOfWork unitOfWork)
 		where TModel : IWithId =>
-		Db.Client.GetDeleteQuery<TEntity>(model.Id.Value)
+		Db.Client.GetDeleteQuery<TEntity>()
 		.Audit(
 			fOk: _ => LogFunc(nameof(DeleteAsync))
 		)
 		.BindAsync(
-			x => Db.ExecuteAsync(x, model, CommandType.Text, transaction)
+			x => Db.ExecuteAsync(x, model, CommandType.Text, unitOfWork)
 		);
 
 	#endregion CRUD Queries

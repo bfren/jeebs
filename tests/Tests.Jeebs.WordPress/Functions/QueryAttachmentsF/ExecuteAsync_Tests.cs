@@ -27,13 +27,13 @@ public class ExecuteAsync_Tests : Query_Tests
 	public async Task Calls_Db_QueryAsync()
 	{
 		// Arrange
-		var (db, w, v) = Setup();
+		var (db, w, _) = Setup();
 		var fileIds = ListF.Create(IdGen.ULongId<WpPostId>(), IdGen.ULongId<WpPostId>());
 
 		// Act
 		await QueryAttachmentsF.ExecuteAsync<PostAttachment>(db, w, opt => (opt with { Ids = fileIds }));
 
 		// Assert
-		await db.Received().QueryAsync<PostAttachment>(Arg.Any<string>(), Arg.Any<object?>(), CommandType.Text, v.Transaction);
+		await db.Received().QueryAsync<PostAttachment>(Arg.Any<string>(), Arg.Any<object?>(), CommandType.Text, w);
 	}
 }

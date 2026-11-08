@@ -16,7 +16,7 @@ public class RetrieveAsync_Tests : Repository_Setup
 		await repo.RetrieveAsync<FooModel>(FooId.Wrap(value));
 
 		// Assert
-		v.Client.Received().GetRetrieveQuery<Foo, FooModel>(value);
+		v.Client.Received().GetRetrieveQuery<Foo, FooModel>();
 	}
 
 	[Fact]
@@ -30,7 +30,7 @@ public class RetrieveAsync_Tests : Repository_Setup
 		await repo.RetrieveAsync<FooModel>(value);
 
 		// Assert
-		await v.Db.Received().QuerySingleAsync<FooModel>(Arg.Any<string>(), Arg.Any<object?>());
+		await v.Db.Received().QuerySingleAsync<FooModel>(Arg.Any<string>(), Arg.Is<object?>(x => Equals(x!.GetType().GetProperty("Id")!.GetValue(x), value.Value)));
 	}
 
 	[Fact]

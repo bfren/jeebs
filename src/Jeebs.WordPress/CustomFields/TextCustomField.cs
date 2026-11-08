@@ -27,7 +27,7 @@ public abstract class TextCustomField : CustomField<string>
 	protected TextCustomField(string key) : base(key, string.Empty) { }
 
 	/// <inheritdoc/>
-	public override Task<Result<bool>> HydrateAsync(IWpDb db, IUnitOfWork w, MetaDictionary meta, bool isRequired)
+	public override Task<Result<bool>> HydrateAsync(IWpDb db, IUnitOfWork unitOfWork, MetaDictionary meta, bool isRequired)
 	{
 		// If meta contains the key, return it
 		if (meta.TryGetValue(Key, out var value))

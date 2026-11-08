@@ -24,12 +24,10 @@ public class GetDeleteQuery_Tests : SqliteDbClient_Setup
 		c0Property.Name.Returns(c0Alias);
 		var c0 = new Column(table, c0Name, c0Property);
 
-		var id = Rnd.Lng;
-
-		var expected = $"DELETE FROM {name} WHERE {c0Name} = {id};";
+		var expected = $"DELETE FROM {name} WHERE {c0Name} = @Id;";
 
 		// Act
-		var result = client.GetDeleteQueryTest(table, c0, id);
+		var result = client.GetDeleteQueryTest(table, c0);
 
 		// Assert
 		Assert.Equal(expected, result);
@@ -57,12 +55,10 @@ public class GetDeleteQuery_Tests : SqliteDbClient_Setup
 		c1Property.Name.Returns(c1Alias);
 		var c1 = new Column(table, c1Name, c1Property);
 
-		var id = Rnd.Lng;
-
-		var expected = $"DELETE FROM {name} WHERE {c0Name} = {id} AND {c1Name} = @{c1Alias};";
+		var expected = $"DELETE FROM {name} WHERE {c0Name} = @Id AND {c1Name} = @{c1Alias};";
 
 		// Act
-		var result = client.GetDeleteQueryTest(table, c0, id, c1);
+		var result = client.GetDeleteQueryTest(table, c0, c1);
 
 		// Assert
 		Assert.Equal(expected, result);

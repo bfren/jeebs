@@ -13,7 +13,7 @@ namespace Jeebs.WordPress.Query;
 public sealed class Terms : IQueryTerms
 {
 	/// <inheritdoc/>
-	public Task<Result<IEnumerable<T>>> ExecuteAsync<T>(IWpDb db, IUnitOfWork w, GetTermsOptions opt)
+	public Task<Result<IEnumerable<T>>> ExecuteAsync<T>(IWpDb db, IUnitOfWork unitOfWork, GetTermsOptions opt)
 		where T : IWithId<WpTermId, ulong> =>
-		QueryTermsF.ExecuteAsync<T>(db, w, opt);
+		QueryTermsF.ExecuteAsync<T>(db, unitOfWork, opt);
 }

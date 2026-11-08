@@ -95,17 +95,6 @@ public interface IDbClient
 	#region Custom Queries
 
 	/// <summary>
-	/// Return a query to retrieve a list of entities that match all the specified parameters.
-	/// </summary>
-	/// <typeparam name="TEntity">Entity type.</typeparam>
-	/// <typeparam name="TModel">Return model type.</typeparam>
-	/// <param name="predicates">Predicates (matched using AND).</param>
-	Result<(string query, IQueryParametersDictionary param)> GetQuery<TEntity, TModel>(
-		(string, Compare, dynamic)[] predicates
-	)
-		where TEntity : IWithId;
-
-	/// <summary>
 	/// Return a query to retrieve how many entities match the specified query parts.
 	/// </summary>
 	/// <param name="parts">IQueryParts.</param>
@@ -133,8 +122,8 @@ public interface IDbClient
 	/// </summary>
 	/// <typeparam name="TEntity">Entity type.</typeparam>
 	/// <typeparam name="TModel">Return model type.</typeparam>
-	/// <param name="id">Entity ID.</param>
-	Result<string> GetRetrieveQuery<TEntity, TModel>(object id)
+	/// <remarks>The query expects the ID as a parameter named Id.</remarks>
+	Result<string> GetRetrieveQuery<TEntity, TModel>()
 		where TEntity : IWithId;
 
 	/// <summary>
@@ -142,16 +131,16 @@ public interface IDbClient
 	/// </summary>
 	/// <typeparam name="TEntity">Entity type.</typeparam>
 	/// <typeparam name="TModel">Return model type.</typeparam>
-	/// <param name="id">Entity ID.</param>
-	Result<string> GetUpdateQuery<TEntity, TModel>(object id)
+	/// <remarks>The query expects the ID as a parameter named Id.</remarks>
+	Result<string> GetUpdateQuery<TEntity, TModel>()
 		where TEntity : IWithId;
 
 	/// <summary>
 	/// Return a query to delete a single entity by ID.
 	/// </summary>
 	/// <typeparam name="TEntity">Entity type.</typeparam>
-	/// <param name="id">Entity ID.</param>
-	Result<string> GetDeleteQuery<TEntity>(object id)
+	/// <remarks>The query expects the ID as a parameter named Id.</remarks>
+	Result<string> GetDeleteQuery<TEntity>()
 		where TEntity : IWithId;
 
 	#endregion CRUD Queries

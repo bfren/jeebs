@@ -31,42 +31,6 @@ public abstract partial class DbClient : IDbClient
 	/// <param name="sorted">Whether the query already has an ORDER BY clause.</param>
 	protected abstract string GetLimitAndOffset(ulong? maximum, ulong skip, bool sorted);
 
-	/// <summary>
-	/// Return a query to retrieve a list of entities that match all the specified parameters.
-	/// </summary>
-	/// <param name="table">Table name.</param>
-	/// <param name="columns">List of columns to select.</param>
-	/// <param name="predicates">Predicates (matched using AND).</param>
-	protected virtual Result<(string query, IQueryParametersDictionary param)> GetQuery(
-		ITableName table,
-		IColumnList columns,
-		IImmutableList<(IColumn column, Compare cmp, object value)> predicates
-	)
-	{
-		// Get columns
-		var col = DataF.GetColumnsFromList(this, columns);
-
-		// Add each predicate to the where and parameter lists
-		var (where, param) = DataF.GetWhereAndParameters(this, predicates, false);
-
-		// Return query and parameters
-		return (
-			$"SELECT {JoinList(col, false)} FROM {Escape(table)} WHERE {string.Join(" AND ", where)}{QueryTerminator}",
-			param
-		);
-	}
-
-	/// <inheritdoc/>
-	public Result<(string query, IQueryParametersDictionary param)> GetQuery<TEntity, TModel>(
-		(string, Compare, dynamic)[] predicates
-	)
-		where TEntity : IWithId =>
-		from map in EntityMapper.GetTableMapFor<TEntity>()
-		from sel in Extract<TModel>.From(map.Table)
-		from whr in DataF.ConvertPredicatesToColumns(map.Columns, predicates)
-		from qry in GetQuery(map.Name, sel, whr)
-		select qry;
-
 	/// <inheritdoc/>
 	public Result<(string query, IQueryParametersDictionary param)> GetCountQuery(IQueryParts parts) =>
 		// a count returns one row, so sorting and paging it would fail or skip the count itself
@@ -170,15 +134,4 @@ public abstract partial class DbClient : IDbClient
 		// Return query string
 		return ($"{sql}{QueryTerminator}", parameters);
 	}
-
-	#region Testing
-
-	internal Result<(string query, IQueryParametersDictionary param)> GetQueryTest(
-		ITableName table,
-		IColumnList columns,
-		IImmutableList<(IColumn column, Compare cmp, object value)> predicates
-	) =>
-		GetQuery(table, columns, predicates);
-
-	#endregion Testing
 }

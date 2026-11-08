@@ -34,16 +34,14 @@ public class GetRetrieveQuery_Tests : PostgreSqlDbClient_Setup
 
 		var list = new ColumnList([c0, c1]);
 
-		var id = Rnd.Lng;
-
 		var expected = "SELECT" +
 			$" {c0Name} AS \"{c0Alias}\"," +
 			$" {c1Name} AS \"{c1Alias}\"" +
 			$" FROM {schema}.{name}" +
-			$" WHERE {c2Name} = {id};";
+			$" WHERE {c2Name} = @Id;";
 
 		// Act
-		var result = client.GetRetrieveQueryTest(table, list, c2, id);
+		var result = client.GetRetrieveQueryTest(table, list, c2);
 
 		// Assert
 		Assert.Equal(expected, result);

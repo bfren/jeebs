@@ -15,11 +15,11 @@ public static partial class QueryAttachmentsF
 	/// Get the filesystem path to the specified Attachment.
 	/// </summary>
 	/// <param name="db">IWpDb.</param>
-	/// <param name="w">IUnitOfWork.</param>
+	/// <param name="unitOfWork">IUnitOfWork.</param>
 	/// <param name="fileId">File (Post) ID.</param>
-	internal static Task<Result<string>> GetFilePathAsync(IWpDb db, IUnitOfWork w, WpPostId fileId) =>
+	internal static Task<Result<string>> GetFilePathAsync(IWpDb db, IUnitOfWork unitOfWork, WpPostId fileId) =>
 		ExecuteAsync<Attachment>(
-			db, w, opt => opt with { Ids = ListF.Create(fileId) }
+			db, unitOfWork, opt => opt with { Ids = ListF.Create(fileId) }
 		)
 		.GetSingleAsync(
 			x => x.Value<Attachment>(),

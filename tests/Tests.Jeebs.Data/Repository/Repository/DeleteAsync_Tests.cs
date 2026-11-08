@@ -17,7 +17,7 @@ public class DeleteAsync_Tests : Repository_Setup
 		await repo.DeleteAsync(model);
 
 		// Assert
-		v.Client.Received().GetDeleteQuery<Foo>(value);
+		v.Client.Received().GetDeleteQuery<Foo>();
 	}
 
 	[Fact]

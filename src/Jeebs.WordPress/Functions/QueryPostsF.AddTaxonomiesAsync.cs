@@ -18,9 +18,9 @@ public static partial class QueryPostsF
 	/// <typeparam name="TList">List type.</typeparam>
 	/// <typeparam name="TModel">Post type.</typeparam>
 	/// <param name="db">IWpDb.</param>
-	/// <param name="w">IUnitOfWork.</param>
+	/// <param name="unitOfWork">IUnitOfWork.</param>
 	/// <param name="posts">Posts.</param>
-	internal static Task<Result<TList>> AddTaxonomiesAsync<TList, TModel>(IWpDb db, IUnitOfWork w, TList posts)
+	internal static Task<Result<TList>> AddTaxonomiesAsync<TList, TModel>(IWpDb db, IUnitOfWork unitOfWork, TList posts)
 		where TList : IEnumerable<TModel>
 		where TModel : IWithId<WpPostId, ulong>
 	{
@@ -39,7 +39,7 @@ public static partial class QueryPostsF
 
 		// Get terms and add them to the posts
 		return QueryPostsTaxonomyF
-			.ExecuteAsync<Term>(db, w, opt => opt with
+			.ExecuteAsync<Term>(db, unitOfWork, opt => opt with
 			{
 				PostIds = posts.Select(p => p.Id).ToImmutableList()
 			})

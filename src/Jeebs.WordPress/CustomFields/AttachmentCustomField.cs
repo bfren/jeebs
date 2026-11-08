@@ -33,7 +33,7 @@ public abstract class AttachmentCustomField : CustomField<AttachmentCustomField.
 		QueryPosts = queryPosts;
 
 	/// <inheritdoc/>
-	public override async Task<Result<bool>> HydrateAsync(IWpDb db, IUnitOfWork w, MetaDictionary meta, bool isRequired)
+	public override async Task<Result<bool>> HydrateAsync(IWpDb db, IUnitOfWork unitOfWork, MetaDictionary meta, bool isRequired)
 	{
 		// First, get the Attachment Post ID from the meta dictionary
 		// If meta doesn't contain the key and this is a required field, return failure
@@ -62,7 +62,7 @@ public abstract class AttachmentCustomField : CustomField<AttachmentCustomField.
 				x => ParseAttachmentPostId(GetType(), x)
 			)
 			.BindAsync(
-				x => QueryPosts.ExecuteAsync<Attachment>(db, w, opt => opt with
+				x => QueryPosts.ExecuteAsync<Attachment>(db, unitOfWork, opt => opt with
 				{
 					Id = x,
 					Type = PostType.Attachment,

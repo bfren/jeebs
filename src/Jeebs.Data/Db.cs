@@ -13,6 +13,7 @@ using Jeebs.Data.Query;
 using Jeebs.Logging;
 using Microsoft.Extensions.Options;
 using Wrap.Exceptions;
+using Defaults = Jeebs.Constants.PagingValues;
 
 namespace Jeebs.Data;
 
@@ -109,7 +110,37 @@ public abstract class Db : IDb
 	public abstract Task<Result<IEnumerable<T>>> QueryAsync<T>(IQueryParts parts);
 
 	/// <inheritdoc/>
-	public abstract Task<Result<IPagedList<T>>> QueryAsync<T>(ulong page, IQueryParts parts);
+	public virtual Task<Result<IPagedList<T>>> QueryAsync<T>(ulong page, IQueryParts parts) =>
+		QueryAsync(page, parts, QuerySingleAsync<ulong>, QueryAsync<T>);
+
+	/// <summary>
+	/// Count the items that match <paramref name="parts"/>, then query the requested page of them.
+	/// </summary>
+	/// <typeparam name="T">Item type.</typeparam>
+	/// <param name="page">Page number.</param>
+	/// <param name="parts">Query parts.</param>
+	/// <param name="count">Runs the count query.</param>
+	/// <param name="items">Runs the items query.</param>
+	protected Task<Result<IPagedList<T>>> QueryAsync<T>(
+		ulong page,
+		IQueryParts parts,
+		Func<string, IQueryParametersDictionary, Task<Result<ulong>>> count,
+		Func<string, IQueryParametersDictionary, Task<Result<IEnumerable<T>>>> items
+	) =>
+		from countQuery in Client.GetCountQuery(parts)
+		from countResults in count(countQuery.query, countQuery.param)
+		from paging in R.Try(
+			() => new PagingValues(countResults, page, parts.Maximum ?? Defaults.ItemsPer, Defaults.PagesPer),
+			e => R.Fail(e).Msg("Error creating paging values.", countResults, page, parts.Maximum)
+				.Ctx(GetType().Name, nameof(QueryAsync))
+		)
+		from itemsQuery in Client.GetQuery(new QueryParts(parts) with
+		{
+			Skip = (paging.Page - 1) * paging.ItemsPer,
+			Maximum = paging.ItemsPer
+		})
+		from itemsResults in items(itemsQuery.query, itemsQuery.param)
+		select (IPagedList<T>)new PagedList<T>(paging, itemsResults);
 
 	/// <inheritdoc/>
 	public abstract Task<Result<IEnumerable<T>>> QueryAsync<T>(Func<IQueryBuilder, IQueryBuilderWithFrom> builder);

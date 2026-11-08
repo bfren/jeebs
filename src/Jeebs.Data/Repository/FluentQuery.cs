@@ -58,6 +58,27 @@ public sealed partial record class FluentQuery<TEntity, TId> : IFluentQuery<TEnt
 	}
 
 	/// <summary>
+	/// Check the query can run: there were no errors while building it, and it has a WHERE clause.
+	/// </summary>
+	/// <param name="method">Name of the calling method (for the failure context).</param>
+	/// <returns>A failure if the query can't run, otherwise null.</returns>
+	internal Failure? CheckParts(string method)
+	{
+		// Errors are usually from converting a column alias to a column object
+		if (Errors.Count > 0)
+		{
+			return R.Fail("Query errors.", Errors).Ctx(nameof(FluentQuery<,>), method);
+		}
+
+		if (Parts.Where.Count == 0 && Parts.WhereCustom.Count == 0)
+		{
+			return R.Fail("No predicates defined for WHERE clause.").Ctx(nameof(FluentQuery<,>), method);
+		}
+
+		return null;
+	}
+
+	/// <summary>
 	/// Return unchanged query.
 	/// </summary>
 	/// <returns>Original query.</returns>

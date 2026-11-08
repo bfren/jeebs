@@ -8,10 +8,10 @@ namespace Jeebs.Data.Repository.FluentQuery_Tests;
 public class WhereIn_Tests : FluentQuery_Tests
 {
 	[Fact]
-	public void No_Values__Does_Not_Add_Predicate__Returns_Original_Query()
+	public void No_Values__Adds_Predicate_With_Empty_List()
 	{
 		// Arrange
-		var (query, v) = Setup();
+		var (query, _) = Setup();
 
 		// Act
 		var r0 = query.WhereIn(nameof(TestEntity.Foo), Array.Empty<string?>());
@@ -19,11 +19,13 @@ public class WhereIn_Tests : FluentQuery_Tests
 
 		// Assert
 		var f0 = Assert.IsType<FluentQuery<TestEntity, TestId>>(r0);
-		Assert.Empty(f0.Parts.Where);
+		var (_, compare0, value0) = Assert.Single(f0.Parts.Where);
+		Assert.Equal(Compare.In, compare0);
+		Assert.Empty((IEnumerable<string?>)value0);
 		var f1 = Assert.IsType<FluentQuery<TestEntity, TestId>>(r1);
-		Assert.Empty(f1.Parts.Where);
-		Assert.Same(query, f0);
-		Assert.Same(query, f1);
+		var (_, compare1, value1) = Assert.Single(f1.Parts.Where);
+		Assert.Equal(Compare.In, compare1);
+		Assert.Empty((IEnumerable<string?>)value1);
 	}
 
 	[Fact]

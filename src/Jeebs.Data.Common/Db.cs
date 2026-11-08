@@ -1,7 +1,9 @@
 // Jeebs Rapid Application Development
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
+using System;
 using System.Data;
+using System.Data.Common;
 using System.Threading.Tasks;
 using Jeebs.Config.Db;
 using Jeebs.Logging;
@@ -38,31 +40,11 @@ public abstract partial class Db : Data.Db, IDb
 	protected Db(IDbClient client, DbConnectionConfig config, ILog log) : base(client, config, log) =>
 		Client = client;
 
-	/// <inheritdoc/>
-	public virtual IUnitOfWork StartWork()
-	{
-		// Get a database connection
-		Log.Vrb("Getting database connection.");
-		var connection = Client.GetConnection(Config.ConnectionString);
-
-		// Open database connection
-		if (connection.State != ConnectionState.Open)
-		{
-			Log.Vrb("Connecting to the database.");
-			connection.Open();
-		}
-
-		// Begin a new transaction
-		Log.Vrb("Beginning a new transaction.");
-		var transaction = connection.BeginTransaction();
-
-		// Create Unit of Work
-		Log.Vrb("Starting new Unit of Work.");
-		return new UnitOfWork(connection, transaction, Log);
-	}
-
-	/// <inheritdoc/>
-	public virtual async Task<IUnitOfWork> StartWorkAsync()
+	/// <summary>
+	/// Open a connection and start a new Unit of Work for <see cref="DoWorkAsync"/> - its transaction
+	/// is only begun when a write first needs it.
+	/// </summary>
+	protected virtual async Task<IUnitOfWork> StartWorkAsync()
 	{
 		// Connect to the database
 		Log.Vrb("Getting database connection.");
@@ -75,13 +57,24 @@ public abstract partial class Db : Data.Db, IDb
 			await connection.OpenAsync();
 		}
 
-		// Begin a new transaction
-		Log.Vrb("Beginning a new transaction.");
-		var transaction = await connection.BeginTransactionAsync();
+		// Begin a new transaction the first time it is used
+		var transaction = new LazyAsync<DbTransaction>(async () =>
+		{
+			Log.Vrb("Beginning a new transaction.");
+			return await connection.BeginTransactionAsync();
+		});
 
 		// Create Unit of Work
 		Log.Vrb("Starting new Unit of Work.");
 		return new UnitOfWork(connection, transaction, Log);
+	}
+
+	/// <inheritdoc/>
+	public virtual async Task<Result<T>> DoWorkAsync<T>(Func<IUnitOfWork, Task<Result<T>>> work)
+	{
+		// disposing rolls back anything not committed - so a failure or an exception in work saves nothing
+		await using var unitOfWork = await StartWorkAsync();
+		return await work(unitOfWork).BindAsync(unitOfWork.CommitAsync);
 	}
 
 	/// <summary>

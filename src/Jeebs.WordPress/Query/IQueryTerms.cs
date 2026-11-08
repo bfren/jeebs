@@ -18,8 +18,8 @@ public interface IQueryTerms
 	/// </summary>
 	/// <typeparam name="T">Return Model type.</typeparam>
 	/// <param name="db">IWpDb.</param>
-	/// <param name="w">IUnitOfWork.</param>
+	/// <param name="unitOfWork">IUnitOfWork.</param>
 	/// <param name="opt">Function to return query options.</param>
-	Task<Result<IEnumerable<T>>> ExecuteAsync<T>(IWpDb db, IUnitOfWork w, GetTermsOptions opt)
+	Task<Result<IEnumerable<T>>> ExecuteAsync<T>(IWpDb db, IUnitOfWork unitOfWork, GetTermsOptions opt)
 		where T : IWithId<WpTermId, ulong>;
 }
