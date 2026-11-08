@@ -251,17 +251,17 @@ public sealed class PostsPartsBuilder : PartsBuilder<WpPostId>, IQueryPostsParts
 		// Add each custom field
 		foreach (var (field, cmp, value) in customFields)
 		{
-			// Add AND if this is not the first conditional clause
-			if (customFieldWhere.Length > 0)
-			{
-				_ = customFieldWhere.Append(" AND ");
-			}
-
 			// Ensure there is a search value
 			var customFieldSearch = value.ToString();
 			if (customFieldSearch is null)
 			{
 				continue;
+			}
+
+			// Add AND if this is not the first conditional clause
+			if (customFieldWhere.Length > 0)
+			{
+				_ = customFieldWhere.Append(" AND ");
 			}
 
 			// Get comparison operator - if it's LIKE and % has not already been added to the search string, add it

@@ -146,6 +146,33 @@ public class AddWhereCustomFields_Tests : QueryPartsBuilder_Tests<PostsPartsBuil
 	}
 
 	[Fact]
+	public void CustomField_With_Null_Value_Is_Skipped_Without_Stray_And()
+	{
+		// Arrange
+		var (builder, v) = Setup();
+		var f0 = Substitute.For<ICustomField>();
+		f0.Key.Returns(Rnd.Str);
+		var f1 = Substitute.For<ICustomField>();
+		f1.Key.Returns(Rnd.Str);
+		var customFields = ListF.Create((f0, Compare.Equal, (object)Rnd.Str), (f1, Compare.Equal, new NullString()));
+
+		// Act
+		var result = builder.AddWhereCustomFields(v.Parts, customFields);
+
+		// Assert
+		var ok = result.AssertOk();
+		var (clause, _) = Assert.Single(ok.WhereCustom);
+		Assert.EndsWith(") >= 1", clause);
+		Assert.DoesNotContain(" AND (", clause);
+	}
+
+	private sealed class NullString
+	{
+		public override string? ToString() =>
+			null;
+	}
+
+	[Fact]
 	public void Multiple_CustomFields_Adds_Parameters()
 	{
 		// Arrange
