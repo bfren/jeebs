@@ -64,6 +64,8 @@ Won't do: **#12** reads without a transaction (speed only), and rate limiting on
   the exception handler, status-code pages and HSTS, which they silently lacked. Production
   errors in MVC and Razor apps now go to `/Error` (the `ErrorController`), and error views are
   sent with their real status code instead of 200.
+- **Controllers:** `MvcController.Process` is removed (it blocked a thread on failure); use
+  `ProcessAsync`, which now has a `(Result<T>, Func<T, IActionResult>)` overload.
 - **Logging:** `SerilogLogger.ConsoleMessagePrefix` is gone. With `addPrefix` the app name now
   appears in console output only, not in the message stored by Seq, files or database sinks.
 - **`string.ToASCII()`** is renamed `ToHtmlEntities()`, and encodes every character (accents,
@@ -257,7 +259,8 @@ Must fix: B1–B5. Should fix: B6–B9. Nice to have: B10–B12.
 - [x] **B11 `robots.txt` on one line** — `src/Jeebs.Mvc/Controllers/SimpleController.cs:32`
   Fix: `"User-agent: *\nAllow: /"`. Done.
 
-Left out (small): the blocking `.GetAwaiter().GetResult()` in `MvcController.Process` (own issue).
+Done in #632: `MvcController.Process` blocked on `.GetAwaiter().GetResult()` for failures; it is
+removed, with a new `ProcessAsync(Result<T>, Func<T, IActionResult>)` to replace it.
 Done in #628: the app name was added to every log message template (so every sink stored it, and
 templates never grouped); it now goes into the console output template only.
 
