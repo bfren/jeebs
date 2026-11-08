@@ -64,6 +64,8 @@ Won't do: **#12** reads without a transaction (speed only), and rate limiting on
   the exception handler, status-code pages and HSTS, which they silently lacked. Production
   errors in MVC and Razor apps now go to `/Error` (the `ErrorController`), and error views are
   sent with their real status code instead of 200.
+- **`string.ToASCII()`** is renamed `ToHtmlEntities()`, and encodes every character (accents,
+  emoji) instead of turning non-ASCII into `?`.
 
 ---
 
@@ -222,8 +224,9 @@ Must fix: B1–B5. Should fix: B6–B9. Nice to have: B10–B12.
   `{@Request}` / `{@Response}` expand the `RequestUri`, which is the webhook secret. Fix: log only
   `(int)response.StatusCode` and the exception; `using` on request and response.
   Done. No test: there is no `Tests.Jeebs.Services.Webhook` project yet.
-- [ ] **B10 Email tag turns accents into `?`** — `src/Jeebs/Extensions/String/StringExtensions.ToASCII.cs`
+- [x] **B10 Email tag turns accents into `?`** — `src/Jeebs/Extensions/String/StringExtensions.ToASCII.cs`
   `Encoding.ASCII` replaces non-ASCII (`José` → `Jos?`). Fix: loop over chars, write `&#{(int)c};`.
+  Done: renamed `ToHtmlEntities`, loops over runes (so emoji are one entity), tests updated.
 
 ## Phase 10 — PHP and WordPress data (B3, B8, B12)
 
