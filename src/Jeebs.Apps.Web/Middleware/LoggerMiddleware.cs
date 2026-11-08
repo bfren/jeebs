@@ -72,6 +72,9 @@ public sealed class LoggerMiddleware : IMiddleware
 		{
 			// Log error
 			logger.Error(ex, MessageTemplate, context.Request.Method, GetPath(context), 500, stopwatch.Elapsed.TotalSeconds);
+
+			// Let the server send the 500
+			throw;
 		}
 	}
 
