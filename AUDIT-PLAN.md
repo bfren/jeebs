@@ -243,14 +243,15 @@ Must fix: B1–B5. Should fix: B6–B9. Nice to have: B10–B12.
   Custom fields: `= 1` drops posts with two matching rows for one key; use `>= 1`. Taxonomies:
   a repeated term ID never matches `= Count`; use `.Distinct()` on the IDs.
 
-## Phase 11 — log levels and small fixes (B7, B11)
+## Phase 11 — log levels and small fixes (B7, B11) — issue #628
 
-- [ ] **B7 `IsEnabled` casts between mismatched enums** —
+- [x] **B7 `IsEnabled` casts between mismatched enums** —
   `src/Jeebs.Logging.Serilog/SerilogLogger.cs:57`, `src/Jeebs/Logging/Log.cs:96`
   Wrap `LogLevel` is 1, 2, 4, 8, 16, 32; Serilog is 0–5. With minimum Information,
   `IsEnabled(Debug)` is true and `IsEnabled(Warning)` is always true; the Microsoft `LogLevel`
   overload is off the same way. Fix: use `LevelF.ConvertToSerilogLevel`, and a switch for the
-  Microsoft levels. One test.
+  Microsoft levels. One test. Done (`Microsoft LogLevel.None` is never enabled); tests in
+  `tests/Tests.Jeebs.Logging.Serilog/_/SerilogLogger/`.
 - [ ] **B11 `robots.txt` on one line** — `src/Jeebs.Mvc/Controllers/SimpleController.cs:32`
   Fix: `"User-agent: *\nAllow: /"`.
 

@@ -2,9 +2,9 @@
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using System;
+using Jeebs.Logging.Serilog.Functions;
 using Wrap.Logging;
 using S = Serilog;
-using SE = Serilog.Events;
 
 namespace Jeebs.Logging.Serilog;
 
@@ -55,7 +55,10 @@ public class SerilogLogger : Log
 
 	/// <inheritdoc/>
 	public override bool IsEnabled(LogLevel level) =>
-		logger.IsEnabled((SE.LogEventLevel)level);
+		LevelF.ConvertToSerilogLevel(level).Match(
+			fFail: _ => false,
+			fOk: logger.IsEnabled
+		);
 
 	/// <inheritdoc/>
 	public override void Vrb(string message, params object?[] args) =>
