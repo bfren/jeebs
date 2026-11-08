@@ -103,17 +103,32 @@ public class WebApp : App
 	/// <param name="app">WebApplication.</param>
 	public virtual void Configure(WebApplication app)
 	{
-		// Shorthands
-		var config = app.Configuration;
-		var env = app.Environment;
+		// Logging, Site Verification, Exception Handling and Security Headers
+		ConfigureStart(app);
 
+		// Configure Authorisation and Authentication
+		if (app.Configuration.GetSection<AuthConfig>(AuthConfig.Key) is AuthConfig auth && auth.Enabled)
+		{
+			ConfigureAuth(app, app.Configuration);
+		}
+
+		// Do NOT use HTTPS redirection - this should be handled by the web server / reverse proxy
+	}
+
+	/// <summary>
+	/// Add the middleware every web application needs at the start of the pipeline:
+	/// request logging, site verification, exception handling and security headers.
+	/// </summary>
+	/// <param name="app">WebApplication.</param>
+	protected void ConfigureStart(WebApplication app)
+	{
 		// Logging
 		_ = app.UseMiddleware<LoggerMiddleware>();
 
 		// Site Verification
-		ConfigureSiteVerification(app, config);
+		ConfigureSiteVerification(app, app.Configuration);
 
-		if (env.IsDevelopment())
+		if (app.Environment.IsDevelopment())
 		{
 			// Useful exception page
 			_ = app.UseDeveloperExceptionPage();
@@ -126,14 +141,6 @@ public class WebApp : App
 			// Add security headers
 			ConfigureSecurityHeaders(app);
 		}
-
-		// Configure Authorisation and Authentication
-		if (config.GetSection<AuthConfig>(AuthConfig.Key) is AuthConfig auth && auth.Enabled)
-		{
-			ConfigureAuth(app, config);
-		}
-
-		// Do NOT use HTTPS redirection - this should be handled by the web server / reverse proxy
 	}
 
 	/// <summary>

@@ -40,6 +40,7 @@ public static partial class MvcControllerExtensions
 		if ((findView(viewName) ?? findView("Default")) is string view)
 		{
 			@this.Log.Vrb("Found view {view}", view);
+			@this.Response.StatusCode = status;
 			return @this.View(view, failure);
 		}
 

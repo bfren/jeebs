@@ -261,6 +261,10 @@ public class MvcApp(bool useHsts) : WebApp(useHsts)
 	/// <inheritdoc/>
 	public override void Configure(WebApplication app)
 	{
+		// Logging, Site Verification, Exception Handling and Security Headers
+		// (not base.Configure, which would add authorisation before routing)
+		ConfigureStart(app);
+
 		// Compression
 		ConfigureResponseCompression(app);
 
