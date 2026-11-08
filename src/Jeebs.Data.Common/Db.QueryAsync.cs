@@ -8,7 +8,6 @@ using System.Threading.Tasks;
 using Jeebs.Collections;
 using Jeebs.Data.Functions;
 using Jeebs.Data.Query;
-using Defaults = Jeebs.Constants.PagingValues;
 
 namespace Jeebs.Data.Common;
 
@@ -65,24 +64,12 @@ public abstract partial class Db
 
 	/// <inheritdoc/>
 	public Task<Result<IPagedList<T>>> QueryAsync<T>(ulong page, IQueryParts parts, IDbTransaction transaction) =>
-		from count in Client.GetCountQuery(parts)
-		from countResults in QuerySingleAsync<ulong>(
-			count.query, count.param, CommandType.Text, transaction
-		)
-		from paging in R.Try(
-			() => new PagingValues(countResults, page, parts.Maximum ?? Defaults.ItemsPer, Defaults.PagesPer),
-			e => R.Fail(e).Msg("Error creating paging values.", countResults, page, parts.Maximum)
-				.Ctx(GetType().Name, nameof(QueryAsync))
-		)
-		from items in Client.GetQuery(new QueryParts(parts) with
-		{
-			Skip = (paging.Page - 1) * paging.ItemsPer,
-			Maximum = paging.ItemsPer
-		})
-		from itemsResults in QueryAsync<T>(
-			items.query, items.param, CommandType.Text, transaction
-		)
-		select (IPagedList<T>)new PagedList<T>(paging, itemsResults);
+		QueryAsync(
+			page,
+			parts,
+			(query, param) => QuerySingleAsync<ulong>(query, param, CommandType.Text, transaction),
+			(query, param) => QueryAsync<T>(query, param, CommandType.Text, transaction)
+		);
 
 	#endregion
 
