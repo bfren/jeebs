@@ -64,6 +64,8 @@ Won't do: **#12** reads without a transaction (speed only), and rate limiting on
   the exception handler, status-code pages and HSTS, which they silently lacked. Production
   errors in MVC and Razor apps now go to `/Error` (the `ErrorController`), and error views are
   sent with their real status code instead of 200.
+- **Logging:** `SerilogLogger.ConsoleMessagePrefix` is gone. With `addPrefix` the app name now
+  appears in console output only, not in the message stored by Seq, files or database sinks.
 - **`string.ToASCII()`** is renamed `ToHtmlEntities()`, and encodes every character (accents,
   emoji) instead of turning non-ASCII into `?`.
 
@@ -243,19 +245,21 @@ Must fix: B1–B5. Should fix: B6–B9. Nice to have: B10–B12.
   Custom fields: `= 1` drops posts with two matching rows for one key; use `>= 1`. Taxonomies:
   a repeated term ID never matches `= Count`; use `.Distinct()` on the IDs.
 
-## Phase 11 — log levels and small fixes (B7, B11)
+## Phase 11 — log levels and small fixes (B7, B11) — issue #628
 
-- [ ] **B7 `IsEnabled` casts between mismatched enums** —
+- [x] **B7 `IsEnabled` casts between mismatched enums** —
   `src/Jeebs.Logging.Serilog/SerilogLogger.cs:57`, `src/Jeebs/Logging/Log.cs:96`
   Wrap `LogLevel` is 1, 2, 4, 8, 16, 32; Serilog is 0–5. With minimum Information,
   `IsEnabled(Debug)` is true and `IsEnabled(Warning)` is always true; the Microsoft `LogLevel`
   overload is off the same way. Fix: use `LevelF.ConvertToSerilogLevel`, and a switch for the
-  Microsoft levels. One test.
-- [ ] **B11 `robots.txt` on one line** — `src/Jeebs.Mvc/Controllers/SimpleController.cs:32`
-  Fix: `"User-agent: *\nAllow: /"`.
+  Microsoft levels. One test. Done (`Microsoft LogLevel.None` is never enabled); tests in
+  `tests/Tests.Jeebs.Logging.Serilog/_/SerilogLogger/`.
+- [x] **B11 `robots.txt` on one line** — `src/Jeebs.Mvc/Controllers/SimpleController.cs:32`
+  Fix: `"User-agent: *\nAllow: /"`. Done.
 
-Left out (small): the blocking `.GetAwaiter().GetResult()` in `MvcController.Process`, and the
-app name added to every log message template.
+Left out (small): the blocking `.GetAwaiter().GetResult()` in `MvcController.Process` (own issue).
+Done in #628: the app name was added to every log message template (so every sink stored it, and
+templates never grouped); it now goes into the console output template only.
 
 ## Not audited yet
 

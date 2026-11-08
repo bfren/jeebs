@@ -94,7 +94,29 @@ public abstract class Log : ILog
 
 	/// <inheritdoc/>
 	public bool IsEnabled(Microsoft.Extensions.Logging.LogLevel level) =>
-		IsEnabled((LogLevel)level);
+		level switch
+		{
+			Microsoft.Extensions.Logging.LogLevel.Trace =>
+				IsEnabled(LogLevel.Verbose),
+
+			Microsoft.Extensions.Logging.LogLevel.Debug =>
+				IsEnabled(LogLevel.Debug),
+
+			Microsoft.Extensions.Logging.LogLevel.Information =>
+				IsEnabled(LogLevel.Information),
+
+			Microsoft.Extensions.Logging.LogLevel.Warning =>
+				IsEnabled(LogLevel.Warning),
+
+			Microsoft.Extensions.Logging.LogLevel.Error =>
+				IsEnabled(LogLevel.Error),
+
+			Microsoft.Extensions.Logging.LogLevel.Critical =>
+				IsEnabled(LogLevel.Fatal),
+
+			_ =>
+				false
+		};
 
 	/// <inheritdoc/>
 	public abstract void Vrb(string message, params object?[] args);
