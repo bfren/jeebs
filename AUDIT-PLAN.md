@@ -212,11 +212,12 @@ Must fix: B1–B5. Should fix: B6–B9. Nice to have: B10–B12.
   Production `MvcApp` on Kestrel: an endpoint that throws returns 500 with the `/Error` body) and
   `LoggerMiddleware_Tests.InvokeAsync_Tests` (rethrows). Both fail without the B1 / B5 fixes.
 
-## Phase 9 — encoding and secrets (B2, B4, B10)
+## Phase 9 — encoding and secrets (B2, B4, B10) — issue #626
 
-- [ ] **B2 XSS in paging links** — `src/Jeebs.Mvc/TagHelpers/PagingTagHelper.cs:80`
+- [x] **B2 XSS in paging links** — `src/Jeebs.Mvc/TagHelpers/PagingTagHelper.cs:80`
   `Query` (the search text) goes into the HTML unencoded via `AppendHtml`. Fix:
   `Uri.EscapeDataString(Query)`, and HTML-encode `Url`. Add a test with `"><script>`.
+  Done (`QueryPrefix` is escaped too); test in `tests/Tests.Jeebs.Mvc/_/PagingTagHelper/`.
 - [ ] **B4 Webhook errors log the secret Slack URL** — `src/Jeebs.Services.Webhook/WebhookDriver.cs:91`
   `{@Request}` / `{@Response}` expand the `RequestUri`, which is the webhook secret. Fix: log only
   `(int)response.StatusCode` and the exception; `using` on request and response.
