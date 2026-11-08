@@ -64,7 +64,7 @@ public class AddWhereCustomFields_Tests : QueryPartsBuilder_Tests<PostsPartsBuil
 			$"WHERE `{pm}`.`post_id` = `{p}`.`ID` " +
 			$"AND `{pm}`.`meta_key` = @customField0_Key " +
 			$"AND `{pm}`.`meta_value` {input.ToOperator()} @customField0_Value" +
-			") = 1",
+			") >= 1",
 			clause
 		);
 	}
@@ -135,14 +135,57 @@ public class AddWhereCustomFields_Tests : QueryPartsBuilder_Tests<PostsPartsBuil
 			$"WHERE `{pm}`.`post_id` = `{p}`.`ID` " +
 			$"AND `{pm}`.`meta_key` = @customField0_Key " +
 			$"AND `{pm}`.`meta_value` = @customField0_Value" +
-			") = 1 AND (" +
+			") >= 1 AND (" +
 			$"SELECT COUNT(1) FROM `{pm}` " +
 			$"WHERE `{pm}`.`post_id` = `{p}`.`ID` " +
 			$"AND `{pm}`.`meta_key` = @customField1_Key " +
 			$"AND `{pm}`.`meta_value` = @customField1_Value" +
-			") = 1",
+			") >= 1",
 			clause
 		);
+	}
+
+	[Fact]
+	public void CustomField_With_Null_Value_Is_Skipped_Without_Stray_And()
+	{
+		// Arrange
+		var (builder, v) = Setup();
+		var f0 = Substitute.For<ICustomField>();
+		f0.Key.Returns(Rnd.Str);
+		var f1 = Substitute.For<ICustomField>();
+		f1.Key.Returns(Rnd.Str);
+		var customFields = ListF.Create((f0, Compare.Equal, (object)Rnd.Str), (f1, Compare.Equal, new NullString()));
+
+		// Act
+		var result = builder.AddWhereCustomFields(v.Parts, customFields);
+
+		// Assert
+		var ok = result.AssertOk();
+		var (clause, _) = Assert.Single(ok.WhereCustom);
+		Assert.EndsWith(") >= 1", clause);
+		Assert.DoesNotContain(" AND (", clause);
+	}
+
+	[Fact]
+	public void All_CustomField_Values_Null_Does_Nothing()
+	{
+		// Arrange
+		var (builder, v) = Setup();
+		var f0 = Substitute.For<ICustomField>();
+		var customFields = ListF.Create((f0, Compare.Equal, (object)new NullString()));
+
+		// Act
+		var result = builder.AddWhereCustomFields(v.Parts, customFields);
+
+		// Assert
+		var ok = result.AssertOk();
+		Assert.Same(v.Parts, ok);
+	}
+
+	private sealed class NullString
+	{
+		public override string? ToString() =>
+			null;
 	}
 
 	[Fact]

@@ -174,7 +174,7 @@ public sealed class PostsPartsBuilder : PartsBuilder<WpPostId>, IQueryPostsParts
 					  select new
 					  {
 						  Name = g.Key,
-						  Ids = g.Select(x => x.id.Value).ToList()
+						  Ids = g.Select(x => x.id.Value).Distinct().ToList() // a repeated ID would never match the count
 					  };
 
 		// Add each taxonomy
@@ -251,17 +251,17 @@ public sealed class PostsPartsBuilder : PartsBuilder<WpPostId>, IQueryPostsParts
 		// Add each custom field
 		foreach (var (field, cmp, value) in customFields)
 		{
-			// Add AND if this is not the first conditional clause
-			if (customFieldWhere.Length > 0)
-			{
-				_ = customFieldWhere.Append(" AND ");
-			}
-
 			// Ensure there is a search value
 			var customFieldSearch = value.ToString();
 			if (customFieldSearch is null)
 			{
 				continue;
+			}
+
+			// Add AND if this is not the first conditional clause
+			if (customFieldWhere.Length > 0)
+			{
+				_ = customFieldWhere.Append(" AND ");
 			}
 
 			// Get comparison operator - if it's LIKE and % has not already been added to the search string, add it
@@ -286,11 +286,17 @@ public sealed class PostsPartsBuilder : PartsBuilder<WpPostId>, IQueryPostsParts
 				$"AND {__(T.PostsMeta, pm => pm.Value)} {customFieldComparison} {customFieldValueParameter}"
 			);
 
-			// Add sub query to where
-			_ = customFieldWhere.Append(F.DefaultCulture, $"({subQuery}) = 1");
+			// Add sub query to where - a post may have more than one matching row for the same key
+			_ = customFieldWhere.Append(F.DefaultCulture, $"({subQuery}) >= 1");
 
 			// Increase custom field index
 			customFieldIndex++;
+		}
+
+		// If every value was null there is nothing to add - treat it the same as an empty list
+		if (customFieldWhere.Length == 0)
+		{
+			return parts;
 		}
 
 		// Add to main WHERE clause

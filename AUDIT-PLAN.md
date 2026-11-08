@@ -228,17 +228,18 @@ Must fix: B1–B5. Should fix: B6–B9. Nice to have: B10–B12.
   `Encoding.ASCII` replaces non-ASCII (`José` → `Jos?`). Fix: loop over chars, write `&#{(int)c};`.
   Done: renamed `ToHtmlEntities`, loops over runes (so emoji are one entity), tests updated.
 
-## Phase 10 — PHP and WordPress data (B3, B8, B12)
+## Phase 10 — PHP and WordPress data (B3, B8, B12) — issue #627
 
-- [ ] **B3 PHP strings cut at the first `;`** — `src/Jeebs/Functions/Php/PhpF.Deserialise.cs:88`
+- [x] **B3 PHP strings cut at the first `;`** — `src/Jeebs/Functions/Php/PhpF.Deserialise.cs:88`
   `getString` ignores the stored length, so `Tom &amp; Jerry` in attachment metadata reads
   wrongly, shifts every later value, or throws from `PostAttachment.Info`. Fix: read length n and
   take n UTF-8 bytes (PHP counts bytes). Tests: a string with `;`, one with `é`; also correct the
   existing `s:15:"Deserialise_Tests"` case (it is 17 long).
-- [ ] **B8 PHP numbers use the server culture** — `src/Jeebs/Functions/Php/PhpF.Deserialise.cs:37`
+  Done, plus tests for an emoji and for a `;` in an array not shifting the next value.
+- [x] **B8 PHP numbers use the server culture** — `src/Jeebs/Functions/Php/PhpF.Deserialise.cs:37`
   `double.Parse` / `long.Parse` with no culture: on a German server `d:1.5;` reads as 15. Fix:
-  pass `CultureInfo.InvariantCulture`.
-- [ ] **B12 WordPress filters miss posts** — `src/Jeebs.WordPress/Query/PostsPartsBuilder.cs:227,290`
+  pass `CultureInfo.InvariantCulture`. Done, with a `de-DE` test.
+- [x] **B12 WordPress filters miss posts** — `src/Jeebs.WordPress/Query/PostsPartsBuilder.cs:227,290`
   Custom fields: `= 1` drops posts with two matching rows for one key; use `>= 1`. Taxonomies:
   a repeated term ID never matches `= Count`; use `.Distinct()` on the IDs.
 
