@@ -1,6 +1,8 @@
 // Jeebs Rapid Application Development
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
+using System;
+using System.Net;
 using Jeebs.Collections;
 using Microsoft.AspNetCore.Razor.TagHelpers;
 
@@ -74,10 +76,10 @@ public sealed class PagingTagHelper : TagHelper
 		}
 
 		// Build the href string, containing a placeholder to replace with the page number
-		var href = Url + "?p={0}";
+		var href = WebUtility.HtmlEncode(Url) + "?p={0}";
 		if (!string.IsNullOrEmpty(Query))
 		{
-			href += $"&amp;{QueryPrefix}={Query}";
+			href += $"&amp;{Uri.EscapeDataString(QueryPrefix)}={Uri.EscapeDataString(Query)}";
 		}
 
 		// Create the wrapper

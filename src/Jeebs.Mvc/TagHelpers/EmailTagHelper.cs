@@ -61,8 +61,8 @@ public sealed class EmailTagHelper : UrlResolutionTagHelper
 		}
 
 		// Encode href / display text
-		var hrefEncoded = new HtmlString(href.ToASCII());
-		var displayEncoded = new HtmlString((Display ?? To).ToASCII());
+		var hrefEncoded = new HtmlString(href.ToHtmlEntities());
+		var displayEncoded = new HtmlString((Display ?? To).ToHtmlEntities());
 
 		// We can't use tag builder here because it encodes attributes, which we have already done
 		output.TagName = "a";

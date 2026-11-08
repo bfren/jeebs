@@ -64,6 +64,8 @@ Won't do: **#12** reads without a transaction (speed only), and rate limiting on
   the exception handler, status-code pages and HSTS, which they silently lacked. Production
   errors in MVC and Razor apps now go to `/Error` (the `ErrorController`), and error views are
   sent with their real status code instead of 200.
+- **`string.ToASCII()`** is renamed `ToHtmlEntities()`, and encodes every character (accents,
+  emoji) instead of turning non-ASCII into `?`.
 
 ---
 
@@ -212,16 +214,19 @@ Must fix: B1–B5. Should fix: B6–B9. Nice to have: B10–B12.
   Production `MvcApp` on Kestrel: an endpoint that throws returns 500 with the `/Error` body) and
   `LoggerMiddleware_Tests.InvokeAsync_Tests` (rethrows). Both fail without the B1 / B5 fixes.
 
-## Phase 9 — encoding and secrets (B2, B4, B10)
+## Phase 9 — encoding and secrets (B2, B4, B10) — issue #626
 
-- [ ] **B2 XSS in paging links** — `src/Jeebs.Mvc/TagHelpers/PagingTagHelper.cs:80`
+- [x] **B2 XSS in paging links** — `src/Jeebs.Mvc/TagHelpers/PagingTagHelper.cs:80`
   `Query` (the search text) goes into the HTML unencoded via `AppendHtml`. Fix:
   `Uri.EscapeDataString(Query)`, and HTML-encode `Url`. Add a test with `"><script>`.
-- [ ] **B4 Webhook errors log the secret Slack URL** — `src/Jeebs.Services.Webhook/WebhookDriver.cs:91`
+  Done (`QueryPrefix` is escaped too); test in `tests/Tests.Jeebs.Mvc/_/PagingTagHelper/`.
+- [x] **B4 Webhook errors log the secret Slack URL** — `src/Jeebs.Services.Webhook/WebhookDriver.cs:91`
   `{@Request}` / `{@Response}` expand the `RequestUri`, which is the webhook secret. Fix: log only
   `(int)response.StatusCode` and the exception; `using` on request and response.
-- [ ] **B10 Email tag turns accents into `?`** — `src/Jeebs/Extensions/String/StringExtensions.ToASCII.cs`
+  Done. No test: there is no `Tests.Jeebs.Services.Webhook` project yet.
+- [x] **B10 Email tag turns accents into `?`** — `src/Jeebs/Extensions/String/StringExtensions.ToASCII.cs`
   `Encoding.ASCII` replaces non-ASCII (`José` → `Jos?`). Fix: loop over chars, write `&#{(int)c};`.
+  Done: renamed `ToHtmlEntities`, loops over runes (so emoji are one entity), tests updated.
 
 ## Phase 10 — PHP and WordPress data (B3, B8, B12)
 
