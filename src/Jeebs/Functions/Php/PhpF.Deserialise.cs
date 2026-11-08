@@ -2,6 +2,7 @@
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using System;
+using System.Globalization;
 using System.Text;
 
 namespace Jeebs.Functions;
@@ -35,10 +36,10 @@ public static partial class PhpF
 				getBoolean(str, ref pointer),
 
 			char c when c == DoubleChar =>
-				getNumber(str, double.Parse, 0d, ref pointer),
+				getNumber(str, s => double.Parse(s, CultureInfo.InvariantCulture), 0d, ref pointer),
 
 			char c when c == IntegerChar =>
-				getNumber(str, long.Parse, 0L, ref pointer),
+				getNumber(str, s => long.Parse(s, CultureInfo.InvariantCulture), 0L, ref pointer),
 
 			char c when c == StringChar =>
 				getString(str, ref pointer),

@@ -1,6 +1,8 @@
 // Jeebs Unit Tests
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
+using System.Globalization;
+
 namespace Jeebs.Functions.PhpF_Tests;
 
 public class Deserialise_Tests
@@ -46,6 +48,29 @@ public class Deserialise_Tests
 		var inner = Assert.IsType<PhpF.AssociativeArray>(outer[1]);
 		Assert.Equal("Apple", inner[0]);
 		Assert.Equal("Orange", inner[1]);
+	}
+
+	[Fact]
+	public void Number__Ignores_Current_Culture()
+	{
+		// Arrange
+		var culture = CultureInfo.CurrentCulture;
+		CultureInfo.CurrentCulture = new("de-DE");
+
+		try
+		{
+			// Act
+			var d = PhpF.Deserialise("d:1.5;");
+			var i = PhpF.Deserialise("i:-1000;");
+
+			// Assert
+			Assert.Equal(1.5d, d);
+			Assert.Equal(-1000L, i);
+		}
+		finally
+		{
+			CultureInfo.CurrentCulture = culture;
+		}
 	}
 
 	[Fact]
