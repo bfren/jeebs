@@ -61,6 +61,25 @@ public class AddWhereTaxonomies_Tests : QueryPartsBuilder_Tests<PostsPartsBuilde
 	}
 
 	[Fact]
+	public void Repeated_Term_Is_Counted_Once()
+	{
+		// Arrange
+		var (builder, v) = Setup();
+		var taxonomy = Taxonomy.PostCategory;
+		var id = IdGen.ULongId<WpTermId>();
+		var taxonomies = ListF.Create((taxonomy, id), (taxonomy, id));
+
+		// Act
+		var result = builder.AddWhereTaxonomies(v.Parts, taxonomies);
+
+		// Assert
+		var ok = result.AssertOk();
+		var (clause, parameters) = Assert.Single(ok.WhereCustom);
+		Assert.EndsWith("IN (@taxonomy0_0)) = 1", clause);
+		Assert.Equal(2, parameters.Count);
+	}
+
+	[Fact]
 	public void Single_Taxonomy_Adds_Parameters()
 	{
 		// Arrange

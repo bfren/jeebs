@@ -64,7 +64,7 @@ public class AddWhereCustomFields_Tests : QueryPartsBuilder_Tests<PostsPartsBuil
 			$"WHERE `{pm}`.`post_id` = `{p}`.`ID` " +
 			$"AND `{pm}`.`meta_key` = @customField0_Key " +
 			$"AND `{pm}`.`meta_value` {input.ToOperator()} @customField0_Value" +
-			") = 1",
+			") >= 1",
 			clause
 		);
 	}
@@ -135,12 +135,12 @@ public class AddWhereCustomFields_Tests : QueryPartsBuilder_Tests<PostsPartsBuil
 			$"WHERE `{pm}`.`post_id` = `{p}`.`ID` " +
 			$"AND `{pm}`.`meta_key` = @customField0_Key " +
 			$"AND `{pm}`.`meta_value` = @customField0_Value" +
-			") = 1 AND (" +
+			") >= 1 AND (" +
 			$"SELECT COUNT(1) FROM `{pm}` " +
 			$"WHERE `{pm}`.`post_id` = `{p}`.`ID` " +
 			$"AND `{pm}`.`meta_key` = @customField1_Key " +
 			$"AND `{pm}`.`meta_value` = @customField1_Value" +
-			") = 1",
+			") >= 1",
 			clause
 		);
 	}

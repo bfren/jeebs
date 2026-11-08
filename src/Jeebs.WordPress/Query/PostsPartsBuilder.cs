@@ -174,7 +174,7 @@ public sealed class PostsPartsBuilder : PartsBuilder<WpPostId>, IQueryPostsParts
 					  select new
 					  {
 						  Name = g.Key,
-						  Ids = g.Select(x => x.id.Value).ToList()
+						  Ids = g.Select(x => x.id.Value).Distinct().ToList() // a repeated ID would never match the count
 					  };
 
 		// Add each taxonomy
@@ -286,8 +286,8 @@ public sealed class PostsPartsBuilder : PartsBuilder<WpPostId>, IQueryPostsParts
 				$"AND {__(T.PostsMeta, pm => pm.Value)} {customFieldComparison} {customFieldValueParameter}"
 			);
 
-			// Add sub query to where
-			_ = customFieldWhere.Append(F.DefaultCulture, $"({subQuery}) = 1");
+			// Add sub query to where - a post may have more than one matching row for the same key
+			_ = customFieldWhere.Append(F.DefaultCulture, $"({subQuery}) >= 1");
 
 			// Increase custom field index
 			customFieldIndex++;

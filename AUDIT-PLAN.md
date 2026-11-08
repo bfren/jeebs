@@ -239,7 +239,7 @@ Must fix: B1–B5. Should fix: B6–B9. Nice to have: B10–B12.
 - [x] **B8 PHP numbers use the server culture** — `src/Jeebs/Functions/Php/PhpF.Deserialise.cs:37`
   `double.Parse` / `long.Parse` with no culture: on a German server `d:1.5;` reads as 15. Fix:
   pass `CultureInfo.InvariantCulture`. Done, with a `de-DE` test.
-- [ ] **B12 WordPress filters miss posts** — `src/Jeebs.WordPress/Query/PostsPartsBuilder.cs:227,290`
+- [x] **B12 WordPress filters miss posts** — `src/Jeebs.WordPress/Query/PostsPartsBuilder.cs:227,290`
   Custom fields: `= 1` drops posts with two matching rows for one key; use `>= 1`. Taxonomies:
   a repeated term ID never matches `= Count`; use `.Distinct()` on the IDs.
 
