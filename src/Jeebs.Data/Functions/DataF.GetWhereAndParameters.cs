@@ -69,27 +69,30 @@ public static partial class DataF
 				continue;
 			}
 
-			// IN requires value to be a list of items
-			if (value is not string and IEnumerable list)
+			// IN takes a list of items - a single value (including a string) is a list of one
+			var list = value is not string and IEnumerable items ? items : new object[] { value };
+
+			// Add a parameter for each value
+			var inParam = new List<string>();
+			foreach (var inValue in list)
 			{
-				// Add a parameter for each value
-				var inParam = new List<string>();
-				foreach (var inValue in list)
-				{
-					// Auto-increment namd and get parameter value (to support StrongId)
-					var inParamName = $"P{index++}";
-					var inParamValue = DataF.GetParameterValue(inValue);
+				// Auto-increment name and get parameter value (to support StrongId)
+				var inParamName = $"P{index++}";
+				var inParamValue = DataF.GetParameterValue(inValue);
 
-					// Add parameter
-					param.Add(inParamName, inParamValue);
-					inParam.Add(client.GetParamRef(inParamName));
-				}
+				// Add parameter
+				param.Add(inParamName, inParamValue);
+				inParam.Add(client.GetParamRef(inParamName));
+			}
 
-				// If there are IN parameters, add to the query
-				if (inParam.Count > 0)
-				{
-					where.Add($"{escapedColumn} {client.GetOperator(compare)} {client.JoinList(inParam, true)}");
-				}
+			// Nothing is IN an empty list, and everything is NOT IN it
+			if (inParam.Count > 0)
+			{
+				where.Add($"{escapedColumn} {client.GetOperator(compare)} {client.JoinList(inParam, true)}");
+			}
+			else if (compare is Compare.In)
+			{
+				where.Add("1 = 0");
 			}
 		}
 

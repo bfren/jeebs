@@ -80,26 +80,16 @@ public sealed partial record class FluentQuery<TEntity, TId>
 	public IFluentQuery<TEntity, TId> WhereId(params TId[] ids) =>
 		ids.Length switch
 		{
-			> 1 =>
-				WhereIn(nameof(IWithId.Id), ids.Select(x => x.Value)),
-
 			1 =>
 				Where(nameof(IWithId.Id), Compare.Equal, ids[0].Value),
 
 			_ =>
-				Unchanged()
+				WhereIn(nameof(IWithId.Id), ids.Select(x => x.Value))
 		};
 
 	/// <inheritdoc/>
 	public IFluentQuery<TEntity, TId> WhereIn<TValue>(string columnAlias, IEnumerable<TValue> values) =>
-		values.Any() switch
-		{
-			true =>
-				Where(columnAlias, Compare.In, values),
-
-			false =>
-				Unchanged()
-		};
+		Where(columnAlias, Compare.In, values);
 
 	/// <inheritdoc/>
 	public IFluentQuery<TEntity, TId> WhereIn<TValue>(Expression<Func<TEntity, TValue>> aliasSelector, IEnumerable<TValue> values) =>
