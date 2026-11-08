@@ -31,5 +31,5 @@ public abstract class SimpleController : Controller
 	/// </summary>
 	[Route("robots.txt")]
 	public ContentResult RobotsTxt() =>
-		Content("User-agent: * Allow: /", "text/plain");
+		Content("User-agent: *\nAllow: /", "text/plain");
 }

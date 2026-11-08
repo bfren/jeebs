@@ -252,8 +252,8 @@ Must fix: B1–B5. Should fix: B6–B9. Nice to have: B10–B12.
   overload is off the same way. Fix: use `LevelF.ConvertToSerilogLevel`, and a switch for the
   Microsoft levels. One test. Done (`Microsoft LogLevel.None` is never enabled); tests in
   `tests/Tests.Jeebs.Logging.Serilog/_/SerilogLogger/`.
-- [ ] **B11 `robots.txt` on one line** — `src/Jeebs.Mvc/Controllers/SimpleController.cs:32`
-  Fix: `"User-agent: *\nAllow: /"`.
+- [x] **B11 `robots.txt` on one line** — `src/Jeebs.Mvc/Controllers/SimpleController.cs:32`
+  Fix: `"User-agent: *\nAllow: /"`. Done.
 
 Left out (small): the blocking `.GetAwaiter().GetResult()` in `MvcController.Process`, and the
 app name added to every log message template.
