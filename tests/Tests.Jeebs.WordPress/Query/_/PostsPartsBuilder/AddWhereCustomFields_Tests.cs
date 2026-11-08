@@ -166,6 +166,22 @@ public class AddWhereCustomFields_Tests : QueryPartsBuilder_Tests<PostsPartsBuil
 		Assert.DoesNotContain(" AND (", clause);
 	}
 
+	[Fact]
+	public void All_CustomField_Values_Null_Does_Nothing()
+	{
+		// Arrange
+		var (builder, v) = Setup();
+		var f0 = Substitute.For<ICustomField>();
+		var customFields = ListF.Create((f0, Compare.Equal, (object)new NullString()));
+
+		// Act
+		var result = builder.AddWhereCustomFields(v.Parts, customFields);
+
+		// Assert
+		var ok = result.AssertOk();
+		Assert.Same(v.Parts, ok);
+	}
+
 	private sealed class NullString
 	{
 		public override string? ToString() =>

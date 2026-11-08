@@ -293,6 +293,12 @@ public sealed class PostsPartsBuilder : PartsBuilder<WpPostId>, IQueryPostsParts
 			customFieldIndex++;
 		}
 
+		// If every value was null there is nothing to add - treat it the same as an empty list
+		if (customFieldWhere.Length == 0)
+		{
+			return parts;
+		}
+
 		// Add to main WHERE clause
 		return AddWhereCustom(parts, customFieldWhere.ToString(), customFieldParameters);
 	}
