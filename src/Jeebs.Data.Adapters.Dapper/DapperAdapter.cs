@@ -43,16 +43,16 @@ public sealed class DapperAdapter : IAdapter
 		(Mapper, Cache) = (mapper, cache);
 
 	/// <inheritdoc/>
-	public Task<Result<int>> ExecuteAsync(IDbTransaction transaction, string query, object? param, CommandType type) =>
+	public Task<Result<int>> ExecuteAsync(IDbConnection connection, IDbTransaction transaction, string query, object? param, CommandType type) =>
 		R.TryAsync(
-			() => transaction.Connection!.ExecuteAsync(query, param, transaction, commandType: type),
+			() => connection.ExecuteAsync(query, param, transaction, commandType: type),
 			ex => Fail(nameof(ExecuteAsync), ex, query, param)
 		);
 
 	/// <inheritdoc/>
-	public Task<Result<T>> ExecuteAsync<T>(IDbTransaction transaction, string query, object? param, CommandType type) =>
+	public Task<Result<T>> ExecuteAsync<T>(IDbConnection connection, IDbTransaction transaction, string query, object? param, CommandType type) =>
 		R.TryAsync(
-			() => transaction.Connection!.ExecuteScalarAsync<T>(query, param, transaction, commandType: type),
+			() => connection.ExecuteScalarAsync<T>(query, param, transaction, commandType: type),
 			ex => Fail(nameof(ExecuteAsync), ex, query, param)
 		)
 		.BindAsync(
@@ -68,19 +68,19 @@ public sealed class DapperAdapter : IAdapter
 		);
 
 	/// <inheritdoc/>
-	public Task<Result<IEnumerable<T>>> QueryAsync<T>(IDbTransaction transaction, string query, object? param, CommandType type) =>
+	public Task<Result<IEnumerable<T>>> QueryAsync<T>(IDbConnection connection, IDbTransaction? transaction, string query, object? param, CommandType type) =>
 		R.TryAsync(
 			() => Cache.GetOrCreateAsync(query, param,
-				() => transaction.Connection!.QueryAsync<T>(query, param, transaction, commandType: type)
+				() => connection.QueryAsync<T>(query, param, transaction, commandType: type)
 			),
 			ex => Fail(nameof(QueryAsync), ex, query, param)
 		);
 
 	/// <inheritdoc/>
-	public Task<Result<T>> QuerySingleAsync<T>(IDbTransaction transaction, string query, object? param, CommandType type) =>
+	public Task<Result<T>> QuerySingleAsync<T>(IDbConnection connection, IDbTransaction? transaction, string query, object? param, CommandType type) =>
 		R.TryAsync(
 			() => Cache.GetOrCreateAsync(query, param,
-				() => transaction.Connection!.QuerySingleAsync<T>(query, param, transaction, commandType: type)
+				() => connection.QuerySingleAsync<T>(query, param, transaction, commandType: type)
 			),
 			ex => Fail(nameof(QuerySingleAsync), ex, query, param)
 		);

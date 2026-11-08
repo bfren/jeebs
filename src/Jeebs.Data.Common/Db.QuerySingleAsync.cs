@@ -18,14 +18,13 @@ public abstract partial class Db
 		QuerySingleAsync<T>(query, param, CommandType.Text);
 
 	/// <inheritdoc/>
-	public async Task<Result<T>> QuerySingleAsync<T>(string query, object? param, CommandType type)
-	{
-		await using var w = await StartWorkAsync();
-		return await QuerySingleAsync<T>(query, param, type, w.Transaction);
-	}
+	public Task<Result<T>> QuerySingleAsync<T>(string query, object? param, CommandType type) =>
+		DoWorkAsync(
+			unitOfWork => QuerySingleAsync<T>(query, param, type, unitOfWork)
+		);
 
 	/// <inheritdoc/>
-	public Task<Result<T>> QuerySingleAsync<T>(string query, object? param, CommandType type, IDbTransaction transaction) =>
+	public Task<Result<T>> QuerySingleAsync<T>(string query, object? param, CommandType type, IUnitOfWork unitOfWork) =>
 		R.Wrap(
 			(query, parameters: param ?? new object(), type)
 		)
@@ -33,7 +32,8 @@ public abstract partial class Db
 			fOk: LogQuery<T>
 		)
 		.BindAsync(
-			x => Client.Adapter.QuerySingleAsync<T>(transaction, x.query, x.parameters, x.type)
+			// a read joins the transaction only if a write has already begun it
+			async x => await Client.Adapter.QuerySingleAsync<T>(unitOfWork.Connection, unitOfWork.Transaction.Initialised ? await unitOfWork.Transaction : null, x.query, x.parameters, x.type)
 		)
 		.BindAsync(
 			x => x switch
@@ -52,16 +52,15 @@ public abstract partial class Db
 	#region Parts
 
 	/// <inheritdoc/>
-	public override async Task<Result<T>> QuerySingleAsync<T>(IQueryParts parts)
-	{
-		await using var w = await StartWorkAsync();
-		return await QuerySingleAsync<T>(parts, w.Transaction);
-	}
+	public override Task<Result<T>> QuerySingleAsync<T>(IQueryParts parts) =>
+		DoWorkAsync(
+			unitOfWork => QuerySingleAsync<T>(parts, unitOfWork)
+		);
 
 	/// <inheritdoc/>
-	public Task<Result<T>> QuerySingleAsync<T>(IQueryParts parts, IDbTransaction transaction) =>
+	public Task<Result<T>> QuerySingleAsync<T>(IQueryParts parts, IUnitOfWork unitOfWork) =>
 		from q in Client.GetQuery(parts)
-		from r in QuerySingleAsync<T>(q.query, q.param, CommandType.Text, transaction)
+		from r in QuerySingleAsync<T>(q.query, q.param, CommandType.Text, unitOfWork)
 		select r;
 
 	#endregion
@@ -69,19 +68,18 @@ public abstract partial class Db
 	#region Builder
 
 	/// <inheritdoc/>
-	public override async Task<Result<T>> QuerySingleAsync<T>(Func<IQueryBuilder, IQueryBuilderWithFrom> builder)
-	{
-		await using var w = await StartWorkAsync();
-		return await QuerySingleAsync<T>(builder, w.Transaction);
-	}
+	public override Task<Result<T>> QuerySingleAsync<T>(Func<IQueryBuilder, IQueryBuilderWithFrom> builder) =>
+		DoWorkAsync(
+			unitOfWork => QuerySingleAsync<T>(builder, unitOfWork)
+		);
 
 	/// <inheritdoc/>
-	public Task<Result<T>> QuerySingleAsync<T>(Func<IQueryBuilder, IQueryBuilderWithFrom> builder, IDbTransaction transaction) =>
+	public Task<Result<T>> QuerySingleAsync<T>(Func<IQueryBuilder, IQueryBuilderWithFrom> builder, IUnitOfWork unitOfWork) =>
 		DataF.BuildQuery<T>(
 			builder
 		)
 		.BindAsync(
-			x => QuerySingleAsync<T>(x, transaction)
+			x => QuerySingleAsync<T>(x, unitOfWork)
 		);
 
 	#endregion

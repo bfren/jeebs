@@ -16,9 +16,9 @@ public static partial class QueryAttachmentsF
 	/// </summary>
 	/// <typeparam name="T"></typeparam>
 	/// <param name="db">IWpDb.</param>
-	/// <param name="w">IUnitOfWork.</param>
+	/// <param name="unitOfWork">IUnitOfWork.</param>
 	/// <param name="opt">Function to return query options.</param>
-	internal static Task<Result<IEnumerable<T>>> ExecuteAsync<T>(IWpDb db, IUnitOfWork w, GetAttachmentsOptions opt)
+	internal static Task<Result<IEnumerable<T>>> ExecuteAsync<T>(IWpDb db, IUnitOfWork unitOfWork, GetAttachmentsOptions opt)
 		where T : IPostAttachment =>
 		R.Try(
 			() => opt(new AttachmentsOptions()),
@@ -29,6 +29,6 @@ public static partial class QueryAttachmentsF
 			x => GetQuery(db.Schema, x.Ids, db.WpConfig.VirtualUploadsUrl)
 		)
 		.BindAsync(
-			x => db.QueryAsync<T>(x, null, System.Data.CommandType.Text, w.Transaction)
+			x => db.QueryAsync<T>(x, null, System.Data.CommandType.Text, unitOfWork)
 		);
 }

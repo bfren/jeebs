@@ -34,64 +34,56 @@ internal sealed class WpDbQuery : IWpDbQuery
 		(Db, Log) = (db, log);
 
 	/// <inheritdoc/>
-	public async Task<Result<IEnumerable<T>>> AttachmentsAsync<T>(Query.GetAttachmentsOptions opt)
-		where T : IPostAttachment
-	{
-		await using var w = await Db.StartWorkAsync();
-		return await QueryAttachmentsF.ExecuteAsync<T>(Db, w, opt);
-	}
+	public Task<Result<IEnumerable<T>>> AttachmentsAsync<T>(Query.GetAttachmentsOptions opt)
+		where T : IPostAttachment =>
+		Db.DoWorkAsync(
+			unitOfWork => QueryAttachmentsF.ExecuteAsync<T>(Db, unitOfWork, opt)
+		);
 
 	/// <inheritdoc/>
-	public async Task<Result<string>> AttachmentFilePathAsync(WpPostId fileId)
-	{
-		await using var w = await Db.StartWorkAsync();
-		return await QueryAttachmentsF.GetFilePathAsync(Db, w, fileId);
-	}
+	public Task<Result<string>> AttachmentFilePathAsync(WpPostId fileId) =>
+		Db.DoWorkAsync(
+			unitOfWork => QueryAttachmentsF.GetFilePathAsync(Db, unitOfWork, fileId)
+		);
 
 	/// <inheritdoc/>
-	public async Task<Result<IEnumerable<T>>> PostsAsync<T>(Query.GetPostsOptions opt, params IContentFilter[] filters)
-		where T : IWithId<WpPostId, ulong>
-	{
-		await using var w = await Db.StartWorkAsync();
-		return await QueryPostsF.ExecuteAsync<T>(Db, w, opt, filters);
-	}
+	public Task<Result<IEnumerable<T>>> PostsAsync<T>(Query.GetPostsOptions opt, params IContentFilter[] filters)
+		where T : IWithId<WpPostId, ulong> =>
+		Db.DoWorkAsync(
+			unitOfWork => QueryPostsF.ExecuteAsync<T>(Db, unitOfWork, opt, filters)
+		);
 
 	/// <inheritdoc/>
-	public async Task<Result<IPagedList<T>>> PostsAsync<T>(ulong page, Query.GetPostsOptions opt, params IContentFilter[] filters)
-		where T : IWithId<WpPostId, ulong>
-	{
-		await using var w = await Db.StartWorkAsync();
-		return await QueryPostsF.ExecuteAsync<T>(Db, w, page, opt, filters);
-	}
+	public Task<Result<IPagedList<T>>> PostsAsync<T>(ulong page, Query.GetPostsOptions opt, params IContentFilter[] filters)
+		where T : IWithId<WpPostId, ulong> =>
+		Db.DoWorkAsync(
+			unitOfWork => QueryPostsF.ExecuteAsync<T>(Db, unitOfWork, page, opt, filters)
+		);
 
 	/// <inheritdoc/>
-	public async Task<Result<(WpPostId? prev, WpPostId? next)>> PreviousAndNextPostsAsync(WpPostId id, Query.GetPostsOptions opt)
-	{
-		await using var w = await Db.StartWorkAsync();
-		return await QueryPostsF.GetPreviousAndNextAsync(Db, w, id, opt);
-	}
+	public Task<Result<(WpPostId? prev, WpPostId? next)>> PreviousAndNextPostsAsync(WpPostId id, Query.GetPostsOptions opt) =>
+		Db.DoWorkAsync(
+			unitOfWork => QueryPostsF.GetPreviousAndNextAsync(Db, unitOfWork, id, opt)
+		);
 
 	/// <inheritdoc/>
-	public async Task<Result<IEnumerable<T>>> PostsMetaAsync<T>(Query.GetPostsMetaOptions opt)
-		where T : IWithId<WpPostMetaId, ulong>
-	{
-		await using var w = await Db.StartWorkAsync();
-		return await QueryPostsMetaF.ExecuteAsync<T>(Db, w, opt);
-	}
+	public Task<Result<IEnumerable<T>>> PostsMetaAsync<T>(Query.GetPostsMetaOptions opt)
+		where T : IWithId<WpPostMetaId, ulong> =>
+		Db.DoWorkAsync(
+			unitOfWork => QueryPostsMetaF.ExecuteAsync<T>(Db, unitOfWork, opt)
+		);
 
 	/// <inheritdoc/>
-	public async Task<Result<IEnumerable<T>>> PostsTaxonomyAsync<T>(Query.GetPostsTaxonomyOptions opt)
-		where T : IWithId<WpTermId, ulong>
-	{
-		await using var w = await Db.StartWorkAsync();
-		return await QueryPostsTaxonomyF.ExecuteAsync<T>(Db, w, opt);
-	}
+	public Task<Result<IEnumerable<T>>> PostsTaxonomyAsync<T>(Query.GetPostsTaxonomyOptions opt)
+		where T : IWithId<WpTermId, ulong> =>
+		Db.DoWorkAsync(
+			unitOfWork => QueryPostsTaxonomyF.ExecuteAsync<T>(Db, unitOfWork, opt)
+		);
 
 	/// <inheritdoc/>
-	public async Task<Result<IEnumerable<T>>> TermsAsync<T>(Query.GetTermsOptions opt)
-		where T : IWithId<WpTermId, ulong>
-	{
-		await using var w = await Db.StartWorkAsync();
-		return await QueryTermsF.ExecuteAsync<T>(Db, w, opt);
-	}
+	public Task<Result<IEnumerable<T>>> TermsAsync<T>(Query.GetTermsOptions opt)
+		where T : IWithId<WpTermId, ulong> =>
+		Db.DoWorkAsync(
+			unitOfWork => QueryTermsF.ExecuteAsync<T>(Db, unitOfWork, opt)
+		);
 }

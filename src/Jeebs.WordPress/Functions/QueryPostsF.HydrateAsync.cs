@@ -18,13 +18,13 @@ public static partial class QueryPostsF
 	/// <typeparam name="TList">List type.</typeparam>
 	/// <typeparam name="TModel">Model type.</typeparam>
 	/// <param name="db">IWpDb.</param>
-	/// <param name="w">IUnitOfWork.</param>
+	/// <param name="unitOfWork">IUnitOfWork.</param>
 	/// <param name="posts">Posts.</param>
 	/// <param name="meta">Meta property.</param>
 	/// <param name="fields">Custom Fields.</param>
 	internal static async Task<Result<TList>> HydrateAsync<TList, TModel>(
 		IWpDb db,
-		IUnitOfWork w,
+		IUnitOfWork unitOfWork,
 		TList posts,
 		Meta<TModel> meta,
 		List<PropertyInfo> fields
@@ -48,7 +48,7 @@ public static partial class QueryPostsF
 					if (GetCustomField(post, info) is ICustomField customField)
 					{
 						// Hydrate the field
-						var result = await customField.HydrateAsync(db, w, metaDict, required);
+						var result = await customField.HydrateAsync(db, unitOfWork, metaDict, required);
 
 						// If it failed and it's required, return Fail
 						if (result.Unsafe().TryFailure(out var failure) && required)

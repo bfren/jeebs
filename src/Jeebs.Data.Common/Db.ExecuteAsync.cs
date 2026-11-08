@@ -13,19 +13,13 @@ public abstract partial class Db
 		ExecuteAsync(query, param, CommandType.Text);
 
 	/// <inheritdoc/>
-	public async Task<Result<bool>> ExecuteAsync(string query, object? param, CommandType type)
-	{
-		await using var w = await StartWorkAsync();
-		return await ExecuteAsync(
-			query, param, type, w.Transaction
-		)
-		.BindAsync(
-			w.CommitAsync
+	public Task<Result<bool>> ExecuteAsync(string query, object? param, CommandType type) =>
+		DoWorkAsync(
+			unitOfWork => ExecuteAsync(query, param, type, unitOfWork)
 		);
-	}
 
 	/// <inheritdoc/>
-	public Task<Result<bool>> ExecuteAsync(string query, object? param, CommandType type, IDbTransaction transaction) =>
+	public Task<Result<bool>> ExecuteAsync(string query, object? param, CommandType type, IUnitOfWork unitOfWork) =>
 		R.Wrap(
 			(query, parameters: param ?? new object(), type)
 		)
@@ -33,7 +27,7 @@ public abstract partial class Db
 			fOk: LogQuery<bool>
 		)
 		.BindAsync(
-			x => Client.Adapter.ExecuteAsync(transaction, x.query, x.parameters, x.type)
+			async x => await Client.Adapter.ExecuteAsync(unitOfWork.Connection, await unitOfWork.Transaction, x.query, x.parameters, x.type)
 		)
 		.MapAsync(
 			x => x > 0

@@ -13,19 +13,13 @@ public abstract partial class Db
 		InsertAsync<T>(query, param, CommandType.Text);
 
 	/// <inheritdoc/>
-	public async Task<Result<T>> InsertAsync<T>(string query, object? param, CommandType type)
-	{
-		await using var w = await StartWorkAsync();
-		return await InsertAsync<T>(
-			query, param, type, w.Transaction
-		)
-		.BindAsync(
-			w.CommitAsync
+	public Task<Result<T>> InsertAsync<T>(string query, object? param, CommandType type) =>
+		DoWorkAsync(
+			unitOfWork => InsertAsync<T>(query, param, type, unitOfWork)
 		);
-	}
 
 	/// <inheritdoc/>
-	public Task<Result<T>> InsertAsync<T>(string query, object? param, CommandType type, IDbTransaction transaction) =>
+	public Task<Result<T>> InsertAsync<T>(string query, object? param, CommandType type, IUnitOfWork unitOfWork) =>
 		R.Wrap(
 			(query, parameters: param ?? new object(), type)
 		)
@@ -33,7 +27,7 @@ public abstract partial class Db
 			fOk: LogQuery<T>
 		)
 		.BindAsync(
-			x => Client.Adapter.ExecuteAsync<T>(transaction, x.query, x.parameters, x.type)
+			async x => await Client.Adapter.ExecuteAsync<T>(unitOfWork.Connection, await unitOfWork.Transaction, x.query, x.parameters, x.type)
 		)
 		.BindAsync(
 			x => x switch

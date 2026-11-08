@@ -18,7 +18,7 @@ public static partial class QueryPostsF
 	/// <inheritdoc cref="ExecuteAsync{TModel}(IWpDb, IUnitOfWork, ulong, GetPostsOptions, IContentFilter[])"/>
 	internal static Task<Result<IEnumerable<TModel>>> ExecuteAsync<TModel>(
 		IWpDb db,
-		IUnitOfWork w,
+		IUnitOfWork unitOfWork,
 		GetPostsOptions opt,
 		params IContentFilter[] filters
 	)
@@ -27,13 +27,13 @@ public static partial class QueryPostsF
 			db, opt
 		)
 		.BindAsync(
-			x => db.QueryAsync<TModel>(x, w.Transaction)
+			x => db.QueryAsync<TModel>(x, unitOfWork)
 		)
 		.BindAsync(
 			x => x.Count() switch
 			{
 				> 0 =>
-					Process<IEnumerable<TModel>, TModel>(db, w, x, filters),
+					Process<IEnumerable<TModel>, TModel>(db, unitOfWork, x, filters),
 
 				_ =>
 					R.Wrap(x).AsTask()
@@ -45,13 +45,13 @@ public static partial class QueryPostsF
 	/// </summary>
 	/// <typeparam name="TModel">Return value type.</typeparam>
 	/// <param name="db">IWpDb.</param>
-	/// <param name="w">IUnitOfWork.</param>
+	/// <param name="unitOfWork">IUnitOfWork.</param>
 	/// <param name="page">Page number.</param>
 	/// <param name="opt">Function to return query options.</param>
 	/// <param name="filters">Optional content filters to apply.</param>
 	internal static Task<Result<IPagedList<TModel>>> ExecuteAsync<TModel>(
 		IWpDb db,
-		IUnitOfWork w,
+		IUnitOfWork unitOfWork,
 		ulong page,
 		GetPostsOptions opt,
 		params IContentFilter[] filters
@@ -61,13 +61,13 @@ public static partial class QueryPostsF
 			db, opt
 		)
 		.BindAsync(
-			x => db.QueryAsync<TModel>(page, x, w.Transaction)
+			x => db.QueryAsync<TModel>(page, x, unitOfWork)
 		)
 		.BindAsync(
 			x => x switch
 			{
 				PagedList<TModel> when x.Count > 0 =>
-					Process<IPagedList<TModel>, TModel>(db, w, x, filters),
+					Process<IPagedList<TModel>, TModel>(db, unitOfWork, x, filters),
 
 				PagedList<TModel> =>
 					R.Wrap(x).AsTask(),

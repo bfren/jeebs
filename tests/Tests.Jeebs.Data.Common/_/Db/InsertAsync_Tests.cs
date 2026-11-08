@@ -18,7 +18,7 @@ public class InsertAsync_Tests : Db_Setup
 
 		// Act
 		await db.InsertAsync<int>(query, param, type);
-		await db.InsertAsync<int>(query, param, type, v.Transaction);
+		await db.InsertAsync<int>(query, param, type, v.UnitOfWork);
 
 		// Assert
 		v.Log.Received(2).Vrb(
@@ -33,7 +33,7 @@ public class InsertAsync_Tests : Db_Setup
 		// Arrange
 		var (db, v) = Setup();
 		var id = Rnd.Int;
-		v.Client.Adapter.ExecuteAsync<int>(v.Transaction, Arg.Any<string>(), Arg.Any<object?>(), Arg.Any<CommandType>())
+		v.Client.Adapter.ExecuteAsync<int>(v.Connection, v.Transaction, Arg.Any<string>(), Arg.Any<object?>(), Arg.Any<CommandType>())
 			.Returns(id);
 		v.UnitOfWork.CommitAsync(Arg.Any<int>()).Returns(x => R.Wrap(x.Arg<int>()));
 
@@ -51,7 +51,7 @@ public class InsertAsync_Tests : Db_Setup
 		// Arrange
 		var (db, v) = Setup();
 		var message = Rnd.Str;
-		v.Client.Adapter.ExecuteAsync<int>(v.Transaction, Arg.Any<string>(), Arg.Any<object?>(), Arg.Any<CommandType>())
+		v.Client.Adapter.ExecuteAsync<int>(v.Connection, v.Transaction, Arg.Any<string>(), Arg.Any<object?>(), Arg.Any<CommandType>())
 			.Returns(R.Fail(message));
 
 		// Act

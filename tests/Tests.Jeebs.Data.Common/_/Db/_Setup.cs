@@ -6,12 +6,21 @@ using System.Data.Common;
 using Jeebs.Config.Db;
 using Jeebs.Functions;
 using Jeebs.Logging;
-using NSubstitute.Extensions;
 
 namespace Jeebs.Data.Common.Db_Tests;
 
 public abstract class Db_Setup
 {
+	/// <summary>
+	/// Runs all work in <paramref name="unitOfWork"/>, so tests can check what was done with it.
+	/// </summary>
+	public abstract class TestDb(IDbClient client, DbConnectionConfig config, ILog log, IUnitOfWork unitOfWork) :
+		Db(client, config, log)
+	{
+		protected override Task<IUnitOfWork> StartWorkAsync() =>
+			Task.FromResult(unitOfWork);
+	}
+
 	public static (Db, Vars) Setup()
 	{
 		var connectionString = Rnd.Str;
@@ -27,23 +36,23 @@ public abstract class Db_Setup
 		client.GetConnection(Arg.Any<string>()).Returns(connection);
 
 		var adapter = Substitute.For<IAdapter>();
-		adapter.QuerySingleAsync<int>(transaction, Arg.Any<string>(), Arg.Any<object?>(), Arg.Any<CommandType>())
+		adapter.QueryAsync<int>(connection, Arg.Any<IDbTransaction?>(), Arg.Any<string>(), Arg.Any<object?>(), Arg.Any<CommandType>())
+			.Returns(R.Wrap(new[] { Rnd.Int }.AsEnumerable()));
+		adapter.QuerySingleAsync<int>(connection, Arg.Any<IDbTransaction?>(), Arg.Any<string>(), Arg.Any<object?>(), Arg.Any<CommandType>())
 			.Returns(Rnd.Int);
-		adapter.ExecuteAsync(transaction, Arg.Any<string>(), Arg.Any<object?>(), Arg.Any<CommandType>())
+		adapter.ExecuteAsync(connection, transaction, Arg.Any<string>(), Arg.Any<object?>(), Arg.Any<CommandType>())
 			.Returns(Rnd.Flip ? 0 : 1);
-		adapter.ExecuteAsync<int>(transaction, Arg.Any<string>(), Arg.Any<object?>(), Arg.Any<CommandType>())
+		adapter.ExecuteAsync<int>(connection, transaction, Arg.Any<string>(), Arg.Any<object?>(), Arg.Any<CommandType>())
 			.Returns(Rnd.Int);
 		client.Adapter.Returns(adapter);
 
-		var w = Substitute.For<IUnitOfWork>();
-		w.Connection.Returns(connection);
-		w.Transaction.Returns(transaction);
+		var unitOfWork = Substitute.For<IUnitOfWork>();
+		unitOfWork.Connection.Returns(connection);
+		unitOfWork.Transaction.Returns(new LazyAsync<DbTransaction>(Task.FromResult(transaction)));
 
-		var db = Substitute.ForPartsOf<Db>(client, config, log);
-		db.Configure().StartWork().Returns(w);
-		db.Configure().StartWorkAsync().Returns(Task.FromResult(w));
+		var db = Substitute.ForPartsOf<TestDb>(client, config, log, unitOfWork);
 
-		return (db, new(client, config, connection, log, transaction, w));
+		return (db, new(client, config, connection, log, transaction, unitOfWork));
 	}
 
 	public sealed record Vars(

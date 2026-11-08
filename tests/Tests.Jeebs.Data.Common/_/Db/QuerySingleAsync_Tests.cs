@@ -8,7 +8,7 @@ namespace Jeebs.Data.Common.Db_Tests;
 public class QuerySingleAsync_Tests : Db_Setup
 {
 	[Fact]
-	public async Task Without_Transaction_Starts_UnitOfWork()
+	public async Task Without_UnitOfWork__Starts_And_Disposes_One()
 	{
 		// Arrange
 		var (db, v) = Setup();
@@ -20,7 +20,7 @@ public class QuerySingleAsync_Tests : Db_Setup
 		await db.QuerySingleAsync<int>(query, param, type);
 
 		// Assert
-		await db.Received().StartWorkAsync();
+		await v.UnitOfWork.Received(1).DisposeAsync();
 	}
 
 	[Fact]
@@ -34,7 +34,7 @@ public class QuerySingleAsync_Tests : Db_Setup
 
 		// Act
 		await db.QuerySingleAsync<int>(query, param);
-		await db.QuerySingleAsync<int>(query, param, type, v.Transaction);
+		await db.QuerySingleAsync<int>(query, param, type, v.UnitOfWork);
 
 		// Assert
 		v.Log.Received(2).Vrb(

@@ -8,7 +8,7 @@ namespace Jeebs.Data.Common.Db_Tests;
 public class ExecuteAsync_Tests : Db_Setup
 {
 	[Fact]
-	public async Task Without_Transaction_Starts_UnitOfWork()
+	public async Task Without_UnitOfWork__Starts_And_Disposes_One()
 	{
 		// Arrange
 		var (db, v) = Setup();
@@ -20,7 +20,7 @@ public class ExecuteAsync_Tests : Db_Setup
 		await db.ExecuteAsync(query, param, type);
 
 		// Assert
-		await db.Received().StartWorkAsync();
+		await v.UnitOfWork.Received(1).DisposeAsync();
 	}
 
 	[Fact]
@@ -34,7 +34,7 @@ public class ExecuteAsync_Tests : Db_Setup
 
 		// Act
 		await db.ExecuteAsync(query, param);
-		await db.ExecuteAsync(query, param, type, v.Transaction);
+		await db.ExecuteAsync(query, param, type, v.UnitOfWork);
 
 		// Assert
 		v.Log.Received(2).Vrb(
@@ -48,7 +48,7 @@ public class ExecuteAsync_Tests : Db_Setup
 	{
 		// Arrange
 		var (db, v) = Setup();
-		v.Client.Adapter.ExecuteAsync(v.Transaction, Arg.Any<string>(), Arg.Any<object?>(), Arg.Any<CommandType>())
+		v.Client.Adapter.ExecuteAsync(v.Connection, v.Transaction, Arg.Any<string>(), Arg.Any<object?>(), Arg.Any<CommandType>())
 			.Returns(1);
 		v.UnitOfWork.CommitAsync(Arg.Any<bool>()).Returns(x => R.Wrap(x.Arg<bool>()));
 
@@ -66,7 +66,7 @@ public class ExecuteAsync_Tests : Db_Setup
 		// Arrange
 		var (db, v) = Setup();
 		var message = Rnd.Str;
-		v.Client.Adapter.ExecuteAsync(v.Transaction, Arg.Any<string>(), Arg.Any<object?>(), Arg.Any<CommandType>())
+		v.Client.Adapter.ExecuteAsync(v.Connection, v.Transaction, Arg.Any<string>(), Arg.Any<object?>(), Arg.Any<CommandType>())
 			.Returns(R.Fail(message));
 
 		// Act

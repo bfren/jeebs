@@ -20,14 +20,13 @@ public abstract partial class Db
 		QueryAsync<T>(query, param, CommandType.Text);
 
 	/// <inheritdoc/>
-	public async Task<Result<IEnumerable<T>>> QueryAsync<T>(string query, object? param, CommandType type)
-	{
-		await using var w = await StartWorkAsync();
-		return await QueryAsync<T>(query, param, type, w.Transaction);
-	}
+	public Task<Result<IEnumerable<T>>> QueryAsync<T>(string query, object? param, CommandType type) =>
+		DoWorkAsync(
+			unitOfWork => QueryAsync<T>(query, param, type, unitOfWork)
+		);
 
 	/// <inheritdoc/>
-	public Task<Result<IEnumerable<T>>> QueryAsync<T>(string query, object? param, CommandType type, IDbTransaction transaction) =>
+	public Task<Result<IEnumerable<T>>> QueryAsync<T>(string query, object? param, CommandType type, IUnitOfWork unitOfWork) =>
 		R.Wrap(
 			(query, parameters: param ?? new object(), type)
 		)
@@ -35,7 +34,8 @@ public abstract partial class Db
 			fOk: LogQuery<T>
 		)
 		.BindAsync(
-			x => Client.Adapter.QueryAsync<T>(transaction, x.query, x.parameters, x.type)
+			// a read joins the transaction only if a write has already begun it
+			async x => await Client.Adapter.QueryAsync<T>(unitOfWork.Connection, unitOfWork.Transaction.Initialised ? await unitOfWork.Transaction : null, x.query, x.parameters, x.type)
 		);
 
 	#endregion
@@ -43,32 +43,30 @@ public abstract partial class Db
 	#region Parts
 
 	/// <inheritdoc/>
-	public override async Task<Result<IEnumerable<T>>> QueryAsync<T>(IQueryParts parts)
-	{
-		await using var w = await StartWorkAsync();
-		return await QueryAsync<T>(parts, w.Transaction);
-	}
+	public override Task<Result<IEnumerable<T>>> QueryAsync<T>(IQueryParts parts) =>
+		DoWorkAsync(
+			unitOfWork => QueryAsync<T>(parts, unitOfWork)
+		);
 
 	/// <inheritdoc/>
-	public Task<Result<IEnumerable<T>>> QueryAsync<T>(IQueryParts parts, IDbTransaction transaction) =>
+	public Task<Result<IEnumerable<T>>> QueryAsync<T>(IQueryParts parts, IUnitOfWork unitOfWork) =>
 		from q in Client.GetQuery(parts)
-		from r in QueryAsync<T>(q.query, q.param, CommandType.Text, transaction)
+		from r in QueryAsync<T>(q.query, q.param, CommandType.Text, unitOfWork)
 		select r;
 
 	/// <inheritdoc/>
-	public override async Task<Result<IPagedList<T>>> QueryAsync<T>(ulong page, IQueryParts parts)
-	{
-		await using var w = await StartWorkAsync();
-		return await QueryAsync<T>(page, parts, w.Transaction);
-	}
+	public override Task<Result<IPagedList<T>>> QueryAsync<T>(ulong page, IQueryParts parts) =>
+		DoWorkAsync(
+			unitOfWork => QueryAsync<T>(page, parts, unitOfWork)
+		);
 
 	/// <inheritdoc/>
-	public Task<Result<IPagedList<T>>> QueryAsync<T>(ulong page, IQueryParts parts, IDbTransaction transaction) =>
+	public Task<Result<IPagedList<T>>> QueryAsync<T>(ulong page, IQueryParts parts, IUnitOfWork unitOfWork) =>
 		QueryAsync(
 			page,
 			parts,
-			(query, param) => QuerySingleAsync<ulong>(query, param, CommandType.Text, transaction),
-			(query, param) => QueryAsync<T>(query, param, CommandType.Text, transaction)
+			(query, param) => QuerySingleAsync<ulong>(query, param, CommandType.Text, unitOfWork),
+			(query, param) => QueryAsync<T>(query, param, CommandType.Text, unitOfWork)
 		);
 
 	#endregion
@@ -76,35 +74,33 @@ public abstract partial class Db
 	#region Builder
 
 	/// <inheritdoc/>
-	public override async Task<Result<IEnumerable<T>>> QueryAsync<T>(Func<IQueryBuilder, IQueryBuilderWithFrom> builder)
-	{
-		await using var w = await StartWorkAsync();
-		return await QueryAsync<T>(builder, w.Transaction);
-	}
-
-	/// <inheritdoc/>
-	public Task<Result<IEnumerable<T>>> QueryAsync<T>(Func<IQueryBuilder, IQueryBuilderWithFrom> builder, IDbTransaction transaction) =>
-		DataF.BuildQuery<T>(
-			builder
-		)
-		.BindAsync(
-			x => QueryAsync<T>(x, transaction)
+	public override Task<Result<IEnumerable<T>>> QueryAsync<T>(Func<IQueryBuilder, IQueryBuilderWithFrom> builder) =>
+		DoWorkAsync(
+			unitOfWork => QueryAsync<T>(builder, unitOfWork)
 		);
 
 	/// <inheritdoc/>
-	public override async Task<Result<IPagedList<T>>> QueryAsync<T>(ulong page, Func<IQueryBuilder, IQueryBuilderWithFrom> builder)
-	{
-		await using var w = await StartWorkAsync();
-		return await QueryAsync<T>(page, builder, w.Transaction);
-	}
-
-	/// <inheritdoc/>
-	public Task<Result<IPagedList<T>>> QueryAsync<T>(ulong page, Func<IQueryBuilder, IQueryBuilderWithFrom> builder, IDbTransaction transaction) =>
+	public Task<Result<IEnumerable<T>>> QueryAsync<T>(Func<IQueryBuilder, IQueryBuilderWithFrom> builder, IUnitOfWork unitOfWork) =>
 		DataF.BuildQuery<T>(
 			builder
 		)
 		.BindAsync(
-			x => QueryAsync<T>(page, x, transaction)
+			x => QueryAsync<T>(x, unitOfWork)
+		);
+
+	/// <inheritdoc/>
+	public override Task<Result<IPagedList<T>>> QueryAsync<T>(ulong page, Func<IQueryBuilder, IQueryBuilderWithFrom> builder) =>
+		DoWorkAsync(
+			unitOfWork => QueryAsync<T>(page, builder, unitOfWork)
+		);
+
+	/// <inheritdoc/>
+	public Task<Result<IPagedList<T>>> QueryAsync<T>(ulong page, Func<IQueryBuilder, IQueryBuilderWithFrom> builder, IUnitOfWork unitOfWork) =>
+		DataF.BuildQuery<T>(
+			builder
+		)
+		.BindAsync(
+			x => QueryAsync<T>(page, x, unitOfWork)
 		);
 
 	#endregion

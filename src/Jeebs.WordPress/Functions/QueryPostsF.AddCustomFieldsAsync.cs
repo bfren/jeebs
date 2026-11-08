@@ -17,9 +17,9 @@ public static partial class QueryPostsF
 	/// <typeparam name="TList">List type.</typeparam>
 	/// <typeparam name="TModel">Model type.</typeparam>
 	/// <param name="db">IWpDb.</param>
-	/// <param name="w">IUnitOfWork.</param>
+	/// <param name="unitOfWork">IUnitOfWork.</param>
 	/// <param name="posts">Posts.</param>
-	internal static Task<Result<TList>> AddCustomFieldsAsync<TList, TModel>(IWpDb db, IUnitOfWork w, TList posts)
+	internal static Task<Result<TList>> AddCustomFieldsAsync<TList, TModel>(IWpDb db, IUnitOfWork unitOfWork, TList posts)
 		where TList : IEnumerable<TModel>
 		where TModel : IWithId<WpPostId, ulong>
 	{
@@ -39,7 +39,7 @@ public static partial class QueryPostsF
 		// Get terms and add them to the posts
 		return GetMetaDictionary<TModel>()
 			.BindAsync(
-				x => HydrateAsync(db, w, posts, x, fields)
+				x => HydrateAsync(db, unitOfWork, posts, x, fields)
 			);
 	}
 }

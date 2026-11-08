@@ -25,13 +25,13 @@ public class ExecuteAsync_Tests : Query_Tests
 	public async Task Calls_Db_QueryAsync()
 	{
 		// Arrange
-		var (db, w, v) = Setup();
+		var (db, w, _) = Setup();
 
 		// Act
 		await QueryTermsF.ExecuteAsync<Test>(db, w, opt => opt);
 
 		// Assert
-		await db.Received().QueryAsync<Test>(Arg.Any<IQueryParts>(), v.Transaction);
+		await db.Received().QueryAsync<Test>(Arg.Any<IQueryParts>(), w);
 	}
 
 	public record class Test : WpTermEntity;

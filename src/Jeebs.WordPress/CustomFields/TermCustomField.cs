@@ -32,7 +32,7 @@ public abstract class TermCustomField : CustomField<TermCustomField.Term>
 		QueryTerms = queryTerms;
 
 	/// <inheritdoc/>
-	public override async Task<Result<bool>> HydrateAsync(IWpDb db, IUnitOfWork w, MetaDictionary meta, bool isRequired)
+	public override async Task<Result<bool>> HydrateAsync(IWpDb db, IUnitOfWork unitOfWork, MetaDictionary meta, bool isRequired)
 	{
 		// First, get the Term ID from the meta dictionary
 		// If meta doesn't contain the key and this is a required field, return failure
@@ -61,7 +61,7 @@ public abstract class TermCustomField : CustomField<TermCustomField.Term>
 				x => ParseTermId(GetType(), x)
 			)
 			.BindAsync(
-				x => QueryTerms.ExecuteAsync<Term>(db, w, opt => opt with { Id = x })
+				x => QueryTerms.ExecuteAsync<Term>(db, unitOfWork, opt => opt with { Id = x })
 			)
 			.GetSingleAsync(
 				x => x.Value<Term>(),

@@ -17,21 +17,21 @@ public sealed class Posts : IQueryPosts
 	/// <inheritdoc/>
 	public Task<Result<IEnumerable<T>>> ExecuteAsync<T>(
 		IWpDb db,
-		IUnitOfWork w,
+		IUnitOfWork unitOfWork,
 		GetPostsOptions opt,
 		params IContentFilter[] filters
 	)
 		where T : IWithId<WpPostId, ulong> =>
-		QueryPostsF.ExecuteAsync<T>(db, w, opt, filters);
+		QueryPostsF.ExecuteAsync<T>(db, unitOfWork, opt, filters);
 
 	/// <inheritdoc/>
 	public Task<Result<IPagedList<T>>> ExecuteAsync<T>(
 		IWpDb db,
-		IUnitOfWork w,
+		IUnitOfWork unitOfWork,
 		ulong page,
 		GetPostsOptions opt,
 		params IContentFilter[] filters
 	)
 		where T : IWithId<WpPostId, ulong> =>
-		QueryPostsF.ExecuteAsync<T>(db, w, page, opt, filters);
+		QueryPostsF.ExecuteAsync<T>(db, unitOfWork, page, opt, filters);
 }
