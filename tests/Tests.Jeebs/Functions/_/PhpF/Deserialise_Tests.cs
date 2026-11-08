@@ -15,7 +15,10 @@ public class Deserialise_Tests
 	[InlineData("d:-1.7976931348623157E+308;", double.MinValue)]
 	[InlineData("d:1.7976931348623157E+308;", double.MaxValue)]
 	[InlineData("s:0:\"\";", "")]
-	[InlineData("s:15:\"Deserialise_Tests\";", nameof(Deserialise_Tests))]
+	[InlineData("s:17:\"Deserialise_Tests\";", nameof(Deserialise_Tests))]
+	[InlineData("s:15:\"Tom &amp; Jerry\";", "Tom &amp; Jerry")]
+	[InlineData("s:6:\"José;\";", "José;")]
+	[InlineData("s:6:\"a😀b\";", "a😀b")]
 	[InlineData("N;", "")]
 	public void String_Returns_Deserialised_Value<T>(string input, T expected)
 		where T : notnull
@@ -43,5 +46,20 @@ public class Deserialise_Tests
 		var inner = Assert.IsType<PhpF.AssociativeArray>(outer[1]);
 		Assert.Equal("Apple", inner[0]);
 		Assert.Equal("Orange", inner[1]);
+	}
+
+	[Fact]
+	public void String_With_Semicolon_In_Array__Does_Not_Shift_Later_Values()
+	{
+		// Arrange
+		var input = "a:2:{s:4:\"name\";s:15:\"Tom &amp; Jerry\";s:5:\"width\";i:640;}";
+
+		// Act
+		var result = PhpF.Deserialise(input);
+
+		// Assert
+		var array = Assert.IsType<PhpF.AssociativeArray>(result);
+		Assert.Equal("Tom &amp; Jerry", array["name"]);
+		Assert.Equal(640L, array["width"]);
 	}
 }

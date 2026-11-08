@@ -2,6 +2,7 @@
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
 using System;
+using System.Text;
 
 namespace Jeebs.Functions;
 
@@ -87,17 +88,24 @@ public static partial class PhpF
 		// Get string
 		static string getString(string str, ref int pointer)
 		{
-			// Get start and end positions
+			// Get the stored length, which PHP counts in UTF-8 bytes
 			var colon0 = str.IndexOf(':', pointer) + 1;
 			var colon1 = str.IndexOf(':', colon0);
-			var semicolon = str.IndexOf(';', pointer);
-			pointer = semicolon + 1;
+			var bytes = int.Parse(str[colon0..colon1], F.DefaultCulture);
 
-			// Calculate length
-			var from = colon1 + 2; // start two characters after the second colon
-			var to = semicolon - 1; // end one character before the semicolon
+			// Walk forward from the opening quote until that many bytes have been read
+			var from = colon1 + 2;
+			var to = from;
+			var read = 0;
+			while (read < bytes && to < str.Length)
+			{
+				_ = Rune.DecodeFromUtf16(str.AsSpan(to), out var rune, out var used);
+				read += rune.Utf8SequenceLength;
+				to += used;
+			}
 
-			// Get substring
+			// Skip the closing quote and semicolon
+			pointer = to + 2;
 			return str[from..to];
 		}
 
