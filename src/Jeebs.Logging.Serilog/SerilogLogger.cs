@@ -20,27 +20,12 @@ public sealed class SerilogLogger<TContext> : SerilogLogger, ILog<TContext>
 /// <inheritdoc cref="ILog"/>
 public class SerilogLogger : Log
 {
-	/// <summary>
-	/// Add this as a prefix to messages logged to the console.
-	/// </summary>
-	public static string? ConsoleMessagePrefix { get; internal set; }
-
 	private readonly S.ILogger logger;
 
 	/// <summary>
 	/// Use global logger.
 	/// </summary>
 	public SerilogLogger() : this(S.Log.Logger) { }
-
-	internal static string Prefix(string message) =>
-		ConsoleMessagePrefix switch
-		{
-			string app =>
-				string.Format(F.DefaultCulture, "{0} | {1}", app, message),
-
-			_ =>
-				message
-		};
 
 	/// <summary>
 	/// Use specified logger.
@@ -62,51 +47,51 @@ public class SerilogLogger : Log
 
 	/// <inheritdoc/>
 	public override void Vrb(string message, params object?[] args) =>
-		logger.Verbose(Prefix(message), args);
+		logger.Verbose(message, args);
 
 	/// <inheritdoc/>
 	public override void Vrb(Exception ex, string message, params object?[] args) =>
-		logger.Verbose(ex, Prefix(message), args);
+		logger.Verbose(ex, message, args);
 
 	/// <inheritdoc/>
 	public override void Dbg(string message, params object?[] args) =>
-		logger.Debug(Prefix(message), args);
+		logger.Debug(message, args);
 
 	/// <inheritdoc/>
 	public override void Dbg(Exception ex, string message, params object?[] args) =>
-		logger.Debug(ex, Prefix(message), args);
+		logger.Debug(ex, message, args);
 
 	/// <inheritdoc/>
 	public override void Inf(string message, params object?[] args) =>
-		logger.Information(Prefix(message), args);
+		logger.Information(message, args);
 
 	/// <inheritdoc/>
 	public override void Inf(Exception ex, string message, params object?[] args) =>
-		logger.Information(ex, Prefix(message), args);
+		logger.Information(ex, message, args);
 
 	/// <inheritdoc/>
 	public override void Wrn(string message, params object?[] args) =>
-		logger.Warning(Prefix(message), args);
+		logger.Warning(message, args);
 
 	/// <inheritdoc/>
 	public override void Wrn(Exception ex, string message, params object?[] args) =>
-		logger.Warning(ex, Prefix(message), args);
+		logger.Warning(ex, message, args);
 
 	/// <inheritdoc/>
 	public override void Err(string message, params object?[] args) =>
-		logger.Error(Prefix(message), args);
+		logger.Error(message, args);
 
 	/// <inheritdoc/>
 	public override void Err(Exception ex, string message, params object?[] args) =>
-		logger.Error(ex, Prefix(message), args);
+		logger.Error(ex, message, args);
 
 	/// <inheritdoc/>
 	public override void Ftl(string message, params object?[] args) =>
-		logger.Fatal(Prefix(message), args);
+		logger.Fatal(message, args);
 
 	/// <inheritdoc/>
 	public override void Ftl(Exception ex, string message, params object?[] args) =>
-		logger.Fatal(ex, Prefix(message), args);
+		logger.Fatal(ex, message, args);
 
 	/// <inheritdoc/>
 	public override void Dispose()

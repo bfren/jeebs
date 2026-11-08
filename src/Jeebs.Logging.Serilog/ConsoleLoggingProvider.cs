@@ -1,6 +1,7 @@
 // Jeebs Rapid Application Development
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
+using System;
 using Jeebs.Config;
 using Jeebs.Config.Services.Console;
 using Serilog;
@@ -32,16 +33,20 @@ public sealed class ConsoleLoggingProvider : ILoggingProvider
 	internal static void AddDefaultConsoleConfig(LoggerConfiguration logger) =>
 		AddConsoleConfig(logger, new() { AddPrefix = false });
 
-	internal static void AddConsoleConfig(LoggerConfiguration logger, ConsoleConfig config, string? name = null)
-	{
-		if (config.AddPrefix && !string.IsNullOrWhiteSpace(name))
-		{
-			SerilogLogger.ConsoleMessagePrefix = name;
-		}
-
+	internal static void AddConsoleConfig(LoggerConfiguration logger, ConsoleConfig config, string? name = null) =>
 		_ = logger.WriteTo.Console(
-			outputTemplate: config.Template,
+			outputTemplate: GetTemplate(config, name),
 			formatProvider: F.DefaultCulture
 		);
-	}
+
+	/// <summary>
+	/// Add the app name to the console output template (not the message template, so other sinks
+	/// and template grouping are unaffected).
+	/// </summary>
+	/// <param name="config">Console configuration.</param>
+	/// <param name="name">App name.</param>
+	internal static string GetTemplate(ConsoleConfig config, string? name) =>
+		config.AddPrefix && !string.IsNullOrWhiteSpace(name)
+			? config.Template.Replace("{Message", $"{name.Replace("{", "{{").Replace("}", "}}")} | {{Message", StringComparison.Ordinal)
+			: config.Template;
 }
