@@ -92,14 +92,16 @@ public abstract class WebhookDriver<TConfig, TMessage> : Driver<TConfig>, IWebho
 		ThreadF.FireAndForget(
 			async () =>
 			{
+				// Don't log the request or response: both carry the webhook URL, which is a secret
+				using var _ = request;
 				var client = Factory.CreateClient();
-				var response = await client.SendAsync(request);
+				using var response = await client.SendAsync(request);
 				if (!response.IsSuccessStatusCode)
 				{
-					Log.Wrn("Unable to send message: {@Response}", response);
+					Log.Wrn("Unable to send message: {StatusCode}.", (int)response.StatusCode);
 				}
 			},
-			e => Log.Err(e, "Error sending message: {@Request}", request)
+			e => Log.Err(e, "Error sending message.")
 		);
 
 	#endregion Actually Send
