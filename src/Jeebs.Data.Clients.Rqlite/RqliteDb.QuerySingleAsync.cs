@@ -13,8 +13,8 @@ public abstract partial class RqliteDb : Db
 	/// <inheritdoc/>
 	public override async Task<Result<T>> QuerySingleAsync<T>(string query, object? param)
 	{
-		using var w = StartWork();
-		return await w.QueryAsync<T>(query, param ?? new())
+		using var c = Connect();
+		return await c.QueryAsync<T>(query, param ?? new())
 			.GetSingleAsync(x => x.Value<T>());
 	}
 
@@ -26,6 +26,7 @@ public abstract partial class RqliteDb : Db
 
 	/// <inheritdoc/>
 	public override Task<Result<T>> QuerySingleAsync<T>(Func<IQueryBuilder, IQueryBuilderWithFrom> builder) =>
-		DataF.BuildQuery<T>(builder)
-			.BindAsync(QuerySingleAsync<T>);
+		from p in DataF.BuildQuery<T>(builder)
+		from r in QuerySingleAsync<T>(p)
+		select r;
 }

@@ -36,9 +36,9 @@ var client = http.CreateClient("with_timings");
 var repo = app.Services.GetRequiredService<TestRepository>();
 
 // Show rqlite version
-using (var w = dbTyped.StartWork())
+using (var c = dbTyped.Connect())
 {
-	var version = await w.GetVersionAsync();
+	var version = await c.GetVersionAsync();
 	log.Inf("Rqlite: {Version}", version);
 	log.Dbg("HTTP {Version}", client.DefaultRequestVersion);
 }
@@ -100,9 +100,9 @@ Console.WriteLine();
 // Update data
 header("== Updating data ==");
 var newFoo = Rnd.Str;
-using (var w = dbTyped.StartWork())
+using (var c = dbTyped.Connect())
 {
-	await w.ExecuteAsync(
+	await c.ExecuteAsync(
 		$"UPDATE {table} SET foo = :newFoo WHERE id = :id", new { newFoo, id }
 	)
 	.AuditAsync(
@@ -110,7 +110,7 @@ using (var w = dbTyped.StartWork())
 		fFail: log.Failure
 	);
 
-	await w.QueryAsync<TestObj>(
+	await c.QueryAsync<TestObj>(
 		$"SELECT * FROM {table} WHERE id = :id", new { id }
 	)
 	.GetSingleAsync(x => x.Value<TestObj>())

@@ -20,5 +20,16 @@
 			"docs/**": true,
 		},
 		"dotnet.defaultSolution": "Jeebs (v10).sln",
+        "emeraldwalk.runonsave": {
+            "commands": [
+                {
+                    "match": "\\.(cs)$",
+                    "cmd": "dotnet-fast format \"${fileDirname}\" --no-restore --include \"${relativeFile}\"",
+                    //"cmd": "echo \"File ${file} in ${fileDirname}\"",
+                    "showElapsed": true,
+                    "isAsync": true
+                }
+            ]
+        }
 	}
 }

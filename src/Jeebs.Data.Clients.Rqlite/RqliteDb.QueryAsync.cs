@@ -17,23 +17,26 @@ public abstract partial class RqliteDb : Db
 	/// <inheritdoc/>
 	public override async Task<Result<IEnumerable<T>>> QueryAsync<T>(string query, object? param)
 	{
-		using var w = StartWork();
-		return await w.QueryAsync<T>(query, param ?? new())
+		using var c = Connect();
+		return await c.QueryAsync<T>(query, param ?? new())
 			.MapAsync(x => x.AsEnumerable());
 	}
 
 	/// <inheritdoc/>
 	public override Task<Result<IEnumerable<T>>> QueryAsync<T>(IQueryParts parts) =>
-		Client.GetQuery(parts)
-			.BindAsync(x => QueryAsync<T>(x.query, x.param));
+		from q in Client.GetQuery(parts)
+		from r in QueryAsync<T>(q.query, q.param)
+		select r;
 
 	/// <inheritdoc/>
 	public override Task<Result<IEnumerable<T>>> QueryAsync<T>(Func<IQueryBuilder, IQueryBuilderWithFrom> builder) =>
-		DataF.BuildQuery<T>(builder)
-			.BindAsync(QueryAsync<T>);
+		from p in DataF.BuildQuery<T>(builder)
+		from r in QueryAsync<T>(p)
+		select r;
 
 	/// <inheritdoc/>
 	public override Task<Result<IPagedList<T>>> QueryAsync<T>(ulong page, Func<IQueryBuilder, IQueryBuilderWithFrom> builder) =>
-		DataF.BuildQuery<T>(builder)
-			.BindAsync(x => QueryAsync<T>(page, x));
+		from p in DataF.BuildQuery<T>(builder)
+		from r in QueryAsync<T>(page, p)
+		select r;
 }
