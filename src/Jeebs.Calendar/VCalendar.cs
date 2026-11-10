@@ -154,10 +154,10 @@ public class VCalendar(CalendarModel calendar, string tzid) : CalendarBase(calen
 	/// Escape a TEXT value according to
 	/// https://icalendar.org/iCalendar-RFC-5545/3-3-11-text.html.
 	/// </summary>
-	/// <param name="text">Text value.</param>
+	/// <param name="text">Text value (null - e.g. from a database row - is treated as empty).</param>
 	/// <returns>Escaped text.</returns>
-	internal static string Escape(string text) =>
-		text
+	internal static string Escape(string? text) =>
+		(text ?? string.Empty)
 			.Replace(@"\", @"\\", StringComparison.Ordinal)
 			.Replace(";", @"\;", StringComparison.Ordinal)
 			.Replace(",", @"\,", StringComparison.Ordinal)
