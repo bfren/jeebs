@@ -16,7 +16,7 @@ Mark items `[x]` as they land.
 |---|---|---|---|---|
 | 1–7 | First audit, 2026-11-07 (v9.4.4) | #1–#16 | #602–#612 | yes |
 | 8–11 | Second audit, 2026-11-07 (v10.0.0-beta.1) | B1–B12 | #624–#632 | yes |
-| 12–15 | Third audit, 2026-11-08 (v10.0.0-beta.1) | C1–C14 | #634 (phase 12) | phase 12 |
+| 12–15 | Third audit, 2026-11-08 (v10.0.0-beta.1) | C1–C14 | #634 (phase 12), #637 (phase 13) | phases 12–13 |
 
 ### Won't do
 
@@ -80,11 +80,11 @@ reporting, so findings come from reading the code.
   `IDbClient.GetRetrieveQuery` / `GetUpdateQuery` / `GetDeleteQuery` no longer take an `id`.
 - **`IDbClient.GetQuery<TEntity, TModel>((string, Compare, dynamic)[])`** and
   `DataF.ConvertPredicatesToColumns` are removed.
+- **Auth:** `AuthController.SignOut` is POST-only with an anti-forgery token; sign-out links
+  must become forms. A failed sign in now shows the form again with an error alert, keeping the email.
 
-Add these when phases 13–15 land:
+Add these when phases 14–15 land:
 
-- **C12:** `AuthController.SignOut` is POST-only with an anti-forgery token; sign-out links
-  must become forms.
 - **C6:** only if the replacement validator changes what the config schema accepts.
 
 ---
@@ -131,21 +131,21 @@ Must fix: C1–C5. Should fix: C6–C11. Nice to have: C12–C14.
 
 ## Phase 13 — auth and web (C4, C7, C8, C9, C12)
 
-- [ ] **C4 Sign-out redirects to nowhere** — `src/Jeebs.Mvc.Auth/Controllers/AuthController.cs:66`
+- [x] **C4 Sign-out redirects to nowhere** — `src/Jeebs.Mvc.Auth/Controllers/AuthController.cs:66`
   `Url.Action("Auth", "SignOut")` has action and controller swapped, so it is always null.
   Fix: `Url.Action("SignIn", "Auth")`. Test: the redirect is not empty.
-- [ ] **C7 Redirects trust the Host header** — `src/Jeebs.Apps.Web/Middleware/RedirectExactMiddleware.cs:64-68`
+- [x] **C7 Redirects trust the Host header** — `src/Jeebs.Apps.Web/Middleware/RedirectExactMiddleware.cs:64-68`
   The 301 target is built from `req.Host`, so `Host: evil.example` gets a cached permanent redirect
   to another site. Fix: `context.Response.Redirect(redirectTo, permanent: true)`.
-- [ ] **C8 Authorization header logged in full** — `src/Jeebs.Mvc.Auth/Functions/HttpF/HttpF.GetToken.cs`
+- [x] **C8 Authorization header logged in full** — `src/Jeebs.Mvc.Auth/Functions/HttpF/HttpF.GetToken.cs`
   A non-Bearer header (e.g. `Basic` with a username and password) goes into the log.
   Fix: drop `{Header}` from the failure message. Update `GetToken_Tests` if it checks the args.
-- [ ] **C9 Wrong password shows no message** — `src/Jeebs.Mvc.Auth/Functions/AuthF/AuthF.DoSignInAsync.cs:78-84`,
+- [x] **C9 Wrong password shows no message** — `src/Jeebs.Mvc.Auth/Functions/AuthF/AuthF.DoSignInAsync.cs:78-84`,
   `src/Jeebs.Mvc.Auth/Controllers/AuthController.cs:93`
   The comment says an alert is added but none is, and `SignIn()` shows a new empty model.
   Fix: in the `TryAgain` branch add an error alert ("Unknown email or password.") and return
   `View(model with { Password = string.Empty })`.
-- [ ] **C12 Sign-out works from a GET** — `src/Jeebs.Mvc.Auth/Controllers/AuthController.cs:104`
+- [x] **C12 Sign-out works from a GET** — `src/Jeebs.Mvc.Auth/Controllers/AuthController.cs:104`
   Any site can sign users out with an `<img>` tag. Fix: `[HttpPost, ValidateAntiForgeryToken]`;
   change `apps/AppMvc/Views/Auth/Index.cshtml` to a form. **Breaking.**
 

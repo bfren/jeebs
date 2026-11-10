@@ -102,8 +102,9 @@ public abstract class AuthControllerBase : Mvc.Controllers.MvcController
 	}
 
 	/// <summary>
-	/// Perform sign out.
+	/// Perform sign out - POST only so other sites cannot sign users out with a link or image.
 	/// </summary>
+	[HttpPost, ValidateAntiForgeryToken]
 	public new async Task<IActionResult> SignOut()
 	{
 		// Do sign out
