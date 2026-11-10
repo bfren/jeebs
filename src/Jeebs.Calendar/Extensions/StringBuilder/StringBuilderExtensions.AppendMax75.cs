@@ -22,7 +22,7 @@ internal static partial class StringBuilderExtensions
 		// If text is short enough, simply append it
 		if (text.Length <= max)
 		{
-			_ = @this.AppendLine(text);
+			_ = @this.Append(text).Append(NewLine);
 			return;
 		}
 
@@ -39,16 +39,21 @@ internal static partial class StringBuilderExtensions
 			// a single whitespace character - either space or tab
 			if (first)
 			{
-				_ = @this.AppendLine(next);
+				_ = @this.Append(next).Append(NewLine);
 				first = false;
 			}
 			else
 			{
-				_ = @this.AppendLine(" " + next);
+				_ = @this.Append(' ').Append(next).Append(NewLine);
 			}
 		} while (remaining.Length > max);
 
 		// Append remaining text
-		_ = @this.AppendLine(" " + remaining);
+		_ = @this.Append(' ').Append(remaining).Append(NewLine);
 	}
+
+	/// <summary>
+	/// RFC 5545 lines end with CRLF on every platform.
+	/// </summary>
+	internal const string NewLine = "\r\n";
 }

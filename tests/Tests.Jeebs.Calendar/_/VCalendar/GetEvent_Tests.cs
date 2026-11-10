@@ -28,7 +28,7 @@ public class GetEvent_Tests
 			.AppendLine($"DTSTART;TZID={tzid}:{VCalendar.Format(e.Start)}")
 			.AppendLine($"DTEND;TZID={tzid}:{VCalendar.Format(e.End)}")
 			.AppendLine("END:VEVENT")
-			.ToString();
+			.ToString().ReplaceLineEndings("\r\n");
 
 		// Act
 		var result = VCalendar.GetEvent(lastModified, tzid, uid, e);
@@ -57,7 +57,7 @@ public class GetEvent_Tests
 			.AppendLine($"DTSTART;TZID={tzid};VALUE=DATE:{VCalendar.Format(e.Start, false)}")
 			.AppendLine("TRANSP:TRANSPARENT")
 			.AppendLine("END:VEVENT")
-			.ToString();
+			.ToString().ReplaceLineEndings("\r\n");
 
 		// Act
 		var result = VCalendar.GetEvent(lastModified, tzid, uid, e);

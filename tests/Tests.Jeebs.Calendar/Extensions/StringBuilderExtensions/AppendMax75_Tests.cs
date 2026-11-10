@@ -21,7 +21,7 @@ public class AppendMax75_Tests
 		sb.AppendMax75(text);
 
 		// Assert
-		Assert.Equal(text + Environment.NewLine, sb.ToString());
+		Assert.Equal(text + "\r\n", sb.ToString());
 	}
 
 	[Fact]
@@ -33,7 +33,7 @@ public class AppendMax75_Tests
 		var l0 = text[0..74];
 		var l1 = text[74..148];
 		var l2 = text[148..];
-		var expected = $"{l0}{Environment.NewLine} {l1}{Environment.NewLine} {l2}{Environment.NewLine}";
+		var expected = $"{l0}\r\n {l1}\r\n {l2}\r\n";
 
 		// Act
 		sb.AppendMax75(text);

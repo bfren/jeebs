@@ -9,7 +9,7 @@ public class GetFooter_Tests
 	public void Returns_Correct_Footer_Definition()
 	{
 		// Arrange
-		var expected = $"END:VCALENDAR{Environment.NewLine}";
+		var expected = "END:VCALENDAR\r\n";
 
 		// Act
 		var result = VCalendar.GetFooter();

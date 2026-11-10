@@ -69,7 +69,7 @@ public class ToString_Tests
 			.AppendLine("TRANSP:TRANSPARENT")
 			.AppendLine("END:VEVENT")
 			.AppendLine("END:VCALENDAR")
-			.ToString();
+			.ToString().ReplaceLineEndings("\r\n");
 
 		// Act
 		var result = vcal.ToString(domain);
