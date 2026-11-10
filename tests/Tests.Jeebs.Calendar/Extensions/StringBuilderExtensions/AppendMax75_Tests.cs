@@ -41,4 +41,48 @@ public class AppendMax75_Tests
 		// Assert
 		Assert.Equal(expected, sb.ToString());
 	}
+
+	[Fact]
+	public void Accented_Text__Folds_At_74_Bytes()
+	{
+		// Arrange
+		var sb = new StringBuilder();
+		var text = new string('é', 50); // 2 bytes each
+
+		// Act
+		sb.AppendMax75(text);
+
+		// Assert
+		Assert.Equal($"{new string('é', 37)}\r\n {new string('é', 13)}\r\n", sb.ToString());
+	}
+
+	[Fact]
+	public void Emoji__Is_Not_Split()
+	{
+		// Arrange
+		var sb = new StringBuilder();
+		var text = new string('a', 72) + "😀"; // 72 bytes + 4 bytes
+
+		// Act
+		sb.AppendMax75(text);
+
+		// Assert
+		Assert.Equal($"{new string('a', 72)}\r\n 😀\r\n", sb.ToString());
+	}
+
+	[Fact]
+	public void Every_Line_Is_At_Most_75_Bytes()
+	{
+		// Arrange
+		var sb = new StringBuilder();
+		var text = string.Concat(Enumerable.Repeat("aé😀", 100));
+
+		// Act
+		sb.AppendMax75(text);
+
+		// Assert
+		var lines = sb.ToString().Split("\r\n", StringSplitOptions.RemoveEmptyEntries);
+		Assert.All(lines, x => Assert.True(Encoding.UTF8.GetByteCount(x) <= 75));
+		Assert.Equal(text, string.Concat(lines.Select((x, i) => i == 0 ? x : x[1..])));
+	}
 }
