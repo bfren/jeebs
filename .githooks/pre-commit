@@ -15,5 +15,5 @@ if [ -n "$partial" ]; then
   exit 1
 fi
 
-dotnet format --include $files --severity info --no-restore
+dotnet format "./Jeebs (v10).slnx" --include $files --severity info --no-restore
 git add -- $files
