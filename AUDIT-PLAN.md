@@ -1,7 +1,6 @@
 # Audit fix plan
 
-Three audits so far. Phases 1–11 (first and second audits) are done; phases 12–15 (third audit)
-are the plan below. Each phase is one issue / branch, one commit per item, and ends with:
+Three audits so far, phases 1–15, all done. Each phase is one issue / branch, one commit per item, and ends with:
 
 ```bash
 dotnet test --solution "Jeebs (v10).slnx" --configuration Test
@@ -16,7 +15,7 @@ Mark items `[x]` as they land.
 |---|---|---|---|---|
 | 1–7 | First audit, 2026-11-07 (v9.4.4) | #1–#16 | #602–#612 | yes |
 | 8–11 | Second audit, 2026-11-07 (v10.0.0-beta.1) | B1–B12 | #624–#632 | yes |
-| 12–15 | Third audit, 2026-11-08 (v10.0.0-beta.1) | C1–C14 | #634 (phase 12), #637 (phase 13) | phases 12–13 |
+| 12–15 | Third audit, 2026-11-08 (v10.0.0-beta.1) | C1–C14 | #634, #637, #639, #641 | yes |
 
 ### Won't do
 
@@ -82,10 +81,10 @@ reporting, so findings come from reading the code.
   `DataF.ConvertPredicatesToColumns` are removed.
 - **Auth:** `AuthController.SignOut` is POST-only with an anti-forgery token; sign-out links
   must become forms. A failed sign in now shows the form again with an error alert, keeping the email.
-
-Add these when phases 14–15 land:
-
-- **C6:** only if the replacement validator changes what the config schema accepts.
+- **Config schema:** `jeebsconfig.json` is validated with NJsonSchema (MIT) instead of
+  Newtonsoft.Json.Schema (AGPL). It accepts the same files, but the error text in
+  `ConfigSchemaValidationFailedException` is worded differently. The schema's `definitions` are
+  flattened (e.g. `#/definitions/logging/level` is now `#/definitions/loggingLevel`).
 
 ---
 
@@ -163,11 +162,17 @@ Must fix: C1–C5. Should fix: C6–C11. Nice to have: C12–C14.
 
 ## Phase 15 — dependencies and small fixes (C6, C13)
 
-- [ ] **C6 AGPL dependency in an MIT library** — `src/Jeebs.Config/ConfigValidator.cs`,
+- [x] **C6 AGPL dependency in an MIT library** — `src/Jeebs.Config/ConfigValidator.cs`,
   `Newtonsoft.Json.Schema` 4.0.2 in `Directory.Packages.props`
   The package is AGPL-3.0 or paid, and every `Jeebs.Apps` app pulls it in. Fix: switch to an
   MIT-licensed validator (e.g. `JsonSchema.Net`), only used in this file. Check the existing
   config tests still pass against the same schema.
-- [ ] **C13 Webhook failure details thrown away** — `src/Jeebs.Services.Webhook/WebhookDriver.cs` (`Send(FailureValue)`)
+  Done with NJsonSchema 11.6.1: JsonSchema.Net 9.x ships under a maintenance-fee EULA, and 8.0.5
+  (the last plain MIT release) is frozen. NJsonSchema can't resolve refs into nested `definitions`,
+  so they are flattened. There were no validator tests; `Validate_Tests` was written against the
+  old validator first (valid, invalid, comments / trailing commas, every sample app config).
+- [x] **C13 Webhook failure details thrown away** — `src/Jeebs.Services.Webhook/WebhookDriver.cs` (`Send(FailureValue)`)
   It puts the exception in `Fields`, but the Slack driver (the only one) uses only `Content` and
   `Level`. Fix: drop `Fields` there and append `e.Message` to `Content`.
+  Done: `Content` gets the exception type and message on a new line. No test - there is no
+  `Tests.Jeebs.Services.Webhook` project.

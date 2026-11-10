@@ -104,7 +104,7 @@
               "type": "object",
               "description": "Named database connections",
               "additionalProperties": {
-                "$ref": "#/definitions/db/connection"
+                "$ref": "#/definitions/dbConnection"
               }
             },
             "default": {
@@ -125,20 +125,20 @@
           "additionalProperties": false,
           "properties": {
             "minimum": {
-              "$ref": "#/definitions/logging/level"
+              "$ref": "#/definitions/loggingLevel"
             },
             "overrides": {
               "type": "object",
               "description": "Log level overrides - property names should be the starting pattern of a log source, e.g. Microsoft.AspNetCore",
               "additionalProperties": {
-                "$ref": "#/definitions/logging/level"
+                "$ref": "#/definitions/loggingLevel"
               }
             },
             "providers": {
               "type": "object",
               "description": "[Optional] Logging providers - name should be in format service_type.service_name (e.g. seq.dev-server)",
               "additionalProperties": {
-                "$ref": "#/definitions/logging/provider"
+                "$ref": "#/definitions/loggingProvider"
               }
             }
           }
@@ -297,84 +297,78 @@
           "type": "object",
           "description": "WordPress instances",
           "additionalProperties": {
-            "$ref": "#/definitions/wp/instance"
+            "$ref": "#/definitions/wpInstance"
           }
         }
       }
     }
   },
   "definitions": {
-    "db": {
-      "connection": {
-        "type": "object",
-        "description": "Database connection configuration",
-        "required": [ "connectionString" ],
-        "additionalProperties": false,
-        "properties": {
-          "connectionString": {
-            "type": "string",
-            "description": "Connection string"
-          },
-          "tablePrefix": {
-            "type": "string",
-            "description": "[Optional] Table prefix"
-          },
-          "additionalProperties": {
-            "type": "object",
-            "description": "[Optional] Additional properties required by this connection (key/value pairs)"
-          }
+    "dbConnection": {
+      "type": "object",
+      "description": "Database connection configuration",
+      "required": [ "connectionString" ],
+      "additionalProperties": false,
+      "properties": {
+        "connectionString": {
+          "type": "string",
+          "description": "Connection string"
+        },
+        "tablePrefix": {
+          "type": "string",
+          "description": "[Optional] Table prefix"
+        },
+        "additionalProperties": {
+          "type": "object",
+          "description": "[Optional] Additional properties required by this connection (key/value pairs)"
         }
       }
     },
-    "logging": {
-      "level": {
-        "type": "string",
-        "description": "Microsoft compatible logging levels",
-        "enum": [ "Verbose", "Debug", "Information", "Warning", "Error", "Fatal" ]
-      },
-      "provider": {
-        "type": "object",
-        "default": "Logging provider",
-        "required": [ "enabled" ],
-        "additionalProperties": false,
-        "properties": {
-          "enabled": {
-            "type": "boolean",
-            "description": "Whether or not this provider is enabled"
-          },
-          "minimum": {
-            "$ref": "#/definitions/logging/level"
-          }
+    "loggingLevel": {
+      "type": "string",
+      "description": "Microsoft compatible logging levels",
+      "enum": [ "Verbose", "Debug", "Information", "Warning", "Error", "Fatal" ]
+    },
+    "loggingProvider": {
+      "type": "object",
+      "default": "Logging provider",
+      "required": [ "enabled" ],
+      "additionalProperties": false,
+      "properties": {
+        "enabled": {
+          "type": "boolean",
+          "description": "Whether or not this provider is enabled"
+        },
+        "minimum": {
+          "$ref": "#/definitions/loggingLevel"
         }
       }
     },
-    "wp": {
-      "instance": {
-        "type": "object",
-        "description": "WordPress instance configuration",
-        "required": [ "tablePrefix" ],
-        "additionalProperties": false,
-        "properties": {
-          "db": {
-            "type": "string",
-            "description": "[Optional] The connection to use for this instance - must be one of the connections defined in 'connections'"
-          },
-          "tablePrefix": {
-            "type": "string",
-            "description": "Table prefix"
-          },
-          "uploadsUrl": {
-            "type": "string",
-            "description": "The URL of the 'uploads' directory for the WordPress instance (e.g. https://host/wp-content/uploads)"
-          },
-          "uploadsPath": {
-            "type": "string",
-            "description": "The file system path of the 'uploads' directory (e.g. /var/www/html/wp-content/uploads)"
-          },
-          "virtualUploadsUrl": {
-            "type": "string",
-            "description": "Virtual URL of the 'uploads' directory (used with 'uploadsUrl' to hide location of WordPress instance)"
-          }
+    "wpInstance": {
+      "type": "object",
+      "description": "WordPress instance configuration",
+      "required": [ "tablePrefix" ],
+      "additionalProperties": false,
+      "properties": {
+        "db": {
+          "type": "string",
+          "description": "[Optional] The connection to use for this instance - must be one of the connections defined in 'connections'"
+        },
+        "tablePrefix": {
+          "type": "string",
+          "description": "Table prefix"
+        },
+        "uploadsUrl": {
+          "type": "string",
+          "description": "The URL of the 'uploads' directory for the WordPress instance (e.g. https://host/wp-content/uploads)"
+        },
+        "uploadsPath": {
+          "type": "string",
+          "description": "The file system path of the 'uploads' directory (e.g. /var/www/html/wp-content/uploads)"
+        },
+        "virtualUploadsUrl": {
+          "type": "string",
+          "description": "Virtual URL of the 'uploads' directory (used with 'uploadsUrl' to hide location of WordPress instance)"
         }
       }
     }
