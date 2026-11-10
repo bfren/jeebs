@@ -107,9 +107,9 @@ public class VCalendar(CalendarModel calendar, string tzid) : CalendarBase(calen
 		builder.AppendMax75($"CREATED:{Format(lastModified)}");
 		builder.AppendMax75($"LAST-MODIFIED:{Format(lastModified)}");
 		builder.AppendMax75($"DTSTAMP:{Format(lastModified)}");
-		builder.AppendMax75($"SUMMARY:{e.Summary}");
-		builder.AppendMax75($"DESCRIPTION:{e.Description}");
-		builder.AppendMax75($"LOCATION:{e.Location}");
+		builder.AppendMax75($"SUMMARY:{Escape(e.Summary)}");
+		builder.AppendMax75($"DESCRIPTION:{Escape(e.Description)}");
+		builder.AppendMax75($"LOCATION:{Escape(e.Location)}");
 
 		if (e.IsAllDay)
 		{
@@ -149,6 +149,19 @@ public class VCalendar(CalendarModel calendar, string tzid) : CalendarBase(calen
 	/// <returns>DateTime string.</returns>
 	internal static string Format(DateTime dt, bool withTime = true) =>
 		dt.ToString(withTime ? @"yyyyMMdd\THHmmss" : "yyyyMMdd", F.DefaultCulture);
+
+	/// <summary>
+	/// Escape a TEXT value according to
+	/// https://icalendar.org/iCalendar-RFC-5545/3-3-11-text.html.
+	/// </summary>
+	/// <param name="text">Text value (null - e.g. from a database row - is treated as empty).</param>
+	/// <returns>Escaped text.</returns>
+	internal static string Escape(string? text) =>
+		(text ?? string.Empty)
+			.Replace(@"\", @"\\", StringComparison.Ordinal)
+			.Replace(";", @"\;", StringComparison.Ordinal)
+			.Replace(",", @"\,", StringComparison.Ordinal)
+			.ReplaceLineEndings(@"\n");
 
 	/// <summary>
 	/// Get Timezone information.

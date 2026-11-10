@@ -151,13 +151,13 @@ Must fix: C1–C5. Should fix: C6–C11. Nice to have: C12–C14.
 
 ## Phase 14 — calendar output (C3, C14)
 
-- [ ] **C3 Calendar text not escaped, lines end with LF** — `src/Jeebs.Calendar/VCalendar.cs:89-91`,
+- [x] **C3 Calendar text not escaped, lines end with LF** — `src/Jeebs.Calendar/VCalendar.cs:89-91`,
   `src/Jeebs.Calendar/Extensions/StringBuilder/StringBuilderExtensions.AppendMax75.cs`
   Newlines, `;` and `,` in summary / description / location break the `.ics`, and `AppendLine`
   writes `\n` on Linux where RFC 5545 needs `\r\n`. Fix: one escape helper (`\` → `\\`, `;` → `\;`,
   `,` → `\,`, newline → `\n`) on the three fields; write `\r\n`. Test: a description with a
   newline and a location with a comma.
-- [ ] **C14 Lines folded by characters, not bytes** — same `AppendMax75`
+- [x] **C14 Lines folded by characters, not bytes** — same `AppendMax75`
   RFC 5545 folds at 75 octets; accented text makes longer lines and a split can cut an emoji.
   Fix: fold by UTF-8 byte count without splitting a rune. Test with accents and an emoji.
 

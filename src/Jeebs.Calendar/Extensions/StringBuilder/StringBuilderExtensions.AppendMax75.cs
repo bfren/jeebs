@@ -8,47 +8,38 @@ namespace Jeebs.Calendar;
 internal static partial class StringBuilderExtensions
 {
 	/// <summary>
-	/// Append a line to <paramref name="this"/>, splitting at 75 characters according to
-	/// https://icalendar.org/iCalendar-RFC-5545/3-1-content-lines.html.
+	/// Append a line to <paramref name="this"/>, folding at 75 octets (UTF-8 bytes) according to
+	/// https://icalendar.org/iCalendar-RFC-5545/3-1-content-lines.html, without splitting a character.
 	/// </summary>
 	/// <param name="this">StringBuilder.</param>
 	/// <param name="text">String to append.</param>
 	internal static void AppendMax75(this StringBuilder @this, string text)
 	{
-		// Maximum line length - must be 74 to handle the single whitespace
-		// character on subsequent lines
+		// Maximum bytes of text per line - 74 leaves room for the single whitespace
+		// character that begins each folded line
 		const int max = 74;
 
-		// If text is short enough, simply append it
-		if (text.Length <= max)
+		var bytes = 0;
+		var index = 0;
+		foreach (var rune in text.EnumerateRunes())
 		{
-			_ = @this.AppendLine(text);
-			return;
+			// Fold before a character that would take the line over the limit
+			if (bytes + rune.Utf8SequenceLength > max)
+			{
+				_ = @this.Append(NewLine).Append(' ');
+				bytes = 0;
+			}
+
+			_ = @this.Append(text, index, rune.Utf16SequenceLength);
+			bytes += rune.Utf8SequenceLength;
+			index += rune.Utf16SequenceLength;
 		}
 
-		// Split at 75
-		var remaining = text;
-		var first = true;
-		do
-		{
-			// Get next slice
-			var next = remaining[0..max];
-			remaining = remaining[max..];
-
-			// Append line - after the first line, subsequent lines must begin with
-			// a single whitespace character - either space or tab
-			if (first)
-			{
-				_ = @this.AppendLine(next);
-				first = false;
-			}
-			else
-			{
-				_ = @this.AppendLine(" " + next);
-			}
-		} while (remaining.Length > max);
-
-		// Append remaining text
-		_ = @this.AppendLine(" " + remaining);
+		_ = @this.Append(NewLine);
 	}
+
+	/// <summary>
+	/// RFC 5545 lines end with CRLF on every platform.
+	/// </summary>
+	internal const string NewLine = "\r\n";
 }

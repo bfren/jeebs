@@ -29,7 +29,8 @@ public class GetTimezoneGmt_Tests
 			.AppendLine("RRULE:FREQ=YEARLY;BYMONTH=3;BYDAY=-1SU")
 			.AppendLine("END:DAYLIGHT")
 			.AppendLine("END:VTIMEZONE")
-			.ToString();
+			.ToString()
+			.ReplaceLineEndings("\r\n");
 
 		// Act
 		var result = VCalendar.GetTimezoneGmt();
