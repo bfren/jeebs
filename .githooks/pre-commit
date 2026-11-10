@@ -1,0 +1,19 @@
+#!/bin/sh
+set -e
+IFS='
+'
+
+files=$(git diff --cached --name-only --diff-filter=ACMR -- '*.cs')
+[ -z "$files" ] && exit 0
+
+# Refuse if a staged file also has unstaged edits, otherwise
+# re-adding it would sneak those edits into the commit.
+partial=$(git diff --name-only -- $files)
+if [ -n "$partial" ]; then
+  echo "pre-commit: stage or stash these first:"
+  echo "$partial"
+  exit 1
+fi
+
+dotnet format --include $files --severity info --no-restore
+git add -- $files
