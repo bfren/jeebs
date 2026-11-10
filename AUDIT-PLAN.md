@@ -83,8 +83,7 @@ reporting, so findings come from reading the code.
   must become forms. A failed sign in now shows the form again with an error alert, keeping the email.
 - **Config schema:** `jeebsconfig.json` is validated with NJsonSchema (MIT) instead of
   Newtonsoft.Json.Schema (AGPL). It accepts the same files, but the error text in
-  `ConfigSchemaValidationFailedException` is worded differently. The schema's `definitions` are
-  flattened (e.g. `#/definitions/logging/level` is now `#/definitions/loggingLevel`).
+  `ConfigSchemaValidationFailedException` is worded differently.
 
 ---
 
