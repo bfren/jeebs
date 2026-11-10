@@ -1,4 +1,5 @@
 {
+  "$schema": "https://schemas.bfren.dev/jeebs/application/config.json",
   "jeebs": {
     "app": {
       "name": "PostgreSQL",
