@@ -63,7 +63,7 @@ public abstract class AuthControllerBase : Mvc.Controllers.MvcController
 	{
 		Auth = auth;
 		SignInRedirect = () => Url.Action("Index", "Home");
-		SignOutRedirect = () => Url.Action("Auth", "SignOut");
+		SignOutRedirect = () => Url.Action(nameof(SignIn), "Auth");
 	}
 
 	/// <summary>
