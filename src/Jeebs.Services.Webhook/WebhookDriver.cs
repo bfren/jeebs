@@ -1,7 +1,6 @@
 // Jeebs Rapid Application Development
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
-using System.Collections.Generic;
 using System.Net.Http;
 using Jeebs.Config;
 using Jeebs.Functions;
@@ -41,19 +40,20 @@ public abstract class WebhookDriver<TConfig, TMessage> : Driver<TConfig>, IWebho
 	/// <inheritdoc/>
 	public virtual void Send(FailureValue failure)
 	{
-		// Convert to notification Message
+		// Convert to notification Message - exception details go in Content because drivers
+		// (e.g. Slack) only send Content and Level
+		var content = failure.Message.FormatWith(failure.Args);
 		var message = new Message
 		{
-			Content = failure.Message.FormatWith(failure.Args),
-			Level = failure.Level.ToNotificationLevel(),
-			Fields = failure.Exception switch
+			Content = failure.Exception switch
 			{
 				{ } e =>
-					new Dictionary<string, object> { { "Exception", e } },
+					$"{content}\n{e.GetType().Name}: {e.Message}",
 
 				_ =>
-					[]
-			}
+					content
+			},
+			Level = failure.Level.ToNotificationLevel()
 		};
 
 		// Send message

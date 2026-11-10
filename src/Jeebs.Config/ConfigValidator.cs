@@ -1,12 +1,9 @@
 // Jeebs Rapid Application Development
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
-using System.Collections.Generic;
 using System.IO;
 using System.Text;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
-using Newtonsoft.Json.Schema;
+using NJsonSchema;
 
 namespace Jeebs.Config;
 
@@ -31,24 +28,21 @@ public static class ConfigValidator
 		}
 
 		// Read config file
-		using var configFile = File.OpenText(path);
-		using var configReader = new JsonTextReader(configFile);
-		var config = JToken.ReadFrom(configReader);
+		var config = File.ReadAllText(path);
 
-		// Read schema file
-		using var schemaStream = new MemoryStream(Properties.Resources.schema);
-		using var schemaFile = new StreamReader(schemaStream);
-		using var schemaReader = new JsonTextReader(schemaFile);
-		var schema = JSchema.Load(schemaReader);
+		// Read schema file - NJsonSchema only loads schemas asynchronously, and this runs once at startup
+		using var schemaFile = new StreamReader(new MemoryStream(Properties.Resources.schema));
+		var schema = JsonSchema.FromJsonAsync(schemaFile.ReadToEnd()).GetAwaiter().GetResult();
 
 		// Validate file using schema
-		if (!config.IsValid(schema, out IList<string> errors))
+		var errors = schema.Validate(config);
+		if (errors.Count > 0)
 		{
 			var sb = new StringBuilder();
 			_ = sb.AppendLine(F.DefaultCulture, $"Invalid Jeebs configuration file: {path}.");
 			foreach (var item in errors)
 			{
-				_ = sb.AppendLine(item);
+				_ = sb.AppendLine(item.ToString());
 			}
 
 			throw new ConfigSchemaValidationFailedException(sb.ToString());
