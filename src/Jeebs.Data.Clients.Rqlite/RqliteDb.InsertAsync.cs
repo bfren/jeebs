@@ -11,8 +11,8 @@ public abstract partial class RqliteDb : Db
 	/// <inheritdoc/>
 	public override async Task<Result<TId>> InsertAsync<TId>(string query, object? param)
 	{
-		using var w = StartWork();
-		return await w.ExecuteAsync(
+		using var c = Connect();
+		return await c.ExecuteAsync(
 			query, param ?? new()
 		)
 		.BindAsync(

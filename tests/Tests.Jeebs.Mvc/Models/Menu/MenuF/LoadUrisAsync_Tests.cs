@@ -34,7 +34,9 @@ public class LoadUrisAsync_Tests
 		var u2 = Rnd.Str;
 		var uris = new[] { u0, u1, u2 }.ToList();
 		var loadUri = Substitute.For<LoadUri>();
+#pragma warning disable CA2012 // NSubstitute setup call: the ValueTask is never consumed, only configured
 		loadUri.Invoke(default!, default!, TestContext.Current.CancellationToken).ReturnsForAnyArgs(ValueTask.FromResult(Rnd.Str));
+#pragma warning restore CA2012
 
 		// Act
 		await MenuF.LoadUrisAsync(client, uris, loadUri);

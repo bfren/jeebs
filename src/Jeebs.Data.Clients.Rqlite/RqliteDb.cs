@@ -27,10 +27,10 @@ public abstract partial class RqliteDb : Db
 		Factory = factory;
 
 	/// <summary>
-	/// Start work using new RqliteClient object.
+	/// Connect to rqlite using a new RqliteClient object - this does not begin a transaction or unit of work.
 	/// </summary>
 	/// <returns>New RqliteClient object.</returns>
-	public IRqliteClient StartWork()
+	public IRqliteClient Connect()
 	{
 		var name = Config.ConnectionString;
 		return string.IsNullOrWhiteSpace(name) switch

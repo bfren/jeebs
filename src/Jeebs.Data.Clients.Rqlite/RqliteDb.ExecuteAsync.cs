@@ -15,8 +15,8 @@ public abstract partial class RqliteDb : Db
 	/// <inheritdoc/>
 	public async Task<Result<bool>> ExecuteAsync(bool asSingleTransaction, params (string query, object param)[] commands)
 	{
-		using var w = StartWork();
-		return await w.ExecuteAsync(asSingleTransaction, [.. commands])
+		using var c = Connect();
+		return await c.ExecuteAsync(asSingleTransaction, [.. commands])
 			// LastInsertId is kept per connection, so it is not reset by an UPDATE or DELETE that changes nothing
 			.MapAsync(x => x.All(r => r.RowsAffected > 0));
 	}

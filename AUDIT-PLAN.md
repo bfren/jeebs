@@ -54,6 +54,7 @@ reporting, so findings come from reading the code.
   key derivation). Byte-key boxes are unaffected.
 - **Passwords:** new hashes use Argon2 Interactive; old hashes still verify and are re-hashed
   on the next sign-in.
+- **Rqlite:** `RqliteDb.StartWork()` is renamed `Connect()` - it only creates a client and never began a unit of work.
 - **Rqlite:** `ExecuteAsync` returns `false` when no rows change (including DDL).
 - **SQLite / Rqlite:** count queries use `COUNT(*)`; SQL Server paging without a sort adds
   `ORDER BY (SELECT NULL)`.
