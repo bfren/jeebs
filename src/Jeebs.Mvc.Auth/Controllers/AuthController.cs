@@ -85,13 +85,16 @@ public abstract class AuthControllerBase : Mvc.Controllers.MvcController
 		));
 
 		// Handle result
+		if (result is AuthOp.TryAgain)
+		{
+			TempData.AddErrorAlert("Unknown email or password.");
+			return View(model with { Password = string.Empty });
+		}
+
 		return result switch
 		{
 			AuthOp.SignedIn =>
 				result,
-
-			AuthOp.TryAgain =>
-				SignIn(),
 
 			_ =>
 				Denied(Request.GetDisplayUrl())
