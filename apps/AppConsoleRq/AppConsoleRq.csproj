@@ -26,5 +26,5 @@
   <ItemGroup>
     <PackageReference Include="Rnd" />
   </ItemGroup>
-  <ProjectExtensions><VisualStudio><UserProperties jeebsconfig_1json__JsonSchema="https://schemas.bfren.dev/jeebs/application/config.json" /></VisualStudio></ProjectExtensions>
+  <ProjectExtensions><VisualStudio><UserProperties jeebsconfig_1json__JsonSchema="https://schemas.bfren.dev/jeebs/application/config/2026-11.json" /></VisualStudio></ProjectExtensions>
 </Project>

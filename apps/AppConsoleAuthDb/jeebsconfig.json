@@ -1,5 +1,5 @@
 {
-  "$schema": "https://schemas.bfren.dev/jeebs/application/config.json",
+  "$schema": "https://schemas.bfren.dev/jeebs/application/config/2026-11.json",
   "jeebs": {
     "app": {
       "name": "Auth Database",
