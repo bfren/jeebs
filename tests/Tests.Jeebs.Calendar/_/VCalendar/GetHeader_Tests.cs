@@ -17,7 +17,8 @@ public class GetHeader_Tests
 			.AppendLine("PRODID:-//bfren//NONSGML Jeebs.Calendar//EN")
 			.AppendLine("CALSCALE:GREGORIAN")
 			.AppendLine("X-PUBLISHED-TTL:PT1H")
-			.ToString().ReplaceLineEndings("\r\n");
+			.ToString()
+			.ReplaceLineEndings("\r\n");
 
 		// Act
 		var result = VCalendar.GetHeader();
