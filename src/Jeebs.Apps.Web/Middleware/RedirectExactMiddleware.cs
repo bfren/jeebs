@@ -60,12 +60,11 @@ public sealed class RedirectExactMiddleware : IMiddleware
 		// If there is a match redirect to it
 		if (redirect is string redirectTo)
 		{
-			// Build redirection URL and log action
-			var url = $"{req.Scheme}://{req.Host}{redirectTo}";
-			logger.Information("Redirecting from '{RedirectFrom}' to '{RedirectTo}'.", current, url);
+			// Log action
+			logger.Information("Redirecting from '{RedirectFrom}' to '{RedirectTo}'.", current, redirectTo);
 
-			// Perform the (permanent) redirect
-			context.Response.Redirect(url, permanent: true);
+			// Perform the (permanent) redirect - not built from req.Host, which the client controls
+			context.Response.Redirect(redirectTo, permanent: true);
 		}
 		else
 		{

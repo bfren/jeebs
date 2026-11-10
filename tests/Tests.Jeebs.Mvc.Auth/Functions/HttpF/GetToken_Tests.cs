@@ -6,7 +6,7 @@ namespace Jeebs.Mvc.Auth.Functions.HttpF_Tests;
 public class GetToken_Tests
 {
 	[Fact]
-	public void Invalid_Authorization_Header_Returns_None_With_InvalidAuthorisationHeaderMsg()
+	public void Invalid_Authorization_Header_Returns_Failure_Without_Header_Value()
 	{
 		// Arrange
 		var header = Rnd.Str;
@@ -15,7 +15,7 @@ public class GetToken_Tests
 		var result = HttpF.GetToken(header);
 
 		// Assert
-		result.AssertFailure("Invalid Authorization header: '{Header}'.", header);
+		result.AssertFailure("Authorization header is not a Bearer token.");
 	}
 
 	[Fact]

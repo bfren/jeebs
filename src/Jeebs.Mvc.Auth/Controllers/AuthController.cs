@@ -63,7 +63,7 @@ public abstract class AuthControllerBase : Mvc.Controllers.MvcController
 	{
 		Auth = auth;
 		SignInRedirect = () => Url.Action("Index", "Home");
-		SignOutRedirect = () => Url.Action("Auth", "SignOut");
+		SignOutRedirect = () => Url.Action(nameof(SignIn), "Auth");
 	}
 
 	/// <summary>
@@ -85,13 +85,16 @@ public abstract class AuthControllerBase : Mvc.Controllers.MvcController
 		));
 
 		// Handle result
+		if (result is AuthOp.TryAgain)
+		{
+			TempData.AddErrorAlert("Unknown email or password.");
+			return View(model with { Password = string.Empty });
+		}
+
 		return result switch
 		{
 			AuthOp.SignedIn =>
 				result,
-
-			AuthOp.TryAgain =>
-				SignIn(),
 
 			_ =>
 				Denied(Request.GetDisplayUrl())
@@ -99,8 +102,9 @@ public abstract class AuthControllerBase : Mvc.Controllers.MvcController
 	}
 
 	/// <summary>
-	/// Perform sign out.
+	/// Perform sign out - POST only so other sites cannot sign users out with a link or image.
 	/// </summary>
+	[HttpPost, ValidateAntiForgeryToken]
 	public new async Task<IActionResult> SignOut()
 	{
 		// Do sign out

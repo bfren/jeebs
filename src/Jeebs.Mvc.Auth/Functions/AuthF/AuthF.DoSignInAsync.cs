@@ -77,7 +77,7 @@ public static partial class AuthF
 			return await v.SignInAsync(principal);
 		}
 
-		// Log error and add alert for user
+		// Log error - the controller shows the alert
 		v.Log.Err("Unknown username or password: {Email}.", v.Model.Email);
 
 		// Try again
