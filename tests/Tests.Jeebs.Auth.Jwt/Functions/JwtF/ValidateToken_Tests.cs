@@ -52,7 +52,9 @@ public class ValidateToken_Tests
 	public void Not_Valid_Yet_Returns_None_With_TokenIsNotValidYetMsg()
 	{
 		// Arrange
-		var (config, token, _) = GetToken(false, DateTime.UtcNow.AddHours(1), DateTime.UtcNow.AddHours(1));
+		// One clock read - on macOS two reads are often equal, and a token must expire after it starts
+		var now = DateTime.UtcNow;
+		var (config, token, _) = GetToken(false, now.AddHours(1), now.AddHours(2));
 
 		// Act
 		var result = JwtF.ValidateToken(config, token);
