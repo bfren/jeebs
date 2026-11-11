@@ -26,6 +26,9 @@ Mark items `[x]` as they land.
 - **Rate limiting on the sign-in route.**
 - **D7 greedy shortcode regexes in `GenerateExcerpt`.** WordPress shortcodes don't nest or sit
   side by side in our content, so losing the text between two of them is acceptable.
+- **ImageSharp as an image driver.** Six Labors Split License: Apache 2.0 only for open-source use,
+  a transitive dependency, under 1M USD revenue or non-profits, otherwise paid - and 4.x fails Release
+  builds of the project that references it without a licence key. The Stb driver (D15) is used instead.
 
 ### Not audited yet
 
@@ -99,7 +102,9 @@ reporting, so findings come from reading the code.
   `IImageDriver.FromStream` returns `Result<IImageWrapper>`, and both `FromFile` and `FromStream`
   fail with "Not a valid image." instead of throwing. `IImageWrapper` is `IDisposable`, so dispose
   each wrapper (including the one `ApplyMask` returns) to free its memory. The Skia driver now
-  brings the Linux native library, so apps no longer need to add it.
+  brings the Linux native library, so apps no longer need to add it. Publish with `-r <rid>`
+  (e.g. `-r linux-x64`): a publish without one copies SkiaSharp's native library for every
+  platform, about 470 MB, against about 12 MB for one.
 
 ---
 
@@ -179,7 +184,16 @@ D7 is in Won't do; D10 is investigate-first.
   Content type `image/jpg` for PNG bytes, a hard-coded `Q:\` path, and unbounded `width` / `height`
   from the query string (`100000 × 100000` tries ~40 GB). Fix: `"image/png"`, the path from config,
   and cap both sizes (e.g. 4000) before `ApplyMask`.
-  Done: `ImagePath` in `appsettings.Development.json`, 400 Bad Request outside 0–4000.
+  Done: `ImagePath` in `appsettings.Development.json`, 400 Bad Request outside 1–4000 (both sides
+  required - with one at 0 the other is worked out from the image, so the cap wouldn't hold).
+- [x] **D15 Managed image driver** — new `src/Jeebs.Services.Drivers.Drawing.Stb`
+  SkiaSharp's native libraries add ~470 MB to a publish without `-r`. The Stb driver has no native
+  code: `StbImageSharp` (MIT / Unlicense) reads, `StbImageWriteSharp` (public domain) writes JPEG and
+  PNG, and `PixelF.Resize` crops and resizes with a two-pass tent filter (bilinear when enlarging,
+  area-weighted when shrinking, colour weighted by alpha). Skia applies EXIF orientation and stb
+  doesn't, so `PixelF.GetOrientation` / `Orient` do it; all eight orientations match the Skia driver.
+  About 4× slower than Skia: ~195 ms against ~49 ms for a 6000×4000 JPEG to a 400×300 thumbnail
+  (Apple Silicon, Release). 31 tests in `tests/Tests.Jeebs.Services.Drivers.Drawing.Stb`.
 
 ## Investigate later — D10
 
