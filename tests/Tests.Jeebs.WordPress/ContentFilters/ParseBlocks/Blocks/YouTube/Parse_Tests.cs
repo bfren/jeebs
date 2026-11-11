@@ -32,4 +32,34 @@ public class Parse_Tests
 		// Assert
 		Assert.Contains(expected, result);
 	}
+
+	[Fact]
+	public void Encodes_Url()
+	{
+		// Arrange
+		var input = """<!-- wp:embed {"url":"https://www.youtube.com/watch?v=5k9mk7esVUw&x=\"><script>alert(1)</script>","type":"video","providerNameSlug":"youtube"} --><!-- /wp:embed -->""";
+
+		// Act
+		var result = YouTube.Parse(input);
+
+		// Assert
+		Assert.Contains("data-v=\"5k9mk7esVUw\"", result);
+		Assert.Contains(">https://www.youtube.com/watch?v=5k9mk7esVUw&amp;x=%22%3E%3Cscript%3Ealert(1)%3C/script%3E</div>", result);
+		Assert.DoesNotContain("<script>", result);
+	}
+
+	[Theory]
+	[InlineData("""<!-- wp:embed {"url":"youtu.be/R5OzX-f9ATY","type":"video","providerNameSlug":"youtube"} --><!-- /wp:embed -->""")]
+	[InlineData("""<!-- wp:embed {"url":"","type":"video","providerNameSlug":"youtube"} --><!-- /wp:embed -->""")]
+	[InlineData("""<!-- wp:embed {"type":"video","providerNameSlug":"youtube"} --><!-- /wp:embed -->""")]
+	public void Invalid_Url_Leaves_Block_Unchanged(string input)
+	{
+		// Arrange
+
+		// Act
+		var result = YouTube.Parse(input);
+
+		// Assert
+		Assert.Equal(input, result);
+	}
 }

@@ -30,4 +30,18 @@ public class Parse_Tests
 		// Assert
 		Assert.Contains(expected, result);
 	}
+
+	[Fact]
+	public void Encodes_Url()
+	{
+		// Arrange
+		var input = """<!-- wp:embed {"url":"https://vimeo.com/1\" onmouseover=\"alert(1)","type":"video","providerNameSlug":"vimeo"} --><!-- /wp:embed -->""";
+
+		// Act
+		var result = Vimeo.Parse(input);
+
+		// Assert
+		Assert.Contains("data-url=\"https://vimeo.com/1&quot; onmouseover=&quot;alert(1)\">", result);
+		Assert.DoesNotContain("\" onmouseover=\"", result);
+	}
 }
