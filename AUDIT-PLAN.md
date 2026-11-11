@@ -18,11 +18,18 @@ Mark items `[x]` as they land.
 | 12–15 | Third audit, 2026-11-08 (v10.0.0-beta.1) | C1–C14 | #634, #637, #639, #641 | yes |
 | 16–17 | Fourth audit, 2026-11-11 (v10.0.0-beta.2) | D1–D14 | #647, #648 | yes (D10 open) |
 
+Released in **v10.0.0-beta.2** (2026-11-10, #645 / #646), the first published v10 pre-release
+(beta.1 was never released). Its release notes were built from the breaking changes list below, so
+the 10.0.0 notes should start from beta.2's and add only what lands after it.
+
+### Done after all
+
+- **#12 reads without a transaction** (first audit, put off as "won't do"). Done in phase 12
+  (#635): the unit of work's transaction is lazy, so only a write begins it and read-only work has
+  none, and `IAdapter` methods take the `IDbConnection` with a nullable `IDbTransaction`.
+
 ### Won't do
 
-- **#12 reads without a transaction** (speed only). `IAdapter` takes an `IDbTransaction` and the
-  Dapper adapter gets its connection from `transaction.Connection`, so this needs adapter methods
-  that take an `IDbConnection` (14 files use `IAdapter`). Reads roll back on dispose, which is harmless.
 - **Rate limiting on the sign-in route.**
 - **D7 greedy shortcode regexes in `GenerateExcerpt`.** WordPress shortcodes don't nest or sit
   side by side in our content, so losing the text between two of them is acceptable.
@@ -274,9 +281,13 @@ Must fix: C1–C5. Should fix: C6–C11. Nice to have: C12–C14.
   writes `\n` on Linux where RFC 5545 needs `\r\n`. Fix: one escape helper (`\` → `\\`, `;` → `\;`,
   `,` → `\,`, newline → `\n`) on the three fields; write `\r\n`. Test: a description with a
   newline and a location with a comma.
+  Done (`VCalendar.Escape`, `Escape_Tests`). `Escape` also treats a null field as empty, so an event
+  with no location writes `LOCATION:` as before instead of throwing.
 - [x] **C14 Lines folded by characters, not bytes** — same `AppendMax75`
   RFC 5545 folds at 75 octets; accented text makes longer lines and a split can cut an emoji.
   Fix: fold by UTF-8 byte count without splitting a rune. Test with accents and an emoji.
+  Done: 74 bytes of text per line (each folded line starts with a space), so ASCII output is
+  unchanged. `AppendMax75_Tests` covers accents, an emoji at the fold and a mixed string.
 
 ## Phase 15 — dependencies and small fixes (C6, C13)
 
