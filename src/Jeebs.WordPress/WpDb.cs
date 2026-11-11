@@ -94,7 +94,6 @@ public sealed class WpDb<TC, TCm, TL, TO, TP, TPm, TT, TTm, TTr, TTt, TU, TUm> :
 		{
 			if (!m.HasTypeHandler<WpPostId>())
 			{
-				m.ResetTypeHandlers();
 				m.AddTypeHandler(new CommentTypeTypeHandler());
 				m.AddTypeHandler(new MimeTypeTypeHandler());
 				m.AddTypeHandler(new PostStatusTypeHandler());
