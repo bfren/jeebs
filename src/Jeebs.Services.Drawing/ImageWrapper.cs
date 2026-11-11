@@ -40,6 +40,9 @@ public abstract class ImageWrapper : IImageWrapper
 	/// <inheritdoc/>
 	public abstract Result<IImageWrapper> ApplyMask(int width, int height);
 
+	/// <inheritdoc/>
+	public abstract void Dispose();
+
 	/// <summary>
 	/// Resize and crop an image to fill a mask of specified width and height.
 	/// </summary>
