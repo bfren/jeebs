@@ -9,21 +9,6 @@ namespace Jeebs.Services.Drawing;
 public enum ImageFormat
 {
 	/// <summary>
-	/// Bitmap format.
-	/// </summary>
-	Bmp = 0,
-
-	/// <summary>
-	/// Graphics Interchange Format (format).
-	/// </summary>
-	Gif = 1,
-
-	/// <summary>
-	/// Icon.
-	/// </summary>
-	Ico = 2,
-
-	/// <summary>
 	/// Joint Photographic Experts Group format.
 	/// </summary>
 	Jpeg = 3,

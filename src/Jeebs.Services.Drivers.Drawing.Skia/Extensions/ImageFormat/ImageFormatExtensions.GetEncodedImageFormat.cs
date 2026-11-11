@@ -16,18 +16,7 @@ public static partial class ImageFormatExtensions
 	public static SKEncodedImageFormat GetEncodedImageFormat(this ImageFormat @this) =>
 		@this switch
 		{
-			ImageFormat.Bmp =>
-				SKEncodedImageFormat.Bmp,
-
-			ImageFormat.Gif =>
-				SKEncodedImageFormat.Gif,
-
-			ImageFormat.Ico =>
-
-				SKEncodedImageFormat.Ico,
-
 			ImageFormat.Jpeg =>
-
 				SKEncodedImageFormat.Jpeg,
 
 			ImageFormat.Png =>
