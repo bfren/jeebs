@@ -3,7 +3,8 @@
     <Configurations>Debug;Release;Test</Configurations>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="System.Data.SQLite.Core" />
+    <PackageReference Include="System.Data.SQLite" />
+    <PackageReference Include="SQLitePCLRaw.lib.e_sqlite3" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Jeebs.Data.Common\Jeebs.Data.Common.csproj" />

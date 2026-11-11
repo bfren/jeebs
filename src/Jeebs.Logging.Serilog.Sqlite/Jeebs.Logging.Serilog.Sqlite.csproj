@@ -4,7 +4,8 @@
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.Extensions.Logging" />
-    <PackageReference Include="System.Data.SQLite.Core" />
+    <PackageReference Include="System.Data.SQLite" />
+    <PackageReference Include="SQLitePCLRaw.lib.e_sqlite3" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Jeebs.Logging.Serilog\Jeebs.Logging.Serilog.csproj" />
