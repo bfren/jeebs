@@ -34,6 +34,13 @@ WordPress tables, entities and enums; `Data.Testing` (skimmed only); the sample 
 `Connect()` calls. None of the audits ran the tests or started an app before
 reporting, so findings come from reading the code.
 
+### Next audit
+
+- **Check all doc comments.** Every XML doc comment in `src`: `cref`s and `inheritdoc`s that point at
+  removed or renamed members, `param`s that no longer exist, and summaries that no longer match the
+  code. The build only flags unresolved `cref`s (CS1574, e.g. `src/Jeebs.Data/DbClient.StandardQueries.cs:39`
+  still names `GetRetrieveQuery{TEntity, TModel}(object)`); the rest needs reading.
+
 ---
 
 ## Breaking changes for the major version release notes

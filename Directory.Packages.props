@@ -47,9 +47,10 @@
     <PackageVersion Include="Simple.Migrations" Version="0.9.21" />
     <PackageVersion Include="SkiaSharp" Version="4.155.0" />
     <PackageVersion Include="Sodium.Core" Version="1.4.1" />
+    <PackageVersion Include="SQLitePCLRaw.lib.e_sqlite3" Version="3.53.3" />
     <PackageVersion Include="System.Collections.Immutable" Version="10.0.2" />
     <PackageVersion Include="System.Configuration.ConfigurationManager" Version="10.0.14" />
-    <PackageVersion Include="System.Data.SQLite.Core" Version="1.0.119" />
+    <PackageVersion Include="System.Data.SQLite" Version="2.0.4" />
     <PackageVersion Include="System.IdentityModel.Tokens.Jwt" Version="8.23.0" />
     <PackageVersion Include="System.Security.Cryptography.Pkcs" Version="10.0.14" />
     <PackageVersion Include="System.Security.Cryptography.ProtectedData" Version="10.0.14" />
