@@ -31,7 +31,6 @@ public static partial class QueryAttachmentsF
 				$"`p`.`{schema.Posts.Id}` AS '{nameof(PostAttachment.Id)}', " +
 				$"`p`.`{schema.Posts.Title}` AS '{nameof(PostAttachment.Title)}', " +
 				$"`p`.`{schema.Posts.Excerpt}` AS '{nameof(PostAttachment.Description)}', " +
-				$"`p`.`{schema.Posts.Url}` AS '{nameof(PostAttachment.Url)}', " +
 				$"`pm`.`{schema.PostsMeta.Value}` AS '{nameof(PostAttachment.UrlPath)}', " +
 				$"CONCAT('{virtualUploadsUrl.EndWith('/')}', `pm`.`{schema.PostsMeta.Value}`) AS '{nameof(PostAttachment.Url)}' " +
 			$"FROM `{schema.Posts}` AS `p` " +

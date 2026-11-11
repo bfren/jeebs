@@ -1,6 +1,6 @@
 # Audit fix plan
 
-Three audits so far, phases 1–15, all done. Each phase is one issue / branch, one commit per item, and ends with:
+Four audits so far, phases 1–15 done, 16–17 to do. Each phase is one issue / branch, one commit per item, and ends with:
 
 ```bash
 dotnet test --solution "Jeebs (v10).slnx" --configuration Test
@@ -16,6 +16,7 @@ Mark items `[x]` as they land.
 | 1–7 | First audit, 2026-11-07 (v9.4.4) | #1–#16 | #602–#612 | yes |
 | 8–11 | Second audit, 2026-11-07 (v10.0.0-beta.1) | B1–B12 | #624–#632 | yes |
 | 12–15 | Third audit, 2026-11-08 (v10.0.0-beta.1) | C1–C14 | #634, #637, #639, #641 | yes |
+| 16–17 | Fourth audit, 2026-11-11 (v10.0.0-beta.2) | D1–D14 | #647, #648 | no |
 
 ### Won't do
 
@@ -23,11 +24,14 @@ Mark items `[x]` as they land.
   Dapper adapter gets its connection from `transaction.Connection`, so this needs adapter methods
   that take an `IDbConnection` (14 files use `IAdapter`). Reads roll back on dispose, which is harmless.
 - **Rate limiting on the sign-in route.**
+- **D7 greedy shortcode regexes in `GenerateExcerpt`.** WordPress shortcodes don't nest or sit
+  side by side in our content, so losing the text between two of them is acceptable.
 
 ### Not audited yet
 
-Most of WordPress (beyond the query builder and attachments), `Services.Drawing` / Skia,
-`Data.Testing` and the sample apps. None of the audits ran the tests or started an app before
+WordPress tables, entities and enums; `Data.Testing` (skimmed only); the sample apps other than
+`AppMvc` and `AppConsoleWp`; whether the `Rqlite` package reuses its HTTP connection across
+`Connect()` calls. None of the audits ran the tests or started an app before
 reporting, so findings come from reading the code.
 
 ---
@@ -84,6 +88,86 @@ reporting, so findings come from reading the code.
 - **Config schema:** `jeebsconfig.json` is validated with NJsonSchema (MIT) instead of
   Newtonsoft.Json.Schema (AGPL). It accepts the same files, but the error text in
   `ConfigSchemaValidationFailedException` is worded differently.
+
+---
+
+# Fourth audit — 2026-11-11 (v10.0.0-beta.2)
+
+Items are numbered D1–D14 to match the audit report. Covered the parts earlier audits skipped:
+WordPress beyond the query builder, `Services.Drawing` / Skia, and the `AppMvc` / `AppConsoleWp` samples.
+D7 is in Won't do; D10 is investigate-first.
+
+## Phase 16 — WordPress (D1, D2, D3, D4, D11 part, D12, D13)
+
+- [x] **D1 Embed URLs written into HTML unescaped** — `src/Jeebs.WordPress/ContentFilters/Blocks/YouTube.cs:48`,
+  `src/Jeebs.WordPress/ContentFilters/Blocks/Vimeo.cs:17`
+  `Uri.ToString()` un-escapes, so `?x="><script>` comes back raw; Vimeo pastes `embed.Url` straight
+  into `data-url="…"`. **Investigate first:** as an Author (no `unfiltered_html`), save an embed
+  whose url is `https://vimeo.com/1" onmouseover="alert(1)` through the REST API, then read
+  `post_content` from the database. kses runs over block attributes for those users, which removes
+  tags but probably not a bare `"`. Editors and admins have `unfiltered_html` on single sites, so
+  they can save anything. Fix either way (escaping output is cheap): `WebUtility.HtmlEncode` on the
+  URL in both, and `uri.AbsoluteUri` instead of `uri` for YouTube. Test: a url containing `"` and
+  `<` comes out encoded.
+  Done (the video ID is encoded too). The WordPress check hasn't been run.
+- [x] **D2 One bad embed URL throws for the whole query** — `src/Jeebs.WordPress/ContentFilters/Blocks/YouTube.cs:41`
+  `YouTubeRegex` matches every `wp:embed` block, not only YouTube, and `new Uri(youTube.Url)` throws
+  on a relative, empty or missing url (`UriFormatException` / `ArgumentNullException`). Nothing
+  catches it. **Investigate first:** search real `post_content` for `wp:embed` blocks with no `"url"`
+  or a relative one (old `core-embed/*` blocks, imports, REST writes skip the editor). Fix:
+  `if (!Uri.TryCreate(youTube.Url, UriKind.Absolute, out var uri)) return;`. Test: a block with
+  `"url":"youtu.be/abc"` is left unchanged.
+  Done, tested with relative, empty and missing urls. The content search hasn't been run.
+- [x] **D3 Only the first WordPress instance registers its custom types** — `src/Jeebs.WordPress/Wp.cs:111`
+  `Init<WpConfig>` should be `Init<TConfig>`, otherwise `WpBcg` and `WpUsa` share one key and only
+  the first resolved runs `RegisterCustomPostTypes` / `RegisterCustomTaxonomies`. Test (part of D11):
+  two `Wp` subclasses with different config types both have their `Register…` methods called.
+  Done: `tests/Tests.Jeebs.WordPress/_/Wp/Constructor_Tests.cs`, which failed before the fix.
+- [x] **D4 `WpDb` resets every Dapper type handler** — `src/Jeebs.WordPress/WpDb.cs:97`
+  `ResetTypeHandlers()` deletes handlers other databases in the same app added (Guid, JSON, lists),
+  and can race with a query on another request. WordPress doesn't need them, but a multi-db app does.
+  Fix: delete the line; the WordPress handlers are added straight after it.
+- [x] **D12 `SetMeta` scans all meta rows per post** — `src/Jeebs.WordPress/Functions/QueryPostsF.SetMeta.cs:32`
+  Fix: `var byPost = postsMeta.ToLookup(m => m.PostId);` once, then filter `byPost[post.Id]`.
+  Existing `SetMeta` tests cover it.
+- [x] **D13 Attachment query selects `Url` twice** — `src/Jeebs.WordPress/Functions/QueryAttachmentsF.GetQuery.cs:34`
+  The `guid` column is overwritten by the `CONCAT` one on line 36. Delete line 34 and update the
+  expected SQL in the `GetQuery` tests.
+
+## Phase 17 — images (D5, D6, D8, D9, D11 part, D14)
+
+- [ ] **D5 Remove unsupported image formats** — `src/Jeebs.Services.Drawing/ImageFormat.cs`,
+  `src/Jeebs.Services.Drivers.Drawing.Skia/Extensions/…/ImageFormatExtensions…cs:19-26`
+  Skia only encodes JPEG, PNG and WebP; `Encode` returns null for the rest and `Save` throws a
+  `NullReferenceException`. Fix: remove `Bmp`, `Gif` and `Ico` (keep `Jpeg = 3`, `Png = 4` so stored
+  values don't change) and their switch arms. Update the `GetEncodedImageFormat` tests. **Breaking.**
+- [ ] **D6 Invalid image data throws** — `src/Jeebs.Services.Drivers.Drawing.Skia/ImageDriver.cs:25, 33`
+  `SKImage.FromEncodedData` returns null for a non-image. Fix: return
+  `R.Fail("Not a valid image.")` when it is null, and make `FromStream` return
+  `Result<IImageWrapper>` like `FromFile`. Test: a text file / stream fails. **Breaking.**
+- [ ] **D8 Resizing uses nearest-neighbour sampling** — `src/Jeebs.Services.Drivers.Drawing.Skia/ImageWrapper.cs:80`
+  `new()` sampling options mean no smoothing. Fix:
+  `new SKSamplingOptions(SKFilterMode.Linear, SKMipmapMode.Linear)`; drop the `IsAntialias` paint
+  if it no longer does anything.
+- [ ] **D9 Image wrappers can't be disposed through the interface** — `src/Jeebs.Services.Drawing/IImageWrapper.cs:9`
+  Native bitmaps wait for the finaliser. Fix: `IImageWrapper : IDisposable` (base `ImageWrapper`
+  gets an abstract or virtual `Dispose`), and dispose both wrappers in `AppMvc`'s `ImageController`. **Breaking.**
+- [ ] **D11 Tests for the image code** — new `tests/Tests.Jeebs.Services.Drawing` (register in the
+  `.slnx` under `/tests/`) for `ImageF.CalculateNewSize` / `CalculateMask` (e.g. 400×200 into
+  100×100), and a new `Tests.Jeebs.Services.Drivers.Drawing.Skia` for D5, D6 and D8 (neither project exists yet). The `Wp` test is under D3.
+- [ ] **D14 Sample image controller** — `apps/AppMvc/Controllers/ImageController.cs:15, 25`
+  Content type `image/jpg` for PNG bytes, a hard-coded `Q:\` path, and unbounded `width` / `height`
+  from the query string (`100000 × 100000` tries ~40 GB). Fix: `"image/png"`, the path from config,
+  and cap both sizes (e.g. 4000) before `ApplyMask`.
+
+## Investigate later — D10
+
+- [ ] **D10 Custom fields query per post** — `src/Jeebs.WordPress/Functions/QueryPostsF.HydrateAsync.cs:51`,
+  `src/Jeebs.WordPress/CustomFields/AttachmentCustomField.cs:65`, `TermCustomField.cs`
+  Each attachment field runs a posts query plus a meta query for every post (about 120 queries for
+  20 sermons with three attachment fields). Batching means changing `ICustomField.HydrateAsync`
+  from one post to many, so it is a refactor, not a fix. First measure the query count and time on
+  a real sermons list page; only design a batched hydrate if it is slow.
 
 ---
 

@@ -23,14 +23,16 @@ public static partial class QueryPostsF
 	{
 		if (posts.Any() && postsMeta.Count > 0)
 		{
+			// Group meta by post once, so each post only looks at its own rows
+			var metaByPost = postsMeta.ToLookup(m => m.PostId);
+
 			// Add meta to each post
 			foreach (var post in posts)
 			{
-				var postMeta = from m in postsMeta
+				var postMeta = from m in metaByPost[post.Id]
 							   let key = m.Key
 							   let value = m.Value
-							   where m.PostId == post.Id
-							   && !string.IsNullOrEmpty(key)
+							   where !string.IsNullOrEmpty(key)
 							   && !string.IsNullOrEmpty(value)
 							   select new KeyValuePair<string, string>(key, value);
 

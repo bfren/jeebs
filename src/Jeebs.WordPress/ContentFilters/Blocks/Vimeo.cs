@@ -1,6 +1,8 @@
 // Jeebs Rapid Application Development
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
+using System.Net;
+
 namespace Jeebs.WordPress.ContentFilters.Blocks;
 
 /// <summary>
@@ -14,6 +16,8 @@ internal static class Vimeo
 	/// <param name="content">Post content.</param>
 	internal static string Parse(string content) =>
 		Embed.Parse(content, Embed.EmbedType.Video, Embed.Provider.Vimeo, (id, embed) =>
-			string.Format(F.DefaultCulture, "<div id=\"{0}\" class=\"hide video-vimeo\" data-url=\"{1}\">{2}</div>", id, embed.Url, embed.Url)
-		);
+		{
+			var url = WebUtility.HtmlEncode(embed.Url);
+			return string.Format(F.DefaultCulture, "<div id=\"{0}\" class=\"hide video-vimeo\" data-url=\"{1}\">{2}</div>", id, url, url);
+		});
 }

@@ -3,6 +3,7 @@
 
 using System;
 using System.Linq;
+using System.Net;
 using System.Text.RegularExpressions;
 using Jeebs.Functions;
 using RndF;
@@ -37,15 +38,18 @@ internal static partial class YouTube
 			var info = match.Groups[2].Value;
 			_ = JsonF.Deserialise<YouTubeParsed>(info).IfOk(youTube =>
 			{
-				// Get URI
-				var uri = new Uri(youTube.Url);
+				// Leave the block alone if the URL is missing or not absolute
+				if (!Uri.TryCreate(youTube.Url, UriKind.Absolute, out var uri))
+				{
+					return;
+				}
 
-				// Get Video ID and replace content using output format
+				// Get Video ID and replace content using output format - AbsoluteUri keeps the URL escaped
 				if (GetVideoId(uri) is string videoId)
 				{
 					content = content.Replace(
 						match.Value,
-						string.Format(F.DefaultCulture, format, Rnd.StringF.Get(10), videoId, uri)
+						string.Format(F.DefaultCulture, format, Rnd.StringF.Get(10), WebUtility.HtmlEncode(videoId), WebUtility.HtmlEncode(uri.AbsoluteUri))
 					);
 				}
 			});

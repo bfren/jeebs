@@ -108,6 +108,6 @@ public abstract class Wp<TConfig, TC, TCm, TL, TO, TP, TPm, TT, TTm, TTr, TTt, T
 		Db = new WpDb<TC, TCm, TL, TO, TP, TPm, TT, TTm, TTr, TTt, TU, TUm>(dbClient, dbConfig, wpConfig, logForDb);
 
 		// Initialise
-		Init<WpConfig>(logForDb.ForContext<Wp>());
+		Init<TConfig>(logForDb.ForContext<Wp>());
 	}
 }
