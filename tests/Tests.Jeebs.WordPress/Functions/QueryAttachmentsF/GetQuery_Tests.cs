@@ -37,7 +37,6 @@ public class GetQuery_Tests
 				"`p`.`ID` AS 'Id', " +
 				"`p`.`post_title` AS 'Title', " +
 				"`p`.`post_excerpt` AS 'Description', " +
-				"`p`.`guid` AS 'Url', " +
 				"`pm`.`meta_value` AS 'UrlPath', " +
 				$"CONCAT('{virtualUploadsUrl}/', `pm`.`meta_value`) AS 'Url' " +
 			$"FROM `{schema.Posts}` AS `p` " +
