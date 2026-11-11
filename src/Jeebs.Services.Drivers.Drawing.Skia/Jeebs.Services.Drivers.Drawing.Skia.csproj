@@ -4,6 +4,8 @@
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="SkiaSharp" />
+    <!-- SkiaSharp only brings Windows / macOS / mobile native libraries; no fontconfig needed as no text is drawn -->
+    <PackageReference Include="SkiaSharp.NativeAssets.Linux.NoDependencies" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Jeebs.Services.Drawing\Jeebs.Services.Drawing.csproj" />
