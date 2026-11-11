@@ -203,4 +203,14 @@
       <Build Solution="Release|*" Project="false" />
     </Project>
   </Folder>
+  <Folder Name="/tests/.Services/">
+    <Project Path="tests/Tests.Jeebs.Services.Drawing/Tests.Jeebs.Services.Drawing.csproj">
+      <Build Solution="Release|*" Project="false" />
+    </Project>
+  </Folder>
+  <Folder Name="/tests/.Services/.Drivers/">
+    <Project Path="tests/Tests.Jeebs.Services.Drivers.Drawing.Skia/Tests.Jeebs.Services.Drivers.Drawing.Skia.csproj">
+      <Build Solution="Release|*" Project="false" />
+    </Project>
+  </Folder>
 </Solution>
