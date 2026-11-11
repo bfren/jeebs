@@ -4,25 +4,37 @@
 using Jeebs.Services.Drawing;
 using Microsoft.AspNetCore.Mvc;
 using Wrap.Extensions;
-using Wrap.Linq;
 
 namespace AppMvc.Controllers;
 
-public class ImageController(IImageDriver image) : Controller
+public class ImageController(IImageDriver image, IConfiguration config) : Controller
 {
+	// Width and height come from the query string, so cap them before allocating an image
+	private const int MaxSize = 4000;
+
 	private readonly IImageDriver image = image;
 
-	private readonly string path = @"Q:\Personal\Images\Photos\DSC_5425.jpg";
+	private readonly IConfiguration config = config;
 
 	public IActionResult Image(int width, int height)
 	{
-		var r = from i in image.FromFile(path)
-				from m in i.ApplyMask(width, height)
-				from a in m.ToPngByteArray()
-				select a;
+		if (width is < 0 or > MaxSize || height is < 0 or > MaxSize)
+		{
+			return BadRequest();
+		}
+
+		if (config["ImagePath"] is not string path)
+		{
+			return NotFound();
+		}
+
+		// Dispose each image once the next step has used it
+		var r = image.FromFile(path)
+			.Bind(i => { using (i) { return i.ApplyMask(width, height); } })
+			.Bind(m => { using (m) { return m.ToPngByteArray(); } });
 
 		return r.Match(
-			fOk: x => File(x, "image/jpg") as IActionResult,
+			fOk: x => File(x, "image/png") as IActionResult,
 			fFail: _ => NotFound()
 		);
 	}
