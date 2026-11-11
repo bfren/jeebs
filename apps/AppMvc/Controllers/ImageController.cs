@@ -18,7 +18,8 @@ public class ImageController(IImageDriver image, IConfiguration config) : Contro
 
 	public IActionResult Image(int width, int height)
 	{
-		if (width is < 0 or > MaxSize || height is < 0 or > MaxSize)
+		// Both sides are required: with one at 0 the other is worked out from the image, so the cap wouldn't hold
+		if (width is < 1 or > MaxSize || height is < 1 or > MaxSize)
 		{
 			return BadRequest();
 		}
