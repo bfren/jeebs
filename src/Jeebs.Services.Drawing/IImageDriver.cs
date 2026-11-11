@@ -20,5 +20,5 @@ public interface IImageDriver
 	/// Create image object from a stream.
 	/// </summary>
 	/// <param name="stream">Stream.</param>
-	IImageWrapper FromStream(Stream stream);
+	Result<IImageWrapper> FromStream(Stream stream);
 }

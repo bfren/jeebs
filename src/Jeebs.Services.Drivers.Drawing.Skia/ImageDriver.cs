@@ -23,14 +23,30 @@ public sealed class ImageDriver : IImageDriver
 
 		// Create and return image object
 		using var image = SKImage.FromEncodedData(path);
-		return new ImageWrapper(image.EncodedData);
+		return WrapImageIfNotNull(image, nameof(FromFile));
 	}
 
 	/// <inheritdoc/>
-	public IImageWrapper FromStream(Stream stream)
+	public Result<IImageWrapper> FromStream(Stream stream)
 	{
 		// Create and return image object
 		using var image = SKImage.FromEncodedData(stream);
-		return new ImageWrapper(image.EncodedData);
+		return WrapImageIfNotNull(image, nameof(FromStream));
 	}
+
+	/// <summary>
+	/// Wrap a decoded image - Skia returns null when the data is not an image it can read.
+	/// </summary>
+	/// <param name="image">Decoded image, or null.</param>
+	/// <param name="method">Calling method name, for the failure context.</param>
+	private static Result<IImageWrapper> WrapImageIfNotNull(SKImage? image, string method) =>
+		image switch
+		{
+			SKImage x =>
+				new ImageWrapper(x.EncodedData),
+
+			_ =>
+				R.Fail("Not a valid image.")
+					.Ctx(nameof(ImageDriver), method)
+		};
 }

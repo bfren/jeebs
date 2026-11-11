@@ -1,6 +1,6 @@
 # Audit fix plan
 
-Four audits so far, phases 1–15 done, 16–17 to do. Each phase is one issue / branch, one commit per item, and ends with:
+Four audits so far, phases 1–17 done (D10 still to investigate). Each phase is one issue / branch, one commit per item, and ends with:
 
 ```bash
 dotnet test --solution "Jeebs (v10).slnx" --configuration Test
@@ -16,16 +16,26 @@ Mark items `[x]` as they land.
 | 1–7 | First audit, 2026-11-07 (v9.4.4) | #1–#16 | #602–#612 | yes |
 | 8–11 | Second audit, 2026-11-07 (v10.0.0-beta.1) | B1–B12 | #624–#632 | yes |
 | 12–15 | Third audit, 2026-11-08 (v10.0.0-beta.1) | C1–C14 | #634, #637, #639, #641 | yes |
-| 16–17 | Fourth audit, 2026-11-11 (v10.0.0-beta.2) | D1–D14 | #647, #648 | no |
+| 16–17 | Fourth audit, 2026-11-11 (v10.0.0-beta.2) | D1–D14 | #647, #648 | yes (D10 open) |
+
+Released in **v10.0.0-beta.2** (2026-11-10, #645 / #646), the first published v10 pre-release
+(beta.1 was never released). Its release notes were built from the breaking changes list below, so
+the 10.0.0 notes should start from beta.2's and add only what lands after it.
+
+### Done after all
+
+- **#12 reads without a transaction** (first audit, put off as "won't do"). Done in phase 12
+  (#635): the unit of work's transaction is lazy, so only a write begins it and read-only work has
+  none, and `IAdapter` methods take the `IDbConnection` with a nullable `IDbTransaction`.
 
 ### Won't do
 
-- **#12 reads without a transaction** (speed only). `IAdapter` takes an `IDbTransaction` and the
-  Dapper adapter gets its connection from `transaction.Connection`, so this needs adapter methods
-  that take an `IDbConnection` (14 files use `IAdapter`). Reads roll back on dispose, which is harmless.
 - **Rate limiting on the sign-in route.**
 - **D7 greedy shortcode regexes in `GenerateExcerpt`.** WordPress shortcodes don't nest or sit
   side by side in our content, so losing the text between two of them is acceptable.
+- **ImageSharp as an image driver.** Six Labors Split License: Apache 2.0 only for open-source use,
+  a transitive dependency, under 1M USD revenue or non-profits, otherwise paid - and 4.x fails Release
+  builds of the project that references it without a licence key. The Stb driver (D15) is used instead.
 
 ### Not audited yet
 
@@ -95,6 +105,13 @@ reporting, so findings come from reading the code.
 - **Config schema:** `jeebsconfig.json` is validated with NJsonSchema (MIT) instead of
   Newtonsoft.Json.Schema (AGPL). It accepts the same files, but the error text in
   `ConfigSchemaValidationFailedException` is worded differently.
+- **Images:** `ImageFormat.Bmp`, `Gif` and `Ico` are removed (Skia can't write them; saving crashed).
+  `IImageDriver.FromStream` returns `Result<IImageWrapper>`, and both `FromFile` and `FromStream`
+  fail with "Not a valid image." instead of throwing. `IImageWrapper` is `IDisposable`, so dispose
+  each wrapper (including the one `ApplyMask` returns) to free its memory. The Skia driver now
+  brings the Linux native library, so apps no longer need to add it. Publish with `-r <rid>`
+  (e.g. `-r linux-x64`): a publish without one copies SkiaSharp's native library for every
+  platform, about 470 MB, against about 12 MB for one.
 
 ---
 
@@ -143,29 +160,47 @@ D7 is in Won't do; D10 is investigate-first.
 
 ## Phase 17 — images (D5, D6, D8, D9, D11 part, D14)
 
-- [ ] **D5 Remove unsupported image formats** — `src/Jeebs.Services.Drawing/ImageFormat.cs`,
+- [x] **D5 Remove unsupported image formats** — `src/Jeebs.Services.Drawing/ImageFormat.cs`,
   `src/Jeebs.Services.Drivers.Drawing.Skia/Extensions/…/ImageFormatExtensions…cs:19-26`
   Skia only encodes JPEG, PNG and WebP; `Encode` returns null for the rest and `Save` throws a
   `NullReferenceException`. Fix: remove `Bmp`, `Gif` and `Ico` (keep `Jpeg = 3`, `Png = 4` so stored
   values don't change) and their switch arms. Update the `GetEncodedImageFormat` tests. **Breaking.**
-- [ ] **D6 Invalid image data throws** — `src/Jeebs.Services.Drivers.Drawing.Skia/ImageDriver.cs:25, 33`
+  Done. There were no `GetEncodedImageFormat` tests, so they are new (see D11).
+- [x] **D6 Invalid image data throws** — `src/Jeebs.Services.Drivers.Drawing.Skia/ImageDriver.cs:25, 33`
   `SKImage.FromEncodedData` returns null for a non-image. Fix: return
   `R.Fail("Not a valid image.")` when it is null, and make `FromStream` return
   `Result<IImageWrapper>` like `FromFile`. Test: a text file / stream fails. **Breaking.**
-- [ ] **D8 Resizing uses nearest-neighbour sampling** — `src/Jeebs.Services.Drivers.Drawing.Skia/ImageWrapper.cs:80`
+- [x] **D8 Resizing uses nearest-neighbour sampling** — `src/Jeebs.Services.Drivers.Drawing.Skia/ImageWrapper.cs:80`
   `new()` sampling options mean no smoothing. Fix:
   `new SKSamplingOptions(SKFilterMode.Linear, SKMipmapMode.Linear)`; drop the `IsAntialias` paint
   if it no longer does anything.
-- [ ] **D9 Image wrappers can't be disposed through the interface** — `src/Jeebs.Services.Drawing/IImageWrapper.cs:9`
+  Done; the paint is gone (`IsAntialias` only affects shape edges). The test checks that halving
+  1px black / white stripes gives grey, and fails (pure black) with the old `new()`.
+- [x] **D9 Image wrappers can't be disposed through the interface** — `src/Jeebs.Services.Drawing/IImageWrapper.cs:9`
   Native bitmaps wait for the finaliser. Fix: `IImageWrapper : IDisposable` (base `ImageWrapper`
   gets an abstract or virtual `Dispose`), and dispose both wrappers in `AppMvc`'s `ImageController`. **Breaking.**
-- [ ] **D11 Tests for the image code** — new `tests/Tests.Jeebs.Services.Drawing` (register in the
+  Done with an abstract `Dispose`.
+- [x] **D11 Tests for the image code** — new `tests/Tests.Jeebs.Services.Drawing` (register in the
   `.slnx` under `/tests/`) for `ImageF.CalculateNewSize` / `CalculateMask` (e.g. 400×200 into
   100×100), and a new `Tests.Jeebs.Services.Drivers.Drawing.Skia` for D5, D6 and D8 (neither project exists yet). The `Wp` test is under D3.
-- [ ] **D14 Sample image controller** — `apps/AppMvc/Controllers/ImageController.cs:15, 25`
+  Done: 6 + 11 tests, under new `/tests/.Services/` and `/tests/.Services/.Drivers/` solution folders.
+  SkiaSharp ships no Linux native library, so CI (Ubuntu) couldn't run them, and nor could any app on
+  a Linux server. The driver now references `SkiaSharp.NativeAssets.Linux.NoDependencies` (no
+  fontconfig needed, as nothing draws text), which brings glibc, musl and ARM builds.
+- [x] **D14 Sample image controller** — `apps/AppMvc/Controllers/ImageController.cs:15, 25`
   Content type `image/jpg` for PNG bytes, a hard-coded `Q:\` path, and unbounded `width` / `height`
   from the query string (`100000 × 100000` tries ~40 GB). Fix: `"image/png"`, the path from config,
   and cap both sizes (e.g. 4000) before `ApplyMask`.
+  Done: `ImagePath` in `appsettings.Development.json`, 400 Bad Request outside 1–4000 (both sides
+  required - with one at 0 the other is worked out from the image, so the cap wouldn't hold).
+- [x] **D15 Managed image driver** — new `src/Jeebs.Services.Drivers.Drawing.Stb`
+  SkiaSharp's native libraries add ~470 MB to a publish without `-r`. The Stb driver has no native
+  code: `StbImageSharp` (MIT / Unlicense) reads, `StbImageWriteSharp` (public domain) writes JPEG and
+  PNG, and `PixelF.Resize` crops and resizes with a two-pass tent filter (bilinear when enlarging,
+  area-weighted when shrinking, colour weighted by alpha). Skia applies EXIF orientation and stb
+  doesn't, so `PixelF.GetOrientation` / `Orient` do it; all eight orientations match the Skia driver.
+  About 4× slower than Skia: ~195 ms against ~49 ms for a 6000×4000 JPEG to a 400×300 thumbnail
+  (Apple Silicon, Release). 31 tests in `tests/Tests.Jeebs.Services.Drivers.Drawing.Stb`.
 
 ## Investigate later — D10
 
@@ -246,9 +281,13 @@ Must fix: C1–C5. Should fix: C6–C11. Nice to have: C12–C14.
   writes `\n` on Linux where RFC 5545 needs `\r\n`. Fix: one escape helper (`\` → `\\`, `;` → `\;`,
   `,` → `\,`, newline → `\n`) on the three fields; write `\r\n`. Test: a description with a
   newline and a location with a comma.
+  Done (`VCalendar.Escape`, `Escape_Tests`). `Escape` also treats a null field as empty, so an event
+  with no location writes `LOCATION:` as before instead of throwing.
 - [x] **C14 Lines folded by characters, not bytes** — same `AppendMax75`
   RFC 5545 folds at 75 octets; accented text makes longer lines and a split can cut an emoji.
   Fix: fold by UTF-8 byte count without splitting a rune. Test with accents and an emoji.
+  Done: 74 bytes of text per line (each folded line starts with a space), so ASCII output is
+  unchanged. `AppendMax75_Tests` covers accents, an emoji at the fold and a mixed string.
 
 ## Phase 15 — dependencies and small fixes (C6, C13)
 

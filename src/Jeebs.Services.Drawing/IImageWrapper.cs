@@ -1,12 +1,14 @@
 // Jeebs Rapid Application Development
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
+using System;
+
 namespace Jeebs.Services.Drawing;
 
 /// <summary>
-/// Image wrapper.
+/// Image wrapper - dispose it to free the image memory.
 /// </summary>
-public interface IImageWrapper
+public interface IImageWrapper : IDisposable
 {
 	/// <summary>
 	/// Image width.

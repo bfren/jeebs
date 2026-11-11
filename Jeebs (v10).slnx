@@ -11,6 +11,9 @@
       <Build Solution="Release|*" Project="false" />
       <Build Solution="Test|*" Project="false" />
     </Project>
+    <Project Path="tests/Tests.Jeebs.Services.Drivers.Drawing.Stb/Tests.Jeebs.Services.Drivers.Drawing.Stb.csproj">
+      <Build Solution="Release|*" Project="false" />
+    </Project>
     <Project Path="apps/AppBasic/AppBasic.csproj">
       <Build Solution="Release|*" Project="false" />
       <Build Solution="Test|*" Project="false" />
@@ -117,6 +120,7 @@
   </Folder>
   <Folder Name="/src/.Services/.Drivers/">
     <Project Path="src/Jeebs.Services.Drivers.Drawing.Skia/Jeebs.Services.Drivers.Drawing.Skia.csproj" />
+    <Project Path="src/Jeebs.Services.Drivers.Drawing.Stb/Jeebs.Services.Drivers.Drawing.Stb.csproj" />
     <Project Path="src/Jeebs.Services.Drivers.Webhook.Slack/Jeebs.Services.Drivers.Webhook.Slack.csproj" />
   </Folder>
   <Folder Name="/tests/">
@@ -200,6 +204,16 @@
       <Build Solution="Release|*" Project="false" />
     </Project>
     <Project Path="tests/Tests.Jeebs.Mvc/Tests.Jeebs.Mvc.csproj">
+      <Build Solution="Release|*" Project="false" />
+    </Project>
+  </Folder>
+  <Folder Name="/tests/.Services/">
+    <Project Path="tests/Tests.Jeebs.Services.Drawing/Tests.Jeebs.Services.Drawing.csproj">
+      <Build Solution="Release|*" Project="false" />
+    </Project>
+  </Folder>
+  <Folder Name="/tests/.Services/.Drivers/">
+    <Project Path="tests/Tests.Jeebs.Services.Drivers.Drawing.Skia/Tests.Jeebs.Services.Drivers.Drawing.Skia.csproj">
       <Build Solution="Release|*" Project="false" />
     </Project>
   </Folder>
