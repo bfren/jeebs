@@ -1,6 +1,6 @@
 # Audit fix plan
 
-Four audits so far, phases 1–15 done, 16–17 to do. Each phase is one issue / branch, one commit per item, and ends with:
+Four audits so far, phases 1–17 done (D10 still to investigate). Each phase is one issue / branch, one commit per item, and ends with:
 
 ```bash
 dotnet test --solution "Jeebs (v10).slnx" --configuration Test
@@ -16,7 +16,7 @@ Mark items `[x]` as they land.
 | 1–7 | First audit, 2026-11-07 (v9.4.4) | #1–#16 | #602–#612 | yes |
 | 8–11 | Second audit, 2026-11-07 (v10.0.0-beta.1) | B1–B12 | #624–#632 | yes |
 | 12–15 | Third audit, 2026-11-08 (v10.0.0-beta.1) | C1–C14 | #634, #637, #639, #641 | yes |
-| 16–17 | Fourth audit, 2026-11-11 (v10.0.0-beta.2) | D1–D14 | #647, #648 | no |
+| 16–17 | Fourth audit, 2026-11-11 (v10.0.0-beta.2) | D1–D14 | #647, #648 | yes (D10 open) |
 
 ### Won't do
 
@@ -95,6 +95,11 @@ reporting, so findings come from reading the code.
 - **Config schema:** `jeebsconfig.json` is validated with NJsonSchema (MIT) instead of
   Newtonsoft.Json.Schema (AGPL). It accepts the same files, but the error text in
   `ConfigSchemaValidationFailedException` is worded differently.
+- **Images:** `ImageFormat.Bmp`, `Gif` and `Ico` are removed (Skia can't write them; saving crashed).
+  `IImageDriver.FromStream` returns `Result<IImageWrapper>`, and both `FromFile` and `FromStream`
+  fail with "Not a valid image." instead of throwing. `IImageWrapper` is `IDisposable`, so dispose
+  each wrapper (including the one `ApplyMask` returns) to free its memory. The Skia driver now
+  brings the Linux native library, so apps no longer need to add it.
 
 ---
 
@@ -143,29 +148,38 @@ D7 is in Won't do; D10 is investigate-first.
 
 ## Phase 17 — images (D5, D6, D8, D9, D11 part, D14)
 
-- [ ] **D5 Remove unsupported image formats** — `src/Jeebs.Services.Drawing/ImageFormat.cs`,
+- [x] **D5 Remove unsupported image formats** — `src/Jeebs.Services.Drawing/ImageFormat.cs`,
   `src/Jeebs.Services.Drivers.Drawing.Skia/Extensions/…/ImageFormatExtensions…cs:19-26`
   Skia only encodes JPEG, PNG and WebP; `Encode` returns null for the rest and `Save` throws a
   `NullReferenceException`. Fix: remove `Bmp`, `Gif` and `Ico` (keep `Jpeg = 3`, `Png = 4` so stored
   values don't change) and their switch arms. Update the `GetEncodedImageFormat` tests. **Breaking.**
-- [ ] **D6 Invalid image data throws** — `src/Jeebs.Services.Drivers.Drawing.Skia/ImageDriver.cs:25, 33`
+  Done. There were no `GetEncodedImageFormat` tests, so they are new (see D11).
+- [x] **D6 Invalid image data throws** — `src/Jeebs.Services.Drivers.Drawing.Skia/ImageDriver.cs:25, 33`
   `SKImage.FromEncodedData` returns null for a non-image. Fix: return
   `R.Fail("Not a valid image.")` when it is null, and make `FromStream` return
   `Result<IImageWrapper>` like `FromFile`. Test: a text file / stream fails. **Breaking.**
-- [ ] **D8 Resizing uses nearest-neighbour sampling** — `src/Jeebs.Services.Drivers.Drawing.Skia/ImageWrapper.cs:80`
+- [x] **D8 Resizing uses nearest-neighbour sampling** — `src/Jeebs.Services.Drivers.Drawing.Skia/ImageWrapper.cs:80`
   `new()` sampling options mean no smoothing. Fix:
   `new SKSamplingOptions(SKFilterMode.Linear, SKMipmapMode.Linear)`; drop the `IsAntialias` paint
   if it no longer does anything.
-- [ ] **D9 Image wrappers can't be disposed through the interface** — `src/Jeebs.Services.Drawing/IImageWrapper.cs:9`
+  Done; the paint is gone (`IsAntialias` only affects shape edges). The test checks that halving
+  1px black / white stripes gives grey, and fails (pure black) with the old `new()`.
+- [x] **D9 Image wrappers can't be disposed through the interface** — `src/Jeebs.Services.Drawing/IImageWrapper.cs:9`
   Native bitmaps wait for the finaliser. Fix: `IImageWrapper : IDisposable` (base `ImageWrapper`
   gets an abstract or virtual `Dispose`), and dispose both wrappers in `AppMvc`'s `ImageController`. **Breaking.**
-- [ ] **D11 Tests for the image code** — new `tests/Tests.Jeebs.Services.Drawing` (register in the
+  Done with an abstract `Dispose`.
+- [x] **D11 Tests for the image code** — new `tests/Tests.Jeebs.Services.Drawing` (register in the
   `.slnx` under `/tests/`) for `ImageF.CalculateNewSize` / `CalculateMask` (e.g. 400×200 into
   100×100), and a new `Tests.Jeebs.Services.Drivers.Drawing.Skia` for D5, D6 and D8 (neither project exists yet). The `Wp` test is under D3.
-- [ ] **D14 Sample image controller** — `apps/AppMvc/Controllers/ImageController.cs:15, 25`
+  Done: 6 + 11 tests, under new `/tests/.Services/` and `/tests/.Services/.Drivers/` solution folders.
+  SkiaSharp ships no Linux native library, so CI (Ubuntu) couldn't run them, and nor could any app on
+  a Linux server. The driver now references `SkiaSharp.NativeAssets.Linux.NoDependencies` (no
+  fontconfig needed, as nothing draws text), which brings glibc, musl and ARM builds.
+- [x] **D14 Sample image controller** — `apps/AppMvc/Controllers/ImageController.cs:15, 25`
   Content type `image/jpg` for PNG bytes, a hard-coded `Q:\` path, and unbounded `width` / `height`
   from the query string (`100000 × 100000` tries ~40 GB). Fix: `"image/png"`, the path from config,
   and cap both sizes (e.g. 4000) before `ApplyMask`.
+  Done: `ImagePath` in `appsettings.Development.json`, 400 Bad Request outside 0–4000.
 
 ## Investigate later — D10
 
