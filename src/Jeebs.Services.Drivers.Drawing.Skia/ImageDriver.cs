@@ -23,7 +23,7 @@ public sealed class ImageDriver : IImageDriver
 
 		// Create and return image object
 		using var image = SKImage.FromEncodedData(path);
-		return Wrap(image, nameof(FromFile));
+		return WrapImageIfNotNull(image, nameof(FromFile));
 	}
 
 	/// <inheritdoc/>
@@ -31,7 +31,7 @@ public sealed class ImageDriver : IImageDriver
 	{
 		// Create and return image object
 		using var image = SKImage.FromEncodedData(stream);
-		return Wrap(image, nameof(FromStream));
+		return WrapImageIfNotNull(image, nameof(FromStream));
 	}
 
 	/// <summary>
@@ -39,7 +39,7 @@ public sealed class ImageDriver : IImageDriver
 	/// </summary>
 	/// <param name="image">Decoded image, or null.</param>
 	/// <param name="method">Calling method name, for the failure context.</param>
-	private static Result<IImageWrapper> Wrap(SKImage? image, string method) =>
+	private static Result<IImageWrapper> WrapImageIfNotNull(SKImage? image, string method) =>
 		image switch
 		{
 			SKImage x =>
