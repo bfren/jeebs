@@ -38,20 +38,20 @@ public interface ILog
 	bool IsEnabled(Microsoft.Extensions.Logging.LogLevel level);
 
 	/// <summary>
-	/// Log a <see cref="Failure"/> using the <see cref="LogLevel"/> it defines.
+	/// Log a <see cref="Wrap.Failure"/> using the <see cref="LogLevel"/> it defines.
 	/// </summary>
 	/// <param name="value">Failure to log.</param>
 	void Failure(Failure value);
 
 	/// <summary>
-	/// Log a <see cref="Failure"/> using the specified <paramref name="level"/>.
+	/// Log a <see cref="Wrap.Failure"/> using the specified <paramref name="level"/>.
 	/// </summary>
 	/// <param name="value">Failure to log.</param>
 	/// <param name="level">Log level.</param>
 	void Failure(Failure value, LogLevel level);
 
 	/// <summary>
-	/// Log an array of <see cref="Failure"/> values.
+	/// Log an array of <see cref="Wrap.Failure"/> values.
 	/// </summary>
 	/// <param name="values">Failures to log.</param>
 	void Failures(params Failure[] values);

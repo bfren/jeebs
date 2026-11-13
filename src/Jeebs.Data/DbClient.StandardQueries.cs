@@ -36,7 +36,7 @@ public abstract partial class DbClient : IDbClient
 			x => GetRetrieveQuery(x.map.Name, x.columns, x.map.IdColumn)
 		);
 
-	/// <inheritdoc cref="GetRetrieveQuery{TEntity, TModel}(object)"/>
+	/// <inheritdoc cref="GetRetrieveQuery{TEntity, TModel}()"/>
 	/// <param name="table">Table name.</param>
 	/// <param name="columns">List of columns to select.</param>
 	/// <param name="idColumn">ID column for predicate.</param>
