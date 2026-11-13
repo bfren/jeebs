@@ -59,10 +59,10 @@
     <PackageVersion Include="System.Security.Cryptography.ProtectedData" Version="11.0.0" />
     <PackageVersion Include="System.Text.Json" Version="10.0.2" />
     <PackageVersion Include="System.Threading.RateLimiting" Version="11.0.0" />
-    <PackageVersion Include="Wrap" Version="2.0.0-beta.1" />
-    <PackageVersion Include="Wrap.Id.Dapper" Version="2.0.0-beta.1" />
-    <PackageVersion Include="Wrap.Mvc" Version="2.0.0-beta.1" />
-    <PackageVersion Include="Wrap.Testing" Version="2.0.0-beta.1" />
+    <PackageVersion Include="Wrap" Version="2.0.0-beta.3" />
+    <PackageVersion Include="Wrap.Id.Dapper" Version="2.0.0-beta.3" />
+    <PackageVersion Include="Wrap.Mvc" Version="2.0.0-beta.3" />
+    <PackageVersion Include="Wrap.Testing" Version="2.0.0-beta.3" />
     <PackageVersion Include="xunit.runner.visualstudio" Version="4.0.1" />
     <PackageVersion Include="xunit.v3" Version="4.0.3" />
     <PackageVersion Include="xunit.v3.assert" Version="4.0.3" />
