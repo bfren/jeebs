@@ -106,7 +106,8 @@ reporting, so findings come from reading the code.
   Newtonsoft.Json.Schema (AGPL). It accepts the same files, but the error text in
   `ConfigSchemaValidationFailedException` is worded differently.
 - **Images:** `ImageFormat.Bmp`, `Gif` and `Ico` are removed (Skia can't write them; saving crashed).
-  `IImageDriver.FromStream` returns `Result<IImageWrapper>`, and both `FromFile` and `FromStream`
+  The remaining values are renumbered: `Unsupported = 0` (new), `Jpeg = 1`, `Png = 2` (were 3 and 4),
+  so any format stored or sent as a number must be converted. `IImageDriver.FromStream` returns `Result<IImageWrapper>`, and both `FromFile` and `FromStream`
   fail with "Not a valid image." instead of throwing. `IImageWrapper` is `IDisposable`, so dispose
   each wrapper (including the one `ApplyMask` returns) to free its memory. The Skia driver now
   brings the Linux native library, so apps no longer need to add it. Publish with `-r <rid>`
