@@ -14,12 +14,12 @@ public sealed class InvalidTableMapException : Exception
 	/// <summary>
 	/// List of errors showing why table map is invalid.
 	/// </summary>
-	public List<FailureValue> Errors { get; init; }
+	public List<Failure> Errors { get; init; }
 
 	/// <summary>
 	/// Create exception.
 	/// </summary>
 	/// <param name="errors">List of errors.</param>
-	public InvalidTableMapException(List<FailureValue> errors) =>
+	public InvalidTableMapException(List<Failure> errors) =>
 		Errors = errors;
 }

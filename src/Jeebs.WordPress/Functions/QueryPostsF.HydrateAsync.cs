@@ -36,8 +36,10 @@ public static partial class QueryPostsF
 		foreach (var post in posts)
 		{
 			// Get meta
-			if (meta.Get(post).Unsafe().TrySome(out var metaDict))
+			if (meta.Get(post) is Some<MetaDictionary> some)
 			{
+				var metaDict = some.Value;
+
 				// Add each custom field
 				foreach (var info in fields)
 				{
@@ -51,13 +53,13 @@ public static partial class QueryPostsF
 						var result = await customField.HydrateAsync(db, unitOfWork, metaDict, required);
 
 						// If it failed and it's required, return Fail
-						if (result.Unsafe().TryFailure(out var failure) && required)
+						if (result is Failure f && required)
 						{
-							return R.Fail(failure);
+							return f;
 						}
 
 						// Set the value
-						if (result.Unsafe().TryOk(out var set) && set)
+						if (result.IsTrue())
 						{
 							info.SetValue(post, customField);
 						}

@@ -29,7 +29,7 @@ public sealed class Lock_Tests
 
 		// Assert
 		var ok = result.AssertOk();
-		Assert.NotNull(ok.EncryptedContents);
+		ok.EncryptedContents.AssertSome();
 	}
 
 	[Fact]
@@ -43,6 +43,6 @@ public sealed class Lock_Tests
 
 		// Assert
 		var ok = result.AssertOk();
-		Assert.NotNull(ok.EncryptedContents);
+		ok.EncryptedContents.AssertSome();
 	}
 }

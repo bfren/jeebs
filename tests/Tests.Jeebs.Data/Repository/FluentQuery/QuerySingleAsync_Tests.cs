@@ -30,8 +30,8 @@ public class QuerySingleAsync_Tests : FluentQuery_Tests
 	{
 		// Arrange
 		var (query, _) = Setup();
-		var m0 = FailGen.Create().Value;
-		var m1 = FailGen.Create().Value;
+		var m0 = FailGen.Create();
+		var m1 = FailGen.Create();
 		query.Errors.Add(m0);
 		query.Errors.Add(m1);
 

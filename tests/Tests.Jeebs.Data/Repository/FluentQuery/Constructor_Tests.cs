@@ -24,7 +24,7 @@ public class Constructor_Tests
 
 		// Assert
 		var single = Assert.Single(result.Errors);
-		Assert.Equal(reason.Value, single);
+		Assert.Equal(reason, single);
 	}
 
 	[Fact]

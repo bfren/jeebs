@@ -135,7 +135,7 @@ public abstract record class Op : IOp
 	/// Create an error result with a failure message.
 	/// </summary>
 	/// <param name="failure">Failure value.</param>
-	public static Op Error(FailureValue failure) =>
+	public static Op Error(Failure failure) =>
 		new Op<bool>(R.Fail(failure));
 
 	/// <summary>

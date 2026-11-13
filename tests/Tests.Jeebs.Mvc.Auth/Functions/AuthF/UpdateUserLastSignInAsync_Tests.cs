@@ -72,7 +72,7 @@ public class UpdateUserLastSignInAsync_Tests
 		_ = await AuthF.UpdateUserLastSignInAsync(v.Provider, v.UserId, v.Log);
 
 		// Assert
-		v.Log.Received().Failure(failure.Value);
+		v.Log.Received().Failure(failure);
 	}
 
 	[Fact]

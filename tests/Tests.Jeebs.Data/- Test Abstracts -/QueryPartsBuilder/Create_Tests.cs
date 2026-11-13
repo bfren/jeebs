@@ -35,7 +35,7 @@ public abstract class Create_Tests<TBuilder, TId, TModel> : QueryPartsBuilder_Te
 		var result = builder.Create<TModel>(null, Rnd.UInt64);
 
 		// Assert
-		Assert.NotSame(v.Parts, result);
+		Assert.NotEqual(v.Parts, result);
 		v.Extract.Received().From<TModel>(Arg.Any<ITable[]>());
 	}
 

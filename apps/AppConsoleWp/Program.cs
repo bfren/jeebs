@@ -67,7 +67,7 @@ await bcg.Db.Query.PostsAsync<SermonModel>(2, opt => opt with
 .AuditAsync(
 	fOk: x =>
 	{
-		if (!x.Any())
+		if (x.Count == 0)
 		{
 			log.Err("No sermons found.");
 		}
@@ -353,7 +353,7 @@ await bcg.Db.Query.PostsAsync<PostModel>(2, opt => opt with
 .AuditAsync(
 	fOk: x =>
 	{
-		if (!x.Any())
+		if (x.Count == 0)
 		{
 			log.Err("No posts found.");
 		}

@@ -14,5 +14,5 @@ public static partial class ClaimsPrincipalExtensions
 	/// <param name="claimType">Claim type.</param>
 	/// <returns>Whether or not the current user has the specified Claim.</returns>
 	public static bool HasClaim(this ClaimsPrincipal @this, string claimType) =>
-		@this.GetClaim(claimType).IsSome;
+		@this.GetClaim(claimType) is Some<string>;
 }

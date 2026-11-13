@@ -3,6 +3,7 @@
 
 using System.Threading.Tasks;
 using Jeebs.Auth;
+using Jeebs.Auth.Jwt;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using Microsoft.AspNetCore.Razor.TagHelpers;
@@ -38,14 +39,15 @@ public sealed class JwtTagHelper : TagHelper
 	public override Task ProcessAsync(TagHelperContext context, TagHelperOutput output)
 	{
 		// ViewContext is required or we can't get the current user
-		if (ViewContext != null && Provider.CreateToken(ViewContext.HttpContext.User).Unsafe().TryOk(out var t))
+		if (ViewContext != null && Provider.CreateToken(ViewContext.HttpContext.User) is Ok<JsonWebToken> ok)
 		{
+			var token = ok.Value;
 			output.TagName = "input";
 			output.TagMode = TagMode.SelfClosing;
 			output.Attributes.Add("type", "hidden");
 			output.Attributes.Add("id", "token");
 			output.Attributes.Add("name", "token");
-			output.Attributes.Add("value", t.Value);
+			output.Attributes.Add("value", token.Value);
 		}
 		else
 		{

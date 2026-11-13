@@ -35,7 +35,7 @@ public class Parse_Tests
 		var result = Record.Exception(() => handler.Parse(input));
 
 		// Assert
-		var ex = Assert.IsType<FailureException>(result);
+		var ex = Assert.IsType<UnsafeUnwrapException>(result);
 		Assert.IsType<JsonException>(ex.InnerException);
 	}
 

@@ -172,7 +172,7 @@ await db.DoWorkAsync(async unitOfWork =>
 			);
 
 		// returning a failure stops the loop and saves none of the inserts
-		if (!result.IsOk)
+		if (result is Failure)
 		{
 			return result;
 		}
@@ -218,9 +218,9 @@ await db.DoWorkAsync(async unitOfWork =>
 			);
 
 		// returning a failure stops the loop and saves none of the inserts
-		if (result.Unsafe().TryFailure(out var failure))
+		if (result is Failure f)
 		{
-			return R.Fail(failure);
+			return f;
 		}
 	}
 

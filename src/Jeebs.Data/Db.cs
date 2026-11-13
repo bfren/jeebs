@@ -12,7 +12,6 @@ using Jeebs.Data.Map;
 using Jeebs.Data.Query;
 using Jeebs.Logging;
 using Microsoft.Extensions.Options;
-using Wrap.Exceptions;
 using Defaults = Jeebs.Constants.PagingValues;
 
 namespace Jeebs.Data;
@@ -40,7 +39,7 @@ public abstract class Db : IDb
 	/// <param name="log">ILog (should be given a context of the implementing class).</param>
 	/// <param name="name">Connection name.</param>
 	protected Db(IDbClient client, IOptions<DbConfig> config, ILog log, string name) :
-		this(client, config.Value.GetConnection(name).Unwrap(), log)
+		this(client, config.Value.GetConnection(name).Unsafe().Unwrap(), log)
 	{ }
 
 	/// <summary>
@@ -100,7 +99,7 @@ public abstract class Db : IDb
 			x => Client.Escape(x, true)
 		)
 		.Unwrap(
-			f => throw new InvalidOperationException($"Could not get column from expression: {column}.", new FailureException(f))
+			f => throw new InvalidOperationException($"Could not get column from expression: {column}: {f}")
 		);
 
 	/// <inheritdoc/>

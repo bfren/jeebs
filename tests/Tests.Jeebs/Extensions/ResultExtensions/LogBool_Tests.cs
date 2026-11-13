@@ -55,6 +55,6 @@ public class LogBool_Tests
 		_ = result.LogBool(log, ifTrue: Rnd.Str, ifFalse: Rnd.Str);
 
 		// Assert
-		log.Received(2).Failure(failure.Value);
+		log.Received(2).Failure(failure);
 	}
 }

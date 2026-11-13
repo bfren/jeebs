@@ -40,7 +40,7 @@ public class Message_Tests
 	public void Result_Is_Failure__Returns_Error()
 	{
 		// Arrange
-		var failure = FailGen.Create().Value;
+		var failure = FailGen.Create();
 		var fail = R.Fail(failure);
 		var jsonResult = new Op<long>(fail);
 

@@ -25,7 +25,7 @@ public abstract class QueryPartsBuilderWithEntity<TEntity, TId>(IEntityMapper ma
 	/// Get table map for <typeparamref name="TEntity"/>.
 	/// </summary>
 	public virtual Lazy<ITableMap> Map =>
-		new(() => mapper.GetTableMapFor<TEntity>().Unwrap());
+		new(() => mapper.GetTableMapFor<TEntity>().Unsafe().Unwrap());
 
 	/// <inheritdoc/>
 	public override ITable Table =>

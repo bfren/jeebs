@@ -17,7 +17,7 @@ public static partial class DataF
 	/// </summary>
 	/// <typeparam name="TTable">Table type.</typeparam>
 	/// <typeparam name="TEntity">Entity type.</typeparam>
-	public static (bool valid, List<FailureValue> errors) ValidateTable<TTable, TEntity>()
+	public static (bool valid, List<Failure> errors) ValidateTable<TTable, TEntity>()
 		where TTable : ITable
 		where TEntity : IWithId
 	{
@@ -36,7 +36,7 @@ public static partial class DataF
 		var entityPropertyNames = getPropertyNames(entityType);
 
 		// Compare the table columns with the entity properties
-		var errors = new List<FailureValue>();
+		var errors = new List<Failure>();
 
 		// Check for missing table columns
 		var missingTableFields = entityPropertyNames.Except(tablePropertyNames);

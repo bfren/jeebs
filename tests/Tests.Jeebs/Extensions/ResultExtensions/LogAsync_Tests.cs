@@ -40,7 +40,7 @@ public class LogAsync_Tests
 		_ = result.LogAsync(log, message: Rnd.Str);
 
 		// Assert
-		log.Received(2).Failure(failure.Value);
+		log.Received(2).Failure(failure);
 		return Task.CompletedTask;
 	}
 }

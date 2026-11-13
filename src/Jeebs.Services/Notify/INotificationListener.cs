@@ -14,6 +14,6 @@ public interface INotificationListener
 	/// <inheritdoc cref="INotifier.Send(string, NotificationLevel)"/>
 	void Send(string message, NotificationLevel level);
 
-	/// <inheritdoc cref="INotifier.Send(FailureValue)"/>
-	void Send(FailureValue failure);
+	/// <inheritdoc cref="INotifier.Send(Failure)"/>
+	void Send(Failure failure);
 }

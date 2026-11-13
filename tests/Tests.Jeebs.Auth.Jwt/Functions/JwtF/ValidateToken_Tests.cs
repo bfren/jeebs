@@ -43,7 +43,7 @@ public class ValidateToken_Tests
 			principal,
 			notBefore,
 			expires
-		).Unwrap();
+		).Unsafe().Unwrap();
 
 		return (config, token, name);
 	}

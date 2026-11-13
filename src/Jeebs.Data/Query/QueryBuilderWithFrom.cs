@@ -32,7 +32,7 @@ public sealed record class QueryBuilderWithFrom : IQueryBuilderWithFrom
 	internal QueryBuilderWithFrom(ITable from)
 	{
 		Parts = new QueryParts(from);
-		Tables = new([from]);
+		Tables = [from];
 	}
 
 	/// <summary>
@@ -94,8 +94,8 @@ public sealed record class QueryBuilderWithFrom : IQueryBuilderWithFrom
 		AddTable<TTo>();
 
 		// Get columns
-		var from = DataF.GetColumnFromExpression(fromColumn).Unwrap();
-		var to = DataF.GetColumnFromExpression(toColumn).Unwrap();
+		var from = DataF.GetColumnFromExpression(fromColumn).Unsafe().Unwrap();
+		var to = DataF.GetColumnFromExpression(toColumn).Unsafe().Unwrap();
 
 		// Add to query
 		return type switch
@@ -144,7 +144,7 @@ public sealed record class QueryBuilderWithFrom : IQueryBuilderWithFrom
 		{
 			Parts = Parts with
 			{
-				Where = Parts.Where.WithItem((DataF.GetColumnFromExpression(table, column).Unwrap(), cmp, value))
+				Where = Parts.Where.WithItem((DataF.GetColumnFromExpression(table, column).Unsafe().Unwrap(), cmp, value))
 			}
 		};
 	}
@@ -161,7 +161,7 @@ public sealed record class QueryBuilderWithFrom : IQueryBuilderWithFrom
 		{
 			Parts = Parts with
 			{
-				Sort = Parts.Sort.WithItem((DataF.GetColumnFromExpression(table, column).Unwrap(), SortOrder.Ascending))
+				Sort = Parts.Sort.WithItem((DataF.GetColumnFromExpression(table, column).Unsafe().Unwrap(), SortOrder.Ascending))
 			}
 		};
 	}
@@ -178,7 +178,7 @@ public sealed record class QueryBuilderWithFrom : IQueryBuilderWithFrom
 		{
 			Parts = Parts with
 			{
-				Sort = Parts.Sort.WithItem((DataF.GetColumnFromExpression(table, column).Unwrap(), SortOrder.Descending))
+				Sort = Parts.Sort.WithItem((DataF.GetColumnFromExpression(table, column).Unsafe().Unwrap(), SortOrder.Descending))
 			}
 		};
 	}
