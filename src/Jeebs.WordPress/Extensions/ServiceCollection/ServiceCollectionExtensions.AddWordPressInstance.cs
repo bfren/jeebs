@@ -1,12 +1,16 @@
 // Jeebs Rapid Application Development
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
+using Jeebs.Config.Db;
 using Jeebs.Config.WordPress;
 using Jeebs.Data.Adapters.Dapper;
 using Jeebs.Data.Clients.MySql;
 using Jeebs.Data.Common;
+using Microsoft.Extensions.Caching.Distributed;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 
 namespace Jeebs.WordPress;
 
@@ -53,6 +57,10 @@ public static partial class ServiceCollectionExtensions
 			where TWp : class, IWp<TWpConfig>
 			where TWpConfig : WpConfig
 		{
+			// TWp is the app's own type, so its constructor is only known at run time - build the factory
+			// once here rather than in every scope
+			var createWp = ActivatorUtilities.CreateFactory<TWp>([typeof(IDbClient)]);
+
 			// WordPress gets its own cached client, so the app's other databases keep their own
 			// IDbClient, IAdapter and ICacheService
 			_ = services
@@ -60,10 +68,10 @@ public static partial class ServiceCollectionExtensions
 				.Configure<TWpConfig>(config.GetSection(section))
 				.AddScoped(p =>
 				{
-					var cache = ActivatorUtilities.CreateInstance<DistributedCacheService>(p);
+					var cache = new DistributedCacheService(p.GetRequiredService<IOptions<DbConfig>>(), p.GetRequiredService<IDistributedCache>());
 					var adapter = new DapperAdapter(DapperTypeMapper.Instance, cache);
-					var client = ActivatorUtilities.CreateInstance<MySqlDbClient>(p, adapter);
-					return ActivatorUtilities.CreateInstance<TWp>(p, client);
+					var client = new MySqlDbClient(adapter, p.GetRequiredService<ILoggerFactory>());
+					return createWp(p, [client]);
 				});
 
 			return services;

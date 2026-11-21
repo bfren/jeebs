@@ -21,14 +21,14 @@ public class AddWordPressInstance_Tests
 		var config = new ConfigurationBuilder().Build();
 
 		// Act
-		_ = services.AddWordPressInstance(Rnd.Str).Using<IWp<WpConfig>, WpConfig>(config);
+		_ = services.AddWordPressInstance(Rnd.Str).Using<TestWp, WpConfig>(config);
 
 		// Assert
 		Assert.DoesNotContain(services, s => s.ServiceType == typeof(IDbClient));
 		Assert.DoesNotContain(services, s => s.ServiceType == typeof(IAdapter));
 		Assert.DoesNotContain(services, s => s.ServiceType == typeof(ITypeMapper));
 		Assert.DoesNotContain(services, s => s.ServiceType == typeof(ICacheService));
-		Assert.Contains(services, s => s.ServiceType == typeof(IWp<WpConfig>));
+		Assert.Contains(services, s => s.ServiceType == typeof(TestWp));
 	}
 
 	[Fact]
