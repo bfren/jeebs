@@ -136,6 +136,13 @@ the tests or started an app before reporting, so findings come from reading the 
   Error), and adapter query errors no longer include the query parameters.
 - **PostgreSQL:** `PostgreSqlDbClient` takes an optional `ICacheService`, so `AddDataQueryCache()`
   now caches PostgreSQL queries.
+- **Config schema:** `azure:dataProtection` is removed (it was never used: nothing called
+  `AddDataProtection()`), and `azure` allows no unknown keys, so delete that section from
+  `jeebsconfig.json`. `DataProtectionConfig` and `AzureConfig.Verification` are gone.
+- **Webhooks:** `IWebhookMessage.Fields` (unused since C13) and `UnknownMessageLevelException`
+  (never thrown) are removed.
+- **Data:** `Jeebs.Data.Db.LogQuery` is removed (only its test called it); `Data.Common` databases
+  keep their own `LogQuery`.
 
 ---
 
@@ -221,7 +228,7 @@ E1 must not ship without E2: fixing E1 alone turns caching on for apps that set 
 
 ## Phase 20 — deletions and CI (E7, E8, E9, E13) — #656
 
-- [ ] **E7 Data protection settings never used** — `src/Jeebs.Apps/App.cs:95`,
+- [x] **E7 Data protection settings never used** — `src/Jeebs.Apps/App.cs:95`,
   `src/Jeebs/Config/Azure/DataProtection/DataProtectionConfig.cs`
   `azure:dataProtection` is in the schema and loaded into options, but nothing calls
   `AddDataProtection()` or persists keys, so in a container keys are lost on every deploy and
@@ -229,19 +236,26 @@ E1 must not ship without E2: fixing E1 alone turns caching on for apps that set 
   test files - or, if a site needs it, wire it with
   `AddDataProtection().PersistKeysToAzureBlobStorage(...).ProtectKeysWithAzureKeyVault(...)`.
   **Breaking** if deleted.
-- [ ] **E8 Unused webhook pieces** — `src/Jeebs.Services.Webhook/IWebhookMessage.cs:27`,
+  Done: deleted, plus the two unused `Azure.Extensions.AspNetCore.DataProtection.*` package versions.
+- [x] **E8 Unused webhook pieces** — `src/Jeebs.Services.Webhook/IWebhookMessage.cs:27`,
   `src/Jeebs.Services.Webhook/Models/Message.cs:21`, `src/Jeebs.Services.Webhook/Exceptions/UnknownMessageLevelException.cs`
   Nothing reads `Fields` since C13; `UnknownMessageLevelException` is never thrown and sits in a
   stray `Jx.` namespace. Fix: delete all three. **Breaking.**
-- [ ] **E9 `Data.Db.LogQuery` only called by its test** — `src/Jeebs.Data/Db.cs:65`
+- [x] **E9 `Data.Db.LogQuery` only called by its test** — `src/Jeebs.Data/Db.cs:65`
   `Data.Common` has its own `LogQuery`, and Rqlite logs no queries. Fix: call it from the four
   Rqlite query methods, or delete it, `LogQueryTest` and `tests/Tests.Jeebs.Data/_/Db/LogQuery_Tests.cs`.
+  Done: deleted (`WriteToLog` stays - `Data.Common`'s `LogQuery` uses it).
 - [ ] **E13 Superseded test runs keep going** — `.github/workflows/test.yml`
   (raised during Phase 19) A second push to a branch starts a new run while the first carries on,
   wasting minutes, and a PR can wait on a run for a commit that is no longer the tip. Fix: add
   `concurrency: { group: ${{ github.workflow }}-${{ github.ref }}, cancel-in-progress: true }` at
   the top level - safe because the workflow never runs on `main` or tags. Check that the Slack
   notify job in `bfren/dotnet`'s reusable workflow doesn't post on cancelled runs.
+  **Blocked:** it does. `bfren/dotnet`'s `test.yml` runs `notify` with `if: always()`, which also
+  runs when a run is cancelled, and `notify.yml` counts `cancelled` as failed, so every superseded
+  run would post "Jeebs publish failed" to Slack. First change that job to `if: ${{ !cancelled() }}`
+  in `bfren/dotnet` (it still reports failures, and stops reporting cancelled runs), then add the
+  `concurrency` block here.
 
 ---
 
