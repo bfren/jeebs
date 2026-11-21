@@ -1,6 +1,6 @@
 # Audit fix plan
 
-Five audits so far, phases 1–17 done (D10 still to investigate), phases 18–20 to do. Each phase is one issue / branch, one commit per item, and ends with:
+Five audits so far, phases 1–20 done (D10 still to investigate). Each phase is one issue / branch, one commit per item, and ends with:
 
 ```bash
 dotnet test --solution "Jeebs (v10).slnx" --configuration Test
@@ -17,7 +17,7 @@ Mark items `[x]` as they land.
 | 8–11 | Second audit, 2026-11-07 (v10.0.0-beta.1) | B1–B12 | #624–#632 | yes |
 | 12–15 | Third audit, 2026-11-08 (v10.0.0-beta.1) | C1–C14 | #634, #637, #639, #641 | yes |
 | 16–17 | Fourth audit, 2026-11-11 (v10.0.0-beta.2) | D1–D14 | #647, #648 | yes (D10 open) |
-| 18–20 | Fifth audit, 2026-11-21 (v10.0.0-beta.2) | E1–E13 | #654, #655, #656 | no |
+| 18–20 | Fifth audit, 2026-11-21 (v10.0.0-beta.2) | E1–E13 | #654, #655, #656 | yes |
 
 Released in **v10.0.0-beta.2** (2026-11-10, #645 / #646), the first published v10 pre-release
 (beta.1 was never released). Its release notes were built from the breaking changes list below, so
@@ -127,13 +127,17 @@ the tests or started an app before reporting, so findings come from reading the 
   SQLite, existing mixed-case emails no longer match, so lowercase them before upgrading - this
   can't be undone, so it is a one-off step rather than a migration:
   PostgreSQL `UPDATE auth.user SET user_email = LOWER(TRIM(user_email));`,
-  SQLite `UPDATE "auth.user" SET "user_email" = LOWER(TRIM("user_email"));` (SQLite's `LOWER`
-  only changes ASCII letters). If two accounts differ only by case the unique constraint makes the
-  update fail: merge or remove one first. MySQL needs nothing (its column ignores case).
+  SQLite `UPDATE "auth.user" SET "user_email" = LOWER(TRIM("user_email"));`. If two accounts differ
+  only by case the unique constraint makes the update fail: merge or remove one first. SQLite's
+  `LOWER` only changes A-Z, so afterwards list the emails with other letters,
+  `SELECT "user_email" FROM "auth.user" WHERE "user_email" GLOB '*[^ -~]*';`, and lowercase any
+  capitals left in them by hand (e.g. `josÉ@example.com` to `josé@example.com`), or those users
+  can't sign in. MySQL needs nothing (its column ignores case).
 - **Auth data:** the Auth database client is always built with no query cache, including when it is
   also the main `IDbClient` (`useAuthDbClientAsMain`).
 - **Logging:** failed sign ins log the reason at Warning and the attempt at Information (both were
-  Error), and adapter query errors no longer include the query parameters.
+  Error). Query parameter values are no longer logged - neither in adapter query errors nor in the
+  Verbose query log, which now has the query type, return type and query only.
 - **PostgreSQL:** `PostgreSqlDbClient` takes an optional `ICacheService`, so `AddDataQueryCache()`
   now caches PostgreSQL queries.
 - **Config schema:** `azure:dataProtection` is removed (it was never used: nothing called
