@@ -93,6 +93,8 @@ public sealed class DapperAdapter : IAdapter
 
 	private static Failure Fail(string function, Exception exception, string query, object? param) =>
 		R.Fail(exception)
-			.Msg("Error executing query '{Query}' with parameters {@Param}.", query, param)
+			// parameters are left out because they can hold secrets (e.g. password hashes) - they are
+			// logged at Verbose before the query runs
+			.Msg("Error executing query '{Query}'.", query)
 			.Ctx(nameof(DapperAdapter), function);
 }

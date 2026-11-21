@@ -31,4 +31,24 @@ public class QueryAsync_Tests
 		_ = await cache.Received(1).GetOrCreateAsync(DapperAdapter.CacheKey(connection, query), param,
 			Arg.Any<Func<Task<IEnumerable<string>>>>());
 	}
+
+	[Fact]
+	public async Task Query_Throws__Failure_Does_Not_Include_Parameters()
+	{
+		// Arrange
+		var connection = Substitute.For<IDbConnection>();
+		_ = connection.ConnectionString.Returns(Rnd.Str);
+		var query = Rnd.Str;
+		var param = new { PasswordHash = Rnd.Str };
+		var cache = Substitute.For<ICacheService>();
+		_ = cache.GetOrCreateAsync(Arg.Any<string>(), Arg.Any<object?>(), Arg.Any<Func<Task<IEnumerable<string>>>>())
+			.Returns<Task<IEnumerable<string>>>(_ => throw new InvalidOperationException());
+		var adapter = new DapperAdapter(cache: cache);
+
+		// Act
+		var result = await adapter.QueryAsync<string>(connection, null, query, param, CommandType.Text);
+
+		// Assert
+		_ = result.AssertFailure("Error executing query '{Query}'.", query);
+	}
 }
