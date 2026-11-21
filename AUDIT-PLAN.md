@@ -1,6 +1,6 @@
 # Audit fix plan
 
-Four audits so far, phases 1–17 done (D10 still to investigate). Each phase is one issue / branch, one commit per item, and ends with:
+Five audits so far, phases 1–17 done (D10 still to investigate), phases 18–20 to do. Each phase is one issue / branch, one commit per item, and ends with:
 
 ```bash
 dotnet test --solution "Jeebs (v10).slnx" --configuration Test
@@ -17,6 +17,7 @@ Mark items `[x]` as they land.
 | 8–11 | Second audit, 2026-11-07 (v10.0.0-beta.1) | B1–B12 | #624–#632 | yes |
 | 12–15 | Third audit, 2026-11-08 (v10.0.0-beta.1) | C1–C14 | #634, #637, #639, #641 | yes |
 | 16–17 | Fourth audit, 2026-11-11 (v10.0.0-beta.2) | D1–D14 | #647, #648 | yes (D10 open) |
+| 18–20 | Fifth audit, 2026-11-21 (v10.0.0-beta.2) | E1–E9 | #654, #655, #656 | no |
 
 Released in **v10.0.0-beta.2** (2026-11-10, #645 / #646), the first published v10 pre-release
 (beta.1 was never released). Its release notes were built from the breaking changes list below, so
@@ -40,9 +41,9 @@ the 10.0.0 notes should start from beta.2's and add only what lands after it.
 ### Not audited yet
 
 WordPress tables, entities and enums; `Data.Testing` (skimmed only); the sample apps other than
-`AppMvc` and `AppConsoleWp`; whether the `Rqlite` package reuses its HTTP connection across
-`Connect()` calls. None of the audits ran the tests or started an app before
-reporting, so findings come from reading the code.
+`AppMvc` and `AppConsoleWp`. (The `Rqlite` package creates its clients through `IHttpClientFactory`,
+so `Connect()` reuses pooled HTTP connections - checked in the fifth audit.) None of the audits ran
+the tests or started an app before reporting, so findings come from reading the code.
 
 ### Next audit
 
@@ -113,6 +114,72 @@ reporting, so findings come from reading the code.
   brings the Linux native library, so apps no longer need to add it. Publish with `-r <rid>`
   (e.g. `-r linux-x64`): a publish without one copies SkiaSharp's native library for every
   platform, about 470 MB, against about 12 MB for one.
+
+---
+
+# Fifth audit — 2026-11-21 (v10.0.0-beta.2)
+
+Items are numbered E1–E9 to match the audit report. Must fix: E1, E2. Should fix: E3–E7.
+Nice to have: E8, E9. Left out as too small: Slack's 3,000-character section limit, the ignored PNG
+`quality` argument, and casing variants filling the `Enumerated` parse cache.
+
+## Phase 18 — query cache (E1, E2, E6) — #654
+
+- [ ] **E1 Cache off for whole minutes** — `src/Jeebs.Data.Common/DistributedCacheService.cs:26`
+  `relativeExpiration.Seconds == 0` checks only the seconds part (0–59), so 60, 120, 300 or 3600
+  seconds never cache, and a negative value gets past the check and throws when the entry is stored.
+  Fix: `if (relativeExpiration <= TimeSpan.Zero)`. Test under E6.
+- [ ] **E2 WordPress turns the cache on for every database** —
+  `src/Jeebs.WordPress/Extensions/ServiceCollection/ServiceCollectionExtensions.AddWordPressInstance.cs:57-60`
+  `Using` registers `IDbClient`, `IAdapter` and `ICacheService` for the whole app (last registration
+  wins), so the auth database's `DapperAdapter` caches user lookups too: after a password change the
+  old password keeps working, and a disabled user can still sign in, until the entry expires. With
+  `WithData(false)` the app's main `IDbClient` also becomes WordPress's MySQL client.
+  Fix: build the WordPress `MySqlDbClient` in `Using` with its own
+  `DapperAdapter(DapperTypeMapper.Instance, <cache service>)`, pass it to `TWp` through a factory
+  registration, and remove the three global registrations. Test: an app with WordPress and
+  `AddData` resolves `NullCacheService` for `ICacheService`. **Breaking** for apps that relied on
+  the global `IDbClient` / `IAdapter` WordPress registered.
+- [ ] **E6 Tests for the cache path** — `DistributedCacheService`, `DapperAdapter`
+  Neither has a test (`Tests.Jeebs.Data.Adapters.Dapper` only tests type handlers). One test with
+  a `MemoryDistributedCache`: call twice with `TimeSpan.FromMinutes(1)`, `fetch` runs once - it
+  fails before E1.
+
+## Phase 19 — auth and logging (E3, E4, E5) — #655
+
+- [ ] **E3 Email case matters on PostgreSQL and SQLite** — `src/Jeebs.Auth.Data/AuthUserRepository.cs:52, 63`
+  MySQL's column is `utf8_general_ci`; PostgreSQL `text` and SQLite `TEXT` compare exactly, so
+  `Ben@Example.com` can't sign in as `ben@example.com`, and two accounts can share an address.
+  Fix: `email.Trim().ToLowerInvariant()` in `CreateAsync` and `RetrieveAsync(string email)`.
+  **Investigate first:** existing mixed-case rows need lowercasing (and checking for duplicates)
+  before the change, or those users can't sign in. **Breaking.**
+- [ ] **E4 Password hashes in error logs** — `src/Jeebs.Data.Adapters.Dapper/DapperAdapter.cs:90`
+  `{@Param}` writes out every property of the parameter, which for user updates is the
+  `AuthUserEntity` with its `PasswordHash`. A failed password change or rehash that the caller
+  logs sends the hash to Seq, files or Slack. Fix: drop `{@Param}` and keep `{Query}` (parameters
+  are already logged at Verbose before the query runs).
+- [ ] **E5 Each wrong password logs two errors** — `src/Jeebs.Mvc.Auth/Functions/AuthF/AuthF.DoSignInAsync.cs:61, 82`
+  The validation failure and `Log.Err("Unknown username or password…")` are both Error, so with a
+  Slack sink at Error 1,000 guesses send 2,000 alerts (rate limiting is won't do). Fix: log both at
+  Information (or Warning).
+
+## Phase 20 — deletions (E7, E8, E9) — #656
+
+- [ ] **E7 Data protection settings never used** — `src/Jeebs.Apps/App.cs:95`,
+  `src/Jeebs/Config/Azure/DataProtection/DataProtectionConfig.cs`
+  `azure:dataProtection` is in the schema and loaded into options, but nothing calls
+  `AddDataProtection()` or persists keys, so in a container keys are lost on every deploy and
+  everyone is signed out. Fix: delete the class, its schema entry, the `Configure` line and its three
+  test files - or, if a site needs it, wire it with
+  `AddDataProtection().PersistKeysToAzureBlobStorage(...).ProtectKeysWithAzureKeyVault(...)`.
+  **Breaking** if deleted.
+- [ ] **E8 Unused webhook pieces** — `src/Jeebs.Services.Webhook/IWebhookMessage.cs:27`,
+  `src/Jeebs.Services.Webhook/Models/Message.cs:21`, `src/Jeebs.Services.Webhook/Exceptions/UnknownMessageLevelException.cs`
+  Nothing reads `Fields` since C13; `UnknownMessageLevelException` is never thrown and sits in a
+  stray `Jx.` namespace. Fix: delete all three. **Breaking.**
+- [ ] **E9 `Data.Db.LogQuery` only called by its test** — `src/Jeebs.Data/Db.cs:65`
+  `Data.Common` has its own `LogQuery`, and Rqlite logs no queries. Fix: call it from the four
+  Rqlite query methods, or delete it, `LogQueryTest` and `tests/Tests.Jeebs.Data/_/Db/LogQuery_Tests.cs`.
 
 ---
 
