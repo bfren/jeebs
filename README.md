@@ -14,6 +14,8 @@ Jeebs.Apps.Web.WebApp.Run(args);
 
 Please [view the book](https://docs.bfren.dev/jeebs) for information on how to use these libraries.
 
+To build from source, clone with submodules (`git clone --recursive`, or `git submodule update --init` in an existing clone): the config schema comes from [bfren/schemas](https://github.com/bfren/schemas).
+
 ## History
 
 I am definitely a backend developer at heart, although like everyone I have to write front-facing things sometimes!  However I am happiest when I'm writing code that makes frontend development easier - and more beautiful.

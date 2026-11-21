@@ -2,6 +2,8 @@
 
 .NET 10 libraries (`src/`), their tests (`tests/`) and sample apps (`apps/`), all in `Jeebs (v10).slnx`.
 Packages are versioned centrally in `Directory.Packages.props`; the release version is in `Version`.
+The config schema comes from the `schemas` submodule (bfren/schemas), embedded by `Jeebs.Config`, so
+clone with `--recursive` or run `git submodule update --init` first - the build fails without it.
 
 ## Before handing back C# changes
 
