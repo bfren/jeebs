@@ -17,7 +17,7 @@ Mark items `[x]` as they land.
 | 8–11 | Second audit, 2026-11-07 (v10.0.0-beta.1) | B1–B12 | #624–#632 | yes |
 | 12–15 | Third audit, 2026-11-08 (v10.0.0-beta.1) | C1–C14 | #634, #637, #639, #641 | yes |
 | 16–17 | Fourth audit, 2026-11-11 (v10.0.0-beta.2) | D1–D14 | #647, #648 | yes (D10 open) |
-| 18–20 | Fifth audit, 2026-11-21 (v10.0.0-beta.2) | E1–E9 | #654, #655, #656 | no |
+| 18–20 | Fifth audit, 2026-11-21 (v10.0.0-beta.2) | E1–E12 | #654, #655, #656 | no |
 
 Released in **v10.0.0-beta.2** (2026-11-10, #645 / #646), the first published v10 pre-release
 (beta.1 was never released). Its release notes were built from the breaking changes list below, so
@@ -114,22 +114,32 @@ the tests or started an app before reporting, so findings come from reading the 
   brings the Linux native library, so apps no longer need to add it. Publish with `-r <rid>`
   (e.g. `-r linux-x64`): a publish without one copies SkiaSharp's native library for every
   platform, about 470 MB, against about 12 MB for one.
+- **WordPress:** `AddWordPressInstance(...).Using<TWp, TWpConfig>()` no longer registers
+  `IDbClient`, `IAdapter`, `ITypeMapper` or `ICacheService` for the whole app; each WordPress
+  instance gets its own cached MySQL client, and query caching is no longer switched on for other
+  databases. Apps that resolved `IDbClient` or `IAdapter` from WordPress's registration must register
+  them themselves (`AddData<TDb, TDbClient, TAdapter>()`). `DapperAdapter`'s mapper and cache
+  are now optional: DI uses the Dapper type mapper and no cache for whichever is not registered.
+- **Query cache:** `QueryCacheSeconds` set to a whole number of minutes now caches (it was silently
+  off), and keys include a hash of the connection string, so existing distributed cache entries
+  are not reused.
 
 ---
 
 # Fifth audit — 2026-11-21 (v10.0.0-beta.2)
 
-Items are numbered E1–E9 to match the audit report. Must fix: E1, E2. Should fix: E3–E7.
+Items are numbered E1–E9 to match the audit report, plus E10 found while checking it and E11–E12 found in the Phase 18 review. Must fix: E1, E2, E10.
+Should fix: E3–E7, E11. Nice to have: E12.
 Nice to have: E8, E9. Left out as too small: Slack's 3,000-character section limit, the ignored PNG
 `quality` argument, and casing variants filling the `Enumerated` parse cache.
 
-## Phase 18 — query cache (E1, E2, E6) — #654
+## Phase 18 — query cache (E1, E2, E6, E10) — #654
 
-- [ ] **E1 Cache off for whole minutes** — `src/Jeebs.Data.Common/DistributedCacheService.cs:26`
+- [x] **E1 Cache off for whole minutes** — `src/Jeebs.Data.Common/DistributedCacheService.cs:26`
   `relativeExpiration.Seconds == 0` checks only the seconds part (0–59), so 60, 120, 300 or 3600
   seconds never cache, and a negative value gets past the check and throws when the entry is stored.
   Fix: `if (relativeExpiration <= TimeSpan.Zero)`. Test under E6.
-- [ ] **E2 WordPress turns the cache on for every database** —
+- [x] **E2 WordPress turns the cache on for every database** —
   `src/Jeebs.WordPress/Extensions/ServiceCollection/ServiceCollectionExtensions.AddWordPressInstance.cs:57-60`
   `Using` registers `IDbClient`, `IAdapter` and `ICacheService` for the whole app (last registration
   wins), so the auth database's `DapperAdapter` caches user lookups too: after a password change the
@@ -139,13 +149,25 @@ Nice to have: E8, E9. Left out as too small: Slack's 3,000-character section lim
   `DapperAdapter(DapperTypeMapper.Instance, <cache service>)`, pass it to `TWp` through a factory
   registration, and remove the three global registrations. Test: an app with WordPress and
   `AddData` resolves `NullCacheService` for `ICacheService`. **Breaking** for apps that relied on
-  the global `IDbClient` / `IAdapter` WordPress registered.
-- [ ] **E6 Tests for the cache path** — `DistributedCacheService`, `DapperAdapter`
+  the global `IDbClient` / `IAdapter` WordPress registered. Removing them left auth's
+  `DapperAdapter` unresolvable (nothing else registers `ITypeMapper`, and `AppMvc` already failed
+  this way), so `DapperAdapter`'s constructor parameters are now optional: DI uses the Dapper
+  mapper and no cache for whichever is not registered. (A public parameterless constructor was tried
+  first, but DI then dropped a registered cache or mapper when only one of the two was registered.)
+- [x] **E6 Tests for the cache path** — `DistributedCacheService`, `DapperAdapter`
   Neither has a test (`Tests.Jeebs.Data.Adapters.Dapper` only tests type handlers). One test with
   a `MemoryDistributedCache`: call twice with `TimeSpan.FromMinutes(1)`, `fetch` runs once - it
   fails before E1.
+- [x] **E10 Cache key shared across databases** — `src/Jeebs.Data.Common/DistributedCacheService.cs:32`
+  (found while checking E1/E2) The key is `{query}:{param}`, so two databases sharing a cache - e.g.
+  `AppConsoleWp`'s "bcg" and "usa" WordPress instances - get each other's results for the same query.
+  Fix: `DapperAdapter` prefixes the query with a hash of the connection string (a hash so passwords
+  never reach a Redis key). Test: same query on two connection strings runs `fetch` twice.
 
-## Phase 19 — auth and logging (E3, E4, E5) — #655
+E1 must not ship without E2: fixing E1 alone turns caching on for apps that set a whole-minute
+`QueryCacheSeconds`, which with WordPress registered includes the auth database.
+
+## Phase 19 — auth and logging (E3, E4, E5, E11, E12) — #655
 
 - [ ] **E3 Email case matters on PostgreSQL and SQLite** — `src/Jeebs.Auth.Data/AuthUserRepository.cs:52, 63`
   MySQL's column is `utf8_general_ci`; PostgreSQL `text` and SQLite `TEXT` compare exactly, so
@@ -153,7 +175,7 @@ Nice to have: E8, E9. Left out as too small: Slack's 3,000-character section lim
   Fix: `email.Trim().ToLowerInvariant()` in `CreateAsync` and `RetrieveAsync(string email)`.
   **Investigate first:** existing mixed-case rows need lowercasing (and checking for duplicates)
   before the change, or those users can't sign in. **Breaking.**
-- [ ] **E4 Password hashes in error logs** — `src/Jeebs.Data.Adapters.Dapper/DapperAdapter.cs:90`
+- [ ] **E4 Password hashes in error logs** — `src/Jeebs.Data.Adapters.Dapper/DapperAdapter.cs:96`
   `{@Param}` writes out every property of the parameter, which for user updates is the
   `AuthUserEntity` with its `PasswordHash`. A failed password change or rehash that the caller
   logs sends the hash to Seq, files or Slack. Fix: drop `{@Param}` and keep `{Query}` (parameters
@@ -162,6 +184,20 @@ Nice to have: E8, E9. Left out as too small: Slack's 3,000-character section lim
   The validation failure and `Log.Err("Unknown username or password…")` are both Error, so with a
   Slack sink at Error 1,000 guesses send 2,000 alerts (rate limiting is won't do). Fix: log both at
   Information (or Warning).
+- [ ] **E11 Auth lookups cached when the app turns on the query cache** —
+  `src/Jeebs.Data.Common/Extensions/ServiceCollection/ServiceCollectionExtensions.AddDataQueryCache.cs:19`
+  (found in the Phase 18 review) `AddDataQueryCache()` registers a caching `ICacheService` for the
+  whole app, and the auth client's adapter is resolved from DI, so it caches user lookups too: the
+  E2 problem (old password still works, disabled user can still sign in) without WordPress.
+  Fix: build the auth client in `AddAuthData` with an adapter that never caches, as WordPress now
+  builds its own client. Test: with `AddDataQueryCache()` registered, the auth client's adapter
+  runs `fetch` on every query.
+- [ ] **E12 Query cache never reaches PostgreSQL** — `src/Jeebs.Data.Clients.PostgreSql/PostgreSqlDbClient.cs:20`
+  (found in the Phase 18 review) `PostgreSqlDbClient` builds its adapter with `new NullCacheService()`,
+  so a PostgreSQL app that calls `AddDataQueryCache()` gets no caching and no warning. Decide with
+  E11: either say so in the `AddDataQueryCache` XML doc, or take `ICacheService? cache = null` in
+  the constructor (as `DapperAdapter` now does) - but only once E11 keeps auth uncached, or the
+  PostgreSQL auth client starts caching user lookups.
 
 ## Phase 20 — deletions (E7, E8, E9) — #656
 
