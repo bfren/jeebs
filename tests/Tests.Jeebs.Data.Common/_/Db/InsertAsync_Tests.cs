@@ -22,8 +22,8 @@ public class InsertAsync_Tests : Db_Setup
 
 		// Assert
 		v.Log.Received(2).Vrb(
-			"Query Type: {Type} | Returns: {Return} | {Query} | Parameters: {Param}",
-			type, typeof(int), query, param
+			"Query Type: {Type} | Returns: {Return} | {Query}",
+			type, typeof(int), query
 		);
 	}
 

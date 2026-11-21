@@ -82,23 +82,8 @@ public abstract partial class Db : Data.Db, IDb
 	/// </summary>
 	/// <typeparam name="TReturn">Query return type.</typeparam>
 	/// <param name="input">Input values.</param>
-	protected virtual void LogQuery<TReturn>((string query, object? parameters, CommandType type) input)
-	{
-		var (query, parameters, type) = input;
-
-		// Always log query type, return type, and query
-		var message = "Query Type: {Type} | Returns: {Return} | {Query}";
-		object?[] args = [type, typeof(TReturn), query];
-
-		// Log with or without parameters
-		if (parameters is null)
-		{
-			WriteToLog(message, [.. args]);
-		}
-		else if (parameters.ToString() is string param)
-		{
-			message += " | Parameters: {Param}";
-			WriteToLog(message, [.. args, param]);
-		}
-	}
+	protected virtual void LogQuery<TReturn>((string query, object? parameters, CommandType type) input) =>
+		// parameter values are left out because they can hold secrets - an update's parameters are the
+		// whole entity, and a record's ToString() prints every property (e.g. a user's password hash)
+		WriteToLog("Query Type: {Type} | Returns: {Return} | {Query}", [input.type, typeof(TReturn), input.query]);
 }
