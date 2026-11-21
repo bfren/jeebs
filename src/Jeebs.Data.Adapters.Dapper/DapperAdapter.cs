@@ -43,14 +43,14 @@ public sealed class DapperAdapter : IAdapter
 	public Task<Result<int>> ExecuteAsync(IDbConnection connection, IDbTransaction transaction, string query, object? param, CommandType type) =>
 		R.TryAsync(
 			() => connection.ExecuteAsync(query, param, transaction, commandType: type),
-			ex => Fail(nameof(ExecuteAsync), ex, query, param)
+			ex => Fail(nameof(ExecuteAsync), ex, query)
 		);
 
 	/// <inheritdoc/>
 	public Task<Result<T>> ExecuteAsync<T>(IDbConnection connection, IDbTransaction transaction, string query, object? param, CommandType type) =>
 		R.TryAsync(
 			() => connection.ExecuteScalarAsync<T>(query, param, transaction, commandType: type),
-			ex => Fail(nameof(ExecuteAsync), ex, query, param)
+			ex => Fail(nameof(ExecuteAsync), ex, query)
 		)
 		.BindAsync(
 			x => x switch
@@ -70,7 +70,7 @@ public sealed class DapperAdapter : IAdapter
 			() => Cache.GetOrCreateAsync(CacheKey(connection, query), param,
 				() => connection.QueryAsync<T>(query, param, transaction, commandType: type)
 			),
-			ex => Fail(nameof(QueryAsync), ex, query, param)
+			ex => Fail(nameof(QueryAsync), ex, query)
 		);
 
 	/// <inheritdoc/>
@@ -79,7 +79,7 @@ public sealed class DapperAdapter : IAdapter
 			() => Cache.GetOrCreateAsync(CacheKey(connection, query), param,
 				() => connection.QuerySingleAsync<T>(query, param, transaction, commandType: type)
 			),
-			ex => Fail(nameof(QuerySingleAsync), ex, query, param)
+			ex => Fail(nameof(QuerySingleAsync), ex, query)
 		);
 
 	/// <summary>
@@ -91,7 +91,7 @@ public sealed class DapperAdapter : IAdapter
 	internal static string CacheKey(IDbConnection connection, string query) =>
 		$"{Convert.ToHexString(SHA256.HashData(Encoding.UTF8.GetBytes(connection.ConnectionString)))}:{query}";
 
-	private static Failure Fail(string function, Exception exception, string query, object? param) =>
+	private static Failure Fail(string function, Exception exception, string query) =>
 		R.Fail(exception)
 			// parameters are left out because they can hold secrets (e.g. password hashes) - they are
 			// logged at Verbose before the query runs
