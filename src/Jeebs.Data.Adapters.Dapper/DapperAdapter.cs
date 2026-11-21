@@ -67,7 +67,7 @@ public sealed class DapperAdapter : IAdapter
 	/// <inheritdoc/>
 	public Task<Result<IEnumerable<T>>> QueryAsync<T>(IDbConnection connection, IDbTransaction? transaction, string query, object? param, CommandType type) =>
 		R.TryAsync(
-			() => Cache.GetOrCreateAsync(CacheKey(connection, query), param,
+			() => CacheUnlessInTransaction(connection, transaction, query, param,
 				() => connection.QueryAsync<T>(query, param, transaction, commandType: type)
 			),
 			ex => Fail(nameof(QueryAsync), ex, query)
@@ -76,11 +76,24 @@ public sealed class DapperAdapter : IAdapter
 	/// <inheritdoc/>
 	public Task<Result<T>> QuerySingleAsync<T>(IDbConnection connection, IDbTransaction? transaction, string query, object? param, CommandType type) =>
 		R.TryAsync(
-			() => Cache.GetOrCreateAsync(CacheKey(connection, query), param,
+			() => CacheUnlessInTransaction(connection, transaction, query, param,
 				() => connection.QuerySingleAsync<T>(query, param, transaction, commandType: type)
 			),
 			ex => Fail(nameof(QuerySingleAsync), ex, query)
 		);
+
+	/// <summary>
+	/// Run <paramref name="fetch"/> through the cache, except inside a transaction: a read there can see
+	/// rows that are not committed yet (and may be rolled back), so caching it would serve them to others.
+	/// </summary>
+	/// <typeparam name="T">Query return value type.</typeparam>
+	/// <param name="connection">Database connection.</param>
+	/// <param name="transaction">[Optional] Database transaction.</param>
+	/// <param name="query">Query text.</param>
+	/// <param name="param">Query parameters.</param>
+	/// <param name="fetch">Function to run the query.</param>
+	private Task<T> CacheUnlessInTransaction<T>(IDbConnection connection, IDbTransaction? transaction, string query, object? param, Func<Task<T>> fetch) =>
+		transaction is null ? Cache.GetOrCreateAsync(CacheKey(connection, query), param, fetch) : fetch();
 
 	/// <summary>
 	/// Prefix <paramref name="query"/> with a hash of the connection string, so databases sharing a

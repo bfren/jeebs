@@ -51,4 +51,19 @@ public class QueryAsync_Tests
 		// Assert
 		_ = result.AssertFailure("Error executing query '{Query}'.", query);
 	}
+
+	[Fact]
+	public async Task With_Transaction__Does_Not_Use_Cache()
+	{
+		// Arrange
+		var connection = Substitute.For<IDbConnection>();
+		var cache = Substitute.For<ICacheService>();
+		var adapter = new DapperAdapter(cache: cache);
+
+		// Act
+		_ = await adapter.QueryAsync<string>(connection, Substitute.For<IDbTransaction>(), Rnd.Str, null, CommandType.Text);
+
+		// Assert
+		_ = await cache.DidNotReceiveWithAnyArgs().GetOrCreateAsync<IEnumerable<string>>(default!, default, default!);
+	}
 }
