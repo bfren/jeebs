@@ -17,7 +17,7 @@ Mark items `[x]` as they land.
 | 8–11 | Second audit, 2026-11-07 (v10.0.0-beta.1) | B1–B12 | #624–#632 | yes |
 | 12–15 | Third audit, 2026-11-08 (v10.0.0-beta.1) | C1–C14 | #634, #637, #639, #641 | yes |
 | 16–17 | Fourth audit, 2026-11-11 (v10.0.0-beta.2) | D1–D14 | #647, #648 | yes (D10 open) |
-| 18–20 | Fifth audit, 2026-11-21 (v10.0.0-beta.2) | E1–E12 | #654, #655, #656 | no |
+| 18–20 | Fifth audit, 2026-11-21 (v10.0.0-beta.2) | E1–E13 | #654, #655, #656 | no |
 
 Released in **v10.0.0-beta.2** (2026-11-10, #645 / #646), the first published v10 pre-release
 (beta.1 was never released). Its release notes were built from the breaking changes list below, so
@@ -123,14 +123,26 @@ the tests or started an app before reporting, so findings come from reading the 
 - **Query cache:** `QueryCacheSeconds` set to a whole number of minutes now caches (it was silently
   off), and keys include a hash of the connection string, so existing distributed cache entries
   are not reused.
+- **Auth emails:** emails are now stored and looked up trimmed and lower case. On PostgreSQL and
+  SQLite, existing mixed-case emails no longer match, so lowercase them before upgrading - this
+  can't be undone, so it is a one-off step rather than a migration:
+  PostgreSQL `UPDATE auth.user SET user_email = LOWER(TRIM(user_email));`,
+  SQLite `UPDATE "auth.user" SET "user_email" = LOWER(TRIM("user_email"));` (SQLite's `LOWER`
+  only changes ASCII letters). If two accounts differ only by case the unique constraint makes the
+  update fail: merge or remove one first. MySQL needs nothing (its column ignores case).
+- **Auth data:** the Auth database client is always built with no query cache, including when it is
+  also the main `IDbClient` (`useAuthDbClientAsMain`).
+- **Logging:** failed sign ins log the reason at Warning and the attempt at Information (both were
+  Error), and adapter query errors no longer include the query parameters.
+- **PostgreSQL:** `PostgreSqlDbClient` takes an optional `ICacheService`, so `AddDataQueryCache()`
+  now caches PostgreSQL queries.
 
 ---
 
 # Fifth audit — 2026-11-21 (v10.0.0-beta.2)
 
-Items are numbered E1–E9 to match the audit report, plus E10 found while checking it and E11–E12 found in the Phase 18 review. Must fix: E1, E2, E10.
-Should fix: E3–E7, E11. Nice to have: E12.
-Nice to have: E8, E9. Left out as too small: Slack's 3,000-character section limit, the ignored PNG
+Items are numbered E1–E9 to match the audit report, plus E10 found while checking it and E11–E12 found in the Phase 18 review, and E13 raised during Phase 19.
+Must fix: E1, E2, E10. Should fix: E3–E7, E11. Nice to have: E8, E9, E12, E13. Left out as too small: Slack's 3,000-character section limit, the ignored PNG
 `quality` argument, and casing variants filling the `Enumerated` parse cache.
 
 ## Phase 18 — query cache (E1, E2, E6, E10) — #654
@@ -169,22 +181,26 @@ E1 must not ship without E2: fixing E1 alone turns caching on for apps that set 
 
 ## Phase 19 — auth and logging (E3, E4, E5, E11, E12) — #655
 
-- [ ] **E3 Email case matters on PostgreSQL and SQLite** — `src/Jeebs.Auth.Data/AuthUserRepository.cs:52, 63`
+- [x] **E3 Email case matters on PostgreSQL and SQLite** — `src/Jeebs.Auth.Data/AuthUserRepository.cs:52, 63`
   MySQL's column is `utf8_general_ci`; PostgreSQL `text` and SQLite `TEXT` compare exactly, so
   `Ben@Example.com` can't sign in as `ben@example.com`, and two accounts can share an address.
   Fix: `email.Trim().ToLowerInvariant()` in `CreateAsync` and `RetrieveAsync(string email)`.
   **Investigate first:** existing mixed-case rows need lowercasing (and checking for duplicates)
   before the change, or those users can't sign in. **Breaking.**
-- [ ] **E4 Password hashes in error logs** — `src/Jeebs.Data.Adapters.Dapper/DapperAdapter.cs:96`
+  Done: lowercasing existing rows can't be undone, so it is a one-off SQL step in the breaking
+  changes list rather than a migration (it fails on case-only duplicates, so nothing is merged
+  silently).
+- [x] **E4 Password hashes in error logs** — `src/Jeebs.Data.Adapters.Dapper/DapperAdapter.cs:98`
   `{@Param}` writes out every property of the parameter, which for user updates is the
   `AuthUserEntity` with its `PasswordHash`. A failed password change or rehash that the caller
   logs sends the hash to Seq, files or Slack. Fix: drop `{@Param}` and keep `{Query}` (parameters
   are already logged at Verbose before the query runs).
-- [ ] **E5 Each wrong password logs two errors** — `src/Jeebs.Mvc.Auth/Functions/AuthF/AuthF.DoSignInAsync.cs:61, 82`
+- [x] **E5 Each wrong password logs two errors** — `src/Jeebs.Mvc.Auth/Functions/AuthF/AuthF.DoSignInAsync.cs:61, 82`
   The validation failure and `Log.Err("Unknown username or password…")` are both Error, so with a
   Slack sink at Error 1,000 guesses send 2,000 alerts (rate limiting is won't do). Fix: log both at
   Information (or Warning).
-- [ ] **E11 Auth lookups cached when the app turns on the query cache** —
+  Done: the reason at Warning (it may be a database error), the attempt at Information.
+- [x] **E11 Auth lookups cached when the app turns on the query cache** —
   `src/Jeebs.Data.Common/Extensions/ServiceCollection/ServiceCollectionExtensions.AddDataQueryCache.cs:19`
   (found in the Phase 18 review) `AddDataQueryCache()` registers a caching `ICacheService` for the
   whole app, and the auth client's adapter is resolved from DI, so it caches user lookups too: the
@@ -192,14 +208,18 @@ E1 must not ship without E2: fixing E1 alone turns caching on for apps that set 
   Fix: build the auth client in `AddAuthData` with an adapter that never caches, as WordPress now
   builds its own client. Test: with `AddDataQueryCache()` registered, the auth client's adapter
   runs `fetch` on every query.
-- [ ] **E12 Query cache never reaches PostgreSQL** — `src/Jeebs.Data.Clients.PostgreSql/PostgreSqlDbClient.cs:20`
+  Done: `UncachedServiceProvider` builds the client, answering `ICacheService` with
+  `NullCacheService` and `IAdapter` with a new instance of the app's adapter type built through it.
+- [x] **E12 Query cache never reaches PostgreSQL** — `src/Jeebs.Data.Clients.PostgreSql/PostgreSqlDbClient.cs:20`
   (found in the Phase 18 review) `PostgreSqlDbClient` builds its adapter with `new NullCacheService()`,
   so a PostgreSQL app that calls `AddDataQueryCache()` gets no caching and no warning. Decide with
   E11: either say so in the `AddDataQueryCache` XML doc, or take `ICacheService? cache = null` in
   the constructor (as `DapperAdapter` now does) - but only once E11 keeps auth uncached, or the
   PostgreSQL auth client starts caching user lookups.
+  Done: the constructor takes `ICacheService? cache = null`; the auth client's implicit constructor
+  passes none.
 
-## Phase 20 — deletions (E7, E8, E9) — #656
+## Phase 20 — deletions and CI (E7, E8, E9, E13) — #656
 
 - [ ] **E7 Data protection settings never used** — `src/Jeebs.Apps/App.cs:95`,
   `src/Jeebs/Config/Azure/DataProtection/DataProtectionConfig.cs`
@@ -216,6 +236,12 @@ E1 must not ship without E2: fixing E1 alone turns caching on for apps that set 
 - [ ] **E9 `Data.Db.LogQuery` only called by its test** — `src/Jeebs.Data/Db.cs:65`
   `Data.Common` has its own `LogQuery`, and Rqlite logs no queries. Fix: call it from the four
   Rqlite query methods, or delete it, `LogQueryTest` and `tests/Tests.Jeebs.Data/_/Db/LogQuery_Tests.cs`.
+- [ ] **E13 Superseded test runs keep going** — `.github/workflows/test.yml`
+  (raised during Phase 19) A second push to a branch starts a new run while the first carries on,
+  wasting minutes, and a PR can wait on a run for a commit that is no longer the tip. Fix: add
+  `concurrency: { group: ${{ github.workflow }}-${{ github.ref }}, cancel-in-progress: true }` at
+  the top level - safe because the workflow never runs on `main` or tags. Check that the Slack
+  notify job in `bfren/dotnet`'s reusable workflow doesn't post on cancelled runs.
 
 ---
 
