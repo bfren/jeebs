@@ -53,15 +53,18 @@ public static partial class ServiceCollectionExtensions
 			where TWp : class, IWp<TWpConfig>
 			where TWpConfig : WpConfig
 		{
+			// WordPress gets its own cached client, so the app's other databases keep their own
+			// IDbClient, IAdapter and ICacheService
 			_ = services
-				.AddTransient<IDbClient, MySqlDbClient>()
-				.AddTransient<IAdapter, DapperAdapter>()
-				.AddTransient<ITypeMapper>(_ => DapperTypeMapper.Instance)
-				.AddDataQueryCache();
-
-			_ = services
+				.AddDistributedMemoryCache()
 				.Configure<TWpConfig>(config.GetSection(section))
-				.AddScoped<TWp>();
+				.AddScoped(p =>
+				{
+					var cache = ActivatorUtilities.CreateInstance<DistributedCacheService>(p);
+					var adapter = new DapperAdapter(DapperTypeMapper.Instance, cache);
+					var client = ActivatorUtilities.CreateInstance<MySqlDbClient>(p, adapter);
+					return ActivatorUtilities.CreateInstance<TWp>(p, client);
+				});
 
 			return services;
 		}

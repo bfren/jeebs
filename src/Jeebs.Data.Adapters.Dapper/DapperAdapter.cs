@@ -32,17 +32,12 @@ public sealed class DapperAdapter : IAdapter
 		new();
 
 	/// <summary>
-	/// Inject dependencies.
+	/// Inject dependencies - DI uses the default for whichever is not registered.
 	/// </summary>
-	private DapperAdapter() : this(DapperTypeMapper.Instance, new NullCacheService()) { }
-
-	/// <summary>
-	/// Inject dependencies.
-	/// </summary>
-	/// <param name="mapper">ITypeMapper.</param>
-	/// <param name="cache">ICacheService.</param>
-	public DapperAdapter(ITypeMapper mapper, ICacheService cache) =>
-		(Mapper, Cache) = (mapper, cache);
+	/// <param name="mapper">[Optional] ITypeMapper - defaults to <see cref="DapperTypeMapper.Instance"/>.</param>
+	/// <param name="cache">[Optional] ICacheService - defaults to no cache.</param>
+	public DapperAdapter(ITypeMapper? mapper = null, ICacheService? cache = null) =>
+		(Mapper, Cache) = (mapper ?? DapperTypeMapper.Instance, cache ?? new NullCacheService());
 
 	/// <inheritdoc/>
 	public Task<Result<int>> ExecuteAsync(IDbConnection connection, IDbTransaction transaction, string query, object? param, CommandType type) =>
