@@ -16,4 +16,5 @@ jobs:
       name: Jeebs
       configuration: Test
       dotnet-versions: 10.0.x
+      submodules: "true" # the config schema is embedded from the schemas submodule
     secrets: inherit
