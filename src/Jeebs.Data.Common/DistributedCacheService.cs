@@ -23,7 +23,7 @@ public sealed class DistributedCacheService(IOptions<DbConfig> dbConfig, IDistri
 	public async Task<T> GetOrCreateAsync<T>(string query, object? param, Func<Task<T>> fetch, TimeSpan relativeExpiration)
 	{
 		// If expiration is zero or negative, don't cache
-		if (relativeExpiration.Seconds == 0)
+		if (relativeExpiration <= TimeSpan.Zero)
 		{
 			return await fetch();
 		}
