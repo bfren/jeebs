@@ -245,7 +245,7 @@ E1 must not ship without E2: fixing E1 alone turns caching on for apps that set 
   `Data.Common` has its own `LogQuery`, and Rqlite logs no queries. Fix: call it from the four
   Rqlite query methods, or delete it, `LogQueryTest` and `tests/Tests.Jeebs.Data/_/Db/LogQuery_Tests.cs`.
   Done: deleted (`WriteToLog` stays - `Data.Common`'s `LogQuery` uses it).
-- [ ] **E13 Superseded test runs keep going** — `.github/workflows/test.yml`
+- [x] **E13 Superseded test runs keep going** — `.github/workflows/test.yml`
   (raised during Phase 19) A second push to a branch starts a new run while the first carries on,
   wasting minutes, and a PR can wait on a run for a commit that is no longer the tip. Fix: add
   `concurrency: { group: ${{ github.workflow }}-${{ github.ref }}, cancel-in-progress: true }` at
@@ -256,6 +256,7 @@ E1 must not ship without E2: fixing E1 alone turns caching on for apps that set 
   run would post "Jeebs publish failed" to Slack. First change that job to `if: ${{ !cancelled() }}`
   in `bfren/dotnet` (it still reports failures, and stops reporting cancelled runs), then add the
   `concurrency` block here.
+  Done: bfren/dotnet#2 changed `notify` to `if: ${{ !cancelled() }}`, then the `concurrency` block was added.
 
 ---
 
