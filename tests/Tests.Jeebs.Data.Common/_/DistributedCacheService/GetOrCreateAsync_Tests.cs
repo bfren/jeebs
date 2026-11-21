@@ -55,4 +55,25 @@ public class GetOrCreateAsync_Tests
 		// Assert
 		Assert.Equal(2, calls());
 	}
+
+	[Fact]
+	public async Task Same_Query_Different_Result_Types__Do_Not_Share_Entry()
+	{
+		// Arrange
+		var (service, _, _) = Setup();
+		var query = Rnd.Str;
+		var expiration = TimeSpan.FromMinutes(1);
+		var expected = new ModelB(Rnd.Str, Rnd.Int);
+
+		// Act
+		_ = await service.GetOrCreateAsync(query, null, () => Task.FromResult(new ModelA(Rnd.Str)), expiration);
+		var result = await service.GetOrCreateAsync(query, null, () => Task.FromResult(expected), expiration);
+
+		// Assert
+		Assert.Equal(expected, result);
+	}
+
+	public sealed record class ModelA(string Name);
+
+	public sealed record class ModelB(string Name, int Age);
 }
