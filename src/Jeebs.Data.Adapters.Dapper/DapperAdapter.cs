@@ -4,6 +4,8 @@
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Security.Cryptography;
+using System.Text;
 using System.Threading.Tasks;
 using Dapper;
 using Jeebs.Data.Common;
@@ -70,7 +72,7 @@ public sealed class DapperAdapter : IAdapter
 	/// <inheritdoc/>
 	public Task<Result<IEnumerable<T>>> QueryAsync<T>(IDbConnection connection, IDbTransaction? transaction, string query, object? param, CommandType type) =>
 		R.TryAsync(
-			() => Cache.GetOrCreateAsync(query, param,
+			() => Cache.GetOrCreateAsync(CacheKey(connection, query), param,
 				() => connection.QueryAsync<T>(query, param, transaction, commandType: type)
 			),
 			ex => Fail(nameof(QueryAsync), ex, query, param)
@@ -79,11 +81,20 @@ public sealed class DapperAdapter : IAdapter
 	/// <inheritdoc/>
 	public Task<Result<T>> QuerySingleAsync<T>(IDbConnection connection, IDbTransaction? transaction, string query, object? param, CommandType type) =>
 		R.TryAsync(
-			() => Cache.GetOrCreateAsync(query, param,
+			() => Cache.GetOrCreateAsync(CacheKey(connection, query), param,
 				() => connection.QuerySingleAsync<T>(query, param, transaction, commandType: type)
 			),
 			ex => Fail(nameof(QuerySingleAsync), ex, query, param)
 		);
+
+	/// <summary>
+	/// Prefix <paramref name="query"/> with a hash of the connection string, so databases sharing a
+	/// cache don't share entries - hashed so passwords never appear in a cache key.
+	/// </summary>
+	/// <param name="connection">Database connection.</param>
+	/// <param name="query">Query text.</param>
+	internal static string CacheKey(IDbConnection connection, string query) =>
+		$"{Convert.ToHexString(SHA256.HashData(Encoding.UTF8.GetBytes(connection.ConnectionString)))}:{query}";
 
 	private static Failure Fail(string function, Exception exception, string query, object? param) =>
 		R.Fail(exception)
