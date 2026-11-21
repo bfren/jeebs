@@ -58,31 +58,6 @@ public abstract class Db : IDb
 		Log.Vrb;
 
 	/// <summary>
-	/// Write query to the log.
-	/// </summary>
-	/// <typeparam name="TReturn">Query return type.</typeparam>
-	/// <param name="input">Input values.</param>
-	protected virtual void LogQuery<TReturn>((string query, object? parameters) input)
-	{
-		var (query, parameters) = input;
-
-		// Always log query type, return type, and query
-		var message = "Query Returns: {Return} | {Query}";
-		object?[] args = [typeof(TReturn), query];
-
-		// Log with or without parameters
-		if (parameters is null)
-		{
-			WriteToLog(message, [.. args]);
-		}
-		else if (parameters.ToString() is string param)
-		{
-			message += " | Parameters: {Param}";
-			WriteToLog(message, [.. args, param]);
-		}
-	}
-
-	/// <summary>
 	/// Shorthand for escaping a column with its table name and alias.
 	/// </summary>
 	/// <typeparam name="TTable">Table type.</typeparam>
@@ -166,9 +141,6 @@ public abstract class Db : IDb
 
 	internal void WriteToLogTest(string message, object[] args) =>
 		WriteToLog(message, args);
-
-	internal void LogQueryTest<TReturn>((string query, object? parameters) input) =>
-		LogQuery<TReturn>(input);
 
 	#endregion Testing
 }
