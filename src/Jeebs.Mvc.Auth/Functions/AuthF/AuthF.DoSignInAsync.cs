@@ -9,6 +9,7 @@ using Jeebs.Functions;
 using Jeebs.Logging;
 using Jeebs.Mvc.Auth.Models;
 using Microsoft.AspNetCore.Mvc;
+using Wrap.Logging;
 
 namespace Jeebs.Mvc.Auth.Functions;
 
@@ -58,7 +59,9 @@ public static partial class AuthF
 			)
 			.AuditAsync(
 				fOk: x => v.Log.Dbg("User {UserId} validated.", x.Id.Value),
-				fFail: v.Log.Failure
+				// below Error so wrong passwords don't raise alerts - Warning, not Information, because
+				// the failure may also be a database error
+				fFail: f => v.Log.Failure(f, LogLevel.Warning)
 			);
 
 		// Perform sign in
@@ -78,8 +81,8 @@ public static partial class AuthF
 			return await v.SignInAsync(principal);
 		}
 
-		// Log error - the controller shows the alert
-		v.Log.Err("Unknown username or password: {Email}.", v.Model.Email);
+		// Log attempt - the controller shows the alert
+		v.Log.Inf("Unknown username or password: {Email}.", v.Model.Email);
 
 		// Try again
 		return new AuthOp.TryAgain();

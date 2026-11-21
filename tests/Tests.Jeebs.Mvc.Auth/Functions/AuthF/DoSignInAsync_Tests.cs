@@ -86,7 +86,7 @@ public class DoSignInAsync_Tests
 		_ = await AuthF.DoSignInAsync(v, validateUser);
 
 		// Assert
-		v.Log.Received().Failure(failure);
+		v.Log.Received().Failure(failure, Wrap.Logging.LogLevel.Warning);
 	}
 
 	[Fact]
@@ -110,7 +110,7 @@ public class DoSignInAsync_Tests
 	}
 
 	[Fact]
-	public async Task Invalid_User__Calls_Log_Err__With_Correct_Values()
+	public async Task Invalid_User__Calls_Log_Inf__With_Correct_Values()
 	{
 		// Arrange
 		var (_, v) = Setup();
@@ -121,7 +121,8 @@ public class DoSignInAsync_Tests
 		_ = await AuthF.DoSignInAsync(v);
 
 		// Assert
-		v.Log.Received().Err("Unknown username or password: {Email}.", v.Model.Email);
+		v.Log.Received().Inf("Unknown username or password: {Email}.", v.Model.Email);
+		v.Log.DidNotReceiveWithAnyArgs().Err(default!);
 	}
 
 	[Fact]
