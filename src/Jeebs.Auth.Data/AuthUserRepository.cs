@@ -40,6 +40,7 @@ public sealed class AuthUserRepository : Repository<AuthUserEntity, AuthUserId>,
 				.Ctx(nameof(AuthUserRepository), nameof(CreateAsync));
 		}
 
+		email = NormaliseEmail(email);
 		return await
 			RetrieveAsync<CheckAuthUserExists>(
 				email
@@ -60,8 +61,16 @@ public sealed class AuthUserRepository : Repository<AuthUserEntity, AuthUserId>,
 	/// <inheritdoc/>
 	public Task<Result<TModel>> RetrieveAsync<TModel>(string email) =>
 		Fluent()
-			.Where(u => u.EmailAddress, Compare.Equal, email)
+			.Where(u => u.EmailAddress, Compare.Equal, NormaliseEmail(email))
 			.QuerySingleAsync<TModel>();
+
+	/// <summary>
+	/// Emails are stored and looked up trimmed and lower case, because PostgreSQL and SQLite compare
+	/// text exactly (MySQL's column ignores case).
+	/// </summary>
+	/// <param name="email">Email address.</param>
+	internal static string NormaliseEmail(string email) =>
+		email.Trim().ToLowerInvariant();
 
 	/// <inheritdoc/>
 	public Task<Result<bool>> UpdateLastSignInAsync(AuthUserId userId)
