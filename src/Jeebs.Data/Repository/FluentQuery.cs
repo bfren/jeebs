@@ -22,7 +22,7 @@ public sealed partial record class FluentQuery<TEntity, TId> : IFluentQuery<TEnt
 	/// <summary>
 	/// List of errors encountered while building.
 	/// </summary>
-	internal IList<FailureValue> Errors { get; private init; } = [];
+	internal IList<Failure> Errors { get; private init; } = [];
 
 	/// <summary>
 	/// Log (should come with the context of the calling class).

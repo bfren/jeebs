@@ -9,6 +9,7 @@ using Jeebs.Data.Adapters.Dapper;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using Wrap.Extensions;
 
 var (app, log) = Jeebs.Apps.Host.Create(args);
 
@@ -27,7 +28,7 @@ var config = app.Services.GetRequiredService<IOptions<DbConfig>>().Value;
 Console.WriteLine();
 
 // PostgreSql
-var postgresConn = config.GetConnection("arwen-postgres").Unwrap().ConnectionString;
+var postgresConn = config.GetConnection("arwen-postgres").Unsafe().Unwrap().ConnectionString;
 
 log.Dbg("== PostgreSQL ==");
 
@@ -40,7 +41,7 @@ postgres.MigrateToLatest(postgresConn);
 Console.WriteLine();
 
 // MariaDB
-var mariadbConn = config.GetConnection("arwen-mariadb").Unwrap().ConnectionString;
+var mariadbConn = config.GetConnection("arwen-mariadb").Unsafe().Unwrap().ConnectionString;
 
 log.Dbg("== MariaDB ==");
 
@@ -53,7 +54,7 @@ mariadb.MigrateToLatest(mariadbConn);
 Console.WriteLine();
 
 // Sqlite
-var sqliteConn = config.GetConnection("local-sqlite").Unwrap().ConnectionString;
+var sqliteConn = config.GetConnection("local-sqlite").Unsafe().Unwrap().ConnectionString;
 
 log.Dbg("== Sqlite ==");
 

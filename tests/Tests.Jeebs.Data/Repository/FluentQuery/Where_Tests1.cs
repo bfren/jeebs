@@ -12,7 +12,7 @@ public class Where_Tests1 : FluentQuery_Tests
 	{
 		// Arrange
 		var (query, v) = Setup();
-		query.Errors.Add(FailGen.Create().Value);
+		query.Errors.Add(FailGen.Create());
 
 		// Act
 		var r0 = query.Where(nameof(TestEntity.Foo), Compare.Like, Rnd.Str);

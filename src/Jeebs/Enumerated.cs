@@ -98,7 +98,7 @@ public abstract record class Enumerated : IEquatable<Enumerated>, IEquatable<str
 		var key = $"{typeof(T)}-{name}";
 		if (Cache.TryGetValue(key, out var cached))
 		{
-			return (Result<T>)cached;
+			return (Ok<T>)cached;
 		}
 
 		// Check all given values against name
@@ -153,7 +153,7 @@ public abstract record class Enumerated : IEquatable<Enumerated>, IEquatable<str
 	/// <param name="values">Enum values to check name against.</param>
 	protected static bool IsRegistered<T>(string name, T[] values)
 		where T : Enumerated =>
-		Parse(name, values).IsOk;
+		Parse(name, values) is Ok<T>;
 
 	#endregion Static Members
 

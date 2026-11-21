@@ -30,8 +30,10 @@ public static partial class QueryPostsF
 		foreach (var post in posts)
 		{
 			// Get post content
-			if (content.Get(post).Unsafe().TrySome(out var postContent))
+			if (content.Get(post) is Some<string> some)
 			{
+				var postContent = some.Value;
+
 				// Apply filters
 				foreach (var filter in filters)
 				{

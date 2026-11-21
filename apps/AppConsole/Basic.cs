@@ -8,11 +8,11 @@ namespace AppConsole;
 
 public sealed class Basic
 {
-	public static FailureValue CreateFail() =>
+	public static Failure CreateFail() =>
 		new("Basic failure: '{Str}' - '{Guid}'.", Rnd.Str, Rnd.Guid);
 
-	public static FailureValue CreateFailWithException() =>
-		new FailureValue(new InvalidOperationException()) with { Message = "Exception message." };
+	public static Failure CreateFailWithException() =>
+		new Failure(new InvalidOperationException()) with { Message = "Exception message." };
 
 	public static string DoSomething(string input) =>
 		throw new NullReferenceException(nameof(input));

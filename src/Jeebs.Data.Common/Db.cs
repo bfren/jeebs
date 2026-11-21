@@ -28,7 +28,7 @@ public abstract partial class Db : Data.Db, IDb
 	/// <param name="log">ILog (should be given a context of the implementing class).</param>
 	/// <param name="name">Connection name.</param>
 	protected Db(IDbClient client, IOptions<DbConfig> config, ILog log, string name) :
-		this(client, config.Value.GetConnection(name).Unwrap(), log)
+		this(client, config.Value.GetConnection(name).Unsafe().Unwrap(), log)
 	{ }
 
 	/// <summary>

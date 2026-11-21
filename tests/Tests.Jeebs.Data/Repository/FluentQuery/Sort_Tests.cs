@@ -12,7 +12,7 @@ public class Sort_Tests : FluentQuery_Tests
 	{
 		// Arrange
 		var (query, v) = Setup();
-		query.Errors.Add(FailGen.Create().Value);
+		query.Errors.Add(FailGen.Create());
 
 		// Act
 		var r0 = query.Sort(nameof(TestEntity.Foo), SortOrder.Ascending);

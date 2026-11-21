@@ -62,9 +62,10 @@ public static partial class AuthF
 			);
 
 		// Perform sign in
-		if (result.Unsafe().TryOk(out var user))
+		if (result is Ok<AuthUserModel> ok)
 		{
-			// Get user principal			
+			// Get user principal
+			var user = ok.Value;
 			var principal = await GetPrincipalAsync(user, v.Model.Password, v.GetClaims);
 
 			// Update last sign in

@@ -34,9 +34,9 @@ public sealed class DistributedCacheService(IOptions<DbConfig> dbConfig, IDistri
 		if (!string.IsNullOrEmpty(cachedString))
 		{
 			var cachedValue = JsonF.Deserialise<T>(cachedString);
-			if (cachedValue.IsOk)
+			if (cachedValue is Ok<T> ok)
 			{
-				return cachedValue.Unwrap();
+				return ok.Value;
 			}
 		}
 

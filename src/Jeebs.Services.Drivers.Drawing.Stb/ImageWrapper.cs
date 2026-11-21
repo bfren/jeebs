@@ -74,7 +74,8 @@ public sealed class ImageWrapper : Services.Drawing.ImageWrapper
 			case ImageFormat.Png:
 				writer.WritePng(Pixels, Width, Height, ColorComponents.RedGreenBlueAlpha, stream);
 				break;
-
+			case ImageFormat.Unsupported:
+				break;
 			default:
 				throw new ArgumentOutOfRangeException(nameof(format), format, "Unsupported image format.");
 		}

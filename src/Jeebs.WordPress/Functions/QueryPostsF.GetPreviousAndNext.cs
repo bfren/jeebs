@@ -19,8 +19,8 @@ public static partial class QueryPostsF
 		var (prev, next) = ids.GetEitherSide(currentId);
 
 		return (
-			prev.Unsafe().TrySome(out var x) ? new WpPostId { Value = x } : null,
-			next.Unsafe().TrySome(out var y) ? new WpPostId { Value = y } : null
+			prev is Some<ulong> x ? new WpPostId { Value = x.Value } : null,
+			next is Some<ulong> y ? new WpPostId { Value = y.Value } : null
 		);
 	}
 }

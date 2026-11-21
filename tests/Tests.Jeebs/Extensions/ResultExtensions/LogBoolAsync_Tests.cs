@@ -55,6 +55,6 @@ public class LogBoolAsyncAsync_Tests
 		_ = await result.LogBoolAsync(log, ifTrue: Rnd.Str, ifFalse: Rnd.Str);
 
 		// Assert
-		log.Received(2).Failure(failure.Value);
+		log.Received(2).Failure(failure);
 	}
 }

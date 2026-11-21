@@ -22,7 +22,7 @@ public sealed class Jsonb : Dapper.SqlMapper.ICustomQueryParameter
 		obj switch
 		{
 			{ } =>
-				new(JsonF.Serialise(obj).Unwrap()),
+				new(JsonF.Serialise(obj).Unsafe().Unwrap()),
 
 			_ =>
 				new(JsonF.Empty)

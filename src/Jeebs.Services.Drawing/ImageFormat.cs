@@ -6,19 +6,20 @@ namespace Jeebs.Services.Drawing;
 /// <summary>
 /// Supported image formats.
 /// </summary>
-/// <remarks>
-/// The values are set to match the <see cref="System.Drawing.Imaging.ImageFormat"/> enumeration values,
-/// so that they can be used with the <see cref="Drawing.Image.Save(string, Drawing.Imaging.ImageFormat)"/> method.
-/// </remarks>
 public enum ImageFormat
 {
 	/// <summary>
+	/// Default value - not a valid format.
+	/// </summary>
+	Unsupported = 0,
+
+	/// <summary>
 	/// Joint Photographic Experts Group format.
 	/// </summary>
-	Jpeg = 3,
+	Jpeg = 1,
 
 	/// <summary>
 	/// Portable Network Graphics format.
 	/// </summary>
-	Png = 4
+	Png = 2
 }

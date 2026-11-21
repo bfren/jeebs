@@ -26,7 +26,7 @@ public class GetEncodedImageFormat_Tests
 	public void Unknown_Format_Throws_UnsupportedImageFormatException()
 	{
 		// Arrange
-		var input = (ImageFormat)0;
+		var input = ImageFormat.Unsupported;
 
 		// Act
 		object action() => input.GetEncodedImageFormat();

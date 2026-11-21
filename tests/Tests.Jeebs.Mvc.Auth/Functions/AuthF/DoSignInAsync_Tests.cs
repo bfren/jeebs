@@ -86,7 +86,7 @@ public class DoSignInAsync_Tests
 		_ = await AuthF.DoSignInAsync(v, validateUser);
 
 		// Assert
-		v.Log.Received().Failure(failure.Value);
+		v.Log.Received().Failure(failure);
 	}
 
 	[Fact]

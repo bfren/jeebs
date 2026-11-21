@@ -39,6 +39,6 @@ public class Log_Tests
 		_ = result.Log(log, message: Rnd.Str);
 
 		// Assert
-		log.Received(2).Failure(failure.Value);
+		log.Received(2).Failure(failure);
 	}
 }

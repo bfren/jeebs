@@ -31,6 +31,6 @@ public class Map_Tests : QueryPartsBuilderWithEntity_Tests
 		var result = Record.Exception(() => builder.Map.Value);
 
 		// Assert
-		Assert.IsType<FailureException>(result);
+		Assert.IsType<UnsafeUnwrapException>(result);
 	}
 }

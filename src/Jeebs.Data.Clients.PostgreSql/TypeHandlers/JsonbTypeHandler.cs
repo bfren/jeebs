@@ -25,7 +25,7 @@ public class JsonbTypeHandler<T> : Dapper.SqlMapper.TypeHandler<T>
 		value switch
 		{
 			string json when !string.IsNullOrWhiteSpace(json) =>
-				JsonF.Deserialise<T>(json).Unwrap(),
+				JsonF.Deserialise<T>(json).Unsafe().Unwrap(),
 
 			_ =>
 				throw new JsonException($"Invalid JSON: {value}.")

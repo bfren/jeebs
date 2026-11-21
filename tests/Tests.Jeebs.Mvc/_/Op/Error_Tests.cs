@@ -27,7 +27,7 @@ public class Error_Tests
 	public void With_Failure__Sets_Alert_Error()
 	{
 		// Arrange
-		var failure = FailGen.Create().Value;
+		var failure = FailGen.Create();
 
 		// Act
 		var result = Op.Error(failure);

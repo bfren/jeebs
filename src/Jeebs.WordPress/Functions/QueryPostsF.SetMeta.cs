@@ -42,7 +42,7 @@ public static partial class QueryPostsF
 				}
 
 				// Set the value of the meta property
-				metaDict.Set(post, new MetaDictionary(postMeta));
+				metaDict.Set(post, [with(postMeta)]);
 			}
 		}
 

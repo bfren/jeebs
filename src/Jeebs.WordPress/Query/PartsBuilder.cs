@@ -7,6 +7,7 @@ using Jeebs.Data.Common;
 using Jeebs.Data.Functions;
 using Jeebs.Data.Map;
 using Jeebs.Data.Query;
+using Jeebs.WordPress.Exceptions;
 using Jeebs.WordPress.Functions;
 using Wrap.Ids;
 
@@ -82,7 +83,7 @@ public abstract class PartsBuilder<TId> : QueryPartsBuilder<TId>
 			where TTable : ITable =>
 		DataF.GetColumnFromExpression(table, selector).Match(
 			fOk: Client.EscapeWithTable,
-			fFail: R.ThrowFailure<string>
+			fFail: f => throw new EscapeColumnException(f)
 		);
 
 	#region Testing

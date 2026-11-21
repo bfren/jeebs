@@ -17,7 +17,7 @@ public static partial class MvcControllerExtensions
 	/// </summary>
 	/// <param name="this">Controller.</param>
 	/// <param name="failure">Failure value.</param>
-	public static Task<IActionResult> ExecuteErrorAsync(this MvcController @this, FailureValue failure) =>
+	public static Task<IActionResult> ExecuteErrorAsync(this MvcController @this, Failure failure) =>
 		ExecuteErrorAsync(@this, failure, null);
 
 	/// <summary>
@@ -26,7 +26,7 @@ public static partial class MvcControllerExtensions
 	/// <param name="this">Controller.</param>
 	/// <param name="failure">Failure value.</param>
 	/// <param name="code">HTTP Status Code.</param>
-	public static async Task<IActionResult> ExecuteErrorAsync(this MvcController @this, FailureValue failure, int? code)
+	public static async Task<IActionResult> ExecuteErrorAsync(this MvcController @this, Failure failure, int? code)
 	{
 		// Log error
 		@this.Log.Failure(failure);

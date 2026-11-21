@@ -38,7 +38,7 @@ public abstract class WebhookDriver<TConfig, TMessage> : Driver<TConfig>, IWebho
 		Send(new Message { Content = message, Level = level });
 
 	/// <inheritdoc/>
-	public virtual void Send(FailureValue failure)
+	public virtual void Send(Failure failure)
 	{
 		// Convert to notification Message - exception details go in Content because drivers
 		// (e.g. Slack) only send Content and Level

@@ -10,7 +10,7 @@ public class Where_Tests0 : FluentQuery_Tests
 	{
 		// Arrange
 		var (query, _) = Setup();
-		query.Errors.Add(FailGen.Create().Value);
+		query.Errors.Add(FailGen.Create());
 
 		// Act
 		var result = query.Where(Rnd.Str, Rnd.Guid);
