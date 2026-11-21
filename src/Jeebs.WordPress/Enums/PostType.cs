@@ -63,7 +63,7 @@ public sealed record class PostType : Enumerated
 	/// Populate set of post types.
 	/// </summary>
 	static PostType() =>
-		All = new HashSet<PostType>([Post, Page, Revision, Attachment, MenuItem, AdvancedCustomField]);
+		All = [with([Post, Page, Revision, Attachment, MenuItem, AdvancedCustomField])];
 
 	/// <summary>
 	/// Add a custom post type.

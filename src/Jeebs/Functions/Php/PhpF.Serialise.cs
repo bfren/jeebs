@@ -87,6 +87,6 @@ public static partial class PhpF
 
 		// Append a Dictionary to the StringBuilder
 		StringBuilder appendDictionary(IDictionary d) =>
-			appendHashtable(new Hashtable(d));
+			appendHashtable([with(d)]);
 	}
 }

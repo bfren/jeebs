@@ -19,7 +19,7 @@ public static class EnumeratedList
 		where T : Enumerated
 	{
 		var strings = JsonF.Deserialise<List<string>>(json).Unwrap(_ => []);
-		return new EnumeratedList<T>(strings);
+		return [with(strings)];
 	}
 }
 

@@ -410,31 +410,31 @@ public static class BibleBooks
 	/// Books of the Law.
 	/// </summary>
 	public static List<string> Law =>
-		new([Genesis, Exodus, Leviticus, Numbers, Deuteronomy]);
+		[with([Genesis, Exodus, Leviticus, Numbers, Deuteronomy])];
 
 	/// <summary>
 	/// History Books.
 	/// </summary>
 	public static List<string> History =>
-		new([Joshua, Judges, Ruth, FirstSamuel, SecondSamuel, FirstKings, SecondKings, FirstChronicles, SecondChronicles, Ezra, Nehemiah, Esther]);
+		[with([Joshua, Judges, Ruth, FirstSamuel, SecondSamuel, FirstKings, SecondKings, FirstChronicles, SecondChronicles, Ezra, Nehemiah, Esther])];
 
 	/// <summary>
 	/// Wisdom Literature.
 	/// </summary>
 	public static List<string> Wisdom =>
-		new([Job, Psalms, Proverbs, Ecclesiastes, SongOfSongs]);
+		[with([Job, Psalms, Proverbs, Ecclesiastes, SongOfSongs])];
 
 	/// <summary>
 	/// Major Prophets.
 	/// </summary>
 	public static List<string> MajorProphets =>
-		new([Isaiah, Jeremiah, Lamentations, Ezekiel, Daniel]);
+		[with([Isaiah, Jeremiah, Lamentations, Ezekiel, Daniel])];
 
 	/// <summary>
 	/// Minor Prophets.
 	/// </summary>
 	public static List<string> MinorProphets =>
-		new([Hosea, Joel, Amos, Obadiah, Jonah, Micah, Nahum, Habakkuk, Zephaniah, Haggai, Zechariah, Malachi]);
+		[with([Hosea, Joel, Amos, Obadiah, Jonah, Micah, Nahum, Habakkuk, Zephaniah, Haggai, Zechariah, Malachi])];
 
 	/// <summary>
 	/// Old Testament.
@@ -446,25 +446,25 @@ public static class BibleBooks
 	/// Gospels.
 	/// </summary>
 	public static List<string> Gospels =>
-		new([Matthew, Mark, Luke, John]);
+		[with([Matthew, Mark, Luke, John])];
 
 	/// <summary>
 	/// Gospels and Acts.
 	/// </summary>
 	public static List<string> GospelsAndActs =>
-		new([.. Gospels, Acts]);
+		[with([.. Gospels, Acts])];
 
 	/// <summary>
 	/// Pauline Letters.
 	/// </summary>
 	public static List<string> PaulineLetters =>
-		new([Romans, FirstCorinthians, SecondCorinthians, Galatians, Ephesians, Philippians, Colossians, FirstThessalonians, SecondThessalonians, FirstTimothy, SecondTimothy, Titus, Philemon]);
+		[with([Romans, FirstCorinthians, SecondCorinthians, Galatians, Ephesians, Philippians, Colossians, FirstThessalonians, SecondThessalonians, FirstTimothy, SecondTimothy, Titus, Philemon])];
 
 	/// <summary>
 	/// Epistles.
 	/// </summary>
 	public static List<string> Epistles =>
-		new([.. PaulineLetters, Hebrews, James, FirstPeter, SecondPeter, FirstJohn, SecondJohn, ThirdJohn, Jude, Revelation]);
+		[with([.. PaulineLetters, Hebrews, James, FirstPeter, SecondPeter, FirstJohn, SecondJohn, ThirdJohn, Jude, Revelation])];
 
 	/// <summary>
 	/// New Testament.
