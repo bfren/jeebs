@@ -37,31 +37,6 @@
           "description": "Azure configuration",
           "additionalProperties": false,
           "properties": {
-            "dataProtection": {
-              "type": "object",
-              "description": "Azure Data Protection configuration",
-              "required": [ "storageAccessKeyConnectionString", "containerName", "keyUri" ],
-              "additionalProperties": false,
-              "properties": {
-                "storageAccessKeyConnectionString": {
-                  "type": "string",
-                  "description": "Storage Access Key connection string"
-                },
-                "containerName": {
-                  "type": "string",
-                  "description": "Blob Container name"
-                },
-                "blobName": {
-                  "type": "string",
-                  "description": "Blob name (e.g. keys.xml)",
-                  "default": "keys.xml"
-                },
-                "keyUri": {
-                  "type": "string",
-                  "description": "URI to Key Vault key to use for data encryption"
-                }
-              }
-            },
             "keyVault": {
               "type": "object",
               "description": "Azure Key Vault configuration",

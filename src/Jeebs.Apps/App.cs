@@ -5,7 +5,6 @@ using System;
 using System.IO;
 using Jeebs.Config;
 using Jeebs.Config.App;
-using Jeebs.Config.Azure.DataProtection;
 using Jeebs.Config.Azure.KeyVault;
 using Jeebs.Config.Db;
 using Jeebs.Config.Logging;
@@ -92,7 +91,6 @@ public class App
 		_ = services
 			.Configure<AppConfig>(config.GetSection(AppConfig.Key))
 			.Configure<AuthConfig>(config.GetSection(AuthConfig.Key))
-			.Configure<DataProtectionConfig>(config.GetSection(DataProtectionConfig.Key))
 			.Configure<KeyVaultConfig>(config.GetSection(KeyVaultConfig.Key))
 			.Configure<DbConfig>(config.GetSection(DbConfig.Key))
 			.Configure<JeebsConfig>(config.GetSection(JeebsConfig.Key))

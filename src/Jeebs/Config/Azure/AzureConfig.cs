@@ -16,11 +16,6 @@ public sealed record class AzureConfig : IOptions<AzureConfig>
 	public static readonly string Key = JeebsConfig.Key + ":azure";
 
 	/// <summary>
-	/// DataProtectionConfig.
-	/// </summary>
-	public DataProtection.DataProtectionConfig Verification { get; init; } = new();
-
-	/// <summary>
 	/// KeyVaultConfig.
 	/// </summary>
 	public KeyVault.KeyVaultConfig Redirections { get; init; } = new();
