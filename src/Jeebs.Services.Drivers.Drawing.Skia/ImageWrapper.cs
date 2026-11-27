@@ -11,7 +11,7 @@ namespace Jeebs.Services.Drivers.Drawing.Skia;
 /// <summary>
 /// Image Wrapper - using SkiaSharp.
 /// </summary>
-public sealed class ImageWrapper : Services.Drawing.ImageWrapper
+public sealed partial class ImageWrapper : Services.Drawing.ImageWrapper
 {
 	/// <inheritdoc/>
 	public override int Width =>
@@ -60,8 +60,7 @@ public sealed class ImageWrapper : Services.Drawing.ImageWrapper
 				data.SaveTo(ms);
 				return ms.ToArray();
 			},
-			e => R.Fail(e).WithMessage("Error converting image to byte array.")
-				.WithContext(nameof(ImageWrapper), nameof(ToByteArray))
+			e => ErrorConvertingToByteArray() with { Exception = e }
 		);
 
 	/// <inheritdoc/>
@@ -94,4 +93,7 @@ public sealed class ImageWrapper : Services.Drawing.ImageWrapper
 
 		image.Dispose();
 	}
+
+	[Failure("Error converting image to byte array.", Wrap.Logging.LogLevel.Error)]
+	private static partial Failure ErrorConvertingToByteArray();
 }

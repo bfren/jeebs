@@ -11,21 +11,19 @@ namespace Jeebs.Services.Drivers.Drawing.Stb;
 /// <summary>
 /// Image Driver implemented in managed code using StbImageSharp - no native libraries.
 /// </summary>
-public sealed class ImageDriver : IImageDriver
+public sealed partial class ImageDriver : IImageDriver
 {
 	/// <inheritdoc/>
 	public Result<IImageWrapper> FromFile(string path)
 	{
 		if (!File.Exists(path))
 		{
-			return R.Fail("Image file does not exist: '{Path}'.", path)
-				.WithContext(nameof(ImageDriver), nameof(FromFile));
+			return ImageFileNotFound(path);
 		}
 
 		return R.Try(
 			() => File.ReadAllBytes(path),
-			e => R.Fail(e).WithMessage("Unable to read image file.")
-				.WithContext(nameof(ImageDriver), nameof(FromFile))
+			e => UnableToReadImageFile() with { Exception = e }
 		)
 		.Bind(
 			x => Load(x, nameof(FromFile))
@@ -48,7 +46,7 @@ public sealed class ImageDriver : IImageDriver
 	internal static Result<IImageWrapper> Load(byte[] data, string method) =>
 		R.Try(
 			() => ImageResult.FromMemory(data, ColorComponents.RedGreenBlueAlpha),
-			e => R.Fail(e).WithMessage("Not a valid image.")
+			e => (NotValidImage() with { Exception = e })
 				.WithContext(nameof(ImageDriver), method)
 		)
 		.Map(
@@ -58,4 +56,13 @@ public sealed class ImageDriver : IImageDriver
 				return (IImageWrapper)new ImageWrapper(pixels, width, height);
 			}
 		);
+
+	[Failure("Image file does not exist: '{Path}'.")]
+	private static partial Failure ImageFileNotFound(string path);
+
+	[Failure("Unable to read image file.", Wrap.Logging.LogLevel.Error)]
+	private static partial Failure UnableToReadImageFile();
+
+	[Failure("Not a valid image.", Wrap.Logging.LogLevel.Error)]
+	private static partial Failure NotValidImage();
 }
