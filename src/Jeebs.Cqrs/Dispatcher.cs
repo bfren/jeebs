@@ -9,7 +9,7 @@ using Jeebs.Logging;
 namespace Jeebs.Cqrs;
 
 /// <inheritdoc cref="IDispatcher"/>
-public sealed class Dispatcher : IDispatcher
+public sealed partial class Dispatcher : IDispatcher
 {
 	private ILog<Dispatcher> Log { get; init; }
 
@@ -33,8 +33,7 @@ public sealed class Dispatcher : IDispatcher
 				handler.HandleAsync(command),
 
 			_ =>
-				R.Fail("Unable to get command handler {Type}.", command.GetType().Name)
-					.Ctx(nameof(Dispatcher), nameof(SendAsync))
+				CommandHandlerNotFound(command.GetType().Name)
 					.AsTask<bool>()
 		};
 	}
@@ -54,8 +53,7 @@ public sealed class Dispatcher : IDispatcher
 				handler.HandleAsync(query),
 
 			_ =>
-				R.Fail("Unable to get query handler {Type}.", query.GetType().Name)
-					.Ctx(nameof(Dispatcher), nameof(SendAsync))
+				QueryHandlerNotFound(query.GetType().Name)
 					.AsTask<T>()
 		};
 	}
@@ -79,4 +77,10 @@ public sealed class Dispatcher : IDispatcher
 
 		return service;
 	}
+
+	[Failure("Unable to get command handler {Type}.")]
+	private static partial Failure CommandHandlerNotFound(string type);
+
+	[Failure("Unable to get query handler {Type}.")]
+	private static partial Failure QueryHandlerNotFound(string type);
 }

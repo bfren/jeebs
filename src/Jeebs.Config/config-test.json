@@ -1,5 +1,5 @@
 {
-	"$schema": "schema.json#",
+	"$schema": "../../schemas/jeebs/application/config/2026-11.json#",
 	"jeebs": {
 		"app": {
 			"name": "",

@@ -12,7 +12,7 @@ namespace Jeebs.Services.Drivers.Drawing.Stb;
 /// <summary>
 /// Image Wrapper - using StbImageSharp.
 /// </summary>
-public sealed class ImageWrapper : Services.Drawing.ImageWrapper
+public sealed partial class ImageWrapper : Services.Drawing.ImageWrapper
 {
 	/// <inheritdoc/>
 	public override int Width { get; }
@@ -58,8 +58,7 @@ public sealed class ImageWrapper : Services.Drawing.ImageWrapper
 				Write(ms, format, quality);
 				return ms.ToArray();
 			},
-			e => R.Fail(e).Msg("Error converting image to byte array.")
-				.Ctx(nameof(ImageWrapper), nameof(ToByteArray))
+			ErrorConvertingToByteArray
 		);
 
 	private void Write(Stream stream, ImageFormat format, int quality)
@@ -91,4 +90,7 @@ public sealed class ImageWrapper : Services.Drawing.ImageWrapper
 	/// The pixels are managed memory, so there is nothing to free.
 	/// </summary>
 	public override void Dispose() { }
+
+	[Failure("Error converting image to byte array.")]
+	private static partial Failure ErrorConvertingToByteArray(Exception e);
 }

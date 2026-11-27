@@ -23,7 +23,7 @@ public class Value_Tests
 	private void Result_Is_Fail__Returns_Null<T>()
 	{
 		// Arrange
-		var failure = FailGen.Create();
+		var failure = R.Fail(Rnd.Str);
 		var jsonResult = new Op<T>(failure);
 
 		// Act

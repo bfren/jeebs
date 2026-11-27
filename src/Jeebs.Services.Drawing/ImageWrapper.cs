@@ -8,7 +8,7 @@ using Jeebs.Services.Drawing.Geometry;
 namespace Jeebs.Services.Drawing;
 
 /// <inheritdoc cref="IImageWrapper"/>
-public abstract class ImageWrapper : IImageWrapper
+public abstract partial class ImageWrapper : IImageWrapper
 {
 	/// <inheritdoc/>
 	public abstract int Width { get; }
@@ -54,8 +54,7 @@ public abstract class ImageWrapper : IImageWrapper
 		// At least one of width and height should be greater than zero
 		if (width == 0 && height == 0)
 		{
-			return R.Fail("Mask width or height is required.")
-				.Ctx(nameof(ImageWrapper), nameof(ApplyMask));
+			return MaskSizeRequired();
 		}
 
 		// Calculate the size of the new image
@@ -67,8 +66,13 @@ public abstract class ImageWrapper : IImageWrapper
 		// Use implementation to return masked and resized image
 		return R.Try(
 			() => apply(size, mask),
-			e => R.Fail(e).Msg("Error applying image mask.")
-				.Ctx(nameof(ImageWrapper), nameof(ApplyMask))
+			ErrorApplyingMask
 		);
 	}
+
+	[Failure("Mask width or height is required.")]
+	private static partial Failure MaskSizeRequired();
+
+	[Failure("Error applying image mask.")]
+	private static partial Failure ErrorApplyingMask(Exception e);
 }

@@ -20,7 +20,9 @@ public static partial class HttpF
 				JsonWebToken.Wrap(authorisationHeader["Bearer ".Length..].Trim()),
 
 			_ =>
-				R.Fail("Authorization header is not a Bearer token.")
-					.Ctx(nameof(HttpF), nameof(GetToken))
+				NotBearerToken()
 		};
+
+	[Failure("Authorization header is not a Bearer token.")]
+	private static partial Failure NotBearerToken();
 }

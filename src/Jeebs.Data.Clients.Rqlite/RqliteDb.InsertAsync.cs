@@ -22,9 +22,11 @@ public abstract partial class RqliteDb : Db
 					R.Wrap(id),
 
 				_ =>
-					R.Fail("Failed to convert '{Id}' to '{IdType}'.", x.LastInsertId, typeof(TId).Name)
-						.Ctx(nameof(RqliteDb), nameof(InsertAsync))
+					IdConversionFailed(x.LastInsertId, typeof(TId).Name)
 			}
 		);
 	}
+
+	[Failure("Failed to convert '{Id}' to '{IdType}'.")]
+	private static partial Failure IdConversionFailed(object? id, string idType);
 }

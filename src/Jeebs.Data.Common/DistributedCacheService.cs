@@ -23,13 +23,14 @@ public sealed class DistributedCacheService(IOptions<DbConfig> dbConfig, IDistri
 	public async Task<T> GetOrCreateAsync<T>(string query, object? param, Func<Task<T>> fetch, TimeSpan relativeExpiration)
 	{
 		// If expiration is zero or negative, don't cache
-		if (relativeExpiration.Seconds == 0)
+		if (relativeExpiration <= TimeSpan.Zero)
 		{
 			return await fetch();
 		}
 
-		// Check cache before fetching
-		var key = $"{query}:{JsonF.Serialise(param).Unwrap(_ => JsonF.Empty)}";
+		// Check cache before fetching - the key includes the result type, because the same query can be
+		// read into different types (e.g. WordPress attachments) and must not share an entry
+		var key = $"{typeof(T).FullName}:{query}:{JsonF.Serialise(param).Unwrap(_ => JsonF.Empty)}";
 		var cachedString = await cache.GetStringAsync(key);
 		if (!string.IsNullOrEmpty(cachedString))
 		{

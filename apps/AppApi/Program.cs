@@ -25,7 +25,7 @@ static async Task<IResult> HandleSayHello(
 			new SayHelloQuery(name)
 		)
 		.UnwrapAsync(
-			ifFailed: _ => "Nothing to say."
+			fFail: _ => "Nothing to say."
 		);
 
 	return Results.Text(text);

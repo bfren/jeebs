@@ -35,6 +35,9 @@ public static partial class LevelF
 				LogEventLevel.Fatal,
 
 			_ =>
-				R.Fail("Unknown LogLevel: {Level}.", level)
+				UnknownLogLevel(level)
 		};
+
+	[Failure("Unknown LogLevel: {Level}.")]
+	private static partial Failure UnknownLogLevel(LogLevel level);
 }

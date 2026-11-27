@@ -9,7 +9,7 @@ namespace Jeebs.Mvc.Auth;
 /// <summary>
 /// Various authentication operations.
 /// </summary>
-public abstract record class AuthOp : Op<string>
+public abstract partial record class AuthOp : Op<string>
 {
 	/// <summary>
 	/// Create object.
@@ -25,7 +25,7 @@ public abstract record class AuthOp : Op<string>
 	public sealed record class Denied : AuthOp
 	{
 		/// <inheritdoc cref="Denied"/>
-		public Denied() : base(R.Fail("Access denied."), StatusCodes.Status401Unauthorized) { }
+		public Denied() : base(AccessDenied(), StatusCodes.Status401Unauthorized) { }
 	}
 
 	/// <summary>
@@ -58,6 +58,12 @@ public abstract record class AuthOp : Op<string>
 	public sealed record class TryAgain : AuthOp
 	{
 		/// <inheritdoc cref="TryAgain"/>
-		public TryAgain() : base(R.Fail("Try again."), StatusCodes.Status401Unauthorized) { }
+		public TryAgain() : base(TryAgainFailed(), StatusCodes.Status401Unauthorized) { }
 	}
+
+	[Failure("Access denied.")]
+	private static partial Failure AccessDenied();
+
+	[Failure("Try again.")]
+	private static partial Failure TryAgainFailed();
 }

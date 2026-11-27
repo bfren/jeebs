@@ -1,6 +1,7 @@
 // Jeebs Rapid Application Development
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Jeebs.Data.Common;
@@ -22,8 +23,7 @@ public static partial class QueryPostsMetaF
 		where TModel : IWithId<WpPostMetaId, ulong> =>
 		R.Try(
 			() => opt(new PostsMetaOptions(db.Schema)),
-			e => R.Fail(e).Msg("Error getting query posts meta options.")
-				.Ctx(nameof(QueryPostsMetaF), nameof(ExecuteAsync))
+			ErrorGettingPostsMetaOptions
 		)
 		.Bind(
 			x => x.ToParts<TModel>()
@@ -31,4 +31,7 @@ public static partial class QueryPostsMetaF
 		.BindAsync(
 			x => db.QueryAsync<TModel>(x, unitOfWork)
 		);
+
+	[Failure("Error getting query posts meta options.")]
+	private static partial Failure ErrorGettingPostsMetaOptions(Exception e);
 }

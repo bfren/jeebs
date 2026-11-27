@@ -108,8 +108,7 @@ public readonly partial struct DateTimeInt : IEquatable<DateTimeInt>, IParsable<
 				new DateTime(Year, Month, Day, Hour, Minute, 0, DateTimeKind.Utc),
 
 			{ } x =>
-				R.Fail("Invalid {Part} - 'Y:{Year} M:{Month} D:{Day} H:{Hour} m:{Minute}'.", x.Part, Year, Month, Day, Hour, Minute)
-					.Ctx(nameof(DateTimeInt), nameof(ToDateTime))
+				InvalidPart(x.Part, Year, Month, Day, Hour, Minute)
 		};
 
 	/// <summary>
@@ -217,4 +216,7 @@ public readonly partial struct DateTimeInt : IEquatable<DateTimeInt>, IParsable<
 		new(9999, 12, 31, 23, 59);
 
 	#endregion Static
+
+	[Failure("Invalid {Part} - 'Y:{Year} M:{Month} D:{Day} H:{Hour} m:{Minute}'.")]
+	private static partial Failure InvalidPart(string part, int year, int month, int day, int hour, int minute);
 }

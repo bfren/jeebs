@@ -64,7 +64,7 @@ public class UpdateUserLastSignInAsync_Tests
 	{
 		// Arrange
 		var v = Setup();
-		var failure = FailGen.Create();
+		var failure = R.Fail(Rnd.Str);
 		v.Repository.UpdateLastSignInAsync(default!)
 			.ReturnsForAnyArgs(failure);
 
@@ -81,7 +81,7 @@ public class UpdateUserLastSignInAsync_Tests
 		// Arrange
 		var v = Setup();
 		v.Repository.UpdateLastSignInAsync(default!)
-			.ReturnsForAnyArgs(FailGen.Create());
+			.ReturnsForAnyArgs(R.Fail(Rnd.Str));
 
 		// Act
 		var result = await AuthF.UpdateUserLastSignInAsync(v.Provider, v.UserId, v.Log);

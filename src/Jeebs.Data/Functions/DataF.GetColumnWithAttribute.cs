@@ -24,11 +24,7 @@ public static partial class DataF
 		)
 		.Map(
 			x => x.Where(p => p.PropertyInfo.GetCustomAttribute<TAttribute>() != null).ToList(),
-			e => R.Fail(e).Msg(
-					"Error getting properties with attribute '{Attribute}' from table '{Table}'.",
-					typeof(TAttribute).Name, typeof(TTable).Name
-				)
-				.Ctx(nameof(DataF), nameof(GetColumnWithAttribute))
+			e => ErrorGettingAttributeProperties(typeof(TAttribute).Name, typeof(TTable).Name, e)
 		)
 		.GetSingle(
 			x => x.Value<IColumn>(),
@@ -36,9 +32,12 @@ public static partial class DataF
 					"Unable to get single column with attribute '{Attribute}' from table '{Table}': " + msg,
 					[typeof(TAttribute).Name, typeof(TTable).Name, .. args]
 				)
-				.Ctx(nameof(DataF), nameof(GetColumnWithAttribute))
+				.WithContext(nameof(DataF), nameof(GetColumnWithAttribute))
 		)
 		.Map(
 			x => new Column(x)
 		);
+
+	[Failure("Error getting properties with attribute '{Attribute}' from table '{Table}'.")]
+	private static partial Failure ErrorGettingAttributeProperties(string attribute, string table, Exception e);
 }

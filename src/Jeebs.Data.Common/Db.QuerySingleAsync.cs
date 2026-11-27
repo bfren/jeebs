@@ -28,8 +28,8 @@ public abstract partial class Db
 		R.Wrap(
 			(query, parameters: param ?? new object(), type)
 		)
-		.Audit(
-			fOk: LogQuery<T>
+		.IfOk(
+			LogQuery<T>
 		)
 		.BindAsync(
 			// a read joins the transaction only if a write has already begun it
@@ -42,8 +42,7 @@ public abstract partial class Db
 					R.Wrap(x),
 
 				_ =>
-					R.Fail("Item not found or multiple items returned.", query, param)
-						.Ctx(nameof(Db), nameof(QuerySingleAsync))
+					ItemNotFoundOrMultiple(query)
 			}
 		);
 
@@ -83,4 +82,7 @@ public abstract partial class Db
 		);
 
 	#endregion
+
+	[Failure("Item not found or multiple items returned for query '{Query}'.")]
+	private static partial Failure ItemNotFoundOrMultiple(string query);
 }

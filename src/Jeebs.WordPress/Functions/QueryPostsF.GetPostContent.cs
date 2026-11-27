@@ -24,12 +24,14 @@ public static partial class QueryPostsF
 		// If content is not defined return none
 		if (!content.Any())
 		{
-			return R.Fail("Content property not found on model '{Type}'.", typeof(TModel).Name)
-				.Ctx(nameof(QueryPostsF), nameof(GetPostContent));
+			return ContentPropertyNotFound(typeof(TModel).Name);
 		}
 
 		// Return single property
 		// There cannot be more than one because the property is found by name, which must be unique
 		return content.Single();
 	}
+
+	[Failure("Content property not found on model '{Type}'.")]
+	private static partial Failure ContentPropertyNotFound(string type);
 }

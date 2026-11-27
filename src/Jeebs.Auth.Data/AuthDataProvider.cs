@@ -15,7 +15,7 @@ using Jeebs.Data.Enums;
 namespace Jeebs.Auth.Data;
 
 /// <inheritdoc cref="IAuthDataProvider"/>
-public sealed class AuthDataProvider : IAuthDataProvider
+public sealed partial class AuthDataProvider : IAuthDataProvider
 {
 	/// <inheritdoc/>
 	public IAuthDb Db { get; private set; }
@@ -50,22 +50,19 @@ public sealed class AuthDataProvider : IAuthDataProvider
 		// If the password is empty, do nothing
 		if (string.IsNullOrWhiteSpace(model.NewPassword))
 		{
-			return R.Fail("New password cannot be empty.")
-				.Ctx(nameof(AuthDataProvider), nameof(ChangeUserPasswordAsync));
+			return NewPasswordEmpty();
 		}
 
 		// If the passwords don't match, do nothing
 		if (model.NewPassword != model.CheckPassword)
 		{
-			return R.Fail("Passwords do not match.")
-				.Ctx(nameof(AuthDataProvider), nameof(ChangeUserPasswordAsync));
+			return PasswordsDoNotMatch();
 		}
 
 		// If the passwords are the same, do nothing
 		if (model.NewPassword == model.CurrentPassword)
 		{
-			return R.Fail("New password cannot be the same as the old password.")
-				.Ctx(nameof(AuthDataProvider), nameof(ChangeUserPasswordAsync));
+			return NewPasswordSameAsOld();
 		}
 
 		// Get user for authentication
@@ -74,8 +71,7 @@ public sealed class AuthDataProvider : IAuthDataProvider
 			// Verify the entered password
 			if (!x.PasswordHash.VerifyPassword(model.CurrentPassword))
 			{
-				return R.Fail("Invalid password.")
-					.Ctx(nameof(AuthDataProvider), nameof(ChangeUserPasswordAsync));
+				return InvalidPassword();
 			}
 
 			// Update the password
@@ -119,15 +115,13 @@ public sealed class AuthDataProvider : IAuthDataProvider
 		// Check email
 		if (string.IsNullOrEmpty(email))
 		{
-			return R.Fail("Null or empty email.")
-				.Ctx(nameof(AuthDataProvider), nameof(ValidateUserAsync));
+			return NullOrEmptyEmail();
 		}
 
 		// Check password
 		if (string.IsNullOrEmpty(password))
 		{
-			return R.Fail("Invalid password.")
-				.Ctx(nameof(AuthDataProvider), nameof(ValidateUserAsync));
+			return InvalidPassword();
 		}
 
 		// Check the user is enabled and the password is correct
@@ -145,14 +139,12 @@ public sealed class AuthDataProvider : IAuthDataProvider
 
 				if (!x.IsEnabled)
 				{
-					return R.Fail("User {Email} is not enabled.", email)
-						.Ctx(nameof(AuthDataProvider), nameof(ValidateUserAsync));
+					return UserNotEnabled(email);
 				}
 
 				if (!verified)
 				{
-					return R.Fail("Invalid password.")
-						.Ctx(nameof(AuthDataProvider), nameof(ValidateUserAsync));
+					return InvalidPassword();
 				}
 
 				// upgrade hashes made with older settings - a failed update must not stop the user signing in,
@@ -171,4 +163,22 @@ public sealed class AuthDataProvider : IAuthDataProvider
 	/// </summary>
 	private static readonly Lazy<string> DummyHash =
 		new("dummy password for unknown users".HashPassword);
+
+	[Failure("New password cannot be empty.")]
+	private static partial Failure NewPasswordEmpty();
+
+	[Failure("Passwords do not match.")]
+	private static partial Failure PasswordsDoNotMatch();
+
+	[Failure("New password cannot be the same as the old password.")]
+	private static partial Failure NewPasswordSameAsOld();
+
+	[Failure("Invalid password.")]
+	private static partial Failure InvalidPassword();
+
+	[Failure("Null or empty email.")]
+	private static partial Failure NullOrEmptyEmail();
+
+	[Failure("User {Email} is not enabled.")]
+	private static partial Failure UserNotEnabled(string email);
 }

@@ -66,8 +66,8 @@ log.Err("Testing Failure with exception object: {@Exception}.", ex);
 log.Inf("Testing Result failure");
 R.Try(
 	() => Basic.DoSomething(Rnd.Str),
-	e => R.Fail(e).Ctx(nameof(Program), "Main")
-).Audit(fFail: log.Failure);
+	e => R.Fail(e).WithContext(nameof(Program), "Main")
+).IfFailed(log.Failure);
 
 // Test Microsoft ILogger
 var microsoftLogTest = LoggerMessage.Define<string>(LogLevel.Information, new(), "{Msg}");

@@ -1,6 +1,7 @@
 // Jeebs Rapid Application Development
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Jeebs.Data.Common;
@@ -22,8 +23,7 @@ public static partial class QueryPostsTaxonomyF
 		where TModel : IWithId<WpTermId, ulong> =>
 		R.Try(
 			() => opt(new PostsTaxonomyOptions(db.Schema)),
-			e => R.Fail(e).Msg("Error getting query posts taxonomy options.")
-				.Ctx(nameof(QueryPostsTaxonomyF), nameof(ExecuteAsync))
+			ErrorGettingPostsTaxonomyOptions
 		)
 		.Bind(
 			x => x.ToParts<TModel>()
@@ -31,4 +31,7 @@ public static partial class QueryPostsTaxonomyF
 		.BindAsync(
 			x => db.QueryAsync<TModel>(x, unitOfWork)
 		);
+
+	[Failure("Error getting query posts taxonomy options.")]
+	private static partial Failure ErrorGettingPostsTaxonomyOptions(Exception e);
 }

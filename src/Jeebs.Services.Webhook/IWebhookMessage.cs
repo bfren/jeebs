@@ -1,7 +1,6 @@
 // Jeebs Rapid Application Development
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
-using System.Collections.Generic;
 using Jeebs.Services.Notify;
 
 namespace Jeebs.Services.Webhook;
@@ -20,9 +19,4 @@ public interface IWebhookMessage
 	/// Message level.
 	/// </summary>
 	NotificationLevel Level { get; init; }
-
-	/// <summary>
-	/// Additional fields to send.
-	/// </summary>
-	Dictionary<string, object> Fields { get; init; }
 }

@@ -14,7 +14,7 @@ namespace Jeebs.WordPress.CustomFields;
 /// <summary>
 /// Post Attachment Custom Field.
 /// </summary>
-public abstract class AttachmentCustomField : CustomField<AttachmentCustomField.Attachment>
+public abstract partial class AttachmentCustomField : CustomField<AttachmentCustomField.Attachment>
 {
 	/// <summary>
 	/// IQueryPosts.
@@ -46,8 +46,8 @@ public abstract class AttachmentCustomField : CustomField<AttachmentCustomField.
 		{
 			if (isRequired)
 			{
-				return R.Fail("Meta Key '{Key}' not found for Custom Field '{Type}'.", Key, GetType().Name)
-					.Ctx(GetType().Name, nameof(HydrateAsync));
+				return MetaKeyNotFound(Key, GetType().Name)
+					.WithContext(GetType().Name, nameof(HydrateAsync));
 			}
 
 			return R.False;
@@ -73,7 +73,7 @@ public abstract class AttachmentCustomField : CustomField<AttachmentCustomField.
 			.GetSingleAsync(
 				x => x.Value<Attachment>(),
 				(msg, args) => R.Fail("Unable to get single '{ValueStr}': " + msg, [ValueStr, .. args])
-					.Ctx(GetType().Name, nameof(HydrateAsync))
+					.WithContext(GetType().Name, nameof(HydrateAsync))
 			)
 			.MapAsync(
 				x =>
@@ -103,8 +103,8 @@ public abstract class AttachmentCustomField : CustomField<AttachmentCustomField.
 	internal static Result<WpPostId> ParseAttachmentPostId(Type type, string value) =>
 		M.ParseUInt64(value).Match(
 			fSome: x => R.Wrap(new WpPostId { Value = x }),
-			fNone: () => R.Fail("'{Value}' is not a valid Post ID.", value)
-				.Ctx(type.Name, nameof(ParseAttachmentPostId))
+			fNone: () => InvalidPostId(value)
+				.WithContext(type.Name, nameof(ParseAttachmentPostId))
 		);
 
 	/// <inheritdoc/>
@@ -118,4 +118,10 @@ public abstract class AttachmentCustomField : CustomField<AttachmentCustomField.
 	/// Attachment file.
 	/// </summary>
 	public sealed record class Attachment : PostAttachment { }
+
+	[Failure("Meta Key '{Key}' not found for Custom Field '{Type}'.")]
+	private static partial Failure MetaKeyNotFound(string key, string type);
+
+	[Failure("'{Value}' is not a valid Post ID.")]
+	private static partial Failure InvalidPostId(object? value);
 }

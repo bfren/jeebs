@@ -9,7 +9,7 @@ namespace Jeebs.Config.Db;
 /// <summary>
 /// Database configuration.
 /// </summary>
-public sealed record class DbConfig : IOptions<DbConfig>
+public sealed partial record class DbConfig : IOptions<DbConfig>
 {
 	/// <summary>
 	/// Path to database settings configuration section.
@@ -58,20 +58,17 @@ public sealed record class DbConfig : IOptions<DbConfig>
 	/// <param name="name">Connection name.</param>
 	public Result<DbConnectionConfig> GetConnection(string name)
 	{
-		static Result<DbConnectionConfig> fail(string message, params object?[] args) =>
-			R.Fail(message, args).Ctx(nameof(DbConfig), nameof(GetConnection));
-
 		// Name cannot be null or empty
 		var nameOrDefault = string.IsNullOrWhiteSpace(name) ? Default : name;
 		if (string.IsNullOrWhiteSpace(nameOrDefault))
 		{
-			return fail("You must specify the name of the default database connection.");
+			return DefaultConnectionNameNotSpecified();
 		}
 
 		// The list of defined connections cannot be empty
 		if (Connections.Count == 0)
 		{
-			return fail("At least one database connection must be defined.");
+			return NoConnectionsDefined();
 		}
 
 		// Attempt to retrieve the connection
@@ -80,7 +77,7 @@ public sealed record class DbConfig : IOptions<DbConfig>
 			return config;
 		}
 
-		return fail("A connection named '{Name}' could not be found.", nameOrDefault);
+		return ConnectionNotFound(nameOrDefault);
 	}
 
 	/// <summary>
@@ -89,4 +86,13 @@ public sealed record class DbConfig : IOptions<DbConfig>
 	/// <returns>The Authentication Connection configuration.</returns>
 	public Result<DbConnectionConfig> GetAuthenticationConnection() =>
 		GetConnection(Authentication);
+
+	[Failure("You must specify the name of the default database connection.")]
+	private static partial Failure DefaultConnectionNameNotSpecified();
+
+	[Failure("At least one database connection must be defined.")]
+	private static partial Failure NoConnectionsDefined();
+
+	[Failure("A connection named '{Name}' could not be found.")]
+	private static partial Failure ConnectionNotFound(string name);
 }

@@ -1,6 +1,7 @@
 // Jeebs Rapid Application Development
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
+using System;
 using System.Linq;
 using Jeebs.Data.Functions;
 
@@ -18,7 +19,7 @@ public sealed class Extract : IExtract
 /// Extract columns from a table that match <typeparamref name="TModel"/>.
 /// </summary>
 /// <typeparam name="TModel">Model type.</typeparam>
-public static class Extract<TModel>
+public static partial class Extract<TModel>
 {
 	/// <summary>
 	/// Extract columns from specified tables.
@@ -40,18 +41,27 @@ public static class Extract<TModel>
 				() => from table in tables
 					  from column in DataF.GetColumnsFromTable<TModel>(table)
 					  select column,
-				e => R.Fail(e).Msg("Error getting columns from table.").Ctx(nameof(Extract), nameof(From))
+				ErrorGettingColumns
 			)
 			.IfNot(
 				x => x.Any(),
-				_ => R.Fail("No columns were extracted from the tables.").Ctx(nameof(Extract), nameof(From))
+				_ => NoColumnsExtracted()
 			)
 			.Map(
 				x => x.Distinct(new Column.AliasComparer()),
-				e => R.Fail(e).Msg("Error getting distinct columns from the list.").Ctx(nameof(Extract), nameof(From))
+				ErrorGettingDistinctColumns
 			)
 			.Map(
 				x => (IColumnList)new ColumnList(x)
 			);
 	}
+
+	[Failure("Error getting columns from table.")]
+	private static partial Failure ErrorGettingColumns(Exception e);
+
+	[Failure("No columns were extracted from the tables.")]
+	private static partial Failure NoColumnsExtracted();
+
+	[Failure("Error getting distinct columns from the list.")]
+	private static partial Failure ErrorGettingDistinctColumns(Exception e);
 }

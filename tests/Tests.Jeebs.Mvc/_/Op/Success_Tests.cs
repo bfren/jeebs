@@ -36,7 +36,7 @@ public class Success_Tests
 	public void Result_Is_Fail__Returns_False()
 	{
 		// Arrange
-		var fail = FailGen.Create();
+		var fail = R.Fail(Rnd.Str);
 		var jsonResult = new Op<string>(fail);
 
 		// Act

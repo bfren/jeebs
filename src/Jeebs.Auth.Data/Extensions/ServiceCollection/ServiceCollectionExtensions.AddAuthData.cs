@@ -13,14 +13,15 @@ public static partial class ServiceCollectionExtensions
 	/// </summary>
 	/// <typeparam name="TDbClient">IAuthDbClient type.</typeparam>
 	/// <param name="services">IServiceCollection.</param>
-	/// <param name="useAuthDbClientAsMain">If true, <typeparamref name="TDbClient"/> will be registered as <see cref="IDbClient"/>.</param>
+	/// <param name="useAuthDbClientAsMain">If true, <typeparamref name="TDbClient"/> will be registered as <see cref="IDbClient"/>
+	/// (its queries are never cached, so the main database is not cached either).</param>
 	public static IServiceCollection AddAuthData<TDbClient>(this IServiceCollection services, bool useAuthDbClientAsMain)
 		where TDbClient : class, IAuthDbClient
 	{
 		// Register Auth database classes
 		_ = services.AddSingleton<AuthDb>();
 		_ = services.AddSingleton<IAuthDb>(s => s.GetRequiredService<AuthDb>());
-		_ = services.AddSingleton<TDbClient>();
+		_ = services.AddSingleton(p => ActivatorUtilities.CreateInstance<TDbClient>(new UncachedServiceProvider(p)));
 		_ = services.AddSingleton<IAuthDbClient>(s => s.GetRequiredService<TDbClient>());
 
 		// Share Auth database with main database

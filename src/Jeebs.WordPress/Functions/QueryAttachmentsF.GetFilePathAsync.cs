@@ -1,6 +1,7 @@
 // Jeebs Rapid Application Development
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
+using System;
 using System.Threading.Tasks;
 using Jeebs.Data.Common;
 using Jeebs.Functions;
@@ -24,13 +25,15 @@ public static partial class QueryAttachmentsF
 		.GetSingleAsync(
 			x => x.Value<Attachment>(),
 			(msg, args) => R.Fail("Unable to get attachment for File {Id}: " + msg, [fileId.Value, .. args])
-				.Ctx(nameof(QueryAttachmentsF), nameof(GetFilePathAsync))
+				.WithContext(nameof(QueryAttachmentsF), nameof(GetFilePathAsync))
 		)
 		.MapAsync(
 			x => x.GetFilePath(db.WpConfig.UploadsPath),
-			e => R.Fail(e).Msg("Error getting attachment path for File {Id}.", fileId.Value)
-				.Ctx(nameof(QueryAttachmentsF), nameof(GetFilePathAsync))
+			e => ErrorGettingFilePath(fileId.Value, e)
 		);
 
 	internal sealed record class Attachment : PostAttachment;
+
+	[Failure("Error getting attachment path for File {Id}.")]
+	private static partial Failure ErrorGettingFilePath(object? id, Exception e);
 }

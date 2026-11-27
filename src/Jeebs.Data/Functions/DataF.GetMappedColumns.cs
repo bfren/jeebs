@@ -1,6 +1,7 @@
 // Jeebs Rapid Application Development
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
+using System;
 using System.Linq;
 using System.Reflection;
 using Jeebs.Data.Attributes;
@@ -30,11 +31,12 @@ public static partial class DataF
 					  colName: column,
 					  propertyInfo: tableProperty
 				  ),
-			e => R.Fail(e).Msg("Error getting columns from table '{Table}'.", table)
-				.Ctx(nameof(DataF), nameof(GetColumns)
-			)
+			e => ErrorGettingColumns(table, e)
 		)
 		.Map(
 			x => new ColumnList(x)
 		);
+
+	[Failure("Error getting columns from table '{Table}'.")]
+	private static partial Failure ErrorGettingColumns(object? table, Exception e);
 }

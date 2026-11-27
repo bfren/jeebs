@@ -1,6 +1,7 @@
 // Jeebs Rapid Application Development
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Jeebs.Data.Common;
@@ -22,8 +23,7 @@ public static partial class QueryAttachmentsF
 		where T : IPostAttachment =>
 		R.Try(
 			() => opt(new AttachmentsOptions()),
-			e => R.Fail(e).Msg("Error getting query attachments options.")
-				.Ctx(nameof(QueryAttachmentsF), nameof(ExecuteAsync))
+			ErrorGettingAttachmentsOptions
 		)
 		.Bind(
 			x => GetQuery(db.Schema, x.Ids, db.WpConfig.VirtualUploadsUrl)
@@ -31,4 +31,7 @@ public static partial class QueryAttachmentsF
 		.BindAsync(
 			x => db.QueryAsync<T>(x, null, System.Data.CommandType.Text, unitOfWork)
 		);
+
+	[Failure("Error getting query attachments options.")]
+	private static partial Failure ErrorGettingAttachmentsOptions(Exception e);
 }

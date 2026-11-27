@@ -1,6 +1,6 @@
 # Audit fix plan
 
-Four audits so far, phases 1–17 done (D10 still to investigate). Each phase is one issue / branch, one commit per item, and ends with:
+Five audits so far, phases 1–20 done (D10 still to investigate). Each phase is one issue / branch, one commit per item, and ends with:
 
 ```bash
 dotnet test --solution "Jeebs (v10).slnx" --configuration Test
@@ -17,6 +17,7 @@ Mark items `[x]` as they land.
 | 8–11 | Second audit, 2026-11-07 (v10.0.0-beta.1) | B1–B12 | #624–#632 | yes |
 | 12–15 | Third audit, 2026-11-08 (v10.0.0-beta.1) | C1–C14 | #634, #637, #639, #641 | yes |
 | 16–17 | Fourth audit, 2026-11-11 (v10.0.0-beta.2) | D1–D14 | #647, #648 | yes (D10 open) |
+| 18–20 | Fifth audit, 2026-11-21 (v10.0.0-beta.2) | E1–E13 | #654, #655, #656 | yes |
 
 Released in **v10.0.0-beta.2** (2026-11-10, #645 / #646), the first published v10 pre-release
 (beta.1 was never released). Its release notes were built from the breaking changes list below, so
@@ -40,9 +41,9 @@ the 10.0.0 notes should start from beta.2's and add only what lands after it.
 ### Not audited yet
 
 WordPress tables, entities and enums; `Data.Testing` (skimmed only); the sample apps other than
-`AppMvc` and `AppConsoleWp`; whether the `Rqlite` package reuses its HTTP connection across
-`Connect()` calls. None of the audits ran the tests or started an app before
-reporting, so findings come from reading the code.
+`AppMvc` and `AppConsoleWp`. (The `Rqlite` package creates its clients through `IHttpClientFactory`,
+so `Connect()` reuses pooled HTTP connections - checked in the fifth audit.) None of the audits ran
+the tests or started an app before reporting, so findings come from reading the code.
 
 ### Next audit
 
@@ -113,6 +114,153 @@ reporting, so findings come from reading the code.
   brings the Linux native library, so apps no longer need to add it. Publish with `-r <rid>`
   (e.g. `-r linux-x64`): a publish without one copies SkiaSharp's native library for every
   platform, about 470 MB, against about 12 MB for one.
+- **WordPress:** `AddWordPressInstance(...).Using<TWp, TWpConfig>()` no longer registers
+  `IDbClient`, `IAdapter`, `ITypeMapper` or `ICacheService` for the whole app; each WordPress
+  instance gets its own cached MySQL client, and query caching is no longer switched on for other
+  databases. Apps that resolved `IDbClient` or `IAdapter` from WordPress's registration must register
+  them themselves (`AddData<TDb, TDbClient, TAdapter>()`). `DapperAdapter`'s mapper and cache
+  are now optional: DI uses the Dapper type mapper and no cache for whichever is not registered.
+- **Query cache:** `QueryCacheSeconds` set to a whole number of minutes now caches (it was silently
+  off), and keys include a hash of the connection string, so existing distributed cache entries
+  are not reused.
+- **Auth emails:** emails are now stored and looked up trimmed and lower case. On PostgreSQL and
+  SQLite, existing mixed-case emails no longer match, so lowercase them before upgrading - this
+  can't be undone, so it is a one-off step rather than a migration:
+  PostgreSQL `UPDATE auth.user SET user_email = LOWER(TRIM(user_email));`,
+  SQLite `UPDATE "auth.user" SET "user_email" = LOWER(TRIM("user_email"));`. If two accounts differ
+  only by case the unique constraint makes the update fail: merge or remove one first. SQLite's
+  `LOWER` only changes A-Z, so afterwards list the emails with other letters,
+  `SELECT "user_email" FROM "auth.user" WHERE "user_email" GLOB '*[^ -~]*';`, and lowercase any
+  capitals left in them by hand (e.g. `josÉ@example.com` to `josé@example.com`), or those users
+  can't sign in. MySQL needs nothing (its column ignores case).
+- **Auth data:** the Auth database client is always built with no query cache, including when it is
+  also the main `IDbClient` (`useAuthDbClientAsMain`).
+- **Logging:** failed sign ins log the reason at Warning and the attempt at Information (both were
+  Error). Query parameter values are no longer logged - neither in adapter query errors nor in the
+  Verbose query log, which now has the query type, return type and query only.
+- **PostgreSQL:** `PostgreSqlDbClient` takes an optional `ICacheService`, so `AddDataQueryCache()`
+  now caches PostgreSQL queries.
+- **Config schema:** `azure:dataProtection` is removed (it was never used: nothing called
+  `AddDataProtection()`), and `azure` allows no unknown keys, so delete that section from
+  `jeebsconfig.json`. `DataProtectionConfig` and `AzureConfig.Verification` are gone.
+- **Webhooks:** `IWebhookMessage.Fields` (unused since C13) and `UnknownMessageLevelException`
+  (never thrown) are removed.
+- **Data:** `Jeebs.Data.Db.LogQuery` is removed (only its test called it); `Data.Common` databases
+  keep their own `LogQuery`.
+
+---
+
+# Fifth audit — 2026-11-21 (v10.0.0-beta.2)
+
+Items are numbered E1–E9 to match the audit report, plus E10 found while checking it and E11–E12 found in the Phase 18 review, and E13 raised during Phase 19.
+Must fix: E1, E2, E10. Should fix: E3–E7, E11. Nice to have: E8, E9, E12, E13. Left out as too small: Slack's 3,000-character section limit, the ignored PNG
+`quality` argument, and casing variants filling the `Enumerated` parse cache.
+
+## Phase 18 — query cache (E1, E2, E6, E10) — #654
+
+- [x] **E1 Cache off for whole minutes** — `src/Jeebs.Data.Common/DistributedCacheService.cs:26`
+  `relativeExpiration.Seconds == 0` checks only the seconds part (0–59), so 60, 120, 300 or 3600
+  seconds never cache, and a negative value gets past the check and throws when the entry is stored.
+  Fix: `if (relativeExpiration <= TimeSpan.Zero)`. Test under E6.
+- [x] **E2 WordPress turns the cache on for every database** —
+  `src/Jeebs.WordPress/Extensions/ServiceCollection/ServiceCollectionExtensions.AddWordPressInstance.cs:57-60`
+  `Using` registers `IDbClient`, `IAdapter` and `ICacheService` for the whole app (last registration
+  wins), so the auth database's `DapperAdapter` caches user lookups too: after a password change the
+  old password keeps working, and a disabled user can still sign in, until the entry expires. With
+  `WithData(false)` the app's main `IDbClient` also becomes WordPress's MySQL client.
+  Fix: build the WordPress `MySqlDbClient` in `Using` with its own
+  `DapperAdapter(DapperTypeMapper.Instance, <cache service>)`, pass it to `TWp` through a factory
+  registration, and remove the three global registrations. Test: an app with WordPress and
+  `AddData` resolves `NullCacheService` for `ICacheService`. **Breaking** for apps that relied on
+  the global `IDbClient` / `IAdapter` WordPress registered. Removing them left auth's
+  `DapperAdapter` unresolvable (nothing else registers `ITypeMapper`, and `AppMvc` already failed
+  this way), so `DapperAdapter`'s constructor parameters are now optional: DI uses the Dapper
+  mapper and no cache for whichever is not registered. (A public parameterless constructor was tried
+  first, but DI then dropped a registered cache or mapper when only one of the two was registered.)
+- [x] **E6 Tests for the cache path** — `DistributedCacheService`, `DapperAdapter`
+  Neither has a test (`Tests.Jeebs.Data.Adapters.Dapper` only tests type handlers). One test with
+  a `MemoryDistributedCache`: call twice with `TimeSpan.FromMinutes(1)`, `fetch` runs once - it
+  fails before E1.
+- [x] **E10 Cache key shared across databases** — `src/Jeebs.Data.Common/DistributedCacheService.cs:32`
+  (found while checking E1/E2) The key is `{query}:{param}`, so two databases sharing a cache - e.g.
+  `AppConsoleWp`'s "bcg" and "usa" WordPress instances - get each other's results for the same query.
+  Fix: `DapperAdapter` prefixes the query with a hash of the connection string (a hash so passwords
+  never reach a Redis key). Test: same query on two connection strings runs `fetch` twice.
+
+E1 must not ship without E2: fixing E1 alone turns caching on for apps that set a whole-minute
+`QueryCacheSeconds`, which with WordPress registered includes the auth database.
+
+## Phase 19 — auth and logging (E3, E4, E5, E11, E12) — #655
+
+- [x] **E3 Email case matters on PostgreSQL and SQLite** — `src/Jeebs.Auth.Data/AuthUserRepository.cs:52, 63`
+  MySQL's column is `utf8_general_ci`; PostgreSQL `text` and SQLite `TEXT` compare exactly, so
+  `Ben@Example.com` can't sign in as `ben@example.com`, and two accounts can share an address.
+  Fix: `email.Trim().ToLowerInvariant()` in `CreateAsync` and `RetrieveAsync(string email)`.
+  **Investigate first:** existing mixed-case rows need lowercasing (and checking for duplicates)
+  before the change, or those users can't sign in. **Breaking.**
+  Done: lowercasing existing rows can't be undone, so it is a one-off SQL step in the breaking
+  changes list rather than a migration (it fails on case-only duplicates, so nothing is merged
+  silently).
+- [x] **E4 Password hashes in error logs** — `src/Jeebs.Data.Adapters.Dapper/DapperAdapter.cs:98`
+  `{@Param}` writes out every property of the parameter, which for user updates is the
+  `AuthUserEntity` with its `PasswordHash`. A failed password change or rehash that the caller
+  logs sends the hash to Seq, files or Slack. Fix: drop `{@Param}` and keep `{Query}` (parameters
+  are already logged at Verbose before the query runs).
+- [x] **E5 Each wrong password logs two errors** — `src/Jeebs.Mvc.Auth/Functions/AuthF/AuthF.DoSignInAsync.cs:61, 82`
+  The validation failure and `Log.Err("Unknown username or password…")` are both Error, so with a
+  Slack sink at Error 1,000 guesses send 2,000 alerts (rate limiting is won't do). Fix: log both at
+  Information (or Warning).
+  Done: the reason at Warning (it may be a database error), the attempt at Information.
+- [x] **E11 Auth lookups cached when the app turns on the query cache** —
+  `src/Jeebs.Data.Common/Extensions/ServiceCollection/ServiceCollectionExtensions.AddDataQueryCache.cs:19`
+  (found in the Phase 18 review) `AddDataQueryCache()` registers a caching `ICacheService` for the
+  whole app, and the auth client's adapter is resolved from DI, so it caches user lookups too: the
+  E2 problem (old password still works, disabled user can still sign in) without WordPress.
+  Fix: build the auth client in `AddAuthData` with an adapter that never caches, as WordPress now
+  builds its own client. Test: with `AddDataQueryCache()` registered, the auth client's adapter
+  runs `fetch` on every query.
+  Done: `UncachedServiceProvider` builds the client, answering `ICacheService` with
+  `NullCacheService` and `IAdapter` with a new instance of the app's adapter type built through it.
+- [x] **E12 Query cache never reaches PostgreSQL** — `src/Jeebs.Data.Clients.PostgreSql/PostgreSqlDbClient.cs:20`
+  (found in the Phase 18 review) `PostgreSqlDbClient` builds its adapter with `new NullCacheService()`,
+  so a PostgreSQL app that calls `AddDataQueryCache()` gets no caching and no warning. Decide with
+  E11: either say so in the `AddDataQueryCache` XML doc, or take `ICacheService? cache = null` in
+  the constructor (as `DapperAdapter` now does) - but only once E11 keeps auth uncached, or the
+  PostgreSQL auth client starts caching user lookups.
+  Done: the constructor takes `ICacheService? cache = null`; the auth client's implicit constructor
+  passes none.
+
+## Phase 20 — deletions and CI (E7, E8, E9, E13) — #656
+
+- [x] **E7 Data protection settings never used** — `src/Jeebs.Apps/App.cs:95`,
+  `src/Jeebs/Config/Azure/DataProtection/DataProtectionConfig.cs`
+  `azure:dataProtection` is in the schema and loaded into options, but nothing calls
+  `AddDataProtection()` or persists keys, so in a container keys are lost on every deploy and
+  everyone is signed out. Fix: delete the class, its schema entry, the `Configure` line and its three
+  test files - or, if a site needs it, wire it with
+  `AddDataProtection().PersistKeysToAzureBlobStorage(...).ProtectKeysWithAzureKeyVault(...)`.
+  **Breaking** if deleted.
+  Done: deleted, plus the two unused `Azure.Extensions.AspNetCore.DataProtection.*` package versions.
+- [x] **E8 Unused webhook pieces** — `src/Jeebs.Services.Webhook/IWebhookMessage.cs:27`,
+  `src/Jeebs.Services.Webhook/Models/Message.cs:21`, `src/Jeebs.Services.Webhook/Exceptions/UnknownMessageLevelException.cs`
+  Nothing reads `Fields` since C13; `UnknownMessageLevelException` is never thrown and sits in a
+  stray `Jx.` namespace. Fix: delete all three. **Breaking.**
+- [x] **E9 `Data.Db.LogQuery` only called by its test** — `src/Jeebs.Data/Db.cs:65`
+  `Data.Common` has its own `LogQuery`, and Rqlite logs no queries. Fix: call it from the four
+  Rqlite query methods, or delete it, `LogQueryTest` and `tests/Tests.Jeebs.Data/_/Db/LogQuery_Tests.cs`.
+  Done: deleted (`WriteToLog` stays - `Data.Common`'s `LogQuery` uses it).
+- [x] **E13 Superseded test runs keep going** — `.github/workflows/test.yml`
+  (raised during Phase 19) A second push to a branch starts a new run while the first carries on,
+  wasting minutes, and a PR can wait on a run for a commit that is no longer the tip. Fix: add
+  `concurrency: { group: ${{ github.workflow }}-${{ github.ref }}, cancel-in-progress: true }` at
+  the top level - safe because the workflow never runs on `main` or tags. Check that the Slack
+  notify job in `bfren/dotnet`'s reusable workflow doesn't post on cancelled runs.
+  **Blocked:** it does. `bfren/dotnet`'s `test.yml` runs `notify` with `if: always()`, which also
+  runs when a run is cancelled, and `notify.yml` counts `cancelled` as failed, so every superseded
+  run would post "Jeebs publish failed" to Slack. First change that job to `if: ${{ !cancelled() }}`
+  in `bfren/dotnet` (it still reports failures, and stops reporting cancelled runs), then add the
+  `concurrency` block here.
+  Done: bfren/dotnet#2 changed `notify` to `if: ${{ !cancelled() }}`, then the `concurrency` block was added.
 
 ---
 

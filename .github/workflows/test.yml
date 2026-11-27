@@ -8,6 +8,11 @@ on:
       - '**'
   workflow_dispatch:
 
+# cancel a branch's running tests when a newer push starts a run (never runs on main or tags)
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   test:
     uses: bfren/dotnet/.github/workflows/test.yml@main
@@ -16,4 +21,5 @@ jobs:
       name: Jeebs
       configuration: Test
       dotnet-versions: 10.0.x
+      submodules: "true" # the config schema is embedded from the schemas submodule
     secrets: inherit

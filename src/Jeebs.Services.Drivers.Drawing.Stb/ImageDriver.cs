@@ -1,6 +1,7 @@
 // Jeebs Rapid Application Development
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
+using System;
 using System.IO;
 using Jeebs.Services.Drawing;
 using Jeebs.Services.Drivers.Drawing.Stb.Functions;
@@ -11,21 +12,19 @@ namespace Jeebs.Services.Drivers.Drawing.Stb;
 /// <summary>
 /// Image Driver implemented in managed code using StbImageSharp - no native libraries.
 /// </summary>
-public sealed class ImageDriver : IImageDriver
+public sealed partial class ImageDriver : IImageDriver
 {
 	/// <inheritdoc/>
 	public Result<IImageWrapper> FromFile(string path)
 	{
 		if (!File.Exists(path))
 		{
-			return R.Fail("Image file does not exist: '{Path}'.", path)
-				.Ctx(nameof(ImageDriver), nameof(FromFile));
+			return ImageFileNotFound(path);
 		}
 
 		return R.Try(
 			() => File.ReadAllBytes(path),
-			e => R.Fail(e).Msg("Unable to read image file.")
-				.Ctx(nameof(ImageDriver), nameof(FromFile))
+			UnableToReadImageFile
 		)
 		.Bind(
 			x => Load(x, nameof(FromFile))
@@ -48,8 +47,8 @@ public sealed class ImageDriver : IImageDriver
 	internal static Result<IImageWrapper> Load(byte[] data, string method) =>
 		R.Try(
 			() => ImageResult.FromMemory(data, ColorComponents.RedGreenBlueAlpha),
-			e => R.Fail(e).Msg("Not a valid image.")
-				.Ctx(nameof(ImageDriver), method)
+			e => NotValidImage(e)
+				.WithContext(nameof(ImageDriver), method)
 		)
 		.Map(
 			x =>
@@ -58,4 +57,13 @@ public sealed class ImageDriver : IImageDriver
 				return (IImageWrapper)new ImageWrapper(pixels, width, height);
 			}
 		);
+
+	[Failure("Image file does not exist: '{Path}'.")]
+	private static partial Failure ImageFileNotFound(string path);
+
+	[Failure("Unable to read image file.")]
+	private static partial Failure UnableToReadImageFile(Exception e);
+
+	[Failure("Not a valid image.")]
+	private static partial Failure NotValidImage(Exception e);
 }

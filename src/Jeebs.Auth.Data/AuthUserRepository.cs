@@ -12,7 +12,7 @@ using Jeebs.Logging;
 namespace Jeebs.Auth.Data;
 
 /// <inheritdoc cref="IAuthUserRepository"/>
-public sealed class AuthUserRepository : Repository<AuthUserEntity, AuthUserId>, IAuthUserRepository
+public sealed partial class AuthUserRepository : Repository<AuthUserEntity, AuthUserId>, IAuthUserRepository
 {
 	/// <summary>
 	/// IAuthDb.
@@ -36,17 +36,16 @@ public sealed class AuthUserRepository : Repository<AuthUserEntity, AuthUserId>,
 	{
 		if (string.IsNullOrWhiteSpace(plainTextPassword))
 		{
-			return R.Fail("Password cannot be empty.")
-				.Ctx(nameof(AuthUserRepository), nameof(CreateAsync));
+			return PasswordEmpty();
 		}
 
+		email = NormaliseEmail(email);
 		return await
 			RetrieveAsync<CheckAuthUserExists>(
 				email
 			)
 			.MatchAsync(
-				fOk: _ => R.Fail("User with {Email} already exists.", email)
-					.Ctx(nameof(AuthUserRepository), nameof(CreateAsync)),
+				fOk: _ => UserAlreadyExists(email),
 				fFail: _ => CreateAsync(new()
 				{
 					EmailAddress = email,
@@ -60,8 +59,16 @@ public sealed class AuthUserRepository : Repository<AuthUserEntity, AuthUserId>,
 	/// <inheritdoc/>
 	public Task<Result<TModel>> RetrieveAsync<TModel>(string email) =>
 		Fluent()
-			.Where(u => u.EmailAddress, Compare.Equal, email)
+			.Where(u => u.EmailAddress, Compare.Equal, NormaliseEmail(email))
 			.QuerySingleAsync<TModel>();
+
+	/// <summary>
+	/// Emails are stored and looked up trimmed and lower case, because PostgreSQL and SQLite compare
+	/// text exactly (MySQL's column ignores case).
+	/// </summary>
+	/// <param name="email">Email address.</param>
+	internal static string NormaliseEmail(string email) =>
+		email.Trim().ToLowerInvariant();
 
 	/// <inheritdoc/>
 	public Task<Result<bool>> UpdateLastSignInAsync(AuthUserId userId)
@@ -71,4 +78,10 @@ public sealed class AuthUserRepository : Repository<AuthUserEntity, AuthUserId>,
 	}
 
 	private sealed record class CheckAuthUserExists(string EmailAddress);
+
+	[Failure("Password cannot be empty.")]
+	private static partial Failure PasswordEmpty();
+
+	[Failure("User with {Email} already exists.")]
+	private static partial Failure UserAlreadyExists(string email);
 }

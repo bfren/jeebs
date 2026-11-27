@@ -30,7 +30,7 @@ public class LogAsync_Tests
 	public Task Is_Fail__Calls_Log_Failure__With_Correct_Values()
 	{
 		// Arrange
-		var failure = FailGen.Create();
+		var failure = R.Fail(Rnd.Str);
 		Result<bool> fail() => failure;
 		var result = fail().AsTask();
 		var log = Substitute.For<ILog>();

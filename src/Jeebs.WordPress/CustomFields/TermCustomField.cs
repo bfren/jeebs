@@ -13,7 +13,7 @@ namespace Jeebs.WordPress.CustomFields;
 /// <summary>
 /// Term Taxonomy Custom Field.
 /// </summary>
-public abstract class TermCustomField : CustomField<TermCustomField.Term>
+public abstract partial class TermCustomField : CustomField<TermCustomField.Term>
 {
 	/// <summary>
 	/// IQueryTerms.
@@ -45,8 +45,8 @@ public abstract class TermCustomField : CustomField<TermCustomField.Term>
 		{
 			if (isRequired)
 			{
-				return R.Fail("Meta Key '{Key}' not found for Custom Field '{Type}'.", Key, GetType().Name)
-					.Ctx(GetType().Name, nameof(HydrateAsync));
+				return MetaKeyNotFound(Key, GetType().Name)
+					.WithContext(GetType().Name, nameof(HydrateAsync));
 			}
 
 			return R.False;
@@ -66,7 +66,7 @@ public abstract class TermCustomField : CustomField<TermCustomField.Term>
 			.GetSingleAsync(
 				x => x.Value<Term>(),
 				(msg, args) => R.Fail("Unable to get single '{ValueStr}': " + msg, [ValueStr, .. args])
-					.Ctx(GetType().Name, nameof(HydrateAsync))
+					.WithContext(GetType().Name, nameof(HydrateAsync))
 			)
 			.MapAsync(
 				x =>
@@ -85,8 +85,8 @@ public abstract class TermCustomField : CustomField<TermCustomField.Term>
 	internal static Result<WpTermId> ParseTermId(Type type, string value) =>
 		M.ParseUInt64(value).Match(
 			fSome: x => R.Wrap(new WpTermId { Value = x }),
-			fNone: () => R.Fail("'{Value}' is not a valid Term ID.", value)
-				.Ctx(type.Name, nameof(ParseTermId))
+			fNone: () => InvalidTermId(value)
+				.WithContext(type.Name, nameof(ParseTermId))
 		);
 
 	/// <summary>
@@ -102,4 +102,10 @@ public abstract class TermCustomField : CustomField<TermCustomField.Term>
 	/// Term class.
 	/// </summary>
 	public sealed record class Term : WpTermEntity { }
+
+	[Failure("Meta Key '{Key}' not found for Custom Field '{Type}'.")]
+	private static partial Failure MetaKeyNotFound(string key, string type);
+
+	[Failure("'{Value}' is not a valid Term ID.")]
+	private static partial Failure InvalidTermId(object? value);
 }

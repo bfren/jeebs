@@ -10,15 +10,14 @@ namespace Jeebs.Services.Drivers.Drawing.Skia;
 /// <summary>
 /// Image Driver implemented using SkiaSharp.
 /// </summary>
-public sealed class ImageDriver : IImageDriver
+public sealed partial class ImageDriver : IImageDriver
 {
 	/// <inheritdoc/>
 	public Result<IImageWrapper> FromFile(string path)
 	{
 		if (!File.Exists(path))
 		{
-			return R.Fail("Image file does not exist: '{Path}'.", path)
-				.Ctx(nameof(ImageDriver), nameof(FromFile));
+			return ImageFileNotFound(path);
 		}
 
 		// Create and return image object
@@ -46,7 +45,13 @@ public sealed class ImageDriver : IImageDriver
 				new ImageWrapper(x.EncodedData),
 
 			_ =>
-				R.Fail("Not a valid image.")
-					.Ctx(nameof(ImageDriver), method)
+				NotValidImage()
+					.WithContext(nameof(ImageDriver), method)
 		};
+
+	[Failure("Image file does not exist: '{Path}'.")]
+	private static partial Failure ImageFileNotFound(string path);
+
+	[Failure("Not a valid image.")]
+	private static partial Failure NotValidImage();
 }

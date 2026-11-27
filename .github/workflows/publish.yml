@@ -22,6 +22,7 @@ jobs:
     with:
       solution: "Jeebs (v10).slnx"
       dotnet-versions: 10.0.x
+      submodules: "true" # the config schema is embedded from the schemas submodule
   nuget:
     needs: prepare
     runs-on: ubuntu-latest

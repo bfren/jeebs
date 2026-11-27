@@ -19,7 +19,9 @@ public static partial class HttpF
 				authorisationHeader.ToString(),
 
 			_ =>
-				R.Fail("'Authorization' header is missing.")
-					.Ctx(nameof(HttpF), nameof(GetAuthorizationHeader))
+				AuthorizationHeaderMissing()
 		};
+
+	[Failure("'Authorization' header is missing.")]
+	private static partial Failure AuthorizationHeaderMissing();
 }

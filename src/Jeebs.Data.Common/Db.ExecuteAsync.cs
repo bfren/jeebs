@@ -23,8 +23,8 @@ public abstract partial class Db
 		R.Wrap(
 			(query, parameters: param ?? new object(), type)
 		)
-		.Audit(
-			fOk: LogQuery<bool>
+		.IfOk(
+			LogQuery<bool>
 		)
 		.BindAsync(
 			async x => await Client.Adapter.ExecuteAsync(unitOfWork.Connection, await unitOfWork.Transaction, x.query, x.parameters, x.type)

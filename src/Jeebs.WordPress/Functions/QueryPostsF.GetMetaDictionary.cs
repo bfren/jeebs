@@ -23,16 +23,13 @@ public static partial class QueryPostsF
 		// If MetaDictionary is not defined return none
 		if (!metaDictionary.Any())
 		{
-			return R.Fail("MetaDictionary property not found for model '{Type}'.", typeof(TModel).Name)
-				.Lvl(Wrap.Logging.LogLevel.Debug)
-				.Ctx(nameof(QueryPostsF), nameof(GetMetaDictionary));
+			return MetaDictionaryNotFound(typeof(TModel).Name);
 		}
 
 		// Throw an error if there are multiple MetaDictionaries
 		if (metaDictionary.Count() > 1)
 		{
-			return R.Fail("Multiple MetaDictionary properties found for model '{Type}'.", typeof(TModel).Name)
-				.Ctx(nameof(QueryPostsF), nameof(GetMetaDictionary));
+			return MultipleMetaDictionaryProperties(typeof(TModel).Name);
 		}
 
 		return new Meta<TModel>(metaDictionary.Single());
@@ -50,4 +47,10 @@ public static partial class QueryPostsF
 		/// <param name="info">PropertyInfo.</param>
 		public Meta(PropertyInfo info) : base(info) { }
 	}
+
+	[Failure("MetaDictionary property not found for model '{Type}'.", Wrap.Logging.LogLevel.Debug)]
+	private static partial Failure MetaDictionaryNotFound(string type);
+
+	[Failure("Multiple MetaDictionary properties found for model '{Type}'.")]
+	private static partial Failure MultipleMetaDictionaryProperties(string type);
 }

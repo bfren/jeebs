@@ -12,8 +12,8 @@ public class QueryAsync_Tests : FluentQuery_Tests
 	{
 		// Arrange
 		var (query, _) = Setup();
-		var m0 = FailGen.Create();
-		var m1 = FailGen.Create();
+		var m0 = R.Fail(Rnd.Str);
+		var m1 = R.Fail(Rnd.Str);
 		query.Errors.Add(m0);
 		query.Errors.Add(m1);
 
@@ -21,7 +21,7 @@ public class QueryAsync_Tests : FluentQuery_Tests
 		var result = await query.QueryAsync<int>();
 
 		// Assert
-		_ = result.AssertFailure("Query errors.", query.Errors);
+		_ = result.AssertFailure("Query errors: {Errors}.", query.Errors);
 	}
 
 	[Fact]

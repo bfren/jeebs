@@ -17,7 +17,7 @@ using Defaults = Jeebs.Constants.PagingValues;
 namespace Jeebs.Data;
 
 /// <inheritdoc cref="IDb"/>
-public abstract class Db : IDb
+public abstract partial class Db : IDb
 {
 	/// <inheritdoc/>
 	public IDbClient Client { get; private init; }
@@ -56,31 +56,6 @@ public abstract class Db : IDb
 	/// </summary>
 	protected virtual Action<string, object?[]> WriteToLog =>
 		Log.Vrb;
-
-	/// <summary>
-	/// Write query to the log.
-	/// </summary>
-	/// <typeparam name="TReturn">Query return type.</typeparam>
-	/// <param name="input">Input values.</param>
-	protected virtual void LogQuery<TReturn>((string query, object? parameters) input)
-	{
-		var (query, parameters) = input;
-
-		// Always log query type, return type, and query
-		var message = "Query Returns: {Return} | {Query}";
-		object?[] args = [typeof(TReturn), query];
-
-		// Log with or without parameters
-		if (parameters is null)
-		{
-			WriteToLog(message, [.. args]);
-		}
-		else if (parameters.ToString() is string param)
-		{
-			message += " | Parameters: {Param}";
-			WriteToLog(message, [.. args, param]);
-		}
-	}
 
 	/// <summary>
 	/// Shorthand for escaping a column with its table name and alias.
@@ -130,8 +105,8 @@ public abstract class Db : IDb
 		from countResults in count(countQuery.query, countQuery.param)
 		from paging in R.Try(
 			() => new PagingValues(countResults, page, parts.Maximum ?? Defaults.ItemsPer, Defaults.PagesPer),
-			e => R.Fail(e).Msg("Error creating paging values.", countResults, page, parts.Maximum)
-				.Ctx(GetType().Name, nameof(QueryAsync))
+			e => PagingValuesError(countResults, page, parts.Maximum, e)
+				.WithContext(GetType().Name, nameof(QueryAsync))
 		)
 		from itemsQuery in Client.GetQuery(new QueryParts(parts) with
 		{
@@ -167,8 +142,8 @@ public abstract class Db : IDb
 	internal void WriteToLogTest(string message, object[] args) =>
 		WriteToLog(message, args);
 
-	internal void LogQueryTest<TReturn>((string query, object? parameters) input) =>
-		LogQuery<TReturn>(input);
-
 	#endregion Testing
+
+	[Failure("Error creating paging values for {Count} items, page {Page} and {Maximum} per page.")]
+	private static partial Failure PagingValuesError(ulong count, ulong page, ulong? maximum, Exception e);
 }

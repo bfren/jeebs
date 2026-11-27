@@ -35,7 +35,7 @@ public abstract class QueryPartsBuilder
 /// Inject extract object.
 /// </remarks>
 /// <param name="extract">IExtract.</param>
-public abstract class QueryPartsBuilder<TId>(IExtract extract) : QueryPartsBuilder, IQueryPartsBuilder<TId>
+public abstract partial class QueryPartsBuilder<TId>(IExtract extract) : QueryPartsBuilder, IQueryPartsBuilder<TId>
 	where TId : class, IMonad, new()
 {
 	/// <summary>
@@ -196,19 +196,23 @@ public abstract class QueryPartsBuilder<TId>(IExtract extract) : QueryPartsBuild
 		// Check clause
 		if (string.IsNullOrWhiteSpace(clause))
 		{
-			return R.Fail("You cannot add an empty WHERE clause.")
-				.Ctx(nameof(QueryPartsBuilder<>), nameof(AddWhereCustom));
+			return EmptyWhereClause();
 		}
 
 		// Get parameters
 		var param = new QueryParametersDictionary();
 		if (!param.TryAdd(parameters))
 		{
-			return R.Fail("Failed to add parameters to WHERE clause.")
-				.Ctx(nameof(QueryPartsBuilder<>), nameof(AddWhereCustom));
+			return WhereParametersFailed();
 		}
 
 		// Add clause and return
 		return parts with { WhereCustom = parts.WhereCustom.WithItem((clause, param)) };
 	}
+
+	[Failure("You cannot add an empty WHERE clause.")]
+	private static partial Failure EmptyWhereClause();
+
+	[Failure("Failed to add parameters to WHERE clause.")]
+	private static partial Failure WhereParametersFailed();
 }

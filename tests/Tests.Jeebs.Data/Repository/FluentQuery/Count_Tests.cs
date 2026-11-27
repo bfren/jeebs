@@ -20,7 +20,7 @@ public class Count_Tests : FluentQuery_Tests
 
 		// Assert
 		var fluent = Assert.IsType<FluentQuery<TestEntity, TestId>>(withWhere);
-		_ = result.AssertFailure("Query errors.", fluent.Errors);
+		_ = result.AssertFailure("Query errors: {Errors}.", fluent.Errors);
 		await v.Db.DidNotReceiveWithAnyArgs().QuerySingleAsync<long>(default!, default!);
 	}
 

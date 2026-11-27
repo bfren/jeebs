@@ -20,7 +20,7 @@ public static partial class AuthF
 	/// <returns>Auth operation result.</returns>
 	public static Task<AuthOp> CreateTokenAsync(IAuthJwtProvider jwt, ClaimsPrincipal user, ILog log) =>
 				Task.FromResult(jwt.CreateToken(user)
-			.Audit(fFail: log.Failure)
+			.IfFailed(log.Failure)
 			.Match<JsonWebToken, AuthOp>(
 				fOk: x => new AuthOp.SignedIn(x),
 				fFail: _ => new AuthOp.TryAgain()
