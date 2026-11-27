@@ -15,7 +15,7 @@ namespace Jeebs.Data.Adapters.Dapper;
 /// <summary>
 /// Dapper database adapter.
 /// </summary>
-public sealed class DapperAdapter : IAdapter
+public sealed partial class DapperAdapter : IAdapter
 {
 	/// <inheritdoc/>
 	public ITypeMapper Mapper { get; init; }
@@ -59,8 +59,7 @@ public sealed class DapperAdapter : IAdapter
 					R.Wrap(x),
 
 				_ =>
-					R.Fail("Execution returned null value.", query, param)
-						.WithContext(nameof(Db), nameof(ExecuteAsync))
+					ExecutionReturnedNull(query)
 			}
 		);
 
@@ -105,8 +104,13 @@ public sealed class DapperAdapter : IAdapter
 		$"{Convert.ToHexString(SHA256.HashData(Encoding.UTF8.GetBytes(connection.ConnectionString)))}:{query}";
 
 	private static Failure Fail(string function, Exception exception, string query) =>
-		R.Fail(exception)
-			// parameters are left out because they can hold secrets (e.g. password hashes)
-			.WithMessage("Error executing query '{Query}'.", query)
+		// parameters are left out because they can hold secrets (e.g. password hashes)
+		(ErrorExecutingQuery(query) with { Exception = exception })
 			.WithContext(nameof(DapperAdapter), function);
+
+	[Failure("Execution returned null value for query '{Query}'.")]
+	private static partial Failure ExecutionReturnedNull(string query);
+
+	[Failure("Error executing query '{Query}'.", Wrap.Logging.LogLevel.Error)]
+	private static partial Failure ErrorExecutingQuery(string query);
 }

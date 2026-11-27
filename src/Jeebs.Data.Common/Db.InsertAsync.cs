@@ -36,8 +36,10 @@ public abstract partial class Db
 					R.Wrap(x),
 
 				_ =>
-					R.Fail("Execution returned null value.", query, param)
-						.WithContext(nameof(Db), nameof(ExecuteAsync))
+					ExecutionReturnedNull(query)
 			}
 		);
+
+	[Failure("Execution returned null value for query '{Query}'.")]
+	private static partial Failure ExecutionReturnedNull(string query);
 }

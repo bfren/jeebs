@@ -9,7 +9,7 @@ using Jeebs.Logging;
 namespace Jeebs.Data.Common;
 
 /// <inheritdoc cref="IUnitOfWork"/>
-public sealed class UnitOfWork : IUnitOfWork
+public sealed partial class UnitOfWork : IUnitOfWork
 {
 	private readonly ILog log;
 
@@ -43,8 +43,7 @@ public sealed class UnitOfWork : IUnitOfWork
 			return committed switch
 			{
 				false =>
-					R.Fail("No pending transaction to commit.")
-						.WithContext(nameof(UnitOfWork), nameof(CommitAsync)),
+					NoPendingTransaction(),
 
 				_ =>
 					R.True
@@ -110,4 +109,7 @@ public sealed class UnitOfWork : IUnitOfWork
 
 		await Connection.DisposeAsync();
 	}
+
+	[Failure("No pending transaction to commit.")]
+	private static partial Failure NoPendingTransaction();
 }
