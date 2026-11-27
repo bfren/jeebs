@@ -15,11 +15,15 @@ namespace Jeebs.Data.Clients.PostgreSql;
 public partial class PostgreSqlDbClient : Common.DbClient
 {
 	/// <summary>
-	/// Create instance using DapperAdapter.
+	/// Create instance using DapperAdapter with no query cache (the Auth client is always built this way).
 	/// </summary>
-	/// <param name="cache">[Optional] Query cache - DI passes the app's <see cref="ICacheService"/>
-	/// (the Auth client is always built with no cache).</param>
-	public PostgreSqlDbClient(ICacheService? cache = null) : base(new DapperAdapter(new PostgreSqlDbTypeMapper(), cache)) { }
+	public PostgreSqlDbClient() : base(new DapperAdapter(new PostgreSqlDbTypeMapper())) { }
+
+	/// <summary>
+	/// Create instance using DapperAdapter - DI passes the app's <see cref="ICacheService"/>.
+	/// </summary>
+	/// <param name="cache">Query cache.</param>
+	public PostgreSqlDbClient(ICacheService cache) : base(new DapperAdapter(new PostgreSqlDbTypeMapper(), cache)) { }
 
 	/// <summary>
 	/// For testing - inject IAdapter.

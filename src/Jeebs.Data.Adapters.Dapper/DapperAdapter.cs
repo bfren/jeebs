@@ -32,12 +32,29 @@ public sealed partial class DapperAdapter : IAdapter
 		new();
 
 	/// <summary>
-	/// Inject dependencies - DI uses the default for whichever is not registered.
+	/// Use the default mapper and no cache.
 	/// </summary>
-	/// <param name="mapper">[Optional] ITypeMapper - defaults to <see cref="DapperTypeMapper.Instance"/>.</param>
-	/// <param name="cache">[Optional] ICacheService - defaults to no cache.</param>
-	public DapperAdapter(ITypeMapper? mapper = null, ICacheService? cache = null) =>
-		(Mapper, Cache) = (mapper ?? DapperTypeMapper.Instance, cache ?? new NullCacheService());
+	public DapperAdapter() : this(DapperTypeMapper.Instance, new NullCacheService()) { }
+
+	/// <summary>
+	/// Use the default mapper - DI uses this when only an ICacheService is registered.
+	/// </summary>
+	/// <param name="cache">ICacheService.</param>
+	public DapperAdapter(ICacheService cache) : this(DapperTypeMapper.Instance, cache) { }
+
+	/// <summary>
+	/// Use no cache - DI uses this when only an ITypeMapper is registered.
+	/// </summary>
+	/// <param name="mapper">ITypeMapper.</param>
+	public DapperAdapter(ITypeMapper mapper) : this(mapper, new NullCacheService()) { }
+
+	/// <summary>
+	/// Inject dependencies.
+	/// </summary>
+	/// <param name="mapper">ITypeMapper.</param>
+	/// <param name="cache">ICacheService.</param>
+	public DapperAdapter(ITypeMapper mapper, ICacheService? cache) =>
+		(Mapper, Cache) = (mapper, cache ?? new NullCacheService());
 
 	/// <inheritdoc/>
 	public Task<Result<int>> ExecuteAsync(IDbConnection connection, IDbTransaction transaction, string query, object? param, CommandType type) =>

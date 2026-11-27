@@ -8,7 +8,7 @@ namespace Jeebs.Auth.Data.Models;
 /// <summary>
 /// Auth Role model.
 /// </summary>
-public abstract record class AuthRoleModel() : IAuthRole
+public abstract record class AuthRoleModel : IAuthRole
 {
 	/// <inheritdoc/>
 	public AuthRoleId Id { get; init; } =
@@ -19,10 +19,15 @@ public abstract record class AuthRoleModel() : IAuthRole
 		string.Empty;
 
 	/// <summary>
+	/// Create with default values - for derived classes only.
+	/// </summary>
+	protected AuthRoleModel() { }
+
+	/// <summary>
 	/// Create with specified values.
 	/// </summary>
 	/// <param name="id">AuthRoleId.</param>
 	/// <param name="name">Role Name.</param>
-	public AuthRoleModel(AuthRoleId id, string name) : this() =>
+	protected AuthRoleModel(AuthRoleId id, string name) : this() =>
 		(Id, Name) = (id, name);
 }

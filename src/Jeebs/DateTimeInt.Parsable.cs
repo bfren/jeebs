@@ -5,7 +5,7 @@ using System;
 
 namespace Jeebs;
 
-public readonly partial struct DateTimeInt
+public readonly partial struct DateTimeInt : IEquatable<DateTimeInt>
 {
 	/// <summary>
 	/// Parse a string as DateTimeInt.

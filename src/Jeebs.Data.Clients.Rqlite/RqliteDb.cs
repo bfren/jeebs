@@ -22,7 +22,7 @@ public abstract partial class RqliteDb : Db
 	/// <param name="config">DbConfig options.</param>
 	/// <param name="log">ILog.</param>
 	/// <param name="name">DbConnectionConfig name.</param>
-	public RqliteDb(IRqliteClientFactory factory, IDbClient client, IOptions<DbConfig> config, ILog log, string name) :
+	protected RqliteDb(IRqliteClientFactory factory, IDbClient client, IOptions<DbConfig> config, ILog log, string name) :
 		base(client, config, log, name) =>
 		Factory = factory;
 

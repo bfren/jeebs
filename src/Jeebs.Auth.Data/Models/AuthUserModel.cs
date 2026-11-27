@@ -11,7 +11,7 @@ namespace Jeebs.Auth.Data.Models;
 /// Auth User model.
 /// </summary>
 /// <typeparam name="TRole">Auth Role type.</typeparam>
-public abstract record class AuthUserModel<TRole>() : IAuthUser<TRole>
+public abstract record class AuthUserModel<TRole> : IAuthUser<TRole>
 	where TRole : AuthRoleModel
 {
 	/// <inheritdoc/>
@@ -40,10 +40,15 @@ public abstract record class AuthUserModel<TRole>() : IAuthUser<TRole>
 		[];
 
 	/// <summary>
+	/// Create with default values - for derived classes only.
+	/// </summary>
+	protected AuthUserModel() { }
+
+	/// <summary>
 	/// Create with specified values.
 	/// </summary>
 	/// <param name="id">AuthUserId.</param>
 	/// <param name="email">Email address.</param>
-	public AuthUserModel(AuthUserId id, string email) : this() =>
+	protected AuthUserModel(AuthUserId id, string email) : this() =>
 		(Id, EmailAddress) = (id, email);
 }

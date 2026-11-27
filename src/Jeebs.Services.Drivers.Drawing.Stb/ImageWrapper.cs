@@ -86,10 +86,11 @@ public sealed partial class ImageWrapper : Services.Drawing.ImageWrapper
 			new ImageWrapper(PixelF.Resize(Pixels, Width, Height, mask, size.Width, size.Height), size.Width, size.Height)
 		);
 
-	/// <summary>
-	/// The pixels are managed memory, so there is nothing to free.
-	/// </summary>
-	public override void Dispose() { }
+	/// <inheritdoc/>
+	public override void Dispose()
+	{
+		// Pixels are managed memory, so there is nothing to free
+	}
 
 	[Failure("Error converting image to byte array.")]
 	private static partial Failure ErrorConvertingToByteArray(Exception e);
