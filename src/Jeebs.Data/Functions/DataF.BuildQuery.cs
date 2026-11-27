@@ -19,9 +19,12 @@ public static partial class DataF
 		)
 		.Map(
 			x => (QueryBuilderWithFrom)builder(x),
-			e => R.Fail(e).WithMessage("Error building query.").WithContext(nameof(DataF), nameof(BuildQuery))
+			e => ErrorBuildingQuery() with { Exception = e }
 		)
 		.Bind(
 			x => x.Select<TModel>()
 		);
+
+	[Failure("Error building query.", Wrap.Logging.LogLevel.Error)]
+	private static partial Failure ErrorBuildingQuery();
 }

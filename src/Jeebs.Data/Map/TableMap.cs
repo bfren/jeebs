@@ -9,7 +9,7 @@ using Jeebs.Data.Attributes;
 namespace Jeebs.Data.Map;
 
 /// <inheritdoc cref="ITableMap"/>
-public sealed record class TableMap : ITableMap
+public sealed partial record class TableMap : ITableMap
 {
 	/// <inheritdoc/>
 	public ITable Table { get; init; }
@@ -55,8 +55,7 @@ public sealed record class TableMap : ITableMap
 		)
 		.IfNot(
 			x => x.Any(),
-			_ => R.Fail("No writeable columns found.")
-				.WithContext(nameof(TableMap), nameof(GetWriteableColumnNamesAndAliases))
+			_ => NoWriteableColumns()
 		)
 		.Map(
 			x => (x.Select(w => w.ColName).ToList(), x.Select(w => w.ColAlias).ToList())
@@ -65,4 +64,7 @@ public sealed record class TableMap : ITableMap
 	/// <inheritdoc cref="Name"/>
 	public override string ToString() =>
 		Name.GetFullName(s => s);
+
+	[Failure("No writeable columns found.")]
+	private static partial Failure NoWriteableColumns();
 }

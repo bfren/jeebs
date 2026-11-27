@@ -17,7 +17,7 @@ using Defaults = Jeebs.Constants.PagingValues;
 namespace Jeebs.Data;
 
 /// <inheritdoc cref="IDb"/>
-public abstract class Db : IDb
+public abstract partial class Db : IDb
 {
 	/// <inheritdoc/>
 	public IDbClient Client { get; private init; }
@@ -105,7 +105,7 @@ public abstract class Db : IDb
 		from countResults in count(countQuery.query, countQuery.param)
 		from paging in R.Try(
 			() => new PagingValues(countResults, page, parts.Maximum ?? Defaults.ItemsPer, Defaults.PagesPer),
-			e => R.Fail(e).WithMessage("Error creating paging values.", countResults, page, parts.Maximum)
+			e => (PagingValuesError(countResults, page, parts.Maximum) with { Exception = e })
 				.WithContext(GetType().Name, nameof(QueryAsync))
 		)
 		from itemsQuery in Client.GetQuery(new QueryParts(parts) with
@@ -143,4 +143,7 @@ public abstract class Db : IDb
 		WriteToLog(message, args);
 
 	#endregion Testing
+
+	[Failure("Error creating paging values for {Count} items, page {Page} and {Maximum} per page.", Wrap.Logging.LogLevel.Error)]
+	private static partial Failure PagingValuesError(ulong count, ulong page, ulong? maximum);
 }

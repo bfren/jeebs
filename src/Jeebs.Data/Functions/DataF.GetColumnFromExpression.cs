@@ -24,12 +24,14 @@ public static partial class DataF
 			select (IColumn)new Column(table.GetName(), t, i.Info)
 		)
 		.ToResult(
-			() => R.Fail("Unable to get column from expression for table '{Table}'.", typeof(TTable).Name)
-				.WithContext(nameof(DataF), nameof(GetColumnFromExpression))
+			() => ColumnExpressionNotFound(typeof(TTable).Name)
 		);
 
 	/// <inheritdoc cref="GetColumnFromExpression{TTable}(TTable, Expression{Func{TTable, string}})"/>
 	public static Result<IColumn> GetColumnFromExpression<TTable>(Expression<Func<TTable, string>> column)
 		where TTable : ITable, new() =>
 		GetColumnFromExpression(new TTable(), column);
+
+	[Failure("Unable to get column from expression for table '{Table}'.")]
+	private static partial Failure ColumnExpressionNotFound(string table);
 }

@@ -18,7 +18,7 @@ public sealed class Extract : IExtract
 /// Extract columns from a table that match <typeparamref name="TModel"/>.
 /// </summary>
 /// <typeparam name="TModel">Model type.</typeparam>
-public static class Extract<TModel>
+public static partial class Extract<TModel>
 {
 	/// <summary>
 	/// Extract columns from specified tables.
@@ -40,18 +40,27 @@ public static class Extract<TModel>
 				() => from table in tables
 					  from column in DataF.GetColumnsFromTable<TModel>(table)
 					  select column,
-				e => R.Fail(e).WithMessage("Error getting columns from table.").WithContext(nameof(Extract), nameof(From))
+				e => ErrorGettingColumns() with { Exception = e }
 			)
 			.IfNot(
 				x => x.Any(),
-				_ => R.Fail("No columns were extracted from the tables.").WithContext(nameof(Extract), nameof(From))
+				_ => NoColumnsExtracted()
 			)
 			.Map(
 				x => x.Distinct(new Column.AliasComparer()),
-				e => R.Fail(e).WithMessage("Error getting distinct columns from the list.").WithContext(nameof(Extract), nameof(From))
+				e => ErrorGettingDistinctColumns() with { Exception = e }
 			)
 			.Map(
 				x => (IColumnList)new ColumnList(x)
 			);
 	}
+
+	[Failure("Error getting columns from table.", Wrap.Logging.LogLevel.Error)]
+	private static partial Failure ErrorGettingColumns();
+
+	[Failure("No columns were extracted from the tables.")]
+	private static partial Failure NoColumnsExtracted();
+
+	[Failure("Error getting distinct columns from the list.", Wrap.Logging.LogLevel.Error)]
+	private static partial Failure ErrorGettingDistinctColumns();
 }

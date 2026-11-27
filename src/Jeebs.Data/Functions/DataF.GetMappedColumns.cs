@@ -30,11 +30,12 @@ public static partial class DataF
 					  colName: column,
 					  propertyInfo: tableProperty
 				  ),
-			e => R.Fail(e).WithMessage("Error getting columns from table '{Table}'.", table)
-				.WithContext(nameof(DataF), nameof(GetColumns)
-			)
+			e => ErrorGettingColumns(table) with { Exception = e }
 		)
 		.Map(
 			x => new ColumnList(x)
 		);
+
+	[Failure("Error getting columns from table '{Table}'.", Wrap.Logging.LogLevel.Error)]
+	private static partial Failure ErrorGettingColumns(object? table);
 }

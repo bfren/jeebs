@@ -67,12 +67,12 @@ public sealed partial record class FluentQuery<TEntity, TId> : IFluentQuery<TEnt
 		// Errors are usually from converting a column alias to a column object
 		if (Errors.Count > 0)
 		{
-			return R.Fail("Query errors.", Errors).WithContext(nameof(FluentQuery<,>), method);
+			return QueryErrors(Errors).WithContext(nameof(FluentQuery<,>), method);
 		}
 
 		if (Parts.Where.Count == 0 && Parts.WhereCustom.Count == 0)
 		{
-			return R.Fail("No predicates defined for WHERE clause.").WithContext(nameof(FluentQuery<,>), method);
+			return NoPredicatesDefined().WithContext(nameof(FluentQuery<,>), method);
 		}
 
 		return null;
@@ -92,4 +92,10 @@ public sealed partial record class FluentQuery<TEntity, TId> : IFluentQuery<TEnt
 	/// <returns>Updated query.</returns>
 	internal IFluentQuery<TEntity, TId> Update(Func<QueryParts, QueryParts> with) =>
 		this with { Parts = with(new(Parts)) };
+
+	[Failure("Query errors: {Errors}.")]
+	private static partial Failure QueryErrors(IList<Failure> errors);
+
+	[Failure("No predicates defined for WHERE clause.")]
+	private static partial Failure NoPredicatesDefined();
 }

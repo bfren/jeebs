@@ -10,7 +10,7 @@ using Jeebs.Data.Functions;
 namespace Jeebs.Data.Map;
 
 /// <inheritdoc cref="IEntityMapper"/>
-internal sealed class EntityMapper : IEntityMapper, IDisposable
+internal sealed partial class EntityMapper : IEntityMapper, IDisposable
 {
 	#region Static
 
@@ -79,8 +79,7 @@ internal sealed class EntityMapper : IEntityMapper, IDisposable
 			return map;
 		}
 
-		return R.Fail("Trying to get table map for an umapped entity ('{Entity}').", typeof(TEntity).Name)
-			.WithContext(nameof(EntityMapper), nameof(GetTableMapFor));
+		return UnmappedEntity(typeof(TEntity).Name);
 	}
 
 	#region Dispose
@@ -106,4 +105,7 @@ internal sealed class EntityMapper : IEntityMapper, IDisposable
 	}
 
 	#endregion Dispose
+
+	[Failure("Trying to get table map for an umapped entity ('{Entity}').")]
+	private static partial Failure UnmappedEntity(string entity);
 }

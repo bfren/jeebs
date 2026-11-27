@@ -27,10 +27,12 @@ public sealed partial record class FluentQuery<TEntity, TId>
 	public Task<Result<TValue>> ExecuteAsync<TValue>(Expression<Func<TEntity, TValue>> aliasSelector) =>
 		aliasSelector.GetPropertyInfo()
 			.ToResult(
-				() => R.Fail("Unable to get PropertyInfo for alias selector.")
-					.WithContext(nameof(FluentQuery<,>), nameof(ExecuteAsync))
+				() => AliasSelectorNotFound()
 			)
 			.BindAsync(
 				x => ExecuteAsync<TValue>(x.Name)
 			);
+
+	[Failure("Unable to get PropertyInfo for alias selector.")]
+	private static partial Failure AliasSelectorNotFound();
 }

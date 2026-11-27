@@ -22,22 +22,14 @@ public static partial class DataF
 			.Where(x => x.Name == alias)
 			.SingleOrNone()
 			.ToResult(
-				() => R.Fail(
-						"Column with alias '{Alias}' not found in table '{Table}'.",
-						alias, table.GetType().Name
-					)
-					.WithContext(nameof(DataF), nameof(GetColumnFromAlias))
+				() => ColumnAliasNotFound(alias, table.GetType().Name)
 			)
 			.Map(
 				x => (name: x.GetValue(table)?.ToString()!, prop: x)
 			)
 			.If(
 				x => string.IsNullOrEmpty(x.name),
-				x => R.Fail(
-						"Column with alias '{Alias}' has null or empty name in table '{Table}'.",
-						alias, table.GetType().Name
-					)
-					.WithContext(nameof(DataF), nameof(GetColumnFromAlias))
+				x => ColumnAliasEmptyName(alias, table.GetType().Name)
 			)
 			.Map(
 				x => (IColumn)new Column(table.GetName(), x.name, x.prop)
@@ -47,4 +39,10 @@ public static partial class DataF
 	public static Result<IColumn> GetColumnFromAlias<TTable>(string columnAlias)
 		where TTable : ITable, new() =>
 		GetColumnFromAlias(new TTable(), columnAlias);
+
+	[Failure("Column with alias '{Alias}' not found in table '{Table}'.")]
+	private static partial Failure ColumnAliasNotFound(string alias, string table);
+
+	[Failure("Column with alias '{Alias}' has null or empty name in table '{Table}'.")]
+	private static partial Failure ColumnAliasEmptyName(string alias, string table);
 }

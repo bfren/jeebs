@@ -22,8 +22,7 @@ public static partial class DataF
 		)
 		.Map(
 			x => x.Where(p => (p.PropertyInfo.Name == nameof(IWithId.Id) || p.PropertyInfo.GetCustomAttribute<IdAttribute>() is not null) && p.PropertyInfo.GetCustomAttribute<IgnoreAttribute>() is null).ToList(),
-			e => R.Fail(e).WithMessage("Error getting Id properties from table '{Name}'.", typeof(TTable).Name)
-				.WithContext(nameof(DataF), nameof(GetIdColumn))
+			e => ErrorGettingIdProperties(typeof(TTable).Name) with { Exception = e }
 		)
 		.GetSingle(
 			x => x.Value<IColumn>(),
@@ -33,4 +32,7 @@ public static partial class DataF
 		.Map(
 			x => new Column(x)
 		);
+
+	[Failure("Error getting Id properties from table '{Name}'.", Wrap.Logging.LogLevel.Error)]
+	private static partial Failure ErrorGettingIdProperties(string name);
 }
