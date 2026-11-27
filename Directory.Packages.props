@@ -8,11 +8,11 @@
   <ItemGroup>
     <PackageVersion Include="Azure.Extensions.AspNetCore.Configuration.Secrets" Version="1.5.2" />
     <PackageVersion Include="Azure.Identity" Version="1.21.0" />
-    <PackageVersion Include="coverlet.collector" Version="10.1.0" />
-    <PackageVersion Include="Dapper" Version="2.1.89" />
+    <PackageVersion Include="coverlet.collector" Version="10.1.1" />
+    <PackageVersion Include="Dapper" Version="2.1.100" />
     <PackageVersion Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="11.0.0" />
     <PackageVersion Include="Microsoft.Bcl.Cryptography" Version="11.0.0" />
-    <PackageVersion Include="Microsoft.Data.SqlClient" Version="7.1.2" />
+    <PackageVersion Include="Microsoft.Data.SqlClient" Version="8.0.0" />
     <PackageVersion Include="Microsoft.Extensions.Caching.Abstractions" Version="11.0.0" />
     <PackageVersion Include="Microsoft.Extensions.Caching.Memory" Version="11.0.0" />
     <PackageVersion Include="Microsoft.Extensions.Configuration" Version="11.0.0" />
@@ -30,21 +30,21 @@
     <PackageVersion Include="Microsoft.NET.Test.Sdk" Version="18.12.0" />
     <PackageVersion Include="MySqlConnector" Version="3.0.0" />
     <PackageVersion Include="NJsonSchema" Version="11.6.2" />
-    <PackageVersion Include="Npgsql" Version="10.0.3" />
+    <PackageVersion Include="Npgsql" Version="11.0.0" />
     <PackageVersion Include="NSubstitute" Version="6.2.0" />
     <PackageVersion Include="NSubstitute.Analyzers.CSharp" Version="1.0.17" />
-    <PackageVersion Include="Rnd" Version="10.3.0" />
+    <PackageVersion Include="Rnd" Version="11.0.0" />
     <PackageVersion Include="Rqlite" Version="2.0.0-beta.2" />
     <PackageVersion Include="Serilog" Version="4.4.0" />
-    <PackageVersion Include="Serilog.Extensions.Hosting" Version="10.0.0" />
+    <PackageVersion Include="Serilog.Extensions.Hosting" Version="11.0.0" />
     <PackageVersion Include="Serilog.Sinks.Async" Version="2.1.0" />
     <PackageVersion Include="Serilog.Sinks.Console" Version="6.1.1" />
     <PackageVersion Include="Serilog.Sinks.File" Version="7.0.0" />
-    <PackageVersion Include="Serilog.Sinks.Seq" Version="9.1.0" />
+    <PackageVersion Include="Serilog.Sinks.Seq" Version="9.2.0" />
     <PackageVersion Include="Serilog.Sinks.Slack" Version="2.2.3" />
     <PackageVersion Include="Simple.Migrations" Version="0.9.21" />
-    <PackageVersion Include="SkiaSharp" Version="4.156.0" />
-    <PackageVersion Include="SkiaSharp.NativeAssets.Linux.NoDependencies" Version="4.156.0" />
+    <PackageVersion Include="SkiaSharp" Version="4.158.0" />
+    <PackageVersion Include="SkiaSharp.NativeAssets.Linux.NoDependencies" Version="4.158.0" />
     <PackageVersion Include="Sodium.Core" Version="1.4.1" />
     <PackageVersion Include="SQLitePCLRaw.lib.e_sqlite3" Version="3.53.3" />
     <PackageVersion Include="StbImageSharp" Version="2.30.16" />
@@ -57,10 +57,10 @@
     <PackageVersion Include="System.Security.Cryptography.ProtectedData" Version="11.0.0" />
     <PackageVersion Include="System.Text.Json" Version="10.0.2" />
     <PackageVersion Include="System.Threading.RateLimiting" Version="11.0.0" />
-    <PackageVersion Include="Wrap" Version="2.0.0-beta.3" />
-    <PackageVersion Include="Wrap.Id.Dapper" Version="2.0.0-beta.3" />
-    <PackageVersion Include="Wrap.Mvc" Version="2.0.0-beta.3" />
-    <PackageVersion Include="Wrap.Testing" Version="2.0.0-beta.3" />
+    <PackageVersion Include="Wrap" Version="2.0.0-rc.1" />
+    <PackageVersion Include="Wrap.Id.Dapper" Version="2.0.0-rc.1" />
+    <PackageVersion Include="Wrap.Mvc" Version="2.0.0-rc.1" />
+    <PackageVersion Include="Wrap.Testing" Version="2.0.0-rc.1" />
     <PackageVersion Include="xunit.runner.visualstudio" Version="4.0.1" />
     <PackageVersion Include="xunit.v3" Version="4.0.3" />
     <PackageVersion Include="xunit.v3.assert" Version="4.0.3" />
