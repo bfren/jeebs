@@ -41,37 +41,32 @@ public static partial class JwtF
 		// Ensure there is a current user
 		if (principal.Identity is null)
 		{
-			return R.Fail("User cannot be null.")
-				.WithContext(nameof(JwtF), nameof(CreateToken));
+			return UserIsNull();
 		}
 
 		// Ensure the current user is authenticated
 		var identity = principal.Identity;
 		if (!identity.IsAuthenticated)
 		{
-			return R.Fail("User is not authenticated.")
-				.WithContext(nameof(JwtF), nameof(CreateToken));
+			return UserNotAuthenticated();
 		}
 
 		// Ensure the JwtConfig is valid
 		if (!config.IsValid)
 		{
-			return R.Fail("JWT configuration is invalid.")
-				.WithContext(nameof(JwtF), nameof(CreateToken));
+			return ConfigurationInvalid();
 		}
 
 		// Ensure the signing key is a valid length
 		if (config.SigningKey.Length < JwtSecurity.SigningKeyBytes)
 		{
-			return R.Fail("JWT signing key is not long enough ({Length}) - should be {Minimum}.", config.SigningKey.Length, JwtSecurity.SigningKeyBytes)
-				.WithContext(nameof(JwtF), nameof(CreateToken));
+			return SigningKeyTooShort(config.SigningKey.Length, JwtSecurity.SigningKeyBytes);
 		}
 
 		// Ensure the encrypting key is a valid length
 		if (config.EncryptingKey is string key && key.Length < JwtSecurity.EncryptingKeyBytes)
 		{
-			return R.Fail("JWT encrypting key is not long enough ({Length}) - should be {Minimum}.", key.Length, JwtSecurity.EncryptingKeyBytes)
-				.WithContext(nameof(JwtF), nameof(CreateToken));
+			return EncryptingKeyTooShort(key.Length, JwtSecurity.EncryptingKeyBytes);
 		}
 
 		try
@@ -103,13 +98,32 @@ public static partial class JwtF
 		}
 		catch (ArgumentOutOfRangeException e) when (e.Message.Contains("IDX10653"))
 		{
-			return R.Fail("Key is not long enough.")
-				.WithContext(nameof(JwtF), nameof(CreateToken));
+			return KeyNotLongEnough();
 		}
 		catch (Exception e)
 		{
-			return R.Fail(e).WithMessage("Error creating JWT security token.")
-				.WithContext(nameof(JwtF), nameof(CreateToken));
+			return ErrorCreatingToken() with { Exception = e };
 		}
 	}
+
+	[Failure("User cannot be null.")]
+	private static partial Failure UserIsNull();
+
+	[Failure("User is not authenticated.")]
+	private static partial Failure UserNotAuthenticated();
+
+	[Failure("JWT configuration is invalid.")]
+	private static partial Failure ConfigurationInvalid();
+
+	[Failure("JWT signing key is not long enough ({Length}) - should be {Minimum}.")]
+	private static partial Failure SigningKeyTooShort(int length, int minimum);
+
+	[Failure("JWT encrypting key is not long enough ({Length}) - should be {Minimum}.")]
+	private static partial Failure EncryptingKeyTooShort(int length, int minimum);
+
+	[Failure("Key is not long enough.")]
+	private static partial Failure KeyNotLongEnough();
+
+	[Failure("Error creating JWT security token.", Wrap.Logging.LogLevel.Error)]
+	private static partial Failure ErrorCreatingToken();
 }

@@ -12,7 +12,7 @@ using Jeebs.Logging;
 namespace Jeebs.Auth.Data;
 
 /// <inheritdoc cref="IAuthUserRepository"/>
-public sealed class AuthUserRepository : Repository<AuthUserEntity, AuthUserId>, IAuthUserRepository
+public sealed partial class AuthUserRepository : Repository<AuthUserEntity, AuthUserId>, IAuthUserRepository
 {
 	/// <summary>
 	/// IAuthDb.
@@ -36,8 +36,7 @@ public sealed class AuthUserRepository : Repository<AuthUserEntity, AuthUserId>,
 	{
 		if (string.IsNullOrWhiteSpace(plainTextPassword))
 		{
-			return R.Fail("Password cannot be empty.")
-				.WithContext(nameof(AuthUserRepository), nameof(CreateAsync));
+			return PasswordEmpty();
 		}
 
 		email = NormaliseEmail(email);
@@ -46,8 +45,7 @@ public sealed class AuthUserRepository : Repository<AuthUserEntity, AuthUserId>,
 				email
 			)
 			.MatchAsync(
-				fOk: _ => R.Fail("User with {Email} already exists.", email)
-					.WithContext(nameof(AuthUserRepository), nameof(CreateAsync)),
+				fOk: _ => UserAlreadyExists(email),
 				fFail: _ => CreateAsync(new()
 				{
 					EmailAddress = email,
@@ -80,4 +78,10 @@ public sealed class AuthUserRepository : Repository<AuthUserEntity, AuthUserId>,
 	}
 
 	private sealed record class CheckAuthUserExists(string EmailAddress);
+
+	[Failure("Password cannot be empty.")]
+	private static partial Failure PasswordEmpty();
+
+	[Failure("User with {Email} already exists.")]
+	private static partial Failure UserAlreadyExists(string email);
 }

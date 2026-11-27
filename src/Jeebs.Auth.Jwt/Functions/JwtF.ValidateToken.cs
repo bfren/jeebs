@@ -40,18 +40,24 @@ public static partial class JwtF
 		}
 		catch (SecurityTokenNotYetValidException)
 		{
-			return R.Fail("Security token is not valid yet.")
-				.WithContext(nameof(JwtF), nameof(ValidateToken));
+			return TokenNotValidYet();
 		}
 		catch (SecurityTokenExpiredException)
 		{
-			return R.Fail("Token has expired.")
-				.WithContext(nameof(JwtF), nameof(ValidateToken));
+			return TokenExpired();
 		}
 		catch (Exception e)
 		{
-			return R.Fail(e).WithMessage("Error validating token.")
-				.WithContext(nameof(JwtF), nameof(ValidateToken));
+			return ErrorValidatingToken() with { Exception = e };
 		}
 	}
+
+	[Failure("Security token is not valid yet.")]
+	private static partial Failure TokenNotValidYet();
+
+	[Failure("Token has expired.")]
+	private static partial Failure TokenExpired();
+
+	[Failure("Error validating token.", Wrap.Logging.LogLevel.Error)]
+	private static partial Failure ErrorValidatingToken();
 }
