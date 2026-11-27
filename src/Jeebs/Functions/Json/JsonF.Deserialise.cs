@@ -17,13 +17,10 @@ public static partial class JsonF
 	/// <returns>Deserialised object.</returns>
 	public static Result<T> Deserialise<T>(string? str, JsonSerializerOptions options)
 	{
-		static Result<T> fail(string message) =>
-			R.Fail(message).WithContext(nameof(JsonF), nameof(Deserialise));
-
 		// Check for null string
 		if (string.IsNullOrWhiteSpace(str) || string.Equals(str, Empty, StringComparison.Ordinal))
 		{
-			return fail("Cannot deserialise a null or empty string.");
+			return NullOrEmptyString();
 		}
 
 		// Attempt to deserialise JSON
@@ -35,7 +32,7 @@ public static partial class JsonF
 					x,
 
 				_ =>
-					fail("Json deserialise returned a null object.") // should never get here
+					NullObjectReturned() // should never get here
 			};
 		}
 		catch (Exception ex)
@@ -47,4 +44,10 @@ public static partial class JsonF
 	/// <inheritdoc cref="Deserialise{T}(string, JsonSerializerOptions)"/>
 	public static Result<T> Deserialise<T>(string? str) =>
 		Deserialise<T>(str, Options);
+
+	[Failure("Cannot deserialise a null or empty string.")]
+	private static partial Failure NullOrEmptyString();
+
+	[Failure("Json deserialise returned a null object.")]
+	private static partial Failure NullObjectReturned();
 }

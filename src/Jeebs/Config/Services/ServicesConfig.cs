@@ -10,7 +10,7 @@ namespace Jeebs.Config.Services;
 /// <summary>
 /// Third-party services configuration.
 /// </summary>
-public sealed record class ServicesConfig : IOptions<ServicesConfig>
+public sealed partial record class ServicesConfig : IOptions<ServicesConfig>
 {
 	/// <summary>
 	/// Path to this configuration section.
@@ -46,8 +46,7 @@ public sealed record class ServicesConfig : IOptions<ServicesConfig>
 	/// <returns>Service configuration.</returns>
 	public Result<IServiceConfig> GetServiceConfig(string definition) =>
 		SplitDefinition(definition).Match(
-			fNone: () => R.Fail("Invalid service definition: {Definition}.", definition)
-				.WithContext(nameof(ServicesConfig), nameof(GetServiceConfig)),
+			fNone: () => InvalidServiceDefinition(definition),
 			fSome: x => x switch
 			{
 				("console", string name) =>
@@ -60,8 +59,7 @@ public sealed record class ServicesConfig : IOptions<ServicesConfig>
 					GetServiceConfig(c => c.Slack, name).Map(c => (IServiceConfig)c),
 
 				(string type, var _) =>
-					R.Fail("Service type '{Type}' is not recognised.", type)
-						.WithContext(nameof(ServicesConfig), nameof(GetServiceConfig))
+					ServiceTypeNotRecognised(type)
 			}
 		);
 
@@ -75,16 +73,14 @@ public sealed record class ServicesConfig : IOptions<ServicesConfig>
 	public Result<T> GetServiceConfig<T>(Func<ServicesConfig, Dictionary<string, T>> getCollection, string name)
 		where T : IServiceConfig, new() =>
 		getCollection(this).GetValueOrNone(name).Match(
-			fNone: () => R.Fail("Unable to find {Type} service named '{Name}'.", typeof(T).Name, name)
-				.WithContext(nameof(ServicesConfig), nameof(GetServiceConfig)),
+			fNone: () => ServiceNotFound(typeof(T).Name, name),
 			fSome: x => x.IsValid switch
 			{
 				true =>
 					R.Wrap(x),
 
 				false =>
-					R.Fail("Definition of {Type} service named '{Name}' is invalid.", typeof(T).Name, name)
-						.WithContext(nameof(ServicesConfig), nameof(GetServiceConfig))
+					ServiceDefinitionInvalid(typeof(T).Name, name)
 			}
 		);
 
@@ -112,4 +108,16 @@ public sealed record class ServicesConfig : IOptions<ServicesConfig>
 			true =>
 				M.None
 		};
+
+	[Failure("Invalid service definition: {Definition}.")]
+	private static partial Failure InvalidServiceDefinition(string definition);
+
+	[Failure("Service type '{Type}' is not recognised.")]
+	private static partial Failure ServiceTypeNotRecognised(string type);
+
+	[Failure("Unable to find {Type} service named '{Name}'.")]
+	private static partial Failure ServiceNotFound(string type, string name);
+
+	[Failure("Definition of {Type} service named '{Name}' is invalid.")]
+	private static partial Failure ServiceDefinitionInvalid(string type, string name);
 }

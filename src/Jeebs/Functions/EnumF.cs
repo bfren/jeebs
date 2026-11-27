@@ -17,7 +17,7 @@ public static partial class EnumF
 	/// <returns>A failed result containing an error message that the value is not a valid enumeration of type <typeparamref
 	/// name="T"/>.</returns>
 	internal static Result<T> FailNotAValidEnum<T>(string @class, string function) =>
-		R.Fail("'{Type}' Type is not a valid Enum.", typeof(T).FullName).WithContext(@class, function);
+		EnumTypeNotValid(typeof(T).FullName).WithContext(@class, function);
 
 	/// <summary>
 	/// Creates a failed result indicating that a null value was encountered during parsing.
@@ -27,7 +27,7 @@ public static partial class EnumF
 	/// <param name="function">The name of the function where the null value was encountered.</param>
 	/// <returns>A failed result containing an error message about the null value.</returns>
 	internal static Result<T> FailNullValue<T>(string @class, string function) =>
-		R.Fail("Attempting to parse a null value.").WithContext(@class, function);
+		NullValueToParse().WithContext(@class, function);
 
 	/// <summary>
 	/// Creates a failed result indicating that the specified value is not a valid value for the given type.
@@ -39,5 +39,14 @@ public static partial class EnumF
 	/// <returns>A failed result containing an error message that the specified value is not valid for the type <typeparamref
 	/// name="T"/>.</returns>
 	internal static Result<T> FailNotAValidValue<T>(string @class, string function, string? value) =>
-		R.Fail("'{Value}' is not a valid value of {Type}.", value, typeof(T).FullName).WithContext(@class, function);
+		ValueNotValid(value, typeof(T).FullName).WithContext(@class, function);
+
+	[Failure("'{Type}' Type is not a valid Enum.")]
+	private static partial Failure EnumTypeNotValid(string? type);
+
+	[Failure("Attempting to parse a null value.")]
+	private static partial Failure NullValueToParse();
+
+	[Failure("'{Value}' is not a valid value of {Type}.")]
+	private static partial Failure ValueNotValid(string? value, string? type);
 }

@@ -14,9 +14,6 @@ public static partial class Base32F
 	/// <returns>Byte array.</returns>
 	public static Result<byte[]> FromBase32String(string base32String)
 	{
-		static Result<byte[]> fail(string message, params object?[] args) =>
-			R.Fail(message, args).WithContext(nameof(Base32F), nameof(FromBase32String));
-
 		// Check if string is empty
 		if (string.IsNullOrEmpty(base32String))
 		{
@@ -32,7 +29,7 @@ public static partial class Base32F
 		// Check the size
 		if (outputBytes.Length == 0)
 		{
-			return fail("Input string is not long enough.");
+			return InputNotLongEnough();
 		}
 
 		// Position in the string
@@ -57,7 +54,7 @@ public static partial class Base32F
 			// Check if found
 			if (currentBase32Byte < 0)
 			{
-				return fail("'{Character}' is not in Base32 alphabet.", base32String[base32Position]);
+				return CharacterNotInAlphabet(base32String[base32Position]);
 			}
 
 			// Calculate the number of bits we can extract out of current input character to fill missing bits in the output byte
@@ -94,4 +91,10 @@ public static partial class Base32F
 
 		return outputBytes;
 	}
+
+	[Failure("Input string is not long enough.")]
+	private static partial Failure InputNotLongEnough();
+
+	[Failure("'{Character}' is not in Base32 alphabet.")]
+	private static partial Failure CharacterNotInAlphabet(char character);
 }
