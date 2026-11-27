@@ -13,7 +13,7 @@ public class Constructor_Tests
 	{
 		// Arrange
 		var db = Substitute.For<IDb>();
-		var reason = FailGen.Create();
+		var reason = R.Fail(Rnd.Str);
 		var mapper = Substitute.For<IEntityMapper>();
 		mapper.GetTableMapFor<TestEntity>()
 			.Returns(reason);
@@ -32,7 +32,7 @@ public class Constructor_Tests
 	{
 		// Arrange
 		var db = Substitute.For<IDb>();
-		var reason = FailGen.Create();
+		var reason = R.Fail(Rnd.Str);
 		var mapper = Substitute.For<IEntityMapper>();
 		mapper.GetTableMapFor<TestEntity>()
 			.Returns(reason);

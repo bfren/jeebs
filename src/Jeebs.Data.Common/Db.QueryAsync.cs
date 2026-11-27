@@ -30,8 +30,8 @@ public abstract partial class Db
 		R.Wrap(
 			(query, parameters: param ?? new object(), type)
 		)
-		.Audit(
-			fOk: LogQuery<T>
+		.IfOk(
+			LogQuery<T>
 		)
 		.BindAsync(
 			// a read joins the transaction only if a write has already begun it

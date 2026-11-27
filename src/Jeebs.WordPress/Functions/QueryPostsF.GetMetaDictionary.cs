@@ -24,15 +24,15 @@ public static partial class QueryPostsF
 		if (!metaDictionary.Any())
 		{
 			return R.Fail("MetaDictionary property not found for model '{Type}'.", typeof(TModel).Name)
-				.Lvl(Wrap.Logging.LogLevel.Debug)
-				.Ctx(nameof(QueryPostsF), nameof(GetMetaDictionary));
+				.WithLevel(Wrap.Logging.LogLevel.Debug)
+				.WithContext(nameof(QueryPostsF), nameof(GetMetaDictionary));
 		}
 
 		// Throw an error if there are multiple MetaDictionaries
 		if (metaDictionary.Count() > 1)
 		{
 			return R.Fail("Multiple MetaDictionary properties found for model '{Type}'.", typeof(TModel).Name)
-				.Ctx(nameof(QueryPostsF), nameof(GetMetaDictionary));
+				.WithContext(nameof(QueryPostsF), nameof(GetMetaDictionary));
 		}
 
 		return new Meta<TModel>(metaDictionary.Single());

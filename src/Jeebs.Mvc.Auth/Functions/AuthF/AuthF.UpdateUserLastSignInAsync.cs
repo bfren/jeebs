@@ -27,6 +27,6 @@ public static partial class AuthF
 		return await auth.User
 			.UpdateLastSignInAsync(user)
 			.IfFailedAsync(log.Failure)
-			.UnwrapAsync(ifFailed: _ => false);
+			.UnwrapAsync(fFail: _ => false);
 	}
 }

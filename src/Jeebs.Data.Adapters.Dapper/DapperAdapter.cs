@@ -60,7 +60,7 @@ public sealed class DapperAdapter : IAdapter
 
 				_ =>
 					R.Fail("Execution returned null value.", query, param)
-						.Ctx(nameof(Db), nameof(ExecuteAsync))
+						.WithContext(nameof(Db), nameof(ExecuteAsync))
 			}
 		);
 
@@ -107,6 +107,6 @@ public sealed class DapperAdapter : IAdapter
 	private static Failure Fail(string function, Exception exception, string query) =>
 		R.Fail(exception)
 			// parameters are left out because they can hold secrets (e.g. password hashes)
-			.Msg("Error executing query '{Query}'.", query)
-			.Ctx(nameof(DapperAdapter), function);
+			.WithMessage("Error executing query '{Query}'.", query)
+			.WithContext(nameof(DapperAdapter), function);
 }

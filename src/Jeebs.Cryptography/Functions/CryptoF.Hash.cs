@@ -34,7 +34,7 @@ public static partial class CryptoF
 				{
 					BytesOutOfRangeException =>
 						R.Fail("Hash bytes must be between {Min} and {Max}.", 16, 64)
-							.Ctx(nameof(CryptoF), nameof(Hash)),
+							.WithContext(nameof(CryptoF), nameof(Hash)),
 
 					_ =>
 						R.Fail(e)

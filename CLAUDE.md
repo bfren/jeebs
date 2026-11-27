@@ -46,7 +46,7 @@ mixed. Check with `git ls-files --eol | grep -E "w/(mixed|lf)"`.
 - File headers: `// Jeebs Rapid Application Development` (`src`), `// Jeebs Unit Tests` (`tests`)
   or `// Jeebs Test Applications` (`apps`), then `// Copyright (c) bfren - licensed under https://mit.bfren.dev/2013`.
 - Code returns `Result<T>` / `Maybe<T>` from the Wrap package; failures are
-  `R.Fail("Message {Value}.", value).Ctx(nameof(Type), nameof(Method))`.
+  `R.Fail("Message {Value}.", value).WithContext(nameof(Type), nameof(Method))`.
 - Data clients share one query builder in `src/Jeebs.Data/DbClient.CustomQueries.cs`; each client
   overrides only what differs (`RandomSort`, `GetLimitAndOffset`, `QueryTerminator`).
 - `Data.Common` databases are async only, and go through `db.DoWorkAsync(unitOfWork => ...)` (the

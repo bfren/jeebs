@@ -22,8 +22,8 @@ public static partial class QueryTermsF
 		where TModel : IWithId<WpTermId, ulong> =>
 		R.Try(
 			() => opt(new TermsOptions(db.Schema)),
-			e => R.Fail(e).Msg("Error getting query terms options.")
-				.Ctx(nameof(QueryTermsF), nameof(ExecuteAsync))
+			e => R.Fail(e).WithMessage("Error getting query terms options.")
+				.WithContext(nameof(QueryTermsF), nameof(ExecuteAsync))
 		)
 		.Bind(
 			x => x.ToParts<TModel>()

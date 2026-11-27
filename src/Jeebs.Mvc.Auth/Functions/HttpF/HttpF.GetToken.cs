@@ -21,6 +21,6 @@ public static partial class HttpF
 
 			_ =>
 				R.Fail("Authorization header is not a Bearer token.")
-					.Ctx(nameof(HttpF), nameof(GetToken))
+					.WithContext(nameof(HttpF), nameof(GetToken))
 		};
 }

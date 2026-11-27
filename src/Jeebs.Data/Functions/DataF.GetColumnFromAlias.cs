@@ -26,7 +26,7 @@ public static partial class DataF
 						"Column with alias '{Alias}' not found in table '{Table}'.",
 						alias, table.GetType().Name
 					)
-					.Ctx(nameof(DataF), nameof(GetColumnFromAlias))
+					.WithContext(nameof(DataF), nameof(GetColumnFromAlias))
 			)
 			.Map(
 				x => (name: x.GetValue(table)?.ToString()!, prop: x)
@@ -37,7 +37,7 @@ public static partial class DataF
 						"Column with alias '{Alias}' has null or empty name in table '{Table}'.",
 						alias, table.GetType().Name
 					)
-					.Ctx(nameof(DataF), nameof(GetColumnFromAlias))
+					.WithContext(nameof(DataF), nameof(GetColumnFromAlias))
 			)
 			.Map(
 				x => (IColumn)new Column(table.GetName(), x.name, x.prop)

@@ -23,11 +23,11 @@ public static partial class CryptoF
 	{
 
 		static Result<Lockable<T>> fail(Exception ex, string? message) =>
-			R.Fail(ex).Msg(message).Ctx(nameof(CryptoF), nameof(Unlock));
+			R.Fail(ex).WithMessage(message).WithContext(nameof(CryptoF), nameof(Unlock));
 
 		return box.EncryptedContents.Match(
 			fNone: () => R.Fail("There are no encrypted contents to unlock.")
-				.Ctx(nameof(CryptoF), nameof(Unlock)),
+				.WithContext(nameof(CryptoF), nameof(Unlock)),
 			fSome: x =>
 			{
 				try

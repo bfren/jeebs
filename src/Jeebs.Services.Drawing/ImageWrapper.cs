@@ -55,7 +55,7 @@ public abstract class ImageWrapper : IImageWrapper
 		if (width == 0 && height == 0)
 		{
 			return R.Fail("Mask width or height is required.")
-				.Ctx(nameof(ImageWrapper), nameof(ApplyMask));
+				.WithContext(nameof(ImageWrapper), nameof(ApplyMask));
 		}
 
 		// Calculate the size of the new image
@@ -67,8 +67,8 @@ public abstract class ImageWrapper : IImageWrapper
 		// Use implementation to return masked and resized image
 		return R.Try(
 			() => apply(size, mask),
-			e => R.Fail(e).Msg("Error applying image mask.")
-				.Ctx(nameof(ImageWrapper), nameof(ApplyMask))
+			e => R.Fail(e).WithMessage("Error applying image mask.")
+				.WithContext(nameof(ImageWrapper), nameof(ApplyMask))
 		);
 	}
 }

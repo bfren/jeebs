@@ -46,7 +46,7 @@ public abstract class TermCustomField : CustomField<TermCustomField.Term>
 			if (isRequired)
 			{
 				return R.Fail("Meta Key '{Key}' not found for Custom Field '{Type}'.", Key, GetType().Name)
-					.Ctx(GetType().Name, nameof(HydrateAsync));
+					.WithContext(GetType().Name, nameof(HydrateAsync));
 			}
 
 			return R.False;
@@ -66,7 +66,7 @@ public abstract class TermCustomField : CustomField<TermCustomField.Term>
 			.GetSingleAsync(
 				x => x.Value<Term>(),
 				(msg, args) => R.Fail("Unable to get single '{ValueStr}': " + msg, [ValueStr, .. args])
-					.Ctx(GetType().Name, nameof(HydrateAsync))
+					.WithContext(GetType().Name, nameof(HydrateAsync))
 			)
 			.MapAsync(
 				x =>
@@ -86,7 +86,7 @@ public abstract class TermCustomField : CustomField<TermCustomField.Term>
 		M.ParseUInt64(value).Match(
 			fSome: x => R.Wrap(new WpTermId { Value = x }),
 			fNone: () => R.Fail("'{Value}' is not a valid Term ID.", value)
-				.Ctx(type.Name, nameof(ParseTermId))
+				.WithContext(type.Name, nameof(ParseTermId))
 		);
 
 	/// <summary>

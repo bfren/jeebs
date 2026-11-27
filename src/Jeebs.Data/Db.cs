@@ -105,8 +105,8 @@ public abstract class Db : IDb
 		from countResults in count(countQuery.query, countQuery.param)
 		from paging in R.Try(
 			() => new PagingValues(countResults, page, parts.Maximum ?? Defaults.ItemsPer, Defaults.PagesPer),
-			e => R.Fail(e).Msg("Error creating paging values.", countResults, page, parts.Maximum)
-				.Ctx(GetType().Name, nameof(QueryAsync))
+			e => R.Fail(e).WithMessage("Error creating paging values.", countResults, page, parts.Maximum)
+				.WithContext(GetType().Name, nameof(QueryAsync))
 		)
 		from itemsQuery in Client.GetQuery(new QueryParts(parts) with
 		{

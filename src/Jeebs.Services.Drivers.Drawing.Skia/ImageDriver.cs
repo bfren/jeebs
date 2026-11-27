@@ -18,7 +18,7 @@ public sealed class ImageDriver : IImageDriver
 		if (!File.Exists(path))
 		{
 			return R.Fail("Image file does not exist: '{Path}'.", path)
-				.Ctx(nameof(ImageDriver), nameof(FromFile));
+				.WithContext(nameof(ImageDriver), nameof(FromFile));
 		}
 
 		// Create and return image object
@@ -47,6 +47,6 @@ public sealed class ImageDriver : IImageDriver
 
 			_ =>
 				R.Fail("Not a valid image.")
-					.Ctx(nameof(ImageDriver), method)
+					.WithContext(nameof(ImageDriver), method)
 		};
 }

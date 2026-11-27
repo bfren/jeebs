@@ -52,7 +52,7 @@ public class ValidateUserAsync_Tests
 		// Arrange
 		var auth = Substitute.For<IAuthDataProvider>();
 		auth.ValidateUserAsync(default!, default!)
-			.ReturnsForAnyArgs(FailGen.Create());
+			.ReturnsForAnyArgs(R.Fail(Rnd.Str));
 		var log = Substitute.For<ILog>();
 
 		// Act
@@ -71,7 +71,7 @@ public class ValidateUserAsync_Tests
 		auth.ValidateUserAsync(default!, default!)
 			.ReturnsForAnyArgs(true);
 		auth.RetrieveUserAsync<M.AuthUserModel, M.AuthRoleModel>(email: default!)
-			.ReturnsForAnyArgs(FailGen.Create());
+			.ReturnsForAnyArgs(R.Fail(Rnd.Str));
 		var email = Rnd.Str;
 		var model = new M.SignInModel { Email = email };
 		var log = Substitute.For<ILog>();

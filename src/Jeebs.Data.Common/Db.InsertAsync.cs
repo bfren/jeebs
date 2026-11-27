@@ -23,8 +23,8 @@ public abstract partial class Db
 		R.Wrap(
 			(query, parameters: param ?? new object(), type)
 		)
-		.Audit(
-			fOk: LogQuery<T>
+		.IfOk(
+			LogQuery<T>
 		)
 		.BindAsync(
 			async x => await Client.Adapter.ExecuteAsync<T>(unitOfWork.Connection, await unitOfWork.Transaction, x.query, x.parameters, x.type)
@@ -37,7 +37,7 @@ public abstract partial class Db
 
 				_ =>
 					R.Fail("Execution returned null value.", query, param)
-						.Ctx(nameof(Db), nameof(ExecuteAsync))
+						.WithContext(nameof(Db), nameof(ExecuteAsync))
 			}
 		);
 }

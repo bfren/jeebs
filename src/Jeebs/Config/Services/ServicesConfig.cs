@@ -47,7 +47,7 @@ public sealed record class ServicesConfig : IOptions<ServicesConfig>
 	public Result<IServiceConfig> GetServiceConfig(string definition) =>
 		SplitDefinition(definition).Match(
 			fNone: () => R.Fail("Invalid service definition: {Definition}.", definition)
-				.Ctx(nameof(ServicesConfig), nameof(GetServiceConfig)),
+				.WithContext(nameof(ServicesConfig), nameof(GetServiceConfig)),
 			fSome: x => x switch
 			{
 				("console", string name) =>
@@ -61,7 +61,7 @@ public sealed record class ServicesConfig : IOptions<ServicesConfig>
 
 				(string type, var _) =>
 					R.Fail("Service type '{Type}' is not recognised.", type)
-						.Ctx(nameof(ServicesConfig), nameof(GetServiceConfig))
+						.WithContext(nameof(ServicesConfig), nameof(GetServiceConfig))
 			}
 		);
 
@@ -76,7 +76,7 @@ public sealed record class ServicesConfig : IOptions<ServicesConfig>
 		where T : IServiceConfig, new() =>
 		getCollection(this).GetValueOrNone(name).Match(
 			fNone: () => R.Fail("Unable to find {Type} service named '{Name}'.", typeof(T).Name, name)
-				.Ctx(nameof(ServicesConfig), nameof(GetServiceConfig)),
+				.WithContext(nameof(ServicesConfig), nameof(GetServiceConfig)),
 			fSome: x => x.IsValid switch
 			{
 				true =>
@@ -84,7 +84,7 @@ public sealed record class ServicesConfig : IOptions<ServicesConfig>
 
 				false =>
 					R.Fail("Definition of {Type} service named '{Name}' is invalid.", typeof(T).Name, name)
-						.Ctx(nameof(ServicesConfig), nameof(GetServiceConfig))
+						.WithContext(nameof(ServicesConfig), nameof(GetServiceConfig))
 			}
 		);
 

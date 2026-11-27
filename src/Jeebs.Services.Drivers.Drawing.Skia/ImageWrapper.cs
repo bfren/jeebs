@@ -60,8 +60,8 @@ public sealed class ImageWrapper : Services.Drawing.ImageWrapper
 				data.SaveTo(ms);
 				return ms.ToArray();
 			},
-			e => R.Fail(e).Msg("Error converting image to byte array.")
-				.Ctx(nameof(ImageWrapper), nameof(ToByteArray))
+			e => R.Fail(e).WithMessage("Error converting image to byte array.")
+				.WithContext(nameof(ImageWrapper), nameof(ToByteArray))
 		);
 
 	/// <inheritdoc/>

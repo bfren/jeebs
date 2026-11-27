@@ -59,7 +59,7 @@ public sealed record class DbConfig : IOptions<DbConfig>
 	public Result<DbConnectionConfig> GetConnection(string name)
 	{
 		static Result<DbConnectionConfig> fail(string message, params object?[] args) =>
-			R.Fail(message, args).Ctx(nameof(DbConfig), nameof(GetConnection));
+			R.Fail(message, args).WithContext(nameof(DbConfig), nameof(GetConnection));
 
 		// Name cannot be null or empty
 		var nameOrDefault = string.IsNullOrWhiteSpace(name) ? Default : name;

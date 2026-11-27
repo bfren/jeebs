@@ -24,12 +24,12 @@ public static partial class QueryAttachmentsF
 		.GetSingleAsync(
 			x => x.Value<Attachment>(),
 			(msg, args) => R.Fail("Unable to get attachment for File {Id}: " + msg, [fileId.Value, .. args])
-				.Ctx(nameof(QueryAttachmentsF), nameof(GetFilePathAsync))
+				.WithContext(nameof(QueryAttachmentsF), nameof(GetFilePathAsync))
 		)
 		.MapAsync(
 			x => x.GetFilePath(db.WpConfig.UploadsPath),
-			e => R.Fail(e).Msg("Error getting attachment path for File {Id}.", fileId.Value)
-				.Ctx(nameof(QueryAttachmentsF), nameof(GetFilePathAsync))
+			e => R.Fail(e).WithMessage("Error getting attachment path for File {Id}.", fileId.Value)
+				.WithContext(nameof(QueryAttachmentsF), nameof(GetFilePathAsync))
 		);
 
 	internal sealed record class Attachment : PostAttachment;

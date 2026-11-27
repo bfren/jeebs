@@ -22,8 +22,8 @@ public static partial class QueryPostsMetaF
 		where TModel : IWithId<WpPostMetaId, ulong> =>
 		R.Try(
 			() => opt(new PostsMetaOptions(db.Schema)),
-			e => R.Fail(e).Msg("Error getting query posts meta options.")
-				.Ctx(nameof(QueryPostsMetaF), nameof(ExecuteAsync))
+			e => R.Fail(e).WithMessage("Error getting query posts meta options.")
+				.WithContext(nameof(QueryPostsMetaF), nameof(ExecuteAsync))
 		)
 		.Bind(
 			x => x.ToParts<TModel>()

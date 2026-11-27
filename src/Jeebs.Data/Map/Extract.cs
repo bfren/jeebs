@@ -40,15 +40,15 @@ public static class Extract<TModel>
 				() => from table in tables
 					  from column in DataF.GetColumnsFromTable<TModel>(table)
 					  select column,
-				e => R.Fail(e).Msg("Error getting columns from table.").Ctx(nameof(Extract), nameof(From))
+				e => R.Fail(e).WithMessage("Error getting columns from table.").WithContext(nameof(Extract), nameof(From))
 			)
 			.IfNot(
 				x => x.Any(),
-				_ => R.Fail("No columns were extracted from the tables.").Ctx(nameof(Extract), nameof(From))
+				_ => R.Fail("No columns were extracted from the tables.").WithContext(nameof(Extract), nameof(From))
 			)
 			.Map(
 				x => x.Distinct(new Column.AliasComparer()),
-				e => R.Fail(e).Msg("Error getting distinct columns from the list.").Ctx(nameof(Extract), nameof(From))
+				e => R.Fail(e).WithMessage("Error getting distinct columns from the list.").WithContext(nameof(Extract), nameof(From))
 			)
 			.Map(
 				x => (IColumnList)new ColumnList(x)

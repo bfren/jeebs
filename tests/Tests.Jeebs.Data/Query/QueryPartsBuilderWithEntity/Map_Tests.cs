@@ -25,7 +25,7 @@ public class Map_Tests : QueryPartsBuilderWithEntity_Tests
 	{
 		// Arrange
 		var (builder, v) = Setup();
-		v.Mapper.GetTableMapFor<TestEntity>().Returns(FailGen.Create());
+		v.Mapper.GetTableMapFor<TestEntity>().Returns(R.Fail(Rnd.Str));
 
 		// Act
 		var result = Record.Exception(() => builder.Map.Value);

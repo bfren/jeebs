@@ -18,7 +18,7 @@ public static partial class JsonF
 	public static Result<T> Deserialise<T>(string? str, JsonSerializerOptions options)
 	{
 		static Result<T> fail(string message) =>
-			R.Fail(message).Ctx(nameof(JsonF), nameof(Deserialise));
+			R.Fail(message).WithContext(nameof(JsonF), nameof(Deserialise));
 
 		// Check for null string
 		if (string.IsNullOrWhiteSpace(str) || string.Equals(str, Empty, StringComparison.Ordinal))

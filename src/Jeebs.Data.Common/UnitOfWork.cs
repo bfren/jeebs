@@ -44,7 +44,7 @@ public sealed class UnitOfWork : IUnitOfWork
 			{
 				false =>
 					R.Fail("No pending transaction to commit.")
-						.Ctx(nameof(UnitOfWork), nameof(CommitAsync)),
+						.WithContext(nameof(UnitOfWork), nameof(CommitAsync)),
 
 				_ =>
 					R.True
@@ -63,7 +63,7 @@ public sealed class UnitOfWork : IUnitOfWork
 			log.Err(ex, "Error committing transaction.");
 			await RollbackAsync();
 			return R.Fail(ex)
-				.Ctx(nameof(UnitOfWork), nameof(CommitAsync));
+				.WithContext(nameof(UnitOfWork), nameof(CommitAsync));
 		}
 	}
 

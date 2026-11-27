@@ -58,8 +58,8 @@ public sealed class ImageWrapper : Services.Drawing.ImageWrapper
 				Write(ms, format, quality);
 				return ms.ToArray();
 			},
-			e => R.Fail(e).Msg("Error converting image to byte array.")
-				.Ctx(nameof(ImageWrapper), nameof(ToByteArray))
+			e => R.Fail(e).WithMessage("Error converting image to byte array.")
+				.WithContext(nameof(ImageWrapper), nameof(ToByteArray))
 		);
 
 	private void Write(Stream stream, ImageFormat format, int quality)

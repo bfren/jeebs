@@ -29,6 +29,6 @@ public static partial class CryptoF
 
 			_ =>
 				R.Fail("Secure passphrases must contain at least three words ({Number} requested).", numberOfWords)
-					.Ctx(nameof(CryptoF), nameof(GeneratePassphrase))
+					.WithContext(nameof(CryptoF), nameof(GeneratePassphrase))
 		};
 }

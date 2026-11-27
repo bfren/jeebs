@@ -25,7 +25,7 @@ public static partial class QueryPostsF
 		if (!content.Any())
 		{
 			return R.Fail("Content property not found on model '{Type}'.", typeof(TModel).Name)
-				.Ctx(nameof(QueryPostsF), nameof(GetPostContent));
+				.WithContext(nameof(QueryPostsF), nameof(GetPostContent));
 		}
 
 		// Return single property

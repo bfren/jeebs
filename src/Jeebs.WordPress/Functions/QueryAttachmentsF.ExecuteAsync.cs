@@ -22,8 +22,8 @@ public static partial class QueryAttachmentsF
 		where T : IPostAttachment =>
 		R.Try(
 			() => opt(new AttachmentsOptions()),
-			e => R.Fail(e).Msg("Error getting query attachments options.")
-				.Ctx(nameof(QueryAttachmentsF), nameof(ExecuteAsync))
+			e => R.Fail(e).WithMessage("Error getting query attachments options.")
+				.WithContext(nameof(QueryAttachmentsF), nameof(ExecuteAsync))
 		)
 		.Bind(
 			x => GetQuery(db.Schema, x.Ids, db.WpConfig.VirtualUploadsUrl)

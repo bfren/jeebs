@@ -39,7 +39,7 @@ public class DoSignInAsync_Tests
 	{
 		var validateUser = Substitute.For<Func<IAuthDataProvider, SignInModel, ILog, Task<Result<AuthUserModel>>>>();
 		validateUser(default!, default!, default!)
-			.ReturnsForAnyArgs(user is not null ? R.Wrap(user) : FailGen.Create());
+			.ReturnsForAnyArgs(user is not null ? R.Wrap(user) : R.Fail(Rnd.Str));
 
 		return validateUser;
 	}
@@ -77,7 +77,7 @@ public class DoSignInAsync_Tests
 	{
 		// Arrange
 		var (_, v) = Setup();
-		var failure = FailGen.Create();
+		var failure = R.Fail(Rnd.Str);
 		var validateUser = SetupValidate();
 		validateUser(default!, default!, default!)
 			.ReturnsForAnyArgs(failure);

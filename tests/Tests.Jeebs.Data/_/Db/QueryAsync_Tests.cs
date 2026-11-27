@@ -41,7 +41,7 @@ public class QueryAsync_Tests : Db_Setup
 		var (db, v) = Setup();
 		var parts = new QueryParts(Substitute.For<ITable>());
 		var (countSql, countParam) = (Rnd.Str, new QueryParametersDictionary());
-		var failure = FailGen.Create<ulong>();
+		var failure = R.Fail<ulong>(Rnd.Str);
 		v.Client.GetCountQuery(parts).Returns((countSql, countParam));
 		db.QuerySingleAsync<ulong>(countSql, countParam).Returns(failure);
 

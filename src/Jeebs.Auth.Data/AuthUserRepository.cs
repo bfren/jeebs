@@ -37,7 +37,7 @@ public sealed class AuthUserRepository : Repository<AuthUserEntity, AuthUserId>,
 		if (string.IsNullOrWhiteSpace(plainTextPassword))
 		{
 			return R.Fail("Password cannot be empty.")
-				.Ctx(nameof(AuthUserRepository), nameof(CreateAsync));
+				.WithContext(nameof(AuthUserRepository), nameof(CreateAsync));
 		}
 
 		email = NormaliseEmail(email);
@@ -47,7 +47,7 @@ public sealed class AuthUserRepository : Repository<AuthUserEntity, AuthUserId>,
 			)
 			.MatchAsync(
 				fOk: _ => R.Fail("User with {Email} already exists.", email)
-					.Ctx(nameof(AuthUserRepository), nameof(CreateAsync)),
+					.WithContext(nameof(AuthUserRepository), nameof(CreateAsync)),
 				fFail: _ => CreateAsync(new()
 				{
 					EmailAddress = email,

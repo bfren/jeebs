@@ -80,7 +80,7 @@ internal sealed class EntityMapper : IEntityMapper, IDisposable
 		}
 
 		return R.Fail("Trying to get table map for an umapped entity ('{Entity}').", typeof(TEntity).Name)
-			.Ctx(nameof(EntityMapper), nameof(GetTableMapFor));
+			.WithContext(nameof(EntityMapper), nameof(GetTableMapFor));
 	}
 
 	#region Dispose

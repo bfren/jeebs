@@ -47,7 +47,7 @@ public abstract class AttachmentCustomField : CustomField<AttachmentCustomField.
 			if (isRequired)
 			{
 				return R.Fail("Meta Key '{Key}' not found for Custom Field '{Type}'.", Key, GetType().Name)
-					.Ctx(GetType().Name, nameof(HydrateAsync));
+					.WithContext(GetType().Name, nameof(HydrateAsync));
 			}
 
 			return R.False;
@@ -73,7 +73,7 @@ public abstract class AttachmentCustomField : CustomField<AttachmentCustomField.
 			.GetSingleAsync(
 				x => x.Value<Attachment>(),
 				(msg, args) => R.Fail("Unable to get single '{ValueStr}': " + msg, [ValueStr, .. args])
-					.Ctx(GetType().Name, nameof(HydrateAsync))
+					.WithContext(GetType().Name, nameof(HydrateAsync))
 			)
 			.MapAsync(
 				x =>
@@ -104,7 +104,7 @@ public abstract class AttachmentCustomField : CustomField<AttachmentCustomField.
 		M.ParseUInt64(value).Match(
 			fSome: x => R.Wrap(new WpPostId { Value = x }),
 			fNone: () => R.Fail("'{Value}' is not a valid Post ID.", value)
-				.Ctx(type.Name, nameof(ParseAttachmentPostId))
+				.WithContext(type.Name, nameof(ParseAttachmentPostId))
 		);
 
 	/// <inheritdoc/>

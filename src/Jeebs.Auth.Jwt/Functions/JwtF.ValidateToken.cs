@@ -41,17 +41,17 @@ public static partial class JwtF
 		catch (SecurityTokenNotYetValidException)
 		{
 			return R.Fail("Security token is not valid yet.")
-				.Ctx(nameof(JwtF), nameof(ValidateToken));
+				.WithContext(nameof(JwtF), nameof(ValidateToken));
 		}
 		catch (SecurityTokenExpiredException)
 		{
 			return R.Fail("Token has expired.")
-				.Ctx(nameof(JwtF), nameof(ValidateToken));
+				.WithContext(nameof(JwtF), nameof(ValidateToken));
 		}
 		catch (Exception e)
 		{
-			return R.Fail(e).Msg("Error validating token.")
-				.Ctx(nameof(JwtF), nameof(ValidateToken));
+			return R.Fail(e).WithMessage("Error validating token.")
+				.WithContext(nameof(JwtF), nameof(ValidateToken));
 		}
 	}
 }

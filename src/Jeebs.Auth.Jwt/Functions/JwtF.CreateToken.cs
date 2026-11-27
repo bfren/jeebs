@@ -42,7 +42,7 @@ public static partial class JwtF
 		if (principal.Identity is null)
 		{
 			return R.Fail("User cannot be null.")
-				.Ctx(nameof(JwtF), nameof(CreateToken));
+				.WithContext(nameof(JwtF), nameof(CreateToken));
 		}
 
 		// Ensure the current user is authenticated
@@ -50,28 +50,28 @@ public static partial class JwtF
 		if (!identity.IsAuthenticated)
 		{
 			return R.Fail("User is not authenticated.")
-				.Ctx(nameof(JwtF), nameof(CreateToken));
+				.WithContext(nameof(JwtF), nameof(CreateToken));
 		}
 
 		// Ensure the JwtConfig is valid
 		if (!config.IsValid)
 		{
 			return R.Fail("JWT configuration is invalid.")
-				.Ctx(nameof(JwtF), nameof(CreateToken));
+				.WithContext(nameof(JwtF), nameof(CreateToken));
 		}
 
 		// Ensure the signing key is a valid length
 		if (config.SigningKey.Length < JwtSecurity.SigningKeyBytes)
 		{
 			return R.Fail("JWT signing key is not long enough ({Length}) - should be {Minimum}.", config.SigningKey.Length, JwtSecurity.SigningKeyBytes)
-				.Ctx(nameof(JwtF), nameof(CreateToken));
+				.WithContext(nameof(JwtF), nameof(CreateToken));
 		}
 
 		// Ensure the encrypting key is a valid length
 		if (config.EncryptingKey is string key && key.Length < JwtSecurity.EncryptingKeyBytes)
 		{
 			return R.Fail("JWT encrypting key is not long enough ({Length}) - should be {Minimum}.", key.Length, JwtSecurity.EncryptingKeyBytes)
-				.Ctx(nameof(JwtF), nameof(CreateToken));
+				.WithContext(nameof(JwtF), nameof(CreateToken));
 		}
 
 		try
@@ -104,12 +104,12 @@ public static partial class JwtF
 		catch (ArgumentOutOfRangeException e) when (e.Message.Contains("IDX10653"))
 		{
 			return R.Fail("Key is not long enough.")
-				.Ctx(nameof(JwtF), nameof(CreateToken));
+				.WithContext(nameof(JwtF), nameof(CreateToken));
 		}
 		catch (Exception e)
 		{
-			return R.Fail(e).Msg("Error creating JWT security token.")
-				.Ctx(nameof(JwtF), nameof(CreateToken));
+			return R.Fail(e).WithMessage("Error creating JWT security token.")
+				.WithContext(nameof(JwtF), nameof(CreateToken));
 		}
 	}
 }

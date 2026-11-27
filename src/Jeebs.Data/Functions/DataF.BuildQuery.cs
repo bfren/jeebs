@@ -19,7 +19,7 @@ public static partial class DataF
 		)
 		.Map(
 			x => (QueryBuilderWithFrom)builder(x),
-			e => R.Fail(e).Msg("Error building query.").Ctx(nameof(DataF), nameof(BuildQuery))
+			e => R.Fail(e).WithMessage("Error building query.").WithContext(nameof(DataF), nameof(BuildQuery))
 		)
 		.Bind(
 			x => x.Select<TModel>()

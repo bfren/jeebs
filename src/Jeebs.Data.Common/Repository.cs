@@ -37,8 +37,8 @@ public abstract class Repository<TEntity, TId> : Base.Repository<TEntity, TId>, 
 	/// <inheritdoc/>
 	public virtual Task<Result<TId>> CreateAsync(TEntity entity, IUnitOfWork unitOfWork) =>
 		Db.Client.GetCreateQuery<TEntity>()
-		.Audit(
-			fOk: _ => LogFunc(nameof(CreateAsync))
+		.IfOk(
+			_ => LogFunc(nameof(CreateAsync))
 		)
 		.BindAsync(
 			x => Db.InsertAsync<TId>(x, entity, CommandType.Text, unitOfWork)
@@ -53,8 +53,8 @@ public abstract class Repository<TEntity, TId> : Base.Repository<TEntity, TId>, 
 	/// <inheritdoc/>
 	public virtual Task<Result<TModel>> RetrieveAsync<TModel>(TId id, IUnitOfWork unitOfWork) =>
 		Db.Client.GetRetrieveQuery<TEntity, TModel>()
-		.Audit(
-			fOk: _ => LogFunc(nameof(RetrieveAsync))
+		.IfOk(
+			_ => LogFunc(nameof(RetrieveAsync))
 		)
 		.BindAsync(
 			x => Db.QuerySingleAsync<TModel>(x, new { Id = id.Value }, CommandType.Text, unitOfWork)
@@ -70,8 +70,8 @@ public abstract class Repository<TEntity, TId> : Base.Repository<TEntity, TId>, 
 	public virtual Task<Result<bool>> UpdateAsync<TModel>(TModel model, IUnitOfWork unitOfWork)
 		where TModel : IWithId =>
 		Db.Client.GetUpdateQuery<TEntity, TModel>()
-		.Audit(
-			fOk: _ => LogFunc(nameof(UpdateAsync))
+		.IfOk(
+			_ => LogFunc(nameof(UpdateAsync))
 		)
 		.BindAsync(
 			x => Db.ExecuteAsync(x, model, CommandType.Text, unitOfWork)
@@ -87,8 +87,8 @@ public abstract class Repository<TEntity, TId> : Base.Repository<TEntity, TId>, 
 	public virtual Task<Result<bool>> DeleteAsync<TModel>(TModel model, IUnitOfWork unitOfWork)
 		where TModel : IWithId =>
 		Db.Client.GetDeleteQuery<TEntity>()
-		.Audit(
-			fOk: _ => LogFunc(nameof(DeleteAsync))
+		.IfOk(
+			_ => LogFunc(nameof(DeleteAsync))
 		)
 		.BindAsync(
 			x => Db.ExecuteAsync(x, model, CommandType.Text, unitOfWork)

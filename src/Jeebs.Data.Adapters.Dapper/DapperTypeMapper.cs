@@ -69,7 +69,7 @@ public class DapperTypeMapper : ITypeMapper
 		AddGenericTypeHandlers<IGuidId>(typeof(GuidIdTypeHandler<>));
 		AddGenericTypeHandlers<IIntId>(typeof(IntIdTypeHandler<>));
 		AddGenericTypeHandlers<ILongId>(typeof(LongIdTypeHandler<>));
-		AddGenericTypeHandlers<IUintId>(typeof(UIntIdTypeHandler<>));
+		AddGenericTypeHandlers<IUIntId>(typeof(UIntIdTypeHandler<>));
 		AddGenericTypeHandlers<IULongId>(typeof(ULongIdTypeHandler<>));
 	}
 

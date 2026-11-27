@@ -22,8 +22,8 @@ public static partial class QueryPostsTaxonomyF
 		where TModel : IWithId<WpTermId, ulong> =>
 		R.Try(
 			() => opt(new PostsTaxonomyOptions(db.Schema)),
-			e => R.Fail(e).Msg("Error getting query posts taxonomy options.")
-				.Ctx(nameof(QueryPostsTaxonomyF), nameof(ExecuteAsync))
+			e => R.Fail(e).WithMessage("Error getting query posts taxonomy options.")
+				.WithContext(nameof(QueryPostsTaxonomyF), nameof(ExecuteAsync))
 		)
 		.Bind(
 			x => x.ToParts<TModel>()

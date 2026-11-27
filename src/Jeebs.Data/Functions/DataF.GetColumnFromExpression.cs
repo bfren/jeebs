@@ -25,7 +25,7 @@ public static partial class DataF
 		)
 		.ToResult(
 			() => R.Fail("Unable to get column from expression for table '{Table}'.", typeof(TTable).Name)
-				.Ctx(nameof(DataF), nameof(GetColumnFromExpression))
+				.WithContext(nameof(DataF), nameof(GetColumnFromExpression))
 		);
 
 	/// <inheritdoc cref="GetColumnFromExpression{TTable}(TTable, Expression{Func{TTable, string}})"/>

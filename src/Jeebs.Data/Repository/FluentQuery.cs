@@ -67,12 +67,12 @@ public sealed partial record class FluentQuery<TEntity, TId> : IFluentQuery<TEnt
 		// Errors are usually from converting a column alias to a column object
 		if (Errors.Count > 0)
 		{
-			return R.Fail("Query errors.", Errors).Ctx(nameof(FluentQuery<,>), method);
+			return R.Fail("Query errors.", Errors).WithContext(nameof(FluentQuery<,>), method);
 		}
 
 		if (Parts.Where.Count == 0 && Parts.WhereCustom.Count == 0)
 		{
-			return R.Fail("No predicates defined for WHERE clause.").Ctx(nameof(FluentQuery<,>), method);
+			return R.Fail("No predicates defined for WHERE clause.").WithContext(nameof(FluentQuery<,>), method);
 		}
 
 		return null;

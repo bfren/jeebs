@@ -58,8 +58,8 @@ await db
 	.ExecuteAsync(
 		$"INSERT INTO {table} (foo, bar) VALUES (@foo, @bar);", new { foo, bar }, CommandType.Text
 	)
-	.AuditAsync(
-		fFail: log.Failure
+	.IfFailedAsync(
+		log.Failure
 	);
 Console.WriteLine();
 
@@ -83,8 +83,8 @@ await db
 	.ExecuteAsync(
 		$"UPDATE {table} SET foo = @newFoo WHERE id = @id;", new { newFoo, id }, CommandType.Text
 	)
-	.AuditAsync(
-		fFail: log.Failure
+	.IfFailedAsync(
+		log.Failure
 	);
 
 await db
@@ -167,8 +167,8 @@ await db.DoWorkAsync(async unitOfWork =>
 			.ExecuteAsync(
 				$"INSERT INTO {jsonTable} (json_value) VALUES (@value);", new { value = Jsonb.Create(v) }, CommandType.Text, unitOfWork
 			)
-			.AuditAsync(
-				fFail: log.Failure
+			.IfFailedAsync(
+				log.Failure
 			);
 
 		// returning a failure stops the loop and saves none of the inserts

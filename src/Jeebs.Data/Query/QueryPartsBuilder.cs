@@ -197,7 +197,7 @@ public abstract class QueryPartsBuilder<TId>(IExtract extract) : QueryPartsBuild
 		if (string.IsNullOrWhiteSpace(clause))
 		{
 			return R.Fail("You cannot add an empty WHERE clause.")
-				.Ctx(nameof(QueryPartsBuilder<>), nameof(AddWhereCustom));
+				.WithContext(nameof(QueryPartsBuilder<>), nameof(AddWhereCustom));
 		}
 
 		// Get parameters
@@ -205,7 +205,7 @@ public abstract class QueryPartsBuilder<TId>(IExtract extract) : QueryPartsBuild
 		if (!param.TryAdd(parameters))
 		{
 			return R.Fail("Failed to add parameters to WHERE clause.")
-				.Ctx(nameof(QueryPartsBuilder<>), nameof(AddWhereCustom));
+				.WithContext(nameof(QueryPartsBuilder<>), nameof(AddWhereCustom));
 		}
 
 		// Add clause and return

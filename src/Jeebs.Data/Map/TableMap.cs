@@ -56,7 +56,7 @@ public sealed record class TableMap : ITableMap
 		.IfNot(
 			x => x.Any(),
 			_ => R.Fail("No writeable columns found.")
-				.Ctx(nameof(TableMap), nameof(GetWriteableColumnNamesAndAliases))
+				.WithContext(nameof(TableMap), nameof(GetWriteableColumnNamesAndAliases))
 		)
 		.Map(
 			x => (x.Select(w => w.ColName).ToList(), x.Select(w => w.ColAlias).ToList())

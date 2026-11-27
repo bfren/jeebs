@@ -23,7 +23,7 @@ public abstract partial class RqliteDb : Db
 
 				_ =>
 					R.Fail("Failed to convert '{Id}' to '{IdType}'.", x.LastInsertId, typeof(TId).Name)
-						.Ctx(nameof(RqliteDb), nameof(InsertAsync))
+						.WithContext(nameof(RqliteDb), nameof(InsertAsync))
 			}
 		);
 	}

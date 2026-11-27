@@ -19,13 +19,13 @@ public sealed class ImageDriver : IImageDriver
 		if (!File.Exists(path))
 		{
 			return R.Fail("Image file does not exist: '{Path}'.", path)
-				.Ctx(nameof(ImageDriver), nameof(FromFile));
+				.WithContext(nameof(ImageDriver), nameof(FromFile));
 		}
 
 		return R.Try(
 			() => File.ReadAllBytes(path),
-			e => R.Fail(e).Msg("Unable to read image file.")
-				.Ctx(nameof(ImageDriver), nameof(FromFile))
+			e => R.Fail(e).WithMessage("Unable to read image file.")
+				.WithContext(nameof(ImageDriver), nameof(FromFile))
 		)
 		.Bind(
 			x => Load(x, nameof(FromFile))
@@ -48,8 +48,8 @@ public sealed class ImageDriver : IImageDriver
 	internal static Result<IImageWrapper> Load(byte[] data, string method) =>
 		R.Try(
 			() => ImageResult.FromMemory(data, ColorComponents.RedGreenBlueAlpha),
-			e => R.Fail(e).Msg("Not a valid image.")
-				.Ctx(nameof(ImageDriver), method)
+			e => R.Fail(e).WithMessage("Not a valid image.")
+				.WithContext(nameof(ImageDriver), method)
 		)
 		.Map(
 			x =>

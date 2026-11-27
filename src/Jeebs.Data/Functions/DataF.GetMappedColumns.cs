@@ -30,8 +30,8 @@ public static partial class DataF
 					  colName: column,
 					  propertyInfo: tableProperty
 				  ),
-			e => R.Fail(e).Msg("Error getting columns from table '{Table}'.", table)
-				.Ctx(nameof(DataF), nameof(GetColumns)
+			e => R.Fail(e).WithMessage("Error getting columns from table '{Table}'.", table)
+				.WithContext(nameof(DataF), nameof(GetColumns)
 			)
 		)
 		.Map(

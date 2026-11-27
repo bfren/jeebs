@@ -51,21 +51,21 @@ public sealed class AuthDataProvider : IAuthDataProvider
 		if (string.IsNullOrWhiteSpace(model.NewPassword))
 		{
 			return R.Fail("New password cannot be empty.")
-				.Ctx(nameof(AuthDataProvider), nameof(ChangeUserPasswordAsync));
+				.WithContext(nameof(AuthDataProvider), nameof(ChangeUserPasswordAsync));
 		}
 
 		// If the passwords don't match, do nothing
 		if (model.NewPassword != model.CheckPassword)
 		{
 			return R.Fail("Passwords do not match.")
-				.Ctx(nameof(AuthDataProvider), nameof(ChangeUserPasswordAsync));
+				.WithContext(nameof(AuthDataProvider), nameof(ChangeUserPasswordAsync));
 		}
 
 		// If the passwords are the same, do nothing
 		if (model.NewPassword == model.CurrentPassword)
 		{
 			return R.Fail("New password cannot be the same as the old password.")
-				.Ctx(nameof(AuthDataProvider), nameof(ChangeUserPasswordAsync));
+				.WithContext(nameof(AuthDataProvider), nameof(ChangeUserPasswordAsync));
 		}
 
 		// Get user for authentication
@@ -75,7 +75,7 @@ public sealed class AuthDataProvider : IAuthDataProvider
 			if (!x.PasswordHash.VerifyPassword(model.CurrentPassword))
 			{
 				return R.Fail("Invalid password.")
-					.Ctx(nameof(AuthDataProvider), nameof(ChangeUserPasswordAsync));
+					.WithContext(nameof(AuthDataProvider), nameof(ChangeUserPasswordAsync));
 			}
 
 			// Update the password
@@ -120,14 +120,14 @@ public sealed class AuthDataProvider : IAuthDataProvider
 		if (string.IsNullOrEmpty(email))
 		{
 			return R.Fail("Null or empty email.")
-				.Ctx(nameof(AuthDataProvider), nameof(ValidateUserAsync));
+				.WithContext(nameof(AuthDataProvider), nameof(ValidateUserAsync));
 		}
 
 		// Check password
 		if (string.IsNullOrEmpty(password))
 		{
 			return R.Fail("Invalid password.")
-				.Ctx(nameof(AuthDataProvider), nameof(ValidateUserAsync));
+				.WithContext(nameof(AuthDataProvider), nameof(ValidateUserAsync));
 		}
 
 		// Check the user is enabled and the password is correct
@@ -146,13 +146,13 @@ public sealed class AuthDataProvider : IAuthDataProvider
 				if (!x.IsEnabled)
 				{
 					return R.Fail("User {Email} is not enabled.", email)
-						.Ctx(nameof(AuthDataProvider), nameof(ValidateUserAsync));
+						.WithContext(nameof(AuthDataProvider), nameof(ValidateUserAsync));
 				}
 
 				if (!verified)
 				{
 					return R.Fail("Invalid password.")
-						.Ctx(nameof(AuthDataProvider), nameof(ValidateUserAsync));
+						.WithContext(nameof(AuthDataProvider), nameof(ValidateUserAsync));
 				}
 
 				// upgrade hashes made with older settings - a failed update must not stop the user signing in,

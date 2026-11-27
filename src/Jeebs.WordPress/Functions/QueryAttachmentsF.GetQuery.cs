@@ -22,7 +22,7 @@ public static partial class QueryAttachmentsF
 		if (fileIds.Count == 0)
 		{
 			return R.Fail("No File IDs were provided.")
-				.Ctx(nameof(QueryAttachmentsF), nameof(GetQuery));
+				.WithContext(nameof(QueryAttachmentsF), nameof(GetQuery));
 		}
 
 		// Build query
