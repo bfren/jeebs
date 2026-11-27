@@ -45,8 +45,14 @@ mixed. Check with `git ls-files --eol | grep -E "w/(mixed|lf)"`.
 
 - File headers: `// Jeebs Rapid Application Development` (`src`), `// Jeebs Unit Tests` (`tests`)
   or `// Jeebs Test Applications` (`apps`), then `// Copyright (c) bfren - licensed under https://mit.bfren.dev/2013`.
-- Code returns `Result<T>` / `Maybe<T>` from the Wrap package; failures are
-  `R.Fail("Message {Value}.", value).WithContext(nameof(Type), nameof(Method))`.
+- Code returns `Result<T>` / `Maybe<T>` from the Wrap package. A failure with a fixed message is a
+  generated `[Failure]` method, declared at the end of its type (the type is `partial`):
+  `[Failure("Message {Value}.")] private static partial Failure MessageFailed(string value);`, returned as
+  `return MessageFailed(value);`. The generator sets the context, so don't add `WithContext(nameof, nameof)`,
+  unless the context is only known at run time (e.g. `GetType().Name` or a caller's name passed in).
+  With an exception, return `MessageFailed(value) with { Exception = e }` and set `Wrap.Logging.LogLevel.Error`
+  in the attribute (the generator defaults to Warning). `R.Fail` is only for an exception with no fixed
+  message (`R.Fail(e)`) and messages built at run time.
 - Data clients share one query builder in `src/Jeebs.Data/DbClient.CustomQueries.cs`; each client
   overrides only what differs (`RandomSort`, `GetLimitAndOffset`, `QueryTerminator`).
 - `Data.Common` databases are async only, and go through `db.DoWorkAsync(unitOfWork => ...)` (the
