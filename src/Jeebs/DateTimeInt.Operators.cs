@@ -1,9 +1,11 @@
 // Jeebs Rapid Application Development
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
+using System;
+
 namespace Jeebs;
 
-public readonly partial struct DateTimeInt
+public readonly partial struct DateTimeInt : IEquatable<DateTimeInt>
 {
 	/// <inheritdoc/>
 	public static bool operator ==(DateTimeInt left, DateTimeInt right) =>

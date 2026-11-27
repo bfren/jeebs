@@ -32,7 +32,7 @@ public abstract class Locked
 	/// <summary>
 	/// Create new Locked box with random salt and nonce.
 	/// </summary>
-	internal Locked() =>
+	private protected Locked() =>
 		(Salt, Nonce) = (SodiumCore.GetRandomBytes(16), SecretBox.GenerateNonce());
 }
 
