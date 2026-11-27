@@ -19,10 +19,12 @@ public static partial class QueryPostsF
 		where TModel : IWithId<WpPostId, ulong> =>
 		R.Try(
 			() => opt(new PostsOptions(db.Schema)),
-			e => R.Fail(e).WithMessage("Error getting posts options.")
-				.WithContext(nameof(QueryPostsF), nameof(GetQueryParts))
+			e => ErrorGettingPostsOptions() with { Exception = e }
 		)
 		.Bind(
 			x => x.ToParts<TModel>()
 		);
+
+	[Failure("Error getting posts options.", Wrap.Logging.LogLevel.Error)]
+	private static partial Failure ErrorGettingPostsOptions();
 }

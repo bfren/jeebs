@@ -22,8 +22,7 @@ public static partial class QueryTermsF
 		where TModel : IWithId<WpTermId, ulong> =>
 		R.Try(
 			() => opt(new TermsOptions(db.Schema)),
-			e => R.Fail(e).WithMessage("Error getting query terms options.")
-				.WithContext(nameof(QueryTermsF), nameof(ExecuteAsync))
+			e => ErrorGettingTermsOptions() with { Exception = e }
 		)
 		.Bind(
 			x => x.ToParts<TModel>()
@@ -31,4 +30,7 @@ public static partial class QueryTermsF
 		.BindAsync(
 			x => db.QueryAsync<TModel>(x, unitOfWork)
 		);
+
+	[Failure("Error getting query terms options.", Wrap.Logging.LogLevel.Error)]
+	private static partial Failure ErrorGettingTermsOptions();
 }

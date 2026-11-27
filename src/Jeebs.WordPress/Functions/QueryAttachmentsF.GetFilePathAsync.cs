@@ -28,9 +28,11 @@ public static partial class QueryAttachmentsF
 		)
 		.MapAsync(
 			x => x.GetFilePath(db.WpConfig.UploadsPath),
-			e => R.Fail(e).WithMessage("Error getting attachment path for File {Id}.", fileId.Value)
-				.WithContext(nameof(QueryAttachmentsF), nameof(GetFilePathAsync))
+			e => ErrorGettingFilePath(fileId.Value) with { Exception = e }
 		);
 
 	internal sealed record class Attachment : PostAttachment;
+
+	[Failure("Error getting attachment path for File {Id}.", Wrap.Logging.LogLevel.Error)]
+	private static partial Failure ErrorGettingFilePath(object? id);
 }

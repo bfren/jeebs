@@ -21,8 +21,7 @@ public static partial class QueryAttachmentsF
 		// Check for empty list
 		if (fileIds.Count == 0)
 		{
-			return R.Fail("No File IDs were provided.")
-				.WithContext(nameof(QueryAttachmentsF), nameof(GetQuery));
+			return NoFileIds();
 		}
 
 		// Build query
@@ -39,4 +38,7 @@ public static partial class QueryAttachmentsF
 				$"AND `pm`.`{schema.PostsMeta.Key}` = '{Constants.Attachment}';"
 		;
 	}
+
+	[Failure("No File IDs were provided.")]
+	private static partial Failure NoFileIds();
 }

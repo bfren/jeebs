@@ -73,9 +73,11 @@ public static partial class QueryPostsF
 					R.Wrap(x).AsTask(),
 
 				_ =>
-					R.Fail("Unrecognised PagedList type.")
-						.WithContext(nameof(QueryPostsF), nameof(ExecuteAsync))
+					UnrecognisedPagedList()
 						.AsTask<IPagedList<TModel>>()
 			}
 		);
+
+	[Failure("Unrecognised PagedList type.")]
+	private static partial Failure UnrecognisedPagedList();
 }

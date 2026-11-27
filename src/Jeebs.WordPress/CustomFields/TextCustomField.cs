@@ -9,7 +9,7 @@ namespace Jeebs.WordPress.CustomFields;
 /// <summary>
 /// Simple text value custom field.
 /// </summary>
-public abstract class TextCustomField : CustomField<string>
+public abstract partial class TextCustomField : CustomField<string>
 {
 	/// <summary>
 	/// Custom Field value.
@@ -39,7 +39,7 @@ public abstract class TextCustomField : CustomField<string>
 		// Return error if the field is required
 		if (isRequired)
 		{
-			return R.Fail("Meta Key '{Key}' not found for Custom Field '{Type}'.", Key, GetType().Name)
+			return MetaKeyNotFound(Key, GetType().Name)
 				.WithContext(GetType().Name, nameof(HydrateAsync))
 				.AsTask<bool>();
 		}
@@ -54,4 +54,7 @@ public abstract class TextCustomField : CustomField<string>
 
 	internal string GetValueAsStringTest() =>
 		GetValueAsString();
+
+	[Failure("Meta Key '{Key}' not found for Custom Field '{Type}'.")]
+	private static partial Failure MetaKeyNotFound(string key, string type);
 }

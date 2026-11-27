@@ -22,8 +22,7 @@ public static partial class QueryPostsTaxonomyF
 		where TModel : IWithId<WpTermId, ulong> =>
 		R.Try(
 			() => opt(new PostsTaxonomyOptions(db.Schema)),
-			e => R.Fail(e).WithMessage("Error getting query posts taxonomy options.")
-				.WithContext(nameof(QueryPostsTaxonomyF), nameof(ExecuteAsync))
+			e => ErrorGettingPostsTaxonomyOptions() with { Exception = e }
 		)
 		.Bind(
 			x => x.ToParts<TModel>()
@@ -31,4 +30,7 @@ public static partial class QueryPostsTaxonomyF
 		.BindAsync(
 			x => db.QueryAsync<TModel>(x, unitOfWork)
 		);
+
+	[Failure("Error getting query posts taxonomy options.", Wrap.Logging.LogLevel.Error)]
+	private static partial Failure ErrorGettingPostsTaxonomyOptions();
 }

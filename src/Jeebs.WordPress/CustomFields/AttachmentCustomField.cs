@@ -14,7 +14,7 @@ namespace Jeebs.WordPress.CustomFields;
 /// <summary>
 /// Post Attachment Custom Field.
 /// </summary>
-public abstract class AttachmentCustomField : CustomField<AttachmentCustomField.Attachment>
+public abstract partial class AttachmentCustomField : CustomField<AttachmentCustomField.Attachment>
 {
 	/// <summary>
 	/// IQueryPosts.
@@ -46,7 +46,7 @@ public abstract class AttachmentCustomField : CustomField<AttachmentCustomField.
 		{
 			if (isRequired)
 			{
-				return R.Fail("Meta Key '{Key}' not found for Custom Field '{Type}'.", Key, GetType().Name)
+				return MetaKeyNotFound(Key, GetType().Name)
 					.WithContext(GetType().Name, nameof(HydrateAsync));
 			}
 
@@ -103,7 +103,7 @@ public abstract class AttachmentCustomField : CustomField<AttachmentCustomField.
 	internal static Result<WpPostId> ParseAttachmentPostId(Type type, string value) =>
 		M.ParseUInt64(value).Match(
 			fSome: x => R.Wrap(new WpPostId { Value = x }),
-			fNone: () => R.Fail("'{Value}' is not a valid Post ID.", value)
+			fNone: () => InvalidPostId(value)
 				.WithContext(type.Name, nameof(ParseAttachmentPostId))
 		);
 
@@ -118,4 +118,10 @@ public abstract class AttachmentCustomField : CustomField<AttachmentCustomField.
 	/// Attachment file.
 	/// </summary>
 	public sealed record class Attachment : PostAttachment { }
+
+	[Failure("Meta Key '{Key}' not found for Custom Field '{Type}'.")]
+	private static partial Failure MetaKeyNotFound(string key, string type);
+
+	[Failure("'{Value}' is not a valid Post ID.")]
+	private static partial Failure InvalidPostId(object? value);
 }

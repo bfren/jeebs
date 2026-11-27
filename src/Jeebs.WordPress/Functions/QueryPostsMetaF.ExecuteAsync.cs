@@ -22,8 +22,7 @@ public static partial class QueryPostsMetaF
 		where TModel : IWithId<WpPostMetaId, ulong> =>
 		R.Try(
 			() => opt(new PostsMetaOptions(db.Schema)),
-			e => R.Fail(e).WithMessage("Error getting query posts meta options.")
-				.WithContext(nameof(QueryPostsMetaF), nameof(ExecuteAsync))
+			e => ErrorGettingPostsMetaOptions() with { Exception = e }
 		)
 		.Bind(
 			x => x.ToParts<TModel>()
@@ -31,4 +30,7 @@ public static partial class QueryPostsMetaF
 		.BindAsync(
 			x => db.QueryAsync<TModel>(x, unitOfWork)
 		);
+
+	[Failure("Error getting query posts meta options.", Wrap.Logging.LogLevel.Error)]
+	private static partial Failure ErrorGettingPostsMetaOptions();
 }
