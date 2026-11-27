@@ -10,7 +10,7 @@ namespace Jeebs.Cqrs;
 /// CQRS command handler.
 /// </summary>
 /// <typeparam name="T">Command type.</typeparam>
-public abstract class CommandHandler<T> : ICommandHandler
+public abstract partial class CommandHandler<T> : ICommandHandler
 	where T : Command
 {
 	/// <inheritdoc cref="ICommandHandler.HandleAsync(Command)"/>
@@ -24,6 +24,9 @@ public abstract class CommandHandler<T> : ICommandHandler
 				HandleAsync(x),
 
 			_ =>
-				R.Fail("Incorrect command type.").WithContext(GetType().Name, nameof(HandleAsync)).AsTask<bool>()
+				IncorrectCommandType().WithContext(GetType().Name, nameof(HandleAsync)).AsTask<bool>()
 		};
+
+	[Failure("Incorrect command type.")]
+	private static partial Failure IncorrectCommandType();
 }

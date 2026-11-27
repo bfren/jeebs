@@ -11,7 +11,7 @@ namespace Jeebs.Cqrs;
 /// </summary>
 /// <typeparam name="TQuery">Query type.</typeparam>
 /// <typeparam name="TResult">Query result value type.</typeparam>
-public abstract class QueryHandler<TQuery, TResult> : IQueryHandler<TResult>
+public abstract partial class QueryHandler<TQuery, TResult> : IQueryHandler<TResult>
 	where TQuery : Query<TResult>
 {
 	/// <inheritdoc cref="IQueryHandler{TResult}.HandleAsync(Query{TResult})"/>
@@ -25,6 +25,9 @@ public abstract class QueryHandler<TQuery, TResult> : IQueryHandler<TResult>
 				HandleAsync(x),
 
 			_ =>
-				R.Fail("Incorrect query type.").WithContext(GetType().Name, nameof(HandleAsync)).AsTask<TResult>()
+				IncorrectQueryType().WithContext(GetType().Name, nameof(HandleAsync)).AsTask<TResult>()
 		};
+
+	[Failure("Incorrect query type.")]
+	private static partial Failure IncorrectQueryType();
 }

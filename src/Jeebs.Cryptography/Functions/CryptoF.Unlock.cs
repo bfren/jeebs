@@ -19,15 +19,9 @@ public static partial class CryptoF
 	/// <param name="box">Locked box.</param>
 	/// <param name="key">Encryption key.</param>
 	/// <returns>Unlocked box.</returns>
-	public static Result<Lockable<T>> Unlock<T>(this Locked<T> box, byte[] key)
-	{
-
-		static Result<Lockable<T>> fail(Exception ex, string? message) =>
-			R.Fail(ex).WithMessage(message).WithContext(nameof(CryptoF), nameof(Unlock));
-
-		return box.EncryptedContents.Match(
-			fNone: () => R.Fail("There are no encrypted contents to unlock.")
-				.WithContext(nameof(CryptoF), nameof(Unlock)),
+	public static Result<Lockable<T>> Unlock<T>(this Locked<T> box, byte[] key) =>
+		box.EncryptedContents.Match(
+			fNone: () => NoEncryptedContents(),
 			fSome: x =>
 			{
 				try
@@ -41,21 +35,32 @@ public static partial class CryptoF
 				}
 				catch (KeyOutOfRangeException ex)
 				{
-					return fail(ex, "Invalid key.");
+					return InvalidKey() with { Exception = ex };
 				}
 				catch (NonceOutOfRangeException ex)
 				{
-					return fail(ex, "Invalid nonce.");
+					return InvalidNonce() with { Exception = ex };
 				}
 				catch (CryptographicException ex)
 				{
-					return fail(ex, "Incorrect key or nonce.");
+					return IncorrectKeyOrNonce() with { Exception = ex };
 				}
 				catch (Exception ex)
 				{
-					return fail(ex, null);
+					return R.Fail(ex).WithContext(nameof(CryptoF), nameof(Unlock));
 				}
 			}
 		);
-	}
+
+	[Failure("There are no encrypted contents to unlock.")]
+	private static partial Failure NoEncryptedContents();
+
+	[Failure("Invalid key.", Wrap.Logging.LogLevel.Error)]
+	private static partial Failure InvalidKey();
+
+	[Failure("Invalid nonce.", Wrap.Logging.LogLevel.Error)]
+	private static partial Failure InvalidNonce();
+
+	[Failure("Incorrect key or nonce.", Wrap.Logging.LogLevel.Error)]
+	private static partial Failure IncorrectKeyOrNonce();
 }

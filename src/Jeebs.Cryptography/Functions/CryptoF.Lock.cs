@@ -24,7 +24,7 @@ public static partial class CryptoF
 
 			// contents cannot be null
 			_ =>
-				R.Fail("Contents cannot be null.").WithContext(nameof(CryptoF), nameof(Lock))
+				ContentsCannotBeNull()
 		};
 
 	/// <summary>
@@ -42,8 +42,7 @@ public static partial class CryptoF
 				key,
 
 			false =>
-				R.Fail("Key must be {Bytes} bytes long.", Lockable.KeyLength)
-					.WithContext(nameof(CryptoF), nameof(Lock))
+				KeyWrongLength(Lockable.KeyLength)
 		};
 
 	/// <summary>
@@ -62,4 +61,10 @@ public static partial class CryptoF
 	public static Result<Locked<T>> Lock<T>(T contents, string key) =>
 		from c in CheckContents(contents)
 		select new Locked<T>(c, key);
+
+	[Failure("Contents cannot be null.")]
+	private static partial Failure ContentsCannotBeNull();
+
+	[Failure("Key must be {Bytes} bytes long.")]
+	private static partial Failure KeyWrongLength(int bytes);
 }
