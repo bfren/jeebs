@@ -66,13 +66,13 @@ public abstract partial class ImageWrapper : IImageWrapper
 		// Use implementation to return masked and resized image
 		return R.Try(
 			() => apply(size, mask),
-			e => ErrorApplyingMask() with { Exception = e }
+			ErrorApplyingMask
 		);
 	}
 
 	[Failure("Mask width or height is required.")]
 	private static partial Failure MaskSizeRequired();
 
-	[Failure("Error applying image mask.", Wrap.Logging.LogLevel.Error)]
-	private static partial Failure ErrorApplyingMask();
+	[Failure("Error applying image mask.")]
+	private static partial Failure ErrorApplyingMask(Exception e);
 }

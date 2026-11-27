@@ -105,12 +105,12 @@ public sealed partial class DapperAdapter : IAdapter
 
 	private static Failure Fail(string function, Exception exception, string query) =>
 		// parameters are left out because they can hold secrets (e.g. password hashes)
-		(ErrorExecutingQuery(query) with { Exception = exception })
+		ErrorExecutingQuery(query, exception)
 			.WithContext(nameof(DapperAdapter), function);
 
 	[Failure("Execution returned null value for query '{Query}'.")]
 	private static partial Failure ExecutionReturnedNull(string query);
 
-	[Failure("Error executing query '{Query}'.", Wrap.Logging.LogLevel.Error)]
-	private static partial Failure ErrorExecutingQuery(string query);
+	[Failure("Error executing query '{Query}'.")]
+	private static partial Failure ErrorExecutingQuery(string query, Exception e);
 }

@@ -1,6 +1,7 @@
 // Jeebs Rapid Application Development
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Jeebs.Data.Common;
@@ -22,7 +23,7 @@ public static partial class QueryTermsF
 		where TModel : IWithId<WpTermId, ulong> =>
 		R.Try(
 			() => opt(new TermsOptions(db.Schema)),
-			e => ErrorGettingTermsOptions() with { Exception = e }
+			ErrorGettingTermsOptions
 		)
 		.Bind(
 			x => x.ToParts<TModel>()
@@ -31,6 +32,6 @@ public static partial class QueryTermsF
 			x => db.QueryAsync<TModel>(x, unitOfWork)
 		);
 
-	[Failure("Error getting query terms options.", Wrap.Logging.LogLevel.Error)]
-	private static partial Failure ErrorGettingTermsOptions();
+	[Failure("Error getting query terms options.")]
+	private static partial Failure ErrorGettingTermsOptions(Exception e);
 }

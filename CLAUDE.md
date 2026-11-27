@@ -50,8 +50,10 @@ mixed. Check with `git ls-files --eol | grep -E "w/(mixed|lf)"`.
   `[Failure("Message {Value}.")] private static partial Failure MessageFailed(string value);`, returned as
   `return MessageFailed(value);`. The generator sets the context, so don't add `WithContext(nameof, nameof)`,
   unless the context is only known at run time (e.g. `GetType().Name` or a caller's name passed in).
-  With an exception, return `MessageFailed(value) with { Exception = e }` and set `Wrap.Logging.LogLevel.Error`
-  in the attribute (the generator defaults to Warning). `R.Fail` is only for an exception with no fixed
+  With an exception, add an `Exception e` parameter to the generated method and pass the exception:
+  `[Failure("Message.")] private static partial Failure MessageFailed(Exception e);`, returned as
+  `return MessageFailed(e);`. The level is Error whenever an exception is passed, so the attribute needs no level.
+  `R.Fail` is only for an exception with no fixed
   message (`R.Fail(e)`) and messages built at run time.
 - Data clients share one query builder in `src/Jeebs.Data/DbClient.CustomQueries.cs`; each client
   overrides only what differs (`RandomSort`, `GetLimitAndOffset`, `QueryTerminator`).

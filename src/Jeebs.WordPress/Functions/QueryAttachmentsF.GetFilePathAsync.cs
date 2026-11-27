@@ -1,6 +1,7 @@
 // Jeebs Rapid Application Development
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
+using System;
 using System.Threading.Tasks;
 using Jeebs.Data.Common;
 using Jeebs.Functions;
@@ -28,11 +29,11 @@ public static partial class QueryAttachmentsF
 		)
 		.MapAsync(
 			x => x.GetFilePath(db.WpConfig.UploadsPath),
-			e => ErrorGettingFilePath(fileId.Value) with { Exception = e }
+			e => ErrorGettingFilePath(fileId.Value, e)
 		);
 
 	internal sealed record class Attachment : PostAttachment;
 
-	[Failure("Error getting attachment path for File {Id}.", Wrap.Logging.LogLevel.Error)]
-	private static partial Failure ErrorGettingFilePath(object? id);
+	[Failure("Error getting attachment path for File {Id}.")]
+	private static partial Failure ErrorGettingFilePath(object? id, Exception e);
 }

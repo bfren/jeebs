@@ -102,7 +102,7 @@ public static partial class JwtF
 		}
 		catch (Exception e)
 		{
-			return ErrorCreatingToken() with { Exception = e };
+			return ErrorCreatingToken(e);
 		}
 	}
 
@@ -124,6 +124,6 @@ public static partial class JwtF
 	[Failure("Key is not long enough.")]
 	private static partial Failure KeyNotLongEnough();
 
-	[Failure("Error creating JWT security token.", Wrap.Logging.LogLevel.Error)]
-	private static partial Failure ErrorCreatingToken();
+	[Failure("Error creating JWT security token.")]
+	private static partial Failure ErrorCreatingToken(Exception e);
 }

@@ -48,7 +48,7 @@ public static partial class JwtF
 		}
 		catch (Exception e)
 		{
-			return ErrorValidatingToken() with { Exception = e };
+			return ErrorValidatingToken(e);
 		}
 	}
 
@@ -58,6 +58,6 @@ public static partial class JwtF
 	[Failure("Token has expired.")]
 	private static partial Failure TokenExpired();
 
-	[Failure("Error validating token.", Wrap.Logging.LogLevel.Error)]
-	private static partial Failure ErrorValidatingToken();
+	[Failure("Error validating token.")]
+	private static partial Failure ErrorValidatingToken(Exception e);
 }

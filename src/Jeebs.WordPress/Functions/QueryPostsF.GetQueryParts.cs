@@ -1,6 +1,7 @@
 // Jeebs Rapid Application Development
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
+using System;
 using Jeebs.Data.Query;
 using Jeebs.WordPress.Entities.Ids;
 using Jeebs.WordPress.Query;
@@ -19,12 +20,12 @@ public static partial class QueryPostsF
 		where TModel : IWithId<WpPostId, ulong> =>
 		R.Try(
 			() => opt(new PostsOptions(db.Schema)),
-			e => ErrorGettingPostsOptions() with { Exception = e }
+			ErrorGettingPostsOptions
 		)
 		.Bind(
 			x => x.ToParts<TModel>()
 		);
 
-	[Failure("Error getting posts options.", Wrap.Logging.LogLevel.Error)]
-	private static partial Failure ErrorGettingPostsOptions();
+	[Failure("Error getting posts options.")]
+	private static partial Failure ErrorGettingPostsOptions(Exception e);
 }

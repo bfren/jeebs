@@ -1,6 +1,7 @@
 // Jeebs Rapid Application Development
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
+using System;
 using System.Linq;
 using System.Reflection;
 using Jeebs.Data.Attributes;
@@ -22,7 +23,7 @@ public static partial class DataF
 		)
 		.Map(
 			x => x.Where(p => (p.PropertyInfo.Name == nameof(IWithId.Id) || p.PropertyInfo.GetCustomAttribute<IdAttribute>() is not null) && p.PropertyInfo.GetCustomAttribute<IgnoreAttribute>() is null).ToList(),
-			e => ErrorGettingIdProperties(typeof(TTable).Name) with { Exception = e }
+			e => ErrorGettingIdProperties(typeof(TTable).Name, e)
 		)
 		.GetSingle(
 			x => x.Value<IColumn>(),
@@ -33,6 +34,6 @@ public static partial class DataF
 			x => new Column(x)
 		);
 
-	[Failure("Error getting Id properties from table '{Name}'.", Wrap.Logging.LogLevel.Error)]
-	private static partial Failure ErrorGettingIdProperties(string name);
+	[Failure("Error getting Id properties from table '{Name}'.")]
+	private static partial Failure ErrorGettingIdProperties(string name, Exception e);
 }

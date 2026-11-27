@@ -35,15 +35,15 @@ public static partial class CryptoF
 				}
 				catch (KeyOutOfRangeException ex)
 				{
-					return InvalidKey() with { Exception = ex };
+					return InvalidKey(ex);
 				}
 				catch (NonceOutOfRangeException ex)
 				{
-					return InvalidNonce() with { Exception = ex };
+					return InvalidNonce(ex);
 				}
 				catch (CryptographicException ex)
 				{
-					return IncorrectKeyOrNonce() with { Exception = ex };
+					return IncorrectKeyOrNonce(ex);
 				}
 				catch (Exception ex)
 				{
@@ -55,12 +55,12 @@ public static partial class CryptoF
 	[Failure("There are no encrypted contents to unlock.")]
 	private static partial Failure NoEncryptedContents();
 
-	[Failure("Invalid key.", Wrap.Logging.LogLevel.Error)]
-	private static partial Failure InvalidKey();
+	[Failure("Invalid key.")]
+	private static partial Failure InvalidKey(Exception e);
 
-	[Failure("Invalid nonce.", Wrap.Logging.LogLevel.Error)]
-	private static partial Failure InvalidNonce();
+	[Failure("Invalid nonce.")]
+	private static partial Failure InvalidNonce(Exception e);
 
-	[Failure("Incorrect key or nonce.", Wrap.Logging.LogLevel.Error)]
-	private static partial Failure IncorrectKeyOrNonce();
+	[Failure("Incorrect key or nonce.")]
+	private static partial Failure IncorrectKeyOrNonce(Exception e);
 }

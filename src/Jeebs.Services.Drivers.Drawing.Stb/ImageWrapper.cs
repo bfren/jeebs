@@ -58,7 +58,7 @@ public sealed partial class ImageWrapper : Services.Drawing.ImageWrapper
 				Write(ms, format, quality);
 				return ms.ToArray();
 			},
-			e => ErrorConvertingToByteArray() with { Exception = e }
+			ErrorConvertingToByteArray
 		);
 
 	private void Write(Stream stream, ImageFormat format, int quality)
@@ -91,6 +91,6 @@ public sealed partial class ImageWrapper : Services.Drawing.ImageWrapper
 	/// </summary>
 	public override void Dispose() { }
 
-	[Failure("Error converting image to byte array.", Wrap.Logging.LogLevel.Error)]
-	private static partial Failure ErrorConvertingToByteArray();
+	[Failure("Error converting image to byte array.")]
+	private static partial Failure ErrorConvertingToByteArray(Exception e);
 }

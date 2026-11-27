@@ -1,6 +1,7 @@
 // Jeebs Rapid Application Development
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
+using System;
 using System.Linq;
 using Jeebs.Data.Functions;
 
@@ -40,7 +41,7 @@ public static partial class Extract<TModel>
 				() => from table in tables
 					  from column in DataF.GetColumnsFromTable<TModel>(table)
 					  select column,
-				e => ErrorGettingColumns() with { Exception = e }
+				ErrorGettingColumns
 			)
 			.IfNot(
 				x => x.Any(),
@@ -48,19 +49,19 @@ public static partial class Extract<TModel>
 			)
 			.Map(
 				x => x.Distinct(new Column.AliasComparer()),
-				e => ErrorGettingDistinctColumns() with { Exception = e }
+				ErrorGettingDistinctColumns
 			)
 			.Map(
 				x => (IColumnList)new ColumnList(x)
 			);
 	}
 
-	[Failure("Error getting columns from table.", Wrap.Logging.LogLevel.Error)]
-	private static partial Failure ErrorGettingColumns();
+	[Failure("Error getting columns from table.")]
+	private static partial Failure ErrorGettingColumns(Exception e);
 
 	[Failure("No columns were extracted from the tables.")]
 	private static partial Failure NoColumnsExtracted();
 
-	[Failure("Error getting distinct columns from the list.", Wrap.Logging.LogLevel.Error)]
-	private static partial Failure ErrorGettingDistinctColumns();
+	[Failure("Error getting distinct columns from the list.")]
+	private static partial Failure ErrorGettingDistinctColumns(Exception e);
 }

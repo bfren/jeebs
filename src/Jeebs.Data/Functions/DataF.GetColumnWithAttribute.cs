@@ -24,7 +24,7 @@ public static partial class DataF
 		)
 		.Map(
 			x => x.Where(p => p.PropertyInfo.GetCustomAttribute<TAttribute>() != null).ToList(),
-			e => ErrorGettingAttributeProperties(typeof(TAttribute).Name, typeof(TTable).Name) with { Exception = e }
+			e => ErrorGettingAttributeProperties(typeof(TAttribute).Name, typeof(TTable).Name, e)
 		)
 		.GetSingle(
 			x => x.Value<IColumn>(),
@@ -38,6 +38,6 @@ public static partial class DataF
 			x => new Column(x)
 		);
 
-	[Failure("Error getting properties with attribute '{Attribute}' from table '{Table}'.", Wrap.Logging.LogLevel.Error)]
-	private static partial Failure ErrorGettingAttributeProperties(string attribute, string table);
+	[Failure("Error getting properties with attribute '{Attribute}' from table '{Table}'.")]
+	private static partial Failure ErrorGettingAttributeProperties(string attribute, string table, Exception e);
 }

@@ -105,7 +105,7 @@ public abstract partial class Db : IDb
 		from countResults in count(countQuery.query, countQuery.param)
 		from paging in R.Try(
 			() => new PagingValues(countResults, page, parts.Maximum ?? Defaults.ItemsPer, Defaults.PagesPer),
-			e => (PagingValuesError(countResults, page, parts.Maximum) with { Exception = e })
+			e => PagingValuesError(countResults, page, parts.Maximum, e)
 				.WithContext(GetType().Name, nameof(QueryAsync))
 		)
 		from itemsQuery in Client.GetQuery(new QueryParts(parts) with
@@ -144,6 +144,6 @@ public abstract partial class Db : IDb
 
 	#endregion Testing
 
-	[Failure("Error creating paging values for {Count} items, page {Page} and {Maximum} per page.", Wrap.Logging.LogLevel.Error)]
-	private static partial Failure PagingValuesError(ulong count, ulong page, ulong? maximum);
+	[Failure("Error creating paging values for {Count} items, page {Page} and {Maximum} per page.")]
+	private static partial Failure PagingValuesError(ulong count, ulong page, ulong? maximum, Exception e);
 }

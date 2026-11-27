@@ -1,6 +1,7 @@
 // Jeebs Rapid Application Development
 // Copyright (c) bfren - licensed under https://mit.bfren.dev/2013
 
+using System;
 using System.IO;
 using Jeebs.Services.Drawing;
 using Jeebs.Services.Drivers.Drawing.Stb.Functions;
@@ -23,7 +24,7 @@ public sealed partial class ImageDriver : IImageDriver
 
 		return R.Try(
 			() => File.ReadAllBytes(path),
-			e => UnableToReadImageFile() with { Exception = e }
+			UnableToReadImageFile
 		)
 		.Bind(
 			x => Load(x, nameof(FromFile))
@@ -46,7 +47,7 @@ public sealed partial class ImageDriver : IImageDriver
 	internal static Result<IImageWrapper> Load(byte[] data, string method) =>
 		R.Try(
 			() => ImageResult.FromMemory(data, ColorComponents.RedGreenBlueAlpha),
-			e => (NotValidImage() with { Exception = e })
+			e => NotValidImage(e)
 				.WithContext(nameof(ImageDriver), method)
 		)
 		.Map(
@@ -60,9 +61,9 @@ public sealed partial class ImageDriver : IImageDriver
 	[Failure("Image file does not exist: '{Path}'.")]
 	private static partial Failure ImageFileNotFound(string path);
 
-	[Failure("Unable to read image file.", Wrap.Logging.LogLevel.Error)]
-	private static partial Failure UnableToReadImageFile();
+	[Failure("Unable to read image file.")]
+	private static partial Failure UnableToReadImageFile(Exception e);
 
-	[Failure("Not a valid image.", Wrap.Logging.LogLevel.Error)]
-	private static partial Failure NotValidImage();
+	[Failure("Not a valid image.")]
+	private static partial Failure NotValidImage(Exception e);
 }
